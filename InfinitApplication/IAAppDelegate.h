@@ -8,7 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "IAMainController.h"
+
 @interface IAAppDelegate : NSObject <NSApplicationDelegate>
+{
+@private
+    IAMainController* _controller;
+}
 
 @property (assign) IBOutlet NSWindow *window;
 

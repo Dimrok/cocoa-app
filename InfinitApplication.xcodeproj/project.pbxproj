@@ -17,6 +17,51 @@
 		8328082A17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328080A17A2B4A60025B6F8 /* Cocoa.framework */; };
 		8328083217A2B4A60025B6F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8328083017A2B4A60025B6F8 /* InfoPlist.strings */; };
 		8328083517A2B4A60025B6F8 /* InfinitApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8328083417A2B4A60025B6F8 /* InfinitApplicationTests.m */; };
+		8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8328084117A2B51F0025B6F8 /* application_icon.icns */; };
+		832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808C617A2BBD70025B6F8 /* IAStatusBarIcon.m */; };
+		832808CA17A2C0BC0025B6F8 /* status_bar_icon_clicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 832808C817A2C0BC0025B6F8 /* status_bar_icon_clicked.png */; };
+		832808CB17A2C0BC0025B6F8 /* status_bar_icon_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 832808C917A2C0BC0025B6F8 /* status_bar_icon_normal.png */; };
+		832808CF17A2C1480025B6F8 /* IAFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808CE17A2C1480025B6F8 /* IAFunctions.m */; };
+		832808D217A2C9E40025B6F8 /* IAMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808D117A2C9E40025B6F8 /* IAMainController.m */; };
+		832808DD17A2D7000025B6F8 /* IAMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808DB17A2D7000025B6F8 /* IAMainViewController.m */; };
+		832808DE17A2D7000025B6F8 /* IAMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808DC17A2D7000025B6F8 /* IAMainViewController.xib */; };
+		832808E817A2E5C10025B6F8 /* IANotLoggedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808E617A2E5C10025B6F8 /* IANotLoggedInView.m */; };
+		832808E917A2E5C10025B6F8 /* IANotLoggedInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808E717A2E5C10025B6F8 /* IANotLoggedInView.xib */; };
+		8334C7E117A67D22006028BC /* Gap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
+		8334C7E217A67D2D006028BC /* Gap.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
+		8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; };
+		8334C82117A692BD006028BC /* libagent.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E317A67EAF006028BC /* libagent.dylib */; };
+		8334C82217A692BD006028BC /* libasio-udt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E417A67EAF006028BC /* libasio-udt.dylib */; };
+		8334C82317A692BD006028BC /* libboost_chrono-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */; };
+		8334C82417A692BD006028BC /* libboost_signals-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */; };
+		8334C82517A692BD006028BC /* libboost_system-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */; };
+		8334C82617A692BD006028BC /* libboost_thread-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */; };
+		8334C82817A692BD006028BC /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */; };
+		8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EB17A67EB0006028BC /* libcryptography.dylib */; };
+		8334C82A17A692BD006028BC /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EC17A67EB0006028BC /* libcurl.4.dylib */; };
+		8334C82B17A692BD006028BC /* libcurly.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7ED17A67EB0006028BC /* libcurly.dylib */; };
+		8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EE17A67EB0006028BC /* libelle.dylib */; };
+		8334C82D17A692BD006028BC /* libetoile.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EF17A67EB0006028BC /* libetoile.dylib */; };
+		8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; };
+		8334C82F17A692BD006028BC /* libgcc_s.1.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F117A67EB0006028BC /* libgcc_s.1.dylib */; };
+		8334C83017A692BD006028BC /* libhole.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F217A67EB0006028BC /* libhole.dylib */; };
+		8334C83117A692BD006028BC /* libinfinit.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F317A67EB0006028BC /* libinfinit.dylib */; };
+		8334C83217A692BD006028BC /* liblune.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F417A67EB0006028BC /* liblune.dylib */; };
+		8334C83317A692BD006028BC /* libmetrics.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F517A67EB0006028BC /* libmetrics.dylib */; };
+		8334C83417A692BD006028BC /* libnucleus.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F617A67EB0006028BC /* libnucleus.dylib */; };
+		8334C83517A692BD006028BC /* libpapier.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F717A67EB0006028BC /* libpapier.dylib */; };
+		8334C83617A692BD006028BC /* libplasma.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F817A67EB0006028BC /* libplasma.dylib */; };
+		8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F917A67EB0006028BC /* libprotocol.dylib */; };
+		8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FA17A67EB0006028BC /* libreactor.dylib */; };
+		8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */; };
+		8334C83A17A692BD006028BC /* libstdc++.6.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */; };
+		8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FD17A67EB0006028BC /* libtrophonius.dylib */; };
+		8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FE17A67EB0006028BC /* libudt.dylib */; };
+		8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */; };
+		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
+		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
+		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
+		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,10 +72,126 @@
 			remoteGlobalIDString = 8328080617A2B4A60025B6F8;
 			remoteInfo = InfinitApplication;
 		};
+		8328084B17A2B6BE0025B6F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
+		8328084D17A2B6BE0025B6F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 61B5F90209C4CEE200B25A18;
+			remoteInfo = "Sparkle Test App";
+		};
+		8328084F17A2B6BE0025B6F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 612279D90DB5470200AB99EA;
+			remoteInfo = "Sparkle Unit Tests";
+		};
+		8328085117A2B6BE0025B6F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D06E8D00FD68C7C005AE3F6;
+			remoteInfo = BinaryDelta;
+		};
+		8328085317A2B6BE0025B6F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55C14BB7136EEF1500649790;
+			remoteInfo = finish_installation;
+		};
+		8334C81E17A681CB006028BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83CD6F4117A65EDA004F55D1;
+			remoteInfo = Gap;
+		};
+		83CD6F7C17A65F51004F55D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Sparkle;
+		};
+		83CD702B17A678C6004F55D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83CD6F4217A65EDA004F55D1;
+			remoteInfo = Gap;
+		};
+		83CD702D17A678C6004F55D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83CD6F5A17A65EDA004F55D1;
+			remoteInfo = GapTests;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		83CD6FF217A67418004F55D1 /* Copy Infinit Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */,
+				8334C82117A692BD006028BC /* libagent.dylib in Copy Infinit Libraries */,
+				8334C82217A692BD006028BC /* libasio-udt.dylib in Copy Infinit Libraries */,
+				8334C82317A692BD006028BC /* libboost_chrono-mt.dylib in Copy Infinit Libraries */,
+				8334C82417A692BD006028BC /* libboost_signals-mt.dylib in Copy Infinit Libraries */,
+				8334C82517A692BD006028BC /* libboost_system-mt.dylib in Copy Infinit Libraries */,
+				8334C82617A692BD006028BC /* libboost_thread-mt.dylib in Copy Infinit Libraries */,
+				8334C82817A692BD006028BC /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */,
+				8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */,
+				8334C82A17A692BD006028BC /* libcurl.4.dylib in Copy Infinit Libraries */,
+				8334C82B17A692BD006028BC /* libcurly.dylib in Copy Infinit Libraries */,
+				8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */,
+				8334C82D17A692BD006028BC /* libetoile.dylib in Copy Infinit Libraries */,
+				8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */,
+				8334C82F17A692BD006028BC /* libgcc_s.1.dylib in Copy Infinit Libraries */,
+				8334C83017A692BD006028BC /* libhole.dylib in Copy Infinit Libraries */,
+				8334C83117A692BD006028BC /* libinfinit.dylib in Copy Infinit Libraries */,
+				8334C83217A692BD006028BC /* liblune.dylib in Copy Infinit Libraries */,
+				8334C83317A692BD006028BC /* libmetrics.dylib in Copy Infinit Libraries */,
+				8334C83417A692BD006028BC /* libnucleus.dylib in Copy Infinit Libraries */,
+				8334C83517A692BD006028BC /* libpapier.dylib in Copy Infinit Libraries */,
+				8334C83617A692BD006028BC /* libplasma.dylib in Copy Infinit Libraries */,
+				8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */,
+				8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */,
+				8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */,
+				8334C83A17A692BD006028BC /* libstdc++.6.dylib in Copy Infinit Libraries */,
+				8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */,
+				8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */,
+			);
+			name = "Copy Infinit Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83CD701117A6754A004F55D1 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8334C7E217A67D2D006028BC /* Gap.framework in Copy Frameworks */,
+				83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		8328080717A2B4A60025B6F8 /* InfinitApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinitApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8328080717A2B4A60025B6F8 /* Infinit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8328080A17A2B4A60025B6F8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		8328080D17A2B4A60025B6F8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		8328080E17A2B4A60025B6F8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -49,6 +210,55 @@
 		8328083117A2B4A60025B6F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8328083317A2B4A60025B6F8 /* InfinitApplicationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfinitApplicationTests.h; sourceTree = "<group>"; };
 		8328083417A2B4A60025B6F8 /* InfinitApplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfinitApplicationTests.m; sourceTree = "<group>"; };
+		8328084117A2B51F0025B6F8 /* application_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = application_icon.icns; sourceTree = "<group>"; };
+		8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = ../Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
+		832808C517A2BBD70025B6F8 /* IAStatusBarIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAStatusBarIcon.h; sourceTree = "<group>"; };
+		832808C617A2BBD70025B6F8 /* IAStatusBarIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAStatusBarIcon.m; sourceTree = "<group>"; };
+		832808C817A2C0BC0025B6F8 /* status_bar_icon_clicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bar_icon_clicked.png; sourceTree = "<group>"; };
+		832808C917A2C0BC0025B6F8 /* status_bar_icon_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bar_icon_normal.png; sourceTree = "<group>"; };
+		832808CD17A2C1470025B6F8 /* IAFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFunctions.h; sourceTree = "<group>"; };
+		832808CE17A2C1480025B6F8 /* IAFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFunctions.m; sourceTree = "<group>"; };
+		832808D017A2C9E40025B6F8 /* IAMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMainController.h; sourceTree = "<group>"; };
+		832808D117A2C9E40025B6F8 /* IAMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAMainController.m; sourceTree = "<group>"; };
+		832808DA17A2D7000025B6F8 /* IAMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMainViewController.h; sourceTree = "<group>"; };
+		832808DB17A2D7000025B6F8 /* IAMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAMainViewController.m; sourceTree = "<group>"; };
+		832808DC17A2D7000025B6F8 /* IAMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAMainViewController.xib; sourceTree = "<group>"; };
+		832808E517A2E5C10025B6F8 /* IANotLoggedInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotLoggedInView.h; sourceTree = "<group>"; };
+		832808E617A2E5C10025B6F8 /* IANotLoggedInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotLoggedInView.m; sourceTree = "<group>"; };
+		832808E717A2E5C10025B6F8 /* IANotLoggedInView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANotLoggedInView.xib; sourceTree = "<group>"; };
+		8334C7E317A67EAF006028BC /* libagent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libagent.dylib; path = ../../../Externals/lib/libagent.dylib; sourceTree = "<group>"; };
+		8334C7E417A67EAF006028BC /* libasio-udt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libasio-udt.dylib"; path = "../../../Externals/lib/libasio-udt.dylib"; sourceTree = "<group>"; };
+		8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_chrono-mt.dylib"; path = "../../../Externals/lib/libboost_chrono-mt.dylib"; sourceTree = "<group>"; };
+		8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_signals-mt.dylib"; path = "../../../Externals/lib/libboost_signals-mt.dylib"; sourceTree = "<group>"; };
+		8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../Externals/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
+		8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "../../../Externals/lib/libboost_thread-mt.dylib"; sourceTree = "<group>"; };
+		8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_unit_test_framework-mt.dylib"; path = "../../../Externals/lib/libboost_unit_test_framework-mt.dylib"; sourceTree = "<group>"; };
+		8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
+		8334C7EB17A67EB0006028BC /* libcryptography.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptography.dylib; path = ../../../Externals/lib/libcryptography.dylib; sourceTree = "<group>"; };
+		8334C7EC17A67EB0006028BC /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
+		8334C7ED17A67EB0006028BC /* libcurly.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly.dylib; path = ../../../Externals/lib/libcurly.dylib; sourceTree = "<group>"; };
+		8334C7EE17A67EB0006028BC /* libelle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libelle.dylib; path = ../../../Externals/lib/libelle.dylib; sourceTree = "<group>"; };
+		8334C7EF17A67EB0006028BC /* libetoile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libetoile.dylib; path = ../../../Externals/lib/libetoile.dylib; sourceTree = "<group>"; };
+		8334C7F017A67EB0006028BC /* libgap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgap.dylib; path = ../../../Externals/lib/libgap.dylib; sourceTree = "<group>"; };
+		8334C7F117A67EB0006028BC /* libgcc_s.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgcc_s.1.dylib; path = ../../../Externals/lib/libgcc_s.1.dylib; sourceTree = "<group>"; };
+		8334C7F217A67EB0006028BC /* libhole.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhole.dylib; path = ../../../Externals/lib/libhole.dylib; sourceTree = "<group>"; };
+		8334C7F317A67EB0006028BC /* libinfinit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libinfinit.dylib; path = ../../../Externals/lib/libinfinit.dylib; sourceTree = "<group>"; };
+		8334C7F417A67EB0006028BC /* liblune.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblune.dylib; path = ../../../Externals/lib/liblune.dylib; sourceTree = "<group>"; };
+		8334C7F517A67EB0006028BC /* libmetrics.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetrics.dylib; path = ../../../Externals/lib/libmetrics.dylib; sourceTree = "<group>"; };
+		8334C7F617A67EB0006028BC /* libnucleus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnucleus.dylib; path = ../../../Externals/lib/libnucleus.dylib; sourceTree = "<group>"; };
+		8334C7F717A67EB0006028BC /* libpapier.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpapier.dylib; path = ../../../Externals/lib/libpapier.dylib; sourceTree = "<group>"; };
+		8334C7F817A67EB0006028BC /* libplasma.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libplasma.dylib; path = ../../../Externals/lib/libplasma.dylib; sourceTree = "<group>"; };
+		8334C7F917A67EB0006028BC /* libprotocol.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotocol.dylib; path = ../../../Externals/lib/libprotocol.dylib; sourceTree = "<group>"; };
+		8334C7FA17A67EB0006028BC /* libreactor.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreactor.dylib; path = ../../../Externals/lib/libreactor.dylib; sourceTree = "<group>"; };
+		8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../Externals/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
+		8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "../../../Externals/lib/libstdc++.6.dylib"; sourceTree = "<group>"; };
+		8334C7FD17A67EB0006028BC /* libtrophonius.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtrophonius.dylib; path = ../../../Externals/lib/libtrophonius.dylib; sourceTree = "<group>"; };
+		8334C7FE17A67EB0006028BC /* libudt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libudt.dylib; path = ../../../Externals/lib/libudt.dylib; sourceTree = "<group>"; };
+		83CD6FB317A672E5004F55D1 /* IAGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGap.h; sourceTree = "<group>"; };
+		83CD6FB417A672E5004F55D1 /* IAGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGap.m; sourceTree = "<group>"; };
+		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
+		83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGapMetrics.m; sourceTree = "<group>"; };
+		83CD702617A678C5004F55D1 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = ../Gap/Gap.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +266,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
+				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
+				8334C7E117A67D22006028BC /* Gap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,13 +292,15 @@
 				8328082D17A2B4A60025B6F8 /* InfinitApplicationTests */,
 				8328080917A2B4A60025B6F8 /* Frameworks */,
 				8328080817A2B4A60025B6F8 /* Products */,
+				83CD702617A678C5004F55D1 /* Gap.xcodeproj */,
+				8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
 		8328080817A2B4A60025B6F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8328080717A2B4A60025B6F8 /* InfinitApplication.app */,
+				8328080717A2B4A60025B6F8 /* Infinit.app */,
 				8328082717A2B4A60025B6F8 /* InfinitApplicationTests.octest */,
 			);
 			name = Products;
@@ -114,10 +329,19 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
+				83CD6FB917A67398004F55D1 /* Infinit Libraries */,
+				83CD6FB217A672C7004F55D1 /* Gap */,
+				832808D917A2D66E0025B6F8 /* Main View Controller */,
+				832808D317A2D5E80025B6F8 /* Main Controller */,
+				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
 				8328081C17A2B4A60025B6F8 /* IAAppDelegate.h */,
 				8328081D17A2B4A60025B6F8 /* IAAppDelegate.m */,
 				8328081F17A2B4A60025B6F8 /* MainMenu.xib */,
+				8328084017A2B5100025B6F8 /* Resources */,
 				8328081117A2B4A60025B6F8 /* Supporting Files */,
+				832808CD17A2C1470025B6F8 /* IAFunctions.h */,
+				832808CE17A2C1480025B6F8 /* IAFunctions.m */,
+				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
 			);
 			path = InfinitApplication;
 			sourceTree = "<group>";
@@ -153,24 +377,152 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8328084017A2B5100025B6F8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8328084117A2B51F0025B6F8 /* application_icon.icns */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		8328084417A2B6BE0025B6F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8328084C17A2B6BE0025B6F8 /* Sparkle.framework */,
+				8328084E17A2B6BE0025B6F8 /* Sparkle Test App.app */,
+				8328085017A2B6BE0025B6F8 /* Sparkle Unit Tests.octest */,
+				8328085217A2B6BE0025B6F8 /* BinaryDelta */,
+				8328085417A2B6BE0025B6F8 /* finish_installation.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		832808C417A2BBA10025B6F8 /* Status Bar Icon */ = {
+			isa = PBXGroup;
+			children = (
+				832808CC17A2C0C40025B6F8 /* Images */,
+				832808C517A2BBD70025B6F8 /* IAStatusBarIcon.h */,
+				832808C617A2BBD70025B6F8 /* IAStatusBarIcon.m */,
+			);
+			name = "Status Bar Icon";
+			sourceTree = "<group>";
+		};
+		832808CC17A2C0C40025B6F8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				832808C817A2C0BC0025B6F8 /* status_bar_icon_clicked.png */,
+				832808C917A2C0BC0025B6F8 /* status_bar_icon_normal.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		832808D317A2D5E80025B6F8 /* Main Controller */ = {
+			isa = PBXGroup;
+			children = (
+				832808D017A2C9E40025B6F8 /* IAMainController.h */,
+				832808D117A2C9E40025B6F8 /* IAMainController.m */,
+			);
+			name = "Main Controller";
+			sourceTree = "<group>";
+		};
+		832808D917A2D66E0025B6F8 /* Main View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				832808DA17A2D7000025B6F8 /* IAMainViewController.h */,
+				832808DB17A2D7000025B6F8 /* IAMainViewController.m */,
+				832808DC17A2D7000025B6F8 /* IAMainViewController.xib */,
+			);
+			name = "Main View Controller";
+			sourceTree = "<group>";
+		};
+		832808EA17A2E5C70025B6F8 /* Not Logged In View */ = {
+			isa = PBXGroup;
+			children = (
+				832808E517A2E5C10025B6F8 /* IANotLoggedInView.h */,
+				832808E617A2E5C10025B6F8 /* IANotLoggedInView.m */,
+				832808E717A2E5C10025B6F8 /* IANotLoggedInView.xib */,
+			);
+			name = "Not Logged In View";
+			sourceTree = "<group>";
+		};
+		83CD6FB217A672C7004F55D1 /* Gap */ = {
+			isa = PBXGroup;
+			children = (
+				83CD6FB317A672E5004F55D1 /* IAGap.h */,
+				83CD6FB417A672E5004F55D1 /* IAGap.m */,
+				83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */,
+				83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */,
+			);
+			name = Gap;
+			sourceTree = "<group>";
+		};
+		83CD6FB917A67398004F55D1 /* Infinit Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				8334C7E317A67EAF006028BC /* libagent.dylib */,
+				8334C7E417A67EAF006028BC /* libasio-udt.dylib */,
+				8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */,
+				8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */,
+				8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */,
+				8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */,
+				8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */,
+				8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */,
+				8334C7EB17A67EB0006028BC /* libcryptography.dylib */,
+				8334C7EC17A67EB0006028BC /* libcurl.4.dylib */,
+				8334C7ED17A67EB0006028BC /* libcurly.dylib */,
+				8334C7EE17A67EB0006028BC /* libelle.dylib */,
+				8334C7EF17A67EB0006028BC /* libetoile.dylib */,
+				8334C7F017A67EB0006028BC /* libgap.dylib */,
+				8334C7F117A67EB0006028BC /* libgcc_s.1.dylib */,
+				8334C7F217A67EB0006028BC /* libhole.dylib */,
+				8334C7F317A67EB0006028BC /* libinfinit.dylib */,
+				8334C7F417A67EB0006028BC /* liblune.dylib */,
+				8334C7F517A67EB0006028BC /* libmetrics.dylib */,
+				8334C7F617A67EB0006028BC /* libnucleus.dylib */,
+				8334C7F717A67EB0006028BC /* libpapier.dylib */,
+				8334C7F817A67EB0006028BC /* libplasma.dylib */,
+				8334C7F917A67EB0006028BC /* libprotocol.dylib */,
+				8334C7FA17A67EB0006028BC /* libreactor.dylib */,
+				8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */,
+				8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */,
+				8334C7FD17A67EB0006028BC /* libtrophonius.dylib */,
+				8334C7FE17A67EB0006028BC /* libudt.dylib */,
+			);
+			name = "Infinit Libraries";
+			sourceTree = "<group>";
+		};
+		83CD702717A678C5004F55D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83CD702C17A678C6004F55D1 /* Gap.framework */,
+				83CD702E17A678C6004F55D1 /* GapTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8328080617A2B4A60025B6F8 /* InfinitApplication */ = {
+		8328080617A2B4A60025B6F8 /* Infinit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplication" */;
+			buildConfigurationList = 8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "Infinit" */;
 			buildPhases = (
+				83CD6F7E17A65FA7004F55D1 /* ShellScript */,
 				8328080317A2B4A60025B6F8 /* Sources */,
-				8328080417A2B4A60025B6F8 /* Frameworks */,
 				8328080517A2B4A60025B6F8 /* Resources */,
+				83CD701117A6754A004F55D1 /* Copy Frameworks */,
+				83CD6FF217A67418004F55D1 /* Copy Infinit Libraries */,
+				8328080417A2B4A60025B6F8 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8334C81F17A681CB006028BC /* PBXTargetDependency */,
+				83CD6F7D17A65F51004F55D1 /* PBXTargetDependency */,
 			);
-			name = InfinitApplication;
+			name = Infinit;
 			productName = InfinitApplication;
-			productReference = 8328080717A2B4A60025B6F8 /* InfinitApplication.app */;
+			productReference = 8328080717A2B4A60025B6F8 /* Infinit.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8328082617A2B4A60025B6F8 /* InfinitApplicationTests */ = {
@@ -212,13 +564,75 @@
 			mainGroup = 832807FE17A2B4A60025B6F8;
 			productRefGroup = 8328080817A2B4A60025B6F8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 83CD702717A678C5004F55D1 /* Products */;
+					ProjectRef = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+				},
+				{
+					ProductGroup = 8328084417A2B6BE0025B6F8 /* Products */;
+					ProjectRef = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				8328080617A2B4A60025B6F8 /* InfinitApplication */,
+				8328080617A2B4A60025B6F8 /* Infinit */,
 				8328082617A2B4A60025B6F8 /* InfinitApplicationTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8328084C17A2B6BE0025B6F8 /* Sparkle.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Sparkle.framework;
+			remoteRef = 8328084B17A2B6BE0025B6F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8328084E17A2B6BE0025B6F8 /* Sparkle Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Sparkle Test App.app";
+			remoteRef = 8328084D17A2B6BE0025B6F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8328085017A2B6BE0025B6F8 /* Sparkle Unit Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Sparkle Unit Tests.octest";
+			remoteRef = 8328084F17A2B6BE0025B6F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8328085217A2B6BE0025B6F8 /* BinaryDelta */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = BinaryDelta;
+			remoteRef = 8328085117A2B6BE0025B6F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8328085417A2B6BE0025B6F8 /* finish_installation.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = finish_installation.app;
+			remoteRef = 8328085317A2B6BE0025B6F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83CD702C17A678C6004F55D1 /* Gap.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Gap.framework;
+			remoteRef = 83CD702B17A678C6004F55D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83CD702E17A678C6004F55D1 /* GapTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GapTests.octest;
+			remoteRef = 83CD702D17A678C6004F55D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8328080517A2B4A60025B6F8 /* Resources */ = {
@@ -228,6 +642,11 @@
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
 				8328081B17A2B4A60025B6F8 /* Credits.rtf in Resources */,
 				8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */,
+				8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */,
+				832808CA17A2C0BC0025B6F8 /* status_bar_icon_clicked.png in Resources */,
+				832808CB17A2C0BC0025B6F8 /* status_bar_icon_normal.png in Resources */,
+				832808DE17A2D7000025B6F8 /* IAMainViewController.xib in Resources */,
+				832808E917A2E5C10025B6F8 /* IANotLoggedInView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +674,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		83CD6F7E17A65FA7004F55D1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nINFINIT_SOURCE_DIR=\"${HOME}/sandbox/infinit\"\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\n[ -n \"$INFINIT_BUILD_DIR\" ] && (\n    cp -fv \"${INFINIT_BUILD_DIR}/lib/\"*.dylib \"${EXTERNALS_DIR}/lib\"\n)\n\nrealpath()\n{\n    python << EOF\nimport os\nprint(os.path.abspath(\"$1\"))\nEOF\n}\n\nget_external_libraries()\n{\n    otool -L \"${EXTERNALS_DIR}/lib/\"*.dylib \\\n    | grep -E '/opt|dependencies' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nget_external_libraries_of()\n{\n    otool -L \"${1}\" \\\n    | grep -E '/opt|dependencies' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nwhile true\ndo\n    EXTERNALS_LIBS=`get_external_libraries | tr '\\n' ' '`\n    echo \"Found external libraries: ${EXTERNALS_LIBS}\"\n    for lib in ${EXTERNALS_LIBS}\n    do\n        dest=\"${EXTERNALS_DIR}/lib\"/`basename \"${lib}\"`\n        dest=`realpath \"${dest}\"`\n        rm -f \"${dest}\"\n        cp -v \"${lib}\" \"${dest}\"\n    done\n    [ \"${EXTERNALS_LIBS}\" = \"`get_external_libraries | tr '\\n' ' '`\" ] && echo \"END OF EXTERNALS\" && break\ndone\n\nfor lib in \"${EXTERNALS_DIR}/lib/\"*.dylib\ndo\n    chmod a+rwx \"${lib}\"\n#    strip -x \"${lib}\"\n    install_name_tool \"${lib}\" -id @rpath/`basename \"${lib}\"`\n    for dep in `get_external_libraries_of \"${lib}\" | tr '\\n' ' '`\n    do\n        echo \"PATCHING ${lib}: change ${dep} to @rpath/`basename ${dep}`\"\n        install_name_tool -change \"${dep}\" \"@rpath/`basename ${dep}`\" \"${lib}\"\n    done\n    echo \"Patched lib ${lib}:\"\n    otool -L \"${lib}\"\ndone\n\n\necho \"DONE\"\nexit 0";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -264,6 +696,13 @@
 			files = (
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
+				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */,
+				832808CF17A2C1480025B6F8 /* IAFunctions.m in Sources */,
+				832808D217A2C9E40025B6F8 /* IAMainController.m in Sources */,
+				832808DD17A2D7000025B6F8 /* IAMainViewController.m in Sources */,
+				832808E817A2E5C10025B6F8 /* IANotLoggedInView.m in Sources */,
+				83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */,
+				83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,8 +719,18 @@
 /* Begin PBXTargetDependency section */
 		8328082C17A2B4A60025B6F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8328080617A2B4A60025B6F8 /* InfinitApplication */;
+			target = 8328080617A2B4A60025B6F8 /* Infinit */;
 			targetProxy = 8328082B17A2B4A60025B6F8 /* PBXContainerItemProxy */;
+		};
+		8334C81F17A681CB006028BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Gap;
+			targetProxy = 8334C81E17A681CB006028BC /* PBXContainerItemProxy */;
+		};
+		83CD6F7D17A65F51004F55D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Sparkle;
+			targetProxy = 83CD6F7C17A65F51004F55D1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -326,6 +775,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -335,6 +787,10 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../DerivedData/Infinit/Build/Products/Debug\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -348,6 +804,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -359,6 +817,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -369,12 +830,18 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../DerivedData/Infinit/Build/Products/Debug\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
@@ -383,10 +850,16 @@
 		8328083917A2B4A60025B6F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
 				INFOPLIST_FILE = "InfinitApplication/InfinitApplication-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Externals/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -395,10 +868,16 @@
 		8328083A17A2B4A60025B6F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
 				INFOPLIST_FILE = "InfinitApplication/InfinitApplication-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Externals/lib\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -446,13 +925,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplication" */ = {
+		8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "Infinit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8328083917A2B4A60025B6F8 /* Debug */,
 				8328083A17A2B4A60025B6F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8328083B17A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplicationTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +941,7 @@
 				8328083D17A2B4A60025B6F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

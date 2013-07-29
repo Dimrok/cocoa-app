@@ -10,9 +10,19 @@
 
 @implementation IAAppDelegate
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)awakeFromNib
+{
+    _controller = [IAMainController instance];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     // Insert code here to initialize your application
+}
+
+- (void)applicationWillResignActive:(NSNotification*)notification
+{
+    
 }
 
 @end
