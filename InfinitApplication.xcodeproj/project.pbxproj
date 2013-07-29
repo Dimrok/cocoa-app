@@ -302,6 +302,7 @@
 			children = (
 				8398835617A6AC95009409B3 /* Security.framework */,
 				8328081017A2B4A60025B6F8 /* InfinitApplication */,
+				83CD6FB917A67398004F55D1 /* Infinit Libraries */,
 				8328082D17A2B4A60025B6F8 /* InfinitApplicationTests */,
 				8328080917A2B4A60025B6F8 /* Frameworks */,
 				8328080817A2B4A60025B6F8 /* Products */,
@@ -342,8 +343,8 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
+				8398835817A6BFBD009409B3 /* Login Window */,
 				8398834717A6A580009409B3 /* Utilities */,
-				83CD6FB917A67398004F55D1 /* Infinit Libraries */,
 				83CD6FB217A672C7004F55D1 /* Gap */,
 				832808D917A2D66E0025B6F8 /* Main View Controller */,
 				832808D317A2D5E80025B6F8 /* Main Controller */,
@@ -472,6 +473,13 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		8398835817A6BFBD009409B3 /* Login Window */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Login Window";
+			sourceTree = "<group>";
+		};
 		83CD6FB217A672C7004F55D1 /* Gap */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,6 +524,7 @@
 				8334C7FE17A67EB0006028BC /* libudt.dylib */,
 			);
 			name = "Infinit Libraries";
+			path = InfinitApplication;
 			sourceTree = "<group>";
 		};
 		83CD702717A678C5004F55D1 /* Products */ = {

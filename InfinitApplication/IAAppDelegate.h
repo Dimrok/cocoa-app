@@ -10,7 +10,8 @@
 
 #import "IAMainController.h"
 
-@interface IAAppDelegate : NSObject <NSApplicationDelegate>
+@interface IAAppDelegate : NSObject <NSApplicationDelegate,
+                                     IAMainControllerProtocol>
 {
 @private
     IAMainController* _controller;

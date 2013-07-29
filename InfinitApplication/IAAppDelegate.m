@@ -8,21 +8,53 @@
 
 #import "IAAppDelegate.h"
 
+#import <Sparkle/Sparkle.h>
+
 @implementation IAAppDelegate
 
 - (void)awakeFromNib
 {
-    _controller = [IAMainController instance];
+//    [[SUUpdater sharedUpdater] setDelegate:self];
+//    [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
+//    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+}
+
+- (NSString*)description
+{
+    return @"[IAAppDelegate]";
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
-    // Insert code here to initialize your application
+    _controller = [[IAMainController alloc] initWithDelegate:self];
+    NSAppleEventManager* appleEventManager = [NSAppleEventManager sharedAppleEventManager];
+    [appleEventManager setEventHandler:self
+                           andSelector:@selector(handleQuitEvent:withReplyEvent:)
+                         forEventClass:kCoreEventClass
+                            andEventID:kAEQuitApplication];
 }
 
 - (void)applicationWillResignActive:(NSNotification*)notification
 {
     
+}
+
+- (void)updaterWillRelaunchApplication:(SUUpdater*)updater
+{
+    NSLog(@"%@ Sparkle updating, will relaunch", self);
+}
+
+- (void)handleQuitEvent:(NSAppleEventDescriptor*)event
+         withReplyEvent:(NSAppleEventDescriptor*)reply_event
+{
+    NSLog(@"%@ Handle quit event", self);
+    [_controller handleQuit];
+}
+
+- (void)quitApplication:(IAMainController*)sender
+{
+    NSLog(@"%@ Terminating application", self);
+    [NSApp terminate:self];
 }
 
 @end
