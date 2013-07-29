@@ -49,7 +49,7 @@
 	return self;
 }
 
-- (id)getPrefForKey:(NSString*)key
+- (id)prefsForKey:(NSString*)key
 {
 	return _values[key];
 }
