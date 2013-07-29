@@ -60,6 +60,8 @@
 		8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */; };
 		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
 		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
+		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
+		8398835717A6AC96009409B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8398835617A6AC95009409B3 /* Security.framework */; };
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
 		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
@@ -260,6 +262,9 @@
 		8398834E17A6A5AE009409B3 /* IAAutoStartup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAutoStartup.m; sourceTree = "<group>"; };
 		8398835017A6A5BB009409B3 /* IAKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAKeychainManager.h; sourceTree = "<group>"; };
 		8398835117A6A5BB009409B3 /* IAKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAKeychainManager.m; sourceTree = "<group>"; };
+		8398835317A6AA9D009409B3 /* IAUserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserPrefs.h; sourceTree = "<group>"; };
+		8398835417A6AA9D009409B3 /* IAUserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAUserPrefs.m; sourceTree = "<group>"; };
+		8398835617A6AC95009409B3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		83CD6FB317A672E5004F55D1 /* IAGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGap.h; sourceTree = "<group>"; };
 		83CD6FB417A672E5004F55D1 /* IAGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGap.m; sourceTree = "<group>"; };
 		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
@@ -272,6 +277,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8398835717A6AC96009409B3 /* Security.framework in Frameworks */,
 				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
 				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
@@ -294,6 +300,7 @@
 		832807FE17A2B4A60025B6F8 = {
 			isa = PBXGroup;
 			children = (
+				8398835617A6AC95009409B3 /* Security.framework */,
 				8328081017A2B4A60025B6F8 /* InfinitApplication */,
 				8328082D17A2B4A60025B6F8 /* InfinitApplicationTests */,
 				8328080917A2B4A60025B6F8 /* Frameworks */,
@@ -453,6 +460,8 @@
 		8398834717A6A580009409B3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				8398835317A6AA9D009409B3 /* IAUserPrefs.h */,
+				8398835417A6AA9D009409B3 /* IAUserPrefs.m */,
 				8398835017A6A5BB009409B3 /* IAKeychainManager.h */,
 				8398835117A6A5BB009409B3 /* IAKeychainManager.m */,
 				8398834D17A6A5AE009409B3 /* IAAutoStartup.h */,
@@ -723,6 +732,7 @@
 				83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */,
 				8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */,
 				8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */,
+				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
