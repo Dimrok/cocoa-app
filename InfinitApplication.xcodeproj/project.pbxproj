@@ -58,6 +58,8 @@
 		8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FD17A67EB0006028BC /* libtrophonius.dylib */; };
 		8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FE17A67EB0006028BC /* libudt.dylib */; };
 		8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */; };
+		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
+		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
 		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
@@ -254,6 +256,10 @@
 		8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "../../../Externals/lib/libstdc++.6.dylib"; sourceTree = "<group>"; };
 		8334C7FD17A67EB0006028BC /* libtrophonius.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtrophonius.dylib; path = ../../../Externals/lib/libtrophonius.dylib; sourceTree = "<group>"; };
 		8334C7FE17A67EB0006028BC /* libudt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libudt.dylib; path = ../../../Externals/lib/libudt.dylib; sourceTree = "<group>"; };
+		8398834D17A6A5AE009409B3 /* IAAutoStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAutoStartup.h; sourceTree = "<group>"; };
+		8398834E17A6A5AE009409B3 /* IAAutoStartup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAutoStartup.m; sourceTree = "<group>"; };
+		8398835017A6A5BB009409B3 /* IAKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAKeychainManager.h; sourceTree = "<group>"; };
+		8398835117A6A5BB009409B3 /* IAKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAKeychainManager.m; sourceTree = "<group>"; };
 		83CD6FB317A672E5004F55D1 /* IAGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGap.h; sourceTree = "<group>"; };
 		83CD6FB417A672E5004F55D1 /* IAGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGap.m; sourceTree = "<group>"; };
 		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
@@ -329,6 +335,7 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
+				8398834717A6A580009409B3 /* Utilities */,
 				83CD6FB917A67398004F55D1 /* Infinit Libraries */,
 				83CD6FB217A672C7004F55D1 /* Gap */,
 				832808D917A2D66E0025B6F8 /* Main View Controller */,
@@ -339,8 +346,6 @@
 				8328081F17A2B4A60025B6F8 /* MainMenu.xib */,
 				8328084017A2B5100025B6F8 /* Resources */,
 				8328081117A2B4A60025B6F8 /* Supporting Files */,
-				832808CD17A2C1470025B6F8 /* IAFunctions.h */,
-				832808CE17A2C1480025B6F8 /* IAFunctions.m */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
 			);
 			path = InfinitApplication;
@@ -443,6 +448,19 @@
 				832808E717A2E5C10025B6F8 /* IANotLoggedInView.xib */,
 			);
 			name = "Not Logged In View";
+			sourceTree = "<group>";
+		};
+		8398834717A6A580009409B3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8398835017A6A5BB009409B3 /* IAKeychainManager.h */,
+				8398835117A6A5BB009409B3 /* IAKeychainManager.m */,
+				8398834D17A6A5AE009409B3 /* IAAutoStartup.h */,
+				8398834E17A6A5AE009409B3 /* IAAutoStartup.m */,
+				832808CD17A2C1470025B6F8 /* IAFunctions.h */,
+				832808CE17A2C1480025B6F8 /* IAFunctions.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		83CD6FB217A672C7004F55D1 /* Gap */ = {
@@ -703,6 +721,8 @@
 				832808E817A2E5C10025B6F8 /* IANotLoggedInView.m in Sources */,
 				83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */,
 				83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */,
+				8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */,
+				8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
