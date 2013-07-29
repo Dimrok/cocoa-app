@@ -15,8 +15,6 @@
 
 @implementation IAMainController
 
-static IAMainController* _instance;
-
 //- Initiailisation --------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate
@@ -30,6 +28,10 @@ static IAMainController* _instance;
         
         IAGap* state = [[IAGap alloc] init];
         [IAGapState setupWithProtocol:state];
+        
+        _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
+        
+        [_login_view_controller showLoginWindowOnScreen:[self currentScreen]];
     }
     return self;
 }
@@ -141,7 +143,7 @@ static IAMainController* _instance;
 // Current screen to display content on
 - (NSScreen*)currentScreen
 {
-    return _status_item.view.window.screen;
+    return [[NSScreen screens] objectAtIndex:0];
 }
 
 // Midpoint of status bar icon
@@ -194,5 +196,7 @@ static IAMainController* _instance;
 {
     
 }
+
+//- Login window protocol --------------------------------------------------------------------------
 
 @end

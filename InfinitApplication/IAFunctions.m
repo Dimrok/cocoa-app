@@ -40,4 +40,14 @@
     return img;
 }
 
+- (BOOL)stringIsValidEmail:(NSString*)str
+{
+    BOOL stricter_filter = YES; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString* stricter_filter_str = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
+    NSString* lax_string = @".+@([A-Za-z0-9]+\\.)+[A-Za-z]{2}[A-Za-z]*";
+    NSString* email_regex = stricter_filter ? stricter_filter_str : lax_string;
+    NSPredicate* email_test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", email_regex];
+    return [email_test evaluateWithObject:str];
+}
+
 @end

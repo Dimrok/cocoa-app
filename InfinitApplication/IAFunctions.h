@@ -12,4 +12,6 @@
 
 + (NSImage*)imageNamed:(NSString*)imageName;
 
+- (BOOL)stringIsValidEmail:(NSString*)str;
+
 @end

@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-#import "IAStatusBarIcon.h"
+#import "IALoginViewController.h"
 #import "IAMainViewController.h"
 #import "IANotLoggedInView.h"
+#import "IAStatusBarIcon.h"
 
 @protocol IAMainControllerProtocol;
 
-@interface IAMainController : NSObject <IAMainViewControllerProtocol,
+@interface IAMainController : NSObject <IALoginViewControllerProtocol,
+                                        IAMainViewControllerProtocol,
                                         IANotLoggedInViewProtocol,
                                         IAStatusBarIconProtocol>
 {
@@ -23,6 +25,7 @@
     NSStatusItem* _status_item;
     IAStatusBarIcon* _status_bar_icon;
     IAMainViewController* _view_controller;
+    IALoginViewController* _login_view_controller;
 }
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;
