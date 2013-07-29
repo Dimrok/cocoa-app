@@ -75,6 +75,12 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    [self.email_address setDelegate:self];
+    [self.password setDelegate:self];
+}
+
 - (NSString*)description
 {
     return @"[LoginViewController]";
@@ -107,5 +113,25 @@
 }
 
 //- Text Fields ------------------------------------------------------------------------------------
+
+- (void)controlTextDidChange:(NSNotification*)aNotification
+{
+    NSControl* control = aNotification.object;
+    if (control == self.email_address)
+    {
+        IALog(@"xxx %d", self.email_address.stringValue.length);
+        if (self.email_address.stringValue.length == 0)
+            [self.create_account_link setHidden:NO];
+        else
+            [self.create_account_link setHidden:YES];
+    }
+    else if (control == self.password)
+    {
+        if (self.password.stringValue.length == 0)
+            [self.fogot_password_link setHidden:NO];
+        else
+            [self.fogot_password_link setHidden:YES];
+    }
+}
 
 @end

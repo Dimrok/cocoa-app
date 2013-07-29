@@ -15,7 +15,8 @@
 
 @protocol IALoginViewControllerProtocol;
 
-@interface IALoginViewController : NSViewController <NSWindowDelegate>
+@interface IALoginViewController : NSViewController <NSTextFieldDelegate,
+                                                     NSWindowDelegate>
 {
 @private
     id<IALoginViewControllerProtocol> _delegate;
