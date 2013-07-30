@@ -9,7 +9,9 @@
 #import "IALoginViewController.h"
 
 #import <Gap/IAGapState.h>
+
 #import "IADefine.h"
+#import "IAFunctions.h"
 
 @interface IALoginViewController ()
 
@@ -78,6 +80,7 @@
 - (void)awakeFromNib
 {
     [self.email_address setDelegate:self];
+    [self.error_message setHidden:YES];
     [self.password setDelegate:self];
 }
 
@@ -86,24 +89,32 @@
     return @"[LoginViewController]";
 }
 
-//- General Functions ------------------------------------------------------------------------------
-
 - (void)showLoginWindowOnScreen:(NSScreen*)screen
 {
+    if (_window != nil)
+        return;
     NSRect frame = NSZeroRect;
     frame.size = self.view.bounds.size;
     frame.origin = [self centreFrame:frame onScreen:screen];
     
-    [self.view addSubview:[self login_view]];
+    [self.view addSubview:self.login_view];
     _window = [IALoginViewController windowWithFrame:frame screen:screen];
     _window.delegate = self;
-    _window.alphaValue = 1.0;
     _window.contentView = self.view;
-    [_window invalidateShadow];
-    [_window update];
-    [self.login_view setNeedsDisplay:YES];
     [_window makeKeyAndOrderFront:nil];
 }
+
+- (void)showLoginWindowOnScreen:(NSScreen*)screen withError:(NSString*)error
+{
+    if (_window == nil)
+    {
+        [self showLoginWindowOnScreen:screen];
+    }
+    self.error_message.stringValue = error;
+    [self.error_message setHidden:NO];
+}
+
+//- General Functions ------------------------------------------------------------------------------
 
 - (NSPoint)centreFrame:(NSRect)frame onScreen:(NSScreen*)screen
 {
@@ -117,9 +128,9 @@
 - (void)controlTextDidChange:(NSNotification*)aNotification
 {
     NSControl* control = aNotification.object;
+    [self.error_message setHidden:YES];
     if (control == self.email_address)
     {
-        IALog(@"xxx %d", self.email_address.stringValue.length);
         if (self.email_address.stringValue.length == 0)
             [self.create_account_link setHidden:NO];
         else
@@ -131,6 +142,40 @@
             [self.fogot_password_link setHidden:NO];
         else
             [self.fogot_password_link setHidden:YES];
+    }
+}
+
+//- Login ------------------------------------------------------------------------------------------
+
+- (BOOL)inputsGood
+{
+    if (![IAFunctions stringIsValidEmail:self.email_address.stringValue])
+    {
+        self.error_message.stringValue = NSLocalizedString(@"Please enter a valid email address",
+                                                           @"email not valid");
+        [self.error_message setHidden:NO];
+        return NO;
+    }
+    else if (self.password.stringValue.length == 0)
+    {
+        self.error_message.stringValue = NSLocalizedString(@"Please enter your password",
+                                                           @"no password entered");
+        [self.error_message setHidden:NO];
+        return NO;
+    }
+    return YES;
+}
+
+- (IBAction)loginClicked:(NSButton*)sender
+{
+    if (sender == self.login_button)
+    {
+        if ([self inputsGood])
+        {
+            [_delegate tryLogin:self
+                       username:self.email_address.stringValue
+                       password:self.password.stringValue];
+        }
     }
 }
 

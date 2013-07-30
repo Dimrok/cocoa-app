@@ -65,18 +65,14 @@
         if (pwd_ptr == NULL)
             return NO;
         
-        NSString* device_name = @"TODO"; // XXX use NSHost to get device name
         NSString* password = [[NSString alloc] initWithBytes:pwd_ptr
                                                       length:pwd_len
                                                     encoding:NSUTF8StringEncoding];
         if (password.length == 0)
             return NO;
         
-        [[IAGapState instance] login:login_email
-                        withPassword:password
-                       andDeviceName:device_name
-                     performSelector:@selector(loginCallback:)
-                            onObject:self];
+        [self loginWithUsername:login_email password:password];
+        
         password = @"";
         password = nil;
         return YES;
@@ -111,7 +107,20 @@
     
 }
 
-//- General functions ------------------------------------------------------------------------------
+//- Login and Logout -------------------------------------------------------------------------------
+
+- (void)loginWithUsername:(NSString*)username password:(NSString*)password
+{
+    NSString* device_name = @"TODO"; // XXX use NSHost to get device name
+    
+    [[IAGapState instance] login:username
+                    withPassword:password
+                   andDeviceName:device_name
+                 performSelector:@selector(loginCallback:)
+                        onObject:self];
+    password = @"";
+    password = nil;
+}
 
 - (void)loginCallback:(IAGapOperationResult*)result
 {
@@ -121,7 +130,23 @@
     }
     else
     {
-        [self openLoginWindow];
+        IALog(@"%@ ERROR: Couldn't login with status: %d", self, result.status);
+        NSString* error;
+        switch (result.status)
+        {
+            case gap_network_error:
+                error = NSLocalizedString(@"Connection problem", @"no route to internet");
+                break;
+            case gap_email_password_dont_match:
+                error = NSLocalizedString(@"Username or password incorrect",
+                                          @"username or password wrong");
+                break;
+            default:
+                error = NSLocalizedString(@"Unknown login error", @"unknown login error");
+                break;
+        }
+        [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
+                                              withError:error];
     }
 }
 
@@ -139,6 +164,8 @@
     [[IAGapState instance] freeGap];
     [_delegate quitApplication:self];
 }
+
+//- General Functions ------------------------------------------------------------------------------
 
 // Current screen to display content on
 - (NSScreen*)currentScreen
@@ -198,5 +225,15 @@
 }
 
 //- Login window protocol --------------------------------------------------------------------------
+
+- (void)tryLogin:(IALoginViewController*)sender
+        username:(NSString*)username
+        password:(NSString*)password
+{
+    if (sender == _login_view_controller)
+    {
+        [self loginWithUsername:username password:password];
+    }
+}
 
 @end
