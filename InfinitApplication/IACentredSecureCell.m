@@ -8,7 +8,30 @@
 
 #import "IACentredSecureCell.h"
 
+#import "IADefine.h"
+
 @implementation IACentredSecureCell
+
+- (void)awakeFromNib
+{
+    [self setFocusRingType:NSFocusRingTypeNone];
+}
+
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView
+{
+    NSBezierPath* better_bounds = [NSBezierPath bezierPathWithRoundedRect:cellFrame
+                                                                  xRadius:5.0
+                                                                  yRadius:5.0];
+    [better_bounds addClip];
+    [super drawWithFrame:cellFrame
+                  inView:controlView];
+    if (self.isBezeled)
+    {
+        [better_bounds setLineWidth:2];
+        [TH_RGBCOLOR(194.0, 194.0, 194.0) set];
+        [better_bounds stroke];
+    }
+}
 
 - (NSRect)adjustedFrameToVerticallyCenterText:(NSRect)frame
 {
