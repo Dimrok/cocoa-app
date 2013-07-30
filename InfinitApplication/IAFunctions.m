@@ -50,4 +50,32 @@
     return [email_test evaluateWithObject:str];
 }
 
++ (NSDictionary*)textStyleWithFont:(NSFont*)font
+                    paragraphStyle:(NSParagraphStyle*)paragraph_style
+                            colour:(NSColor*)colour
+                            shadow:(NSShadow*)shadow
+{
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+    if (font != nil)
+        [dict setObject:font forKey:NSFontAttributeName];
+    if (paragraph_style != nil)
+        [dict setObject:paragraph_style forKey:NSParagraphStyleAttributeName];
+    if (colour != nil)
+        [dict setObject:colour forKey:NSForegroundColorAttributeName];
+    if (shadow != nil)
+        [dict setObject:shadow forKey:NSShadowAttributeName];
+    return [NSDictionary dictionaryWithDictionary:dict];
+}
+
++ (NSShadow*)shadowWithOffset:(NSSize)offset
+                   blurRadius:(CGFloat)blur_radius
+                        color:(NSColor*)colour
+{
+    NSShadow* shadow = [[NSShadow alloc] init];
+    shadow.shadowOffset = offset;
+    shadow.shadowBlurRadius = blur_radius;
+    shadow.shadowColor = colour;
+    return shadow;
+}
+
 @end

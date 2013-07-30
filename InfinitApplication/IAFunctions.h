@@ -14,4 +14,13 @@
 
 + (BOOL)stringIsValidEmail:(NSString*)str;
 
++ (NSDictionary*)textStyleWithFont:(NSFont*)font
+                    paragraphStyle:(NSParagraphStyle*)paragraph_style
+                            colour:(NSColor*)colour
+                            shadow:(NSShadow*)shadow;
+
++ (NSShadow*)shadowWithOffset:(NSSize)offset
+                   blurRadius:(CGFloat)blur_radius
+                        color:(NSColor*)colour;
+
 @end
