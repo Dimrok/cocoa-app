@@ -31,9 +31,21 @@
 //- Login view -------------------------------------------------------------------------------------
 
 @interface IALoginView : NSView
+{
+@private
+    CGFloat _shadow_drop;
+}
+@property (nonatomic, readonly) CGFloat shadowDrop;
 @end
 
 @implementation IALoginView
+
+@synthesize shadowDrop = _shadow_drop;
+
+- (void)awakeFromNib
+{
+    _shadow_drop = 3.0;
+}
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -43,6 +55,12 @@
                                                          yRadius:corner_radius];
     
     [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    NSShadow* shadow = [[NSShadow alloc] init];
+    shadow.shadowBlurRadius = 3.0;
+    shadow.shadowColor = [[NSColor blackColor] colorWithAlphaComponent:0.3];
+    shadow.shadowOffset = NSMakeSize(_shadow_drop, -_shadow_drop);
+    [shadow set];
+    
     [path fill];
 }
 
@@ -57,9 +75,9 @@
     IALoginWindow* result = [[IALoginWindow alloc] initWithContentRect:frame
                                                              styleMask:NSBorderlessWindowMask
                                                                backing:NSBackingStoreBuffered
-                                                                 defer:YES
+                                                                 defer:NO
                                                                 screen:screen];
-    result.alphaValue = 0.0;
+    result.alphaValue = 1.0;
 	result.backgroundColor = [NSColor clearColor];
     result.hasShadow = YES;
 	result.opaque = NO;
@@ -81,7 +99,22 @@
 {
     [self.email_address setDelegate:self];
     [self.error_message setHidden:YES];
+    self.error_message.stringValue = @"";
     [self.password setDelegate:self];
+    
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = NSCenterTextAlignment;
+    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
+                                          blurRadius:1.0
+                                               color:[NSColor blackColor]];
+    
+    NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
+                                                 paragraphStyle:style
+                                                         colour:[NSColor whiteColor]
+                                                         shadow:shadow];
+    self.login_button.attributedTitle = [[NSAttributedString alloc]
+                                         initWithString:NSLocalizedString(@"LOGIN", @"login")
+                                             attributes:button_style];
 }
 
 - (NSString*)description
