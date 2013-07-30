@@ -8,6 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+#import <Gap/IATransaction.h>
+
+@protocol IATransactionManagerProtocol;
+
 @interface IATransactionManager : NSObject
+
+@property (readonly) NSArray* transactions;
+
+- (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
+
+@end
+
+
+@protocol IATransactionManagerProtocol <NSObject>
+
+- (void)transactionManager:(IATransactionManager*)sender
+          transactionAdded:(IATransaction*)transaction;
+- (void)transactionManager:(IATransactionManager*)sender
+        transactionUpdated:(IATransaction*)transaction;
 
 @end
