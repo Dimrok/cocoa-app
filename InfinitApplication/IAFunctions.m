@@ -40,7 +40,7 @@
     return img;
 }
 
-- (BOOL)stringIsValidEmail:(NSString*)str
++ (BOOL)stringIsValidEmail:(NSString*)str
 {
     BOOL stricter_filter = YES; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
     NSString* stricter_filter_str = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
