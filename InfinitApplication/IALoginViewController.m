@@ -99,9 +99,20 @@
     
     [self.view addSubview:self.login_view];
     _window = [IALoginViewController windowWithFrame:frame screen:screen];
+    _window.alphaValue = 0.0;
     _window.delegate = self;
     _window.contentView = self.view;
+    
     [_window makeKeyAndOrderFront:nil];
+    
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.25;
+         [_window.animator setAlphaValue:1.0];
+     }
+                        completionHandler:^
+     {
+     }];
 }
 
 - (void)showLoginWindowOnScreen:(NSScreen*)screen withError:(NSString*)error
@@ -121,6 +132,34 @@
     CGFloat x = floor(NSWidth(screen.frame) / 2.0 - NSWidth(frame) / 2.0);
     CGFloat y = floor(NSHeight(screen.frame) / 2.0 - NSHeight(frame) / 2.0);
     return NSMakePoint(x, y);
+}
+
+- (void)closeLoginWindow
+{
+    if (_window == nil)
+    {
+        return;
+    }
+    _window.delegate = nil;
+    
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.25;
+         [_window.animator setAlphaValue:0.0];
+     }
+                        completionHandler:^
+     {
+         [_window orderOut:nil];
+         _window = nil;
+     }];
+}
+
+- (BOOL)loginWindowOpen
+{
+    if (_window == nil)
+        return NO;
+    else
+        return YES;
 }
 
 //- Text Fields ------------------------------------------------------------------------------------
