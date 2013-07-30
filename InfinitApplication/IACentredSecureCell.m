@@ -20,8 +20,8 @@
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView
 {
     NSBezierPath* better_bounds = [NSBezierPath bezierPathWithRoundedRect:cellFrame
-                                                                  xRadius:5.0
-                                                                  yRadius:5.0];
+                                                                  xRadius:3.0
+                                                                  yRadius:3.0];
     [better_bounds addClip];
     [super drawWithFrame:cellFrame
                   inView:controlView];
