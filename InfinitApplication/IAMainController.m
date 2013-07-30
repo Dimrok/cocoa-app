@@ -127,6 +127,8 @@
     if (result.success)
     {
         IALog(@"%@ Logged in", self);
+        if ([_login_view_controller loginWindowOpen])
+            [_login_view_controller closeLoginWindow];
     }
     else
     {
