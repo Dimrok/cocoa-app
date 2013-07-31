@@ -81,8 +81,6 @@
 		83C124A717A7CDD100BE1252 /* IASendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C124A517A7CDD100BE1252 /* IASendFilesViewController.xib */; };
 		83C124AD17A7CE0100BE1252 /* IASearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124AB17A7CE0100BE1252 /* IASearchViewController.m */; };
 		83C124AE17A7CE0100BE1252 /* IASearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C124AC17A7CE0100BE1252 /* IASearchViewController.xib */; };
-		83C124B217A7CE3A00BE1252 /* IANotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124B017A7CE3A00BE1252 /* IANotificationsViewController.m */; };
-		83C124B317A7CE3A00BE1252 /* IANotificationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C124B117A7CE3A00BE1252 /* IANotificationsViewController.xib */; };
 		83C124B817A7CEB000BE1252 /* IATransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124B717A7CEB000BE1252 /* IATransactionManager.m */; };
 		83C124BB17A7CEC000BE1252 /* IAUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124BA17A7CEC000BE1252 /* IAUserManager.m */; };
 		83C124C017A7EF0000BE1252 /* bg-main-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C124BE17A7EF0000BE1252 /* bg-main-button.png */; };
@@ -317,9 +315,6 @@
 		83C124AA17A7CE0100BE1252 /* IASearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchViewController.h; sourceTree = "<group>"; };
 		83C124AB17A7CE0100BE1252 /* IASearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchViewController.m; sourceTree = "<group>"; };
 		83C124AC17A7CE0100BE1252 /* IASearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASearchViewController.xib; sourceTree = "<group>"; };
-		83C124AF17A7CE3A00BE1252 /* IANotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationsViewController.h; sourceTree = "<group>"; };
-		83C124B017A7CE3A00BE1252 /* IANotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationsViewController.m; sourceTree = "<group>"; };
-		83C124B117A7CE3A00BE1252 /* IANotificationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANotificationsViewController.xib; sourceTree = "<group>"; };
 		83C124B617A7CEB000BE1252 /* IATransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IATransactionManager.h; sourceTree = "<group>"; };
 		83C124B717A7CEB000BE1252 /* IATransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IATransactionManager.m; sourceTree = "<group>"; };
 		83C124B917A7CEC000BE1252 /* IAUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserManager.h; sourceTree = "<group>"; };
@@ -437,7 +432,6 @@
 				8328081117A2B4A60025B6F8 /* Supporting Files */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
 				83C124A817A7CDD500BE1252 /* Send Files View */,
-				83C124B417A7CE3F00BE1252 /* Notifications View */,
 			);
 			path = InfinitApplication;
 			sourceTree = "<group>";
@@ -599,16 +593,6 @@
 				83C124AC17A7CE0100BE1252 /* IASearchViewController.xib */,
 			);
 			name = "Search View";
-			sourceTree = "<group>";
-		};
-		83C124B417A7CE3F00BE1252 /* Notifications View */ = {
-			isa = PBXGroup;
-			children = (
-				83C124AF17A7CE3A00BE1252 /* IANotificationsViewController.h */,
-				83C124B017A7CE3A00BE1252 /* IANotificationsViewController.m */,
-				83C124B117A7CE3A00BE1252 /* IANotificationsViewController.xib */,
-			);
-			name = "Notifications View";
 			sourceTree = "<group>";
 		};
 		83C124B517A7CE9800BE1252 /* Managers */ = {
@@ -832,7 +816,6 @@
 				8398836417A6C5C4009409B3 /* infinit_logo_large.png in Resources */,
 				83C124A717A7CDD100BE1252 /* IASendFilesViewController.xib in Resources */,
 				83C124AE17A7CE0100BE1252 /* IASearchViewController.xib in Resources */,
-				83C124B317A7CE3A00BE1252 /* IANotificationsViewController.xib in Resources */,
 				83C124C017A7EF0000BE1252 /* bg-main-button.png in Resources */,
 				83C124C117A7EF0000BE1252 /* bg-main-button@2x.png in Resources */,
 				831FB22117A901D500696604 /* avatar_default.png in Resources */,
@@ -907,7 +890,6 @@
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
 				83C124A617A7CDD100BE1252 /* IASendFilesViewController.m in Sources */,
 				83C124AD17A7CE0100BE1252 /* IASearchViewController.m in Sources */,
-				83C124B217A7CE3A00BE1252 /* IANotificationsViewController.m in Sources */,
 				83C124B817A7CEB000BE1252 /* IATransactionManager.m in Sources */,
 				83C124BB17A7CEC000BE1252 /* IAUserManager.m in Sources */,
 				831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */,
