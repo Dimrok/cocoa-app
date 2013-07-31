@@ -27,8 +27,13 @@
 - (id)initWithDelegate:(id<IAMainViewControllerProtocol>)delegate;
 
 - (void)close;
-- (void)openWithView:(NSView*)view onScreen:(NSScreen*)screen withMidpoint:(NSPoint)midpoint;
-- (void)switchToView:(NSView*)view onScreen:(NSScreen*)screen;
+
+- (void)openWithView:(NSView*)view
+            onScreen:(NSScreen*)screen
+        withMidpoint:(NSPoint)midpoint;
+
+- (void)switchToView:(NSView*)view
+            onScreen:(NSScreen*)screen;
 
 @end
 
