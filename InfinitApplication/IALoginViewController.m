@@ -32,14 +32,33 @@
 //- Login view -------------------------------------------------------------------------------------
 
 @interface IALoginView : NSView
+
+@property (nonatomic) CGFloat shadow_size;
+
 @end
 
 @implementation IALoginView
 
+@synthesize shadow_size;
+
+- (void)awakeFromNib
+{
+    shadow_size = 10.0;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
+    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, 0.0)
+                                          blurRadius:shadow_size
+                                               color:TH_RGBACOLOR(0.0, 0.0, 0.0, 0.5)];
+    [shadow set];
     CGFloat corner_radius = 10.0;
-    NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:self.bounds
+    NSRect inner_bounds = NSZeroRect;
+    inner_bounds.origin = NSMakePoint(self.bounds.origin.x + shadow_size / 2.0,
+                                      self.bounds.origin.y + shadow_size / 2.0);
+    inner_bounds.size = NSMakeSize(self.bounds.size.width - shadow_size,
+                                   self.bounds.size.height - shadow_size);
+    NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:inner_bounds
                                                          xRadius:corner_radius
                                                          yRadius:corner_radius];
     
@@ -68,7 +87,7 @@
     result.alphaValue = 1.0;
 	result.backgroundColor = [NSColor clearColor];
     result.hasShadow = YES;
-//	result.opaque = NO;
+	result.opaque = NO;
     [result setLevel:NSFloatingWindowLevel];
     [result setMovableByWindowBackground:YES];
     return result;
@@ -83,13 +102,8 @@
     return self;
 }
 
-- (void)awakeFromNib
+- (void)setLoginButtonText
 {
-    [self.email_address setDelegate:self];
-    [self.error_message setHidden:YES];
-    self.error_message.stringValue = @"";
-    [self.password setDelegate:self];
-    
     NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.alignment = NSCenterTextAlignment;
     NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
@@ -102,7 +116,31 @@
                                                          shadow:shadow];
     self.login_button.attributedTitle = [[NSAttributedString alloc]
                                          initWithString:NSLocalizedString(@"LOGIN", @"login")
-                                             attributes:button_style];
+                                         attributes:button_style];
+}
+
+// Shadows not drawn for transparent NSBorderlessWindowMask windows.
+// Work around by increasing view size and drawing manually.
+- (void)prepareForShadow
+{
+    NSRect new_main_rect = NSZeroRect;
+    new_main_rect.origin = NSMakePoint(self.view.frame.origin.x,
+                                     self.view.frame.origin.y);
+    new_main_rect.size = NSMakeSize(self.login_view.frame.size.width + self.login_view.shadow_size,
+                                    self.login_view.frame.size.height + self.login_view.shadow_size);
+    self.view.frame = new_main_rect;    
+}
+
+- (void)awakeFromNib
+{
+    [self.email_address setDelegate:self];
+    [self.error_message setHidden:YES];
+    self.error_message.stringValue = @"";
+    [self.password setDelegate:self];
+
+    [self prepareForShadow];
+    
+    [self setLoginButtonText];
 }
 
 - (NSString*)description
@@ -118,6 +156,8 @@
     frame.size = self.view.bounds.size;
     frame.origin = [self centreFrame:frame onScreen:screen];
     
+    NSRect rect = NSMakeRect(5.0, 5.0, self.login_view.frame.size.width, self.login_view.frame.size.height);
+    self.login_view.frame = rect;
     [self.view addSubview:self.login_view];
     _window = [IALoginViewController windowWithFrame:frame screen:screen];
     _window.alphaValue = 0.0;
