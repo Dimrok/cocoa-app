@@ -52,7 +52,7 @@
                                           blurRadius:shadow_size
                                                color:TH_RGBACOLOR(0.0, 0.0, 0.0, 0.5)];
     [shadow set];
-    CGFloat corner_radius = 10.0;
+    CGFloat corner_radius = 5.0;
     NSRect inner_bounds = NSZeroRect;
     inner_bounds.origin = NSMakePoint(self.bounds.origin.x + shadow_size / 2.0,
                                       self.bounds.origin.y + shadow_size / 2.0);
