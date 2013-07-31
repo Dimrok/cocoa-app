@@ -17,11 +17,6 @@
 
 @interface IALoginViewController : NSViewController <NSTextFieldDelegate,
                                                      NSWindowDelegate>
-{
-@private
-    id<IALoginViewControllerProtocol> _delegate;
-    NSWindow* _window;
-}
 
 @property (nonatomic, strong) IBOutlet NSTextField* create_account_link;
 @property (nonatomic, strong) IBOutlet NSTextField* email_address;

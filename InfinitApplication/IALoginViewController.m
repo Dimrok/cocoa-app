@@ -21,6 +21,7 @@
 
 @implementation IALoginWindow
 
+
 - (BOOL)canBecomeKeyWindow
 {
     return YES;
@@ -31,21 +32,9 @@
 //- Login view -------------------------------------------------------------------------------------
 
 @interface IALoginView : NSView
-{
-@private
-    CGFloat _shadow_drop;
-}
-@property (nonatomic, readonly) CGFloat shadowDrop;
 @end
 
 @implementation IALoginView
-
-@synthesize shadowDrop = _shadow_drop;
-
-- (void)awakeFromNib
-{
-    _shadow_drop = 3.0;
-}
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -55,12 +44,6 @@
                                                          yRadius:corner_radius];
     
     [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
-    NSShadow* shadow = [[NSShadow alloc] init];
-    shadow.shadowBlurRadius = 3.0;
-    shadow.shadowColor = [[NSColor blackColor] colorWithAlphaComponent:0.3];
-    shadow.shadowOffset = NSMakeSize(_shadow_drop, -_shadow_drop);
-    [shadow set];
-    
     [path fill];
 }
 
@@ -69,6 +52,11 @@
 //- Initiailisation --------------------------------------------------------------------------------
 
 @implementation IALoginViewController
+{
+@private
+    id<IALoginViewControllerProtocol> _delegate;
+    NSWindow* _window;
+}
 
 + (IALoginWindow*)windowWithFrame:(NSRect)frame screen:(NSScreen*)screen
 {
@@ -80,7 +68,7 @@
     result.alphaValue = 1.0;
 	result.backgroundColor = [NSColor clearColor];
     result.hasShadow = YES;
-	result.opaque = NO;
+//	result.opaque = NO;
     [result setLevel:NSFloatingWindowLevel];
     [result setMovableByWindowBackground:YES];
     return result;
