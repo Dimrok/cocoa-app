@@ -11,3 +11,7 @@
 @interface IAUserManager : NSObject
 
 @end
+
+@protocol IAUserManagerProtocol <NSObject>
+
+@end

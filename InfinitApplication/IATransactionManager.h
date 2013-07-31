@@ -18,6 +18,10 @@
 
 - (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
 
+- (void)setTransaction:(IATransaction*)transaction
+              viewMode:(IATransactionViewMode)mode;
+- (NSArray*)transactionsForUserId:(NSString*)user_id;
+
 @end
 
 

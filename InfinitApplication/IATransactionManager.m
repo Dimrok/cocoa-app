@@ -27,21 +27,30 @@
     {
         _delegate = delegate;
         _transactions = [NSMutableArray array];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(onTransactionNotification:)
-                                                     name:IA_GAP_EVENT_TRANSACTION_NOTIFICATION
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(onNotificationsRead:)
-                                                     name:IA_GAP_EVENT_TRANSACTION_READ_NOTIFICATION
-                                                   object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(onTransactionNotification:)
+                                                   name:IA_GAP_EVENT_TRANSACTION_NOTIFICATION
+                                                 object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(onNotificationsRead:)
+                                                   name:IA_GAP_EVENT_TRANSACTION_READ_NOTIFICATION
+                                                 object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(onGapError:)
+                                                   name:IA_GAP_EVENT_ERROR
+                                                 object:nil];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
+}
+
+- (NSString*)description
+{
+    return @"[TransactionManager]";
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -63,12 +72,37 @@
 {
     NSDictionary* dict = notification.userInfo;
     NSString* transaction_id = [dict objectForKey:@"transaction_id"];
+    if (transaction_id == nil)
+        return nil;
     IATransaction* transaction = [IATransaction transactionWithId:transaction_id];
     transaction.is_new = ((NSNumber*)[dict objectForKey:@"is_new"]).boolValue;
     return transaction;
 }
 
-//- Transaction Handling ---------------------------------------------------------------------------
+- (IATransactionViewMode)modeForTransaction:(IATransaction*)transaction
+{
+}
+
+//- Transaction Manipulation -----------------------------------------------------------------------
+
+
+//- User Handling ----------------------------------------------------------------------------------
+
+- (NSArray*)transactionsForUserId:(NSString*)user_id
+{
+    NSMutableArray* transactions = [[NSMutableArray alloc] init];
+    for (IATransaction* transaction in _transactions)
+    {
+        if ([transaction.sender_id isEqualToString:user_id] ||
+            [transaction.recipient_id isEqualToString:user_id])
+        {
+            [transactions addObject:transaction];
+        }
+    }
+    return [NSArray arrayWithArray:transactions];
+}
+
+//- Gap Message Handling ---------------------------------------------------------------------------
 
 - (void)onTransactionNotification:(NSNotification*)notification
 {
@@ -90,6 +124,21 @@
             [_delegate transactionManager:self transactionUpdated:transaction];
         }
     }
+}
+
+- (void)onGapError:(NSNotification*)notification
+{
+    NSDictionary* dict = notification.userInfo;
+    gap_Status error_code = ((NSNumber*)[dict valueForKey:@"error_code"]).intValue;
+    NSString* error_reason = [dict valueForKey:@"reason"];
+    IATransaction* transaction = [self transactionFromNotification:notification];
+    IALog(@"%@ Error (%d: %@) for transaction %@(", self, error_code, error_reason, transaction);
+}
+
+- (void)onNotificationsRead:(NSNotification*)notification
+{
+    for (IATransaction* transaction in _transactions)
+        transaction.is_new = NO;
 }
 
 @end
