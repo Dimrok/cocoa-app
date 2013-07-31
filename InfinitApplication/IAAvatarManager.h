@@ -1,13 +1,24 @@
 //
-//  IAAvatarManager.h
+//  IAFWAvatarManager.h
 //  InfinitApplication
 //
-//  Created by Christopher Crone on 7/31/13.
-//  Copyright (c) 2013 Infinit. All rights reserved.
+//  Created by infinit on 2/15/13.
+//  Copyright (c) 2013 infinit. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface IAAvatarManager : NSObject
+#import <Gap/IAUser.h>
+
+#define IA_AVATAR_MANAGER_AVATAR_FETCHED @"IA_AVATAR_MANAGER_AVATAR_FETCHED"
+
+@interface IAAvatarManager : NSObject <IAUserDownloadAvatarProtocol>
+{
+    NSMutableDictionary* _cache;
+    NSMutableSet* _download_queue;
+}
+
++ (NSImage*)getAvatarForUser:(IAUser*)user
+             andLoadIfNeeded:(BOOL)load;
 
 @end
