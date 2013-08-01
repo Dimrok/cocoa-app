@@ -106,6 +106,7 @@
         return;
     
     _window_is_open = YES;
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [self.window makeKeyAndOrderFront:nil];
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
