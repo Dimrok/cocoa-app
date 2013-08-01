@@ -21,7 +21,7 @@
 
 - (NSString*)description
 {
-    return @"[IAAppDelegate]";
+    return @"[AppDelegate]";
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
