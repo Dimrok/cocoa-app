@@ -10,9 +10,6 @@
 
 #import <Gap/IAGapState.h>
 
-#import "IADefine.h"
-#import "IAFunctions.h"
-
 @interface IALoginViewController ()
 
 @end
@@ -82,9 +79,9 @@
     IALoginWindow* result = [[IALoginWindow alloc] initWithContentRect:frame
                                                              styleMask:NSBorderlessWindowMask
                                                                backing:NSBackingStoreBuffered
-                                                                 defer:NO
+                                                                 defer:YES
                                                                 screen:screen];
-    result.alphaValue = 1.0;
+    result.alphaValue = 0.0;
 	result.backgroundColor = [NSColor clearColor];
     result.hasShadow = YES;
 	result.opaque = NO;
