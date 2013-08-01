@@ -33,10 +33,9 @@
 		832808CB17A2C0BC0025B6F8 /* status_bar_icon_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 832808C917A2C0BC0025B6F8 /* status_bar_icon_normal.png */; };
 		832808CF17A2C1480025B6F8 /* IAFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808CE17A2C1480025B6F8 /* IAFunctions.m */; };
 		832808D217A2C9E40025B6F8 /* IAMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808D117A2C9E40025B6F8 /* IAMainController.m */; };
-		832808DD17A2D7000025B6F8 /* IAMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808DB17A2D7000025B6F8 /* IAMainViewController.m */; };
-		832808DE17A2D7000025B6F8 /* IAMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808DC17A2D7000025B6F8 /* IAMainViewController.xib */; };
-		832808E817A2E5C10025B6F8 /* IANotLoggedInView.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808E617A2E5C10025B6F8 /* IANotLoggedInView.m */; };
-		832808E917A2E5C10025B6F8 /* IANotLoggedInView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808E717A2E5C10025B6F8 /* IANotLoggedInView.xib */; };
+		832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808E617A2E5C10025B6F8 /* IANotLoggedInViewController.m */; };
+		832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */; };
+		8333D45D17A976570093942B /* IAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8333D45C17A976570093942B /* IAViewController.m */; };
 		8334C7E117A67D22006028BC /* Gap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
 		8334C7E217A67D2D006028BC /* Gap.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
 		8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; };
@@ -85,6 +84,8 @@
 		83C124BB17A7CEC000BE1252 /* IAUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124BA17A7CEC000BE1252 /* IAUserManager.m */; };
 		83C124C017A7EF0000BE1252 /* bg-main-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C124BE17A7EF0000BE1252 /* bg-main-button.png */; };
 		83C124C117A7EF0000BE1252 /* bg-main-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C124BF17A7EF0000BE1252 /* bg-main-button@2x.png */; };
+		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
+		83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C7599017AA428700BE6CD5 /* IAWindowController.xib */; };
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
 		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
@@ -259,12 +260,11 @@
 		832808CE17A2C1480025B6F8 /* IAFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFunctions.m; sourceTree = "<group>"; };
 		832808D017A2C9E40025B6F8 /* IAMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMainController.h; sourceTree = "<group>"; };
 		832808D117A2C9E40025B6F8 /* IAMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAMainController.m; sourceTree = "<group>"; };
-		832808DA17A2D7000025B6F8 /* IAMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMainViewController.h; sourceTree = "<group>"; };
-		832808DB17A2D7000025B6F8 /* IAMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAMainViewController.m; sourceTree = "<group>"; };
-		832808DC17A2D7000025B6F8 /* IAMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAMainViewController.xib; sourceTree = "<group>"; };
-		832808E517A2E5C10025B6F8 /* IANotLoggedInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotLoggedInView.h; sourceTree = "<group>"; };
-		832808E617A2E5C10025B6F8 /* IANotLoggedInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotLoggedInView.m; sourceTree = "<group>"; };
-		832808E717A2E5C10025B6F8 /* IANotLoggedInView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANotLoggedInView.xib; sourceTree = "<group>"; };
+		832808E517A2E5C10025B6F8 /* IANotLoggedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotLoggedInViewController.h; sourceTree = "<group>"; };
+		832808E617A2E5C10025B6F8 /* IANotLoggedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotLoggedInViewController.m; sourceTree = "<group>"; };
+		832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANotLoggedInViewController.xib; sourceTree = "<group>"; };
+		8333D45B17A976570093942B /* IAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAViewController.h; sourceTree = "<group>"; };
+		8333D45C17A976570093942B /* IAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAViewController.m; sourceTree = "<group>"; };
 		8334C7E317A67EAF006028BC /* libagent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libagent.dylib; path = ../../../Externals/lib/libagent.dylib; sourceTree = "<group>"; };
 		8334C7E417A67EAF006028BC /* libasio-udt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libasio-udt.dylib"; path = "../../../Externals/lib/libasio-udt.dylib"; sourceTree = "<group>"; };
 		8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_chrono-mt.dylib"; path = "../../../Externals/lib/libboost_chrono-mt.dylib"; sourceTree = "<group>"; };
@@ -321,6 +321,9 @@
 		83C124BA17A7CEC000BE1252 /* IAUserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAUserManager.m; sourceTree = "<group>"; };
 		83C124BE17A7EF0000BE1252 /* bg-main-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-main-button.png"; sourceTree = "<group>"; };
 		83C124BF17A7EF0000BE1252 /* bg-main-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-main-button@2x.png"; sourceTree = "<group>"; };
+		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
+		83C7598F17AA428700BE6CD5 /* IAWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAWindowController.m; sourceTree = "<group>"; };
+		83C7599017AA428700BE6CD5 /* IAWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAWindowController.xib; sourceTree = "<group>"; };
 		83CD6FB317A672E5004F55D1 /* IAGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGap.h; sourceTree = "<group>"; };
 		83CD6FB417A672E5004F55D1 /* IAGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGap.m; sourceTree = "<group>"; };
 		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
@@ -423,7 +426,7 @@
 				8398834717A6A580009409B3 /* Utilities */,
 				83CD6FB217A672C7004F55D1 /* Gap */,
 				832808D917A2D66E0025B6F8 /* Main View Controller */,
-				832808D317A2D5E80025B6F8 /* Main Controller */,
+				832808D317A2D5E80025B6F8 /* Application Controller */,
 				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
 				8328081C17A2B4A60025B6F8 /* IAAppDelegate.h */,
 				8328081D17A2B4A60025B6F8 /* IAAppDelegate.m */,
@@ -515,21 +518,23 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		832808D317A2D5E80025B6F8 /* Main Controller */ = {
+		832808D317A2D5E80025B6F8 /* Application Controller */ = {
 			isa = PBXGroup;
 			children = (
 				832808D017A2C9E40025B6F8 /* IAMainController.h */,
 				832808D117A2C9E40025B6F8 /* IAMainController.m */,
 			);
-			name = "Main Controller";
+			name = "Application Controller";
 			sourceTree = "<group>";
 		};
 		832808D917A2D66E0025B6F8 /* Main View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				832808DA17A2D7000025B6F8 /* IAMainViewController.h */,
-				832808DB17A2D7000025B6F8 /* IAMainViewController.m */,
-				832808DC17A2D7000025B6F8 /* IAMainViewController.xib */,
+				8333D45B17A976570093942B /* IAViewController.h */,
+				8333D45C17A976570093942B /* IAViewController.m */,
+				83C7598E17AA428700BE6CD5 /* IAWindowController.h */,
+				83C7598F17AA428700BE6CD5 /* IAWindowController.m */,
+				83C7599017AA428700BE6CD5 /* IAWindowController.xib */,
 			);
 			name = "Main View Controller";
 			sourceTree = "<group>";
@@ -537,9 +542,9 @@
 		832808EA17A2E5C70025B6F8 /* Not Logged In View */ = {
 			isa = PBXGroup;
 			children = (
-				832808E517A2E5C10025B6F8 /* IANotLoggedInView.h */,
-				832808E617A2E5C10025B6F8 /* IANotLoggedInView.m */,
-				832808E717A2E5C10025B6F8 /* IANotLoggedInView.xib */,
+				832808E517A2E5C10025B6F8 /* IANotLoggedInViewController.h */,
+				832808E617A2E5C10025B6F8 /* IANotLoggedInViewController.m */,
+				832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */,
 			);
 			name = "Not Logged In View";
 			sourceTree = "<group>";
@@ -810,8 +815,7 @@
 				8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */,
 				832808CA17A2C0BC0025B6F8 /* status_bar_icon_clicked.png in Resources */,
 				832808CB17A2C0BC0025B6F8 /* status_bar_icon_normal.png in Resources */,
-				832808DE17A2D7000025B6F8 /* IAMainViewController.xib in Resources */,
-				832808E917A2E5C10025B6F8 /* IANotLoggedInView.xib in Resources */,
+				832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */,
 				8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */,
 				8398836417A6C5C4009409B3 /* infinit_logo_large.png in Resources */,
 				83C124A717A7CDD100BE1252 /* IASendFilesViewController.xib in Resources */,
@@ -826,6 +830,7 @@
 				831FB23317A9345100696604 /* icon-transfer@2x.png in Resources */,
 				831FB23617A9370400696604 /* bg-header-top-gray.png in Resources */,
 				831FB23717A9370400696604 /* bg-header-top-gray@2x.png in Resources */,
+				83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,8 +883,7 @@
 				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */,
 				832808CF17A2C1480025B6F8 /* IAFunctions.m in Sources */,
 				832808D217A2C9E40025B6F8 /* IAMainController.m in Sources */,
-				832808DD17A2D7000025B6F8 /* IAMainViewController.m in Sources */,
-				832808E817A2E5C10025B6F8 /* IANotLoggedInView.m in Sources */,
+				832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.m in Sources */,
 				83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */,
 				83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */,
 				8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */,
@@ -894,6 +898,8 @@
 				83C124BB17A7CEC000BE1252 /* IAUserManager.m in Sources */,
 				831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */,
 				831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */,
+				8333D45D17A976570093942B /* IAViewController.m in Sources */,
+				83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
