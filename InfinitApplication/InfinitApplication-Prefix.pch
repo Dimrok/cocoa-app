@@ -4,4 +4,7 @@
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
+    #import <Gap/IAGapState.h>
+    #import "IADefine.h"
+    #import "IAFunctions.h"
 #endif
