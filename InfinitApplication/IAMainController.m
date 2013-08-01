@@ -263,7 +263,7 @@
 
 //- State Machines ---------------------------------------------------------------------------------
 
-- (void)statusBarIconClickStateMachine
+- (void)viewStateMachine
 {
     [self showNotifications];
 //    [self showNotLoggedInView];
@@ -273,7 +273,7 @@
 
 - (void)statusBarIconClicked:(IAStatusBarIcon*)status_bar_icon
 {
-    if ([status_bar_icon isHighlighted])
+    if ([_window_controller windowIsOpen])
     {
         [status_bar_icon setHighlighted:NO];
         [_window_controller closeWindow];
@@ -281,7 +281,7 @@
     else
     {
         [status_bar_icon setHighlighted:YES];
-        [self statusBarIconClickStateMachine];
+        [self viewStateMachine];
     }
 }
 

@@ -82,6 +82,9 @@
 
 - (void)closeWindow
 {
+    if (!_window_is_open)
+        return;
+    
     _window_is_open = NO;
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
@@ -91,8 +94,28 @@
      }
                         completionHandler:^
      {
+         self.window.alphaValue = 0.0;
+         [self.window orderOut:nil];
          [_current_controller.view removeFromSuperview];
-         [self.window close];
+     }];
+}
+
+- (void)openWindow
+{
+    if (_window_is_open)
+        return;
+    
+    _window_is_open = YES;
+    [self.window makeKeyAndOrderFront:nil];
+    
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.25;
+         [(NSWindow*)self.window.animator setAlphaValue:1.0];
+     }
+                        completionHandler:^
+     {
+         self.window.alphaValue = 1.0;
      }];
 }
 
@@ -105,28 +128,28 @@
 
 //- View Handling ----------------------------------------------------------------------------------
 
-- (void)changeToViewController:(IAViewController*)controller
+- (void)changeToViewController:(IAViewController*)new_controller
 {
-    NSSize new_size = controller.view.frame.size;
-    CGFloat y_diff = _current_controller.view.frame.size.height - controller.view.frame.size.height;
+    NSSize new_size = new_controller.view.frame.size;
+    CGFloat y_diff = _current_controller.view.frame.size.height -
+                     new_controller.view.frame.size.height;
     NSPoint midpoint = NSMakePoint(self.window.frame.origin.x,
                                    self.window.frame.origin.y + y_diff);
     [self.window setFrame:NSMakeRect(midpoint.x, midpoint.y, new_size.width, new_size.height)
                   display:YES
                   animate:YES];
-    [self.window.contentView addSubview:controller.view];
+    [self.window.contentView addSubview:new_controller.view];
     [_current_controller.view removeFromSuperview];
     _current_controller = nil;
-    _current_controller = controller;
+    _current_controller = new_controller;
 }
 
 - (void)openWithViewController:(IAViewController*)controller
                   withMidpoint:(NSPoint)midpoint
 {
-    if (controller == nil && !_window_is_open)
+    if (controller == nil)
         return;
     
-    _window_is_open = YES;
     _current_controller = controller;
     
     NSRect frame;
@@ -137,16 +160,7 @@
     
     [self.window.contentView addSubview:controller.view];
     
-    [self.window makeKeyAndOrderFront:nil];
-    
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-         context.duration = 0.25;
-         [(NSWindow*)self.window.animator setAlphaValue:1.0];
-     }
-                        completionHandler:^
-     {
-     }];
+    [self openWindow];
     
 }
 

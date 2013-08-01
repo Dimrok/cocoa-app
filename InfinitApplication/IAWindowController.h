@@ -20,7 +20,7 @@
 
 - (void)closeWindow;
 
-- (void)changeToViewController:(IAViewController*)controller;
+- (void)changeToViewController:(IAViewController*)new_controller;
 
 - (void)openWithViewController:(IAViewController*)controller
                   withMidpoint:(NSPoint)midpoint;
