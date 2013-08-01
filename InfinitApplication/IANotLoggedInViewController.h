@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "IAViewController.h"
+
 @protocol IANotLoggedInViewProtocol;
 
-@interface IANotLoggedInView : NSViewController
+@interface IANotLoggedInViewController : IAViewController
 {
 @private
     id<IANotLoggedInViewProtocol> _delegate;
@@ -21,4 +23,7 @@
 @end
 
 @protocol IANotLoggedInViewProtocol <NSObject>
+
+- (void)notLoggedInViewControllerWantsOpenLoginWindow:(IANotLoggedInViewController*)sender;
+
 @end
