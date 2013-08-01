@@ -36,6 +36,7 @@
     NSString* version_str = [NSString stringWithFormat:@"v%@",
                              [NSString stringWithUTF8String:INFINIT_VERSION]];
     _version_item.title = version_str;
+    self.view.autoresizingMask = NSViewHeightSizable;
 }
 
 - (NSString*)description
