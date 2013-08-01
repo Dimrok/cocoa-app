@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import "IALoginViewController.h"
-#import "IAMainViewController.h"
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
 #import "IAStatusBarIcon.h"
@@ -18,7 +17,6 @@
 @protocol IAMainControllerProtocol;
 
 @interface IAMainController : NSObject <IALoginViewControllerProtocol,
-                                        IAMainViewControllerProtocol,
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
                                         IAStatusBarIconProtocol,
