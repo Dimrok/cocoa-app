@@ -12,9 +12,9 @@
 
 + (NSBundle*)bundle
 {
-	static NSBundle *bundle=nil;
-	if (bundle==nil)
-		bundle=[NSBundle bundleForClass:[self class]];
+	static NSBundle* bundle=nil;
+	if (bundle == nil)
+		bundle = [NSBundle bundleForClass:[self class]];
 	return bundle;
 }
 
