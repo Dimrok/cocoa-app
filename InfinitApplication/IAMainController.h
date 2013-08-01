@@ -10,23 +10,19 @@
 
 #import "IALoginViewController.h"
 #import "IAMainViewController.h"
-#import "IANotLoggedInView.h"
+#import "IANotificationListViewController.h"
+#import "IANotLoggedInViewController.h"
 #import "IAStatusBarIcon.h"
+#import "IAWindowController.h"
 
 @protocol IAMainControllerProtocol;
 
 @interface IAMainController : NSObject <IALoginViewControllerProtocol,
                                         IAMainViewControllerProtocol,
+                                        IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
-                                        IAStatusBarIconProtocol>
-{
-@private
-    id<IAMainControllerProtocol> _delegate;
-    NSStatusItem* _status_item;
-    IAStatusBarIcon* _status_bar_icon;
-    IAMainViewController* _view_controller;
-    IALoginViewController* _login_view_controller;
-}
+                                        IAStatusBarIconProtocol,
+                                        IAWindowControllerProtocol>
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;
 
