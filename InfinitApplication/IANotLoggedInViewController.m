@@ -37,6 +37,26 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = NSCenterTextAlignment;
+    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
+                                          blurRadius:1.0
+                                               color:[NSColor blackColor]];
+    
+    NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
+                                                 paragraphStyle:style
+                                                         colour:[NSColor whiteColor]
+                                                         shadow:shadow];
+    self.login_button.attributedTitle = [[NSAttributedString alloc]
+                                         initWithString:NSLocalizedString(@"LOGIN", @"login")
+                                         attributes:button_style];
+    
+    self.not_logged_message.stringValue = NSLocalizedString(@"Not currently logged in...",
+                                                            @"not logged in");
+}
+
 - (NSString*)description
 {
     return @"NotLoggedInViewController";

@@ -18,6 +18,9 @@
     id<IANotLoggedInViewProtocol> _delegate;
 }
 
+@property (nonatomic, strong) IBOutlet NSTextField* not_logged_message;
+@property (nonatomic, strong) IBOutlet NSButton* login_button;
+
 - (id)initWithDelegate:(id<IANotLoggedInViewProtocol>)delegate;
 
 @end
