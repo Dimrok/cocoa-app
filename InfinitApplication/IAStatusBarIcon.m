@@ -18,14 +18,14 @@ enum status_bar_icon_status {
 
 @synthesize isHighlighted = _is_highlighted;
 
+//- Initialisation ---------------------------------------------------------------------------------
+
 - (id)initWithFrame:(NSRect)frame
 {
     if (self = [super initWithFrame:frame])
     {
-        _drag_types = [NSArray arrayWithObjects:NSURLPboardType,
-                                                        NSFileContentsPboardType,
-                                                        NSFilenamesPboardType,
-                                                        nil];
+        _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType,
+                                                nil];
         [self registerForDraggedTypes:_drag_types];
     }
     
@@ -71,19 +71,22 @@ enum status_bar_icon_status {
     [self setNeedsDisplay:YES];
 }
 
-//- Click operations ---------------------------------------------------------------------------------
+//- General Functions ------------------------------------------------------------------------------
+
+
+//- Click Operations -------------------------------------------------------------------------------
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
 	[_delegate statusBarIconClicked:self];
 }
 
-
-//- Drag operations ----------------------------------------------------------------------------------
+//- Drag Operations --------------------------------------------------------------------------------
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
-    if ([[sender draggingPasteboard] availableTypeFromArray:_drag_types])
+    NSPasteboard* paste_board = sender.draggingPasteboard;
+    if ([paste_board availableTypeFromArray:_drag_types])
     {
         [_delegate statusBarIconDragEntered:self];
         return NSDragOperationCopy;
@@ -91,14 +94,18 @@ enum status_bar_icon_status {
     return NSDragOperationNone;
 }
 
-- (void)draggingExited:(id<NSDraggingInfo>)sender
-{
-    
-}
-
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
 {
-    return NO;
+    NSPasteboard* paste_board = sender.draggingPasteboard;
+    if (![paste_board availableTypeFromArray:_drag_types])
+        return NO;
+    
+    NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
+    
+    if (files.count > 0)
+        [_delegate statusBarIconDragDrop:self withFiles:files];
+    
+    return YES;
 }
 
 @end
