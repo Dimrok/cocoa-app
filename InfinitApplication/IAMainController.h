@@ -15,6 +15,7 @@
 #import "IALoginViewController.h"
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
+#import "IAGeneralSendController.h"
 #import "IAStatusBarIcon.h"
 #import "IATransactionManager.h"
 #import "IAUserManager.h"
@@ -25,6 +26,7 @@
 @interface IAMainController : NSObject <IALoginViewControllerProtocol,
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
+                                        IAGeneralSendControllerProtocol,
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,

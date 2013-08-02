@@ -17,13 +17,22 @@
 {
 @private
     id<IAMainControllerProtocol> _delegate;
+    
     NSStatusItem* _status_item;
     IAStatusBarIcon* _status_bar_icon;
+    
+    // View controllers
     IALoginViewController* _login_view_controller;
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
+    IAGeneralSendController* _general_send_controller;
     IAWindowController* _window_controller;
     
+    // Managers
+    IATransactionManager* _transaction_manager;
+    IAUserManager* _user_manager;
+    
+    // Other
     BOOL _new_credentials;
     NSString* _username;
     NSString* _password;
@@ -43,7 +52,13 @@
         _status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:34.0];
         _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_status_item];
         _status_item.view = _status_bar_icon;
+        
+        _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+        
         _window_controller = [[IAWindowController alloc] initWithDelegate:self];
+        
+        _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
+        _user_manager = [[IAUserManager alloc] initWithDelegate:self];
         
         if (![self tryAutomaticLogin])
         {
@@ -128,7 +143,19 @@
         [_window_controller openWithViewController:_not_logged_view_controller
                                   withMidpoint:[self statusBarIconMiddle]];
     }
-    
+}
+
+- (void)showSendView:(IAViewController*)controller
+{
+    if ([_window_controller windowIsOpen])
+    {
+        [_window_controller changeToViewController:controller];
+    }
+    else
+    {
+        [_window_controller openWithViewController:controller
+                                      withMidpoint:[self statusBarIconMiddle]];
+    }
 }
 
 //- Window Handling --------------------------------------------------------------------------------
@@ -137,6 +164,8 @@
 {
     [_window_controller closeWindow];
     [_status_bar_icon setHighlighted:NO];
+    _not_logged_view_controller = nil;
+    _not_logged_view_controller = nil;
 }
 
 //- Login and Logout -------------------------------------------------------------------------------
@@ -261,33 +290,27 @@
     }
 }
 
-//- State Machines ---------------------------------------------------------------------------------
+//- View Logic -------------------------------------------------------------------------------------
 
-- (void)viewStateMachine
+- (void)selectView
 {
+    if (![[IAGapState instance] logged_in])
+    {
+        [self showNotLoggedInView];
+        return;
+    }
     [self showNotifications];
-//    [self showNotLoggedInView];
 }
 
-//- Status Bar Icon Protocol -----------------------------------------------------------------------
+//- General Send Controller Protocol ---------------------------------------------------------------
 
-- (void)statusBarIconClicked:(IAStatusBarIcon*)status_bar_icon
+- (void)sendController:(IAGeneralSendController*)sender
+ wantsActiveController:(IAViewController*)controller
 {
-    if ([_window_controller windowIsOpen])
-    {
-        [status_bar_icon setHighlighted:NO];
-        [_window_controller closeWindow];
-    }
-    else
-    {
-        [status_bar_icon setHighlighted:YES];
-        [self viewStateMachine];
-    }
-}
-
-- (void)statusBarIconDragEntered:(IAStatusBarIcon*)status_bar_icon
-{
+    if (controller == nil)
+        return;
     
+    [self showSendView:controller];
 }
 
 //- Login Window Protocol --------------------------------------------------------------------------
@@ -322,6 +345,49 @@
         _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
     [_login_view_controller showLoginWindowOnScreen:[self currentScreen]];
     [self closeNotificationWindow];
+}
+
+//- Status Bar Icon Protocol -----------------------------------------------------------------------
+
+- (void)statusBarIconClicked:(IAStatusBarIcon*)sender
+{
+    if ([_window_controller windowIsOpen])
+    {
+        [sender setHighlighted:NO];
+        [_window_controller closeWindow];
+    }
+    else
+    {
+        [sender setHighlighted:YES];
+        [self selectView];
+    }
+}
+
+- (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
+                    withFiles:(NSArray*)files
+{
+    [_general_send_controller simpleFileDrop];
+}
+
+- (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
+{
+    
+}
+
+//- Transaction Manager Protocol -------------------------------------------------------------------
+
+- (void)transactionManager:(IATransactionManager*)sender
+          transactionAdded:(IATransaction*)transaction
+{
+    
+}
+
+//- User Manager Protocol --------------------------------------------------------------------------
+
+- (void)userManager:(IAUserManager*)sender
+    hasNewStatusFor:(IAUser*)user
+{
+    [_transaction_manager newUserStatusFor:user];
 }
 
 //- Window Controller Protocol ---------------------------------------------------------------------
