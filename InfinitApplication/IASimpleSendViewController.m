@@ -13,15 +13,25 @@
 @end
 
 @implementation IASimpleSendViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
+@private
+    id<IASimpleSendViewProtocol> _delegate;
+}
+
+//- Initialisation ---------------------------------------------------------------------------------
+
+- (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
+{
+    if (self = [super initWithNibName:[self className] bundle:nil])
+    {
+        _delegate = delegate;
     }
-    
     return self;
+}
+
+- (NSString*)description
+{
+    return @"[SimpleSendView]";
 }
 
 @end
