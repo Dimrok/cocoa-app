@@ -5,6 +5,8 @@
 //  Created by Christopher Crone on 7/31/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
+//  This view controller is the main application view and is responsible for showing current
+//  notifications and a history of transactions.
 
 #import <Cocoa/Cocoa.h>
 

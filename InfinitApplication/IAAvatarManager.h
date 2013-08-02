@@ -5,6 +5,7 @@
 //  Created by infinit on 2/15/13.
 //  Copyright (c) 2013 infinit. All rights reserved.
 //
+//  The avatar manager fetches and caches avatars as they're needed.
 
 #import <Foundation/Foundation.h>
 

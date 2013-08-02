@@ -5,6 +5,10 @@
 //  Created by Christopher Crone on 7/30/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
+//  This manager is responsible for handling transactions. This means that it handles remote
+//  changes to transaction state through gap, local user interactions with transactions (accept,
+//  send, cancel, etc.), as well as setting the current view mode of each transaction. In order to
+//  this, it requires information about user status changes.
 
 #import <Foundation/Foundation.h>
 
@@ -14,12 +18,11 @@
 
 @interface IATransactionManager : NSObject
 
-@property (readonly) NSArray* transactions;
+@property (atomic, readonly) NSArray* transactions;
 
 - (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
 
-- (void)setTransaction:(IATransaction*)transaction
-              viewMode:(IATransactionViewMode)mode;
+- (void)newUserStatusFor:(IAUser*)user;
 - (NSArray*)transactionsForUserId:(NSString*)user_id;
 
 @end

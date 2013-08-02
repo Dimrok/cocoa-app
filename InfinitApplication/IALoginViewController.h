@@ -5,6 +5,7 @@
 //  Created by Christopher Crone on 7/29/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
+//  This view controller is responsible for the login window.
 
 #import <Cocoa/Cocoa.h>
 

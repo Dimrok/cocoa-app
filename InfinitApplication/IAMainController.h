@@ -5,6 +5,10 @@
 //  Created by Christopher Crone on 7/26/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
+//  This controller has several responsibilities. It's responsible for login/logout operations,
+//  selecting which views should be shown and communicating with the IATransactionManager and
+//  IAUserManager. It also acts as a proxy between the views and the managers so that all
+//  information passes through the same place.
 
 #import <Foundation/Foundation.h>
 
@@ -12,6 +16,8 @@
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
 #import "IAStatusBarIcon.h"
+#import "IATransactionManager.h"
+#import "IAUserManager.h"
 #import "IAWindowController.h"
 
 @protocol IAMainControllerProtocol;
@@ -20,6 +26,8 @@
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
                                         IAStatusBarIconProtocol,
+                                        IATransactionManagerProtocol,
+                                        IAUserManagerProtocol,
                                         IAWindowControllerProtocol>
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;
