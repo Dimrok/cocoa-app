@@ -8,9 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol IASearchResultsViewProtocol;
+
 @interface IASearchResultsViewController : NSViewController <NSTableViewDataSource,
                                                              NSTableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
+
+- (id)initWithDelegate:(id<IASearchResultsViewProtocol>)delegate;
+
+- (void)searchForString:(NSString*)str;
+
+@end
+
+@protocol IASearchResultsViewProtocol <NSObject>
 
 @end

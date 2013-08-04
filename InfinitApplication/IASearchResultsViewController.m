@@ -13,13 +13,17 @@
 @end
 
 @implementation IASearchResultsViewController
+{
+    id<IASearchResultsViewProtocol> _delegate;
+}
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
+- (id)initWithDelegate:(id<IASearchResultsViewProtocol>)delegate
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
+        _delegate = delegate;
     }
     
     return self;
@@ -30,4 +34,12 @@
 {
     return @"[SearchResultsViewController]";
 }
+
+//- General Functions ------------------------------------------------------------------------------
+
+- (void)searchForString:(NSString*)str
+{
+    
+}
+
 @end
