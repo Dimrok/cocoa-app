@@ -96,6 +96,7 @@
      {
          self.window.alphaValue = 0.0;
          [self.window orderOut:nil];
+         [self.window close];
          [_current_controller.view removeFromSuperview];
      }];
 }
