@@ -10,6 +10,29 @@
 
 @implementation IAFunctions
 
++ (NSBezierPath*)roundedBottomBezierWithRect:(NSRect)rect
+                                cornerRadius:(CGFloat)corner_radius
+{
+    NSBezierPath* res = [NSBezierPath bezierPath];
+    CGFloat x = rect.origin.x;
+    CGFloat y = rect.origin.y;
+    CGFloat width = rect.size.width;
+    CGFloat height = rect.size.height;
+    [res moveToPoint:NSMakePoint(x, y + height)];
+    [res appendBezierPathWithArcWithCenter:NSMakePoint(x + corner_radius, y + corner_radius)
+                                    radius:corner_radius
+                                startAngle:180.0
+                                  endAngle:270.0];
+    [res appendBezierPathWithArcWithCenter:NSMakePoint(x + width - corner_radius, y + corner_radius)
+                                    radius:corner_radius
+                                startAngle:270.0
+                                  endAngle:0.0];
+    [res lineToPoint:NSMakePoint(x + width, y + height)];
+    [res lineToPoint:NSMakePoint(x, y + height)];
+    [res closePath];
+    return res;
+}
+
 + (NSBundle*)bundle
 {
 	static NSBundle* bundle=nil;

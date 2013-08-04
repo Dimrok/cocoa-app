@@ -10,6 +10,9 @@
 
 @interface IAFunctions : NSObject
 
++ (NSBezierPath*)roundedBottomBezierWithRect:(NSRect)rect
+                                cornerRadius:(CGFloat)corner_radius;
+
 + (NSImage*)imageNamed:(NSString*)imageName;
 
 + (BOOL)stringIsValidEmail:(NSString*)str;
