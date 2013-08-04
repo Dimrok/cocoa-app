@@ -264,7 +264,7 @@
 // Current screen to display content on
 - (NSScreen*)currentScreen
 {
-    return [[NSScreen screens] objectAtIndex:0];
+    return [NSScreen mainScreen];
 }
 
 // Midpoint of status bar icon
