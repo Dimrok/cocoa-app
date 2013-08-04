@@ -68,6 +68,7 @@
 		8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FE17A67EB0006028BC /* libudt.dylib */; };
 		8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */; };
 		8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8346314F17A7042A00A7E17F /* IACentredSecureCell.m */; };
+		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
 		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
 		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
@@ -113,6 +114,12 @@
 		83F1147917AE542800DCF662 /* icon-search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147717AE542800DCF662 /* icon-search@2x.png */; };
 		83F1147C17AE5A9900DCF662 /* icon-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147A17AE5A9900DCF662 /* icon-delete.png */; };
 		83F1147D17AE5A9900DCF662 /* icon-delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147B17AE5A9900DCF662 /* icon-delete@2x.png */; };
+		83F1148517AE63E700DCF662 /* IASearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F1148317AE63E700DCF662 /* IASearchResultsViewController.m */; };
+		83F1148617AE63E700DCF662 /* IASearchResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148417AE63E700DCF662 /* IASearchResultsViewController.xib */; };
+		83F1148B17AE709F00DCF662 /* icon-star-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148717AE709F00DCF662 /* icon-star-selected.png */; };
+		83F1148C17AE709F00DCF662 /* icon-star-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148817AE709F00DCF662 /* icon-star-selected@2x.png */; };
+		83F1148D17AE709F00DCF662 /* icon-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148917AE709F00DCF662 /* icon-star.png */; };
+		83F1148E17AE709F00DCF662 /* icon-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148A17AE709F00DCF662 /* icon-star@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -318,6 +325,8 @@
 		8334C7FE17A67EB0006028BC /* libudt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libudt.dylib; path = ../../../Externals/lib/libudt.dylib; sourceTree = "<group>"; };
 		8346314E17A7042A00A7E17F /* IACentredSecureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredSecureCell.h; sourceTree = "<group>"; };
 		8346314F17A7042A00A7E17F /* IACentredSecureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredSecureCell.m; sourceTree = "<group>"; };
+		836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsCellView.h; sourceTree = "<group>"; };
+		836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsCellView.m; sourceTree = "<group>"; };
 		8398834D17A6A5AE009409B3 /* IAAutoStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAutoStartup.h; sourceTree = "<group>"; };
 		8398834E17A6A5AE009409B3 /* IAAutoStartup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAutoStartup.m; sourceTree = "<group>"; };
 		8398835017A6A5BB009409B3 /* IAKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAKeychainManager.h; sourceTree = "<group>"; };
@@ -375,6 +384,13 @@
 		83F1147717AE542800DCF662 /* icon-search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-search@2x.png"; sourceTree = "<group>"; };
 		83F1147A17AE5A9900DCF662 /* icon-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-delete.png"; sourceTree = "<group>"; };
 		83F1147B17AE5A9900DCF662 /* icon-delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-delete@2x.png"; sourceTree = "<group>"; };
+		83F1148217AE63E700DCF662 /* IASearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsViewController.h; sourceTree = "<group>"; };
+		83F1148317AE63E700DCF662 /* IASearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsViewController.m; sourceTree = "<group>"; };
+		83F1148417AE63E700DCF662 /* IASearchResultsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASearchResultsViewController.xib; sourceTree = "<group>"; };
+		83F1148717AE709F00DCF662 /* icon-star-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star-selected.png"; sourceTree = "<group>"; };
+		83F1148817AE709F00DCF662 /* icon-star-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star-selected@2x.png"; sourceTree = "<group>"; };
+		83F1148917AE709F00DCF662 /* icon-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star.png"; sourceTree = "<group>"; };
+		83F1148A17AE709F00DCF662 /* icon-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -645,6 +661,7 @@
 			isa = PBXGroup;
 			children = (
 				83C99E0C17AB9C7B00AFF091 /* Resources */,
+				83F1148117AE5FDB00DCF662 /* Search Results */,
 				83C99E0217AB98AC00AFF091 /* Simple Send View */,
 				83C99DFF17AB8EAC00AFF091 /* IAGeneralSendController.h */,
 				83C99E0017AB8EAC00AFF091 /* IAGeneralSendController.m */,
@@ -665,6 +682,10 @@
 		83C99E0C17AB9C7B00AFF091 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83F1148717AE709F00DCF662 /* icon-star-selected.png */,
+				83F1148817AE709F00DCF662 /* icon-star-selected@2x.png */,
+				83F1148917AE709F00DCF662 /* icon-star.png */,
+				83F1148A17AE709F00DCF662 /* icon-star@2x.png */,
 				83F1147A17AE5A9900DCF662 /* icon-delete.png */,
 				83F1147B17AE5A9900DCF662 /* icon-delete@2x.png */,
 				83F1147617AE542800DCF662 /* icon-search.png */,
@@ -745,6 +766,18 @@
 				83CD702E17A678C6004F55D1 /* GapTests.octest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		83F1148117AE5FDB00DCF662 /* Search Results */ = {
+			isa = PBXGroup;
+			children = (
+				836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */,
+				836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */,
+				83F1148217AE63E700DCF662 /* IASearchResultsViewController.h */,
+				83F1148317AE63E700DCF662 /* IASearchResultsViewController.m */,
+				83F1148417AE63E700DCF662 /* IASearchResultsViewController.xib */,
+			);
+			name = "Search Results";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -931,6 +964,11 @@
 				83F1147917AE542800DCF662 /* icon-search@2x.png in Resources */,
 				83F1147C17AE5A9900DCF662 /* icon-delete.png in Resources */,
 				83F1147D17AE5A9900DCF662 /* icon-delete@2x.png in Resources */,
+				83F1148617AE63E700DCF662 /* IASearchResultsViewController.xib in Resources */,
+				83F1148B17AE709F00DCF662 /* icon-star-selected.png in Resources */,
+				83F1148C17AE709F00DCF662 /* icon-star-selected@2x.png in Resources */,
+				83F1148D17AE709F00DCF662 /* icon-star.png in Resources */,
+				83F1148E17AE709F00DCF662 /* icon-star@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1000,6 +1038,8 @@
 				83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */,
 				83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.m in Sources */,
 				83C99E0617AB98CE00AFF091 /* IASimpleSendViewController.m in Sources */,
+				83F1148517AE63E700DCF662 /* IASearchResultsViewController.m in Sources */,
+				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
