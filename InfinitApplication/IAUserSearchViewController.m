@@ -49,6 +49,12 @@
     return @"[SearchResultsViewController]";
 }
 
+- (void)awakeFromNib
+{
+    self.view.autoresizingMask = NSViewHeightSizable | NSViewWidthSizable;
+    self.search_field.focusRingType = NSFocusRingTypeNone;
+}
+
 //- General Functions ------------------------------------------------------------------------------
 
 - (void)searchForString:(NSString*)str
@@ -92,5 +98,6 @@ objectValueForTableColumn:(NSTableColumn*)tableColumn
 {
     return nil;
 }
+
 
 @end

@@ -11,7 +11,8 @@
 @protocol IAUserSearchViewProtocol;
 
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
-                                                          NSTableViewDelegate>
+                                                          NSTableViewDelegate,
+                                                          NSTextViewDelegate>
 
 @property (nonatomic, strong) IBOutlet NSButton* clear_search;
 @property (nonatomic, strong) IBOutlet NSTextField* search_field;
