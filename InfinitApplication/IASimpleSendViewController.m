@@ -12,20 +12,6 @@
 
 @end
 
-@interface IASimpleSendSearchView : NSView
-@end
-
-@implementation IASimpleSendSearchView
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    NSBezierPath* path = [NSBezierPath bezierPathWithRect:self.bounds];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
-    [path fill];
-}
-
-@end
-
 @interface IASimpleSendFooterView : NSView
 @end
 
@@ -68,7 +54,7 @@
 @private
     id<IASimpleSendViewProtocol> _delegate;
     
-    IASearchResultsViewController* _search_results_controller;
+    IAUserSearchViewController* _user_search_controller;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -78,17 +64,15 @@
     if (self = [super initWithNibName:[self className] bundle:nil])
     {
         _delegate = delegate;
-        _search_results_controller = [[IASearchResultsViewController alloc] initWithDelegate:self];
+        _user_search_controller = [[IAUserSearchViewController alloc] initWithDelegate:self];
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    [self.search_field setFocusRingType:NSFocusRingTypeNone];
-    [self.search_field setDelegate:self];
-    [self.clear_search setHidden:YES];
-    self.search_results = _search_results_controller.view;
+    [self.main_view addSubview:_user_search_controller.view];
+    [self.main_view setNeedsDisplay:YES];
 }
 
 - (NSString*)description
@@ -98,29 +82,5 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
-
-
-//- Search Field -----------------------------------------------------------------------------------
-
-- (void)controlTextDidChange:(NSNotification*)aNotification
-{
-    NSControl* control = aNotification.object;
-    if (control == self.search_field)
-    {
-        if (self.search_field.stringValue.length == 0)
-            [self.clear_search setHidden:YES];
-        else
-            [self.clear_search setHidden:NO];
-    }
-}
-
-- (IBAction)clearSearchField:(NSButton*)sender
-{
-    if (sender == self.clear_search)
-    {
-        self.search_field.stringValue = @"";
-        [self.clear_search setHidden:YES];
-    }
-}
 
 @end
