@@ -310,6 +310,7 @@
     if (controller == nil)
         return;
     
+    [_status_bar_icon setHighlighted:YES];
     [self showSendView:controller];
 }
 
