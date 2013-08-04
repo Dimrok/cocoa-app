@@ -8,9 +8,12 @@
 
 #import "IAViewController.h"
 
+#import "IASearchResultsViewController.h"
+
 @protocol IASimpleSendViewProtocol;
 
-@interface IASimpleSendViewController : IAViewController <NSTextFieldDelegate>
+@interface IASimpleSendViewController : IAViewController <NSTextFieldDelegate,
+                                                          IASearchResultsViewProtocol>
 
 @property (nonatomic, strong) IBOutlet NSButton* add_person_button;
 @property (nonatomic, strong) IBOutlet NSButton* add_note_button;
@@ -18,6 +21,7 @@
 @property (nonatomic, strong) IBOutlet NSButton* cancel_button;
 @property (nonatomic, strong) IBOutlet NSButton* add_files_button;
 @property (nonatomic, strong) IBOutlet NSTextField* search_field;
+@property (nonatomic, strong) IBOutlet NSView* search_results;
 
 
 - (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate;

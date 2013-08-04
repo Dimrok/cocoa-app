@@ -12,10 +12,10 @@
 
 @end
 
-@interface IASimpleSendMainView : NSView
+@interface IASimpleSendSearchView : NSView
 @end
 
-@implementation IASimpleSendMainView
+@implementation IASimpleSendSearchView
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -67,6 +67,8 @@
 {
 @private
     id<IASimpleSendViewProtocol> _delegate;
+    
+    IASearchResultsViewController* _search_results_controller;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -76,6 +78,7 @@
     if (self = [super initWithNibName:[self className] bundle:nil])
     {
         _delegate = delegate;
+        _search_results_controller = [[IASearchResultsViewController alloc] initWithDelegate:self];
     }
     return self;
 }
@@ -85,12 +88,17 @@
     [self.search_field setFocusRingType:NSFocusRingTypeNone];
     [self.search_field setDelegate:self];
     [self.clear_search setHidden:YES];
+    self.search_results = _search_results_controller.view;
 }
 
 - (NSString*)description
 {
     return @"[SimpleSendView]";
 }
+
+//- General Functions ------------------------------------------------------------------------------
+
+
 
 //- Search Field -----------------------------------------------------------------------------------
 
