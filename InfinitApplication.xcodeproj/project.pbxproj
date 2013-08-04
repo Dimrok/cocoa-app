@@ -107,6 +107,12 @@
 		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
 		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
 		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
+		83F1146C17AE521000DCF662 /* btn-send-files-simple.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1146A17AE521000DCF662 /* btn-send-files-simple.png */; };
+		83F1146D17AE521000DCF662 /* btn-send-files-simple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1146B17AE521000DCF662 /* btn-send-files-simple@2x.png */; };
+		83F1147817AE542800DCF662 /* icon-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147617AE542800DCF662 /* icon-search.png */; };
+		83F1147917AE542800DCF662 /* icon-search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147717AE542800DCF662 /* icon-search@2x.png */; };
+		83F1147C17AE5A9900DCF662 /* icon-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147A17AE5A9900DCF662 /* icon-delete.png */; };
+		83F1147D17AE5A9900DCF662 /* icon-delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147B17AE5A9900DCF662 /* icon-delete@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -363,6 +369,12 @@
 		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
 		83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGapMetrics.m; sourceTree = "<group>"; };
 		83CD702617A678C5004F55D1 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = ../Gap/Gap.xcodeproj; sourceTree = "<group>"; };
+		83F1146A17AE521000DCF662 /* btn-send-files-simple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple.png"; sourceTree = "<group>"; };
+		83F1146B17AE521000DCF662 /* btn-send-files-simple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple@2x.png"; sourceTree = "<group>"; };
+		83F1147617AE542800DCF662 /* icon-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-search.png"; sourceTree = "<group>"; };
+		83F1147717AE542800DCF662 /* icon-search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-search@2x.png"; sourceTree = "<group>"; };
+		83F1147A17AE5A9900DCF662 /* icon-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-delete.png"; sourceTree = "<group>"; };
+		83F1147B17AE5A9900DCF662 /* icon-delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-delete@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -653,6 +665,12 @@
 		83C99E0C17AB9C7B00AFF091 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83F1147A17AE5A9900DCF662 /* icon-delete.png */,
+				83F1147B17AE5A9900DCF662 /* icon-delete@2x.png */,
+				83F1147617AE542800DCF662 /* icon-search.png */,
+				83F1147717AE542800DCF662 /* icon-search@2x.png */,
+				83F1146A17AE521000DCF662 /* btn-send-files-simple.png */,
+				83F1146B17AE521000DCF662 /* btn-send-files-simple@2x.png */,
 				83C99E2917ABA13100AFF091 /* icon-files-hover.png */,
 				83C99E2A17ABA13100AFF091 /* icon-files-hover@2x.png */,
 				83C99E2517AB9E3600AFF091 /* icon-files.png */,
@@ -907,6 +925,12 @@
 				83C99E2817AB9E3600AFF091 /* icon-files@2x.png in Resources */,
 				83C99E2B17ABA13100AFF091 /* icon-files-hover.png in Resources */,
 				83C99E2C17ABA13100AFF091 /* icon-files-hover@2x.png in Resources */,
+				83F1146C17AE521000DCF662 /* btn-send-files-simple.png in Resources */,
+				83F1146D17AE521000DCF662 /* btn-send-files-simple@2x.png in Resources */,
+				83F1147817AE542800DCF662 /* icon-search.png in Resources */,
+				83F1147917AE542800DCF662 /* icon-search@2x.png in Resources */,
+				83F1147C17AE5A9900DCF662 /* icon-delete.png in Resources */,
+				83F1147D17AE5A9900DCF662 /* icon-delete@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
