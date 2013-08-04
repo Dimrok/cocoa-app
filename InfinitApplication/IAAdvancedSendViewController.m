@@ -13,15 +13,28 @@
 @end
 
 @implementation IAAdvancedSendViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
+    id<IAAdvancedSendViewProtocol> _delegate;
     
+    IAUserSearchViewController* _user_search_controller;
+    
+}
+
+//- Initialisation ---------------------------------------------------------------------------------
+
+- (id)initWithDelegate:(id<IAAdvancedSendViewProtocol>)delegate
+{
+    if (self = [super initWithNibName:[self className] bundle:nil])
+    {
+        _delegate = delegate;
+        _user_search_controller = [[IAUserSearchViewController alloc] initWithDelegate:self];
+    }
     return self;
+}
+
+- (NSString*)description
+{
+    return @"[AdvancedSendView]";
 }
 
 @end

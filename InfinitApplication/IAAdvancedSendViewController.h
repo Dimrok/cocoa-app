@@ -8,6 +8,18 @@
 
 #import "IAViewController.h"
 
-@interface IAAdvancedSendViewController : IAViewController
+#import "IAUserSearchViewController.h"
+
+@protocol IAAdvancedSendViewProtocol;
+
+@interface IAAdvancedSendViewController : IAViewController <NSTextFieldDelegate,
+                                                            IAUserSearchViewProtocol>
+
+@property (nonatomic, strong) NSButton* send_button;
+
+@end
+
+
+@protocol IAAdvancedSendViewProtocol <NSObject>
 
 @end
