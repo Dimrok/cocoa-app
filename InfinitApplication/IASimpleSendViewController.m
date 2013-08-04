@@ -61,7 +61,7 @@
 
 - (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
 {
-    if (self = [super initWithNibName:[self className] bundle:nil])
+    if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
         _user_search_controller = [[IAUserSearchViewController alloc] initWithDelegate:self];
@@ -71,9 +71,13 @@
 
 - (void)awakeFromNib
 {
-    [self.main_view addSubview:_user_search_controller.view];
-    [self.main_view setNeedsDisplay:YES];
+    self.main_view.autoresizingMask = NSViewHeightSizable;
+    [self.view replaceSubview:self.main_view with:_user_search_controller.view];
+    [_user_search_controller.view setFrameOrigin:self.main_view.frame.origin];
+    [_user_search_controller.view setFrameSize:self.main_view.frame.size];
+    self.main_view = _user_search_controller.view;
 }
+
 
 - (NSString*)description
 {

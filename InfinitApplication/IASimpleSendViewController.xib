@@ -47,8 +47,9 @@
 						<string key="NSFrame">{{0, 28}, {317, 174}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="452895061"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSAntiCompressionPriority">{750, 750}</string>
 						<string key="NSClassName">NSView</string>
 					</object>
 					<object class="NSImageView" id="895327723">
@@ -164,6 +165,7 @@
 								<string key="NSFrame">{{233, 7}, {75, 14}}</string>
 								<reference key="NSSuperview" ref="452895061"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="511721013">
@@ -675,16 +677,6 @@
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">71</int>
-						<reference key="object" ref="618141194"/>
-						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">123</int>
-						<reference key="object" ref="706282810"/>
-						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">264</int>
 						<reference key="object" ref="544629120"/>
 						<array class="NSMutableArray" key="children">
@@ -793,11 +785,6 @@
 						<reference key="parent" ref="452895061"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">574</int>
-						<reference key="object" ref="436606098"/>
-						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">625</int>
 						<reference key="object" ref="964615074"/>
 						<reference key="parent" ref="452895061"/>
@@ -805,12 +792,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">668</int>
 						<reference key="object" ref="983450900"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">678</int>
-						<reference key="object" ref="834310119"/>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -819,13 +800,33 @@
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">680</int>
-						<reference key="object" ref="566066926"/>
+						<int key="objectID">678</int>
+						<reference key="object" ref="834310119"/>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">684</int>
 						<reference key="object" ref="960737660"/>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">574</int>
+						<reference key="object" ref="436606098"/>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">123</int>
+						<reference key="object" ref="706282810"/>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">680</int>
+						<reference key="object" ref="566066926"/>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">71</int>
+						<reference key="object" ref="618141194"/>
 						<reference key="parent" ref="1005"/>
 					</object>
 				</array>
@@ -846,6 +847,7 @@
 					<reference ref="706282810"/>
 					<reference ref="436606098"/>
 				</array>
+				<boolean value="YES" key="1.IBNSViewMetadataLastInspectedTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="123.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="22.IBNSViewMetadataConstraints">
@@ -903,7 +905,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">759</int>
+			<int key="maxID">791</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -918,17 +920,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IASimpleSendViewController</string>
 					<string key="superclassName">IAViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">clearSearchField:</string>
-						<string key="NS.object.0">NSButton</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">clearSearchField:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">clearSearchField:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="add_files_button">NSButton</string>
 						<string key="add_note_button">NSButton</string>

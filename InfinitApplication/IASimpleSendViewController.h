@@ -12,8 +12,7 @@
 
 @protocol IASimpleSendViewProtocol;
 
-@interface IASimpleSendViewController : IAViewController <NSTextFieldDelegate,
-                                                          IAUserSearchViewProtocol>
+@interface IASimpleSendViewController : IAViewController <IAUserSearchViewProtocol>
 
 @property (nonatomic, strong) IBOutlet NSButton* add_person_button;
 @property (nonatomic, strong) IBOutlet NSButton* add_note_button;
