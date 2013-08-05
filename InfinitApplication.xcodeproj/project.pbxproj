@@ -680,12 +680,12 @@
 		83C99DFE17AB8E7300AFF091 /* Send Controller */ = {
 			isa = PBXGroup;
 			children = (
-				83C99E0C17AB9C7B00AFF091 /* Resources */,
 				83F1148117AE5FDB00DCF662 /* Search Results */,
 				836AAF7217AE8891001ECF2E /* Advanced Send View */,
 				83C99E0217AB98AC00AFF091 /* Simple Send View */,
 				83C99DFF17AB8EAC00AFF091 /* IAGeneralSendController.h */,
 				83C99E0017AB8EAC00AFF091 /* IAGeneralSendController.m */,
+				83C99E0C17AB9C7B00AFF091 /* Resources */,
 			);
 			name = "Send Controller";
 			sourceTree = "<group>";
