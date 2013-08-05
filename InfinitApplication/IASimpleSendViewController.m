@@ -60,11 +60,14 @@
 //- Initialisation ---------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
+   andSearchController:(IAUserSearchViewController*)search_controller
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
-        _user_search_controller = [[IAUserSearchViewController alloc] initWithDelegate:self];
+        _user_search_controller = search_controller;
+        self.main_view.autoresizingMask = NSViewHeightSizable;
+        self.footer_view.autoresizingMask = NSViewHeightSizable;
     }
     return self;
 }
@@ -74,7 +77,6 @@
     [self.main_view addSubview:_user_search_controller.view];
     [_user_search_controller.view setFrameOrigin:NSMakePoint(0.0, 0.0)];
     [_user_search_controller.view setFrameSize:self.main_view.frame.size];
-    self.main_view = _user_search_controller.view;
 }
 
 
@@ -84,6 +86,16 @@
 }
 
 //- General Functions ------------------------------------------------------------------------------
+
+//- Button Handling --------------------------------------------------------------------------------
+
+- (IBAction)addNoteClicked:(NSButton*)sender
+{
+    if (sender == self.add_note_button)
+    {
+        [_delegate simpleSendViewWantsAddNote:self];
+    }
+}
 
 
 @end

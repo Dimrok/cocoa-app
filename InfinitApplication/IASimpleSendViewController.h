@@ -12,7 +12,7 @@
 
 @protocol IASimpleSendViewProtocol;
 
-@interface IASimpleSendViewController : IAViewController <IAUserSearchViewProtocol>
+@interface IASimpleSendViewController : IAViewController
 
 @property (nonatomic, strong) IBOutlet NSButton* add_person_button;
 @property (nonatomic, strong) IBOutlet NSButton* add_note_button;
@@ -20,10 +20,16 @@
 @property (nonatomic, strong) IBOutlet NSButton* add_files_button;
 
 
-- (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate;
+- (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
+   andSearchController:(IAUserSearchViewController*)search_controller;
 
 @end
 
 @protocol IASimpleSendViewProtocol <NSObject>
+
+- (void)simpleSendViewWantsAddFile:(IASimpleSendViewController*)sender;
+- (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender;
+- (void)simpleSendViewWantsAddRecipient:(IASimpleSendViewController*)sender;
+- (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender;
 
 @end
