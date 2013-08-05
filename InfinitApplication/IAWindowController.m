@@ -69,8 +69,6 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
 
 - (NSString*)description
@@ -85,8 +83,6 @@
     if (!_window_is_open)
         return;
     
-    _window_is_open = NO;
-    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.25;
@@ -94,6 +90,7 @@
      }
                         completionHandler:^
      {
+         _window_is_open = NO;
          self.window.alphaValue = 0.0;
          [self.window orderOut:nil];
          [self.window close];
@@ -106,7 +103,6 @@
     if (_window_is_open)
         return;
     
-    _window_is_open = YES;
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [self.window makeKeyAndOrderFront:nil];
     
@@ -117,6 +113,7 @@
      }
                         completionHandler:^
      {
+         _window_is_open = YES;
          self.window.alphaValue = 1.0;
      }];
 }
@@ -137,11 +134,14 @@
                      new_controller.view.frame.size.height;
     NSPoint midpoint = NSMakePoint(self.window.frame.origin.x,
                                    self.window.frame.origin.y + y_diff);
+    [new_controller.view setFrameOrigin:NSMakePoint(0.0, 0.0)];
     [self.window setFrame:NSMakeRect(midpoint.x, midpoint.y, new_size.width, new_size.height)
                   display:YES
                   animate:YES];
-    [self.window.contentView replaceSubview:_current_controller.view
-                                       with:new_controller.view];
+    [[self.window.contentView animator] replaceSubview:_current_controller.view
+                                                  with:new_controller.view];
+    [self.window display];
+    [self.window invalidateShadow];
     _current_controller = nil;
     _current_controller = new_controller;
 }
@@ -165,6 +165,5 @@
     [self openWindow];
     
 }
-
 
 @end
