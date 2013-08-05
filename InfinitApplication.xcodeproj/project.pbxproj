@@ -79,6 +79,7 @@
 		8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8398836017A6C1F9009409B3 /* IALoginViewController.xib */; };
 		8398836417A6C5C4009409B3 /* infinit_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 8398836317A6C5C4009409B3 /* infinit_logo_large.png */; };
 		8398836A17A6FDE7009409B3 /* IACenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */; };
+		83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */; };
 		83C124B817A7CEB000BE1252 /* IATransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124B717A7CEB000BE1252 /* IATransactionManager.m */; };
 		83C124BB17A7CEC000BE1252 /* IAUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124BA17A7CEC000BE1252 /* IAUserManager.m */; };
 		83C124C017A7EF0000BE1252 /* bg-main-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C124BE17A7EF0000BE1252 /* bg-main-button.png */; };
@@ -346,6 +347,8 @@
 		8398836517A6FA73009409B3 /* IADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADefine.h; sourceTree = "<group>"; };
 		8398836817A6FDE6009409B3 /* IACenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACenteredTextFieldCell.h; sourceTree = "<group>"; };
 		8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACenteredTextFieldCell.m; sourceTree = "<group>"; };
+		83A99B2B17AF9474008DE473 /* IASendFileListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASendFileListCellView.h; sourceTree = "<group>"; };
+		83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASendFileListCellView.m; sourceTree = "<group>"; };
 		83C124B617A7CEB000BE1252 /* IATransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IATransactionManager.h; sourceTree = "<group>"; };
 		83C124B717A7CEB000BE1252 /* IATransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IATransactionManager.m; sourceTree = "<group>"; };
 		83C124B917A7CEC000BE1252 /* IAUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserManager.h; sourceTree = "<group>"; };
@@ -624,6 +627,8 @@
 				836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */,
 				836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */,
 				836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */,
+				83A99B2B17AF9474008DE473 /* IASendFileListCellView.h */,
+				83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */,
 			);
 			name = "Advanced Send View";
 			sourceTree = "<group>";
@@ -1058,6 +1063,7 @@
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
 				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
 				836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */,
+				83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
