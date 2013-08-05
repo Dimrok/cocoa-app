@@ -11,11 +11,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import "IAAdvancedSendViewController.h"
 #import "IASimpleSendViewController.h"
 
 @protocol IAGeneralSendControllerProtocol;
 
-@interface IAGeneralSendController : NSObject <IASimpleSendViewProtocol>
+@interface IAGeneralSendController : NSObject <IAAdvancedSendViewProtocol,
+                                               IASimpleSendViewProtocol,
+                                               IAUserSearchViewProtocol>
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
 
