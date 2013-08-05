@@ -140,8 +140,8 @@
     [self.window setFrame:NSMakeRect(midpoint.x, midpoint.y, new_size.width, new_size.height)
                   display:YES
                   animate:YES];
-    [self.window.contentView addSubview:new_controller.view];
-    [_current_controller.view removeFromSuperview];
+    [self.window.contentView replaceSubview:_current_controller.view
+                                       with:new_controller.view];
     _current_controller = nil;
     _current_controller = new_controller;
 }
