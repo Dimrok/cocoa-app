@@ -44,6 +44,11 @@
     return @"[NotificationListViewController]";
 }
 
+- (BOOL)closeOnFocusLost
+{
+    return YES;
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)settingsButtonClicked:(NSButton*)sender

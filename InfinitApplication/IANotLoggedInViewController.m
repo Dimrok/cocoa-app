@@ -62,6 +62,11 @@
     return @"NotLoggedInViewController";
 }
 
+- (BOOL)closeOnFocusLost
+{
+    return YES;
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)openLoginWindow:(NSButton*)sender

@@ -52,6 +52,11 @@
     return @"[AdvancedSendView]";
 }
 
+- (BOOL)closeOnFocusLost
+{
+    return NO;
+}
+
 - (void)awakeFromNib
 {
     [self.search_view addSubview:_user_search_controller.view];

@@ -105,6 +105,7 @@
     
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [self.window makeKeyAndOrderFront:nil];
+    [self.window setLevel:NSFloatingWindowLevel];
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
@@ -122,7 +123,8 @@
 {
     if (self.window != notification.object)
         return;
-    [_delegate windowControllerWantsCloseWindow:self];
+    if ([_current_controller closeOnFocusLost])
+        [_delegate windowControllerWantsCloseWindow:self];
 }
 
 //- View Handling ----------------------------------------------------------------------------------

@@ -20,4 +20,6 @@
 @property (nonatomic, retain) IBOutlet NSView* header_view;
 @property (nonatomic, retain) IBOutlet NSView* main_view;
 
+- (BOOL)closeOnFocusLost;
+
 @end
