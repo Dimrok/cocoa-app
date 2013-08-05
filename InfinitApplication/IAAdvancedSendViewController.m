@@ -8,6 +8,8 @@
 
 #import "IAAdvancedSendViewController.h"
 
+#import "IAHoverButtonCell.h"
+
 @interface IAAdvancedSendViewController ()
 
 @end
@@ -57,8 +59,15 @@
     return NO;
 }
 
+- (void)setButtonHoverImages
+{
+    [self.add_files_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
+    [self.cancel_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
+}
+
 - (void)awakeFromNib
 {
+    [self setButtonHoverImages];
     [self.search_view addSubview:_user_search_controller.view];
     [_user_search_controller.view setFrameOrigin:NSMakePoint(0.0, 0.0)];
     [_user_search_controller.view setFrameSize:self.search_view.frame.size];

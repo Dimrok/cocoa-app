@@ -8,6 +8,8 @@
 
 #import "IASimpleSendViewController.h"
 
+#import "IAHoverButtonCell.h"
+
 @interface IASimpleSendViewController ()
 
 @end
@@ -72,8 +74,18 @@
     return self;
 }
 
+- (void)setButtonHoverImages
+{
+    [self.add_files_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
+    [self.add_person_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-people-hover"]];
+    [self.add_note_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-note-hover"]];
+    [self.cancel_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
+}
+
 - (void)awakeFromNib
 {
+    [self setButtonHoverImages];
+    
     [self.main_view addSubview:_user_search_controller.view];
     [_user_search_controller.view setFrameOrigin:NSMakePoint(0.0, 0.0)];
     [_user_search_controller.view setFrameSize:self.main_view.frame.size];
