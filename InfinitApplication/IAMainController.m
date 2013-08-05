@@ -335,7 +335,7 @@
 
 - (void)notificationListGotTransferClick:(IANotificationListViewController*)sender
 {
-    [self showNotLoggedInView];
+    [_general_send_controller openWithNoFile];
 }
 
 //- Not Logged In View Protocol --------------------------------------------------------------------
@@ -367,7 +367,7 @@
 - (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files
 {
-    [_general_send_controller simpleFileDrop];
+    [_general_send_controller openWithFiles:files];
 }
 
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
