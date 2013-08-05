@@ -71,9 +71,8 @@
 
 - (void)awakeFromNib
 {
-    self.main_view.autoresizingMask = NSViewHeightSizable;
-    [self.view replaceSubview:self.main_view with:_user_search_controller.view];
-    [_user_search_controller.view setFrameOrigin:self.main_view.frame.origin];
+    [self.main_view addSubview:_user_search_controller.view];
+    [_user_search_controller.view setFrameOrigin:NSMakePoint(0.0, 0.0)];
     [_user_search_controller.view setFrameSize:self.main_view.frame.size];
     self.main_view = _user_search_controller.view;
 }
