@@ -18,4 +18,9 @@
 @synthesize main_view;
 @synthesize footer_view;
 
+- (BOOL)closeOnFocusLost
+{
+    return NO;
+}
+
 @end
