@@ -10,6 +10,9 @@
 
 #import <Gap/IAGapState.h>
 
+#define INFINIT_REGISTER_URL "http://infinit.io/register"
+#define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot-password"
+
 @interface IALoginViewController ()
 
 @end
@@ -129,7 +132,7 @@
 }
 
 - (void)awakeFromNib
-{
+{    
     [self.email_address setDelegate:self];
     [self.error_message setHidden:YES];
     self.error_message.stringValue = @"";
@@ -229,16 +232,16 @@
     if (control == self.email_address)
     {
         if (self.email_address.stringValue.length == 0)
-            [self.create_account_link setHidden:NO];
+            [self.create_account_button setHidden:NO];
         else
-            [self.create_account_link setHidden:YES];
+            [self.create_account_button setHidden:YES];
     }
     else if (control == self.password)
     {
         if (self.password.stringValue.length == 0)
-            [self.fogot_password_link setHidden:NO];
+            [self.forgot_password_button setHidden:NO];
         else
-            [self.fogot_password_link setHidden:YES];
+            [self.forgot_password_button setHidden:YES];
     }
 }
 
@@ -282,6 +285,20 @@
 {
     if (sender == self.close_button)
         [self closeLoginWindow];
+}
+
+//- Register and Forgot Password -------------------------------------------------------------------
+
+- (IBAction)registerButtonClicked:(NSButton*)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL
+        URLWithString:[NSString stringWithUTF8String:INFINIT_REGISTER_URL]]];
+}
+
+- (IBAction)forgotPasswordButtonClicked:(NSButton*)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL
+        URLWithString:[NSString stringWithUTF8String:INFINIT_FORGOT_PASSWORD_URL]]];
 }
 
 @end
