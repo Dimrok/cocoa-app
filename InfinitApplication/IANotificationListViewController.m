@@ -24,7 +24,7 @@
 
 - (id)initWithDelegate:(id<IANotificationListViewProtocol>)delegate
 {
-    if (self = [super initWithNibName:[self className] bundle:nil])
+    if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
     }
