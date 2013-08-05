@@ -276,4 +276,12 @@
     }
 }
 
+//- Close Button -----------------------------------------------------------------------------------
+
+- (IBAction)closeButtonClicked:(NSButton*)sender
+{
+    if (sender == self.close_button)
+        [self closeLoginWindow];
+}
+
 @end
