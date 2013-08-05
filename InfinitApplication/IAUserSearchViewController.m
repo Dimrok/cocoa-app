@@ -38,6 +38,7 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
+        self.table_view.autoresizingMask = NSViewHeightSizable;
     }
     
     return self;
@@ -54,6 +55,7 @@
     self.view.autoresizingMask = NSViewHeightSizable | NSViewWidthSizable;
     self.search_field.focusRingType = NSFocusRingTypeNone;
     [self.clear_search setHidden:YES];
+    [self.table_view setHidden:YES];
 }
 
 //- General Functions ------------------------------------------------------------------------------
