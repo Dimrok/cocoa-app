@@ -16,6 +16,8 @@
     
     // Send views
     IASimpleSendViewController* _simple_send_controller;
+    
+    NSMutableArray* _files;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -25,16 +27,22 @@
     if (self = [super init])
     {
         _delegate = delegate;
+        _files = [NSMutableArray array];
     }
     return self;
 }
 
-//- General Functions ------------------------------------------------------------------------------
+//- Open Functions ---------------------------------------------------------------------------------
 
-- (void)simpleFileDrop
+- (void)openWithNoFile
 {
     _simple_send_controller = [[IASimpleSendViewController alloc] initWithDelegate:self];
     [_delegate sendController:self wantsActiveController:_simple_send_controller];
+}
+
+- (void)openWithFiles:(NSArray*)files
+{
+    [_files addObjectsFromArray:files];
 }
 
 @end

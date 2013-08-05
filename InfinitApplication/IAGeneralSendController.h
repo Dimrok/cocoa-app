@@ -19,7 +19,8 @@
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
 
-- (void)simpleFileDrop;
+- (void)openWithNoFile;
+- (void)openWithFiles:(NSArray*)files;
 
 @end
 
