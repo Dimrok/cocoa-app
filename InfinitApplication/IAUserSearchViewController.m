@@ -53,6 +53,7 @@
 {
     self.view.autoresizingMask = NSViewHeightSizable | NSViewWidthSizable;
     self.search_field.focusRingType = NSFocusRingTypeNone;
+    [self.clear_search setHidden:YES];
 }
 
 //- General Functions ------------------------------------------------------------------------------
