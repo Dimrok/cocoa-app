@@ -41,7 +41,6 @@
     return YES;
 }
 
-
 @end
 
 @implementation IAWindowController
@@ -136,7 +135,6 @@
                      new_controller.view.frame.size.height;
     NSPoint midpoint = NSMakePoint(self.window.frame.origin.x,
                                    self.window.frame.origin.y + y_diff);
-    [new_controller.view setFrameOrigin:NSMakePoint(0.0, 0.0)];
     [self.window setFrame:NSMakeRect(midpoint.x, midpoint.y, new_size.width, new_size.height)
                   display:YES
                   animate:YES];
