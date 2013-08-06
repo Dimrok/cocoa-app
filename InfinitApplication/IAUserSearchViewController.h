@@ -18,11 +18,17 @@
 @property (nonatomic, strong) IBOutlet NSView* search_box_view;
 @property (nonatomic, strong) IBOutlet NSTextField* search_field;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
+@property (nonatomic, strong) IBOutlet NSScrollView* results_view;
 
-- (id)initWithDelegate:(id<IAUserSearchViewProtocol>)delegate;
+- (id)init;
+
+- (void)setDelegate:(id<IAUserSearchViewProtocol>)delegate;
 
 @end
 
 @protocol IAUserSearchViewProtocol <NSObject>
+
+- (void)searchView:(IAUserSearchViewController*)sender
+       changedSize:(NSSize)size;
 
 @end

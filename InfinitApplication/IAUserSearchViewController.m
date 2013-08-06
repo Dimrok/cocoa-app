@@ -42,17 +42,18 @@
     NSMutableArray* _search_results;
     
     CGFloat _row_height;
+    NSInteger _max_rows_shown;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (id)initWithDelegate:(id<IAUserSearchViewProtocol>)delegate
+- (id)init
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
-        _delegate = delegate;
-        _row_height = 40.0;
-        self.table_view.autoresizingMask = NSViewHeightSizable;
+        _row_height = 42.0;
+        _max_rows_shown = 5;
+        _delegate = nil;
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -60,6 +61,11 @@
     }
     
     return self;
+}
+
+- (void)setDelegate:(id<IAUserSearchViewProtocol>)delegate
+{
+    _delegate = delegate;
 }
 
 - (void)dealloc
@@ -74,10 +80,7 @@
 
 - (void)awakeFromNib
 {
-    self.view.autoresizingMask = NSViewHeightSizable | NSViewWidthSizable;
-    self.search_field.focusRingType = NSFocusRingTypeNone;
     [self.clear_search setHidden:YES];
-    [self.table_view setHidden:YES];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -115,7 +118,6 @@
     NSString* search_string = self.search_field.stringValue;
     if ([IAFunctions stringIsValidEmail:search_string]) // Search using using email address
     {
-        IALog(@"searching email address");
         NSMutableDictionary* data = [NSMutableDictionary dictionaryWithObject:search_string
                                                                        forKey:@"entered_email"];
         [[IAGapState instance] getUserIdfromEmail:search_string
@@ -144,13 +146,12 @@
     {
         IAUser* user = [IAUser userWithId:user_id];
         _search_results = [NSMutableArray arrayWithObject:user];
-        IALog(@"%@", _search_results);
     }
     else
     {
         _search_results = nil;
     }
-    [self reloadData];
+    [self updateResultsTable];
 }
 
 - (void)searchResultsCallback:(IAGapOperationResult*)results
@@ -162,8 +163,8 @@
         return;
     }
     _search_results = [NSMutableArray arrayWithArray:results.data];
-    IALog(@"Seach results: %@", _search_results);
-    [self reloadData];
+    IALog(@"search results: %@", _search_results);
+    [self updateResultsTable];
 }
 
 //- Search Field -----------------------------------------------------------------------------------
@@ -176,9 +177,8 @@
         if (self.search_field.stringValue.length == 0)
         {
             [self.clear_search setHidden:YES];
-            [self.table_view setHidden:YES];
+            [self clearResults];
             [self cancelLastSearchOperation];
-            _search_results = nil;
         }
         else
         {
@@ -201,10 +201,38 @@
 
 //- Table Functions --------------------------------------------------------------------------------
 
-- (void)reloadData
+- (void)clearResults
 {
-    [self.table_view setHidden:NO];
+    [self.results_view setHidden:YES];
+    [self.results_view setFrameSize:NSZeroSize];
+    _search_results = nil;
     [self.table_view reloadData];
+    [self.view setFrameSize:self.search_box_view.frame.size];
+    [self.search_box_view setFrameOrigin:NSZeroPoint];
+    [_delegate searchView:self changedSize:self.view.frame.size];
+}
+
+- (void)updateResultsTable
+{
+    [self.results_view setHidden:NO];
+    [self.results_view setFrameSize:NSMakeSize(self.view.frame.size.width, [self tableHeight])];
+    NSSize new_size = NSMakeSize(self.view.frame.size.width,
+                                 self.results_view.frame.size.height +
+                                    self.search_box_view.frame.size.height);
+    [self.view setFrameSize:new_size];
+    [_delegate searchView:self
+              changedSize:new_size];
+    [self.table_view reloadData];
+}
+
+- (CGFloat)tableHeight
+{
+    CGFloat total_height = _search_results.count * _row_height;
+    CGFloat max_height = _row_height * _max_rows_shown;
+    if (total_height > max_height)
+        return max_height;
+    else
+        return total_height;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
@@ -221,7 +249,7 @@
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
-{
+{    
     IAUser* user = [_search_results objectAtIndex:row];
     if (user == nil || [user.user_id isEqualToString:@""])
         return nil;
@@ -241,8 +269,6 @@
 - (NSTableRowView*)tableView:(NSTableView*)tableView
                rowViewForRow:(NSInteger)row
 {
-    if (_search_results == nil)
-        return nil;
     IASearchResultsTableRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
     if (row_view == nil)
         row_view = [[IASearchResultsTableRowView alloc] initWithFrame:NSZeroRect];
