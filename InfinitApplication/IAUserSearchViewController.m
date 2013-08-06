@@ -163,7 +163,6 @@
         return;
     }
     _search_results = [NSMutableArray arrayWithArray:results.data];
-    IALog(@"search results: %@", _search_results);
     [self updateResultsTable];
 }
 
@@ -196,6 +195,7 @@
         self.search_field.stringValue = @"";
         [self.clear_search setHidden:YES];
         [self cancelLastSearchOperation];
+        [self clearResults];
     }
 }
 
