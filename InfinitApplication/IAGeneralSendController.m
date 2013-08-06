@@ -30,7 +30,7 @@
     {
         _delegate = delegate;
         _files = [NSMutableArray array];
-        _user_search_controller = [[IAUserSearchViewController alloc] initWithDelegate:self];
+        _user_search_controller = [[IAUserSearchViewController alloc] init];
     }
     return self;
 }

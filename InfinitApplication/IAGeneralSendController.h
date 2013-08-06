@@ -17,8 +17,7 @@
 @protocol IAGeneralSendControllerProtocol;
 
 @interface IAGeneralSendController : NSObject <IAAdvancedSendViewProtocol,
-                                               IASimpleSendViewProtocol,
-                                               IAUserSearchViewProtocol>
+                                               IASimpleSendViewProtocol>
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
 
