@@ -101,4 +101,55 @@
     return shadow;
 }
 
++ (NSImage*)makeRoundAvatar:(NSImage*)square_image
+                   ofRadius:(CGFloat)radius
+            withWhiteBorder:(BOOL)border
+{
+    CGFloat border_thickness = 0.0;
+    CGFloat image_radius = radius;
+    if (border)
+    {
+        border_thickness = 3.0;
+        image_radius -= 2.0 * border_thickness;
+    }
+    
+    square_image.scalesWhenResized = YES;
+    square_image.size = NSMakeSize(image_radius, image_radius);
+    
+    NSImage* res = [[NSImage alloc] initWithSize:NSMakeSize(radius,radius)];
+    [res lockFocus];
+    
+    if (border)
+    {
+        NSBezierPath* grey_border = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(0.0,
+                                                                                      0.0,
+                                                                                      radius,
+                                                                                      radius)];
+        [TH_RGBCOLOR(239.0, 239.0, 239.0) set];
+        [grey_border stroke];
+        
+        NSBezierPath* white_border = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(1.0,
+                                                                                       1.0,
+                                                                                       radius - 1.0,
+                                                                                       radius - 1.0)];
+        [white_border setLineWidth:(border_thickness - 1.0)];
+        [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+        [white_border stroke];
+    }
+
+    NSBezierPath* image_path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(border_thickness,
+                                                                                 border_thickness,
+                                                                                 image_radius,
+                                                                                 image_radius)];
+    [image_path addClip];
+    [square_image drawInRect:NSMakeRect(border_thickness, border_thickness, image_radius, image_radius) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+//    [square_image drawAtPoint:NSMakePoint(border_thickness, border_thickness)
+//                     fromRect:NSZeroRect
+//                    operation:NSCompositeSourceOver
+//                     fraction:1.0];
+    
+    [res unlockFocus];
+    return res;
+}
+
 @end

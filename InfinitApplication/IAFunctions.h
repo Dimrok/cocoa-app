@@ -26,4 +26,8 @@
                    blurRadius:(CGFloat)blur_radius
                         color:(NSColor*)colour;
 
++ (NSImage*)makeRoundAvatar:(NSImage*)square_image
+                   ofRadius:(CGFloat)radius
+            withWhiteBorder:(BOOL)border;
+
 @end
