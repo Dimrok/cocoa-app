@@ -108,6 +108,7 @@
 {
     CGFloat height = self.header_view.frame.size.height + self.main_view.frame.size.height +
         self.footer_view.frame.size.height;
+    IALog(@"%(%f, %f)", self.main_view.frame.origin.x, self.main_view.frame.origin.y);
     [self.view setFrameSize:NSMakeSize(self.view.frame.size.width, height)];
     CGFloat y_diff = height - self.view.window.frame.size.height;
     NSRect window_rect = NSZeroRect;
@@ -137,7 +138,6 @@
        changedSize:(NSSize)size
 {
     [self.main_view setFrameSize:size];
-    [self.main_view setFrameOrigin:NSZeroPoint];
     [_user_search_controller.view setFrameOrigin:NSZeroPoint];
     [self resizeContainerView];
 }
