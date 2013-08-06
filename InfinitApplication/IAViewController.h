@@ -14,11 +14,20 @@
 
 #import <Cocoa/Cocoa.h>
 
+@interface IAFooterView : NSView
+@end
+
+@interface IAHeaderView : NSView
+@end
+
+@interface IAMainView : NSView
+@end
+
 @interface IAViewController : NSViewController
 
-@property (nonatomic, retain) IBOutlet NSView* footer_view;
-@property (nonatomic, retain) IBOutlet NSView* header_view;
-@property (nonatomic, retain) IBOutlet NSView* main_view;
+@property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
+@property (nonatomic, retain) IBOutlet IAHeaderView* header_view;
+@property (nonatomic, retain) IBOutlet IAMainView* main_view;
 
 - (BOOL)closeOnFocusLost;
 
