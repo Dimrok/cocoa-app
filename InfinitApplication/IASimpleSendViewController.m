@@ -14,7 +14,7 @@
 
 @end
 
-@interface IASimpleSendFooterView : NSView
+@interface IASimpleSendFooterView : IAFooterView
 @end
 
 @implementation IASimpleSendFooterView
@@ -68,8 +68,6 @@
     {
         _delegate = delegate;
         _user_search_controller = search_controller;
-        self.main_view.autoresizingMask = NSViewHeightSizable;
-        self.footer_view.autoresizingMask = NSViewHeightSizable;
     }
     return self;
 }
@@ -84,11 +82,13 @@
 
 - (void)awakeFromNib
 {
+    [_user_search_controller setDelegate:self];
     [self setButtonHoverImages];
-    
     [self.main_view addSubview:_user_search_controller.view];
-    [_user_search_controller.view setFrameOrigin:NSMakePoint(0.0, 0.0)];
-    [_user_search_controller.view setFrameSize:self.main_view.frame.size];
+    [_user_search_controller.view setFrameSize:_user_search_controller.search_box_view.frame.size];
+    [self.main_view setFrameSize:_user_search_controller.view.frame.size];
+    [_user_search_controller.view setFrameOrigin:NSZeroPoint];
+    [self resizeContainerView];
 }
 
 
@@ -104,6 +104,23 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (void)resizeContainerView
+{
+    CGFloat height = self.header_view.frame.size.height + self.main_view.frame.size.height +
+        self.footer_view.frame.size.height;
+    [self.view setFrameSize:NSMakeSize(self.view.frame.size.width, height)];
+    CGFloat y_diff = height - self.view.window.frame.size.height;
+    NSRect window_rect = NSZeroRect;
+    window_rect.origin = NSMakePoint(self.view.window.frame.origin.x,
+                                     self.view.window.frame.origin.y - y_diff);
+    window_rect.size = self.view.frame.size;
+    [self.view.window setFrame:window_rect
+                       display:YES];
+    [self.view setFrameOrigin:NSZeroPoint];
+    [self.view.window display];
+    [self.view.window invalidateShadow];
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)addNoteClicked:(NSButton*)sender
@@ -114,5 +131,15 @@
     }
 }
 
+//- User Search View Protocol ----------------------------------------------------------------------
+
+- (void)searchView:(IAUserSearchViewController*)sender
+       changedSize:(NSSize)size
+{
+    [self.main_view setFrameSize:size];
+    [self.main_view setFrameOrigin:NSZeroPoint];
+    [_user_search_controller.view setFrameOrigin:NSZeroPoint];
+    [self resizeContainerView];
+}
 
 @end
