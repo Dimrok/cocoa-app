@@ -61,7 +61,7 @@
 										<string key="NSFrameSize">{317, 148}</string>
 										<reference key="NSSuperview" ref="418167945"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="435265283"/>
+										<reference key="NSNextKeyView" ref="1008525745"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<string key="NSAntiCompressionPriority">{750, 200}</string>
 										<bool key="NSEnabled">YES</bool>
@@ -176,7 +176,6 @@
 								<string key="NSFrame">{{224, 17}, {15, 102}}</string>
 								<reference key="NSSuperview" ref="431511938"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:58</string>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="431511938"/>
@@ -201,7 +200,7 @@
 						<string key="NSFrameSize">{317, 148}</string>
 						<reference key="NSSuperview" ref="420626012"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1008525745"/>
+						<reference key="NSNextKeyView" ref="418167945"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSAntiCompressionPriority">{750, 200}</string>
 						<int key="NSsFlags">150032</int>
@@ -404,7 +403,7 @@
 						<string key="label">result_avatar</string>
 						<object class="NSTableCellView" key="source" id="435265283">
 							<nil key="NSNextResponder"/>
-							<int key="NSvFlags">274</int>
+							<int key="NSvFlags">4370</int>
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="NSImageView" id="172248264">
 									<reference key="NSNextResponder" ref="435265283"/>
@@ -471,7 +470,7 @@
 								<object class="NSButton" id="508109691">
 									<reference key="NSNextResponder" ref="435265283"/>
 									<int key="NSvFlags">268</int>
-									<string key="NSFrame">{{272, 13}, {17, 15}}</string>
+									<string key="NSFrame">{{279, 13}, {17, 15}}</string>
 									<reference key="NSSuperview" ref="435265283"/>
 									<reference key="NSNextKeyView" ref="1000879543"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -507,19 +506,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">result_name</string>
-						<reference key="source" ref="435265283"/>
-						<reference key="destination" ref="973133474"/>
-					</object>
-					<int key="connectionID">265</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">result_star</string>
 						<reference key="source" ref="435265283"/>
 						<reference key="destination" ref="508109691"/>
 					</object>
 					<int key="connectionID">266</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">result_fullname</string>
+						<reference key="source" ref="435265283"/>
+						<reference key="destination" ref="973133474"/>
+					</object>
+					<int key="connectionID">564</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">starClicked:</string>
+						<reference key="source" ref="435265283"/>
+						<reference key="destination" ref="508109691"/>
+					</object>
+					<int key="connectionID">566</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -714,6 +721,7 @@
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="110.CustomClassName">IASearchResultsCellView</string>
 				<string key="110.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="110.userInterfaceItemIdentifier">user_search_cell</string>
 				<string key="111.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="112.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="113.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -743,7 +751,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">563</int>
+			<int key="maxID">566</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -760,7 +768,7 @@
 					<string key="superclassName">NSTableCellView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="result_avatar">NSImageView</string>
-						<string key="result_name">NSTextField</string>
+						<string key="result_fullname">NSTextField</string>
 						<string key="result_star">NSButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -768,8 +776,8 @@
 							<string key="name">result_avatar</string>
 							<string key="candidateClassName">NSImageView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="result_name">
-							<string key="name">result_name</string>
+						<object class="IBToOneOutletInfo" key="result_fullname">
+							<string key="name">result_fullname</string>
 							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="result_star">

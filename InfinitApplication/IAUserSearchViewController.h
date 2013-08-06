@@ -21,8 +21,6 @@
 
 - (id)initWithDelegate:(id<IAUserSearchViewProtocol>)delegate;
 
-- (void)searchForString:(NSString*)str;
-
 @end
 
 @protocol IAUserSearchViewProtocol <NSObject>
