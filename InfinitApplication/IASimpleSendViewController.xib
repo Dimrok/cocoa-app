@@ -112,7 +112,6 @@
 								<string key="NSFrame">{{233, 7}, {75, 14}}</string>
 								<reference key="NSSuperview" ref="452895061"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="511721013">
@@ -174,21 +173,21 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="544629120"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<string key="NSHuggingPriority">{1000, 250}</string>
-						<string key="NSAntiCompressionPriority">{750, 1000}</string>
+						<string key="NSHuggingPriority">{750, 750}</string>
+						<string key="NSAntiCompressionPriority">{750, 750}</string>
 						<string key="NSClassName">IASimpleSendFooterView</string>
 					</object>
 					<object class="NSCustomView" id="983450900">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">12</int>
+						<int key="NSvFlags">268</int>
 						<array class="NSMutableArray" key="NSSubviews"/>
 						<string key="NSFrame">{{0, 28}, {317, 107}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="452895061"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<string key="NSHuggingPriority">{1000, 1000}</string>
-						<string key="NSAntiCompressionPriority">{750, 1}</string>
+						<string key="NSHuggingPriority">{750, 250}</string>
+						<string key="NSAntiCompressionPriority">{750, 250}</string>
 						<string key="NSClassName">IAMainView</string>
 					</object>
 					<object class="NSCustomView" id="356114827">
@@ -211,7 +210,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="983450900"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<string key="NSHuggingPriority">{1000, 1000}</string>
+								<string key="NSHuggingPriority">{750, 750}</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSImageCell" key="NSCell" id="961982143">
 									<int key="NSCellFlags">134217728</int>
@@ -235,6 +234,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="495489495"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<string key="NSHuggingPriority">{750, 750}</string>
 						<string key="NSClassName">IAHeaderView</string>
 					</object>
 				</array>
@@ -242,7 +242,8 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="356114827"/>
-				<string key="NSHuggingPriority">{1000, 1000}</string>
+				<string key="NSHuggingPriority">{750, 250}</string>
+				<string key="NSAntiCompressionPriority">{750, 250}</string>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</array>
@@ -948,7 +949,8 @@
 					<reference ref="576041266"/>
 					<reference ref="706282810"/>
 				</array>
-				<boolean value="YES" key="1.IBNSViewMetadataLastInspectedTranslatesAutoresizingMaskIntoConstraints"/>
+				<boolean value="NO" key="1.IBNSViewMetadataLastInspectedTranslatesAutoresizingMaskIntoConstraints"/>
+				<boolean value="NO" key="1.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array key="22.IBNSViewMetadataConstraints">
 					<reference ref="11150841"/>

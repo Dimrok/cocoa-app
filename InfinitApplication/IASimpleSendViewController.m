@@ -88,6 +88,11 @@
     [_user_search_controller.view setFrameSize:_user_search_controller.search_box_view.frame.size];
     [self.main_view setFrameSize:_user_search_controller.view.frame.size];
     [_user_search_controller.view setFrameOrigin:NSZeroPoint];
+    [self.main_view addConstraints:[NSLayoutConstraint
+            constraintsWithVisualFormat:@"V:|[search_view]|"
+                                options:0
+                                metrics:nil
+                                  views:@{@"search_view": _user_search_controller.view}]];
     [self resizeContainerView];
 }
 
@@ -108,16 +113,17 @@
 {
     CGFloat height = self.header_view.frame.size.height + self.main_view.frame.size.height +
         self.footer_view.frame.size.height;
-    IALog(@"%(%f, %f)", self.main_view.frame.origin.x, self.main_view.frame.origin.y);
-    [self.view setFrameSize:NSMakeSize(self.view.frame.size.width, height)];
+    NSSize new_size = NSMakeSize(self.view.frame.size.width, height);
     CGFloat y_diff = height - self.view.window.frame.size.height;
     NSRect window_rect = NSZeroRect;
     window_rect.origin = NSMakePoint(self.view.window.frame.origin.x,
                                      self.view.window.frame.origin.y - y_diff);
-    window_rect.size = self.view.frame.size;
+    window_rect.size = new_size;
     [self.view.window setFrame:window_rect
-                       display:YES];
-    [self.view setFrameOrigin:NSZeroPoint];
+                       display:YES
+                       animate:YES];
+    [self.view.animator layoutSubtreeIfNeeded];
+    [self.view setFrame:NSMakeRect(0.0, 0.0, new_size.width, new_size.height)];
     [self.view.window display];
     [self.view.window invalidateShadow];
 }
@@ -138,7 +144,6 @@
        changedSize:(NSSize)size
 {
     [self.main_view setFrameSize:size];
-    [_user_search_controller.view setFrameOrigin:NSZeroPoint];
     [self resizeContainerView];
 }
 

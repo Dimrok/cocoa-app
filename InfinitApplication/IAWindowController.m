@@ -140,6 +140,12 @@
                   animate:YES];
     [[self.window.contentView animator] replaceSubview:_current_controller.view
                                                   with:new_controller.view];
+    
+    [self.window.contentView addConstraints:[NSLayoutConstraint
+                                             constraintsWithVisualFormat:@"V:|[view]|"
+                                             options:0
+                                             metrics:nil
+                                             views:@{@"view": new_controller.view}]];
     [self.window display];
     [self.window invalidateShadow];
     _current_controller = nil;
@@ -161,6 +167,12 @@
     [self.window setFrame:frame display:NO animate:NO];
     
     [self.window.contentView addSubview:controller.view];
+    
+    [self.window.contentView addConstraints:[NSLayoutConstraint
+                                        constraintsWithVisualFormat:@"V:|[view]|"
+                                                            options:nil
+                                                            metrics:0
+                                                              views:@{@"view": controller.view}]];
     
     [self openWindow];
     

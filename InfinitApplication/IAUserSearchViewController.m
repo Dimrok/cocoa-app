@@ -12,7 +12,6 @@
 #import "IASearchResultsCellView.h"
 
 @interface IAUserSearchViewController ()
-
 @end
 
 @interface IASearchBoxView : NSView
@@ -25,6 +24,11 @@
     NSBezierPath* path = [NSBezierPath bezierPathWithRect:self.bounds];
     [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
     [path fill];
+}
+
+- (NSSize)intrinsicContentSize
+{
+    return self.bounds.size;
 }
 
 @end
@@ -203,23 +207,17 @@
 
 - (void)clearResults
 {
-    [self.results_view setHidden:YES];
-    [self.results_view setFrameSize:NSZeroSize];
+    [self.view setFrameSize:self.search_box_view.frame.size];
+    [_delegate searchView:self changedSize:self.view.frame.size];
     _search_results = nil;
     [self.table_view reloadData];
-    [self.view setFrameSize:self.search_box_view.frame.size];
-    [self.search_box_view setFrameOrigin:NSZeroPoint];
-    [_delegate searchView:self changedSize:self.view.frame.size];
 }
 
 - (void)updateResultsTable
 {
     [self.results_view setHidden:NO];
-    [self.results_view setFrameSize:NSMakeSize(self.view.frame.size.width, [self tableHeight])];
     NSSize new_size = NSMakeSize(self.view.frame.size.width,
-                                 self.results_view.frame.size.height +
-                                    self.search_box_view.frame.size.height);
-    [self.view setFrameSize:new_size];
+                                 [self tableHeight] + self.search_box_view.frame.size.height);
     [_delegate searchView:self
               changedSize:new_size];
     [self.table_view reloadData];
