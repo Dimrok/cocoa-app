@@ -30,6 +30,10 @@
 @protocol IAUserSearchViewProtocol <NSObject>
 
 - (void)searchView:(IAUserSearchViewController*)sender
-       changedSize:(NSSize)size;
+       changedSize:(NSSize)size
+  withActiveSearch:(BOOL)searching;
+
+- (void)searchView:(IAUserSearchViewController*)sender
+         choseUser:(IAUser*)user;
 
 @end
