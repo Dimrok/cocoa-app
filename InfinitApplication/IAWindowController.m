@@ -170,8 +170,8 @@
     
     [self.window.contentView addConstraints:[NSLayoutConstraint
                                         constraintsWithVisualFormat:@"V:|[view]|"
-                                                            options:nil
-                                                            metrics:0
+                                                            options:0
+                                                            metrics:nil
                                                               views:@{@"view": controller.view}]];
     
     [self openWindow];
