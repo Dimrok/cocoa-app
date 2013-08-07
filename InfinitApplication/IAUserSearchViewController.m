@@ -14,11 +14,12 @@
 @interface IAUserSearchViewController ()
 @end
 
+//- Search Box View --------------------------------------------------------------------------------
+
 @interface IASearchBoxView : NSView
 @end
 
 @implementation IASearchBoxView
-
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -43,6 +44,8 @@
 }
 
 @end
+
+//- Search Table Row View --------------------------------------------------------------------------
 
 @interface IASearchResultsTableRowView : NSTableRowView
 @end
@@ -100,6 +103,8 @@
 }
 
 @end
+
+//- Search View Controller -------------------------------------------------------------------------
 
 @implementation IAUserSearchViewController
 {
@@ -284,13 +289,11 @@ doCommandBySelector:(SEL)commandSelector
     }
     else if (commandSelector == @selector(moveDown:))
     {
-        IALog(@"down");
         [self moveTableSelectionBy:1];
         return YES;
     }
     else if (commandSelector == @selector(moveUp:))
     {
-        IALog(@"up");
         [self moveTableSelectionBy:-1];
         return YES;
     }
@@ -303,7 +306,9 @@ doCommandBySelector:(SEL)commandSelector
 - (void)clearResults
 {
     [self.view setFrameSize:self.search_box_view.frame.size];
-    [_delegate searchView:self changedSize:self.view.frame.size];
+    [_delegate searchView:self
+              changedSize:self.view.frame.size
+         withActiveSearch:NO];
     _search_results = nil;
     [self.no_results_message setHidden:YES];
 }
@@ -324,7 +329,8 @@ doCommandBySelector:(SEL)commandSelector
                               self.search_box_view.frame.size.height + [self tableHeight]);
     }
     [_delegate searchView:self
-              changedSize:new_size];
+              changedSize:new_size
+         withActiveSearch:YES];
     [self.table_view reloadData];
 }
 
@@ -399,7 +405,8 @@ doCommandBySelector:(SEL)commandSelector
     NSInteger row = self.table_view.selectedRow;
     if (row == -1)
         return;
-    IALog(@"Adding user %@", [_search_results objectAtIndex:row]);
+    
+    [_delegate searchView:self choseUser:[_search_results objectAtIndex:row]];
 }
 
 - (void)moveTableSelectionBy:(NSInteger)displacement
