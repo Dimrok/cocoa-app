@@ -19,6 +19,7 @@
 @property (nonatomic, strong) IBOutlet NSTextField* search_field;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSScrollView* results_view;
+@property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
 
 - (id)init;
 

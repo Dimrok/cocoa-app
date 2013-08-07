@@ -45,6 +45,8 @@
     
     NSMutableArray* _search_results;
     
+    BOOL _no_results;
+    
     CGFloat _row_height;
     NSInteger _max_rows_shown;
 }
@@ -85,6 +87,7 @@
 - (void)awakeFromNib
 {
     [self.clear_search setHidden:YES];
+    [self.no_results_message setHidden:YES];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -141,6 +144,7 @@
     if (!result.success)
     {
         IALog(@"%@ WARNING: Searching for email address failed", self);
+        _search_results = nil;
         return;
     }
     
@@ -153,7 +157,7 @@
     }
     else
     {
-        _search_results = nil;
+        _search_results = [NSMutableArray array];
     }
     [self updateResultsTable];
 }
@@ -186,6 +190,7 @@
         else
         {
             [self.clear_search setHidden:NO];
+            [self.no_results_message setHidden:YES];
             [self cancelLastSearchOperation];
             [self doDelayedSearch];
         }
@@ -210,14 +215,25 @@
     [self.view setFrameSize:self.search_box_view.frame.size];
     [_delegate searchView:self changedSize:self.view.frame.size];
     _search_results = nil;
-    [self.table_view reloadData];
+    [self.no_results_message setHidden:YES];
+//    [self.table_view reloadData];
 }
 
 - (void)updateResultsTable
 {
-    [self.results_view setHidden:NO];
-    NSSize new_size = NSMakeSize(self.view.frame.size.width,
-                                 [self tableHeight] + self.search_box_view.frame.size.height);
+    NSSize new_size = NSZeroSize;
+    if (_search_results.count == 0) // No results so show message
+    {
+        [self.no_results_message setHidden:NO];
+        new_size = NSMakeSize(self.view.frame.size.width,
+                              self.search_box_view.frame.size.height +
+                                self.no_results_message.frame.size.height);
+    }
+    else
+    {
+        new_size = NSMakeSize(self.view.frame.size.width,
+                              self.search_box_view.frame.size.height + [self tableHeight]);
+    }
     [_delegate searchView:self
               changedSize:new_size];
     [self.table_view reloadData];
