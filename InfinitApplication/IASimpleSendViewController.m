@@ -94,8 +94,18 @@
                                 metrics:nil
                                   views:@{@"search_view": _user_search_controller.view}]];
     [self resizeContainerView];
+    [self.view.window makeFirstResponder:_user_search_controller.search_field];
+    
+
+    [self performSelector:@selector(setFocusToSearchField)
+               withObject:nil
+               afterDelay:0];
 }
 
+- (void)setFocusToSearchField
+{
+    [self.view.window makeFirstResponder:_user_search_controller.search_field];
+}
 
 - (NSString*)description
 {
@@ -142,9 +152,20 @@
 
 - (void)searchView:(IAUserSearchViewController*)sender
        changedSize:(NSSize)size
+  withActiveSearch:(BOOL)searching
 {
     [self.main_view setFrameSize:size];
     [self resizeContainerView];
+    if (searching)
+    {
+        // XXX change footer_view
+    }
+}
+
+- (void)searchView:(IAUserSearchViewController*)sender
+         choseUser:(IAUser*)user
+{
+    
 }
 
 @end
