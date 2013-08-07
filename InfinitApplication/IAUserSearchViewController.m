@@ -19,16 +19,27 @@
 
 @implementation IASearchBoxView
 
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSBezierPath* path = [NSBezierPath bezierPathWithRect:self.bounds];
+    // White background
+    NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:self.bounds];
     [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
-    [path fill];
+    [white_bg fill];
+    
+    // Grey Line
+    NSRect grey_line_box = NSMakeRect(self.bounds.origin.x,
+                                      self.bounds.origin.y + 1.0,
+                                      self.bounds.size.width,
+                                      1.0);
+    NSBezierPath* grey_line = [NSBezierPath bezierPathWithOvalInRect:grey_line_box];
+    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [grey_line fill];
 }
 
 - (NSSize)intrinsicContentSize
 {
-    return self.bounds.size;
+    return self.frame.size;
 }
 
 @end
@@ -37,6 +48,57 @@
 @end
 
 @implementation IASearchResultsTableRowView
+
+- (void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    [self setNeedsDisplay:YES];
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    // Dark line
+    NSRect dark_rect = NSMakeRect(self.bounds.origin.x,
+                                  self.bounds.origin.y + self.bounds.size.height - 1.0,
+                                  self.bounds.size.width,
+                                  1.0);
+    NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
+    [TH_RGBCOLOR(209.0, 209.0, 209.0) set];
+    [dark_line fill];
+    
+    // White line
+    NSRect white_rect = NSMakeRect(self.bounds.origin.x,
+                                   self.bounds.origin.y + self.bounds.size.height - 2.0,
+                                   self.bounds.size.width,
+                                   1.0);
+    NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
+    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [white_line fill];
+    
+    if (self.selected)
+    {
+        // Background
+        NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
+                                    self.bounds.origin.y,
+                                    self.bounds.size.width,
+                                    self.bounds.size.height - 2.0);
+        NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
+        [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+        [bg_path fill];
+    }
+    else
+    {
+        // Background
+        NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
+                                    self.bounds.origin.y,
+                                    self.bounds.size.width,
+                                    self.bounds.size.height - 2.0);
+        NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
+        [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+        [bg_path fill];
+    }
+}
+
 @end
 
 @implementation IAUserSearchViewController
@@ -208,7 +270,35 @@
     }
 }
 
-//- Table Functions --------------------------------------------------------------------------------
+- (BOOL)control:(NSControl*)control
+       textView:(NSTextView*)textView
+doCommandBySelector:(SEL)commandSelector
+{
+    if (control != self.search_field)
+        return NO;
+    
+    if (commandSelector == @selector(insertNewline:))
+    {
+        [self addSelectedUser];
+        return YES;
+    }
+    else if (commandSelector == @selector(moveDown:))
+    {
+        IALog(@"down");
+        [self moveTableSelectionBy:1];
+        return YES;
+    }
+    else if (commandSelector == @selector(moveUp:))
+    {
+        IALog(@"up");
+        [self moveTableSelectionBy:-1];
+        return YES;
+    }
+    
+    return NO;
+}
+
+//- Table Drawing Functions ------------------------------------------------------------------------
 
 - (void)clearResults
 {
@@ -216,7 +306,6 @@
     [_delegate searchView:self changedSize:self.view.frame.size];
     _search_results = nil;
     [self.no_results_message setHidden:YES];
-//    [self.table_view reloadData];
 }
 
 - (void)updateResultsTable
@@ -227,7 +316,7 @@
         [self.no_results_message setHidden:NO];
         new_size = NSMakeSize(self.view.frame.size.width,
                               self.search_box_view.frame.size.height +
-                                self.no_results_message.frame.size.height);
+                                self.no_results_message.frame.size.height + 10.0);
     }
     else
     {
@@ -287,6 +376,41 @@
     if (row_view == nil)
         row_view = [[IASearchResultsTableRowView alloc] initWithFrame:NSZeroRect];
     return row_view;
+}
+
+//- User Interactions With Table -------------------------------------------------------------------
+
+- (BOOL)tableView:(NSTableView*)aTableView
+  shouldSelectRow:(NSInteger)row
+{
+    return YES;
+}
+
+- (IBAction)tableViewAction:(NSTableView*)sender
+{
+    NSInteger row = self.table_view.clickedRow;
+    if (row == -1)
+        return;
+    [self addSelectedUser];
+}
+
+- (void)addSelectedUser
+{
+    NSInteger row = self.table_view.selectedRow;
+    if (row == -1)
+        return;
+    IALog(@"Adding user %@", [_search_results objectAtIndex:row]);
+}
+
+- (void)moveTableSelectionBy:(NSInteger)displacement
+{
+    NSInteger row = self.table_view.selectedRow;
+    if (row + displacement < 0 &&
+        row + displacement >= _search_results.count - 1)
+    {
+        return;
+    }
+    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:(row + displacement)] byExtendingSelection:NO];
 }
 
 @end
