@@ -124,7 +124,7 @@
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
-        _row_height = 42.0;
+        _row_height = 45.0;
         _max_rows_shown = 5;
         _delegate = nil;
         [NSNotificationCenter.defaultCenter addObserver:self
@@ -155,6 +155,13 @@
 {
     [self.clear_search setHidden:YES];
     [self.no_results_message setHidden:YES];
+}
+
+- (void)loadView
+{
+    [super loadView];
+    [self.view setFrameSize:NSMakeSize(self.view.frame.size.width,
+                                       self.search_box_view.frame.size.height + [self tableHeight])];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
