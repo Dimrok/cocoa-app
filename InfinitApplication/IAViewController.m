@@ -16,6 +16,13 @@
 
 @implementation IAFooterView
 
+- (void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
+}
+
 - (void)setFrameSize:(NSSize)newSize
 {
     [super setFrameSize:newSize];
@@ -38,6 +45,13 @@
 //- Header View ------------------------------------------------------------------------------------
 
 @implementation IAHeaderView
+
+- (void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
+}
 
 - (void)setFrameSize:(NSSize)newSize
 {
@@ -67,6 +81,13 @@
     NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
     [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
     [bg fill];
+}
+
+- (void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
 }
 
 - (void)setFrameSize:(NSSize)newSize
