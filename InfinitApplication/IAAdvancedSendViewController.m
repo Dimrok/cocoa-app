@@ -16,6 +16,32 @@
 
 @end
 
+@interface IAAdvancedSendSearchView : NSView
+@end
+
+@implementation IAAdvancedSendSearchView
+
+- (void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
+}
+
+- (void)setFrameSize:(NSSize)newSize
+{
+    [super setFrameSize:newSize];
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
+}
+
+- (NSSize)intrinsicContentSize
+{
+    return self.bounds.size;
+}
+
+@end
+
 @interface IAAdvancedSendViewMainView : NSView
 @end
 
@@ -26,6 +52,25 @@
     NSBezierPath* path = [NSBezierPath bezierPathWithRect:self.bounds];
     [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
     [path fill];
+}
+
+- (void)setFrame:(NSRect)frameRect
+{
+    [super setFrame:frameRect];
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
+}
+
+- (void)setFrameSize:(NSSize)newSize
+{
+    [super setFrameSize:newSize];
+    [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
+}
+
+- (NSSize)intrinsicContentSize
+{
+    return self.bounds.size;
 }
 
 @end
@@ -107,8 +152,6 @@
     [_user_search_controller setDelegate:self];
     [self setButtonHoverImages];
     
-    [self updateAddFilesButton];
-    
     [self.search_view addSubview:_user_search_controller.view];
     [self.search_view setFrameSize:_user_search_controller.view.frame.size];
     [_user_search_controller.view setFrameOrigin:NSZeroPoint];
@@ -122,6 +165,9 @@
 - (void)loadView
 {
     [super loadView];
+    [self updateAddFilesButton];
+    [self.files_view setFrameSize:NSMakeSize(self.files_view.frame.size.width,
+                                             [self tableHeight])];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -143,8 +189,14 @@
                                              attributes:files_str_attrs];
 }
 
-//- Note Handling ----------------------------------------------------------------------------------
+- (void)filesUpdated
+{
+    _file_list = [_delegate advancedSendViewWantsFileList:self];
+    [self updateTable];
+    [self updateAddFilesButton];
+}
 
+//- Note Handling ----------------------------------------------------------------------------------
 
 - (void)controlTextDidChange:(NSNotification*)aNotification
 {
@@ -159,6 +211,17 @@
 }
 
 //- Table Functions --------------------------------------------------------------------------------
+
+- (void)updateTable
+{
+    CGFloat y_diff = [self tableHeight] - self.files_view.frame.size.height;
+    [self.main_view setFrameSize:NSMakeSize(self.main_view.frame.size.width,
+                                            self.main_view.frame.size.height + y_diff)];
+    [self.files_view setFrameSize:NSMakeSize(self.files_view.frame.size.width,
+                                             [self tableHeight])];
+    [self resizeContainerView];
+    [self.table_view reloadData];
+}
 
 - (CGFloat)tableHeight
 {
@@ -203,6 +266,25 @@
     return row_view;
 }
 
+//- User Interaction With File Table ---------------------------------------------------------------
+
+- (IBAction)removeFileClicked:(NSButton*)sender
+{
+    NSInteger row = [self.table_view rowForView:sender];
+    [self.table_view beginUpdates];
+    [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                           withAnimation:NSTableViewAnimationSlideLeft];
+    [self.table_view endUpdates];
+    [_delegate advancedSendView:self wantsRemoveFileAtIndex:row];
+}
+
+//- Button Handling --------------------------------------------------------------------------------
+
+- (IBAction)cancelSendClicked:(NSButton*)sender
+{
+    [_delegate advancedSendViewWantsCancel:self];
+}
+
 //- User Search View Protocol ----------------------------------------------------------------------
 
 - (void)searchView:(IAUserSearchViewController*)sender
@@ -214,6 +296,8 @@
                                        self.main_view.frame.size.height + y_diff);
     [self.main_view setFrameSize:new_main_size];
     [self resizeContainerView];
+    [self.search_view setFrameSize:size];
+    [self.advanced_view setFrameOrigin:NSZeroPoint];
     if (searching)
     {
         // XXX change footer_view
