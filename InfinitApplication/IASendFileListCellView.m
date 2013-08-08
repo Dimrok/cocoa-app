@@ -71,10 +71,9 @@
                                                 initWithString:file_name
                                                     attributes:file_name_style];
     
-    NSDictionary* file_properties = [[NSFileManager defaultManager]
-                                            attributesOfFileSystemForPath:file_path
-                                                                    error:nil];
-    NSNumber* file_size = [file_properties objectForKey:NSFileSize];
+    NSDictionary* file_properties = [NSFileManager.defaultManager attributesOfItemAtPath:file_path
+                                                                                     error:NULL];
+    NSUInteger file_size = [file_properties fileSize];
     NSString* file_size_str = [IAFunctions fileSizeStringFrom:file_size];
     NSMutableParagraphStyle* paragraph_style = [[NSParagraphStyle defaultParagraphStyle]
                                                 mutableCopy];
@@ -83,7 +82,7 @@
                                           paragraphStyle:paragraph_style
                                                   colour:TH_RGBCOLOR(202.0, 202.0, 202.0)
                                                   shadow:nil];
-    self.file_name.attributedStringValue = [[NSAttributedString alloc] initWithString:file_size_str
+    self.file_size.attributedStringValue = [[NSAttributedString alloc] initWithString:file_size_str
                                                                            attributes:style];
     
     self.file_type_image.image = [[NSWorkspace sharedWorkspace] iconForFile:file_path];
