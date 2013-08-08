@@ -23,7 +23,7 @@
 - (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller;
 
-- (void)filesAdded;
+- (void)filesUpdated;
 
 @end
 

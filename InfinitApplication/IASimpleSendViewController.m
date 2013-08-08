@@ -90,16 +90,14 @@
     [self updateAddFilesButton];
     
     [self.main_view addSubview:_user_search_controller.view];
-    [self.main_view setFrameSize:_user_search_controller.search_box_view.frame.size];
+    [self.main_view setFrameSize:_user_search_controller.view.frame.size];
     [_user_search_controller.view setFrameOrigin:NSZeroPoint];
     [self.main_view addConstraints:[NSLayoutConstraint
                                     constraintsWithVisualFormat:@"V:|[search_view]|"
                                     options:0
                                     metrics:nil
                                     views:@{@"search_view": _user_search_controller.view}]];
-    [self resizeContainerView];
-    [self.view.window makeFirstResponder:_user_search_controller.search_field];
-    
+    [self resizeContainerView];    
 
     [self performSelector:@selector(setFocusToSearchField)
                withObject:nil
@@ -140,7 +138,7 @@
                                              attributes:files_str_attrs];
 }
 
-- (void)filesAdded
+- (void)filesUpdated
 {
     _file_list = [_delegate simpleSendViewWantsFileList:self];
     [self updateAddFilesButton];
