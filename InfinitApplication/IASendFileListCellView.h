@@ -15,4 +15,6 @@
 @property (nonatomic, strong) IBOutlet NSImageView* file_type_image;
 @property (nonatomic, strong) IBOutlet NSButton* remove_file_button;
 
+- (void)setupCellWithFilePath:(NSString*)file_path;
+
 @end
