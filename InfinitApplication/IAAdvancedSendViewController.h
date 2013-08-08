@@ -14,7 +14,8 @@
 
 @interface IAAdvancedSendViewController : IAViewController <NSTableViewDataSource,
                                                             NSTableViewDelegate,
-                                                            NSTextViewDelegate>
+                                                            NSTextViewDelegate,
+                                                            IAUserSearchViewProtocol>
 
 @property (nonatomic, strong) IBOutlet NSButton* add_files_button;
 @property (nonatomic, strong) IBOutlet NSView* advanced_view;
@@ -32,5 +33,7 @@
 
 
 @protocol IAAdvancedSendViewProtocol <NSObject>
+
+- (NSArray*)advancedSendViewWantsFileList:(IAAdvancedSendViewController*)sender;
 
 @end
