@@ -31,4 +31,6 @@
 
 - (BOOL)closeOnFocusLost;
 
+- (void)resizeContainerView;
+
 @end

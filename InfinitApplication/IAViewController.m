@@ -62,6 +62,13 @@
 
 @implementation IAMainView
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
+    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [bg fill];
+}
+
 - (void)setFrameSize:(NSSize)newSize
 {
     [super setFrameSize:newSize];
@@ -92,6 +99,25 @@
 - (BOOL)closeOnFocusLost
 {
     return NO;
+}
+
+- (void)resizeContainerView
+{
+    CGFloat height = self.header_view.frame.size.height + self.main_view.frame.size.height +
+    self.footer_view.frame.size.height;
+    NSSize new_size = NSMakeSize(self.view.frame.size.width, height);
+    CGFloat y_diff = height - self.view.window.frame.size.height;
+    NSRect window_rect = NSZeroRect;
+    window_rect.origin = NSMakePoint(self.view.window.frame.origin.x,
+                                     self.view.window.frame.origin.y - y_diff);
+    window_rect.size = new_size;
+    [self.view.window setFrame:window_rect
+                       display:YES
+                       animate:YES];
+    [self.view.animator layoutSubtreeIfNeeded];
+    [self.view setFrame:NSMakeRect(0.0, 0.0, new_size.width, new_size.height)];
+    [self.view.window display];
+    [self.view.window invalidateShadow];
 }
 
 @end
