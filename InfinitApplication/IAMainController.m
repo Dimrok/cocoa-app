@@ -359,7 +359,7 @@
     if ([_window_controller windowIsOpen])
     {
         [sender setHighlighted:NO];
-        [_window_controller closeWindow];
+        [self closeNotificationWindow];
     }
     else
     {
