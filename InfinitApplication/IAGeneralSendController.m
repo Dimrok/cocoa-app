@@ -68,7 +68,6 @@
                                         initWithDelegate:self
                                      andSearchController:_user_search_controller];
     [_delegate sendController:self wantsActiveController:_advanced_send_controller];
-    _simple_send_controller = nil;
 }
 
 //- Simple Send View Protocol ----------------------------------------------------------------------
@@ -91,7 +90,6 @@
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender
 {
     _files = nil;
-    _simple_send_controller = nil;
     [_delegate sendControllerWantsClose:self];
 }
 
@@ -99,5 +97,13 @@
 {
     return [NSArray arrayWithArray:_files];
 }
+
+//- Advanced Send View Protocol --------------------------------------------------------------------
+
+- (NSArray*)advancedSendViewWantsFileList:(IAAdvancedSendViewController*)sender
+{
+    return [NSArray arrayWithArray:_files];
+}
+
 
 @end
