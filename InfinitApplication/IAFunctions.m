@@ -142,13 +142,31 @@
                                                                                  image_radius,
                                                                                  image_radius)];
     [image_path addClip];
-    [square_image drawInRect:NSMakeRect(border_thickness, border_thickness, image_radius, image_radius) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-//    [square_image drawAtPoint:NSMakePoint(border_thickness, border_thickness)
-//                     fromRect:NSZeroRect
-//                    operation:NSCompositeSourceOver
-//                     fraction:1.0];
+    [square_image drawInRect:NSMakeRect(border_thickness, border_thickness, image_radius, image_radius)
+                    fromRect:NSZeroRect
+                   operation:NSCompositeSourceOver
+                    fraction:1.0];
     
     [res unlockFocus];
+    return res;
+}
+
++ (NSString*)fileSizeStringFrom:(NSNumber*)file_size
+{
+    NSString* res;
+    CGFloat size = file_size.floatValue;
+    
+    if (size < pow(10.0, 3.0))
+        res = [NSString stringWithFormat:@"%f B", size];
+    else if (size < pow(10.0, 6.0))
+        res = [NSString stringWithFormat:@"%f KB", size / pow(10.0, 3.0)];
+    else if (size < pow(10.0, 9.0))
+        res = [NSString stringWithFormat:@"%f MB", size / pow(10.0, 6.0)];
+    else if (size < pow(10.0, 12.0))
+        res = [NSString stringWithFormat:@"%f GB", size / pow(10.0, 9.0)];
+    else
+        res = [NSString stringWithFormat:@"%f TB", size / pow(10.0, 12.0)];
+    
     return res;
 }
 
