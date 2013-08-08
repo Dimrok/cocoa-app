@@ -30,6 +30,6 @@
                    ofRadius:(CGFloat)radius
             withWhiteBorder:(BOOL)border;
 
-+ (NSString*)fileSizeStringFrom:(NSNumber*)file_size;
++ (NSString*)fileSizeStringFrom:(NSUInteger)file_size;
 
 @end

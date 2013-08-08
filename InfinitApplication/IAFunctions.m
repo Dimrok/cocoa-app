@@ -151,21 +151,21 @@
     return res;
 }
 
-+ (NSString*)fileSizeStringFrom:(NSNumber*)file_size
++ (NSString*)fileSizeStringFrom:(NSUInteger)file_size
 {
     NSString* res;
-    CGFloat size = file_size.floatValue;
+    CGFloat size = file_size;
     
     if (size < pow(10.0, 3.0))
-        res = [NSString stringWithFormat:@"%f B", size];
+        res = [NSString stringWithFormat:@"%.0f B", size];
     else if (size < pow(10.0, 6.0))
-        res = [NSString stringWithFormat:@"%f KB", size / pow(10.0, 3.0)];
+        res = [NSString stringWithFormat:@"%.0f KB", size / pow(10.0, 3.0)];
     else if (size < pow(10.0, 9.0))
-        res = [NSString stringWithFormat:@"%f MB", size / pow(10.0, 6.0)];
+        res = [NSString stringWithFormat:@"%.1f MB", size / pow(10.0, 6.0)];
     else if (size < pow(10.0, 12.0))
-        res = [NSString stringWithFormat:@"%f GB", size / pow(10.0, 9.0)];
+        res = [NSString stringWithFormat:@"%.2f GB", size / pow(10.0, 9.0)];
     else
-        res = [NSString stringWithFormat:@"%f TB", size / pow(10.0, 12.0)];
+        res = [NSString stringWithFormat:@"%.3f TB", size / pow(10.0, 12.0)];
     
     return res;
 }
