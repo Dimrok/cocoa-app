@@ -50,6 +50,13 @@
 - (void)openWithFiles:(NSArray*)files
 {
     [_files addObjectsFromArray:files];
+    if (_simple_send_controller == nil)
+        _simple_send_controller = [[IASimpleSendViewController alloc]
+                                   initWithDelegate:self
+                                   andSearchController:_user_search_controller];
+    else
+        [_simple_send_controller filesAdded];
+    [_delegate sendController:self wantsActiveController:_simple_send_controller];
 }
 
 //- View Switching ---------------------------------------------------------------------------------
@@ -83,7 +90,14 @@
 
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender
 {
-    
+    _files = nil;
+    _simple_send_controller = nil;
+    [_delegate sendControllerWantsClose:self];
+}
+
+- (NSArray*)simpleSendViewWantsFileList:(IASimpleSendViewController*)sender
+{
+    return [NSArray arrayWithArray:_files];
 }
 
 @end

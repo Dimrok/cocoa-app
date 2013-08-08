@@ -31,4 +31,6 @@
 - (void)sendController:(IAGeneralSendController*)sender
  wantsActiveController:(IAViewController*)controller;
 
+- (void)sendControllerWantsClose:(IAGeneralSendController*)sender;
+
 @end

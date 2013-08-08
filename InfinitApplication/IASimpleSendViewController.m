@@ -57,6 +57,8 @@
     id<IASimpleSendViewProtocol> _delegate;
     
     IAUserSearchViewController* _user_search_controller;
+    
+    NSArray* _file_list;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -68,6 +70,7 @@
     {
         _delegate = delegate;
         _user_search_controller = search_controller;
+        _file_list = [_delegate simpleSendViewWantsFileList:self];
     }
     return self;
 }
@@ -84,6 +87,9 @@
 {
     [_user_search_controller setDelegate:self];
     [self setButtonHoverImages];
+    
+    [self updateAddFilesButton];
+    
     [self.main_view addSubview:_user_search_controller.view];
     [_user_search_controller.view setFrameSize:_user_search_controller.search_box_view.frame.size];
     [self.main_view setFrameSize:_user_search_controller.view.frame.size];
@@ -119,6 +125,23 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (void)updateAddFilesButton
+{
+    NSMutableString* files_str = [[NSMutableString alloc] initWithFormat:@"%ld ", _file_list.count];
+    if (_file_list.count == 1)
+        [files_str appendString:NSLocalizedString(@"file", @"file")];
+    else
+        [files_str appendString:NSLocalizedString(@"files", @"files")];
+    NSDictionary* files_str_attrs = [IAFunctions
+                                     textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                     colour:TH_RGBCOLOR(189.0, 167.0, 170.0)
+                                     shadow:nil];
+    self.add_files_button.attributedTitle = [[NSAttributedString alloc]
+                                             initWithString:files_str
+                                             attributes:files_str_attrs];
+}
+
 - (void)resizeContainerView
 {
     CGFloat height = self.header_view.frame.size.height + self.main_view.frame.size.height +
@@ -138,14 +161,32 @@
     [self.view.window invalidateShadow];
 }
 
+- (void)filesAdded
+{
+    _file_list = [_delegate simpleSendViewWantsFileList:self];
+    [self updateAddFilesButton];
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)addNoteClicked:(NSButton*)sender
 {
-    if (sender == self.add_note_button)
-    {
-        [_delegate simpleSendViewWantsAddNote:self];
-    }
+    [_delegate simpleSendViewWantsAddNote:self];
+}
+
+- (IBAction)addPersonClicked:(NSButton*)sender
+{
+    [_delegate simpleSendViewWantsAddRecipient:self];
+}
+
+- (IBAction)cancelSendClicked:(NSButton*)sender
+{
+    [_delegate simpleSendViewWantsCancel:self];
+}
+
+- (IBAction)addFileClicked:(NSButton*)sender
+{
+    [_delegate simpleSendViewWantsAddFile:self];
 }
 
 //- User Search View Protocol ----------------------------------------------------------------------

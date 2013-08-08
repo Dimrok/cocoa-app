@@ -53,8 +53,6 @@
         _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_status_item];
         _status_item.view = _status_bar_icon;
         
-        _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-        
         _window_controller = [[IAWindowController alloc] initWithDelegate:self];
         
         _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
@@ -164,8 +162,7 @@
 {
     [_window_controller closeWindow];
     [_status_bar_icon setHighlighted:NO];
-    _not_logged_view_controller = nil;
-    _not_logged_view_controller = nil;
+    _general_send_controller = nil;
 }
 
 //- Login and Logout -------------------------------------------------------------------------------
@@ -314,6 +311,11 @@
     [self showSendView:controller];
 }
 
+- (void)sendControllerWantsClose:(IAGeneralSendController*)sender
+{
+    [self closeNotificationWindow];
+}
+
 //- Login Window Protocol --------------------------------------------------------------------------
 
 - (void)tryLogin:(IALoginViewController*)sender
@@ -335,6 +337,8 @@
 
 - (void)notificationListGotTransferClick:(IANotificationListViewController*)sender
 {
+    if (_general_send_controller == nil)
+        _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithNoFile];
 }
 
@@ -367,6 +371,8 @@
 - (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files
 {
+    if (_general_send_controller == nil)
+        _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithFiles:files];
 }
 

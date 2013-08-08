@@ -23,6 +23,8 @@
 - (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller;
 
+- (void)filesAdded;
+
 @end
 
 @protocol IASimpleSendViewProtocol <NSObject>
@@ -31,5 +33,6 @@
 - (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender;
 - (void)simpleSendViewWantsAddRecipient:(IASimpleSendViewController*)sender;
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender;
+- (NSArray*)simpleSendViewWantsFileList:(IASimpleSendViewController*)sender;
 
 @end
