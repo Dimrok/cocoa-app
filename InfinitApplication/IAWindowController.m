@@ -139,15 +139,14 @@
     [self.window setFrame:NSMakeRect(midpoint.x, midpoint.y, new_size.width, new_size.height)
                   display:YES
                   animate:YES];
+    [self.window.contentView removeConstraints:_view_constraints];
     [[self.window.contentView animator] replaceSubview:_current_controller.view
                                                   with:new_controller.view];
     
-    [self.window.contentView removeConstraints:_view_constraints];
-    
     _view_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
-                                                           options:0
-                                                           metrics:nil
-                                                             views:@{@"view": new_controller.view}];
+                                                   options:NSLayoutFormatDirectionLeadingToTrailing
+                                                   metrics:nil
+                                                     views:@{@"view": new_controller.view}];
     
     [self.window.contentView addConstraints:_view_constraints];
     [self.window display];
@@ -173,9 +172,9 @@
     [self.window.contentView addSubview:controller.view];
     
     _view_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
-                                                                options:0
-                                                                metrics:nil
-                                                                  views:@{@"view": controller.view}];
+                                                    options:NSLayoutFormatDirectionLeadingToTrailing
+                                                    metrics:nil
+                                                      views:@{@"view": controller.view}];
     
     [self.window.contentView addConstraints:_view_constraints];
     
