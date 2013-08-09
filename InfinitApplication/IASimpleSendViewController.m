@@ -90,14 +90,16 @@
     [self updateAddFilesButton];
     
     [self.main_view addSubview:_user_search_controller.view];
-    [self.main_view setFrameSize:_user_search_controller.view.frame.size];
-    [_user_search_controller.view setFrameOrigin:NSZeroPoint];
     [self.main_view addConstraints:[NSLayoutConstraint
                                     constraintsWithVisualFormat:@"V:|[search_view]|"
                                     options:0
                                     metrics:nil
                                     views:@{@"search_view": _user_search_controller.view}]];
-    [self resizeContainerView];    
+    
+    CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size new:_user_search_controller.view.frame.size];
+    self.main_height_constraint.constant += y_diff;
+    
+    [self.view layoutSubtreeIfNeeded];
 
     [self performSelector:@selector(setFocusToSearchField)
                withObject:nil
@@ -172,8 +174,17 @@
        changedSize:(NSSize)size
   withActiveSearch:(BOOL)searching
 {
-    [self.main_view setFrameSize:size];
-    [self resizeContainerView];
+    CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size new:size];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+    {
+        context.duration = 0.2;
+        [self.main_height_constraint.animator setConstant:(self.main_height_constraint.constant + y_diff)];
+        [self.view.window.contentView layoutSubtreeIfNeeded];
+    }
+    completionHandler:^
+    {
+    }];
+    
     if (searching)
     {
         // XXX change footer_view
