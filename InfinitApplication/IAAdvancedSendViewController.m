@@ -105,6 +105,7 @@
     {
         _delegate = delegate;
         _user_search_controller = search_controller;
+        [_user_search_controller setDelegate:self];
         _file_list = [_delegate advancedSendViewWantsFileList:self];
         _row_height = 40.0;
         _max_rows_shown = 5;
@@ -149,25 +150,28 @@
 {
     [self setButtonHoverImages];
     [self initialiseSendButton];
-    [_user_search_controller setDelegate:self];
     [self setButtonHoverImages];
     
     [self.search_view addSubview:_user_search_controller.view];
-    [self.search_view setFrameSize:_user_search_controller.view.frame.size];
-    [_user_search_controller.view setFrameOrigin:NSZeroPoint];
     [self.search_view addConstraints:[NSLayoutConstraint
-                                    constraintsWithVisualFormat:@"V:|[search_view]|"
-                                    options:0
-                                    metrics:nil
-                                    views:@{@"search_view": _user_search_controller.view}]];
+                                      constraintsWithVisualFormat:@"V:|[search_view]|"
+                                      options:0
+                                      metrics:nil
+                                      views:@{@"search_view": _user_search_controller.view}]];
+    
+    CGFloat y_diff = [self heightDiffOld:self.search_view.frame.size new:_user_search_controller.view.frame.size];
+    self.search_height_constraint.constant += y_diff;
+    [self.view layoutSubtreeIfNeeded];
+    
 }
 
 - (void)loadView
 {
     [super loadView];
-    [self updateAddFilesButton];
-    [self.files_view setFrameSize:NSMakeSize(self.files_view.frame.size.width,
-                                             [self tableHeight])];
+    CGFloat y_diff = [self tableHeight] - self.table_view.frame.size.height;
+    self.advanced_height_constraint.constant += y_diff;
+    [self.view layoutSubtreeIfNeeded];
+    [self.table_view reloadData];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -215,11 +219,19 @@
 - (void)updateTable
 {
     CGFloat y_diff = [self tableHeight] - self.files_view.frame.size.height;
-    [self.main_view setFrameSize:NSMakeSize(self.main_view.frame.size.width,
-                                            self.main_view.frame.size.height + y_diff)];
-    [self.files_view setFrameSize:NSMakeSize(self.files_view.frame.size.width,
-                                             [self tableHeight])];
-    [self resizeContainerView];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.1;
+         [self.advanced_height_constraint.animator
+          setConstant:(self.advanced_height_constraint.constant + y_diff)];
+         [self.view.window.contentView layoutSubtreeIfNeeded];
+     }
+                        completionHandler:^
+     {
+         [self.view.window invalidateShadow];
+         [self.view.window display];
+         [self.view.window invalidateShadow];
+     }];
     [self.table_view reloadData];
 }
 
@@ -291,13 +303,21 @@
        changedSize:(NSSize)size
   withActiveSearch:(BOOL)searching
 {
-    CGFloat y_diff = size.height - self.search_view.frame.size.height;
-    NSSize new_main_size = NSMakeSize(self.main_view.frame.size.width,
-                                       self.main_view.frame.size.height + y_diff);
-    [self.main_view setFrameSize:new_main_size];
-    [self resizeContainerView];
-    [self.search_view setFrameSize:size];
-    [self.advanced_view setFrameOrigin:NSZeroPoint];
+    CGFloat y_diff = [self heightDiffOld:self.search_view.frame.size new:size];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.1;
+         [self.search_height_constraint.animator
+                setConstant:(self.search_height_constraint.constant + y_diff)];
+         [self.view.window.contentView layoutSubtreeIfNeeded];
+     }
+                        completionHandler:^
+     {
+         [self.view.window invalidateShadow];
+         [self.view.window display];
+         [self.view.window invalidateShadow];
+     }];
+    
     if (searching)
     {
         // XXX change footer_view
