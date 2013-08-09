@@ -260,6 +260,11 @@
 
 //- Button Handling --------------------------------------------------------------------------------
 
+- (IBAction)addFilesClicked:(NSButton*)sender
+{
+    [_delegate advancedSendViewWantsOpenFileDialogBox:self];
+}
+
 - (IBAction)cancelSendClicked:(NSButton*)sender
 {
     [_delegate advancedSendViewWantsCancel:self];

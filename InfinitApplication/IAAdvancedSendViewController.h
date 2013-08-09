@@ -46,5 +46,6 @@
 - (void)advancedSendViewWantsCancel:(IAAdvancedSendViewController*)sender;
 - (void)advancedSendView:(IAAdvancedSendViewController*)sender
   wantsRemoveFileAtIndex:(NSInteger)index;
+- (void)advancedSendViewWantsOpenFileDialogBox:(IAAdvancedSendViewController*)sender;
 
 @end

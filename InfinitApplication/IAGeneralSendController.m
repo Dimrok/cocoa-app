@@ -50,7 +50,11 @@
 
 - (void)openWithFiles:(NSArray*)files
 {
-    [_files addObjectsFromArray:files];
+    for (NSString* file in files)
+    {
+        if (![_files containsObject:file])
+            [_files addObject:file];
+    }
     if (_currently_open_controller == nil)
     {
         _simple_send_controller = [[IASimpleSendViewController alloc]
@@ -121,6 +125,25 @@
   wantsRemoveFileAtIndex:(NSInteger)index
 {
     [_files removeObjectAtIndex:index];
+    [sender filesUpdated];
+}
+
+- (void)advancedSendViewWantsOpenFileDialogBox:(IAAdvancedSendViewController*)sender
+{
+    NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
+    file_dialog.canChooseFiles = YES;
+    file_dialog.canChooseDirectories = YES;
+    file_dialog.allowsMultipleSelection = YES;
+    
+    if ([file_dialog runModal] == NSOKButton)
+    {
+        NSArray* dialog_files = [file_dialog URLs];
+        for (NSURL* file_url in dialog_files)
+        {
+            if (![_files containsObject:[file_url path]])
+                [_files addObject:[file_url path]];
+        }
+    }
     [sender filesUpdated];
 }
 
