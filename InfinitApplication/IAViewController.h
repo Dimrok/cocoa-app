@@ -31,6 +31,6 @@
 
 - (BOOL)closeOnFocusLost;
 
-- (void)resizeContainerView;
+- (CGFloat)heightDiffOld:(NSSize)old_size new:(NSSize)new_size;
 
 @end
