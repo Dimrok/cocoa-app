@@ -304,6 +304,11 @@ doCommandBySelector:(SEL)commandSelector
     [_delegate advancedSendViewWantsCancel:self];
 }
 
+- (IBAction)sendButtonClicked:(NSButton*)sender
+{
+    // XXX do checks and try to send
+}
+
 //- User Search View Protocol ----------------------------------------------------------------------
 
 - (void)searchView:(IAUserSearchViewController*)sender
