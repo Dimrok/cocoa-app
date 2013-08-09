@@ -198,4 +198,9 @@
     
 }
 
+- (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
+{
+    
+}
+
 @end

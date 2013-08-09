@@ -204,6 +204,21 @@
     }
 }
 
+- (BOOL)control:(NSControl*)control
+       textView:(NSTextView*)textView
+doCommandBySelector:(SEL)commandSelector
+{
+    if (control != self.note_field)
+        return NO;
+
+    if (commandSelector == @selector(insertTab:))
+    {
+        [self.view.window makeFirstResponder:_user_search_controller.search_field];
+        return YES;
+    }
+    return NO;
+}
+
 //- Table Functions --------------------------------------------------------------------------------
 
 - (void)updateTable
@@ -317,6 +332,11 @@
          choseUser:(IAUser*)user
 {
     
+}
+
+- (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
+{
+    [self.view.window makeFirstResponder:self.note_field];
 }
 
 @end

@@ -304,7 +304,11 @@ doCommandBySelector:(SEL)commandSelector
         [self moveTableSelectionBy:-1];
         return YES;
     }
-    
+    else if (commandSelector == @selector(insertTab:))
+    {
+        [_delegate searchViewWantsLoseFocus:self];
+        return YES;
+    }
     return NO;
 }
 
