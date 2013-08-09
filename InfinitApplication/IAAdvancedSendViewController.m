@@ -47,13 +47,6 @@
 
 @implementation IAAdvancedSendViewMainView
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    NSBezierPath* path = [NSBezierPath bezierPathWithRect:self.bounds];
-    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
-    [path fill];
-}
-
 - (void)setFrame:(NSRect)frameRect
 {
     [super setFrame:frameRect];
@@ -151,7 +144,11 @@
     [self setButtonHoverImages];
     [self initialiseSendButton];
     [self setButtonHoverImages];
-    
+}
+
+- (void)loadView
+{
+    [super loadView];
     [self.search_view addSubview:_user_search_controller.view];
     [self.search_view addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|[search_view]|"
@@ -159,19 +156,12 @@
                                       metrics:nil
                                       views:@{@"search_view": _user_search_controller.view}]];
     
-    CGFloat y_diff = [self heightDiffOld:self.search_view.frame.size new:_user_search_controller.view.frame.size];
-    self.search_height_constraint.constant += y_diff;
+    CGFloat y_diff_search = [self heightDiffOld:self.search_view.frame.size
+                                            new:_user_search_controller.view.frame.size];
+    self.search_height_constraint.constant += y_diff_search;
+    _file_list = nil; // XXX work around for crash on calling layout
     [self.view layoutSubtreeIfNeeded];
-    
-}
-
-- (void)loadView
-{
-    [super loadView];
-    CGFloat y_diff = [self tableHeight] - self.table_view.frame.size.height;
-    self.advanced_height_constraint.constant += y_diff;
-    [self.view layoutSubtreeIfNeeded];
-    [self.table_view reloadData];
+    [self filesUpdated];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -221,16 +211,13 @@
     CGFloat y_diff = [self tableHeight] - self.files_view.frame.size.height;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.1;
+         context.duration = 0.25;
          [self.advanced_height_constraint.animator
           setConstant:(self.advanced_height_constraint.constant + y_diff)];
          [self.view.window.contentView layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {
-         [self.view.window invalidateShadow];
-         [self.view.window display];
-         [self.view.window invalidateShadow];
      }];
     [self.table_view reloadData];
 }
@@ -306,16 +293,13 @@
     CGFloat y_diff = [self heightDiffOld:self.search_view.frame.size new:size];
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.1;
+         context.duration = 0.15;
          [self.search_height_constraint.animator
                 setConstant:(self.search_height_constraint.constant + y_diff)];
          [self.view.window.contentView layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {
-         [self.view.window invalidateShadow];
-         [self.view.window display];
-         [self.view.window invalidateShadow];
      }];
     
     if (searching)
