@@ -10,6 +10,12 @@
 
 #import "IAUserSearchViewController.h"
 
+typedef enum IAAdvancedSendViewFocus
+{
+    advanced_view_user_search_focus = 0,
+    advanced_view_note_focus
+} IAAdvancedSendViewFocus;
+
 @protocol IAAdvancedSendViewProtocol;
 
 @interface IAAdvancedSendViewController : IAViewController <NSTableViewDataSource,
@@ -33,7 +39,8 @@
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 - (id)initWithDelegate:(id<IAAdvancedSendViewProtocol>)delegate
-   andSearchController:(IAUserSearchViewController*)search_controller;
+   andSearchController:(IAUserSearchViewController*)search_controller
+               focusOn:(IAAdvancedSendViewFocus)focus;
 
 - (void)filesUpdated;
 

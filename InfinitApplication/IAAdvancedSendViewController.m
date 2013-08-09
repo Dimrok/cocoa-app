@@ -93,6 +93,7 @@
 
 - (id)initWithDelegate:(id<IAAdvancedSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller
+               focusOn:(IAAdvancedSendViewFocus)focus
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
@@ -102,6 +103,9 @@
         _file_list = [_delegate advancedSendViewWantsFileList:self];
         _row_height = 40.0;
         _max_rows_shown = 5;
+        [self performSelector:@selector(setFocus:)
+                   withObject:[NSNumber numberWithInt:focus]
+                   afterDelay:0.3];
     }
     return self;
 }
@@ -169,6 +173,21 @@
 {
     _file_list = [_delegate advancedSendViewWantsFileList:self];
     [self updateTable];
+}
+
+- (void)setFocus:(NSNumber*)focus
+{
+    switch (focus.intValue) {
+        case advanced_view_user_search_focus:
+            [self.view.window makeFirstResponder:_user_search_controller.search_field];
+            break;
+        case advanced_view_note_focus:
+            [self.view.window makeFirstResponder:self.note_field];
+            break;
+        default:
+            [self.view.window makeFirstResponder:_user_search_controller.search_field];
+            break;
+    }
 }
 
 //- Note Handling ----------------------------------------------------------------------------------

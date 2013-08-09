@@ -69,12 +69,13 @@
 
 //- View Switching ---------------------------------------------------------------------------------
 
-- (void)openAdvancedViewForNote
+- (void)openAdvancedViewWithFocus:(IAAdvancedSendViewFocus)focus
 {
     if (_advanced_send_controller == nil)
         _advanced_send_controller = [[IAAdvancedSendViewController alloc]
                                         initWithDelegate:self
-                                     andSearchController:_user_search_controller];
+                                     andSearchController:_user_search_controller
+                                     focusOn:focus];
     [_delegate sendController:self wantsActiveController:_advanced_send_controller];
     _currently_open_controller = _advanced_send_controller;
     _simple_send_controller = nil;
@@ -84,17 +85,17 @@
 
 - (void)simpleSendViewWantsAddFile:(IASimpleSendViewController*)sender
 {
-    
+    [self openAdvancedViewWithFocus:advanced_view_user_search_focus];
 }
 
 - (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender
 {
-    [self openAdvancedViewForNote];
+    [self openAdvancedViewWithFocus:advanced_view_note_focus];
 }
 
 - (void)simpleSendViewWantsAddRecipient:(IASimpleSendViewController*)sender
 {
-    
+    [self openAdvancedViewWithFocus:advanced_view_user_search_focus];
 }
 
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender
