@@ -177,16 +177,13 @@
     CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size new:size];
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
-        context.duration = 0.1;
+        context.duration = 0.15;
         [self.main_height_constraint.animator
                 setConstant:(self.main_height_constraint.constant + y_diff)];
         [self.view.window.contentView layoutSubtreeIfNeeded];
     }
     completionHandler:^
     {
-        [self.view.window invalidateShadow];
-        [self.view.window display];
-        [self.view.window invalidateShadow];
     }];
     
     if (searching)
