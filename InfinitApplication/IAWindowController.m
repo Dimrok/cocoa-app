@@ -127,6 +127,12 @@
         [_delegate windowControllerWantsCloseWindow:self];
 }
 
+- (void)windowDidResize:(NSNotification*)notification
+{
+    [self.window display];
+    [self.window invalidateShadow];
+}
+
 //- View Handling ----------------------------------------------------------------------------------
 
 - (void)changeToViewController:(IAViewController*)new_controller
@@ -139,9 +145,12 @@
     [self.window setFrame:NSMakeRect(midpoint.x, midpoint.y, new_size.width, new_size.height)
                   display:YES
                   animate:YES];
-    [self.window.contentView removeConstraints:_view_constraints];
     [[self.window.contentView animator] replaceSubview:_current_controller.view
                                                   with:new_controller.view];
+    [self.window.contentView removeConstraints:_view_constraints];
+    
+    [self.window display];
+    [self.window invalidateShadow];
     
     _view_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
                                                    options:NSLayoutFormatDirectionLeadingToTrailing
@@ -149,8 +158,6 @@
                                                      views:@{@"view": new_controller.view}];
     
     [self.window.contentView addConstraints:_view_constraints];
-    [self.window display];
-    [self.window invalidateShadow];
     _current_controller = nil;
     _current_controller = new_controller;
 }
