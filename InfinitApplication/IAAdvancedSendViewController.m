@@ -143,7 +143,6 @@
 {
     [self setButtonHoverImages];
     [self initialiseSendButton];
-    [self setButtonHoverImages];
 }
 
 - (void)loadView
@@ -166,28 +165,10 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
-- (void)updateAddFilesButton
-{
-    NSMutableString* files_str = [[NSMutableString alloc] initWithFormat:@"%ld ", _file_list.count];
-    if (_file_list.count == 1)
-        [files_str appendString:NSLocalizedString(@"file", @"file")];
-    else
-        [files_str appendString:NSLocalizedString(@"files", @"files")];
-    NSDictionary* files_str_attrs = [IAFunctions
-                                     textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                     colour:TH_RGBCOLOR(189.0, 167.0, 170.0)
-                                     shadow:nil];
-    self.add_files_button.attributedTitle = [[NSAttributedString alloc]
-                                             initWithString:files_str
-                                             attributes:files_str_attrs];
-}
-
 - (void)filesUpdated
 {
     _file_list = [_delegate advancedSendViewWantsFileList:self];
     [self updateTable];
-    [self updateAddFilesButton];
 }
 
 //- Note Handling ----------------------------------------------------------------------------------
