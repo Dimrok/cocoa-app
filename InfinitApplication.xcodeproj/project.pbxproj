@@ -86,6 +86,7 @@
 		8398836417A6C5C4009409B3 /* infinit_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 8398836317A6C5C4009409B3 /* infinit_logo_large.png */; };
 		8398836A17A6FDE7009409B3 /* IACenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */; };
 		83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */; };
+		83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */; };
 		83C124B817A7CEB000BE1252 /* IATransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124B717A7CEB000BE1252 /* IATransactionManager.m */; };
 		83C124BB17A7CEC000BE1252 /* IAUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124BA17A7CEC000BE1252 /* IAUserManager.m */; };
 		83C124C017A7EF0000BE1252 /* bg-main-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C124BE17A7EF0000BE1252 /* bg-main-button.png */; };
@@ -363,6 +364,8 @@
 		8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACenteredTextFieldCell.m; sourceTree = "<group>"; };
 		83A99B2B17AF9474008DE473 /* IASendFileListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASendFileListCellView.h; sourceTree = "<group>"; };
 		83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASendFileListCellView.m; sourceTree = "<group>"; };
+		83B3F5B117B53C1600C19859 /* IANotificationListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationListCellView.h; sourceTree = "<group>"; };
+		83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationListCellView.m; sourceTree = "<group>"; };
 		83C124B617A7CEB000BE1252 /* IATransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IATransactionManager.h; sourceTree = "<group>"; };
 		83C124B717A7CEB000BE1252 /* IATransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IATransactionManager.m; sourceTree = "<group>"; };
 		83C124B917A7CEC000BE1252 /* IAUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserManager.h; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 				831FB22317A90BE900696604 /* IANotificationListViewController.h */,
 				831FB22417A90BE900696604 /* IANotificationListViewController.m */,
 				831FB22517A90BE900696604 /* IANotificationListViewController.xib */,
+				83B3F5B117B53C1600C19859 /* IANotificationListCellView.h */,
+				83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */,
 			);
 			name = "Notification View";
 			sourceTree = "<group>";
@@ -1100,6 +1105,7 @@
 				83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */,
 				83281BBE17AFFD1D00CAE422 /* IAConversationViewController.m in Sources */,
 				83281BC917B0050600CAE422 /* IAHoverButtonCell.m in Sources */,
+				83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
