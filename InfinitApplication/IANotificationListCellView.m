@@ -11,16 +11,13 @@
 #import "IAAvatarManager.h"
 
 @implementation IANotificationListCellView
-{
-@private
-    NSInteger _avatar_size;
-}
+
+//- Initialisation ---------------------------------------------------------------------------------
 
 - (id)initWithFrame:(NSRect)frame
 {
     if (self = [super initWithFrame:frame])
     {
-        _avatar_size = 48.0;
     }
     
     return self;
@@ -30,6 +27,8 @@
 {
     return @"[NotificationListCell]";
 }
+
+//- Setup Cell -------------------------------------------------------------------------------------
 
 - (void)setUserFullName:(NSString*)fullname
 {
@@ -79,12 +78,12 @@
 {
     NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
                                                                      andLoadIfNeeded:YES]
-                                          ofRadius:_avatar_size
+                                          ofDiameter:48.0
                                    withWhiteBorder:YES];
     [self.avatar setWantsLayer:YES];
     self.avatar.layer.shadowOffset = NSZeroSize;
     self.avatar.layer.shadowRadius = 1.0;
-    self.avatar.layer.shadowOpacity = 0.36;
+    self.avatar.layer.shadowOpacity = 0.25;
     self.avatar.image = avatar;
 }
 
