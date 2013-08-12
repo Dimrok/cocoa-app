@@ -16,13 +16,16 @@
 
 @interface IANotificationListViewController : IAViewController
 
-@property (nonatomic, retain) IBOutlet NSView* footer_view;
+@property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
 @property (nonatomic, strong) IBOutlet NSButton* gear_button;
 @property (nonatomic, strong) IBOutlet NSMenu* gear_menu;
-@property (nonatomic, retain) IBOutlet NSView* header_view;
+@property (nonatomic, retain) IBOutlet IAHeaderView* header_view;
+@property (nonatomic, retain) IBOutlet IAMainView* main_view;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint* main_view_height_constraint;
+@property (nonatomic, strong) IBOutlet NSTextField* no_data_message;
 @property (nonatomic, strong) IBOutlet NSButton* transfer_button;
+@property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSMenuItem* version_item;
-@property (nonatomic, retain) IBOutlet NSView* main_view;
 
 - (id)initWithDelegate:(id<IANotificationListViewProtocol>)delegate;
 
@@ -32,5 +35,7 @@
 
 - (void)notificationListGotTransferClick:(IANotificationListViewController*)sender;
 - (void)notificationListWantsQuit:(IANotificationListViewController*)sender;
+
+- (NSArray*)notificationListWantsTransactions:(IANotificationListViewController*)sender;
 
 @end
