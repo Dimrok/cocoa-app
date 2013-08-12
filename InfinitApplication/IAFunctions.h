@@ -28,7 +28,8 @@
 
 + (NSImage*)makeRoundAvatar:(NSImage*)square_image
                  ofDiameter:(CGFloat)diameter
-            withWhiteBorder:(BOOL)border;
+ withWhiteBorderOfThickness:(CGFloat)border_thickness
+          andShadowOfRadius:(CGFloat)shadow_radius;
 
 + (NSString*)fileSizeStringFrom:(NSUInteger)file_size;
 

@@ -103,47 +103,59 @@
 
 + (NSImage*)makeRoundAvatar:(NSImage*)square_image
                  ofDiameter:(CGFloat)diameter
-            withWhiteBorder:(BOOL)border
+ withWhiteBorderOfThickness:(CGFloat)border_thickness
+          andShadowOfRadius:(CGFloat)shadow_radius
 {
-    CGFloat border_thickness = 0.0;
     CGFloat image_diameter = diameter;
-    if (border)
-    {
-        border_thickness = 3.0;
-        image_diameter -= 2.0 * border_thickness;
-    }
+    image_diameter -= 2.0 * border_thickness;
+    image_diameter -= 2.0 * shadow_radius;
 
     square_image.size = NSMakeSize(image_diameter, image_diameter);
     
     NSImage* res = [[NSImage alloc] initWithSize:NSMakeSize(diameter, diameter)];
     [res lockFocus];
     
-    if (border)
+    [NSGraphicsContext saveGraphicsState];
+    
+    NSShadow* shadow = [[NSShadow alloc] init];
+    if (shadow_radius > 0.0)
     {
-        NSBezierPath* grey_border = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(0.0,
-                                                                                      0.0,
-                                                                                      diameter,
-                                                                                      diameter)];
+        shadow.shadowBlurRadius = shadow_radius;
+        shadow.shadowColor = TH_RGBACOLOR(0.0, 0.0, 0.0, 0.36);
+        shadow.shadowOffset = NSZeroSize;
+        [shadow set];
+    }
+    
+    if (border_thickness > 0.0)
+    {
+        NSBezierPath* grey_border = [NSBezierPath bezierPathWithOvalInRect:
+                                     NSMakeRect(shadow_radius,
+                                                shadow_radius,
+                                                diameter - (2.0 * shadow_radius),
+                                                diameter - (2.0 * shadow_radius))];
         [TH_RGBCOLOR(239.0, 239.0, 239.0) set];
         [grey_border stroke];
         
         NSBezierPath* white_border = [NSBezierPath bezierPathWithOvalInRect:
-                                      NSMakeRect(1.0,
-                                                 1.0,
-                                                 diameter - 2.0,
-                                                 diameter - 2.0)];
+                                      NSMakeRect(shadow_radius + 1.0,
+                                                 shadow_radius + 1.0,
+                                                 diameter - (2.0 * shadow_radius) - 2.0,
+                                                 diameter - (2.0 * shadow_radius) - 2.0)];
         [white_border setLineWidth:(border_thickness - 1.0)];
         [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
         [white_border stroke];
     }
+    
+    [NSGraphicsContext restoreGraphicsState];
 
-    NSBezierPath* image_path = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(border_thickness,
-                                                                                 border_thickness,
-                                                                                 image_diameter,
-                                                                                 image_diameter)];
+    NSBezierPath* image_path = [NSBezierPath bezierPathWithOvalInRect:
+                                NSMakeRect(border_thickness + shadow_radius,
+                                           border_thickness + shadow_radius,
+                                           image_diameter,
+                                           image_diameter)];
     [image_path addClip];
-    [square_image drawInRect:NSMakeRect(border_thickness,
-                                        border_thickness,
+    [square_image drawInRect:NSMakeRect(border_thickness + shadow_radius,
+                                        border_thickness + shadow_radius,
                                         image_diameter,
                                         image_diameter)
                     fromRect:NSZeroRect
