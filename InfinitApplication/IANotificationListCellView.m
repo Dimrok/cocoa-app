@@ -59,16 +59,38 @@
                                                                            attributes:attrs];
 }
 
+- (BOOL)isToday:(NSDate*)date
+{
+    NSDate* today = [NSDate date];
+    NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+    NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents* today_components = [gregorian components:components
+                                                      fromDate:today];
+    NSDateComponents* date_components = [gregorian components:components
+                                                     fromDate:date];
+    if ([date_components isEqual:today_components])
+        return YES;
+    else
+        return NO;
+}
+
 - (void)setLastActionTime:(NSTimeInterval)timestamp
 {
-    NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSRightTextAlignment;
+    NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:10.0]
+                                          paragraphStyle:para
                                                   colour:TH_RGBCOLOR(206.0, 206.0, 206.0)
                                                   shadow:nil];
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:timestamp];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateStyle = NSDateFormatterShortStyle;
-    formatter.timeStyle = NSDateFormatterShortStyle;
+    formatter.locale = [NSLocale currentLocale];
+    
+    if ([self isToday:date])
+        formatter.timeStyle = NSDateFormatterShortStyle;
+    else
+        formatter.dateStyle = NSDateFormatterShortStyle;
+    
     self.time_since_change.attributedStringValue = [[NSAttributedString alloc]
                                                     initWithString:[formatter stringFromDate:date]
                                                         attributes:attrs];
