@@ -51,6 +51,39 @@
 @end
 
 @implementation IASearchResultsTableRowView
+{
+@private
+    NSTrackingArea* _tracking_area;
+}
+
+- (void)dealloc
+{
+    _tracking_area = nil;
+}
+
+- (void)ensureTrackingArea
+{
+    if (_tracking_area == nil)
+    {
+        NSDictionary* dict = @{@"row": self};
+        _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
+                                                      options:(NSTrackingInVisibleRect |
+                                                               NSTrackingActiveAlways |
+                                                               NSTrackingMouseEnteredAndExited)
+                                                        owner:[(NSTableView*)self.superview delegate]
+                                                     userInfo:dict];
+    }
+}
+
+- (void)updateTrackingAreas
+{
+    [super updateTrackingAreas];
+    [self ensureTrackingArea];
+    if (![[self trackingAreas] containsObject:_tracking_area])
+    {
+        [self addTrackingArea:_tracking_area];
+    }
+}
 
 - (void)setSelected:(BOOL)selected
 {
@@ -394,6 +427,30 @@ doCommandBySelector:(SEL)commandSelector
     if (row_view == nil)
         row_view = [[IASearchResultsTableRowView alloc] initWithFrame:NSZeroRect];
     return row_view;
+}
+
+//- Mouse Hovering ---------------------------------------------------------------------------------
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+    NSDictionary* dict = theEvent.userData;
+    if (![[dict objectForKey:@"row"] isKindOfClass:[IASearchResultsTableRowView class]])
+        return;
+    IASearchResultsTableRowView* row = [dict objectForKey:@"row"];
+    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.table_view rowForView:row]]
+                 byExtendingSelection:NO];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+}
+
+- (void)mouseMoved:(NSEvent*)theEvent
+{
+}
+
+- (void)cursorUpdate:(NSEvent*)event
+{
 }
 
 //- User Interactions With Table -------------------------------------------------------------------
