@@ -380,8 +380,9 @@ doCommandBySelector:(SEL)commandSelector
     [cell setUserFavourite:NO]; // XXX check if user is favourite
     NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
                                                                      andLoadIfNeeded:YES]
-                                          ofDiameter:25
-                                   withWhiteBorder:NO];
+                                        ofDiameter:25
+                        withWhiteBorderOfThickness:0.0
+                                 andShadowOfRadius:0.0];
     [cell setUserAvatar:avatar];
     return cell;
 }
