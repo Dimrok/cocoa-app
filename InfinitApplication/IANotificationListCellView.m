@@ -100,12 +100,9 @@
 {
     NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
                                                                      andLoadIfNeeded:YES]
-                                          ofDiameter:48.0
-                                   withWhiteBorder:YES];
-    [self.avatar setWantsLayer:YES];
-    self.avatar.layer.shadowOffset = NSZeroSize;
-    self.avatar.layer.shadowRadius = 1.0;
-    self.avatar.layer.shadowOpacity = 0.25;
+                                        ofDiameter:50.0
+                        withWhiteBorderOfThickness:3.0
+                                 andShadowOfRadius:1.0];
     self.avatar.image = avatar;
 }
 
