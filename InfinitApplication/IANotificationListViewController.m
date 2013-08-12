@@ -73,9 +73,9 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
-        _transaction_list = [_delegate notificationListWantsTransactions:self];
         _row_height = 72.0;
         _max_rows_shown = 7;
+        _transaction_list = [_delegate notificationListWantsTransactions:self];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -121,8 +121,9 @@
         CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
         self.main_view_height_constraint.constant += y_diff;
     }
-//    _transaction_list = nil; // XXX work around for crash on calling layout
+    _transaction_list = nil; // XXX work around for crash on calling layout
     [self.view layoutSubtreeIfNeeded];
+    [self transactionsUpdated];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -130,11 +131,10 @@
 - (void)avatarCallback:(NSNotification*)notification
 {
     IAUser* user = [notification.userInfo objectForKey:@"user"];
-    
     for (IATransaction* transaction in _transaction_list)
     {
-        if ((transaction.from_me && transaction.recipient_id == user.user_id) ||
-            (!transaction.from_me && transaction.sender_id == user.user_id))
+        if ((transaction.from_me && [transaction.recipient_id isEqualToString:user.user_id]) ||
+            (!transaction.from_me && [transaction.sender_id isEqualToString:user.user_id]))
         {
             [self.table_view reloadDataForRowIndexes:
                     [NSIndexSet indexSetWithIndex:[_transaction_list indexOfObject:transaction]]
@@ -144,6 +144,12 @@
 }
 
 //- Table Functions --------------------------------------------------------------------------------
+
+- (void)transactionsUpdated
+{
+     _transaction_list = [_delegate notificationListWantsTransactions:self];
+    [self updateTable];
+}
 
 - (void)updateTable
 {
