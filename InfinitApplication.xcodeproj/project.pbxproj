@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8301B8FC17BA61F000FD6CAC /* status_bar_icon_fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */; };
 		831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB21D17A8FE1700696604 /* IAAvatarManager.m */; };
 		831FB22117A901D500696604 /* avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 831FB22017A901D500696604 /* avatar_default.png */; };
 		831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB22417A90BE900696604 /* IANotificationListViewController.m */; };
@@ -259,6 +260,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bar_icon_fire.png; sourceTree = "<group>"; };
 		831FB21C17A8FE1700696604 /* IAAvatarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAvatarManager.h; sourceTree = "<group>"; };
 		831FB21D17A8FE1700696604 /* IAAvatarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAvatarManager.m; sourceTree = "<group>"; };
 		831FB22017A901D500696604 /* avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_default.png; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 		832808CC17A2C0C40025B6F8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */,
 				832808C817A2C0BC0025B6F8 /* status_bar_icon_clicked.png */,
 				832808C917A2C0BC0025B6F8 /* status_bar_icon_normal.png */,
 			);
@@ -1030,6 +1033,7 @@
 				83281BBF17AFFD1D00CAE422 /* IAConversationViewController.xib in Resources */,
 				83281BC217AFFEC000CAE422 /* icon-back.png in Resources */,
 				83281BC317AFFEC000CAE422 /* icon-back@2x.png in Resources */,
+				8301B8FC17BA61F000FD6CAC /* status_bar_icon_fire.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
