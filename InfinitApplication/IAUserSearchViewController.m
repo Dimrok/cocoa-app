@@ -186,8 +186,8 @@
 
 - (void)awakeFromNib
 {
-    [self.clear_search setHidden:YES];
     [self.no_results_message setHidden:YES];
+    self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
 }
 
 - (void)loadView
@@ -214,29 +214,27 @@
 
 - (void)cancelLastSearchOperation
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(doSearchNow)
-                                               object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-- (void)doDelayedSearch
+- (void)doDelayedSearch:(NSString*)search_string
 {
-    [self performSelector:@selector(doSearchNow)
-               withObject:nil
+    [self performSelector:@selector(doSearchNow:)
+               withObject:search_string
                afterDelay:0.5];
 }
 
-- (void)doSearchNow
+- (void)doSearchNow:(NSString*)search_string
 {
     [self cancelLastSearchOperation];
-    NSString* search_string = self.search_field.stringValue;
     if ([IAFunctions stringIsValidEmail:search_string]) // Search using using email address
     {
         NSMutableDictionary* data = [NSMutableDictionary dictionaryWithObject:search_string
                                                                        forKey:@"entered_email"];
         [[IAGapState instance] getUserIdfromEmail:search_string
                                   performSelector:@selector(searchUserEmailCallback:)
-                                         onObject:self withData:data];
+                                         onObject:self
+                                         withData:data];
     }
     else // Normal search
     {
@@ -283,35 +281,33 @@
 
 //- Search Field -----------------------------------------------------------------------------------
 
+- (NSString*)trimTrailingWhitespace:(NSString*)str
+{
+    NSInteger i = 0;
+    while (i < str.length &&
+           [[NSCharacterSet whitespaceCharacterSet] characterIsMember:[str characterAtIndex:i]])
+    {
+        i++;
+    }
+    return [str substringFromIndex:i];
+}
+
 - (void)controlTextDidChange:(NSNotification*)aNotification
 {
     NSControl* control = aNotification.object;
     if (control == self.search_field)
     {
-        if (self.search_field.stringValue.length == 0)
-        {
-            [self.clear_search setHidden:YES];
-            [self clearResults];
-            [self cancelLastSearchOperation];
-        }
-        else
-        {
-            [self.clear_search setHidden:NO];
-            [self.no_results_message setHidden:YES];
-            [self cancelLastSearchOperation];
-            [self doDelayedSearch];
-        }
-    }
-}
-
-- (IBAction)clearSearchField:(NSButton*)sender
-{
-    if (sender == self.clear_search)
-    {
-        self.search_field.stringValue = @"";
-        [self.clear_search setHidden:YES];
         [self cancelLastSearchOperation];
-        [self clearResults];
+        NSArray* tokens = self.search_field.objectValue;
+        NSString* search_string;
+        if ([tokens.lastObject isKindOfClass:[NSString class]])
+            search_string = [self trimTrailingWhitespace:tokens.lastObject];
+        else
+            search_string = @"";
+        if (search_string.length > 0)
+            [self doDelayedSearch:search_string];
+        else
+            [self clearResults];
     }
 }
 
@@ -322,12 +318,7 @@ doCommandBySelector:(SEL)commandSelector
     if (control != self.search_field)
         return NO;
     
-    if (commandSelector == @selector(insertNewline:))
-    {
-        [self addSelectedUser];
-        return YES;
-    }
-    else if (commandSelector == @selector(moveDown:))
+    if (commandSelector == @selector(moveDown:))
     {
         [self moveTableSelectionBy:1];
         return YES;
@@ -345,16 +336,94 @@ doCommandBySelector:(SEL)commandSelector
     return NO;
 }
 
+- (BOOL)tokenField:(NSTokenField*)tokenField
+hasMenuForRepresentedObject:(id)representedObject
+{
+    return NO;
+}
+
+- (NSTokenStyle)tokenField:(NSTokenField*)tokenField
+ styleForRepresentedObject:(id)representedObject
+{
+    if ([representedObject isKindOfClass:[IAUser class]])
+        return NSRoundedTokenStyle;
+    if ([representedObject isKindOfClass:[NSString class]] &&
+        [IAFunctions stringIsValidEmail:representedObject])
+    {
+        return NSRoundedTokenStyle;
+    }
+    
+    return NSPlainTextTokenStyle;
+}
+
+- (NSArray*)tokenField:(NSTokenField*)tokenField
+      shouldAddObjects:(NSArray*)tokens
+               atIndex:(NSUInteger)index
+{
+    NSMutableArray* allowed_tokens = [NSMutableArray arrayWithArray:tokens];
+    for (id new_token in allowed_tokens)
+    {
+        NSInteger count = 0;
+        for (id token in self.search_field.objectValue)
+        {
+            if ([token isEqualTo:new_token] && ++count > 1)
+                break;
+        }
+        if (count > 1)
+            [allowed_tokens removeObject:new_token];
+    }
+    for (id object in allowed_tokens)
+    {
+        if (![object isKindOfClass:[IAUser class]] &&
+            !([object isKindOfClass:[NSString class]] && [IAFunctions stringIsValidEmail:object]))
+        {
+            [allowed_tokens removeObject:object];
+        }
+    }
+    return allowed_tokens;
+}
+
+- (NSString*)tokenField:(NSTokenField*)tokenField
+editingStringForRepresentedObject:(id)representedObject
+{
+    return nil;
+}
+
+- (id)tokenField:(NSTokenField*)tokenField
+representedObjectForEditingString:(NSString*)editingString
+{
+    NSInteger row = self.table_view.selectedRow;
+    if (row > -1 || row < _search_results.count)
+        return [_search_results objectAtIndex:row];
+    else
+        return editingString;
+}
+
+- (NSString*)tokenField:(NSTokenField*)tokenField
+displayStringForRepresentedObject:(id)representedObject
+{
+    if ([representedObject isKindOfClass:[NSString class]] &&
+        [IAFunctions stringIsValidEmail:representedObject])
+    {
+        return representedObject;
+    }
+    else if ([representedObject isKindOfClass:[IAUser class]])
+    {
+        return [(IAUser*)representedObject fullname];
+    }
+    return nil;
+}
+
 //- Table Drawing Functions ------------------------------------------------------------------------
 
 - (void)clearResults
 {
+    [self.no_results_message setHidden:YES];
     [self.view setFrameSize:self.search_box_view.frame.size];
     [_delegate searchView:self
               changedSize:self.view.frame.size
          withActiveSearch:NO];
     _search_results = nil;
-    [self.no_results_message setHidden:YES];
 }
 
 - (void)updateResultsTable
@@ -369,6 +438,7 @@ doCommandBySelector:(SEL)commandSelector
     }
     else
     {
+        [self.no_results_message setHidden:YES];
         new_size = NSMakeSize(self.view.frame.size.width,
                               self.search_box_view.frame.size.height + [self tableHeight]);
     }
@@ -464,18 +534,19 @@ doCommandBySelector:(SEL)commandSelector
 - (IBAction)tableViewAction:(NSTableView*)sender
 {
     NSInteger row = self.table_view.clickedRow;
-    if (row == -1)
+    if (row < 0 || row > _search_results.count - 1)
         return;
-    [self addSelectedUser];
+    [self mouseSelectedUser];
 }
 
-- (void)addSelectedUser
+- (void)mouseSelectedUser
 {
-    NSInteger row = self.table_view.selectedRow;
-    if (row == -1)
-        return;
-    
-    [_delegate searchView:self choseUser:[_search_results objectAtIndex:row]];
+    [self.view.window makeFirstResponder:self.search_field];
+    [self controlTextDidChange:[NSNotification
+                                notificationWithName:NSControlTextDidChangeNotification
+                                              object:self.search_field]];
+    NSText* field_editor = self.search_field.currentEditor;
+    [field_editor setSelectedRange:NSMakeRange(field_editor.string.length, 0)];
 }
 
 - (void)moveTableSelectionBy:(NSInteger)displacement
@@ -486,7 +557,8 @@ doCommandBySelector:(SEL)commandSelector
     {
         return;
     }
-    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:(row + displacement)] byExtendingSelection:NO];
+    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:(row + displacement)]
+                 byExtendingSelection:NO];
 }
 
 @end
