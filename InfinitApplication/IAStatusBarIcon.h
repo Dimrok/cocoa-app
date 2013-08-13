@@ -12,19 +12,12 @@
 @protocol IAStatusBarIconProtocol;
 
 @interface IAStatusBarIcon : NSView
-{
-@private
-    id _delegate;
-    NSImage* _icon[2];
-    BOOL _is_highlighted;
-    NSImageView* _icon_view;
-    NSArray* _drag_types;
-}
 
 @property (nonatomic, readonly) BOOL isHighlighted;
 
 - (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate statusItem:(NSStatusItem*)status_item;
 - (void)setHighlighted:(BOOL)is_highlighted;
+- (void)setNumberOfItems:(NSInteger)number_of_items;
 
 @end
 

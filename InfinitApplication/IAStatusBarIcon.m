@@ -15,6 +15,15 @@ enum status_bar_icon_status {
 };
 
 @implementation IAStatusBarIcon
+{
+@private
+    id _delegate;
+    NSArray* _drag_types;
+    NSImage* _icon[2];
+    NSImageView* _icon_view;
+    BOOL _is_highlighted;
+    NSInteger _number_of_items;
+}
 
 @synthesize isHighlighted = _is_highlighted;
 
@@ -26,6 +35,7 @@ enum status_bar_icon_status {
     {
         _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType,
                                                 nil];
+        _number_of_items = 0;
         [self registerForDraggedTypes:_drag_types];
     }
     
@@ -63,7 +73,32 @@ enum status_bar_icon_status {
              fromRect:self.bounds
             operation:NSCompositeSourceOver
              fraction:1.0];
+    if (_number_of_items > 0)
+    {
+        NSDictionary* style;
+        if (_is_highlighted)
+        {
+            style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:TH_RGBCOLOR(255.0, 255.0, 255.0)
+                                            shadow:nil];
+        }
+        else
+        {
+            style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:TH_RGBCOLOR(221.0, 0.0, 0.0)
+                                            shadow:nil];
+        }
+        NSString* number_str = _number_of_items > 99 ?
+                    @"∞" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
+        NSAttributedString* notifications_str = [[NSAttributedString alloc]
+                                                            initWithString:number_str
+                                                                attributes:style];
+    }
 }
+
+//- General Functions ------------------------------------------------------------------------------
 
 - (void)setHighlighted:(BOOL)is_highlighted
 {
@@ -71,8 +106,11 @@ enum status_bar_icon_status {
     [self setNeedsDisplay:YES];
 }
 
-//- General Functions ------------------------------------------------------------------------------
-
+- (void)setNumberOfItems:(NSInteger)number_of_items
+{
+    _number_of_items = number_of_items;
+    [self setNeedsDisplay:YES];
+}
 
 //- Click Operations -------------------------------------------------------------------------------
 
