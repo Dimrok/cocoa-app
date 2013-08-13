@@ -33,9 +33,6 @@
        changedSize:(NSSize)size
   withActiveSearch:(BOOL)searching;
 
-- (void)searchView:(IAUserSearchViewController*)sender
-         choseUser:(IAUser*)user;
-
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
 
 @end

@@ -333,12 +333,6 @@ doCommandBySelector:(SEL)commandSelector
     }
 }
 
-- (void)searchView:(IAUserSearchViewController*)sender
-         choseUser:(IAUser*)user
-{
-    
-}
-
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
     [self.view.window makeFirstResponder:self.note_field];

@@ -192,12 +192,6 @@
     }
 }
 
-- (void)searchView:(IAUserSearchViewController*)sender
-         choseUser:(IAUser*)user
-{
-    
-}
-
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
     
