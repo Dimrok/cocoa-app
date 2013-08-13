@@ -111,7 +111,11 @@
     // Calculate the angle around the x-axis of the circle
     CGFloat start_angle = - (0.5 * arc_angle);
     // Find the difference in angle between each view
-    CGFloat delta = arc_angle / (total - 1);
+    CGFloat delta = 0.0;
+    if (total > 1)
+        delta = arc_angle / (total - 1);
+    else
+        start_angle = 0.0;
     // End coordinates are rotated by 90º
     CGFloat y = arc_radius * cos(start_angle + (number * delta)) - (0.5 * _favourite_size.width);
     CGFloat x = arc_radius * sin(start_angle + (number * delta)) - (0.5 * _favourite_size.height);
@@ -124,12 +128,12 @@
 
 - (void)addFavouriteSubViews
 {
-    for (NSInteger i = 0; i < 5; i++)
+    for (NSInteger i = 0; i < 1; i++)
     {
         IAFavouriteView* favourite_view = [[IAFavouriteView alloc]
                                            initWithFrame:NSMakeRect(0.0, 0.0, _favourite_size.width, _favourite_size.height)];
         [self.view addSubview:favourite_view];
-        [favourite_view setFrame:[self favouritePosition:i of:5]];
+        [favourite_view setFrame:[self favouritePosition:i of:1]];
     }
 }
 
