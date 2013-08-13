@@ -101,7 +101,8 @@
     NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
                                                                      andLoadIfNeeded:YES]
                                         ofDiameter:50.0
-                        withWhiteBorderOfThickness:3.0
+                             withBorderOfThickness:3.0
+                                          inColour:TH_RGBCOLOR(255.0, 255.0, 255.0)
                                  andShadowOfRadius:1.0];
     self.avatar.image = avatar;
 }

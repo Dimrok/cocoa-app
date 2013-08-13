@@ -484,7 +484,8 @@ displayStringForRepresentedObject:(id)representedObject
     NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
                                                                      andLoadIfNeeded:YES]
                                         ofDiameter:25
-                        withWhiteBorderOfThickness:0.0
+                             withBorderOfThickness:0.0
+                                          inColour:TH_RGBCOLOR(255.0, 255.0, 255.0)
                                  andShadowOfRadius:0.0];
     [cell setUserAvatar:avatar];
     return cell;
