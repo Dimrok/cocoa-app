@@ -11,7 +11,8 @@
 
 enum status_bar_icon_status {
     status_bar_icon_normal = 0,
-    status_bar_icon_clicked = 1,
+    status_bar_icon_fire,
+    status_bar_icon_clicked,
 };
 
 @implementation IAStatusBarIcon
@@ -19,7 +20,7 @@ enum status_bar_icon_status {
 @private
     id _delegate;
     NSArray* _drag_types;
-    NSImage* _icon[2];
+    NSImage* _icon[3];
     NSImageView* _icon_view;
     BOOL _is_highlighted;
     NSInteger _number_of_items;
@@ -48,6 +49,7 @@ enum status_bar_icon_status {
     {
         _delegate = delegate;
         _icon[status_bar_icon_normal] = [IAFunctions imageNamed:@"status_bar_icon_normal"];
+        _icon[status_bar_icon_fire] = [IAFunctions imageNamed:@"status_bar_icon_fire"];
         _icon[status_bar_icon_clicked] = [IAFunctions imageNamed:@"status_bar_icon_clicked"];
         CGFloat width = [status_item length];
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
@@ -66,7 +68,13 @@ enum status_bar_icon_status {
         [NSBezierPath fillRect:self.bounds];
     }
     
-    NSImage* icon = _is_highlighted ? _icon[status_bar_icon_clicked] : _icon[status_bar_icon_normal];
+    NSImage* icon;
+    if (_is_highlighted)
+        icon = _icon[status_bar_icon_clicked];
+    else if (_number_of_items > 0)
+        icon = _icon[status_bar_icon_fire];
+    else
+        icon = _icon[status_bar_icon_normal];
     CGFloat x = roundf((NSWidth(self.bounds) - icon.size.width) / 2);
     CGFloat y = roundf((NSHeight(self.bounds) - icon.size.height) / 2);
     [icon drawAtPoint:NSMakePoint(x, y)
@@ -91,7 +99,7 @@ enum status_bar_icon_status {
                                             shadow:nil];
         }
         NSString* number_str = _number_of_items > 9 ?
-                    @"∞" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
+                    @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
         NSAttributedString* notifications_str = [[NSAttributedString alloc]
                                                             initWithString:number_str
                                                                 attributes:style];
