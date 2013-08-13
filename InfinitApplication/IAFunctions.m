@@ -103,7 +103,8 @@
 
 + (NSImage*)makeRoundAvatar:(NSImage*)square_image
                  ofDiameter:(CGFloat)diameter
- withWhiteBorderOfThickness:(CGFloat)border_thickness
+      withBorderOfThickness:(CGFloat)border_thickness
+                   inColour:(NSColor*)colour
           andShadowOfRadius:(CGFloat)shadow_radius
 {
     CGFloat image_diameter = diameter;
@@ -142,7 +143,7 @@
                                                  diameter - (2.0 * shadow_radius) - 2.0,
                                                  diameter - (2.0 * shadow_radius) - 2.0)];
         [white_border setLineWidth:(border_thickness - 1.0)];
-        [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+        [colour set];
         [white_border stroke];
     }
     
