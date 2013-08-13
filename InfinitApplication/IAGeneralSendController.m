@@ -16,6 +16,7 @@
     
     // Send views
     IAAdvancedSendViewController* _advanced_send_controller;
+    IAFavouritesSendViewController* _favourites_send_controller;
     IASimpleSendViewController* _simple_send_controller;
     
     id _currently_open_controller;
@@ -36,6 +37,20 @@
     return self;
 }
 
+//- General Functions ------------------------------------------------------------------------------
+
+- (void)filesOverStatusBarIcon
+{
+    [self performSelector:@selector(showFavourites)
+               withObject:nil
+               afterDelay:0.5];
+}
+
+- (void)cancelOpenFavourites
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 //- Open Functions ---------------------------------------------------------------------------------
 
 - (void)openWithNoFile
@@ -50,6 +65,7 @@
 
 - (void)openWithFiles:(NSArray*)files
 {
+    [self cancelOpenFavourites];
     for (NSString* file in files)
     {
         if (![_files containsObject:file])
@@ -65,6 +81,13 @@
     else
         [_currently_open_controller filesUpdated];
     [_delegate sendController:self wantsActiveController:_simple_send_controller];
+}
+
+- (void)showFavourites
+{
+    if (_favourites_send_controller == nil)
+        _favourites_send_controller = [[IAFavouritesSendViewController alloc] initWithDelegate:self];
+    [_favourites_send_controller showFavourites];
 }
 
 //- View Switching ---------------------------------------------------------------------------------
@@ -146,6 +169,18 @@
         }
     }
     [sender filesUpdated];
+}
+
+//- Favourites Send View Protocol ------------------------------------------------------------------
+
+- (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender
+{
+    return nil;
+}
+
+- (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender
+{
+    return [_delegate sendControllerWantsMidpoint:self];
 }
 
 @end

@@ -316,6 +316,11 @@
     [self closeNotificationWindow];
 }
 
+- (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender
+{
+    return [self statusBarIconMiddle];
+}
+
 //- Login Window Protocol --------------------------------------------------------------------------
 
 - (void)tryLogin:(IALoginViewController*)sender
@@ -340,6 +345,11 @@
     if (_general_send_controller == nil)
         _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithNoFile];
+}
+
+- (NSArray*)notificationListWantsTransactions:(IANotificationListViewController*)sender
+{
+    return _transaction_manager.transactions;
 }
 
 //- Not Logged In View Protocol --------------------------------------------------------------------
@@ -378,13 +388,21 @@
 
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
 {
-    
+    if (_general_send_controller == nil)
+        _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+    [_general_send_controller filesOverStatusBarIcon];
 }
 
 //- Transaction Manager Protocol -------------------------------------------------------------------
 
 - (void)transactionManager:(IATransactionManager*)sender
           transactionAdded:(IATransaction*)transaction
+{
+    
+}
+
+- (void)transactionManager:(IATransactionManager*)sender
+        transactionUpdated:(IATransaction*)transaction
 {
     
 }

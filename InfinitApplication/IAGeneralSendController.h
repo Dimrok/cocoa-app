@@ -12,17 +12,20 @@
 #import <Foundation/Foundation.h>
 
 #import "IAAdvancedSendViewController.h"
+#import "IAFavouritesSendViewController.h"
 #import "IASimpleSendViewController.h"
 
 @protocol IAGeneralSendControllerProtocol;
 
 @interface IAGeneralSendController : NSObject <IAAdvancedSendViewProtocol,
+                                               IAFavouritesSendViewProtocol,
                                                IASimpleSendViewProtocol>
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
 
 - (void)openWithNoFile;
 - (void)openWithFiles:(NSArray*)files;
+- (void)filesOverStatusBarIcon;
 
 @end
 
@@ -32,5 +35,7 @@
  wantsActiveController:(IAViewController*)controller;
 
 - (void)sendControllerWantsClose:(IAGeneralSendController*)sender;
+
+- (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender;
 
 @end
