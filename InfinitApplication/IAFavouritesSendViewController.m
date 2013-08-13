@@ -183,4 +183,11 @@
      }];
 }
 
+//- Favourite View Protocol ------------------------------------------------------------------------
+
+- (void)favouriteView:(IAFavouriteView*)sender
+             gotFiles:(NSArray*)files
+{
+}
+
 @end

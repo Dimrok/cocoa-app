@@ -8,9 +8,12 @@
 
 #import "IAViewController.h"
 
+#import "IAFavouriteView.h"
+
 @protocol IAFavouritesSendViewProtocol;
 
-@interface IAFavouritesSendViewController : NSViewController <NSWindowDelegate>
+@interface IAFavouritesSendViewController : NSViewController <IAFavouriteViewProtocol,
+                                                              NSWindowDelegate>
 
 - (id)initWithDelegate:(id<IAFavouritesSendViewProtocol>)delegate;
 - (void)showFavourites;
