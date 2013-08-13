@@ -25,27 +25,41 @@
 
 @end
 
-//- Favourite View ---------------------------------------------------------------------------------
+//- Favourites View ---------------------------------------------------------------------------------
 
-@interface IAFavouriteView : NSView
+@interface IAFavouritesView : NSView
 @end
 
-@implementation IAFavouriteView
+@implementation IAFavouritesView
+{
+@private
+    NSArray* _drag_types;
+}
 
 - (id)initWithFrame:(NSRect)frameRect
 {
     if (self = [super initWithFrame:frameRect])
     {
-        
+        _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
+        [self registerForDraggedTypes:_drag_types];
     }
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
 {
-    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
-    [[NSColor orangeColor] set];
-    [bg fill];
+    NSPasteboard* paste_board = sender.draggingPasteboard;
+    if (![paste_board availableTypeFromArray:_drag_types])
+        return NO;
+    
+    NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
+    
+    if (files.count > 0)
+    {
+        // Do something
+    }
+    
+    return YES;
 }
 
 @end
@@ -130,8 +144,11 @@
 {
     for (NSInteger i = 0; i < 1; i++)
     {
-        IAFavouriteView* favourite_view = [[IAFavouriteView alloc]
-                                           initWithFrame:NSMakeRect(0.0, 0.0, _favourite_size.width, _favourite_size.height)];
+        IAFavouriteView* favourite_view = [[IAFavouriteView alloc] initWithFrame:
+                                           NSMakeRect(0.0,
+                                                      0.0,
+                                                      _favourite_size.width,
+                                                      _favourite_size.height)];
         [self.view addSubview:favourite_view];
         [favourite_view setFrame:[self favouritePosition:i of:1]];
     }
