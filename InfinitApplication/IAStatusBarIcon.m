@@ -90,11 +90,13 @@ enum status_bar_icon_status {
                                             colour:TH_RGBCOLOR(221.0, 0.0, 0.0)
                                             shadow:nil];
         }
-        NSString* number_str = _number_of_items > 99 ?
+        NSString* number_str = _number_of_items > 9 ?
                     @"∞" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
         NSAttributedString* notifications_str = [[NSAttributedString alloc]
                                                             initWithString:number_str
                                                                 attributes:style];
+        [notifications_str drawAtPoint:
+            NSMakePoint(self.frame.size.width - notifications_str.size.width, 10.0)];
     }
 }
 
