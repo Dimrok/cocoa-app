@@ -24,6 +24,11 @@
 
 @implementation IANotificationListRowView
 
+- (BOOL)isFlipped
+{
+    return NO;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Grey background
@@ -44,7 +49,7 @@
     [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
     [white_line fill];
     
-    // White line
+    // Grey line
     NSRect grey_line_frame = NSMakeRect(self.bounds.origin.x,
                                         0.0,
                                         self.bounds.size.width,
@@ -74,7 +79,7 @@
     {
         _delegate = delegate;
         _row_height = 72.0;
-        _max_rows_shown = 7;
+        _max_rows_shown = 4;
         _transaction_list = [_delegate notificationListWantsTransactions:self];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarCallback:)
@@ -158,8 +163,8 @@
      {
          context.duration = 0.25;
          [self.main_view_height_constraint.animator
-          setConstant:(self.main_view_height_constraint.constant + y_diff)];
-         [self.view.window.contentView layoutSubtreeIfNeeded];
+                    setConstant:(self.main_view_height_constraint.constant + y_diff)];
+         [self.view layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {
@@ -208,6 +213,13 @@
     if (row_view == nil)
         row_view = [[IANotificationListRowView alloc] initWithFrame:NSZeroRect];
     return row_view;
+}
+
+//- User Interaction With Table --------------------------------------------------------------------
+
+- (IBAction)tableViewAction:(NSTableView*)sender
+{
+    
 }
 
 //- Button Handling --------------------------------------------------------------------------------
