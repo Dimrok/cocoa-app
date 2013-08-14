@@ -196,6 +196,11 @@
         
         if (_new_credentials)
             [self addCredentialsToKeychain];
+        
+        // XXX Should allow changing of avatar in settings, not upload every successful login
+        [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
+                            performSelector:nil
+                                   onObject:nil];
     }
     else
     {
