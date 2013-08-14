@@ -12,6 +12,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "IAConversationViewController.h"
 #import "IALoginViewController.h"
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
@@ -23,10 +24,11 @@
 
 @protocol IAMainControllerProtocol;
 
-@interface IAMainController : NSObject <IALoginViewControllerProtocol,
+@interface IAMainController : NSObject <IAConversationViewProtocol,
+                                        IAGeneralSendControllerProtocol,
+                                        IALoginViewControllerProtocol,
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
-                                        IAGeneralSendControllerProtocol,
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,

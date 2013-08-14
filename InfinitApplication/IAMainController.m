@@ -22,10 +22,11 @@
     IAStatusBarIcon* _status_bar_icon;
     
     // View controllers
+    IAConversationViewController* _conversation_view_controller;
+    IAGeneralSendController* _general_send_controller;
     IALoginViewController* _login_view_controller;
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
-    IAGeneralSendController* _general_send_controller;
     IAWindowController* _window_controller;
     
     // Managers
@@ -114,46 +115,41 @@
 
 //- Handle Views -----------------------------------------------------------------------------------
 
-- (void)showNotifications
+- (void)openOrChangeViewController:(IAViewController*)view_controller
 {
-    _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
-    
     if ([_window_controller windowIsOpen])
     {
-        [_window_controller changeToViewController:_notification_view_controller];
+        [_window_controller changeToViewController:view_controller];
     }
     else
     {
-        [_window_controller openWithViewController:_notification_view_controller
+        [_window_controller openWithViewController:view_controller
                                       withMidpoint:[self statusBarIconMiddle]];
     }
+}
+
+- (void)showConversationViewForUser:(IAUser*)user
+{
+    _conversation_view_controller = [[IAConversationViewController alloc] initWithDelegate:self
+                                                                                  andUser:user];
+    [self openOrChangeViewController:_conversation_view_controller];
+}
+
+- (void)showNotifications
+{
+    _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
+    [self openOrChangeViewController:_notification_view_controller];
 }
 
 - (void)showNotLoggedInView
 {
     _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self];
-    if ([_window_controller windowIsOpen])
-    {
-        [_window_controller changeToViewController:_not_logged_view_controller];
-    }
-    else
-    {
-        [_window_controller openWithViewController:_not_logged_view_controller
-                                  withMidpoint:[self statusBarIconMiddle]];
-    }
+    [self openOrChangeViewController:_not_logged_view_controller];
 }
 
 - (void)showSendView:(IAViewController*)controller
 {
-    if ([_window_controller windowIsOpen])
-    {
-        [_window_controller changeToViewController:controller];
-    }
-    else
-    {
-        [_window_controller openWithViewController:controller
-                                      withMidpoint:[self statusBarIconMiddle]];
-    }
+    [self openOrChangeViewController:controller];
 }
 
 //- Window Handling --------------------------------------------------------------------------------
@@ -162,6 +158,8 @@
 {
     [_window_controller closeWindow];
     [_status_bar_icon setHighlighted:NO];
+    _conversation_view_controller = nil;
+    _notification_view_controller = nil;
     _general_send_controller = nil;
 }
 
@@ -352,9 +350,16 @@
     [_general_send_controller openWithNoFile];
 }
 
-- (NSArray*)notificationListWantsTransactions:(IANotificationListViewController*)sender
+- (NSArray*)notificationListWantsLastTransactions:(IANotificationListViewController*)sender
 {
+    // XXX Should return last transaction with all users
     return _transaction_manager.transactions;
+}
+
+- (void)notificationList:(IANotificationListViewController*)sender
+          gotClickOnUser:(IAUser*)user
+{
+    [self showConversationViewForUser:user];
 }
 
 //- Not Logged In View Protocol --------------------------------------------------------------------
