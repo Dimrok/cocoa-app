@@ -76,13 +76,6 @@
 
 @implementation IAMainView
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
-    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
-    [bg fill];
-}
-
 - (void)setFrame:(NSRect)frameRect
 {
     [super setFrame:frameRect];
