@@ -23,6 +23,42 @@
 @end
 
 @implementation IANotificationListRowView
+{
+@private
+    NSTrackingArea* _tracking_area;
+}
+
+- (void)dealloc
+{
+    _tracking_area = nil;
+}
+
+- (void)ensureTrackingArea
+{
+    NSDictionary* dict = @{@"row": self};
+    _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
+                                                  options:(NSTrackingInVisibleRect |
+                                                           NSTrackingActiveAlways |
+                                                           NSTrackingMouseEnteredAndExited)
+                                                    owner:[(NSTableView*)self.superview delegate]
+                                                 userInfo:dict];
+}
+
+- (void)updateTrackingAreas
+{
+    [super updateTrackingAreas];
+    [self ensureTrackingArea];
+    if (![[self trackingAreas] containsObject:_tracking_area])
+    {
+        [self addTrackingArea:_tracking_area];
+    }
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    [self setNeedsDisplay:YES];
+}
 
 - (BOOL)isFlipped
 {
@@ -31,14 +67,28 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Grey background
-    NSRect grey_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                      self.bounds.origin.y + 2.0,
-                                      self.bounds.size.width,
-                                      self.bounds.size.height - 2.0);
-    NSBezierPath* grey_bg = [NSBezierPath bezierPathWithRect:grey_bg_frame];
-    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
-    [grey_bg fill];
+    if (self.selected)
+    {
+        // Grey background
+        NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
+                                           self.bounds.origin.y + 2.0,
+                                           self.bounds.size.width,
+                                           self.bounds.size.height - 2.0);
+        NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:white_bg_frame];
+        [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+        [white_bg fill];
+    }
+    else
+    {
+        // Grey background
+        NSRect grey_bg_frame = NSMakeRect(self.bounds.origin.x,
+                                          self.bounds.origin.y + 2.0,
+                                          self.bounds.size.width,
+                                          self.bounds.size.height - 2.0);
+        NSBezierPath* grey_bg = [NSBezierPath bezierPathWithRect:grey_bg_frame];
+        [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+        [grey_bg fill];
+    }
     
     // White line
     NSRect white_line_frame = NSMakeRect(self.bounds.origin.x,
@@ -79,8 +129,8 @@
     {
         _delegate = delegate;
         _row_height = 72.0;
-        _max_rows_shown = 4;
-        _transaction_list = [_delegate notificationListWantsTransactions:self];
+        _max_rows_shown = 5;
+        _transaction_list = [_delegate notificationListWantsLastTransactions:self];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -152,7 +202,7 @@
 
 - (void)transactionsUpdated
 {
-     _transaction_list = [_delegate notificationListWantsTransactions:self];
+     _transaction_list = [_delegate notificationListWantsLastTransactions:self];
     [self updateTable];
 }
 
@@ -180,6 +230,12 @@
         return max_height;
     else
         return total_height;
+}
+
+- (BOOL)tableView:(NSTableView*)aTableView
+  shouldSelectRow:(NSInteger)row
+{
+    return YES;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
@@ -219,7 +275,49 @@
 
 - (IBAction)tableViewAction:(NSTableView*)sender
 {
+    NSInteger row = [self.table_view clickedRow];
+    if (row < 0 || row > _transaction_list.count - 1)
+        return;
     
+    IATransaction* transaction = [_transaction_list objectAtIndex:row];
+    IAUser* user;
+    
+    if (transaction.from_me)
+        user = [IAUser userWithId:transaction.recipient_id];
+    else
+        user = [IAUser userWithId:transaction.sender_id];
+    
+    [_delegate notificationList:self gotClickOnUser:user];
+}
+
+//- Mouse Hovering ---------------------------------------------------------------------------------
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+    NSDictionary* dict = theEvent.userData;
+    if (![[dict objectForKey:@"row"] isKindOfClass:[IANotificationListRowView class]])
+        return;
+    IANotificationListRowView* row = [dict objectForKey:@"row"];
+    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.table_view rowForView:row]]
+                 byExtendingSelection:NO];
+    if ([self.table_view rowForView:row] == 0)
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+    else
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+    [self.table_view deselectAll:self];
+    self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
+}
+
+- (void)mouseMoved:(NSEvent*)theEvent
+{
+}
+
+- (void)cursorUpdate:(NSEvent*)event
+{
 }
 
 //- Button Handling --------------------------------------------------------------------------------

@@ -209,7 +209,7 @@
 												<reference key="NSNextResponder" ref="675472725"/>
 												<int key="NSvFlags">4096</int>
 												<array class="NSMutableArray" key="NSSubviews"/>
-												<string key="NSFrameSize">{317, 72}</string>
+												<string key="NSFrameSize">{317, 360}</string>
 												<reference key="NSSuperview" ref="675472725"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="264162119"/>
@@ -297,7 +297,7 @@
 												<int key="NSTableViewGroupRowStyle">1</int>
 											</object>
 										</array>
-										<string key="NSFrameSize">{317, 72}</string>
+										<string key="NSFrameSize">{317, 360}</string>
 										<reference key="NSSuperview" ref="820412190"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="94902610"/>
@@ -334,7 +334,7 @@
 										<double key="NSPercent">0.984375</double>
 									</object>
 								</array>
-								<string key="NSFrameSize">{317, 72}</string>
+								<string key="NSFrameSize">{317, 360}</string>
 								<reference key="NSSuperview" ref="293821247"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="717741214"/>
@@ -351,7 +351,7 @@
 								<double key="NSMagnification">1</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 39}, {317, 72}}</string>
+						<string key="NSFrame">{{0, 39}, {317, 360}}</string>
 						<reference key="NSSuperview" ref="242443450"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="820412190"/>
@@ -398,7 +398,7 @@
 								<bool key="NSEditable">YES</bool>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 111}, {317, 13}}</string>
+						<string key="NSFrame">{{0, 399}, {317, 13}}</string>
 						<reference key="NSSuperview" ref="242443450"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="474442177"/>
@@ -406,7 +406,7 @@
 						<string key="NSClassName">IAHeaderView</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{317, 124}</string>
+				<string key="NSFrameSize">{317, 412}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="487040189"/>
@@ -613,7 +613,7 @@
 							<int key="secondAttribute">0</int>
 							<float key="multiplier">1</float>
 							<object class="IBLayoutConstant" key="constant">
-								<double key="value">288</double>
+								<double key="value">360</double>
 							</object>
 							<float key="priority">750</float>
 							<reference key="containingView" ref="293821247"/>
@@ -623,6 +623,14 @@
 						</object>
 					</object>
 					<int key="connectionID">625</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">header_image</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="474442177"/>
+					</object>
+					<int key="connectionID">626</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2350,7 +2358,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">625</int>
+			<int key="maxID">626</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2422,6 +2430,7 @@
 						<string key="footer_view">IAFooterView</string>
 						<string key="gear_button">NSButton</string>
 						<string key="gear_menu">NSMenu</string>
+						<string key="header_image">NSImageView</string>
 						<string key="header_view">IAHeaderView</string>
 						<string key="main_view">IAMainView</string>
 						<string key="main_view_height_constraint">NSLayoutConstraint</string>
@@ -2442,6 +2451,10 @@
 						<object class="IBToOneOutletInfo" key="gear_menu">
 							<string key="name">gear_menu</string>
 							<string key="candidateClassName">NSMenu</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="header_image">
+							<string key="name">header_image</string>
+							<string key="candidateClassName">NSImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="header_view">
 							<string key="name">header_view</string>

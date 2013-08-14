@@ -19,6 +19,7 @@
 @property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
 @property (nonatomic, strong) IBOutlet NSButton* gear_button;
 @property (nonatomic, strong) IBOutlet NSMenu* gear_menu;
+@property (nonatomic, strong) IBOutlet NSImageView* header_image;
 @property (nonatomic, retain) IBOutlet IAHeaderView* header_view;
 @property (nonatomic, retain) IBOutlet IAMainView* main_view;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* main_view_height_constraint;
@@ -36,6 +37,10 @@
 - (void)notificationListGotTransferClick:(IANotificationListViewController*)sender;
 - (void)notificationListWantsQuit:(IANotificationListViewController*)sender;
 
-- (NSArray*)notificationListWantsTransactions:(IANotificationListViewController*)sender;
+// XXX This will need to change to a group when the functionality is available
+- (void)notificationList:(IANotificationListViewController*)sender
+         gotClickOnUser:(IAUser*)user;
+
+- (NSArray*)notificationListWantsLastTransactions:(IANotificationListViewController*)sender;
 
 @end
