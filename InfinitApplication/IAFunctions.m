@@ -142,7 +142,7 @@
                                                  shadow_radius + 1.0,
                                                  diameter - (2.0 * shadow_radius) - 2.0,
                                                  diameter - (2.0 * shadow_radius) - 2.0)];
-        [white_border setLineWidth:(border_thickness - 1.0)];
+        [white_border setLineWidth:(border_thickness)];
         [colour set];
         [white_border stroke];
     }
