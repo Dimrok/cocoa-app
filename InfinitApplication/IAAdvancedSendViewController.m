@@ -16,6 +16,8 @@
 
 @end
 
+//- Advanced Search View ---------------------------------------------------------------------------
+
 @interface IAAdvancedSendSearchView : NSView
 @end
 
@@ -42,10 +44,19 @@
 
 @end
 
+//- Advanced Send Main View ------------------------------------------------------------------------
+
 @interface IAAdvancedSendViewMainView : NSView
 @end
 
 @implementation IAAdvancedSendViewMainView
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
+    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [bg fill];
+}
 
 - (void)setFrame:(NSRect)frameRect
 {
@@ -74,6 +85,41 @@
 @end
 
 @implementation IASendFileListRowView
+
+- (BOOL)isFlipped
+{
+    return NO;
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    // Grey backgrounds
+    NSRect grey_rect = NSMakeRect(self.bounds.origin.x,
+                                  self.bounds.origin.y + 2.0,
+                                  self.bounds.size.width,
+                                  self.bounds.size.height - 2.0);
+    NSBezierPath* grey_path = [NSBezierPath bezierPathWithRect:grey_rect];
+    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [grey_path fill];
+    
+    // White line
+    NSRect white_rect = NSMakeRect(self.bounds.origin.x,
+                                   self.bounds.origin.y + 1.0,
+                                   self.bounds.size.width,
+                                   1.0);
+    NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
+    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [white_line fill];
+    
+    // Dark grey line
+    NSRect dark_grey_rect = NSMakeRect(self.bounds.origin.x,
+                                       self.bounds.origin.y,
+                                       self.bounds.size.width,
+                                       1.0);
+    NSBezierPath* dark_grey_line = [NSBezierPath bezierPathWithRect:dark_grey_rect];
+    [TH_RGBCOLOR(220.0, 220.0, 220.0) set];
+    [dark_grey_line fill];
+}
 
 @end
 

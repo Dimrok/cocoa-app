@@ -636,7 +636,7 @@
 							<object class="IBLayoutConstant" key="constant">
 								<double key="value">197</double>
 							</object>
-							<float key="priority">1000</float>
+							<float key="priority">800</float>
 							<reference key="containingView" ref="163121679"/>
 							<int key="scoringType">9</int>
 							<float key="scoringTypeFloat">40</float>
@@ -659,7 +659,7 @@
 							<object class="IBLayoutConstant" key="constant">
 								<double key="value">45</double>
 							</object>
-							<float key="priority">1000</float>
+							<float key="priority">800</float>
 							<reference key="containingView" ref="495660624"/>
 							<int key="scoringType">9</int>
 							<float key="scoringTypeFloat">40</float>
@@ -683,6 +683,37 @@
 						<reference key="destination" ref="277820621"/>
 					</object>
 					<int key="connectionID">844</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">content_width_constraint</string>
+						<reference key="source" ref="1001"/>
+						<object class="IBNSLayoutConstraint" key="destination" id="700234728">
+							<reference key="firstItem" ref="59097982"/>
+							<int key="firstAttribute">7</int>
+							<int key="relation">0</int>
+							<nil key="secondItem"/>
+							<int key="secondAttribute">0</int>
+							<float key="multiplier">1</float>
+							<object class="IBLayoutConstant" key="constant">
+								<double key="value">317</double>
+							</object>
+							<float key="priority">1000</float>
+							<reference key="containingView" ref="59097982"/>
+							<int key="scoringType">9</int>
+							<float key="scoringTypeFloat">40</float>
+							<int key="contentType">1</int>
+						</object>
+					</object>
+					<int key="connectionID">848</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">content_height_constraint</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="651548736"/>
+					</object>
+					<int key="connectionID">849</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -958,8 +989,8 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1005"/>
-								<int key="scoringType">8</int>
-								<float key="scoringTypeFloat">29</float>
+								<int key="scoringType">9</int>
+								<float key="scoringTypeFloat">40</float>
 								<int key="contentType">3</int>
 							</object>
 							<object class="IBNSLayoutConstraint" id="614783669">
@@ -974,8 +1005,8 @@
 								</object>
 								<float key="priority">1000</float>
 								<reference key="containingView" ref="1005"/>
-								<int key="scoringType">8</int>
-								<float key="scoringTypeFloat">29</float>
+								<int key="scoringType">9</int>
+								<float key="scoringTypeFloat">40</float>
 								<int key="contentType">3</int>
 							</object>
 							<object class="IBNSLayoutConstraint" id="1018352364">
@@ -1363,6 +1394,7 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
+							<reference ref="700234728"/>
 							<reference ref="163121679"/>
 							<reference ref="495660624"/>
 						</array>
@@ -2271,6 +2303,11 @@
 						<reference key="object" ref="1018352364"/>
 						<reference key="parent" ref="1005"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">847</int>
+						<reference key="object" ref="700234728"/>
+						<reference key="parent" ref="59097982"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2314,7 +2351,8 @@
 				<string key="183.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="184.CustomClassName">IAHoverButtonCell</string>
 				<string key="184.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array key="19.IBNSViewMetadataConstraints">
+				<array class="NSMutableArray" key="19.IBNSViewMetadataConstraints">
+					<reference ref="700234728"/>
 					<reference ref="325079346"/>
 					<reference ref="874446325"/>
 					<reference ref="33445392"/>
@@ -2472,6 +2510,7 @@
 				<string key="838.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="839.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="841.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="847.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array key="97.IBNSViewMetadataConstraints">
 					<reference ref="126462647"/>
 				</array>
@@ -2482,7 +2521,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">844</int>
+			<int key="maxID">849</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2652,11 +2691,21 @@
 					<string key="className">IAViewController</string>
 					<string key="superclassName">NSViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="content_height_constraint">NSLayoutConstraint</string>
+						<string key="content_width_constraint">NSLayoutConstraint</string>
 						<string key="footer_view">IAFooterView</string>
 						<string key="header_view">IAHeaderView</string>
 						<string key="main_view">IAMainView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="content_height_constraint">
+							<string key="name">content_height_constraint</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="content_width_constraint">
+							<string key="name">content_width_constraint</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="footer_view">
 							<string key="name">footer_view</string>
 							<string key="candidateClassName">IAFooterView</string>
