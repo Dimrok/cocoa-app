@@ -22,6 +22,7 @@
     id _currently_open_controller;
     IAUserSearchViewController* _user_search_controller;
     NSMutableArray* _files;
+    BOOL _send_view_open;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -33,6 +34,7 @@
         _delegate = delegate;
         _files = [NSMutableArray array];
         _user_search_controller = [[IAUserSearchViewController alloc] init];
+        _send_view_open = NO;
     }
     return self;
 }
@@ -41,9 +43,12 @@
 
 - (void)filesOverStatusBarIcon
 {
-    [self performSelector:@selector(showFavourites)
-               withObject:nil
-               afterDelay:0.5];
+    if (!_send_view_open)
+    {
+        [self performSelector:@selector(showFavourites)
+                   withObject:nil
+                   afterDelay:0.5];
+    }
 }
 
 - (void)cancelOpenFavourites
@@ -55,6 +60,7 @@
 
 - (void)openWithNoFile
 {
+    _send_view_open = YES;
     [_favourites_send_controller hideFavourites];
     if (_simple_send_controller == nil)
         _simple_send_controller = [[IASimpleSendViewController alloc]
@@ -66,6 +72,7 @@
 
 - (void)openWithFiles:(NSArray*)files
 {
+    _send_view_open = YES;
     [self cancelOpenFavourites];
     [_favourites_send_controller hideFavourites];
     for (NSString* file in files)
@@ -96,6 +103,7 @@
 
 - (void)openAdvancedViewWithFocus:(IAAdvancedSendViewFocus)focus
 {
+    _send_view_open = YES;
     if (_advanced_send_controller == nil)
         _advanced_send_controller = [[IAAdvancedSendViewController alloc]
                                         initWithDelegate:self
