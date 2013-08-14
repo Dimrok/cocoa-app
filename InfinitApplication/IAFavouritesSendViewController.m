@@ -25,45 +25,6 @@
 
 @end
 
-//- Favourites View ---------------------------------------------------------------------------------
-
-@interface IAFavouritesView : NSView
-@end
-
-@implementation IAFavouritesView
-{
-@private
-    NSArray* _drag_types;
-}
-
-- (id)initWithFrame:(NSRect)frameRect
-{
-    if (self = [super initWithFrame:frameRect])
-    {
-        _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
-        [self registerForDraggedTypes:_drag_types];
-    }
-    return self;
-}
-
-- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
-{
-    NSPasteboard* paste_board = sender.draggingPasteboard;
-    if (![paste_board availableTypeFromArray:_drag_types])
-        return NO;
-    
-    NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
-    
-    if (files.count > 0)
-    {
-        // Do something
-    }
-    
-    return YES;
-}
-
-@end
-
 //- Favourites Send View Controller ----------------------------------------------------------------
 
 @implementation IAFavouritesSendViewController
@@ -84,7 +45,7 @@
                                                                  defer:YES];
     result.alphaValue = 0.0;
 	result.backgroundColor = [NSColor clearColor];
-    result.hasShadow = YES;
+    result.hasShadow = NO;
 	result.opaque = NO;
     [result setLevel:NSFloatingWindowLevel];
     [result setMovableByWindowBackground:YES];
@@ -117,7 +78,10 @@
 // Function to calculate position of bottom left corner of each favourite based on their number
 - (NSRect)favouritePosition:(NSInteger)number of:(NSInteger)total
 {
-    NSSize frame_size = self.view.frame.size;
+    // Leave a margin on the sides of the view
+    CGFloat margin = 5.0;
+    NSSize frame_size = NSMakeSize(self.view.frame.size.width - 2 * margin,
+                                   self.view.frame.size.height);
     // Select aribitrary arc radius
     CGFloat arc_radius = 1.25 * frame_size.height;
     // Calculate maximum angle that we can use for displaying favourites
@@ -134,23 +98,24 @@
     CGFloat y = arc_radius * cos(start_angle + (number * delta)) - (0.5 * _favourite_size.width);
     CGFloat x = arc_radius * sin(start_angle + (number * delta)) - (0.5 * _favourite_size.height);
     // Move coordinates into frame
-    x += 0.5 * frame_size.width;
-    y -= arc_radius - frame_size.height - 0.5 * _favourite_size.height;
+    x += 0.5 * frame_size.width + margin;
+    y -= arc_radius - frame_size.height - 0.25 * _favourite_size.height;
     y = frame_size.height - y;
     return NSMakeRect(x, y, _favourite_size.width, _favourite_size.height);
 }
 
 - (void)addFavouriteSubViews
 {
-    for (NSInteger i = 0; i < 1; i++)
+    NSInteger i = 0;
+    for (IAUser* favourite in _favourites)
     {
-        IAFavouriteView* favourite_view = [[IAFavouriteView alloc] initWithFrame:
-                                           NSMakeRect(0.0,
-                                                      0.0,
-                                                      _favourite_size.width,
-                                                      _favourite_size.height)];
-        [self.view addSubview:favourite_view];
-        [favourite_view setFrame:[self favouritePosition:i of:1]];
+        NSRect favourite_rect = NSMakeRect(0.0, 0.0, _favourite_size.width, _favourite_size.height);
+        IAFavouriteView* favourite_view = [[IAFavouriteView alloc]
+                                                    initWithFrame:favourite_rect
+                                                      andDelegate:self.favourites_view
+                                                          andUser:favourite];
+        [self.favourites_view addSubview:favourite_view];
+        [favourite_view setFrame:[self favouritePosition:i++ of:_favourites.count]];
     }
 }
 
@@ -164,6 +129,8 @@
     NSPoint midpoint = [_delegate favouritesViewWantsMidpoint:self];
     frame.origin = NSMakePoint(midpoint.x - (self.view.frame.size.width / 2.0),
                                midpoint.y - self.view.frame.size.height);
+
+    [self.favourites_view setDelegate:self];
     
     _window = [IAFavouritesSendViewController windowWithFrame:frame];
     _window.alphaValue = 0.0;
@@ -183,11 +150,31 @@
      }];
 }
 
-//- Favourite View Protocol ------------------------------------------------------------------------
-
-- (void)favouriteView:(IAFavouriteView*)sender
-             gotFiles:(NSArray*)files
+- (void)hideFavourites
 {
+    if (_window == nil)
+    {
+        return;
+    }
+    _window.delegate = nil;
+    
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.25;
+         [_window.animator setAlphaValue:0.0];
+     }
+                        completionHandler:^
+     {
+         [_window orderOut:nil];
+         _window = nil;
+     }];
+}
+
+//- Favourites View Protocol -----------------------------------------------------------------------
+
+- (void)favouritesViewHadDragExit:(IAFavouritesView*)sender
+{
+    [_delegate favouritesViewWantsClose:self];
 }
 
 @end
