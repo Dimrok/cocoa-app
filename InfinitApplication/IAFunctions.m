@@ -186,4 +186,21 @@
     return res;
 }
 
++ (NSImage*)defaultAvatar
+{
+	return [IAFunctions imageNamed:@"avatar_default"];
+}
+
++ (NSImage*)addressBookUserAvatar
+{
+	ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
+	NSData* image_data = address_book.me.imageData;
+	NSImage* result;
+    if (image_data == nil)
+        result = [self defaultAvatar];
+    else
+        result = [[NSImage alloc] initWithData:image_data];
+	return result;
+}
+
 @end

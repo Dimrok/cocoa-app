@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AddressBook/AddressBook.h>
 
 @interface IAFunctions : NSObject
 
@@ -33,5 +34,9 @@
           andShadowOfRadius:(CGFloat)shadow_radius;
 
 + (NSString*)fileSizeStringFrom:(NSUInteger)file_size;
+
++ (NSImage*)defaultAvatar;
+
++ (NSImage*)addressBookUserAvatar;
 
 @end
