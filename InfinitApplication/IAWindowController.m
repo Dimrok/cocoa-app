@@ -49,7 +49,7 @@
     id<IAWindowControllerProtocol> _delegate;
     BOOL _window_is_open;
     IAViewController* _current_controller;
-    NSArray* _view_constraints;
+    NSMutableArray* _view_constraints;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -139,31 +139,45 @@
 {
     NSSize new_size = new_controller.view.frame.size;
     NSSize old_size = _current_controller.view.frame.size;
-    CGFloat y_diff = new_size.height - old_size.height;
     CGFloat x_diff = new_size.width - old_size.width;
-    NSPoint origin = NSMakePoint(self.window.frame.origin.x - (x_diff / 2.0),
-                                 self.window.frame.origin.y - y_diff);
-    [self.window setFrame:NSMakeRect(origin.x,
-                                     origin.y,
-                                     new_size.width,
-                                     new_size.height)
-                  display:YES
-                  animate:YES];
-    [[self.window.contentView animator] replaceSubview:_current_controller.view
-                                                  with:new_controller.view];
-    [self.window.contentView removeConstraints:_view_constraints];
-    
-    [self.window display];
-    [self.window invalidateShadow];
-    
-    _view_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
-                                                   options:NSLayoutFormatDirectionLeadingToTrailing
-                                                   metrics:nil
-                                                     views:@{@"view": new_controller.view}];
-    
-    [self.window.contentView addConstraints:_view_constraints];
-    _current_controller = nil;
-    _current_controller = new_controller;
+                                 
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+    {
+        if (new_size.height != old_size.height)
+            [_current_controller.content_height_constraint.animator setConstant:new_size.height];
+        if (new_size.width != old_size.width)
+            [_current_controller.content_width_constraint.animator setConstant:new_size.width];
+    }
+                        completionHandler:^
+     {
+         if (x_diff != 0)
+         {
+             [self.window setFrameOrigin:NSMakePoint(self.window.frame.origin.x - (x_diff / 2.0),
+                                                    self.window.frame.origin.y)];
+         }
+         [[self.window.contentView animator] replaceSubview:_current_controller.view
+                                                       with:new_controller.view];
+         [self.window.contentView removeConstraints:_view_constraints];
+         
+         [self.window display];
+         [self.window invalidateShadow];
+         
+         _view_constraints = [NSMutableArray arrayWithArray:
+                              [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+                                                 options:NSLayoutFormatDirectionLeadingToTrailing
+                                                 metrics:nil
+                                                   views:@{@"view": new_controller.view}]];
+         
+         [_view_constraints addObjectsFromArray:[NSLayoutConstraint
+                                                 constraintsWithVisualFormat:@"H:|[view]|"
+                                                 options:NSLayoutFormatDirectionLeadingToTrailing
+                                                 metrics:nil
+                                                 views:@{@"view": new_controller.view}]];
+         
+         [self.window.contentView addConstraints:_view_constraints];
+         _current_controller = nil;
+         _current_controller = new_controller;         
+     }];
 }
 
 - (void)openWithViewController:(IAViewController*)controller
@@ -182,10 +196,16 @@
     
     [self.window.contentView addSubview:controller.view];
     
-    _view_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+    _view_constraints = [NSMutableArray arrayWithArray:
+                         [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
                                                     options:NSLayoutFormatDirectionLeadingToTrailing
                                                     metrics:nil
-                                                      views:@{@"view": controller.view}];
+                                                      views:@{@"view": controller.view}]];
+    [_view_constraints addObjectsFromArray:[NSLayoutConstraint
+                                           constraintsWithVisualFormat:@"H:|[view]|"
+                                                  options:NSLayoutFormatDirectionLeadingToTrailing
+                                                  metrics:nil
+                                                    views:@{@"view": controller.view}]];
     
     [self.window.contentView addConstraints:_view_constraints];
     
