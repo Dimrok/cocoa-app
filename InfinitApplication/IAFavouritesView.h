@@ -8,6 +8,21 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface IAFavouritesView : NSView
+#import "IAFavouriteView.h"
+
+@protocol IAFavouritesViewProtocol;
+
+@interface IAFavouritesView : NSView <IAFavouriteViewProtocol>
+
+- (id)initWithFrame:(NSRect)frameRect;
+
+- (void)setDelegate:(id<IAFavouritesViewProtocol>)delegate;
+
+@end
+
+
+@protocol IAFavouritesViewProtocol <NSObject>
+
+- (void)favouritesViewHadDragExit:(IAFavouritesView*)sender;
 
 @end
