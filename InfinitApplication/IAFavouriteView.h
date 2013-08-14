@@ -26,4 +26,7 @@
 - (void)favouriteView:(IAFavouriteView*)sender
              gotFiles:(NSArray*)files;
 
+- (void)favouriteViewGotDragEnter:(IAFavouriteView*)sender;
+- (void)favouriteViewGotDragExit:(IAFavouriteView*)sender;
+
 @end

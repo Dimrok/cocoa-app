@@ -97,6 +97,7 @@
     NSPasteboard* paste_board = sender.draggingPasteboard;
     if ([paste_board availableTypeFromArray:_drag_types])
     {
+        [_delegate favouriteViewGotDragEnter:self];
         _hovering = YES;
         [self setNeedsDisplay:YES];
         return NSDragOperationCopy;
@@ -106,6 +107,7 @@
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender
 {
+    [_delegate favouriteViewGotDragExit:self];
     _hovering = NO;
     [self setNeedsDisplay:YES];
 }
