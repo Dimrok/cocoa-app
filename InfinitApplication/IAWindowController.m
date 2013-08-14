@@ -138,11 +138,15 @@
 - (void)changeToViewController:(IAViewController*)new_controller
 {
     NSSize new_size = new_controller.view.frame.size;
-    CGFloat y_diff = _current_controller.view.frame.size.height -
-                     new_controller.view.frame.size.height;
-    NSPoint midpoint = NSMakePoint(self.window.frame.origin.x,
-                                   self.window.frame.origin.y + y_diff);
-    [self.window setFrame:NSMakeRect(midpoint.x, midpoint.y, new_size.width, new_size.height)
+    NSSize old_size = _current_controller.view.frame.size;
+    CGFloat y_diff = new_size.height - old_size.height;
+    CGFloat x_diff = new_size.width - old_size.width;
+    NSPoint origin = NSMakePoint(self.window.frame.origin.x - (x_diff / 2.0),
+                                 self.window.frame.origin.y - y_diff);
+    [self.window setFrame:NSMakeRect(origin.x,
+                                     origin.y,
+                                     new_size.width,
+                                     new_size.height)
                   display:YES
                   animate:YES];
     [[self.window.contentView animator] replaceSubview:_current_controller.view
