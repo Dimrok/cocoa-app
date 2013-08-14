@@ -21,7 +21,9 @@
 @property (nonatomic, strong) IBOutlet NSTextField* user_fullname;
 @property (nonatomic, strong) IBOutlet NSTextField* user_handle;
 
-- (id)initWithDelegate:(id<IAConversationViewProtocol>)delegate;
+// XXX Will change when there are groups
+- (id)initWithDelegate:(id<IAConversationViewProtocol>)delegate
+              andUser:(IAUser*)user;
 
 @end
 

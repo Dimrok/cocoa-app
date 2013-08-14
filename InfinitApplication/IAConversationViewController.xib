@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12F30</string>
+		<string key="IBDocument.SystemVersion">12F33</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
@@ -66,7 +66,7 @@
 												<string key="NSFrameSize">{345, 232}</string>
 												<reference key="NSSuperview" ref="842571892"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="1052703974"/>
+												<reference key="NSNextKeyView" ref="261760792"/>
 												<string key="NSReuseIdentifierKey">_NS:13</string>
 												<bool key="NSEnabled">YES</bool>
 												<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -154,13 +154,13 @@
 													</object>
 												</object>
 												<double key="NSRowHeight">17</double>
-												<int key="NSTvFlags">-700448768</int>
+												<int key="NSTvFlags">37748736</int>
 												<reference key="NSDelegate"/>
 												<reference key="NSDataSource"/>
 												<int key="NSColumnAutoresizingStyle">4</int>
 												<int key="NSDraggingSourceMaskForLocal">15</int>
 												<int key="NSDraggingSourceMaskForNonLocal">0</int>
-												<bool key="NSAllowsTypeSelect">YES</bool>
+												<bool key="NSAllowsTypeSelect">NO</bool>
 												<int key="NSTableViewDraggingDestinationStyle">0</int>
 												<int key="NSTableViewGroupRowStyle">1</int>
 											</object>
@@ -314,7 +314,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="862236819"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<string key="NSClassName">NSView</string>
+								<string key="NSClassName">IAConversationHeaderView</string>
 							</object>
 						</array>
 						<string key="NSFrame">{{0, 39}, {347, 296}}</string>
@@ -586,6 +586,7 @@
 									<int key="NSvFlags">266</int>
 									<string key="NSFrameSize">{342, 17}</string>
 									<reference key="NSSuperview" ref="261760792"/>
+									<reference key="NSNextKeyView" ref="1052703974"/>
 									<string key="NSAntiCompressionPriority">{250, 750}</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSTextFieldCell" key="NSCell" id="1072745600">
@@ -601,6 +602,7 @@
 								</object>
 							</array>
 							<string key="NSFrame">{{1, 1}, {342, 17}}</string>
+							<reference key="NSNextKeyView" ref="531827790"/>
 						</object>
 						<reference key="destination" ref="531827790"/>
 					</object>
@@ -1799,6 +1801,14 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
+					<string key="className">IAConversationHeaderView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAConversationHeaderView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">IAConversationViewController</string>
 					<string key="superclassName">IAViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
@@ -1846,25 +1856,49 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">IAFooterView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAFooterView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAHeaderView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAHeaderView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAMainView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAMainView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">IAViewController</string>
 					<string key="superclassName">NSViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="footer_view">NSView</string>
-						<string key="header_view">NSView</string>
-						<string key="main_view">NSView</string>
+						<string key="footer_view">IAFooterView</string>
+						<string key="header_view">IAHeaderView</string>
+						<string key="main_view">IAMainView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="footer_view">
 							<string key="name">footer_view</string>
-							<string key="candidateClassName">NSView</string>
+							<string key="candidateClassName">IAFooterView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="header_view">
 							<string key="name">header_view</string>
-							<string key="candidateClassName">NSView</string>
+							<string key="candidateClassName">IAHeaderView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="main_view">
 							<string key="name">main_view</string>
-							<string key="candidateClassName">NSView</string>
+							<string key="candidateClassName">IAMainView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
