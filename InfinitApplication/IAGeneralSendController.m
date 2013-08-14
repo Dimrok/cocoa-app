@@ -175,12 +175,29 @@
 
 - (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender
 {
-    return nil;
+    // XXX fake favourites
+    NSMutableArray* favourites = [NSMutableArray array];
+    for (NSInteger i = 0; i < 5; i++)
+        [favourites addObject:[IAUser userWithId:@"5200bb883f841b5c9d7bffdf"]];
+    return favourites;
 }
 
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender
 {
     return [_delegate sendControllerWantsMidpoint:self];
+}
+
+- (void)favouritesView:(IAFavouritesSendViewController*)sender
+         gotDropOnUser:(IAUser*)user
+             withFiles:(NSArray*)files
+{
+    if (user == nil)
+        [self openWithFiles:files];
+}
+
+- (void)favouritesViewWantsClose:(IAFavouritesSendViewController*)sender
+{
+    [_favourites_send_controller hideFavourites];
 }
 
 @end

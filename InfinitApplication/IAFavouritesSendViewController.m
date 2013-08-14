@@ -177,4 +177,13 @@
     [_delegate favouritesViewWantsClose:self];
 }
 
+- (void)favouritesView:(IAFavouritesView*)sender
+         gotDropOnUser:(IAUser*)user
+             withFiles:(NSArray*)files
+{
+    [_delegate favouritesView:self
+                gotDropOnUser:user
+                    withFiles:files];
+}
+
 @end

@@ -32,7 +32,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSBezierPath* bg = [NSBezierPath bezierPathWithOvalInRect:self.frame];
-    [TH_RGBACOLOR(255.0, 255.0, 255.0, 0.05) set];
+    [TH_RGBACOLOR(127.5, 127.5, 127.5, 0.05) set];
     [bg fill];
 }
 
@@ -69,7 +69,9 @@
     
     if (files.count > 0)
     {
-        // Do something
+        [_delegate favouritesView:self
+                    gotDropOnUser:nil
+                        withFiles:files];
     }
     
     return YES;
@@ -98,6 +100,7 @@
 - (void)favouriteView:(IAFavouriteView*)sender
              gotFiles:(NSArray*)files
 {
+    [_delegate favouritesView:self gotDropOnUser:sender.user withFiles:files];
 }
 
 - (void)favouriteViewGotDragEnter:(IAFavouriteView*)sender
