@@ -31,7 +31,9 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSBezierPath* bg = [NSBezierPath bezierPathWithOvalInRect:self.frame];
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRoundedRect:self.frame
+                                                       xRadius:15.0
+                                                       yRadius:15.0];
     [TH_RGBACOLOR(127.5, 127.5, 127.5, 0.05) set];
     [bg fill];
 }

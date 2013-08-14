@@ -55,6 +55,7 @@
 
 - (void)openWithNoFile
 {
+    [_favourites_send_controller hideFavourites];
     if (_simple_send_controller == nil)
         _simple_send_controller = [[IASimpleSendViewController alloc]
                                         initWithDelegate:self
@@ -66,6 +67,7 @@
 - (void)openWithFiles:(NSArray*)files
 {
     [self cancelOpenFavourites];
+    [_favourites_send_controller hideFavourites];
     for (NSString* file in files)
     {
         if (![_files containsObject:file])
