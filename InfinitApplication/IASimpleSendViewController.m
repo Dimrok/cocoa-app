@@ -14,6 +14,24 @@
 
 @end
 
+//- Simple Send Main View --------------------------------------------------------------------------
+
+@interface IASimpleSendMainView : IAMainView
+@end
+
+@implementation IASimpleSendMainView
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.frame];
+    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [bg fill];
+}
+
+@end
+
+//- Simple Send Footer View ------------------------------------------------------------------------
+
 @interface IASimpleSendFooterView : IAFooterView
 @end
 
@@ -50,6 +68,8 @@
 }
 
 @end
+
+//- Simple Send View Controller --------------------------------------------------------------------
 
 @implementation IASimpleSendViewController
 {
