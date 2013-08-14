@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83014ABD17BB6B7700ECDE96 /* avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 83014ABC17BB6B7700ECDE96 /* avatar_default.png */; };
 		8301B8FC17BA61F000FD6CAC /* status_bar_icon_fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */; };
 		83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5217BA69A3003B2F52 /* IAFavouritesSendViewController.m */; };
 		83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */; };
@@ -263,6 +264,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		83014ABC17BB6B7700ECDE96 /* avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_default.png; sourceTree = "<group>"; };
 		8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bar_icon_fire.png; sourceTree = "<group>"; };
 		83126E5117BA69A3003B2F52 /* IAFavouritesSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFavouritesSendViewController.h; sourceTree = "<group>"; };
 		83126E5217BA69A3003B2F52 /* IAFavouritesSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFavouritesSendViewController.m; sourceTree = "<group>"; };
@@ -587,6 +589,7 @@
 		8328084017A2B5100025B6F8 /* Common Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83014ABC17BB6B7700ECDE96 /* avatar_default.png */,
 				83281BC017AFFEC000CAE422 /* icon-back.png */,
 				83281BC117AFFEC000CAE422 /* icon-back@2x.png */,
 				831FB23417A9370400696604 /* bg-header-top-gray.png */,
@@ -1056,6 +1059,7 @@
 				83281BC317AFFEC000CAE422 /* icon-back@2x.png in Resources */,
 				8301B8FC17BA61F000FD6CAC /* status_bar_icon_fire.png in Resources */,
 				83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */,
+				83014ABD17BB6B7700ECDE96 /* avatar_default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
