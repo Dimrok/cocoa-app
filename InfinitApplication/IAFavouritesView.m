@@ -113,6 +113,7 @@
 
 - (void)favouriteViewGotDragExit:(IAFavouriteView*)sender
 {
+    [self performSelector:@selector(dragLost) withObject:nil afterDelay:0.5];
     _mouse_in_favourite = NO;
 }
 
