@@ -168,13 +168,13 @@
     if (_transaction_list.count == 0)
     {
         [self.no_data_message setHidden:NO];
-        self.main_view_height_constraint.constant = 50.0;
+        self.content_height_constraint.constant = 50.0;
     }
     else
     {
         [self.no_data_message setHidden:YES];
         CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
-        self.main_view_height_constraint.constant += y_diff;
+        self.content_height_constraint.constant += y_diff;
     }
     _transaction_list = nil; // XXX work around for crash on calling layout
     [self.view layoutSubtreeIfNeeded];
@@ -212,8 +212,8 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.25;
-         [self.main_view_height_constraint.animator
-                    setConstant:(self.main_view_height_constraint.constant + y_diff)];
+         [self.content_height_constraint.animator
+                    setConstant:(self.content_height_constraint.constant + y_diff)];
          [self.view layoutSubtreeIfNeeded];
      }
                         completionHandler:^

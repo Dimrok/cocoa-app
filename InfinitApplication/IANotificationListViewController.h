@@ -22,7 +22,6 @@
 @property (nonatomic, strong) IBOutlet NSImageView* header_image;
 @property (nonatomic, retain) IBOutlet IAHeaderView* header_view;
 @property (nonatomic, retain) IBOutlet IAMainView* main_view;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* main_view_height_constraint;
 @property (nonatomic, strong) IBOutlet NSTextField* no_data_message;
 @property (nonatomic, strong) IBOutlet NSButton* transfer_button;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;

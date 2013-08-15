@@ -602,7 +602,15 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">main_view_height_constraint</string>
+						<string key="label">header_image</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="474442177"/>
+					</object>
+					<int key="connectionID">626</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">content_height_constraint</string>
 						<reference key="source" ref="1001"/>
 						<object class="IBNSLayoutConstraint" key="destination" id="670071338">
 							<reference key="firstItem" ref="293821247"/>
@@ -620,22 +628,6 @@
 							<float key="scoringTypeFloat">40</float>
 							<int key="contentType">1</int>
 						</object>
-					</object>
-					<int key="connectionID">625</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">header_image</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="474442177"/>
-					</object>
-					<int key="connectionID">626</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">content_height_constraint</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="670071338"/>
 					</object>
 					<int key="connectionID">627</int>
 				</object>
@@ -2464,6 +2456,30 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IANotificationListViewController</string>
 					<string key="superclassName">IAViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="quitClicked:">NSMenuItem</string>
+						<string key="settingsButtonClicked:">NSButton</string>
+						<string key="tableViewAction:">NSTableView</string>
+						<string key="transferButtonClicked:">NSButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="quitClicked:">
+							<string key="name">quitClicked:</string>
+							<string key="candidateClassName">NSMenuItem</string>
+						</object>
+						<object class="IBActionInfo" key="settingsButtonClicked:">
+							<string key="name">settingsButtonClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBActionInfo" key="tableViewAction:">
+							<string key="name">tableViewAction:</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+						<object class="IBActionInfo" key="transferButtonClicked:">
+							<string key="name">transferButtonClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="footer_view">IAFooterView</string>
 						<string key="gear_button">NSButton</string>
@@ -2471,7 +2487,6 @@
 						<string key="header_image">NSImageView</string>
 						<string key="header_view">IAHeaderView</string>
 						<string key="main_view">IAMainView</string>
-						<string key="main_view_height_constraint">NSLayoutConstraint</string>
 						<string key="no_data_message">NSTextField</string>
 						<string key="table_view">NSTableView</string>
 						<string key="transfer_button">NSButton</string>
@@ -2501,10 +2516,6 @@
 						<object class="IBToOneOutletInfo" key="main_view">
 							<string key="name">main_view</string>
 							<string key="candidateClassName">IAMainView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="main_view_height_constraint">
-							<string key="name">main_view_height_constraint</string>
-							<string key="candidateClassName">NSLayoutConstraint</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="no_data_message">
 							<string key="name">no_data_message</string>

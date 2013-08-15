@@ -117,7 +117,7 @@
                                     views:@{@"search_view": _user_search_controller.view}]];
     
     CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size new:_user_search_controller.view.frame.size];
-    self.main_height_constraint.constant += y_diff;
+    self.content_height_constraint.constant += y_diff;
     
     [self.view layoutSubtreeIfNeeded];
 
@@ -198,8 +198,8 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
         context.duration = 0.15;
-        [self.main_height_constraint.animator
-                setConstant:(self.main_height_constraint.constant + y_diff)];
+        [self.content_height_constraint.animator
+                setConstant:(self.content_height_constraint.constant + y_diff)];
         [self.view.window.contentView layoutSubtreeIfNeeded];
     }
     completionHandler:^

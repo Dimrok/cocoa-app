@@ -18,7 +18,6 @@
 @property (nonatomic, strong) IBOutlet NSButton* add_person_button;
 @property (nonatomic, strong) IBOutlet NSButton* add_note_button;
 @property (nonatomic, strong) IBOutlet NSButton* cancel_button;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* main_height_constraint;
 
 - (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller;
