@@ -25,6 +25,8 @@
 
 - (void)setDelegate:(id<IAUserSearchViewProtocol>)delegate;
 
+- (void)addUser:(IAUser*)user;
+
 @end
 
 @protocol IAUserSearchViewProtocol <NSObject>

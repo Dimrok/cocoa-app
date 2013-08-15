@@ -210,6 +210,23 @@
                                columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
+//- General Functions ------------------------------------------------------------------------------
+
+- (void)addUser:(IAUser*)user
+{
+    if (user == nil)
+        return;
+    NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
+    [temp addObject:user];
+    [self.search_field setObjectValue:temp];
+}
+
+- (void)cursorAtEndOfSearchBox
+{
+    NSText* field_editor = self.search_field.currentEditor;
+    [field_editor setSelectedRange:NSMakeRange(field_editor.string.length, 0)];
+}
+
 //- Search Functions -------------------------------------------------------------------------------
 
 - (void)cancelLastSearchOperation
@@ -546,8 +563,7 @@ displayStringForRepresentedObject:(id)representedObject
     [self controlTextDidChange:[NSNotification
                                 notificationWithName:NSControlTextDidChangeNotification
                                               object:self.search_field]];
-    NSText* field_editor = self.search_field.currentEditor;
-    [field_editor setSelectedRange:NSMakeRange(field_editor.string.length, 0)];
+    [self cursorAtEndOfSearchBox];
 }
 
 - (void)moveTableSelectionBy:(NSInteger)displacement
