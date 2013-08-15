@@ -14,15 +14,6 @@
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (id)initWithFrame:(NSRect)frame
-{
-    if (self = [super initWithFrame:frame])
-    {
-    }
-    
-    return self;
-}
-
 - (NSString*)description
 {
     return @"[NotificationListCell]";
