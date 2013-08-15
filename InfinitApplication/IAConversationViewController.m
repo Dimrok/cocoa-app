@@ -122,6 +122,9 @@
 - (void)loadView
 {
     [super loadView];
+    CGFloat y_diff = (self.person_view.frame.size.height + [self tableHeight]) -
+                    self.main_view.frame.size.height;
+    self.content_height_constraint.constant += y_diff;
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -140,6 +143,11 @@
 }
 
 //- Table Functions --------------------------------------------------------------------------------
+
+- (CGFloat)tableHeight
+{
+    return 100.0;
+}
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
