@@ -143,6 +143,13 @@
                                  
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
+        context.duration = 0.1;
+        if (x_diff != 0)
+        {
+            [self.window.animator setFrameOrigin:
+                                     NSMakePoint(self.window.frame.origin.x - (x_diff / 2.0),
+                                                 self.window.frame.origin.y)];
+        }
         if (new_size.height != old_size.height)
             [_current_controller.content_height_constraint.animator setConstant:new_size.height];
         if (new_size.width != old_size.width)
@@ -150,11 +157,6 @@
     }
                         completionHandler:^
      {
-         if (x_diff != 0)
-         {
-             [self.window setFrameOrigin:NSMakePoint(self.window.frame.origin.x - (x_diff / 2.0),
-                                                    self.window.frame.origin.y)];
-         }
          [[self.window.contentView animator] replaceSubview:_current_controller.view
                                                        with:new_controller.view];
          [self.window.contentView removeConstraints:_view_constraints];
