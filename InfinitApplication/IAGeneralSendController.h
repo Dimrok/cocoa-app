@@ -24,7 +24,8 @@
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
 
 - (void)openWithNoFile;
-- (void)openWithFiles:(NSArray*)files;
+- (void)openWithFiles:(NSArray*)files
+              forUser:(IAUser*)user;
 - (void)filesOverStatusBarIcon;
 
 @end

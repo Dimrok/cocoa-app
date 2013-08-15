@@ -302,6 +302,21 @@
     [self showNotifications];
 }
 
+//- Conversation View Protocol ---------------------------------------------------------------------
+
+- (void)conversationView:(IAConversationViewController*)sender
+    wantsTransferForUser:(IAUser*)user
+{
+    if (_general_send_controller == nil)
+        _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+    [_general_send_controller openWithFiles:nil forUser:user];
+}
+
+- (void)conversationViewWantsBack:(IAConversationViewController*)sender
+{
+    [self showNotifications];
+}
+
 //- General Send Controller Protocol ---------------------------------------------------------------
 
 - (void)sendController:(IAGeneralSendController*)sender
@@ -393,7 +408,7 @@
 {
     if (_general_send_controller == nil)
         _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-    [_general_send_controller openWithFiles:files];
+    [_general_send_controller openWithFiles:files forUser:nil];
 }
 
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender

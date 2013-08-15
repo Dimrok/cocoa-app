@@ -71,6 +71,7 @@
 }
 
 - (void)openWithFiles:(NSArray*)files
+              forUser:(IAUser*)user
 {
     _send_view_open = YES;
     [self cancelOpenFavourites];
@@ -90,6 +91,7 @@
     else
         [_currently_open_controller filesUpdated];
     [_delegate sendController:self wantsActiveController:_simple_send_controller];
+    [_user_search_controller addUser:user];
 }
 
 - (void)showFavourites
@@ -201,8 +203,7 @@
          gotDropOnUser:(IAUser*)user
              withFiles:(NSArray*)files
 {
-    if (user == nil)
-        [self openWithFiles:files];
+    [self openWithFiles:files forUser:user];
 }
 
 - (void)favouritesViewWantsClose:(IAFavouritesSendViewController*)sender

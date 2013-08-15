@@ -119,6 +119,11 @@
     self.user_handle.attributedStringValue = handle_str;
 }
 
+- (void)loadView
+{
+    [super loadView];
+}
+
 //- Avatar Callback --------------------------------------------------------------------------------
 
 - (void)avatarReceivedCallback:(NSNotification*)notification
@@ -146,6 +151,18 @@ objectValueForTableColumn:(NSTableColumn*)tableColumn
             row:(NSInteger)row
 {
     return nil;
+}
+
+//- Button Handling --------------------------------------------------------------------------------
+
+- (IBAction)backButtonClicked:(NSButton*)sender
+{
+    [_delegate conversationViewWantsBack:self];
+}
+
+- (IBAction)transferButtonClicked:(NSButton*)sender
+{
+    [_delegate conversationView:self wantsTransferForUser:_user];
 }
 
 @end
