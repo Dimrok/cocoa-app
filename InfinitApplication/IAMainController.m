@@ -304,6 +304,15 @@
 
 //- Conversation View Protocol ---------------------------------------------------------------------
 
+- (NSArray*)conversationView:(IAConversationViewController*)sender
+wantsReversedTransactionsForUser:(IAUser*)user
+{
+    NSMutableArray* reversed_transactions = [NSMutableArray array];
+    for (IATransaction* transaction in [_transaction_manager transactionsForUser:user])
+         [reversed_transactions insertObject:transaction atIndex:0];
+    return reversed_transactions;
+}
+
 - (void)conversationView:(IAConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user
 {

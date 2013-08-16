@@ -29,6 +29,9 @@
 
 @protocol IAConversationViewProtocol <NSObject>
 
+- (NSArray*)conversationView:(IAConversationViewController*)sender
+wantsReversedTransactionsForUser:(IAUser*)user;
+
 - (void)conversationView:(IAConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user;
 
