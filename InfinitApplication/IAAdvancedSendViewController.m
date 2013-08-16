@@ -207,7 +207,8 @@
     
     CGFloat y_diff_search = [self heightDiffOld:self.search_view.frame.size
                                             new:_user_search_controller.view.frame.size];
-    [self.search_height_constraint.animator setConstant:(y_diff_search + self.search_height_constraint.constant)];
+    [self.search_height_constraint.animator setConstant:(y_diff_search +
+                                                         self.search_height_constraint.constant)];
     _file_list = nil; // XXX work around for crash on calling layout
     [self.view layoutSubtreeIfNeeded];
     [self filesUpdated];
@@ -275,10 +276,10 @@ doCommandBySelector:(SEL)commandSelector
          context.duration = 0.25;
          [self.advanced_height_constraint.animator
           setConstant:(self.advanced_height_constraint.constant + y_diff)];
-         [self.view.window.contentView layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {
+         [self.view.window.contentView layoutSubtreeIfNeeded];
      }];
     [self.table_view reloadData];
 }
