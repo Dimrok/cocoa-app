@@ -202,7 +202,7 @@
                 setConstant:(self.content_height_constraint.constant + y_diff)];
         [self.view.window.contentView layoutSubtreeIfNeeded];
     }
-    completionHandler:^
+                        completionHandler:^
     {
     }];
     
