@@ -11,6 +11,7 @@
 		83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83014AC317BB6E2E00ECDE96 /* AddressBook.framework */; };
 		83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83014AC617BB742700ECDE96 /* IAFavouritesView.m */; };
 		8301B8FC17BA61F000FD6CAC /* status_bar_icon_fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */; };
+		8308BCB417BD35E400B2763A /* IAConversationCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8308BCB317BD35E400B2763A /* IAConversationCellView.m */; };
 		83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5217BA69A3003B2F52 /* IAFavouritesSendViewController.m */; };
 		83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */; };
 		83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */; };
@@ -274,6 +275,8 @@
 		83014AC517BB742700ECDE96 /* IAFavouritesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFavouritesView.h; sourceTree = "<group>"; };
 		83014AC617BB742700ECDE96 /* IAFavouritesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFavouritesView.m; sourceTree = "<group>"; };
 		8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bar_icon_fire.png; sourceTree = "<group>"; };
+		8308BCB217BD35E400B2763A /* IAConversationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAConversationCellView.h; sourceTree = "<group>"; };
+		8308BCB317BD35E400B2763A /* IAConversationCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationCellView.m; sourceTree = "<group>"; };
 		83126E5117BA69A3003B2F52 /* IAFavouritesSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFavouritesSendViewController.h; sourceTree = "<group>"; };
 		83126E5217BA69A3003B2F52 /* IAFavouritesSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFavouritesSendViewController.m; sourceTree = "<group>"; };
 		83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAFavouritesSendViewController.xib; sourceTree = "<group>"; };
@@ -685,6 +688,8 @@
 				83281BBB17AFFD1D00CAE422 /* IAConversationViewController.h */,
 				83281BBC17AFFD1D00CAE422 /* IAConversationViewController.m */,
 				83281BBD17AFFD1D00CAE422 /* IAConversationViewController.xib */,
+				8308BCB217BD35E400B2763A /* IAConversationCellView.h */,
+				8308BCB317BD35E400B2763A /* IAConversationCellView.m */,
 			);
 			name = "Conversation View";
 			sourceTree = "<group>";
@@ -1160,6 +1165,7 @@
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
+				8308BCB417BD35E400B2763A /* IAConversationCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
