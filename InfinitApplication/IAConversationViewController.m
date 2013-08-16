@@ -29,7 +29,7 @@
                                                                    2.0,
                                                                    self.frame.size.width,
                                                                    self.frame.size.height - 2.0)];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
     
     // Grey line
@@ -37,7 +37,7 @@
                                                                           1.0,
                                                                           self.frame.size.width,
                                                                           1.0)];
-    [TH_RGBCOLOR(223.0, 223.0, 223.0) set];
+    [IA_GREY_COLOUR(223.0) set];
     [grey_line fill];
     
     // White line

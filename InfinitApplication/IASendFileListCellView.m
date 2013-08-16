@@ -35,7 +35,7 @@
     NSDictionary* file_name_style = [IAFunctions
                                         textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                            paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                   colour:TH_RGBCOLOR(85.0, 158.0, 201.0)
+                                                   colour:IA_RGB_COLOUR(85.0, 158.0, 201.0)
                                                    shadow:nil];
     self.file_name.attributedStringValue = [[NSAttributedString alloc]
                                                 initWithString:file_name
@@ -50,7 +50,7 @@
     paragraph_style.alignment = NSRightTextAlignment;
     NSDictionary* style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                           paragraphStyle:paragraph_style
-                                                  colour:TH_RGBCOLOR(202.0, 202.0, 202.0)
+                                                  colour:IA_RGB_COLOUR(202.0, 202.0, 202.0)
                                                   shadow:nil];
     self.file_size.attributedStringValue = [[NSAttributedString alloc] initWithString:file_size_str
                                                                            attributes:style];

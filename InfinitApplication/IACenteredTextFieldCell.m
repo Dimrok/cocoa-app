@@ -28,7 +28,7 @@
     if (self.isBezeled)
     {
         [better_bounds setLineWidth:2];
-        [TH_RGBCOLOR(194.0, 194.0, 194.0) set];
+        [IA_GREY_COLOUR(194.0) set];
         [better_bounds stroke];
     }
 }

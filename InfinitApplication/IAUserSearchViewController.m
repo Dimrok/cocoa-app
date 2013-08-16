@@ -25,7 +25,7 @@
 {
     // White background
     NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:self.bounds];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
     
     // Grey Line
@@ -34,7 +34,7 @@
                                       self.bounds.size.width,
                                       1.0);
     NSBezierPath* grey_line = [NSBezierPath bezierPathWithOvalInRect:grey_line_box];
-    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [IA_GREY_COLOUR(246.0) set];
     [grey_line fill];
 }
 
@@ -99,7 +99,7 @@
                                   self.bounds.size.width,
                                   1.0);
     NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
-    [TH_RGBCOLOR(209.0, 209.0, 209.0) set];
+    [IA_GREY_COLOUR(209.0) set];
     [dark_line fill];
     
     // White line
@@ -108,7 +108,7 @@
                                    self.bounds.size.width,
                                    1.0);
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [white_line fill];
     
     if (self.selected)
@@ -119,7 +119,7 @@
                                     self.bounds.size.width,
                                     self.bounds.size.height - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
-        [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+        [IA_GREY_COLOUR(255.0) set];
         [bg_path fill];
     }
     else
@@ -130,7 +130,7 @@
                                     self.bounds.size.width,
                                     self.bounds.size.height - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
-        [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+        [IA_GREY_COLOUR(246.0) set];
         [bg_path fill];
     }
 }
@@ -502,7 +502,7 @@ displayStringForRepresentedObject:(id)representedObject
                                                                      andLoadIfNeeded:YES]
                                         ofDiameter:25
                              withBorderOfThickness:0.0
-                                          inColour:TH_RGBCOLOR(255.0, 255.0, 255.0)
+                                          inColour:IA_GREY_COLOUR(255.0)
                                  andShadowOfRadius:0.0];
     [cell setUserAvatar:avatar];
     return cell;

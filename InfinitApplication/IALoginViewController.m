@@ -50,7 +50,7 @@
 {
     NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, 0.0)
                                           blurRadius:shadow_size
-                                               color:TH_RGBACOLOR(0.0, 0.0, 0.0, 0.5)];
+                                               color:IA_RGBA_COLOUR(0.0, 0.0, 0.0, 0.5)];
     [shadow set];
     CGFloat corner_radius = 5.0;
     NSRect inner_bounds = NSZeroRect;
@@ -62,7 +62,7 @@
                                                          xRadius:corner_radius
                                                          yRadius:corner_radius];
     
-    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [IA_GREY_COLOUR(246.0) set];
     [path fill];
 }
 

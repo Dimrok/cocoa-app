@@ -122,7 +122,7 @@
     if (shadow_radius > 0.0)
     {
         shadow.shadowBlurRadius = shadow_radius;
-        shadow.shadowColor = TH_RGBACOLOR(0.0, 0.0, 0.0, 0.36);
+        shadow.shadowColor = IA_RGBA_COLOUR(0.0, 0.0, 0.0, 0.36);
         shadow.shadowOffset = NSZeroSize;
         [shadow set];
     }
@@ -134,7 +134,7 @@
                                                 shadow_radius,
                                                 diameter - (2.0 * shadow_radius),
                                                 diameter - (2.0 * shadow_radius))];
-        [TH_RGBCOLOR(239.0, 239.0, 239.0) set];
+        [IA_RGB_COLOUR(239.0, 239.0, 239.0) set];
         [grey_border stroke];
         
         NSBezierPath* white_border = [NSBezierPath bezierPathWithOvalInRect:

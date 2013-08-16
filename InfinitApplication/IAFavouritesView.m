@@ -34,7 +34,7 @@
     NSBezierPath* bg = [NSBezierPath bezierPathWithRoundedRect:self.frame
                                                        xRadius:15.0
                                                        yRadius:15.0];
-    [TH_RGBACOLOR(127.5, 127.5, 127.5, 0.05) set];
+    [IA_RGBA_COLOUR(127.5, 127.5, 127.5, 0.05) set];
     [bg fill];
 }
 

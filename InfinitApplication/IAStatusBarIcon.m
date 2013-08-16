@@ -88,14 +88,14 @@ enum status_bar_icon_status {
         {
             style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:TH_RGBCOLOR(255.0, 255.0, 255.0)
+                                            colour:IA_GREY_COLOUR(255.0)
                                             shadow:nil];
         }
         else
         {
             style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:TH_RGBCOLOR(221.0, 0.0, 0.0)
+                                            colour:IA_RGB_COLOUR(221.0, 0.0, 0.0)
                                             shadow:nil];
         }
         NSString* number_str = _number_of_items > 9 ?

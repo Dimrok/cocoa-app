@@ -75,7 +75,7 @@
                                            self.bounds.size.width,
                                            self.bounds.size.height - 2.0);
         NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:white_bg_frame];
-        [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+        [IA_GREY_COLOUR(255.0) set];
         [white_bg fill];
     }
     else
@@ -86,7 +86,7 @@
                                           self.bounds.size.width,
                                           self.bounds.size.height - 2.0);
         NSBezierPath* grey_bg = [NSBezierPath bezierPathWithRect:grey_bg_frame];
-        [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+        [IA_GREY_COLOUR(246.0) set];
         [grey_bg fill];
     }
     
@@ -96,7 +96,7 @@
                                          self.bounds.size.width,
                                          1.0);
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_line_frame];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [white_line fill];
     
     // Grey line
@@ -105,7 +105,7 @@
                                         self.bounds.size.width,
                                         1.0);
     NSBezierPath* grey_line = [NSBezierPath bezierPathWithRect:grey_line_frame];
-    [TH_RGBCOLOR(220.0, 220.0, 220.0) set];
+    [IA_GREY_COLOUR(220.0) set];
     [grey_line fill];
 }
 

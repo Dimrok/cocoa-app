@@ -26,7 +26,7 @@
 {
     NSDictionary* style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                  colour:TH_RGBCOLOR(37.0, 47.0, 51.0)
+                                                  colour:IA_RGB_COLOUR(37.0, 47.0, 51.0)
                                                   shadow:nil];
     NSAttributedString* fullname_str = [[NSAttributedString alloc] initWithString:fullname
                                                                        attributes:style];

@@ -24,7 +24,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.frame];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [bg fill];
 }
 
@@ -45,7 +45,7 @@
                                        self.bounds.size.width,
                                        1.0);
     NSBezierPath* dark_path = [NSBezierPath bezierPathWithRect:dark_line_rect];
-    [TH_RGBCOLOR(223.0, 223.0, 223.0) set];
+    [IA_GREY_COLOUR(223.0) set];
     [dark_path fill];
     
     // White line
@@ -54,7 +54,7 @@
                                         self.bounds.size.width,
                                         1.0);
     NSBezierPath* white_path = [NSBezierPath bezierPathWithRect:white_line_rect];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [white_path fill];
     
     // Grey background with rounded corners
@@ -63,7 +63,7 @@
                                   self.bounds.size.width,
                                   self.bounds.size.height - 2.0);
     NSBezierPath* grey_path = [IAFunctions roundedBottomBezierWithRect:grey_rect cornerRadius:5.0];
-    [TH_RGBCOLOR(242.0, 242.0, 242.0) set];
+    [IA_GREY_COLOUR(242.0) set];
     [grey_path fill];
 }
 
@@ -153,7 +153,7 @@
     NSDictionary* files_str_attrs = [IAFunctions
                                      textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                      paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                     colour:TH_RGBCOLOR(189.0, 167.0, 170.0)
+                                     colour:IA_RGB_COLOUR(189.0, 167.0, 170.0)
                                      shadow:nil];
     self.add_files_button.attributedTitle = [[NSAttributedString alloc]
                                              initWithString:files_str

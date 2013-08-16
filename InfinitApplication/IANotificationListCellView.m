@@ -25,7 +25,7 @@
 {
     NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                  colour:TH_RGBCOLOR(29.0, 29.0, 29.0)
+                                                  colour:IA_GREY_COLOUR(29.0)
                                                   shadow:nil];
     self.user_full_name.attributedStringValue = [[NSAttributedString alloc] initWithString:fullname
                                                                                 attributes:attrs];
@@ -35,7 +35,7 @@
 {
     NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                  colour:TH_RGBCOLOR(153.0, 153.0, 153.0)
+                                                  colour:IA_GREY_COLOUR(153.0)
                                                   shadow:nil];
     NSString* res = file_name;
     NSInteger str_len = 25;
@@ -93,7 +93,7 @@
                                                                      andLoadIfNeeded:YES]
                                         ofDiameter:50.0
                              withBorderOfThickness:3.0
-                                          inColour:TH_RGBCOLOR(255.0, 255.0, 255.0)
+                                          inColour:IA_GREY_COLOUR(255.0)
                                  andShadowOfRadius:1.0];
     self.avatar.image = avatar;
 }

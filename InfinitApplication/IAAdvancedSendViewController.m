@@ -54,7 +54,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
-    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [IA_GREY_COLOUR(246.0)set];
     [bg fill];
 }
 
@@ -99,7 +99,7 @@
                                   self.bounds.size.width,
                                   self.bounds.size.height - 2.0);
     NSBezierPath* grey_path = [NSBezierPath bezierPathWithRect:grey_rect];
-    [TH_RGBCOLOR(246.0, 246.0, 246.0) set];
+    [IA_GREY_COLOUR(246.0) set];
     [grey_path fill];
     
     // White line
@@ -108,7 +108,7 @@
                                    self.bounds.size.width,
                                    1.0);
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
-    [TH_RGBCOLOR(255.0, 255.0, 255.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [white_line fill];
     
     // Dark grey line
@@ -117,7 +117,7 @@
                                        self.bounds.size.width,
                                        1.0);
     NSBezierPath* dark_grey_line = [NSBezierPath bezierPathWithRect:dark_grey_rect];
-    [TH_RGBCOLOR(220.0, 220.0, 220.0) set];
+    [IA_GREY_COLOUR(220.0) set];
     [dark_grey_line fill];
 }
 
