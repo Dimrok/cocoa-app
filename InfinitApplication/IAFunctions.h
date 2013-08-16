@@ -14,6 +14,9 @@
 + (NSBezierPath*)roundedBottomBezierWithRect:(NSRect)rect
                                 cornerRadius:(CGFloat)corner_radius;
 
++ (NSBezierPath*)roundedTopBezierWithRect:(NSRect)rect
+                             cornerRadius:(CGFloat)corner_radius;
+
 + (NSImage*)imageNamed:(NSString*)imageName;
 
 + (BOOL)stringIsValidEmail:(NSString*)str;
@@ -38,5 +41,7 @@
 + (NSImage*)defaultAvatar;
 
 + (NSImage*)addressBookUserAvatar;
+
++ (NSString*)relativeDateOf:(NSTimeInterval)timestamp;
 
 @end

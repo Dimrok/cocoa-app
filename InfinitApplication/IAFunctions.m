@@ -33,6 +33,30 @@
     return res;
 }
 
++ (NSBezierPath*)roundedTopBezierWithRect:(NSRect)rect
+                             cornerRadius:(CGFloat)corner_radius
+{
+    NSBezierPath* res = [NSBezierPath bezierPath];
+    CGFloat x = rect.origin.x;
+    CGFloat y = rect.origin.y;
+    CGFloat width = rect.size.width;
+    CGFloat height = rect.size.height;
+    [res moveToPoint:NSMakePoint(x, y)];
+    [res lineToPoint:NSMakePoint(x + width, y)];
+    [res appendBezierPathWithArcWithCenter:NSMakePoint(x + width - corner_radius,
+                                                       y + height - corner_radius)
+                                    radius:corner_radius
+                                startAngle:180.0
+                                  endAngle:270.0];
+    [res lineToPoint:NSMakePoint(x + corner_radius, y + height)];
+    [res appendBezierPathWithArcWithCenter:NSMakePoint(x + corner_radius, y + height - corner_radius)
+                                    radius:corner_radius
+                                startAngle:270.0
+                                  endAngle:180.0];
+    [res lineToPoint:NSMakePoint(x, y)];
+    return res;
+}
+
 + (NSBundle*)bundle
 {
 	static NSBundle* bundle=nil;
@@ -201,6 +225,71 @@
     else
         result = [[NSImage alloc] initWithData:image_data];
 	return result;
+}
+
++ (BOOL)isToday:(NSDate*)date
+{
+    NSDate* today = [NSDate date];
+    NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+    NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents* today_components = [gregorian components:components
+                                                      fromDate:today];
+    NSDateComponents* date_components = [gregorian components:components
+                                                     fromDate:date];
+    if ([date_components isEqual:today_components])
+        return YES;
+    else
+        return NO;
+}
+
++ (BOOL)isInLastWeek:(NSDate*)date
+{
+    NSDate* now = [NSDate date];
+    NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
+    NSDateComponents* today_components = [gregorian components:components
+                                                      fromDate:now];
+    NSDate* today = [gregorian dateFromComponents:today_components];
+    NSDateComponents* minus_six_days = [[NSDateComponents alloc] init];
+    minus_six_days.day = -6;
+    NSDate* six_days_ago = [gregorian dateByAddingComponents:minus_six_days
+                                                      toDate:today
+                                                     options:0];
+    if ([[date earlierDate:now] isEqualToDate:date] &&
+        [[date laterDate:six_days_ago] isEqualToDate:date])
+    {
+        return YES;
+    }
+    return NO;
+}
+
++ (NSString*)relativeDateOf:(NSTimeInterval)timestamp
+{
+    NSDate* transaction_date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.locale = [NSLocale currentLocale];
+    NSString* res;
+    if (timestamp < [[NSDate date] timeIntervalSince1970] &&
+        timestamp > ([[NSDate date] timeIntervalSince1970] - 180.0))
+    {
+        res = NSLocalizedString(@"Now", @"Now");
+    }
+    else if ([IAFunctions isToday:transaction_date])
+    {
+        formatter.timeStyle = NSDateFormatterShortStyle;
+        res = [formatter stringFromDate:transaction_date];
+    }
+    else if ([IAFunctions isInLastWeek:transaction_date])
+    {
+        formatter.dateFormat = @"EEE";
+        res = [formatter stringFromDate:transaction_date];
+    }
+    else
+    {
+        formatter.dateStyle = NSDateFormatterShortStyle;
+        res = [formatter stringFromDate:transaction_date];
+    }
+    return res;
 }
 
 @end
