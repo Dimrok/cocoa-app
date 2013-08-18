@@ -12,8 +12,8 @@
 
 typedef enum IAAdvancedSendViewFocus
 {
-    advanced_view_user_search_focus = 0,
-    advanced_view_note_focus
+    ADVANCED_VIEW_USER_SEARCH_FOCUS = 0,
+    ADVANCED_VIEW_NOTE_FOCUS
 } IAAdvancedSendViewFocus;
 
 @protocol IAAdvancedSendViewProtocol;

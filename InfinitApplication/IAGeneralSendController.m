@@ -120,17 +120,17 @@
 
 - (void)simpleSendViewWantsAddFile:(IASimpleSendViewController*)sender
 {
-    [self openAdvancedViewWithFocus:advanced_view_user_search_focus];
+    [self openAdvancedViewWithFocus:ADVANCED_VIEW_USER_SEARCH_FOCUS];
 }
 
 - (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender
 {
-    [self openAdvancedViewWithFocus:advanced_view_note_focus];
+    [self openAdvancedViewWithFocus:ADVANCED_VIEW_NOTE_FOCUS];
 }
 
 - (void)simpleSendViewWantsAddRecipient:(IASimpleSendViewController*)sender
 {
-    [self openAdvancedViewWithFocus:advanced_view_user_search_focus];
+    [self openAdvancedViewWithFocus:ADVANCED_VIEW_USER_SEARCH_FOCUS];
 }
 
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender

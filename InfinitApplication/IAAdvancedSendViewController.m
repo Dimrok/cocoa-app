@@ -225,10 +225,10 @@
 - (void)setFocus:(NSNumber*)focus
 {
     switch (focus.intValue) {
-        case advanced_view_user_search_focus:
+        case ADVANCED_VIEW_USER_SEARCH_FOCUS:
             [self.view.window makeFirstResponder:_user_search_controller.search_field];
             break;
-        case advanced_view_note_focus:
+        case ADVANCED_VIEW_NOTE_FOCUS:
             [self.view.window makeFirstResponder:self.note_field];
             break;
         default:
