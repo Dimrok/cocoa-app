@@ -9,11 +9,11 @@
 #import "IAStatusBarIcon.h"
 #import "IAFunctions.h"
 
-enum status_bar_icon_status {
-    status_bar_icon_normal = 0,
-    status_bar_icon_fire,
-    status_bar_icon_clicked,
-};
+typedef enum IAStatusBarIconStatus {
+    STATUS_BAR_ICON_NORMAL = 0,
+    STATUS_BAR_ICON_FIRE,
+    STATUS_BAR_ICON_CLICKED,
+} IAStatusBarIconStatus;
 
 @implementation IAStatusBarIcon
 {
@@ -48,9 +48,9 @@ enum status_bar_icon_status {
     if (self = [super init])
     {
         _delegate = delegate;
-        _icon[status_bar_icon_normal] = [IAFunctions imageNamed:@"status_bar_icon_normal"];
-        _icon[status_bar_icon_fire] = [IAFunctions imageNamed:@"status_bar_icon_fire"];
-        _icon[status_bar_icon_clicked] = [IAFunctions imageNamed:@"status_bar_icon_clicked"];
+        _icon[STATUS_BAR_ICON_NORMAL] = [IAFunctions imageNamed:@"status_bar_icon_normal"];
+        _icon[STATUS_BAR_ICON_FIRE] = [IAFunctions imageNamed:@"status_bar_icon_fire"];
+        _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"status_bar_icon_clicked"];
         CGFloat width = [status_item length];
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
         NSRect rect = NSMakeRect(0.0, 0.0, width, height);
@@ -70,11 +70,11 @@ enum status_bar_icon_status {
     
     NSImage* icon;
     if (_is_highlighted)
-        icon = _icon[status_bar_icon_clicked];
+        icon = _icon[STATUS_BAR_ICON_CLICKED];
     else if (_number_of_items > 0)
-        icon = _icon[status_bar_icon_fire];
+        icon = _icon[STATUS_BAR_ICON_FIRE];
     else
-        icon = _icon[status_bar_icon_normal];
+        icon = _icon[STATUS_BAR_ICON_NORMAL];
     CGFloat x = roundf((NSWidth(self.bounds) - icon.size.width) / 2);
     CGFloat y = roundf((NSHeight(self.bounds) - icon.size.height) / 2);
     [icon drawAtPoint:NSMakePoint(x, y)
