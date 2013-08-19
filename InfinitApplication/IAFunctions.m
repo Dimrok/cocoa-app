@@ -46,8 +46,8 @@
     [res appendBezierPathWithArcWithCenter:NSMakePoint(x + width - corner_radius,
                                                        y + height - corner_radius)
                                     radius:corner_radius
-                                startAngle:180.0
-                                  endAngle:270.0];
+                                startAngle:0.0
+                                  endAngle:90.0];
     [res lineToPoint:NSMakePoint(x + corner_radius, y + height)];
     [res appendBezierPathWithArcWithCenter:NSMakePoint(x + corner_radius, y + height - corner_radius)
                                     radius:corner_radius
