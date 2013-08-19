@@ -23,6 +23,13 @@
 
 @implementation IAAdvancedSendSearchView
 
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSBezierPath* bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:3.0];
+    [IA_GREY_COLOUR(255.0) set];
+    [bg fill];
+}
+
 - (void)setFrame:(NSRect)frameRect
 {
     [super setFrame:frameRect];
@@ -53,7 +60,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSBezierPath* bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:3.0];
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
     [IA_GREY_COLOUR(246.0)set];
     [bg fill];
 }
