@@ -209,6 +209,7 @@
 - (void)favouritesViewWantsClose:(IAFavouritesSendViewController*)sender
 {
     [_favourites_send_controller hideFavourites];
+    _favourites_send_controller = nil;
 }
 
 @end

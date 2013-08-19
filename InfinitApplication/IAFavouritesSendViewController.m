@@ -31,8 +31,10 @@
 {
     id<IAFavouritesSendViewProtocol> _delegate;
     NSArray* _favourites;
+    NSMutableArray* _favourite_views;
     NSWindow* _window;
     NSSize _favourite_size;
+    NSPoint _start_pos;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -58,6 +60,7 @@
     {
         _delegate = delegate;
         _favourites = [_delegate favouritesViewWantsFavourites:self];
+        _favourite_views = [NSMutableArray array];
         _favourite_size = NSMakeSize(65.0, 65.0);
     }
     return self;
@@ -71,6 +74,8 @@
 - (void)loadView
 {
     [super loadView];
+    _start_pos = NSMakePoint((self.view.frame.size.width - _favourite_size.width) / 2.0,
+                             self.view.frame.size.height);
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -106,22 +111,45 @@
 
 - (void)addFavouriteSubViews
 {
-    NSInteger i = 0;
     for (IAUser* favourite in _favourites)
     {
-        NSRect favourite_rect = NSMakeRect(0.0, 0.0, _favourite_size.width, _favourite_size.height);
+        NSRect favourite_rect = NSMakeRect(_start_pos.x,
+                                           _start_pos.y,
+                                           _favourite_size.width,
+                                           _favourite_size.height);
         IAFavouriteView* favourite_view = [[IAFavouriteView alloc]
                                                     initWithFrame:favourite_rect
                                                       andDelegate:self.favourites_view
                                                           andUser:favourite];
         [self.favourites_view addSubview:favourite_view];
-        [favourite_view setFrame:[self favouritePosition:i++ of:_favourites.count]];
+        [_favourite_views addObject:favourite_view];
     }
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+    {
+        context.duration = 0.2;
+        NSInteger i = 0;
+        for (IAFavouriteView* fav_view in _favourite_views)
+        {
+            [fav_view.animator setFrame:[self favouritePosition:i++ of:_favourites.count]];
+        }
+    }
+                    completionHandler:^
+    {
+        NSInteger i = 0;
+        for (IAFavouriteView* fav_view in _favourite_views)
+        {
+            [fav_view setFrame:[self favouritePosition:i++ of:_favourites.count]];
+        }
+    }];
 }
 
 - (void)showFavourites
 {
     if (_window != nil)
+        return;
+    
+    _favourites = [_delegate favouritesViewWantsFavourites:self];
+    if (_favourites.count == 0)
         return;
     
     NSRect frame = NSZeroRect;
@@ -136,37 +164,54 @@
     _window.alphaValue = 0.0;
     _window.delegate = self;
     _window.contentView = self.view;
-    [self addFavouriteSubViews];
     
     [_window makeKeyAndOrderFront:nil];
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.1;
          [_window.animator setAlphaValue:1.0];
      }
                         completionHandler:^
      {
+         [_window setAlphaValue:1.0];
+         [self addFavouriteSubViews];
      }];
 }
 
 - (void)hideFavourites
 {
     if (_window == nil)
-    {
         return;
-    }
-    _window.delegate = nil;
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
-         [_window.animator setAlphaValue:0.0];
+         context.duration = 0.2;
+         for (IAFavouriteView* fav_view in _favourite_views)
+         {
+             [fav_view.animator setFrameOrigin:_start_pos];
+         }
      }
                         completionHandler:^
      {
-         [_window orderOut:nil];
-         _window = nil;
+         for (IAFavouriteView* fav_view in _favourite_views)
+         {
+             [fav_view setFrameOrigin:_start_pos];
+         }
+         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+          {
+              context.duration = 0.1;
+              [_window.animator setAlphaValue:0.0];
+          }
+                             completionHandler:^
+          {
+              [_window orderOut:nil];
+              _window.delegate = nil;
+              _window = nil;
+              for (IAFavouriteView* fav_view in _favourite_views)
+                  [fav_view removeFromSuperview];
+              _favourite_views = nil;
+          }];
      }];
 }
 
