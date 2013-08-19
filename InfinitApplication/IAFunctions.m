@@ -286,7 +286,7 @@
     }
     else
     {
-        formatter.dateStyle = NSDateFormatterShortStyle;
+        formatter.dateFormat = @"dd/MM";
         res = [formatter stringFromDate:transaction_date];
     }
     return res;
