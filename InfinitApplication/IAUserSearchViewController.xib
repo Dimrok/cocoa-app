@@ -1448,6 +1448,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IASearchResultsCellView</string>
 					<string key="superclassName">NSTableCellView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">starClicked:</string>
+						<string key="NS.object.0">NSButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">starClicked:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">starClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="result_avatar">NSImageView</string>
 						<string key="result_fullname">NSTextField</string>
@@ -1475,6 +1486,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IAUserSearchViewController</string>
 					<string key="superclassName">NSViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">tableViewAction:</string>
+						<string key="NS.object.0">NSTableView</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">tableViewAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">tableViewAction:</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="no_results_message">NSTextField</string>
 						<string key="results_view">NSScrollView</string>

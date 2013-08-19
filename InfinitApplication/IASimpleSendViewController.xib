@@ -852,19 +852,6 @@
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">876</int>
-						<reference key="object" ref="495489495"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="961982143"/>
-						</array>
-						<reference key="parent" ref="356114827"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">877</int>
-						<reference key="object" ref="961982143"/>
-						<reference key="parent" ref="495489495"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">849</int>
 						<reference key="object" ref="830691031"/>
 						<reference key="parent" ref="1005"/>
@@ -883,11 +870,6 @@
 						<int key="objectID">872</int>
 						<reference key="object" ref="841562437"/>
 						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">886</int>
-						<reference key="object" ref="187461748"/>
-						<reference key="parent" ref="356114827"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">343</int>
@@ -925,19 +907,9 @@
 						<reference key="parent" ref="452895061"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1017</int>
-						<reference key="object" ref="959326323"/>
-						<reference key="parent" ref="356114827"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">1018</int>
 						<reference key="object" ref="741127970"/>
 						<reference key="parent" ref="1005"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1019</int>
-						<reference key="object" ref="347293120"/>
-						<reference key="parent" ref="356114827"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1024</int>
@@ -992,6 +964,34 @@
 						<int key="objectID">1039</int>
 						<reference key="object" ref="117456367"/>
 						<reference key="parent" ref="983450900"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">876</int>
+						<reference key="object" ref="495489495"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="961982143"/>
+						</array>
+						<reference key="parent" ref="356114827"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1019</int>
+						<reference key="object" ref="347293120"/>
+						<reference key="parent" ref="356114827"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1017</int>
+						<reference key="object" ref="959326323"/>
+						<reference key="parent" ref="356114827"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">886</int>
+						<reference key="object" ref="187461748"/>
+						<reference key="parent" ref="356114827"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">877</int>
+						<reference key="object" ref="961982143"/>
+						<reference key="parent" ref="495489495"/>
 					</object>
 				</array>
 			</object>
@@ -1143,30 +1143,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IASimpleSendViewController</string>
 					<string key="superclassName">IAViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addFileClicked:">NSButton</string>
-						<string key="addNoteClicked:">NSButton</string>
-						<string key="addPersonClicked:">NSButton</string>
-						<string key="cancelSendClicked:">NSButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addFileClicked:">
-							<string key="name">addFileClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBActionInfo" key="addNoteClicked:">
-							<string key="name">addNoteClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBActionInfo" key="addPersonClicked:">
-							<string key="name">addPersonClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBActionInfo" key="cancelSendClicked:">
-							<string key="name">cancelSendClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="add_files_button">NSButton</string>
 						<string key="add_note_button">NSButton</string>
