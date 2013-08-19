@@ -203,6 +203,8 @@
          gotDropOnUser:(IAUser*)user
              withFiles:(NSArray*)files
 {
+    [_favourites_send_controller hideFavourites];
+    _favourites_send_controller = nil;
     [self openWithFiles:files forUser:user];
 }
 
