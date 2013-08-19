@@ -17,6 +17,8 @@
 @property (nonatomic, strong) IBOutlet NSButton* message_button;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
++ (CGFloat)cellHeight:(IATransactionViewMode)view_mode;
+
 - (void)setupCellWithTransaction:(IATransaction*)transaction;
 
 @end

@@ -29,15 +29,15 @@
     NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:
                                                         NSMakeRect(0.0,
                                                                    2.0,
-                                                                   self.frame.size.width,
-                                                                   self.frame.size.height - 2.0)];
+                                                                   self.bounds.size.width,
+                                                                   self.bounds.size.height - 2.0)];
     [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
     
     // Grey line
     NSBezierPath* grey_line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
                                                                           1.0,
-                                                                          self.frame.size.width,
+                                                                          self.bounds.size.width,
                                                                           1.0)];
     [IA_GREY_COLOUR(223.0) set];
     [grey_line fill];
@@ -45,7 +45,7 @@
     // White line
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
                                                                            0.0,
-                                                                           self.frame.size.width,
+                                                                           self.bounds.size.width,
                                                                            1.0)];
     [IA_GREY_COLOUR(255.0) set];
     [white_line fill];
@@ -210,16 +210,14 @@
 - (CGFloat)tableView:(NSTableView*)tableView
          heightOfRow:(NSInteger)row
 {
-    return 100.0;
-//    NSTableRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
-//    return row_view.bounds.size.height;
+    IATransaction* transaction = [_transaction_list objectAtIndex:row];
+    return [IAConversationCellView cellHeight:transaction.view_mode];
 }
 
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
 {
-    IALog(@"viewfortablecolumn row");
     IATransaction* transaction = [_transaction_list objectAtIndex:row];
     IAConversationCellView* cell;
     if (transaction.from_me)
@@ -240,7 +238,6 @@
 - (NSTableRowView*)tableView:(NSTableView*)tableView
                rowViewForRow:(NSInteger)row
 {
-    IALog(@"rowviewforrow");
     IAConversationRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:YES];
     if (row_view == nil)
         row_view = [[IAConversationRowView alloc] initWithFrame:NSZeroRect];
