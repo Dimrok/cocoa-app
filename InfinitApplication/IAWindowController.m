@@ -71,11 +71,6 @@
     [super windowDidLoad];
 }
 
-- (NSString*)description
-{
-    return @"[WindowController]";
-}
-
 //- Window Handling --------------------------------------------------------------------------------
 
 - (void)closeWindow

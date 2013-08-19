@@ -156,11 +156,6 @@
     return self;
 }
 
-- (NSString*)description
-{
-    return @"[AdvancedSendView]";
-}
-
 - (BOOL)closeOnFocusLost
 {
     return NO;

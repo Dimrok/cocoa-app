@@ -66,11 +66,6 @@
     return self;
 }
 
-- (NSString*)description
-{
-    return @"[FavouritesSendView]";
-}
-
 - (void)loadView
 {
     [super loadView];

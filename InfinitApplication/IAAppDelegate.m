@@ -19,11 +19,6 @@
 //    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 }
 
-- (NSString*)description
-{
-    return @"[AppDelegate]";
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     _controller = [[IAMainController alloc] initWithDelegate:self];

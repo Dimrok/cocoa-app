@@ -57,11 +57,6 @@
                                                             @"not logged in");
 }
 
-- (NSString*)description
-{
-    return @"NotLoggedInViewController";
-}
-
 - (BOOL)closeOnFocusLost
 {
     return YES;

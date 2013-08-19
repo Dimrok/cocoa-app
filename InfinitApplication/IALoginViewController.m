@@ -143,11 +143,6 @@
     [self setLoginButtonText];
 }
 
-- (NSString*)description
-{
-    return @"[LoginViewController]";
-}
-
 - (void)showLoginWindowOnScreen:(NSScreen*)screen
 {
     if (_window != nil)

@@ -15,11 +15,6 @@
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (NSString*)description
-{
-    return @"[SearchResultCell]";
-}
-
 //- Set Cell Values --------------------------------------------------------------------------------
 
 - (void)setUserFullname:(NSString*)fullname

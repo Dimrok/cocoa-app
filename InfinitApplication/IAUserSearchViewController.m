@@ -179,11 +179,6 @@
     [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-- (NSString*)description
-{
-    return @"[SearchResultsViewController]";
-}
-
 - (void)awakeFromNib
 {
     [self.no_results_message setHidden:YES];

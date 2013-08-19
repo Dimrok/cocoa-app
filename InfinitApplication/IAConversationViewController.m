@@ -100,11 +100,6 @@
     [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-- (NSString*)description
-{
-    return @"[ConversationView]";
-}
-
 - (BOOL)closeOnFocusLost
 {
     return YES;

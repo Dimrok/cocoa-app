@@ -47,11 +47,6 @@
     [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-- (NSString*)description
-{
-    return @"[FavouriteView]";
-}
-
 //- Avatar Fetched Callback ------------------------------------------------------------------------
 
 - (void)avatarReceived:(NSNotification*)notification

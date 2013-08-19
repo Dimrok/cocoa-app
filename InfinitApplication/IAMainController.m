@@ -69,12 +69,6 @@
     return self;
 }
 
-- (NSString*)description
-{
-    NSString* res = [NSString stringWithFormat:@"[MainController]"];
-    return res;
-}
-
 - (BOOL)tryAutomaticLogin
 {
     NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];

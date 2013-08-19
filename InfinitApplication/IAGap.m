@@ -160,7 +160,8 @@ void on_error_callback(gap_Status errcode, char const* reason, char const* trans
                                                        attributes:nil
                                                             error:nil];
         }
-        setenv("ELLE_LOG_FILE", [[self logFile] UTF8String], 0);
+//        setenv("ELLE_LOG_FILE", [[self logFile] UTF8String], 0);
+        setenv("ELLE_LOG_FILE", "/dev/null", 0);
         [self removeOldLogs];
 
 #ifdef BUILD_PRODUCTION

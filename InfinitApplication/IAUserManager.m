@@ -24,7 +24,7 @@
     {
         _delegate = delegate;
         [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(_onUserStatusNotification:)
+                                               selector:@selector(onUserStatusNotification:)
                                                    name:IA_GAP_EVENT_USER_STATUS_NOTIFICATION
                                                  object:nil];
     }
@@ -34,6 +34,18 @@
 - (void)dealloc
 {
     [NSNotificationCenter.defaultCenter removeObject:self];
+}
+
+//- Callback ---------------------------------------------------------------------------------------
+
+- (void)onUserStatusNotification:(NSNotification*)notification
+{
+    NSString* user_id = [notification.userInfo objectForKey:@"user_id"];
+    IAUser* user = [IAUser userWithId:user_id];
+    if (user == nil)
+        return;
+    
+    [_delegate userManager:self hasNewStatusFor:user];
 }
 
 @end

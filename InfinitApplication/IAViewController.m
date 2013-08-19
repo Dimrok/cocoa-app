@@ -35,11 +35,6 @@
     return self.bounds.size;
 }
 
-- (NSString*)description
-{
-    return @"FooterView";
-}
-
 @end
 
 //- Header View ------------------------------------------------------------------------------------
@@ -65,11 +60,6 @@
     return self.bounds.size;
 }
 
-- (NSString*)description
-{
-    return @"HeaderView";
-}
-
 @end
 
 //- Main View --------------------------------------------------------------------------------------
@@ -93,11 +83,6 @@
 - (NSSize)intrinsicContentSize
 {
     return self.bounds.size;
-}
-
-- (NSString*)description
-{
-    return @"MainView";
 }
 
 @end

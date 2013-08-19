@@ -14,11 +14,6 @@
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (NSString*)description
-{
-    return @"[NotificationListCell]";
-}
-
 //- Setup Cell -------------------------------------------------------------------------------------
 
 - (void)setUserFullName:(NSString*)fullname

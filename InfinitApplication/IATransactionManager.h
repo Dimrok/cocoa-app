@@ -23,7 +23,7 @@
 - (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
 
 - (void)newUserStatusFor:(IAUser*)user;
-- (NSArray*)transactionsForUserId:(NSString*)user_id;
+- (NSArray*)transactionsForUser:(IAUser*)user;
 
 @end
 

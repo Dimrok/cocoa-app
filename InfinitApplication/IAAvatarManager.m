@@ -35,11 +35,6 @@
     return instance;
 }
 
-- (NSString*)description
-{
-    return @"[AvatarManager]";
-}
-
 //- Fetch Avatar -----------------------------------------------------------------------------------
 
 + (NSImage*)getAvatarForUser:(IAUser*)user

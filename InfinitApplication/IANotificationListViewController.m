@@ -144,11 +144,6 @@
     [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-- (NSString*)description
-{
-    return @"[NotificationListViewController]";
-}
-
 - (BOOL)closeOnFocusLost
 {
     return YES;

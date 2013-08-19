@@ -22,11 +22,6 @@
     return self;
 }
 
-- (NSString*)description
-{
-    return @"[SendFileListCellView]";
-}
-
 //- General Functions ------------------------------------------------------------------------------
 
 - (void)setupCellWithFilePath:(NSString*)file_path

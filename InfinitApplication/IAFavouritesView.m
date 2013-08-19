@@ -43,11 +43,6 @@
     _delegate = delegate;
 }
 
-- (NSString*)description
-{
-    return @"[FavouritesView]";
-}
-
 //- Dragging Functions -----------------------------------------------------------------------------
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender

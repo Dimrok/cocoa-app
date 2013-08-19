@@ -131,11 +131,6 @@
     [self.view.window makeFirstResponder:_user_search_controller.search_field];
 }
 
-- (NSString*)description
-{
-    return @"[SimpleSendView]";
-}
-
 - (BOOL)closeOnFocusLost
 {
     return NO;
