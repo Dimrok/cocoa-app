@@ -40,7 +40,7 @@
 
 - (NSSize)intrinsicContentSize
 {
-    return self.frame.size;
+    return self.bounds.size;
 }
 
 @end
