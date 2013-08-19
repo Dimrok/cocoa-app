@@ -24,7 +24,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // White background
-    NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:self.bounds];
+    NSBezierPath* white_bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:3.0];
     [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
     
