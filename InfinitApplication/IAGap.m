@@ -470,38 +470,38 @@ return [NSString stringWithUTF8String:str]; \
     return array;
 }
 
-- (gap_Status)send_files_to_user:(NSNumber*)recipient_id
-                           files:(NSArray*)files
+- (uint32_t)send_files_to_user:(NSNumber*)recipient_id
+                          files:(NSArray*)files
 {
 
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
     if (cfiles == NULL)
-        return gap_error;
+        return gap_null();
     int i = 0;
     for (id file in files)
     {
         cfiles[i++] = [file UTF8String];
         IALog(@"Sending %@ to %@", file, recipient_id);
     }
-    gap_Status ret = gap_send_files(_state, recipient_id.unsignedIntValue, cfiles);
+    uint32_t ret = gap_send_files(_state, recipient_id.unsignedIntValue, cfiles);
     free(cfiles);
     return ret;
 }
 
-- (gap_Status)send_files_by_email:(NSString*)recipient_email
-                            files:(NSArray*)files
+- (uint32_t)send_files_by_email:(NSString*)recipient_email
+                           files:(NSArray*)files
 {
     
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
     if (cfiles == NULL)
-        return gap_error;
+        return gap_null();
     int i = 0;
     for (id file in files)
     {
         cfiles[i++] = [file UTF8String];
         IALog(@"Sending %@ to %@", file, recipient_email);
     }
-    gap_Status ret = gap_send_files_by_email(_state, recipient_email.UTF8String, cfiles);
+    uint32_t ret = gap_send_files_by_email(_state, recipient_email.UTF8String, cfiles);
     free(cfiles);
     return ret;
 }
