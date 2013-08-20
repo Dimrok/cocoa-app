@@ -342,6 +342,14 @@ wantsReversedTransactionsForUser:(IAUser*)user
     return [self statusBarIconMiddle];
 }
 
+- (void)sendController:(IAGeneralSendController*)sender
+        wantsSendFiles:(NSArray*)files
+               toUsers:(NSArray*)users
+{
+    [_transaction_manager sendFiles:files
+                            toUsers:users];
+}
+
 //- Login Window Protocol --------------------------------------------------------------------------
 
 - (void)tryLogin:(IALoginViewController*)sender
