@@ -171,10 +171,10 @@
         CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
         [self.content_height_constraint.animator setConstant:(y_diff +
                                                        self.content_height_constraint.constant)];
+        _transaction_list = nil; // XXX work around for crash on calling layout
+        [self.view layoutSubtreeIfNeeded];
+        [self transactionsUpdated];
     }
-    _transaction_list = nil; // XXX work around for crash on calling layout
-    [self.view layoutSubtreeIfNeeded];
-    [self transactionsUpdated];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
