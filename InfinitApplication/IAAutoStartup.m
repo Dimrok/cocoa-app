@@ -65,7 +65,7 @@
 	if (login_items)
     {
 		UInt32 seed_value;
-		NSArray* login_items_array = (__bridge NSArray*)LSSharedFileListCopySnapshot(login_items, &seed_value);
+		NSArray* login_items_array = (__bridge_transfer NSArray*)LSSharedFileListCopySnapshot(login_items, &seed_value);
 		for(int i = 0; i< [login_items_array count]; i++)
         {
 			LSSharedFileListItemRef item_ref = (__bridge LSSharedFileListItemRef)[login_items_array objectAtIndex:i];
@@ -96,7 +96,7 @@
 	if (login_items)
     {
 		UInt32 seed_value;
-		NSArray  *login_items_array = (__bridge NSArray*)LSSharedFileListCopySnapshot(login_items, &seed_value);
+		NSArray* login_items_array = (__bridge_transfer NSArray*)LSSharedFileListCopySnapshot(login_items, &seed_value);
 		for(int i = 0; i< [login_items_array count]; i++)
         {
 			LSSharedFileListItemRef item_ref = (__bridge LSSharedFileListItemRef)[login_items_array objectAtIndex:i];
