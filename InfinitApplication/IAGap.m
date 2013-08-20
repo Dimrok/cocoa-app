@@ -420,6 +420,11 @@ return [NSString stringWithUTF8String:str]; \
     RETURN_CSTRING(gap_user_handle(_state, user_id.unsignedIntValue));
 }
 
+- (NSString*)user_realid:(NSNumber*)user_id
+{
+    RETURN_CSTRING(gap_user_realid(_state, user_id.unsignedIntValue));
+}
+
 - (gap_UserStatus)user_status:(NSNumber*)user_id
 {
     return gap_user_status(_state, user_id.unsignedIntValue);
