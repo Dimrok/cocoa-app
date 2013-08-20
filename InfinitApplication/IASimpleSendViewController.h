@@ -29,9 +29,17 @@
 @protocol IASimpleSendViewProtocol <NSObject>
 
 - (void)simpleSendViewWantsAddFile:(IASimpleSendViewController*)sender;
+
 - (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender;
+
 - (void)simpleSendViewWantsAddRecipient:(IASimpleSendViewController*)sender;
+
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender;
+
 - (NSArray*)simpleSendViewWantsFileList:(IASimpleSendViewController*)sender;
+
+- (void)simpleSendView:(IASimpleSendViewController*)sender
+        wantsSendFiles:(NSArray*)files
+               toUsers:(NSArray*)users;
 
 @end

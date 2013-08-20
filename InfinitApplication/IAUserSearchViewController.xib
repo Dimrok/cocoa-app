@@ -55,6 +55,7 @@
 						<string key="NSFrame">{{1, 7}, {314, 17}}</string>
 						<reference key="NSSuperview" ref="420626012"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="965619134">
@@ -424,6 +425,22 @@
 						<reference key="destination" ref="534702987"/>
 					</object>
 					<int key="connectionID">781</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">send_button</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1009898587"/>
+					</object>
+					<int key="connectionID">848</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">sendButtonClicked:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1009898587"/>
+					</object>
+					<int key="connectionID">849</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1502,7 +1519,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">847</int>
+			<int key="maxID">849</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1549,6 +1566,7 @@
 						<string key="results_view">NSScrollView</string>
 						<string key="search_box_view">NSView</string>
 						<string key="search_field">NSTokenField</string>
+						<string key="send_button">NSButton</string>
 						<string key="table_view">NSTableView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -1567,6 +1585,10 @@
 						<object class="IBToOneOutletInfo" key="search_field">
 							<string key="name">search_field</string>
 							<string key="candidateClassName">NSTokenField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="send_button">
+							<string key="name">send_button</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="table_view">
 							<string key="name">table_view</string>

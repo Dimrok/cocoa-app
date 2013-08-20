@@ -39,4 +39,8 @@
 
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender;
 
+- (void)sendController:(IAGeneralSendController*)sender
+        wantsSendFiles:(NSArray*)files
+               toUsers:(NSArray*)users;
+
 @end

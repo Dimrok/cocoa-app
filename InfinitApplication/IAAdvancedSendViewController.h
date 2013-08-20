@@ -50,9 +50,16 @@ typedef enum IAAdvancedSendViewFocus
 @protocol IAAdvancedSendViewProtocol <NSObject>
 
 - (NSArray*)advancedSendViewWantsFileList:(IAAdvancedSendViewController*)sender;
+
 - (void)advancedSendViewWantsCancel:(IAAdvancedSendViewController*)sender;
+
 - (void)advancedSendView:(IAAdvancedSendViewController*)sender
   wantsRemoveFileAtIndex:(NSInteger)index;
+
 - (void)advancedSendViewWantsOpenFileDialogBox:(IAAdvancedSendViewController*)sender;
+
+- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+          wantsSendFiles:(NSArray*)files
+                 toUsers:(NSArray*)users;
 
 @end

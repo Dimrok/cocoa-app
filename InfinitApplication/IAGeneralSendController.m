@@ -144,6 +144,16 @@
     return [NSArray arrayWithArray:_files];
 }
 
+- (void)simpleSendView:(IASimpleSendViewController*)sender
+        wantsSendFiles:(NSArray*)files
+               toUsers:(NSArray*)users
+{
+    [_delegate sendController:self
+               wantsSendFiles:files
+                      toUsers:users];
+    [_delegate sendControllerWantsClose:self];
+}
+
 //- Advanced Send View Protocol --------------------------------------------------------------------
 
 - (void)advancedSendViewWantsCancel:(IAAdvancedSendViewController*)sender
@@ -181,6 +191,16 @@
         }
     }
     [sender filesUpdated];
+}
+
+- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+          wantsSendFiles:(NSArray*)files
+                 toUsers:(NSArray*)users
+{
+    [_delegate sendController:self
+               wantsSendFiles:files
+                      toUsers:users];
+    [_delegate sendControllerWantsClose:self];
 }
 
 //- Favourites Send View Protocol ------------------------------------------------------------------

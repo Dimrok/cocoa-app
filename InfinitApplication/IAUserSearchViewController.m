@@ -183,6 +183,7 @@
 {
     [self.no_results_message setHidden:YES];
     self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
+    [self initialiseSendButton];
 }
 
 - (void)loadView
@@ -207,6 +208,23 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (void)initialiseSendButton
+{
+    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = NSCenterTextAlignment;
+    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
+                                          blurRadius:1.0
+                                               color:[NSColor blackColor]];
+    
+    NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
+                                                 paragraphStyle:style
+                                                         colour:[NSColor whiteColor]
+                                                         shadow:shadow];
+    self.send_button.attributedTitle = [[NSAttributedString alloc]
+                                        initWithString:NSLocalizedString(@"SEND", @"send")
+                                        attributes:button_style];
+}
+
 - (void)addUser:(IAUser*)user
 {
     if (user == nil)
@@ -220,6 +238,23 @@
 {
     NSText* field_editor = self.search_field.currentEditor;
     [field_editor setSelectedRange:NSMakeRange(field_editor.string.length, 0)];
+}
+
+- (NSArray*)recipientList
+{
+    return self.search_field.objectValue;
+}
+
+- (void)hideSendButton
+{
+    // XXX change search field size
+    [self.send_button setHidden:YES];
+}
+
+- (void)showSendButton
+{
+    // XXX change search field size
+    [self.send_button setHidden:NO];
 }
 
 //- Search Functions -------------------------------------------------------------------------------
@@ -572,6 +607,12 @@ displayStringForRepresentedObject:(id)representedObject
     }
     [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:(row + displacement)]
                  byExtendingSelection:NO];
+}
+
+//- Button Handling --------------------------------------------------------------------------------
+- (IBAction)sendButtonClicked:(NSButton*)sender
+{
+    [_delegate searchViewHadSendButtonClick:self];
 }
 
 @end

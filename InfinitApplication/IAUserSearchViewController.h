@@ -20,12 +20,19 @@
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSScrollView* results_view;
 @property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
+@property (nonatomic, strong) IBOutlet NSButton* send_button;
 
 - (id)init;
 
 - (void)setDelegate:(id<IAUserSearchViewProtocol>)delegate;
 
 - (void)addUser:(IAUser*)user;
+
+- (NSArray*)recipientList;
+
+- (void)hideSendButton;
+
+- (void)showSendButton;
 
 @end
 
@@ -36,5 +43,7 @@
   withActiveSearch:(BOOL)searching;
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
+
+- (void)searchViewHadSendButtonClick:(IAUserSearchViewController*)sender;
 
 @end

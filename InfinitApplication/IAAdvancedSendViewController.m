@@ -138,6 +138,7 @@
     
     IAUserSearchViewController* _user_search_controller;
     NSArray* _file_list;
+    NSArray* _recipient_list;
     CGFloat _row_height;
     NSInteger _max_rows_shown;
 }
@@ -195,6 +196,7 @@
 {
     [self setButtonHoverImages];
     [self initialiseSendButton];
+    [_user_search_controller hideSendButton];
 }
 
 - (void)loadView
@@ -237,6 +239,19 @@
             [self.view.window makeFirstResponder:_user_search_controller.search_field];
             break;
     }
+}
+
+- (BOOL)inputsGood
+{
+    NSMutableArray* recipients = [NSMutableArray arrayWithArray:
+                                  [_user_search_controller recipientList]];
+    if (recipients.count == 0)
+        return NO;
+    if (_file_list.count == 0)
+        return NO;
+    
+    _recipient_list = [NSArray arrayWithArray:recipients];
+    return YES;
 }
 
 //- Note Handling ----------------------------------------------------------------------------------
@@ -355,7 +370,12 @@ doCommandBySelector:(SEL)commandSelector
 
 - (IBAction)sendButtonClicked:(NSButton*)sender
 {
-    // XXX do checks and try to send
+    if ([self inputsGood])
+    {
+        [_delegate advancedSendView:self
+                     wantsSendFiles:_file_list
+                            toUsers:_recipient_list];
+    }
 }
 
 //- User Search View Protocol ----------------------------------------------------------------------
@@ -385,6 +405,11 @@ doCommandBySelector:(SEL)commandSelector
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
     [self.view.window makeFirstResponder:self.note_field];
+}
+
+- (void)searchViewHadSendButtonClick:(IAUserSearchViewController*)sender
+{
+    IALog(@"%@ WARNING: User search view shouldn't have button shown", self);
 }
 
 @end

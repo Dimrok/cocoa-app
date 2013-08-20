@@ -78,6 +78,7 @@
     
     IAUserSearchViewController* _user_search_controller;
     NSArray* _file_list;
+    NSArray* _recipient_list;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -161,6 +162,19 @@
     [self updateAddFilesButton];
 }
 
+- (BOOL)inputsGood
+{
+    NSMutableArray* recipients = [NSMutableArray arrayWithArray:
+                                  [_user_search_controller recipientList]];
+    if (recipients.count == 0)
+        return NO;
+    if (_file_list.count == 0)
+        return NO;
+    
+    _recipient_list = [NSArray arrayWithArray:recipients];
+    return YES;
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)addNoteClicked:(NSButton*)sender
@@ -210,6 +224,16 @@
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
     
+}
+
+- (void)searchViewHadSendButtonClick:(IAUserSearchViewController*)sender
+{
+    if ([self inputsGood])
+    {
+        [_delegate simpleSendView:self
+                   wantsSendFiles:_file_list
+                          toUsers:_recipient_list];
+    }
 }
 
 @end
