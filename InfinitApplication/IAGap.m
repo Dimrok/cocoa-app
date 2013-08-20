@@ -17,16 +17,13 @@
 //- Callbacks for notifications -----------------------------------------------------
 
 static
-void on_user_status(char const* user_id, gap_UserStatus status);
+void on_user_status(uint32_t const user_id, gap_UserStatus status);
 
 static
-void on_transaction(char const* transaction_id, int is_new);
+void on_transaction(uint32_t const transaction_id, TransferState status);
 
 static
-void on_transaction_status(char const* transaction, int is_new);
-
-static
-void on_error_callback(gap_Status errcode, char const* reason, char const* transaction_id);
+void on_error_callback(gap_Status errcode, char const* reason, uint32_t const transaction_id);
 
 
 @interface NotificationForwarder : NSObject
@@ -42,7 +39,7 @@ void on_error_callback(gap_Status errcode, char const* reason, char const* trans
     NSDictionary* _info;
 }
 
-- (id) init:(NSString *)msg withInfo:(NSDictionary *)info
+- (id)init:(NSString*)msg withInfo:(NSDictionary *)info
 {
     if (self = [super init])
     {
@@ -84,13 +81,16 @@ void on_error_callback(gap_Status errcode, char const* reason, char const* trans
     return _state;
 }
 
-+ (void)sendNotif:(NSString*)msg withInfo:(NSMutableDictionary*)info
++ (void)sendNotif:(NSString*)msg
+         withInfo:(NSMutableDictionary*)info
 {
     if (info == nil)
         info = [NSMutableDictionary dictionary];
     
-    [info setObject:[IAGapState instance].self_id forKey:@"self_id"];
-    [info setObject:[NSNumber numberWithInteger:(NSInteger)getpid()] forKey:@"pid"];
+    [info setObject:[IAGapState instance].self_id
+             forKey:@"self_id"];
+    [info setObject:[NSNumber numberWithInteger:(NSInteger)getpid()]
+             forKey:@"pid"];
     
     [[[NotificationForwarder alloc] init:msg withInfo:info] fire];
 }
@@ -161,7 +161,7 @@ void on_error_callback(gap_Status errcode, char const* reason, char const* trans
                                                             error:nil];
         }
 //        setenv("ELLE_LOG_FILE", [[self logFile] UTF8String], 0);
-        setenv("ELLE_LOG_FILE", "/dev/null", 0);
+        setenv("ELLE_LOG_FILE", "/Users/chris/.infinit/state.log", 0);
         [self removeOldLogs];
 
 #ifdef BUILD_PRODUCTION
@@ -303,79 +303,76 @@ return [NSString stringWithUTF8String:str]; \
 } while (false) \
 /**/
 
-- (NSString*)transaction_sender_id:(NSString*)transaction_id
+- (NSNumber*)transaction_sender_id:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_sender_id(_state, transaction_id.UTF8String));
+    return [NSNumber numberWithUnsignedInt:(gap_transaction_sender_id(_state,
+                                            transaction_id.unsignedIntValue))];
 }
 
-- (NSString*)transaction_sender_fullname:(NSString*)transaction_id
+- (NSString*)transaction_sender_fullname:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_sender_fullname(_state, transaction_id.UTF8String));
+    RETURN_CSTRING(gap_transaction_sender_fullname(_state, transaction_id.unsignedIntValue));
 }
 
-- (NSString*)transaction_sender_device_id:(NSString*)transaction_id
+- (NSString*)transaction_sender_device_id:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_sender_device_id(_state, transaction_id.UTF8String));
+    RETURN_CSTRING(gap_transaction_sender_device_id(_state, transaction_id.unsignedIntValue));
 }
 
-- (NSString*)transaction_recipient_id:(NSString*)transaction_id
+- (NSNumber*)transaction_recipient_id:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_recipient_id(_state, transaction_id.UTF8String));
+    return [NSNumber numberWithUnsignedInt:(gap_transaction_recipient_id(_state,
+                                                                transaction_id.unsignedIntValue))];
 }
 
-- (NSString*)transaction_recipient_fullname:(NSString*)transaction_id
+- (NSString*)transaction_recipient_fullname:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_recipient_fullname(_state, transaction_id.UTF8String));
+    RETURN_CSTRING(gap_transaction_recipient_fullname(_state, transaction_id.unsignedIntValue));
 }
 
-- (NSString*)transaction_recipient_device_id:(NSString*)transaction_id
+- (NSString*)transaction_recipient_device_id:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_recipient_device_id(_state, transaction_id.UTF8String));
+    RETURN_CSTRING(gap_transaction_recipient_device_id(_state, transaction_id.unsignedIntValue));
 }
 
-- (NSString*)transaction_network_id:(NSString*)transaction_id
+- (NSString*)transaction_network_id:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_network_id(_state, transaction_id.UTF8String));
+    RETURN_CSTRING(gap_transaction_network_id(_state, transaction_id.unsignedIntValue));
 }
 
-- (NSString*)transaction_first_filename:(NSString*)transaction_id
+- (NSString*)transaction_first_filename:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_first_filename(_state, transaction_id.UTF8String));
+    RETURN_CSTRING(gap_transaction_first_filename(_state, transaction_id.unsignedIntValue));
 }
 
-- (int)transaction_files_count:(NSString*)transaction_id
+- (int)transaction_files_count:(NSNumber*)transaction_id
 {
-    return gap_transaction_files_count(_state, transaction_id.UTF8String);
+    return gap_transaction_files_count(_state, transaction_id.unsignedIntValue);
 }
 
-- (int)transaction_total_size:(NSString*)transaction_id
+- (uint64_t)transaction_total_size:(NSNumber*)transaction_id
 {
-    return gap_transaction_total_size(_state, transaction_id.UTF8String);
+    return gap_transaction_total_size(_state, transaction_id.unsignedIntValue);
 }
 
-- (NSTimeInterval)transaction_timestamp:(NSString*)transaction_id
+- (NSTimeInterval)transaction_timestamp:(NSNumber*)transaction_id
 {
-    return gap_transaction_timestamp(_state, transaction_id.UTF8String);
+    return gap_transaction_timestamp(_state, transaction_id.unsignedIntValue);
 }
 
-- (int)transaction_is_directory:(NSString*)transaction_id
+- (int)transaction_is_directory:(NSNumber*)transaction_id
 {
-    return gap_transaction_is_directory(_state, transaction_id.UTF8String);
+    return gap_transaction_is_directory(_state, transaction_id.unsignedIntValue);
 }
 
-- (gap_TransactionStatus)transaction_status:(NSString*)transaction_id
+- (gap_TransactionStatus)transaction_status:(NSNumber*)transaction_id
 {
-    return gap_transaction_status(_state, transaction_id.UTF8String);
+    return gap_transaction_status(_state, transaction_id.unsignedIntValue);
 }
 
-- (float)transaction_progress:(NSString*)transaction_id
+- (float)transaction_progress:(NSNumber*)transaction_id
 {
-    return gap_transaction_progress(_state, transaction_id.UTF8String);
-}
-
-- (int)transaction_accepted:(NSString*)transaction_id
-{
-    return gap_transaction_accepted(_state, transaction_id.UTF8String);
+    return gap_transaction_progress(_state, transaction_id.unsignedIntValue);
 }
 
 - (gap_Status)poll
@@ -408,68 +405,68 @@ return [NSString stringWithUTF8String:str]; \
     RETURN_CSTRING(gap_self_email(_state));
 }
 
-- (NSString*)self_id
+- (NSNumber*)self_id
 {
-    RETURN_CSTRING(gap_self_id(_state));
+    return [NSNumber numberWithUnsignedInt:(gap_self_id(_state))];
 }
 
-- (NSString*)user_fullname:(NSString*)user_id
+- (NSString*)user_fullname:(NSNumber*)user_id
 {
-    RETURN_CSTRING(gap_user_fullname(_state, user_id.UTF8String));
+    RETURN_CSTRING(gap_user_fullname(_state, user_id.unsignedIntValue));
 }
 
-- (NSString*)user_handle:(NSString*)user_id
+- (NSString*)user_handle:(NSNumber*)user_id
 {
-    RETURN_CSTRING(gap_user_handle(_state, user_id.UTF8String));
+    RETURN_CSTRING(gap_user_handle(_state, user_id.unsignedIntValue));
 }
 
-- (gap_UserStatus)user_status:(NSString*)user_id
+- (gap_UserStatus)user_status:(NSNumber*)user_id
 {
-    return gap_user_status(_state, user_id.UTF8String);
+    return gap_user_status(_state, user_id.unsignedIntValue);
 }
 
-- (NSString*)user_by_email:(NSString *)email
+- (NSNumber*)user_by_email:(NSString*)email
 {
-    RETURN_CSTRING(gap_user_by_email(_state, email.UTF8String));
+    return [NSNumber numberWithUnsignedInt:(gap_user_by_email(_state, email.UTF8String))];
 }
 - (NSArray*)search_users:(NSString*)text
 {
-    char** results = gap_search_users(_state, text.UTF8String);
+    UInt32* results = gap_search_users(_state, text.UTF8String);
     if (results == NULL)
         return nil;
     NSMutableArray* array = [NSMutableArray array];
-    for (char** ptr = results; *ptr != NULL; ++ptr)
-        [array addObject:[NSString stringWithUTF8String:*ptr]];
+    for (UInt32* ptr = results; *ptr != 0; ++ptr)
+        [array addObject:[NSNumber numberWithUnsignedInt:*ptr]];
     gap_search_users_free(results);
     return array;
 }
 
-- (NSArray*)swaggers
+- (NSArray*)favourites
 {
-    char** results = gap_swaggers(_state);
+    UInt32* results = gap_swaggers(_state);
     if (results == NULL)
         return nil;
     NSMutableArray* array = [NSMutableArray array];
-    for (char** ptr = results; *ptr != NULL; ++ptr)
-        [array addObject:[NSString stringWithUTF8String:*ptr]];
+    for (UInt32* ptr = results; *ptr != 0; ++ptr)
+        [array addObject:[NSNumber numberWithUnsignedInt:*ptr]];
     gap_swaggers_free(results);
     return array;
 }
 
 - (NSArray*)transactions
 {
-    char** results = gap_transactions(_state);
+    UInt32* results = gap_transactions(_state);
     if (results == NULL)
         return nil;
     NSMutableArray* array = [NSMutableArray array];
-    for (char** ptr = results; *ptr != NULL; ++ptr)
-        [array addObject:[NSString stringWithUTF8String:*ptr]];
+    for (UInt32* ptr = results; *ptr != 0; ++ptr)
+        [array addObject:[NSNumber numberWithUnsignedInt:*ptr]];
     gap_transactions_free(results);
     return array;
 }
 
-- (gap_Status)send_files:(NSString*)recipient_id
-                      files:(NSArray*)files
+- (gap_Status)send_files_to_user:(NSNumber*)recipient_id
+                           files:(NSArray*)files
 {
 
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
@@ -481,19 +478,37 @@ return [NSString stringWithUTF8String:str]; \
         cfiles[i++] = [file UTF8String];
         IALog(@"Sending %@ to %@", file, recipient_id);
     }
-    gap_Status ret = gap_send_files(_state, recipient_id.UTF8String, cfiles);
+    gap_Status ret = gap_send_files(_state, recipient_id.unsignedIntValue, cfiles);
     free(cfiles);
     return ret;
 }
 
-- (gap_Status)accept_transaction:(NSString*)transaction_id
+- (gap_Status)send_files_by_email:(NSString*)recipient_email
+                            files:(NSArray*)files
 {
-    return gap_accept_transaction(_state, transaction_id.UTF8String);
+    
+    char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
+    if (cfiles == NULL)
+        return gap_error;
+    int i = 0;
+    for (id file in files)
+    {
+        cfiles[i++] = [file UTF8String];
+        IALog(@"Sending %@ to %@", file, recipient_email);
+    }
+    gap_Status ret = gap_send_files_by_email(_state, recipient_email.UTF8String, cfiles);
+    free(cfiles);
+    return ret;
 }
 
-- (gap_Status)cancel_transaction:(NSString*)transaction_id
+- (gap_Status)accept_transaction:(NSNumber*)transaction_id
 {
-    return gap_cancel_transaction(_state, transaction_id.UTF8String);
+    return gap_accept_transaction(_state, transaction_id.unsignedIntValue);
+}
+
+- (gap_Status)cancel_transaction:(NSNumber*)transaction_id
+{
+    return gap_cancel_transaction(_state, transaction_id.unsignedIntValue);
 }
 
 - (gap_Status)set_output_dir:(NSString*)output_path
@@ -527,50 +542,54 @@ return [NSString stringWithUTF8String:str]; \
 
 
 //- notif callback implementation -----------------------------------------------------------
-static void on_user_status(char const* user_id,
+static void on_user_status(uint32_t const user_id,
                            gap_UserStatus status)
 {
-    assert(user_id != NULL);
+    assert(user_id != 0);
     IALog(@">>> on user status notif !");
-    @try {
+    @try
+    {
         NSMutableDictionary* info = [NSMutableDictionary dictionary];
-        [info setObject:[NSString stringWithUTF8String:user_id] forKey:@"user_id"];
-        [info setObject:[NSNumber numberWithInt:status] forKey:@"user_status"];
-        [IAGap sendNotif:IA_GAP_EVENT_USER_STATUS_NOTIFICATION withInfo:info];
+        [info setObject:[NSNumber numberWithUnsignedInt:user_id]
+                 forKey:@"user_id"];
+        [info setObject:[NSNumber numberWithInt:status]
+                 forKey:@"user_status"];
+        [IAGap sendNotif:IA_GAP_EVENT_USER_STATUS_NOTIFICATION
+                withInfo:info];
     }
-    @catch (NSException* exception) {
+    @catch (NSException* exception)
+    {
         IALog(@"WARNING: on user status exception: %@", exception);
     }
 }
 
-static void on_transaction(char const* transaction_id,
-                           int is_new)
+static void on_transaction(uint32_t const transaction_id, TransferState status)
 {
-    assert(transaction_id != NULL);
-    IALog(@">>> On transaction notif: %s", transaction_id);    
-    @try {
+    assert(transaction_id != 0);
+    IALog(@">>> On transaction notif: %d", transaction_id);
+    @try
+    {
         NSMutableDictionary* msg = [NSMutableDictionary dictionary];
-        [msg setValue:[NSString stringWithUTF8String:transaction_id]
+        [msg setValue:[NSNumber numberWithUnsignedInt:transaction_id]
                forKey:@"transaction_id"];
-
-        [msg setObject:[NSNumber numberWithBool:is_new]
-                forKey:@"is_new"];
+        [msg setValue:[NSNumber numberWithInt:status]
+               forKey:@"status"];
         [IAGap sendNotif:IA_GAP_EVENT_TRANSACTION_NOTIFICATION withInfo:msg];
     }
-    @catch (NSException *exception) {
+    @catch (NSException* exception)
+    {
         IALog(@"WARNING: on_transaction exception: %@", exception.reason);
     }
 }
 
-static void on_error_callback(gap_Status errcode, char const* reason, char const* transaction_id)
+static void on_error_callback(gap_Status errcode, char const* reason, uint32_t const transaction_id)
 {
-    IALog(@">>> On transaction error callback: %s", transaction_id);
-    
-    @try {
-        
+    IALog(@">>> On transaction error callback: %d", transaction_id);
+    @try
+    {
         NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
-        if (transaction_id != NULL)
-            [msg setValue:[NSString stringWithUTF8String:transaction_id]
+        if (transaction_id != 0)
+            [msg setValue:[NSNumber numberWithUnsignedInt:transaction_id]
                    forKey:@"transaction_id"];
         [msg setObject:[NSString stringWithUTF8String:reason]
                 forKey:@"reason"];
@@ -579,7 +598,8 @@ static void on_error_callback(gap_Status errcode, char const* reason, char const
                 forKey:@"error_code"];
         [IAGap sendNotif:IA_GAP_EVENT_ERROR withInfo:msg];
     }
-    @catch (NSException *exception) {
+    @catch (NSException* exception)
+    {
         IALog(@"WARNING: on_transaction_status exception: %@", exception.reason);
     }
 }

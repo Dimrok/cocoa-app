@@ -60,7 +60,7 @@ typedef enum __IAUserTransactionAction
 
 //- General Functions ------------------------------------------------------------------------------
 
-- (NSInteger)indexOfTransactionWithId:(NSString*)transaction_id
+- (NSInteger)indexOfTransactionWithId:(NSNumber*)transaction_id
 {
     NSInteger count = 0;
     for (IATransaction* transaction in _transactions)
@@ -76,10 +76,19 @@ typedef enum __IAUserTransactionAction
 - (IATransaction*)transactionFromNotification:(NSNotification*)notification
 {
     NSDictionary* dict = notification.userInfo;
-    NSString* transaction_id = [dict objectForKey:@"transaction_id"];
+    NSNumber* transaction_id = [dict objectForKey:@"transaction_id"];
     if (transaction_id == nil)
+    {
+        IALog(@"%@ WARNING: transaction from notification failed, no id", self);
         return nil;
-    IATransaction* transaction = [IATransaction transactionWithId:transaction_id];
+    }
+    NSNumber* status = [dict objectForKey:@"status"];
+    if (status == nil)
+    {
+        IALog(@"%@ WARNING: transaction from notification failed, no status", self);
+        return nil;
+    }
+    IATransaction* transaction = [IATransaction transactionWithId:transaction_id andStatus:status];
     transaction.is_new = ((NSNumber*)[dict objectForKey:@"is_new"]).boolValue;
     return transaction;
 }
@@ -115,8 +124,8 @@ typedef enum __IAUserTransactionAction
     NSMutableArray* transactions = [[NSMutableArray alloc] init];
     for (IATransaction* transaction in _transactions)
     {
-        if ([transaction.sender_id isEqualToString:user.user_id] ||
-            [transaction.recipient_id isEqualToString:user.user_id])
+        if ([transaction.sender_id isEqualToNumber:user.user_id] ||
+            [transaction.recipient_id isEqualToNumber:user.user_id])
         {
             [transactions addObject:transaction];
         }

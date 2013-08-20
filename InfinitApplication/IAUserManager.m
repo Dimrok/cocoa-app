@@ -40,7 +40,7 @@
 
 - (void)onUserStatusNotification:(NSNotification*)notification
 {
-    NSString* user_id = [notification.userInfo objectForKey:@"user_id"];
+    NSNumber* user_id = [notification.userInfo objectForKey:@"user_id"];
     IAUser* user = [IAUser userWithId:user_id];
     if (user == nil)
         return;

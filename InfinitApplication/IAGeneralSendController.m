@@ -190,7 +190,7 @@
     // XXX fake favourites
     NSMutableArray* favourites = [NSMutableArray array];
     for (NSInteger i = 0; i < 5; i++)
-        [favourites addObject:[IAUser userWithId:@"5200bb883f841b5c9d7bffdf"]];
+        [favourites addObject:[IAUser userWithId:[NSNumber numberWithUnsignedInt:1]]];
     return favourites;
 }
 
