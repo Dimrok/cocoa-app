@@ -124,8 +124,8 @@ typedef enum __IAUserTransactionAction
     NSMutableArray* transactions = [[NSMutableArray alloc] init];
     for (IATransaction* transaction in _transactions)
     {
-        if ([transaction.sender_id isEqualToNumber:user.user_id] ||
-            [transaction.recipient_id isEqualToNumber:user.user_id])
+        if ([transaction.sender isEqual:user] ||
+            [transaction.recipient isEqual:user])
         {
             [transactions addObject:transaction];
         }
