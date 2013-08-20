@@ -85,6 +85,8 @@
 		8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FE17A67EB0006028BC /* libudt.dylib */; };
 		8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */; };
 		8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8346314F17A7042A00A7E17F /* IACentredSecureCell.m */; };
+		8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */; };
+		8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
@@ -227,6 +229,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */,
+				8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */,
 				8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */,
 				8334C82117A692BD006028BC /* libagent.dylib in Copy Infinit Libraries */,
 				8334C82217A692BD006028BC /* libasio-udt.dylib in Copy Infinit Libraries */,
@@ -373,6 +377,8 @@
 		8334C7FE17A67EB0006028BC /* libudt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libudt.dylib; path = ../../../Externals/lib/libudt.dylib; sourceTree = "<group>"; };
 		8346314E17A7042A00A7E17F /* IACentredSecureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredSecureCell.h; sourceTree = "<group>"; };
 		8346314F17A7042A00A7E17F /* IACentredSecureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredSecureCell.m; sourceTree = "<group>"; };
+		8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_asio.dylib; path = ../../../Externals/lib/libcurly_asio.dylib; sourceTree = "<group>"; };
+		8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_sched.dylib; path = ../../../Externals/lib/libcurly_sched.dylib; sourceTree = "<group>"; };
 		836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsCellView.h; sourceTree = "<group>"; };
 		836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsCellView.m; sourceTree = "<group>"; };
 		836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendViewController.h; sourceTree = "<group>"; };
@@ -856,6 +862,8 @@
 				8334C7EB17A67EB0006028BC /* libcryptography.dylib */,
 				8334C7EC17A67EB0006028BC /* libcurl.4.dylib */,
 				8334C7ED17A67EB0006028BC /* libcurly.dylib */,
+				8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */,
+				8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */,
 				8334C7EE17A67EB0006028BC /* libelle.dylib */,
 				8334C7EF17A67EB0006028BC /* libetoile.dylib */,
 				8334C7F017A67EB0006028BC /* libgap.dylib */,
