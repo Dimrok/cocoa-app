@@ -76,13 +76,13 @@
 {
     if (transaction.from_me)
     {
-        [self setUserFullName:transaction.recipient_fullname];
-        [self setAvatarForUser:[IAUser userWithId:transaction.recipient_id]];
+        [self setUserFullName:transaction.recipient.fullname];
+        [self setAvatarForUser:transaction.recipient];
     }
     else
     {
-        [self setUserFullName:transaction.sender_fullname];
-        [self setAvatarForUser:[IAUser userWithId:transaction.sender_id]];
+        [self setUserFullName:transaction.sender.fullname];
+        [self setAvatarForUser:transaction.sender];
     }
     [self setFileName:transaction.first_filename];
     [self setLastActionTime:transaction.timestamp];
