@@ -25,6 +25,9 @@
 - (void)newUserStatusFor:(IAUser*)user;
 - (NSArray*)transactionsForUser:(IAUser*)user;
 
+- (void)sendFiles:(NSArray*)files
+          toUsers:(NSArray*)users;
+
 @end
 
 

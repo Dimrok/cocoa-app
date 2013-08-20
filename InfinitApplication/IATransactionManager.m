@@ -93,6 +93,22 @@ typedef enum __IAUserTransactionAction
     return transaction;
 }
 
+- (void)sendFiles:(NSArray*)files
+          toUsers:(NSArray*)users
+{
+    for (id user in users)
+    {
+        if ([user isKindOfClass:IAUser.class])
+        {
+            [[IAGapState instance] sendFiles:files toUser:user]; // XXX returns transaction id
+        }
+        else if ([user isKindOfClass:NSString.class] && [IAFunctions stringIsValidEmail:user])
+        {
+            [[IAGapState instance] sendFiles:files toEmail:user]; // XXX returns transaction id
+        }
+    }
+}
+
 //- Transaction View Mode Machine ------------------------------------------------------------------
 
 //    transaction_view_pending_send = 0,
