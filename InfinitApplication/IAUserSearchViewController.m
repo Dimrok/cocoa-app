@@ -287,7 +287,8 @@
         _search_results = nil;
         return;
     }
-    _search_results = [NSMutableArray arrayWithArray:results.data];
+    _search_results = [NSMutableArray arrayWithArray:[results.data sortedArrayUsingSelector:
+                                                      @selector(compare:)]];
     [self updateResultsTable];
 }
 
