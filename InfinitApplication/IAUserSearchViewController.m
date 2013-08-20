@@ -486,7 +486,7 @@ displayStringForRepresentedObject:(id)representedObject
                  row:(NSInteger)row
 {    
     IAUser* user = [_search_results objectAtIndex:row];
-    if (user == nil || [user.user_id isEqualToNumber:0])
+    if (user == nil)
         return nil;
     
     IASearchResultsCellView* cell = [tableView makeViewWithIdentifier:@"user_search_cell"
