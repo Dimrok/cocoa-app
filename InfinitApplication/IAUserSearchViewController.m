@@ -266,8 +266,8 @@
     }
     
     NSDictionary* data = result.data;
-    NSString* user_id = (NSString*)[data objectForKey:@"user_id"];
-    if (![user_id isEqualToString:@""])
+    NSNumber* user_id = (NSNumber*)[data objectForKey:@"user_id"];
+    if (![user_id isEqualToNumber:0])
     {
         IAUser* user = [IAUser userWithId:user_id];
         _search_results = [NSMutableArray arrayWithObject:user];
@@ -486,7 +486,7 @@ displayStringForRepresentedObject:(id)representedObject
                  row:(NSInteger)row
 {    
     IAUser* user = [_search_results objectAtIndex:row];
-    if (user == nil || [user.user_id isEqualToString:@""])
+    if (user == nil || [user.user_id isEqualToNumber:0])
         return nil;
     
     IASearchResultsCellView* cell = [tableView makeViewWithIdentifier:@"user_search_cell"
