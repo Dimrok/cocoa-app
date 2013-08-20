@@ -184,8 +184,8 @@
     IAUser* user = [notification.userInfo objectForKey:@"user"];
     for (IATransaction* transaction in _transaction_list)
     {
-        if ((transaction.from_me && [transaction.recipient_id isEqualToString:user.user_id]) ||
-            (!transaction.from_me && [transaction.sender_id isEqualToString:user.user_id]))
+        if ((transaction.from_me && [transaction.recipient isEqual:user]) ||
+            (!transaction.from_me && [transaction.sender isEqual:user]))
         {
             [self.table_view reloadDataForRowIndexes:
                     [NSIndexSet indexSetWithIndex:[_transaction_list indexOfObject:transaction]]
@@ -250,7 +250,7 @@
                  row:(NSInteger)row
 {
     IATransaction* transaction = [_transaction_list objectAtIndex:row];
-    if (transaction.transaction_id.length == 0)
+    if (transaction.transaction_id == 0)
         return nil;
     IANotificationListCellView* cell = [tableView makeViewWithIdentifier:@"notification_cell"
                                                                    owner:self];
@@ -279,9 +279,9 @@
     IAUser* user;
     
     if (transaction.from_me)
-        user = [IAUser userWithId:transaction.recipient_id];
+        user = transaction.recipient;
     else
-        user = [IAUser userWithId:transaction.sender_id];
+        user = transaction.sender;
     
     [_delegate notificationList:self gotClickOnUser:user];
 }
