@@ -10,16 +10,6 @@
 
 #import <Gap/IAGapState.h>
 
-// UI interaction key
-typedef enum __IAUserTransactionAction
-{
-    USER_TRANSACTION_ACTION_NONE = 0,
-    USER_TRANSACTION_ACTION_SEND,
-    USER_TRANSACTION_ACTION_PAUSE,
-    USER_TRANSACTION_ACTION_ACCEPT,
-    USER_TRANSACTION_ACTION_CANCEL
-} IAUserTransactionAction;
-
 @implementation IATransactionManager
 {
 @private
@@ -89,7 +79,6 @@ typedef enum __IAUserTransactionAction
         return nil;
     }
     IATransaction* transaction = [IATransaction transactionWithId:transaction_id andStatus:status];
-    transaction.is_new = ((NSNumber*)[dict objectForKey:@"is_new"]).boolValue;
     return transaction;
 }
 
@@ -109,31 +98,148 @@ typedef enum __IAUserTransactionAction
     }
 }
 
-//- Transaction View Mode Machine ------------------------------------------------------------------
+//- Transaction View Mode Handling -----------------------------------------------------------------
 
-//    transaction_view_pending_send = 0,
-//    transaction_view_waiting_register,
-//    transaction_view_waiting_online,
-//    transaction_view_waiting_accept,
-//    transaction_view_preparing,
-//    transaction_view_running,
-//    transaction_view_pause_user,
-//    transaction_view_pause_auto,
-//    transaction_view_finished,
-//    transaction_view_cancelled_self,
-//    transaction_view_cancelled_other,
-//    transaction_view_failed
+// View modes:
+//    TRANSACTION_VIEW_NONE = 0,
+//    TRANSACTION_VIEW_PENDING_SEND = 1,
+//    TRANSACTION_VIEW_WAITING_REGISTER = 2,
+//    TRANSACTION_VIEW_WAITING_ONLINE = 3,
+//    TRANSACTION_VIEW_WAITING_ACCEPT = 4,
+//    TRANSACTION_VIEW_PREPARING = 5,
+//    TRANSACTION_VIEW_RUNNING = 6,
+//    TRANSACTION_VIEW_PAUSE_USER = 7,
+//    TRANSACTION_VIEW_PAUSE_AUTO = 8,
+//    TRANSACTION_VIEW_REJECTED = 9,
+//    TRANSACTION_VIEW_FINISHED = 10,
+//    TRANSACTION_VIEW_CANCELLED_SELF = 11,
+//    TRANSACTION_VIEW_CANCELLED_OTHER = 12,
+//    TRANSACTION_VIEW_FAILED = 13
 
-- (void)setTransactionViewMode:(IATransaction*)transaction
-                 forUserAction:(IAUserTransactionAction)action
+// Transaction states:
+//    TransferState_NewTransaction = 0,
+//    TransferState_SenderCreateNetwork = 1,
+//    TransferState_SenderCreateTransaction = 2,
+//    TransferState_SenderCopyFiles = 3,
+//    TransferState_SenderWaitForDecision = 4,
+//    TransferState_RecipientWaitForDecision = 5,
+//    TransferState_RecipientAccepted = 6,
+//    TransferState_GrantPermissions = 7,
+//    TransferState_PublishInterfaces = 8,
+//    TransferState_Connect = 9,
+//    TransferState_PeerDisconnected = 10,
+//    TransferState_PeerConnectionLost = 11,
+//    TransferState_Transfer = 12,
+//    TransferState_CleanLocal = 13,
+//    TransferState_CleanRemote = 14,
+//    TransferState_Finished = 15,
+//    TransferState_Rejected = 16,
+//    TransferState_Canceled = 17,
+//    TransferState_Failed = 18,
+
+- (IATransactionViewMode)transactionViewMode:(IATransaction*)transaction
 {
-    
+    switch (transaction.status)
+    {
+        case TransferState_NewTransaction:
+            return TRANSACTION_VIEW_NONE;
+            
+        case TransferState_SenderCreateNetwork:
+            return TRANSACTION_VIEW_PENDING_SEND;
+            
+        case TransferState_SenderCreateTransaction:
+            return TRANSACTION_VIEW_PENDING_SEND;
+            
+        case TransferState_SenderCopyFiles:
+            return TRANSACTION_VIEW_PENDING_SEND;
+            
+        case TransferState_SenderWaitForDecision:
+            if (transaction.recipient.is_ghost)
+                return TRANSACTION_VIEW_WAITING_REGISTER;
+            else if (transaction.recipient.status != gap_user_status_online)
+                return TRANSACTION_VIEW_WAITING_ONLINE;
+            else
+                return TRANSACTION_VIEW_WAITING_ACCEPT;
+            
+        case TransferState_RecipientWaitForDecision:
+            return TRANSACTION_VIEW_WAITING_ACCEPT;
+            
+        case TransferState_RecipientAccepted:
+            return TRANSACTION_VIEW_PREPARING;
+            
+        case TransferState_GrantPermissions:
+            return TRANSACTION_VIEW_PREPARING;
+            
+        case TransferState_PublishInterfaces:
+            return TRANSACTION_VIEW_PREPARING;
+            
+        case TransferState_Connect:
+            return TRANSACTION_VIEW_PREPARING;
+            
+        case TransferState_PeerDisconnected: // XXX Currently will restart transfer
+            return TRANSACTION_VIEW_PAUSE_AUTO;
+            
+        case TransferState_PeerConnectionLost: // XXX Currently will restart transfer
+            return TRANSACTION_VIEW_PAUSE_AUTO;
+            
+        case TransferState_Transfer:
+            return TRANSACTION_VIEW_RUNNING;
+            
+        case TransferState_CleanLocal:
+            return transaction.view_mode;
+            
+        case TransferState_CleanRemote:
+            return transaction.view_mode;
+            
+        case TransferState_Finished:
+            return TRANSACTION_VIEW_FINISHED;
+            
+        case TransferState_Rejected:
+            return TRANSACTION_VIEW_REJECTED;
+            
+        case TransferState_Canceled: // Must include logic to say who cancelled transaction
+            return TRANSACTION_VIEW_CANCELLED_SELF;
+        
+        case TransferState_Failed:
+            return TRANSACTION_VIEW_FAILED;
+            
+        default:
+            return TRANSACTION_VIEW_NONE;
+    }
 }
 
-//- Transaction Manipulation -----------------------------------------------------------------------
+//- Transaction Lists ------------------------------------------------------------------------------
 
-
-//- User Handling ----------------------------------------------------------------------------------
+- (NSArray*)latestTransactionPerUser
+{
+    NSSortDescriptor* descending = [NSSortDescriptor sortDescriptorWithKey:nil
+                                                                 ascending:NO
+                                                                  selector:@selector(compare:)];
+    NSArray* sorted_transactions = [_transactions sortedArrayUsingDescriptors:
+                                    [NSArray arrayWithObject:descending]];
+    NSMutableArray* res = [NSMutableArray array];
+    NSMutableArray* users = [NSMutableArray array];
+    for (IATransaction* transaction in sorted_transactions)
+    {
+        if (transaction.from_me)
+        {
+            if (![users containsObject:transaction.recipient])
+            {
+                [users addObject:transaction.recipient];
+                [res addObject:transaction];
+            }
+        }
+        else
+        {
+            if (![users containsObject:transaction.sender])
+            {
+                [users addObject:transaction.sender];
+                [res addObject:transaction];
+            }
+        }
+    }
+    return res;
+}
 
 - (NSArray*)transactionsForUser:(IAUser*)user
 {
@@ -159,23 +265,29 @@ typedef enum __IAUserTransactionAction
         if (transaction == nil)
             return;
         
-        [self setTransactionViewMode:(IATransaction*)transaction
-                       forUserAction:USER_TRANSACTION_ACTION_NONE];
-        
         NSInteger index = [self indexOfTransactionWithId:transaction.transaction_id];
-        if (index == -1) // transaction is new
+        if (index == -1) // Transaction is new
         {
+            transaction.view_mode = [self transactionViewMode:transaction];
+            transaction.is_new = YES;
             [_transactions insertObject:transaction atIndex:0];
             [_delegate transactionManager:self transactionAdded:transaction];
         }
-        else // transaction needs to be updated
+        else // Transaction already in list
         {
-            [_transactions replaceObjectAtIndex:index withObject:transaction];
-            [_delegate transactionManager:self transactionUpdated:transaction];
+            // Only update if view move changes
+            if (transaction.view_mode != [self transactionViewMode:transaction])
+            {
+                transaction.view_mode = [self transactionViewMode:transaction];
+                transaction.is_new = YES;
+                [_transactions replaceObjectAtIndex:index withObject:transaction];
+                [_delegate transactionManager:self transactionUpdated:transaction];
+            }
         }
     }
 }
 
+// XXX currently unimplemented
 - (void)onGapError:(NSNotification*)notification
 {
     NSDictionary* dict = notification.userInfo;
@@ -188,20 +300,9 @@ typedef enum __IAUserTransactionAction
 - (void)onNotificationsRead:(NSNotification*)notification
 {
     for (IATransaction* transaction in _transactions)
-        transaction.is_new = NO;
-}
-
-//- User Status Handling ---------------------------------------------------------------------------
-
-- (void)newUserStatusFor:(IAUser*)user
-{
-    NSArray* user_transactions = [NSArray arrayWithArray:[self transactionsForUser:user]];
-    if (user_transactions.count == 0)
-        return;
-    for (IATransaction* transaction in user_transactions)
     {
-        [self setTransactionViewMode:(IATransaction*)transaction
-                       forUserAction:USER_TRANSACTION_ACTION_NONE];
+        if (!transaction.from_me && !transaction.view_mode == TRANSACTION_VIEW_WAITING_ACCEPT)
+            transaction.is_new = NO;
     }
 }
 

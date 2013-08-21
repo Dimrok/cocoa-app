@@ -22,8 +22,8 @@
 
 - (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
 
-- (void)newUserStatusFor:(IAUser*)user;
 - (NSArray*)transactionsForUser:(IAUser*)user;
+- (NSArray*)latestTransactionPerUser;
 
 - (void)sendFiles:(NSArray*)files
           toUsers:(NSArray*)users;
