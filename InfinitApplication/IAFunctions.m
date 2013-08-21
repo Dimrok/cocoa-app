@@ -161,14 +161,14 @@
         [IA_RGB_COLOUR(239.0, 239.0, 239.0) set];
         [grey_border stroke];
         
-        NSBezierPath* white_border = [NSBezierPath bezierPathWithOvalInRect:
-                                      NSMakeRect(shadow_radius + 1.0,
-                                                 shadow_radius + 1.0,
-                                                 diameter - (2.0 * shadow_radius) - 2.0,
-                                                 diameter - (2.0 * shadow_radius) - 2.0)];
-        [white_border setLineWidth:(border_thickness)];
+        NSBezierPath* outter_border = [NSBezierPath bezierPathWithOvalInRect:
+                                       NSMakeRect(shadow_radius + 1.0,
+                                                  shadow_radius + 1.0,
+                                                  diameter - (2.0 * shadow_radius) - 2.0,
+                                                  diameter - (2.0 * shadow_radius) - 2.0)];
+        [outter_border setLineWidth:(border_thickness)];
         [colour set];
-        [white_border stroke];
+        [outter_border stroke];
     }
     
     [NSGraphicsContext restoreGraphicsState];
