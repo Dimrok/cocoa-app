@@ -141,6 +141,9 @@
 		83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206117C4DC6700D4E168 /* icon-check@2x.png */; };
 		83D4206617C4DC6700D4E168 /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206217C4DC6700D4E168 /* icon-error.png */; };
 		83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206317C4DC6700D4E168 /* icon-error@2x.png */; };
+		83D4206E17C4DDC000D4E168 /* IAAvatarBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */; };
+		83D4207117C4DE9800D4E168 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206F17C4DE9800D4E168 /* badge.png */; };
+		83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4207017C4DE9800D4E168 /* badge@2x.png */; };
 		83F1146C17AE521000DCF662 /* btn-send-files-simple.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1146A17AE521000DCF662 /* btn-send-files-simple.png */; };
 		83F1146D17AE521000DCF662 /* btn-send-files-simple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1146B17AE521000DCF662 /* btn-send-files-simple@2x.png */; };
 		83F1147817AE542800DCF662 /* icon-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147617AE542800DCF662 /* icon-search.png */; };
@@ -455,6 +458,10 @@
 		83D4206117C4DC6700D4E168 /* icon-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check@2x.png"; sourceTree = "<group>"; };
 		83D4206217C4DC6700D4E168 /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
 		83D4206317C4DC6700D4E168 /* icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@2x.png"; sourceTree = "<group>"; };
+		83D4206C17C4DDC000D4E168 /* IAAvatarBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAvatarBadgeView.h; sourceTree = "<group>"; };
+		83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAvatarBadgeView.m; sourceTree = "<group>"; };
+		83D4206F17C4DE9800D4E168 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
+		83D4207017C4DE9800D4E168 /* badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "badge@2x.png"; sourceTree = "<group>"; };
 		83F1146A17AE521000DCF662 /* btn-send-files-simple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple.png"; sourceTree = "<group>"; };
 		83F1146B17AE521000DCF662 /* btn-send-files-simple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple@2x.png"; sourceTree = "<group>"; };
 		83F1147617AE542800DCF662 /* icon-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-search.png"; sourceTree = "<group>"; };
@@ -520,6 +527,8 @@
 				831FB22517A90BE900696604 /* IANotificationListViewController.xib */,
 				83B3F5B117B53C1600C19859 /* IANotificationListCellView.h */,
 				83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */,
+				83D4206C17C4DDC000D4E168 /* IAAvatarBadgeView.h */,
+				83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */,
 			);
 			name = "Notification View";
 			sourceTree = "<group>";
@@ -913,6 +922,8 @@
 		83D4205F17C4DC5800D4E168 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83D4206F17C4DE9800D4E168 /* badge.png */,
+				83D4207017C4DE9800D4E168 /* badge@2x.png */,
 				83D4206017C4DC6700D4E168 /* icon-check.png */,
 				83D4206117C4DC6700D4E168 /* icon-check@2x.png */,
 				83D4206217C4DC6700D4E168 /* icon-error.png */,
@@ -1142,6 +1153,8 @@
 				83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */,
 				83D4206617C4DC6700D4E168 /* icon-error.png in Resources */,
 				83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */,
+				83D4207117C4DE9800D4E168 /* badge.png in Resources */,
+				83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1222,6 +1235,7 @@
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
 				8308BCB417BD35E400B2763A /* IAConversationCellView.m in Sources */,
+				83D4206E17C4DDC000D4E168 /* IAAvatarBadgeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
