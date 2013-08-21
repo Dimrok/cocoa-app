@@ -144,6 +144,7 @@
 		83D4206E17C4DDC000D4E168 /* IAAvatarBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */; };
 		83D4207117C4DE9800D4E168 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206F17C4DE9800D4E168 /* badge.png */; };
 		83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4207017C4DE9800D4E168 /* badge@2x.png */; };
+		83D4207517C51E7C00D4E168 /* IANotificationAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */; };
 		83F1146C17AE521000DCF662 /* btn-send-files-simple.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1146A17AE521000DCF662 /* btn-send-files-simple.png */; };
 		83F1146D17AE521000DCF662 /* btn-send-files-simple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1146B17AE521000DCF662 /* btn-send-files-simple@2x.png */; };
 		83F1147817AE542800DCF662 /* icon-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1147617AE542800DCF662 /* icon-search.png */; };
@@ -462,6 +463,8 @@
 		83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAvatarBadgeView.m; sourceTree = "<group>"; };
 		83D4206F17C4DE9800D4E168 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
 		83D4207017C4DE9800D4E168 /* badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "badge@2x.png"; sourceTree = "<group>"; };
+		83D4207317C51E7C00D4E168 /* IANotificationAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationAvatarView.h; sourceTree = "<group>"; };
+		83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationAvatarView.m; sourceTree = "<group>"; };
 		83F1146A17AE521000DCF662 /* btn-send-files-simple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple.png"; sourceTree = "<group>"; };
 		83F1146B17AE521000DCF662 /* btn-send-files-simple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple@2x.png"; sourceTree = "<group>"; };
 		83F1147617AE542800DCF662 /* icon-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-search.png"; sourceTree = "<group>"; };
@@ -529,6 +532,8 @@
 				83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */,
 				83D4206C17C4DDC000D4E168 /* IAAvatarBadgeView.h */,
 				83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */,
+				83D4207317C51E7C00D4E168 /* IANotificationAvatarView.h */,
+				83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */,
 			);
 			name = "Notification View";
 			sourceTree = "<group>";
@@ -1236,6 +1241,7 @@
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
 				8308BCB417BD35E400B2763A /* IAConversationCellView.m in Sources */,
 				83D4206E17C4DDC000D4E168 /* IAAvatarBadgeView.m in Sources */,
+				83D4207517C51E7C00D4E168 /* IANotificationAvatarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
