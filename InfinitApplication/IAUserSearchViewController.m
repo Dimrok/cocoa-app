@@ -301,8 +301,8 @@
     }
     
     NSDictionary* data = result.data;
-    NSNumber* user_id = (NSNumber*)[data objectForKey:@"user_id"];
-    if (![user_id isEqualToNumber:0])
+    NSNumber* user_id = [data objectForKey:@"user_id"];
+    if (user_id.unsignedIntValue != 0)
     {
         IAUser* user = [IAUser userWithId:user_id];
         _search_results = [NSMutableArray arrayWithObject:user];
