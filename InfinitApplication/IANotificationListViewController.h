@@ -42,4 +42,9 @@
 
 - (NSArray*)notificationListWantsLastTransactions:(IANotificationListViewController*)sender;
 
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
+     activeTransactionsForUser:(IAUser*)user;
+- (CGFloat)notificationList:(IANotificationListViewController*)sender
+transactionsProgressForUser:(IAUser*)user;
+
 @end

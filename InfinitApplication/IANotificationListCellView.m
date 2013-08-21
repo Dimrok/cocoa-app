@@ -9,10 +9,13 @@
 #import "IANotificationListCellView.h"
 
 #import "IAAvatarManager.h"
+#import "IAAvatarBadgeView.h"
 
 @implementation IANotificationListCellView
-
-//- Initialisation ---------------------------------------------------------------------------------
+{
+    IATransaction* _transaction;
+    IAUser* _user;
+}
 
 //- Setup Cell -------------------------------------------------------------------------------------
 
@@ -72,20 +75,54 @@
     self.avatar.image = avatar;
 }
 
+- (void)setTransferStatusIcon:(IATransactionViewMode)view_mode
+{
+    switch (view_mode)
+    {
+        case TRANSACTION_VIEW_FAILED:
+            self.transfer_status.image = [IAFunctions imageNamed:@"icon-error"];
+            [self.transfer_status setHidden:NO];
+            break;
+            
+        case TRANSACTION_VIEW_FINISHED:
+            self.transfer_status.image = [IAFunctions imageNamed:@"icon-check"];
+            [self.transfer_status setHidden:NO];
+            break;
+            
+        default:
+            [self.transfer_status setHidden:YES];
+            break;
+    }
+}
+
+- (void)setBadgeCount:(NSUInteger)count
+{
+    if (count == 0)
+        return;
+    
+    [self.badge_view setBadgeCount:count];
+}
+
 - (void)setupCellWithTransaction:(IATransaction*)transaction
+          andRunningTransactions:(NSUInteger)count
 {
     if (transaction.from_me)
-    {
-        [self setUserFullName:transaction.recipient.fullname];
-        [self setAvatarForUser:transaction.recipient];
-    }
+        _user = transaction.recipient;
     else
-    {
-        [self setUserFullName:transaction.sender.fullname];
-        [self setAvatarForUser:transaction.sender];
-    }
+        _user = transaction.sender;
+
+    [self setUserFullName:_user.fullname];
+    [self setAvatarForUser:_user];
+    if (_user.status == gap_user_status_online)
+        [self.user_online setHidden:NO];
+    else
+        [self.user_online setHidden:YES];
+    
+    _transaction = transaction;
     [self setFileName:transaction.first_filename];
-    [self setLastActionTime:transaction.timestamp];
+    [self setLastActionTime:transaction.last_edit_timestamp];
+    [self setTransferStatusIcon:transaction.view_mode];
+    [self setBadgeCount:count];
 }
 
 @end

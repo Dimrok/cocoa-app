@@ -254,7 +254,14 @@
         return nil;
     IANotificationListCellView* cell = [tableView makeViewWithIdentifier:@"notification_cell"
                                                                    owner:self];
-    [cell setupCellWithTransaction:transaction];
+    IAUser* user;
+    if (transaction.from_me)
+        user = transaction.recipient;
+    else
+        user = transaction.sender;
+    [cell setupCellWithTransaction:transaction
+            andRunningTransactions:[_delegate notificationList:self
+                                     activeTransactionsForUser:user]];
     return cell;
 }
 
@@ -346,5 +353,7 @@
 {
     [_delegate notificationListWantsQuit:self];
 }
+
+//- Transaction Handling ---------------------------------------------------------------------------
 
 @end
