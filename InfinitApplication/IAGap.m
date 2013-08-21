@@ -230,6 +230,7 @@ void on_error_callback(gap_Status errcode, char const* reason, uint32_t const tr
         [IAGap sendNotif:IA_GAP_EVENT_LOGIN_OPERATION withInfo:nil];
         if ((gap_user_status_callback(_state, &on_user_status) != gap_ok) ||
             (gap_transaction_callback(_state, &on_transaction) != gap_ok))
+            // XXX add error callback
             //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
         {
             IALog(@"WARNING: Cannot set callbacks");
