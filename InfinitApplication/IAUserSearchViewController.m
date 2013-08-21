@@ -599,14 +599,17 @@ displayStringForRepresentedObject:(id)representedObject
 
 - (void)moveTableSelectionBy:(NSInteger)displacement
 {
-    NSInteger row = self.table_view.selectedRow;
-    if (row + displacement < 0 &&
-        row + displacement >= _search_results.count - 1)
-    {
+    if (_search_results.count == 0)
         return;
-    }
-    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:(row + displacement)]
+    NSInteger row = self.table_view.selectedRow;
+    NSInteger current_pos = row + displacement;
+    if (current_pos < 0)
+        current_pos = _search_results.count - 1;
+    else if (current_pos > _search_results.count - 1)
+        current_pos = 0;
+    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:current_pos]
                  byExtendingSelection:NO];
+    [self.table_view scrollRowToVisible:current_pos];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
