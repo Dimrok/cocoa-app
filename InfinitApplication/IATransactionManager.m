@@ -243,7 +243,7 @@
 
 - (NSArray*)transactionsForUser:(IAUser*)user
 {
-    NSMutableArray* transactions = [[NSMutableArray alloc] init];
+    NSMutableArray* transactions = [NSMutableArray array];
     for (IATransaction* transaction in _transactions)
     {
         if ([transaction.sender isEqual:user] ||
@@ -253,6 +253,34 @@
         }
     }
     return [NSArray arrayWithArray:transactions];
+}
+
+- (NSUInteger)activeTransactionsForUser:(IAUser*)user
+{
+    NSArray* transactions = [NSArray arrayWithArray:[self transactionsForUser:user]];
+    NSUInteger res = 0;
+    for (IATransaction* transaction in transactions)
+    {
+        if (transaction.is_active)
+            res++;
+    }
+    return res;
+}
+
+- (CGFloat)transactionsProgressForUser:(IAUser*)user
+{
+    NSArray* transactions = [NSArray arrayWithArray:[self transactionsForUser:user]];
+    CGFloat total = 0.0;
+    CGFloat transferred = 0.0;
+    for (IATransaction* transaction in transactions)
+    {
+        if (transaction.view_mode == TRANSACTION_VIEW_RUNNING)
+        {
+            total += transaction.total_size.doubleValue;
+            transferred += (transaction.progress * transaction.total_size.doubleValue);
+        }
+    }
+    return (transferred / total);
 }
 
 //- Gap Message Handling ---------------------------------------------------------------------------

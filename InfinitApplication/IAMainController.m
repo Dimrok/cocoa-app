@@ -22,6 +22,7 @@
     IAStatusBarIcon* _status_bar_icon;
     
     // View controllers
+    IAViewController* _current_view_controller;
     IAConversationViewController* _conversation_view_controller;
     IAGeneralSendController* _general_send_controller;
     IALoginViewController* _login_view_controller;
@@ -55,6 +56,7 @@
         _status_item.view = _status_bar_icon;
         
         _window_controller = [[IAWindowController alloc] initWithDelegate:self];
+        _current_view_controller = nil;
         
         _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
         _user_manager = [[IAUserManager alloc] initWithDelegate:self];
@@ -378,14 +380,25 @@ wantsReversedTransactionsForUser:(IAUser*)user
 
 - (NSArray*)notificationListWantsLastTransactions:(IANotificationListViewController*)sender
 {
-    // XXX Should return last transaction with all users
-    return _transaction_manager.transactions;
+    return [_transaction_manager latestTransactionPerUser];
 }
 
 - (void)notificationList:(IANotificationListViewController*)sender
           gotClickOnUser:(IAUser*)user
 {
     [self showConversationViewForUser:user];
+}
+
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
+     activeTransactionsForUser:(IAUser*)user
+{
+    return [_transaction_manager activeTransactionsForUser:user];
+}
+
+- (CGFloat)notificationList:(IANotificationListViewController*)sender
+transactionsProgressForUser:(IAUser*)user
+{
+    return [_transaction_manager transactionsProgressForUser:user];
 }
 
 //- Not Logged In View Protocol --------------------------------------------------------------------
@@ -434,13 +447,17 @@ wantsReversedTransactionsForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
           transactionAdded:(IATransaction*)transaction
 {
-    
+    if (_current_view_controller == nil)
+        return;
+    [_current_view_controller transactionAdded:transaction];
 }
 
 - (void)transactionManager:(IATransactionManager*)sender
         transactionUpdated:(IATransaction*)transaction
 {
-    
+    if (_current_view_controller == nil)
+        return;
+    [_current_view_controller transactionUpdated:transaction];
 }
 
 //- User Manager Protocol --------------------------------------------------------------------------
@@ -448,7 +465,9 @@ wantsReversedTransactionsForUser:(IAUser*)user
 - (void)userManager:(IAUserManager*)sender
     hasNewStatusFor:(IAUser*)user
 {
-    [_transaction_manager newUserStatusFor:user];
+    if (_conversation_view_controller == nil)
+        return;
+    [_current_view_controller userUpdated:user];
 }
 
 //- Window Controller Protocol ---------------------------------------------------------------------
@@ -456,6 +475,12 @@ wantsReversedTransactionsForUser:(IAUser*)user
 - (void)windowControllerWantsCloseWindow:(IAWindowController*)sender
 {
     [self closeNotificationWindow];
+}
+
+- (void)windowController:(IAWindowController*)sender
+hasCurrentViewController:(IAViewController*)controller
+{
+    _current_view_controller = controller;
 }
 
 @end

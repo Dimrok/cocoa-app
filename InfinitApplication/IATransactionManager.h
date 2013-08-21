@@ -23,6 +23,8 @@
 - (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
 
 - (NSArray*)transactionsForUser:(IAUser*)user;
+- (NSUInteger)activeTransactionsForUser:(IAUser*)user;
+- (CGFloat)transactionsProgressForUser:(IAUser*)user;
 - (NSArray*)latestTransactionPerUser;
 
 - (void)sendFiles:(NSArray*)files
