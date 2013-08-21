@@ -45,6 +45,7 @@
 {
     if (!_send_view_open)
     {
+        [self cancelOpenFavourites];
         [self performSelector:@selector(showFavourites)
                    withObject:nil
                    afterDelay:0.5];
@@ -97,8 +98,10 @@
 - (void)showFavourites
 {
     if (_favourites_send_controller == nil)
+    {
         _favourites_send_controller = [[IAFavouritesSendViewController alloc] initWithDelegate:self];
-    [_favourites_send_controller showFavourites];
+        [_favourites_send_controller showFavourites];
+    }
 }
 
 //- View Switching ---------------------------------------------------------------------------------

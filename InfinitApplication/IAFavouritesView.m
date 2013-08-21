@@ -25,6 +25,7 @@
         _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
         _mouse_in_favourite = NO;
         [self registerForDraggedTypes:_drag_types];
+        [self performSelector:@selector(dragLost) withObject:nil afterDelay:3.0];
     }
     return self;
 }

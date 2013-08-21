@@ -162,6 +162,8 @@
     
     [_window makeKeyAndOrderFront:nil];
     
+    [self addFavouriteSubViews];
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.1;
@@ -170,7 +172,6 @@
                         completionHandler:^
      {
          [_window setAlphaValue:1.0];
-         [self addFavouriteSubViews];
      }];
 }
 
