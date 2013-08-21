@@ -224,17 +224,18 @@ void on_error_callback(gap_Status errcode, char const* reason, uint32_t const tr
 - (gap_Status)login:(NSString*)email
            password:(NSString*)hash_password;
 {
+    [IAGap sendNotif:IA_GAP_EVENT_LOGIN_OPERATION withInfo:nil];
+    if ((gap_user_status_callback(_state, &on_user_status) != gap_ok) ||
+        (gap_transaction_callback(_state, &on_transaction) != gap_ok))
+        // XXX add error callback
+        //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
+    {
+        IALog(@"WARNING: Cannot set callbacks");
+    }
     gap_Status res = gap_login(_state, email.UTF8String, hash_password.UTF8String);
     if (res == gap_ok)
     {
-        [IAGap sendNotif:IA_GAP_EVENT_LOGIN_OPERATION withInfo:nil];
-        if ((gap_user_status_callback(_state, &on_user_status) != gap_ok) ||
-            (gap_transaction_callback(_state, &on_transaction) != gap_ok))
-            // XXX add error callback
-            //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
-        {
-            IALog(@"WARNING: Cannot set callbacks");
-        }
+        IALog(@"Login successful");
     }
     return res;
 }
@@ -571,7 +572,7 @@ static void on_user_status(uint32_t const user_id,
 
 static void on_transaction(uint32_t const transaction_id, TransferState status)
 {
-    assert(transaction_id != 0);
+    assert(transaction_id != gap_null());
     IALog(@">>> On transaction notif: %d", transaction_id);
     @try
     {
