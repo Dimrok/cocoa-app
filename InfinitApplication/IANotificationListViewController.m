@@ -40,7 +40,7 @@
                                                   options:(NSTrackingInVisibleRect |
                                                            NSTrackingActiveAlways |
                                                            NSTrackingMouseEnteredAndExited)
-                                                    owner:[(NSTableView*)self.superview delegate]
+                                                    owner:self
                                                  userInfo:dict];
 }
 
@@ -51,6 +51,35 @@
     if (![[self trackingAreas] containsObject:_tracking_area])
     {
         [self addTrackingArea:_tracking_area];
+    }
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+    // xxx Should find a cleaner way to do this
+    id superview = [self superview];
+    if (superview != nil && [superview isKindOfClass:[NSTableView class]])
+    {
+        if (self.window == [[NSApplication sharedApplication] keyWindow])
+        {
+            NSInteger row = [(NSTableView*)[self superview] rowForView:self];
+            [(NSTableView*)[self superview] selectRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                        byExtendingSelection:NO];
+        }
+    }
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+    // xxx Should find a cleaner way to do this
+    id superview = [self superview];
+    if (superview != nil && [superview isKindOfClass:[NSTableView class]])
+    {
+        if (self.window == [[NSApplication sharedApplication] keyWindow])
+        {
+            NSInteger row = [(NSTableView*)[self superview] rowForView:self];
+            [(NSTableView*)[self superview] deselectRow:row];
+        }
     }
 }
 
@@ -291,36 +320,6 @@
         user = transaction.sender;
     
     [_delegate notificationList:self gotClickOnUser:user];
-}
-
-//- Mouse Hovering ---------------------------------------------------------------------------------
-
-- (void)mouseEntered:(NSEvent*)theEvent
-{
-    NSDictionary* dict = theEvent.userData;
-    if (![[dict objectForKey:@"row"] isKindOfClass:[IANotificationListRowView class]])
-        return;
-    IANotificationListRowView* row = [dict objectForKey:@"row"];
-    [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.table_view rowForView:row]]
-                 byExtendingSelection:NO];
-    if ([self.table_view rowForView:row] == 0)
-        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-    else
-        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
-}
-
-- (void)mouseExited:(NSEvent*)theEvent
-{
-    [self.table_view deselectAll:self];
-    self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
-}
-
-- (void)mouseMoved:(NSEvent*)theEvent
-{
-}
-
-- (void)cursorUpdate:(NSEvent*)event
-{
 }
 
 //- Button Handling --------------------------------------------------------------------------------
