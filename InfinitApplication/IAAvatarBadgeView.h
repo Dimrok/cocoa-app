@@ -10,4 +10,6 @@
 
 @interface IAAvatarBadgeView : NSView
 
+- (void)setBadgeCount:(NSUInteger)count;
+
 @end
