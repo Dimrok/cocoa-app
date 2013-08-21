@@ -76,7 +76,7 @@
                                                                 andLoadIfNeeded:YES]
                                    ofDiameter:self.bounds.size.width
                         withBorderOfThickness:3.0
-                                     inColour:IA_RGBA_COLOUR(255.0, 255.0, 255.0, 0.5)
+                                     inColour:IA_GREY_COLOUR(206.0)
                             andShadowOfRadius:2.0];
     }
     [avatar drawInRect:self.bounds
