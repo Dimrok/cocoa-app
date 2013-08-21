@@ -105,4 +105,24 @@
     return new_size.height - old_size.height;
 }
 
+//- Transaction and user update handling -----------------------------------------------------------
+
+- (void)transactionAdded:(IATransaction*)transaction
+{
+    // Do nothing by default, overload if needed
+    return;
+}
+
+- (void)transactionUpdated:(IATransaction*)transaction
+{
+    // Do nothing by default, overload if needed
+    return;
+}
+
+- (void)userUpdated:(IAUser*)user
+{
+    // Do nothing by default, overload if needed
+    return;
+}
+
 @end
