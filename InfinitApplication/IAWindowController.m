@@ -90,6 +90,8 @@
          [self.window orderOut:nil];
          [self.window close];
          [_current_controller.view removeFromSuperview];
+         [_delegate windowController:self
+            hasCurrentViewController:nil];
      }];
 }
 
@@ -173,7 +175,9 @@
          
          [self.window.contentView addConstraints:_view_constraints];
          _current_controller = nil;
-         _current_controller = new_controller;         
+         _current_controller = new_controller;
+         [_delegate windowController:self
+            hasCurrentViewController:_current_controller];
      }];
 }
 
@@ -207,6 +211,8 @@
     [self.window.contentView addConstraints:_view_constraints];
     
     [self openWindow];
+    [_delegate windowController:self
+       hasCurrentViewController:_current_controller];
     
 }
 

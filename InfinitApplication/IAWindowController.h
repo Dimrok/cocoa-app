@@ -35,4 +35,7 @@
 
 - (void)windowControllerWantsCloseWindow:(IAWindowController*)sender;
 
+- (void)windowController:(IAWindowController*)sender
+hasCurrentViewController:(IAViewController*)controller;
+
 @end
