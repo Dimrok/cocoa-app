@@ -10,4 +10,7 @@
 
 @interface IANotificationAvatarView : NSView
 
+@property (nonatomic, setter = setAvatar:) NSImage* avatar;
+@property (nonatomic, setter = setTotalProgress:) CGFloat total_progress;
+
 @end
