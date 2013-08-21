@@ -9,10 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 #import "IAAvatarBadgeView.h"
+#import "IANotificationAvatarView.h"
 
 @interface IANotificationListCellView : NSTableCellView
 
-@property (nonatomic, strong) IBOutlet NSImageView* avatar;
+@property (nonatomic, strong) IBOutlet IANotificationAvatarView* avatar_view;
 @property (nonatomic, strong) IBOutlet IAAvatarBadgeView* badge_view;
 @property (nonatomic, strong) IBOutlet NSTextField* file_name;
 @property (nonatomic, strong) IBOutlet NSTextField* time_since_change;
@@ -24,5 +25,7 @@
           andRunningTransactions:(NSUInteger)count;
 
 - (void)setBadgeCount:(NSUInteger)count;
+
+- (void)setTotalTransactionProgress:(CGFloat)progress;
 
 @end

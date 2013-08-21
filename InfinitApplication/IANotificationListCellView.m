@@ -15,7 +15,23 @@
 {
     IATransaction* _transaction;
     IAUser* _user;
+    CGFloat _progress_angle;
+    CGFloat _progress_start_angle;
+    NSBezierPath* _last_progress;
 }
+
+//- Initialisation ---------------------------------------------------------------------------------
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+    if (self = [super initWithFrame:frameRect])
+    {
+        _progress_start_angle = 45.0;
+        _progress_angle = _progress_start_angle;
+    }
+    return self;
+}
+
 
 //- Setup Cell -------------------------------------------------------------------------------------
 
@@ -66,13 +82,12 @@
 
 - (void)setAvatarForUser:(IAUser*)user
 {
-    NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
+    [self.avatar_view setAvatar:[IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
                                                                      andLoadIfNeeded:YES]
                                         ofDiameter:50.0
                              withBorderOfThickness:3.0
                                           inColour:IA_GREY_COLOUR(255.0)
-                                 andShadowOfRadius:1.0];
-    self.avatar.image = avatar;
+                                 andShadowOfRadius:1.0]];
 }
 
 - (void)setTransferStatusIcon:(IATransactionViewMode)view_mode
@@ -103,6 +118,11 @@
     [self.badge_view setBadgeCount:count];
 }
 
+- (void)setTotalTransactionProgress:(CGFloat)progress
+{
+    [self.avatar_view setTotalProgress:progress];
+}
+
 - (void)setupCellWithTransaction:(IATransaction*)transaction
           andRunningTransactions:(NSUInteger)count
 {
@@ -123,6 +143,16 @@
     [self setLastActionTime:transaction.last_edit_timestamp];
     [self setTransferStatusIcon:transaction.view_mode];
     [self setBadgeCount:count];
+
+    // XXX set real progress
+    [self setTotalTransactionProgress:0.5];
+}
+
+//- Avatar Mouse Handling --------------------------------------------------------------------------
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+    IALog(@"xxx mouse entered avatar");
 }
 
 @end
