@@ -146,7 +146,7 @@
     
     CGFloat _row_height;
     NSInteger _max_rows_shown;
-    NSArray* _transaction_list;
+    NSMutableArray* _transaction_list;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -156,9 +156,10 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
-        _row_height = 72.0;
+        _row_height = 75.0;
         _max_rows_shown = 5;
-        _transaction_list = [_delegate notificationListWantsLastTransactions:self];
+        _transaction_list = [NSMutableArray
+                             arrayWithArray:[_delegate notificationListWantsLastTransactions:self]];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -174,7 +175,9 @@
 
 - (BOOL)closeOnFocusLost
 {
-    return YES;
+    // XXX debugging
+//    return YES;
+    return NO;
 }
 
 - (void)awakeFromNib
@@ -201,7 +204,7 @@
                                                        self.content_height_constraint.constant)];
         _transaction_list = nil; // XXX work around for crash on calling layout
         [self.view layoutSubtreeIfNeeded];
-        [self transactionsUpdated];
+        [self generateTable];
     }
 }
 
@@ -224,26 +227,27 @@
 
 //- Table Functions --------------------------------------------------------------------------------
 
-- (void)transactionsUpdated
+- (void)generateTable
 {
-     _transaction_list = [_delegate notificationListWantsLastTransactions:self];
-    [self updateTable];
+     _transaction_list = [NSMutableArray
+                          arrayWithArray:[_delegate notificationListWantsLastTransactions:self]];
+    [self resizeContentView];
+    [self.table_view reloadData];
 }
 
-- (void)updateTable
+- (void)resizeContentView
 {
     CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.25;
          [self.content_height_constraint.animator
-                    setConstant:(self.content_height_constraint.constant + y_diff)];
-         [self.view layoutSubtreeIfNeeded];
+          setConstant:(self.content_height_constraint.constant + y_diff)];
      }
                         completionHandler:^
      {
+         [self.view layoutSubtreeIfNeeded];
      }];
-    [self.table_view reloadData];
 }
 
 - (CGFloat)tableHeight
@@ -357,6 +361,83 @@
 
 //- Transaction Handling ---------------------------------------------------------------------------
 
+- (void)transactionAdded:(IATransaction*)transaction
+{
+    if ([_transaction_list containsObject:transaction])
+        return;
+    
+    BOOL found = NO;
+    
+    if (_transaction_list.count == 0)
+    {
+        [self.no_data_message setHidden:YES];
+        [self resizeContentView];
+    }
+    
+    // Check for exisiting transaction for this user
+    for (IATransaction* existing_transaction in _transaction_list)
+    {
+        if ([existing_transaction.other_user isEqual:transaction.other_user])
+        {
+            [self.table_view beginUpdates];
+            NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
+            [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                                   withAnimation:NSTableViewAnimationSlideLeft];
+            [_transaction_list removeObject:existing_transaction];
+            [_transaction_list insertObject:transaction
+                                    atIndex:0];
+            [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                                   withAnimation:NSTableViewAnimationSlideDown];
+            [self.table_view endUpdates];
+            found = YES;
+            break;
+        }
+    }
+    if (!found) // Got transaction with new user
+    {
+        [self.table_view beginUpdates];
+        [_transaction_list insertObject:transaction
+                                atIndex:0];
+        [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                               withAnimation:NSTableViewAnimationSlideDown];
+        [self.table_view endUpdates];
+    }
+    
+    if (self.content_height_constraint.constant < _max_rows_shown * _row_height)
+        [self resizeContentView];
+}
+
+- (void)transactionUpdated:(IATransaction*)transaction
+{    
+    for (IATransaction* existing_transaction in _transaction_list)
+    {
+        if (existing_transaction.transaction_id == transaction.transaction_id)
+        {
+            NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
+            if (row != 0) // Move the transaction to the top
+            {
+                [self.table_view beginUpdates];
+                [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                                       withAnimation:NSTableViewAnimationSlideRight];
+                [_transaction_list removeObjectAtIndex:row];
+                [_transaction_list insertObject:transaction
+                                        atIndex:0];
+                [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                                       withAnimation:NSTableViewAnimationSlideDown];
+                [self.table_view endUpdates];
+            }
+            else
+            {
+                [self.table_view beginUpdates];
+                [_transaction_list replaceObjectAtIndex:0 withObject:transaction];
+                [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                           columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+                [self.table_view endUpdates];
+            }
+            break;
+        }
+    }
+}
 
 //- Notification List Cell View Protocol -----------------------------------------------------------
 
