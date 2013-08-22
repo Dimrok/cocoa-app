@@ -443,6 +443,23 @@
     }
 }
 
+//- User Handling ----------------------------------------------------------------------------------
+
+- (void)userUpdated:(IAUser*)user
+{
+    for (IATransaction* transaction in _transaction_list)
+    {
+        if (transaction.other_user == user)
+        {
+            NSUInteger row = [_transaction_list indexOfObject:transaction];
+            [self.table_view beginUpdates];
+            [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                       columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+            [self.table_view endUpdates];
+        }
+    }
+}
+
 //- Notification List Cell View Protocol -----------------------------------------------------------
 
 - (void)notificationListCellAcceptClicked:(IANotificationListCellView*)sender
