@@ -283,6 +283,17 @@
     return res;
 }
 
+- (BOOL)transferringTransactionsForUser:(IAUser*)user
+{
+    NSArray* transactions = [NSArray arrayWithArray:[self transactionsForUser:user]];
+    for (IATransaction* transaction in transactions)
+    {
+        if (transaction.view_mode == TRANSACTION_VIEW_RUNNING)
+            return YES;
+    }
+    return NO;
+}
+
 - (CGFloat)transactionsProgressForUser:(IAUser*)user
 {
     NSArray* transactions = [NSArray arrayWithArray:[self transactionsForUser:user]];

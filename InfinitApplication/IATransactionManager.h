@@ -24,6 +24,7 @@
 
 - (NSArray*)transactionsForUser:(IAUser*)user;
 - (NSUInteger)activeTransactionsForUser:(IAUser*)user;
+- (BOOL)transferringTransactionsForUser:(IAUser*)user;
 - (CGFloat)transactionsProgressForUser:(IAUser*)user;
 - (NSArray*)latestTransactionPerUser;
 
