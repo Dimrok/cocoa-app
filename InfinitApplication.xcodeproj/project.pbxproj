@@ -90,6 +90,10 @@
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
+		83929BB717C60FD60009292D /* icon-reject.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB517C60FD60009292D /* icon-reject.png */; };
+		83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB617C60FD60009292D /* icon-reject@2x.png */; };
+		83929BC017C618CD0009292D /* icon-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBE17C618CD0009292D /* icon-accept.png */; };
+		83929BC117C618CD0009292D /* icon-accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBF17C618CD0009292D /* icon-accept@2x.png */; };
 		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
 		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
 		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
@@ -394,6 +398,10 @@
 		836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendViewController.h; sourceTree = "<group>"; };
 		836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAdvancedSendViewController.m; sourceTree = "<group>"; };
 		836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAAdvancedSendViewController.xib; sourceTree = "<group>"; };
+		83929BB517C60FD60009292D /* icon-reject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject.png"; sourceTree = "<group>"; };
+		83929BB617C60FD60009292D /* icon-reject@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject@2x.png"; sourceTree = "<group>"; };
+		83929BBE17C618CD0009292D /* icon-accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-accept.png"; sourceTree = "<group>"; };
+		83929BBF17C618CD0009292D /* icon-accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-accept@2x.png"; sourceTree = "<group>"; };
 		8398834D17A6A5AE009409B3 /* IAAutoStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAutoStartup.h; sourceTree = "<group>"; };
 		8398834E17A6A5AE009409B3 /* IAAutoStartup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAutoStartup.m; sourceTree = "<group>"; };
 		8398835017A6A5BB009409B3 /* IAKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAKeychainManager.h; sourceTree = "<group>"; };
@@ -927,6 +935,10 @@
 		83D4205F17C4DC5800D4E168 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83929BBE17C618CD0009292D /* icon-accept.png */,
+				83929BBF17C618CD0009292D /* icon-accept@2x.png */,
+				83929BB517C60FD60009292D /* icon-reject.png */,
+				83929BB617C60FD60009292D /* icon-reject@2x.png */,
 				83D4206F17C4DE9800D4E168 /* badge.png */,
 				83D4207017C4DE9800D4E168 /* badge@2x.png */,
 				83D4206017C4DC6700D4E168 /* icon-check.png */,
@@ -1160,6 +1172,10 @@
 				83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */,
 				83D4207117C4DE9800D4E168 /* badge.png in Resources */,
 				83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */,
+				83929BB717C60FD60009292D /* icon-reject.png in Resources */,
+				83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */,
+				83929BC017C618CD0009292D /* icon-accept.png in Resources */,
+				83929BC117C618CD0009292D /* icon-accept@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
