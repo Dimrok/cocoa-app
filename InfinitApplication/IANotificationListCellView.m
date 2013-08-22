@@ -13,11 +13,11 @@
 
 @implementation IANotificationListCellView
 {
-    IATransaction* _transaction;
     IAUser* _user;
     CGFloat _progress_angle;
     CGFloat _progress_start_angle;
     NSBezierPath* _last_progress;
+    id<IANotificationListCellProtocol> _delegate;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -123,9 +123,34 @@
     [self.avatar_view setTotalProgress:progress];
 }
 
-- (void)setupCellWithTransaction:(IATransaction*)transaction
-          andRunningTransactions:(NSUInteger)count
+- (void)setAvatarMode:(IATransactionViewMode)view_mode
+           whenFromMe:(BOOL)from_me
 {
+    switch (view_mode)
+    {            
+        case TRANSACTION_VIEW_WAITING_ACCEPT:
+            if (from_me)
+                [self.avatar_view setViewMode:AVATAR_VIEW_CANCEL];
+            else
+                [self.avatar_view setViewMode:AVATAR_VIEW_ACCEPT_REJECT];
+            break;
+            
+        case TRANSACTION_VIEW_RUNNING:
+            [self.avatar_view setViewMode:AVATAR_VIEW_CANCEL];
+            break;
+            
+        default:
+            [self.avatar_view setViewMode:AVATAR_VIEW_NORMAL];
+            break;
+    }
+}
+
+- (void)setupCellWithTransaction:(IATransaction*)transaction
+         withRunningTransactions:(NSUInteger)count
+                     andProgress:(CGFloat)progress
+                     andDelegate:(id<IANotificationListCellProtocol>)delegate
+{
+    _delegate = delegate;
     if (transaction.from_me)
         _user = transaction.recipient;
     else
@@ -138,21 +163,38 @@
     else
         [self.user_online setHidden:YES];
     
-    _transaction = transaction;
     [self setFileName:transaction.first_filename];
     [self setLastActionTime:transaction.last_edit_timestamp];
     [self setTransferStatusIcon:transaction.view_mode];
+    
+    // Configure avatar view
     [self setBadgeCount:count];
-
-    // XXX set real progress
-    [self setTotalTransactionProgress:0.5];
+    [self setTotalTransactionProgress:progress];
+    [self setAvatarMode:transaction.view_mode
+             whenFromMe:transaction.from_me];
+    [self.avatar_view setDelegate:self];
 }
 
-//- Avatar Mouse Handling --------------------------------------------------------------------------
+//- Avatar Protocol --------------------------------------------------------------------------------
 
-- (void)mouseEntered:(NSEvent*)theEvent
+- (void)avatarHadAcceptClicked:(IANotificationAvatarView*)sender
 {
-    IALog(@"xxx mouse entered avatar");
+    [_delegate notificationListCellAcceptClicked:self];
+}
+
+- (void)avatarHadCancelClicked:(IANotificationAvatarView*)sender
+{
+    [_delegate notificationListCellCancelClicked:self];
+}
+
+- (void)avatarHadRejectClicked:(IANotificationAvatarView*)sender
+{
+    [_delegate notificationListCellRejectClicked:self];
+}
+
+- (void)avatarClicked:(IANotificationAvatarView*)sender
+{
+    [_delegate notificationListCellAvatarClicked:self];
 }
 
 @end

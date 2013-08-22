@@ -11,10 +11,11 @@
 #import <Cocoa/Cocoa.h>
 
 #import "IAViewController.h"
+#import "IANotificationListCellView.h"
 
 @protocol IANotificationListViewProtocol;
 
-@interface IANotificationListViewController : IAViewController
+@interface IANotificationListViewController : IAViewController <IANotificationListCellProtocol>
 
 @property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
 @property (nonatomic, strong) IBOutlet NSButton* gear_button;
@@ -46,5 +47,14 @@
      activeTransactionsForUser:(IAUser*)user;
 - (CGFloat)notificationList:(IANotificationListViewController*)sender
 transactionsProgressForUser:(IAUser*)user;
+
+- (void)notificationList:(IANotificationListViewController*)sender
+       acceptTransaction:(IATransaction*)transaction;
+
+- (void)notificationList:(IANotificationListViewController*)sender
+       cancelTransaction:(IATransaction*)transaction;
+
+- (void)notificationList:(IANotificationListViewController*)sender
+       rejectTransaction:(IATransaction*)transaction;
 
 @end

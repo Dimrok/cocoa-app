@@ -13,10 +13,9 @@
 @private
     CGFloat _start_angle;
     NSTrackingArea* _tracking_area;
+    NSInteger _tracking_options;
+    BOOL _mouse_over;
 }
-
-@synthesize avatar = _avatar;
-@synthesize total_progress = _total_progress;
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -26,6 +25,11 @@
     {
         _total_progress = 0.0;
         _start_angle = 45.0;
+        _mouse_over = NO;
+        _tracking_options = (NSTrackingInVisibleRect |
+                            NSTrackingActiveAlways |
+                            NSTrackingMouseEnteredAndExited|
+                            NSTrackingMouseMoved);
     }
     
     return self;
@@ -38,16 +42,15 @@
 
 //- Mouse Handling ---------------------------------------------------------------------------------
 
+
 - (void)ensureTrackingArea
 {
     if (_tracking_area == nil)
     {
         _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
-                                                      options:(NSTrackingInVisibleRect |
-                                                               NSTrackingActiveAlways |
-                                                               NSTrackingMouseEnteredAndExited)
-                                                        owner:(NSTableCellView*)self.superview
-                                                     userInfo:nil];
+                                                             options:_tracking_options
+                                                               owner:self
+                                                            userInfo:nil];
     }
 }
 
@@ -55,7 +58,7 @@
 {
     [super updateTrackingAreas];
     [self ensureTrackingArea];
-    if (![[self trackingAreas] containsObject:_tracking_area])
+    if (![self.trackingAreas containsObject:_tracking_area])
     {
         [self addTrackingArea:_tracking_area];
     }
@@ -92,6 +95,84 @@
         [progress stroke];
     }
     
+    // Handle drawing of button overlays only if the mouse is in the avatar
+    
+    if (_mouse_over == NO)
+        return;
+    
+    // This assumes that the border around the avatar image is 2px and the shadow is 1px
+    CGFloat border = 3.0;
+    NSRect avatar_image_frame = NSMakeRect(avatar_frame.origin.x + border,
+                                           avatar_frame.origin.y + border,
+                                           avatar_frame.size.width - 2.0 * border,
+                                           avatar_frame.size.height - 2.0 * border);
+    
+    if (_mode == AVATAR_VIEW_CANCEL)
+    {
+        NSBezierPath* cancel_mask = [NSBezierPath bezierPathWithOvalInRect:avatar_image_frame];
+        [IA_RGBA_COLOUR(255.0, 0.0, 0.0, 0.75) set];
+        [cancel_mask fill];
+        
+        NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
+        NSRect cancel_image_frame = NSMakeRect(avatar_image_frame.size.width / 2.0 + border,
+                                               avatar_image_frame.size.height / 2.0,
+                                               cancel_icon.size.width,
+                                               cancel_icon.size.height);
+        [cancel_icon drawInRect:cancel_image_frame
+                       fromRect:NSZeroRect
+                      operation:NSCompositeSourceOver
+                       fraction:1.0];
+    }
+    else if (_mode == AVATAR_VIEW_ACCEPT_REJECT)
+    {
+        NSPoint centre = NSMakePoint(self.frame.size.width / 2.0, self.frame.size.height / 2.0);
+        // Accept
+        NSBezierPath* accept_mask = [NSBezierPath bezierPath];
+        [accept_mask moveToPoint:NSMakePoint(centre.x - avatar_image_frame.size.width / 2.0,
+                                             centre.y)];
+        [accept_mask appendBezierPathWithArcWithCenter:centre
+                                                radius:(avatar_image_frame.size.width / 2.0)
+                                            startAngle:180.0
+                                              endAngle:0.0
+                                             clockwise:YES];
+        [accept_mask closePath];
+        [IA_RGBA_COLOUR(0.0, 255.0, 0.0, 0.75) set];
+        [accept_mask fill];
+        
+        NSImage* accept_icon = [IAFunctions imageNamed:@"icon-accept"];
+        NSRect accept_image_frame = NSMakeRect(centre.x - accept_icon.size.width / 2.0,
+                                               centre.y + border,
+                                               accept_icon.size.width,
+                                               accept_icon.size.height);
+        [accept_icon drawInRect:accept_image_frame
+                       fromRect:NSZeroRect
+                      operation:NSCompositeSourceOver
+                       fraction:1.0];
+        
+        
+        
+        // Reject
+        NSBezierPath* reject_mask = [NSBezierPath bezierPath];
+        [reject_mask moveToPoint:NSMakePoint(centre.x - avatar_image_frame.size.width / 2.0,
+                                             centre.y)];
+        [reject_mask appendBezierPathWithArcWithCenter:centre
+                                                radius:(avatar_image_frame.size.width / 2.0)
+                                            startAngle:180.0
+                                              endAngle:0.0];
+        [reject_mask closePath];
+        [IA_RGBA_COLOUR(255.0, 0.0, 0.0, 0.75) set];
+        [reject_mask fill];
+        
+        NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
+        NSRect cancel_image_frame = NSMakeRect(centre.x - cancel_icon.size.width / 2.0,
+                                               centre.y - avatar_image_frame.size.height / 2.0 + border,
+                                               cancel_icon.size.width,
+                                               cancel_icon.size.height);
+        [cancel_icon drawInRect:cancel_image_frame
+                       fromRect:NSZeroRect
+                      operation:NSCompositeSourceOver
+                       fraction:1.0];
+    }
 }
 
 //- Outside functions ------------------------------------------------------------------------------
@@ -102,11 +183,61 @@
     [self setNeedsDisplay:YES];
 }
 
+- (void)setDelegate:(id<IANotificationAvatarProtocol>)delegate
+{
+    _delegate = delegate;
+}
 
 - (void)setTotalProgress:(CGFloat)progress
 {
     _total_progress = progress;
     [self setNeedsDisplay:YES];
+}
+
+- (void)setViewMode:(IANotificationAvatarMode)mode
+{
+    _mode = mode;
+    [self setNeedsDisplay:YES];
+}
+
+//- Mouse Handling ---------------------------------------------------------------------------------
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+    _mouse_over = YES;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+    _mouse_over = NO;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)mouseDown:(NSEvent*)theEvent
+{
+    // Determine button click based on where the click was on the avatar and the current mode
+    NSPoint click_location = [self convertPoint:theEvent.locationInWindow fromView:nil];
+    switch (_mode)
+    {
+        case AVATAR_VIEW_NORMAL:
+            [_delegate avatarClicked:self];
+            return;
+            
+        case AVATAR_VIEW_ACCEPT_REJECT:
+            if (click_location.y > self.frame.size.height / 2.0)
+                [_delegate avatarHadAcceptClicked:self];
+            else if (click_location.y < self.frame.size.height / 2.0)
+                [_delegate avatarHadRejectClicked:self];
+            return;
+        
+        case AVATAR_VIEW_CANCEL:
+            [_delegate avatarHadCancelClicked:self];
+            return;
+            
+        default:
+            return;
+    }
 }
 
 @end

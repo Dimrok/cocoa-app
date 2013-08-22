@@ -401,6 +401,24 @@ transactionsProgressForUser:(IAUser*)user
     return [_transaction_manager transactionsProgressForUser:user];
 }
 
+- (void)notificationList:(IANotificationListViewController*)sender
+       acceptTransaction:(IATransaction*)transaction
+{
+    [_transaction_manager acceptTransaction:transaction];
+}
+
+- (void)notificationList:(IANotificationListViewController*)sender
+       cancelTransaction:(IATransaction*)transaction
+{
+    [_transaction_manager cancelTransaction:transaction];
+}
+
+- (void)notificationList:(IANotificationListViewController*)sender
+       rejectTransaction:(IATransaction*)transaction
+{
+    [_transaction_manager rejectTransaction:transaction];
+}
+
 //- Not Logged In View Protocol --------------------------------------------------------------------
 
 - (void)notLoggedInViewControllerWantsOpenLoginWindow:(IANotLoggedInViewController*)sender

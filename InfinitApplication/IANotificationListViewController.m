@@ -11,7 +11,6 @@
 #import <Gap/version.h>
 
 #import "IAAvatarManager.h"
-#import "IANotificationListCellView.h"
 
 @interface IANotificationListViewController ()
 
@@ -289,8 +288,11 @@
     else
         user = transaction.sender;
     [cell setupCellWithTransaction:transaction
-            andRunningTransactions:[_delegate notificationList:self
-                                     activeTransactionsForUser:user]];
+            withRunningTransactions:[_delegate notificationList:self
+                                     activeTransactionsForUser:user]
+                       andProgress:[_delegate notificationList:self
+                                   transactionsProgressForUser:user]
+                       andDelegate:self];
     return cell;
 }
 
@@ -354,5 +356,52 @@
 }
 
 //- Transaction Handling ---------------------------------------------------------------------------
+
+
+//- Notification List Cell View Protocol -----------------------------------------------------------
+
+- (void)notificationListCellAcceptClicked:(IANotificationListCellView*)sender
+{
+    NSInteger row = [self.table_view rowForView:sender];
+    if (row < 0 || row >= _transaction_list.count)
+        return;
+    [_delegate notificationList:self
+              acceptTransaction:[_transaction_list objectAtIndex:row]];
+}
+
+- (void)notificationListCellCancelClicked:(IANotificationListCellView*)sender
+{
+    NSInteger row = [self.table_view rowForView:sender];
+    if (row < 0 || row >= _transaction_list.count)
+        return;
+    [_delegate notificationList:self
+              cancelTransaction:[_transaction_list objectAtIndex:row]];
+}
+
+- (void)notificationListCellRejectClicked:(IANotificationListCellView*)sender
+{
+    NSInteger row = [self.table_view rowForView:sender];
+    if (row < 0 || row >= _transaction_list.count)
+        return;
+    [_delegate notificationList:self
+              rejectTransaction:[_transaction_list objectAtIndex:row]];
+}
+
+- (void)notificationListCellAvatarClicked:(IANotificationListCellView*)sender
+{
+    NSInteger row = [self.table_view rowForView:sender];
+    if (row < 0 || row >= _transaction_list.count)
+        return;
+    
+    IATransaction* transaction = [_transaction_list objectAtIndex:row];
+    IAUser* user;
+    
+    if (transaction.from_me)
+        user = transaction.recipient;
+    else
+        user = transaction.sender;
+    
+    [_delegate notificationList:self gotClickOnUser:user];
+}
 
 @end

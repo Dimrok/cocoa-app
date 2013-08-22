@@ -30,6 +30,10 @@
 - (void)sendFiles:(NSArray*)files
           toUsers:(NSArray*)users;
 
+- (void)acceptTransaction:(IATransaction*)transaction;
+- (void)cancelTransaction:(IATransaction*)transaction;
+- (void)rejectTransaction:(IATransaction*)transaction;
+
 @end
 
 

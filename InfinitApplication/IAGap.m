@@ -307,8 +307,8 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSNumber*)transaction_sender_id:(NSNumber*)transaction_id
 {
-    return [NSNumber numberWithUnsignedInt:(gap_transaction_sender_id(_state,
-                                            transaction_id.unsignedIntValue))];
+    return [NSNumber numberWithUnsignedInt:gap_transaction_sender_id(_state,
+                                                                transaction_id.unsignedIntValue)];
 }
 
 - (NSString*)transaction_sender_fullname:(NSNumber*)transaction_id
@@ -508,14 +508,19 @@ return [NSString stringWithUTF8String:str]; \
     return ret;
 }
 
-- (gap_Status)accept_transaction:(NSNumber*)transaction_id
+- (void)accept_transaction:(NSNumber*)transaction_id
 {
-    return gap_accept_transaction(_state, transaction_id.unsignedIntValue);
+    gap_accept_transaction(_state, transaction_id.unsignedIntValue);
 }
 
-- (gap_Status)cancel_transaction:(NSNumber*)transaction_id
+- (void)cancel_transaction:(NSNumber*)transaction_id
 {
-    return gap_cancel_transaction(_state, transaction_id.unsignedIntValue);
+    gap_cancel_transaction(_state, transaction_id.unsignedIntValue);
+}
+
+- (void)reject_transaction:(NSNumber*)transaction_id
+{
+    gap_reject_transaction(_state, transaction_id.unsignedIntValue);
 }
 
 - (gap_Status)set_output_dir:(NSString*)output_path

@@ -67,18 +67,19 @@
 {
     NSDictionary* dict = notification.userInfo;
     NSNumber* transaction_id = [dict objectForKey:@"transaction_id"];
-    if (transaction_id == nil)
+    if (transaction_id.unsignedIntegerValue == gap_null())
     {
         IALog(@"%@ WARNING: transaction from notification failed, no id", self);
         return nil;
     }
     NSNumber* status = [dict objectForKey:@"status"];
-    if (status == nil)
+    if (status.intValue == 0)
     {
         IALog(@"%@ WARNING: transaction from notification failed, no status", self);
         return nil;
     }
-    IATransaction* transaction = [IATransaction transactionWithId:transaction_id andStatus:status];
+    IATransaction* transaction = [IATransaction transactionWithId:transaction_id
+                                                        andStatus:status];
     return transaction;
 }
 
@@ -96,6 +97,21 @@
             [[IAGapState instance] sendFiles:files toEmail:user]; // XXX returns transaction id
         }
     }
+}
+
+- (void)acceptTransaction:(IATransaction*)transaction
+{
+    [[IAGapState instance] acceptTransaction:transaction];
+}
+
+- (void)cancelTransaction:(IATransaction*)transaction
+{
+    [[IAGapState instance] cancelTransaction:transaction];
+}
+
+- (void)rejectTransaction:(IATransaction*)transaction
+{
+    [[IAGapState instance] rejectTransaction:transaction];
 }
 
 //- Transaction View Mode Handling -----------------------------------------------------------------
