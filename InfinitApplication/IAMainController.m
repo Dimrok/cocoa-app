@@ -395,6 +395,12 @@ wantsReversedTransactionsForUser:(IAUser*)user
     return [_transaction_manager activeTransactionsForUser:user];
 }
 
+- (BOOL)notificationList:(IANotificationListViewController*)sender
+transferringTransactionsForUser:(IAUser*)user
+{
+    return [_transaction_manager transferringTransactionsForUser:user];
+}
+
 - (CGFloat)notificationList:(IANotificationListViewController*)sender
 transactionsProgressForUser:(IAUser*)user
 {
