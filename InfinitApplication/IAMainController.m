@@ -483,7 +483,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)userManager:(IAUserManager*)sender
     hasNewStatusFor:(IAUser*)user
 {
-    if (_conversation_view_controller == nil)
+    if (_current_view_controller == nil)
         return;
     [_current_view_controller userUpdated:user];
 }
