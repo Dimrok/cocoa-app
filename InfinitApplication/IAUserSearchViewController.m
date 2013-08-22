@@ -94,8 +94,10 @@
         if (self.window == [[NSApplication sharedApplication] keyWindow])
         {
             NSInteger row = [(NSTableView*)[self superview] rowForView:self];
+            [(NSTableView*)[self superview] beginUpdates];
             [(NSTableView*)[self superview] selectRowIndexes:[NSIndexSet indexSetWithIndex:row]
                                         byExtendingSelection:NO];
+            [(NSTableView*)[self superview] endUpdates];
         }
     }
 }
@@ -109,7 +111,9 @@
         if (self.window == [[NSApplication sharedApplication] keyWindow])
         {
             NSInteger row = [(NSTableView*)[self superview] rowForView:self];
+            [(NSTableView*)[self superview] beginUpdates];
             [(NSTableView*)[self superview] deselectRow:row];
+            [(NSTableView*)[self superview] endUpdates];
         }
     }
 }
