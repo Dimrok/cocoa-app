@@ -95,11 +95,6 @@
         [progress stroke];
     }
     
-    // Handle drawing of button overlays only if the mouse is in the avatar
-    
-    if (_mouse_over == NO)
-        return;
-    
     // This assumes that the border around the avatar image is 2px and the shadow is 1px
     CGFloat border = 3.0;
     NSRect avatar_image_frame = NSMakeRect(avatar_frame.origin.x + border,
@@ -107,23 +102,7 @@
                                            avatar_frame.size.width - 2.0 * border,
                                            avatar_frame.size.height - 2.0 * border);
     
-    if (_mode == AVATAR_VIEW_CANCEL)
-    {
-        NSBezierPath* cancel_mask = [NSBezierPath bezierPathWithOvalInRect:avatar_image_frame];
-        [IA_RGBA_COLOUR(255.0, 0.0, 0.0, 0.75) set];
-        [cancel_mask fill];
-        
-        NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
-        NSRect cancel_image_frame = NSMakeRect(avatar_image_frame.size.width / 2.0 + border,
-                                               avatar_image_frame.size.height / 2.0,
-                                               cancel_icon.size.width,
-                                               cancel_icon.size.height);
-        [cancel_icon drawInRect:cancel_image_frame
-                       fromRect:NSZeroRect
-                      operation:NSCompositeSourceOver
-                       fraction:1.0];
-    }
-    else if (_mode == AVATAR_VIEW_ACCEPT_REJECT)
+    if (_mode == AVATAR_VIEW_ACCEPT_REJECT)
     {
         NSPoint centre = NSMakePoint(self.frame.size.width / 2.0, self.frame.size.height / 2.0);
         // Accept
@@ -166,6 +145,23 @@
         NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
         NSRect cancel_image_frame = NSMakeRect(centre.x - cancel_icon.size.width / 2.0,
                                                centre.y - avatar_image_frame.size.height / 2.0 + border,
+                                               cancel_icon.size.width,
+                                               cancel_icon.size.height);
+        [cancel_icon drawInRect:cancel_image_frame
+                       fromRect:NSZeroRect
+                      operation:NSCompositeSourceOver
+                       fraction:1.0];
+    }
+    
+    if (_mode == AVATAR_VIEW_CANCEL && _mouse_over)
+    {
+        NSBezierPath* cancel_mask = [NSBezierPath bezierPathWithOvalInRect:avatar_image_frame];
+        [IA_RGBA_COLOUR(255.0, 0.0, 0.0, 0.75) set];
+        [cancel_mask fill];
+        
+        NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
+        NSRect cancel_image_frame = NSMakeRect(avatar_image_frame.size.width / 2.0 + border,
+                                               avatar_image_frame.size.height / 2.0,
                                                cancel_icon.size.width,
                                                cancel_icon.size.height);
         [cancel_icon drawInRect:cancel_image_frame
