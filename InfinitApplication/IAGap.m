@@ -372,6 +372,11 @@ return [NSString stringWithUTF8String:str]; \
     return gap_transaction_status(_state, transaction_id.unsignedIntValue);
 }
 
+- (NSString*)transaction_message:(NSNumber*)transaction_id
+{
+    RETURN_CSTRING(gap_transaction_message(_state, transaction_id.unsignedIntValue));
+}
+
 - (float)transaction_progress:(NSNumber*)transaction_id
 {
     return gap_transaction_progress(_state, transaction_id.unsignedIntValue);
@@ -474,6 +479,7 @@ return [NSString stringWithUTF8String:str]; \
 
 - (uint32_t)send_files_to_user:(NSNumber*)recipient_id
                           files:(NSArray*)files
+                      messaage:(NSString*)message
 {
 
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
@@ -485,13 +491,17 @@ return [NSString stringWithUTF8String:str]; \
         cfiles[i++] = [file UTF8String];
         IALog(@"Sending %@ to %@", file, recipient_id);
     }
-    uint32_t ret = gap_send_files(_state, recipient_id.unsignedIntValue, cfiles);
+    uint32_t ret = gap_send_files(_state,
+                                  recipient_id.unsignedIntValue,
+                                  cfiles,
+                                  message.UTF8String);
     free(cfiles);
     return ret;
 }
 
 - (uint32_t)send_files_by_email:(NSString*)recipient_email
-                           files:(NSArray*)files
+                          files:(NSArray*)files
+                        message:(NSString*)message
 {
     
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
@@ -503,7 +513,10 @@ return [NSString stringWithUTF8String:str]; \
         cfiles[i++] = [file UTF8String];
         IALog(@"Sending %@ to %@", file, recipient_email);
     }
-    uint32_t ret = gap_send_files_by_email(_state, recipient_email.UTF8String, cfiles);
+    uint32_t ret = gap_send_files_by_email(_state,
+                                           recipient_email.UTF8String,
+                                           cfiles,
+                                           message.UTF8String);
     free(cfiles);
     return ret;
 }

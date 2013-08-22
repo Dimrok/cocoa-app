@@ -347,9 +347,11 @@ wantsReversedTransactionsForUser:(IAUser*)user
 - (void)sendController:(IAGeneralSendController*)sender
         wantsSendFiles:(NSArray*)files
                toUsers:(NSArray*)users
+           withMessage:(NSString*)message
 {
     [_transaction_manager sendFiles:files
-                            toUsers:users];
+                            toUsers:users
+                        withMessage:message];
 }
 
 //- Login Window Protocol --------------------------------------------------------------------------

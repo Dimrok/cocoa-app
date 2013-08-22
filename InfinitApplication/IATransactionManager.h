@@ -29,7 +29,8 @@
 - (NSArray*)latestTransactionPerUser;
 
 - (void)sendFiles:(NSArray*)files
-          toUsers:(NSArray*)users;
+          toUsers:(NSArray*)users
+      withMessage:(NSString*)message;
 
 - (void)acceptTransaction:(IATransaction*)transaction;
 - (void)cancelTransaction:(IATransaction*)transaction;

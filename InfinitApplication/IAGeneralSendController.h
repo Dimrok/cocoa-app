@@ -41,6 +41,7 @@
 
 - (void)sendController:(IAGeneralSendController*)sender
         wantsSendFiles:(NSArray*)files
-               toUsers:(NSArray*)users;
+               toUsers:(NSArray*)users
+           withMessage:(NSString*)message;
 
 @end

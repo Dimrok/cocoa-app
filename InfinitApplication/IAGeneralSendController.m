@@ -153,7 +153,8 @@
 {
     [_delegate sendController:self
                wantsSendFiles:files
-                      toUsers:users];
+                      toUsers:users
+                  withMessage:@""];
     [_delegate sendControllerWantsClose:self];
 }
 
@@ -199,10 +200,12 @@
 - (void)advancedSendView:(IAAdvancedSendViewController*)sender
           wantsSendFiles:(NSArray*)files
                  toUsers:(NSArray*)users
+             withMessage:(NSString*)message
 {
     [_delegate sendController:self
                wantsSendFiles:files
-                      toUsers:users];
+                      toUsers:users
+                  withMessage:message];
     [_delegate sendControllerWantsClose:self];
 }
 

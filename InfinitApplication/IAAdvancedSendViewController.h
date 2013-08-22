@@ -60,6 +60,7 @@ typedef enum IAAdvancedSendViewFocus
 
 - (void)advancedSendView:(IAAdvancedSendViewController*)sender
           wantsSendFiles:(NSArray*)files
-                 toUsers:(NSArray*)users;
+                 toUsers:(NSArray*)users
+             withMessage:(NSString*)message;
 
 @end

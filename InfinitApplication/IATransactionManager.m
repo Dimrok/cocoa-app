@@ -85,16 +85,17 @@
 
 - (void)sendFiles:(NSArray*)files
           toUsers:(NSArray*)users
+      withMessage:(NSString*)message
 {
     for (id user in users)
     {
         if ([user isKindOfClass:IAUser.class])
         {
-            [[IAGapState instance] sendFiles:files toUser:user]; // XXX returns transaction id
+            [[IAGapState instance] sendFiles:files toUser:user withMessage:message];
         }
         else if ([user isKindOfClass:NSString.class] && [IAFunctions stringIsValidEmail:user])
         {
-            [[IAGapState instance] sendFiles:files toEmail:user]; // XXX returns transaction id
+            [[IAGapState instance] sendFiles:files toEmail:user withMessage:message];
         }
     }
 }

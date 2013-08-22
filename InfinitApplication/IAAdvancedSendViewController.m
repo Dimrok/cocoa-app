@@ -141,6 +141,7 @@
     NSArray* _recipient_list;
     CGFloat _row_height;
     NSInteger _max_rows_shown;
+    NSString* _message;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -157,6 +158,7 @@
         _file_list = [_delegate advancedSendViewWantsFileList:self];
         _row_height = 40.0;
         _max_rows_shown = 5;
+        _message = @"";
         [self performSelector:@selector(setFocus:)
                    withObject:[NSNumber numberWithInt:focus]
                    afterDelay:0.3];
@@ -251,6 +253,7 @@
         return NO;
     
     _recipient_list = [NSArray arrayWithArray:recipients];
+    _message = self.note_field.stringValue;
     return YES;
 }
 
@@ -374,7 +377,8 @@ doCommandBySelector:(SEL)commandSelector
     {
         [_delegate advancedSendView:self
                      wantsSendFiles:_file_list
-                            toUsers:_recipient_list];
+                            toUsers:_recipient_list
+                        withMessage:_message];
     }
 }
 
