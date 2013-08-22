@@ -78,6 +78,8 @@
     if (!_window_is_open)
         return;
     
+    [_current_controller aboutToChangeView];
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.25;
@@ -137,6 +139,8 @@
     NSSize new_size = new_controller.view.frame.size;
     NSSize old_size = _current_controller.view.frame.size;
     CGFloat x_diff = new_size.width - old_size.width;
+    
+    [_current_controller aboutToChangeView];
                                  
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {

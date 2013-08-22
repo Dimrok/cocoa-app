@@ -33,6 +33,8 @@
 
 - (BOOL)closeOnFocusLost;
 
+- (void)aboutToChangeView;
+
 - (CGFloat)heightDiffOld:(NSSize)old_size new:(NSSize)new_size;
 
 - (void)transactionAdded:(IATransaction*)transaction;
