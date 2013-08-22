@@ -45,6 +45,10 @@
 
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
      activeTransactionsForUser:(IAUser*)user;
+
+- (BOOL)notificationList:(IANotificationListViewController*)sender
+transferringTransactionsForUser:(IAUser*)user;
+
 - (CGFloat)notificationList:(IANotificationListViewController*)sender
 transactionsProgressForUser:(IAUser*)user;
 

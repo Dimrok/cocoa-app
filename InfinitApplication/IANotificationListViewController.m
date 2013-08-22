@@ -151,6 +151,8 @@
     CGFloat _row_height;
     NSInteger _max_rows_shown;
     NSMutableArray* _transaction_list;
+    NSMutableArray* _rows_with_progress;
+    NSTimer* _progress_timer;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -219,13 +221,64 @@
     IAUser* user = [notification.userInfo objectForKey:@"user"];
     for (IATransaction* transaction in _transaction_list)
     {
-        if ((transaction.from_me && [transaction.recipient isEqual:user]) ||
-            (!transaction.from_me && [transaction.sender isEqual:user]))
+        if ([transaction.other_user isEqual:user])
         {
             [self.table_view reloadDataForRowIndexes:
                     [NSIndexSet indexSetWithIndex:[_transaction_list indexOfObject:transaction]]
                                     columnIndexes:[NSIndexSet indexSetWithIndex:0]];
         }
+    }
+}
+
+//- Progress Update Functions ----------------------------------------------------------------------
+
+- (void)setUpdatorRunning:(BOOL)is_running
+{
+	if (is_running && _progress_timer == nil)
+		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                           target:self
+                                                         selector:@selector(updateProgress:)
+                                                         userInfo:nil
+                                                          repeats:YES];
+	else if (!is_running && _progress_timer != nil)
+	{
+		[_progress_timer invalidate];
+		_progress_timer = nil;
+	}
+}
+
+- (void)updateListOfRowsWithProgress
+{
+    if (_rows_with_progress == nil)
+        _rows_with_progress = [NSMutableArray array];
+    else
+        [_rows_with_progress removeAllObjects];
+    
+    for (IATransaction* transaction in _transaction_list)
+    {
+        NSUInteger row = 0;
+        if ([_delegate notificationList:self
+        transferringTransactionsForUser:transaction.other_user])
+        {
+            [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
+        }
+        row++;
+    }
+    
+    if (_rows_with_progress.count > 0)
+        [self setUpdatorRunning:YES];
+    else
+        [self setUpdatorRunning:NO];
+}
+
+- (void)updateProgress:(NSNotification*)notification
+{
+    for (NSNumber* row in _rows_with_progress)
+    {
+        IANotificationListCellView* cell = [self.table_view viewAtColumn:0
+                                                                     row:row.unsignedIntegerValue
+                                                         makeIfNecessary:NO];
+        [cell setTotalTransactionProgress:[_delegate notificationList:self transactionsProgressForUser:[[_transaction_list objectAtIndex:row.unsignedIntegerValue] other_user]]];
     }
 }
 
@@ -236,6 +289,7 @@
      _transaction_list = [NSMutableArray
                           arrayWithArray:[_delegate notificationListWantsLastTransactions:self]];
     [self resizeContentView];
+    [self updateListOfRowsWithProgress];
     [self.table_view reloadData];
 }
 
@@ -295,6 +349,7 @@
         user = transaction.recipient;
     else
         user = transaction.sender;
+    
     [cell setupCellWithTransaction:transaction
             withRunningTransactions:[_delegate notificationList:self
                                      activeTransactionsForUser:user]
@@ -441,6 +496,7 @@
             break;
         }
     }
+    [self updateListOfRowsWithProgress];
 }
 
 //- User Handling ----------------------------------------------------------------------------------
@@ -504,6 +560,13 @@
         user = transaction.sender;
     
     [_delegate notificationList:self gotClickOnUser:user];
+}
+
+//- Change View Handling ---------------------------------------------------------------------------
+
+- (void)aboutToChangeView
+{
+    [self setUpdatorRunning:NO];
 }
 
 @end
