@@ -453,7 +453,7 @@ return [NSString stringWithUTF8String:str]; \
     return array;
 }
 
-- (NSArray*)favourites
+- (NSArray*)swaggers
 {
     UInt32* results = gap_swaggers(_state);
     if (results == NULL)
@@ -477,14 +477,14 @@ return [NSString stringWithUTF8String:str]; \
     return array;
 }
 
-- (uint32_t)send_files_to_user:(NSNumber*)recipient_id
+- (NSNumber*)send_files_to_user:(NSNumber*)recipient_id
                           files:(NSArray*)files
                       messaage:(NSString*)message
 {
 
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
     if (cfiles == NULL)
-        return gap_null();
+        return [NSNumber numberWithUnsignedInt:gap_null()];
     int i = 0;
     for (id file in files)
     {
@@ -496,17 +496,17 @@ return [NSString stringWithUTF8String:str]; \
                                   cfiles,
                                   message.UTF8String);
     free(cfiles);
-    return ret;
+    return [NSNumber numberWithUnsignedInt:ret];
 }
 
-- (uint32_t)send_files_by_email:(NSString*)recipient_email
+- (NSNumber*)send_files_by_email:(NSString*)recipient_email
                           files:(NSArray*)files
                         message:(NSString*)message
 {
     
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
     if (cfiles == NULL)
-        return gap_null();
+        return [NSNumber numberWithUnsignedInt:gap_null()];
     int i = 0;
     for (id file in files)
     {
@@ -518,22 +518,25 @@ return [NSString stringWithUTF8String:str]; \
                                            cfiles,
                                            message.UTF8String);
     free(cfiles);
-    return ret;
+    return [NSNumber numberWithUnsignedInt:ret];
 }
 
-- (void)accept_transaction:(NSNumber*)transaction_id
+- (NSNumber*)accept_transaction:(NSNumber*)transaction_id
 {
-    gap_accept_transaction(_state, transaction_id.unsignedIntValue);
+    return [NSNumber numberWithUnsignedInt:gap_accept_transaction(_state,
+                                                                  transaction_id.unsignedIntValue)];
 }
 
-- (void)cancel_transaction:(NSNumber*)transaction_id
+- (NSNumber*)cancel_transaction:(NSNumber*)transaction_id
 {
-    gap_cancel_transaction(_state, transaction_id.unsignedIntValue);
+    return [NSNumber numberWithUnsignedInt:gap_cancel_transaction(_state,
+                                                                  transaction_id.unsignedIntValue)];
 }
 
-- (void)reject_transaction:(NSNumber*)transaction_id
+- (NSNumber*)reject_transaction:(NSNumber*)transaction_id
 {
-    gap_reject_transaction(_state, transaction_id.unsignedIntValue);
+    return [NSNumber numberWithUnsignedInt:gap_reject_transaction(_state,
+                                                                  transaction_id.unsignedIntValue)];
 }
 
 - (gap_Status)set_output_dir:(NSString*)output_path
@@ -561,6 +564,28 @@ return [NSString stringWithUTF8String:str]; \
 - (NSInteger)remaining_invitations
 {
     return gap_self_remaining_invitations(_state);
+}
+
+- (NSArray*)self_favorites
+{
+    UInt32* favourites = gap_self_favorites(_state);
+    if (favourites == NULL)
+        return nil;
+    NSMutableArray* res = [NSMutableArray array];
+    for (UInt32* ptr = favourites; *ptr != 0; ++ptr)
+        [res addObject:[NSNumber numberWithUnsignedInt:*ptr]];
+    free(favourites);
+    return res;
+}
+
+- (gap_Status)favorite:(NSNumber*)user_id
+{
+    return gap_favorite(_state, user_id.unsignedIntValue);
+}
+
+- (gap_Status)unfavorite:(NSNumber*)user_id
+{
+    return gap_unfavorite(_state, user_id.unsignedIntValue);
 }
 
 @end

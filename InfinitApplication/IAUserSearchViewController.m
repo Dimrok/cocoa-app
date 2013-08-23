@@ -9,7 +9,6 @@
 #import "IAUserSearchViewController.h"
 
 #import "IAAvatarManager.h"
-#import "IASearchResultsCellView.h"
 
 @interface IAUserSearchViewController ()
 @end
@@ -560,8 +559,9 @@ displayStringForRepresentedObject:(id)representedObject
     
     IASearchResultsCellView* cell = [tableView makeViewWithIdentifier:@"user_search_cell"
                                                                 owner:self];
+    [cell setDelegate:self];
     [cell setUserFullname:user.fullname];
-    [cell setUserFavourite:NO]; // XXX check if user is favourite
+    [cell setUserFavourite:user.is_favourite];
     NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
                                                                      andLoadIfNeeded:YES]
                                         ofDiameter:25
@@ -622,9 +622,28 @@ displayStringForRepresentedObject:(id)representedObject
 }
 
 //- Button Handling --------------------------------------------------------------------------------
+
 - (IBAction)sendButtonClicked:(NSButton*)sender
 {
     [_delegate searchViewHadSendButtonClick:self];
+}
+
+//- Search Result Cell Protocol --------------------------------------------------------------------
+
+- (void)searchResultCellWantsAddFavourite:(IASearchResultsCellView*)sender
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    IAUser* user = [_search_results objectAtIndex:row];
+    [_delegate searchView:self
+        wantsAddFavourite:user];
+}
+
+- (void)searchResultCellWantsRemoveFavourite:(IASearchResultsCellView*)sender;
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    IAUser* user = [_search_results objectAtIndex:row];
+    [_delegate searchView:self
+     wantsRemoveFavourite:user];
 }
 
 @end

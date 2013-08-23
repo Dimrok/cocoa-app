@@ -42,4 +42,10 @@
         wantsSendFiles:(NSArray*)files
                toUsers:(NSArray*)users;
 
+- (void)simpleSendView:(IASimpleSendViewController*)sender
+     wantsAddFavourite:(IAUser*)user;
+
+- (void)simpleSendView:(IASimpleSendViewController*)sender
+  wantsRemoveFavourite:(IAUser*)user;
+
 @end

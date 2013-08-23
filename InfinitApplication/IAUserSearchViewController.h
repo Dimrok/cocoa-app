@@ -8,12 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "IASearchResultsCellView.h"
+
 @protocol IAUserSearchViewProtocol;
 
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
                                                           NSTableViewDelegate,
                                                           NSTextViewDelegate,
-                                                          NSTokenFieldDelegate>
+                                                          NSTokenFieldDelegate,
+                                                          IASearchResultsCellProtocol>
 
 @property (nonatomic, strong) IBOutlet NSView* search_box_view;
 @property (nonatomic, strong) IBOutlet NSTokenField* search_field;
@@ -45,5 +48,11 @@
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
 
 - (void)searchViewHadSendButtonClick:(IAUserSearchViewController*)sender;
+
+- (void)searchView:(IAUserSearchViewController*)sender
+ wantsAddFavourite:(IAUser*)user;
+
+- (void)searchView:(IAUserSearchViewController*)sender
+ wantsRemoveFavourite:(IAUser*)user;
 
 @end

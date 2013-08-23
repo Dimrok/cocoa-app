@@ -44,4 +44,12 @@
                toUsers:(NSArray*)users
            withMessage:(NSString*)message;
 
+- (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender;
+
+- (void)sendController:(IAGeneralSendController*)sender
+     wantsAddFavourite:(IAUser*)user;
+
+- (void)sendController:(IAGeneralSendController*)sender
+  wantsRemoveFavourite:(IAUser*)user;
+
 @end

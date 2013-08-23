@@ -11,11 +11,15 @@
 @implementation IASearchResultsCellView
 {
     BOOL _is_favourite;
+    id<IASearchResultsCellProtocol> _delegate;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
-
 //- Set Cell Values --------------------------------------------------------------------------------
+
+- (void)setDelegate:(id<IASearchResultsCellProtocol>)delegate
+{
+    _delegate = delegate;
+}
 
 - (void)setUserFullname:(NSString*)fullname
 {
@@ -37,9 +41,13 @@
 {
     _is_favourite = favourite;
     if (favourite)
+    {
         self.result_star.image = [IAFunctions imageNamed:@"icon-star-selected"];
+    }
     else
+    {
         self.result_star.image = [IAFunctions imageNamed:@"icon-star"];
+    }
 }
 
 //- Cell Actions -----------------------------------------------------------------------------------
@@ -48,16 +56,17 @@
 {
     if (sender != self.result_star)
         return;
-    // XXX make user a favourite
     if (_is_favourite)
     {
         _is_favourite = NO;
         self.result_star.image = [IAFunctions imageNamed:@"icon-star"];
+        [_delegate searchResultCellWantsRemoveFavourite:self];
     }
     else
     {
         _is_favourite = YES;
         self.result_star.image = [IAFunctions imageNamed:@"icon-star-selected"];
+        [_delegate searchResultCellWantsAddFavourite:self];
     }
 }
 

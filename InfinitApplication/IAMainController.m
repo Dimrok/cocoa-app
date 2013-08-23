@@ -354,6 +354,23 @@ wantsReversedTransactionsForUser:(IAUser*)user
                         withMessage:message];
 }
 
+- (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender
+{
+    return [_user_manager favouritesList];
+}
+
+- (void)sendController:(IAGeneralSendController*)sender
+     wantsAddFavourite:(IAUser*)user
+{
+    [_user_manager addFavourite:user];
+}
+
+- (void)sendController:(IAGeneralSendController*)sender
+  wantsRemoveFavourite:(IAUser*)user
+{
+    [_user_manager removeFavourite:user];
+}
+
 //- Login Window Protocol --------------------------------------------------------------------------
 
 - (void)tryLogin:(IALoginViewController*)sender

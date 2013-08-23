@@ -236,4 +236,18 @@
     }
 }
 
+- (void)searchView:(IAUserSearchViewController*)sender
+ wantsAddFavourite:(IAUser*)user
+{
+    [_delegate simpleSendView:self
+              wantsAddFavourite:user];
+}
+
+- (void)searchView:(IAUserSearchViewController*)sender
+wantsRemoveFavourite:(IAUser*)user
+{
+    [_delegate simpleSendView:self
+         wantsRemoveFavourite:user];
+}
+
 @end

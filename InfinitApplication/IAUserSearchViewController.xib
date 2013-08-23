@@ -55,7 +55,6 @@
 						<string key="NSFrame">{{1, 7}, {314, 17}}</string>
 						<reference key="NSSuperview" ref="420626012"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:1535</string>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="965619134">
@@ -100,7 +99,7 @@
 										<string key="NSFrameSize">{317, 119}</string>
 										<reference key="NSSuperview" ref="418167945"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="435265283"/>
+										<reference key="NSNextKeyView" ref="1008525745"/>
 										<string key="NSReuseIdentifierKey">_NS:13</string>
 										<string key="NSAntiCompressionPriority">{750, 200}</string>
 										<bool key="NSEnabled">YES</bool>
@@ -233,7 +232,7 @@
 						<string key="NSFrameSize">{317, 119}</string>
 						<reference key="NSSuperview" ref="420626012"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1008525745"/>
+						<reference key="NSNextKeyView" ref="418167945"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSHuggingPriority">{750, 750}</string>
 						<string key="NSAntiCompressionPriority">{750, 250}</string>
@@ -586,7 +585,7 @@
 						<reference key="source" ref="435265283"/>
 						<reference key="destination" ref="508109691"/>
 					</object>
-					<int key="connectionID">566</int>
+					<int key="connectionID">851</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1519,7 +1518,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">849</int>
+			<int key="maxID">851</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1534,6 +1533,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IASearchResultsCellView</string>
 					<string key="superclassName">NSTableCellView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">starClicked:</string>
+						<string key="NS.object.0">NSButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">starClicked:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">starClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="result_avatar">NSImageView</string>
 						<string key="result_fullname">NSTextField</string>

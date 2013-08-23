@@ -158,6 +158,20 @@
     [_delegate sendControllerWantsClose:self];
 }
 
+- (void)simpleSendView:(IASimpleSendViewController*)sender
+     wantsAddFavourite:(IAUser*)user
+{
+    [_delegate sendController:self
+            wantsAddFavourite:user];
+}
+
+- (void)simpleSendView:(IASimpleSendViewController*)sender
+  wantsRemoveFavourite:(IAUser*)user
+{
+    [_delegate sendController:self
+         wantsRemoveFavourite:user];
+}
+
 //- Advanced Send View Protocol --------------------------------------------------------------------
 
 - (void)advancedSendViewWantsCancel:(IAAdvancedSendViewController*)sender
@@ -209,15 +223,25 @@
     [_delegate sendControllerWantsClose:self];
 }
 
+- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+       wantsAddFavourite:(IAUser*)user
+{
+    [_delegate sendController:self
+            wantsAddFavourite:user];
+}
+
+- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+    wantsRemoveFavourite:(IAUser*)user
+{
+    [_delegate sendController:self
+         wantsRemoveFavourite:user];
+}
+
 //- Favourites Send View Protocol ------------------------------------------------------------------
 
 - (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender
 {
-    // XXX fake favourites
-    NSMutableArray* favourites = [NSMutableArray array];
-    for (NSInteger i = 0; i < 5; i++)
-        [favourites addObject:[IAUser userWithId:[NSNumber numberWithUnsignedInt:1]]];
-    return favourites;
+    return [_delegate sendControllerWantsFavourites:self];
 }
 
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender

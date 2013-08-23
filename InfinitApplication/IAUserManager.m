@@ -48,4 +48,22 @@
     [_delegate userManager:self hasNewStatusFor:user];
 }
 
+//- Favourites -------------------------------------------------------------------------------------
+
+- (NSArray*)favouritesList
+{
+    return [[IAGapState instance] getFavourites];
+}
+
+- (void)addFavourite:(IAUser*)user
+{
+    [[IAGapState instance] addFavourite:user];
+}
+
+- (void)removeFavourite:(IAUser*)user
+{
+    [[IAGapState instance] removeFavourite:user];
+}
+
+
 @end

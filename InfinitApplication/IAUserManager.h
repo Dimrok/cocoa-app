@@ -16,6 +16,12 @@
 
 - (id)initWithDelegate:(id<IAUserManagerProtocol>)delegate;
 
+- (NSArray*)favouritesList;
+
+- (void)addFavourite:(IAUser*)user;
+
+- (void)removeFavourite:(IAUser*)user;
+
 @end
 
 @protocol IAUserManagerProtocol <NSObject>

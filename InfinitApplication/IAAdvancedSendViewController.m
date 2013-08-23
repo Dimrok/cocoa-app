@@ -416,4 +416,18 @@ doCommandBySelector:(SEL)commandSelector
     IALog(@"%@ WARNING: User search view shouldn't have button shown", self);
 }
 
+- (void)searchView:(IAUserSearchViewController*)sender
+ wantsAddFavourite:(IAUser*)user
+{
+    [_delegate advancedSendView:self
+              wantsAddFavourite:user];
+}
+
+- (void)searchView:(IAUserSearchViewController*)sender
+wantsRemoveFavourite:(IAUser*)user
+{
+    [_delegate advancedSendView:self
+           wantsRemoveFavourite:user];
+}
+
 @end

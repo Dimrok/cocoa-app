@@ -63,4 +63,10 @@ typedef enum IAAdvancedSendViewFocus
                  toUsers:(NSArray*)users
              withMessage:(NSString*)message;
 
+- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+       wantsAddFavourite:(IAUser*)user;
+
+- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+    wantsRemoveFavourite:(IAUser*)user;
+
 @end
