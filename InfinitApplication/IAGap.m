@@ -342,9 +342,16 @@ return [NSString stringWithUTF8String:str]; \
     RETURN_CSTRING(gap_transaction_network_id(_state, transaction_id.unsignedIntValue));
 }
 
-- (NSString*)transaction_first_filename:(NSNumber*)transaction_id
+- (NSArray*)transaction_files:(NSNumber*)transaction_id
 {
-    RETURN_CSTRING(gap_transaction_first_filename(_state, transaction_id.unsignedIntValue));
+    char** files = gap_transaction_files(_state, transaction_id.unsignedIntValue);
+    if (files == NULL)
+        return nil;
+    NSMutableArray* res = [NSMutableArray array];
+    for (char** ptr = files; *ptr != NULL; ++ptr)
+        [res addObject:[NSString stringWithUTF8String:*ptr]];
+    free(files);
+    return res;
 }
 
 - (int)transaction_files_count:(NSNumber*)transaction_id

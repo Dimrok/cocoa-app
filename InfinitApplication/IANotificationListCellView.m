@@ -163,7 +163,15 @@
     else
         [self.user_online setHidden:YES];
     
-    [self setFileName:transaction.first_filename];
+    if (transaction.files_count == 1)
+    {
+        [self setFileName:transaction.files[0]];
+    }
+    else
+    {
+        [self setFileName:[NSString stringWithFormat:@"%ld %@", transaction.files_count,
+                           NSLocalizedString(@"files", @"files")]];
+    }
     [self setLastActionTime:transaction.last_edit_timestamp];
     [self setTransferStatusIcon:transaction.view_mode];
     
