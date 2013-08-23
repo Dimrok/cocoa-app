@@ -479,7 +479,7 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSNumber*)send_files_to_user:(NSNumber*)recipient_id
                           files:(NSArray*)files
-                      messaage:(NSString*)message
+                        message:(NSString*)message
 {
 
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
