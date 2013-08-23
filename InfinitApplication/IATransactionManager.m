@@ -91,28 +91,57 @@
     {
         if ([user isKindOfClass:IAUser.class])
         {
-            [[IAGapState instance] sendFiles:files toUser:user withMessage:message];
+            NSNumber* result = [[IAGapState instance] sendFiles:files
+                                                        toUser:user
+                                                   withMessage:message];
+            if (result.unsignedIntValue == gap_null())
+            {
+                // XXX Handle send to user error
+                IALog(@"%@ ERROR: Unable to send to user (%@): %@", self, user, files);
+            }
         }
         else if ([user isKindOfClass:NSString.class] && [IAFunctions stringIsValidEmail:user])
         {
-            [[IAGapState instance] sendFiles:files toEmail:user withMessage:message];
+            NSNumber* result = [[IAGapState instance] sendFiles:files
+                                                        toEmail:user
+                                                    withMessage:message];
+            if (result.unsignedIntValue == gap_null())
+            {
+                // XXX Handle send to email error
+                IALog(@"%@ ERROR: Unable to send to email (%@): %@", self, user, files);
+            }
         }
     }
 }
 
 - (void)acceptTransaction:(IATransaction*)transaction
 {
-    [[IAGapState instance] acceptTransaction:transaction];
+    NSNumber* result = [[IAGapState instance] acceptTransaction:transaction];
+    if (result.unsignedIntValue == gap_null())
+    {
+        // XXX Handle accept error
+        IALog(@"%@ ERROR: Unable to send to accept transaction: %@", self, transaction);
+    }
 }
 
 - (void)cancelTransaction:(IATransaction*)transaction
 {
-    [[IAGapState instance] cancelTransaction:transaction];
+    NSNumber* result = [[IAGapState instance] cancelTransaction:transaction];
+    if (result.unsignedIntValue == gap_null())
+    {
+        // XXX Handle cancel error
+        IALog(@"%@ ERROR: Unable to send to cancel transaction: %@", self, transaction);
+    }
 }
 
 - (void)rejectTransaction:(IATransaction*)transaction
 {
-    [[IAGapState instance] rejectTransaction:transaction];
+    NSNumber* result = [[IAGapState instance] rejectTransaction:transaction];
+    if (result.unsignedIntValue == gap_null())
+    {
+        // XXX Handle reject error
+        IALog(@"%@ ERROR: Unable to send to reject transaction: %@", self, transaction);
+    }
 }
 
 //- Transaction View Mode Handling -----------------------------------------------------------------
