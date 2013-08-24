@@ -301,12 +301,9 @@
 //- Conversation View Protocol ---------------------------------------------------------------------
 
 - (NSArray*)conversationView:(IAConversationViewController*)sender
-wantsReversedTransactionsForUser:(IAUser*)user
+    wantsTransactionsForUser:(IAUser*)user
 {
-    NSMutableArray* reversed_transactions = [NSMutableArray array];
-    for (IATransaction* transaction in [_transaction_manager transactionsForUser:user])
-         [reversed_transactions insertObject:transaction atIndex:0];
-    return reversed_transactions;
+    return [_transaction_manager transactionsForUser:user];
 }
 
 - (void)conversationView:(IAConversationViewController*)sender
@@ -496,6 +493,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
           transactionAdded:(IATransaction*)transaction
 {
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveTransactions]];
     if (_current_view_controller == nil)
         return;
     [_current_view_controller transactionAdded:transaction];
@@ -504,6 +502,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
         transactionUpdated:(IATransaction*)transaction
 {
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveTransactions]];
     if (_current_view_controller == nil)
         return;
     [_current_view_controller transactionUpdated:transaction];

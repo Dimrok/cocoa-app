@@ -256,6 +256,17 @@
 
 //- Transaction Lists ------------------------------------------------------------------------------
 
+- (NSUInteger)totalActiveTransactions
+{
+    NSUInteger res = 0;
+    for (IATransaction* transaction in _transactions)
+    {
+        if (transaction.is_active)
+            res++;
+    }
+    return res;
+}
+
 - (NSArray*)latestTransactionPerUser
 {
     NSSortDescriptor* descending = [NSSortDescriptor sortDescriptorWithKey:nil

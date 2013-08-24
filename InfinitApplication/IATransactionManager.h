@@ -23,9 +23,15 @@
 - (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
 
 - (NSArray*)transactionsForUser:(IAUser*)user;
+
 - (NSUInteger)activeTransactionsForUser:(IAUser*)user;
+
+- (NSUInteger)totalActiveTransactions;
+
 - (BOOL)transferringTransactionsForUser:(IAUser*)user;
+
 - (CGFloat)transactionsProgressForUser:(IAUser*)user;
+
 - (NSArray*)latestTransactionPerUser;
 
 - (void)sendFiles:(NSArray*)files
@@ -33,7 +39,9 @@
       withMessage:(NSString*)message;
 
 - (void)acceptTransaction:(IATransaction*)transaction;
+
 - (void)cancelTransaction:(IATransaction*)transaction;
+
 - (void)rejectTransaction:(IATransaction*)transaction;
 
 @end
