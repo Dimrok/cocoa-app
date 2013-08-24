@@ -473,6 +473,9 @@ transactionsProgressForUser:(IAUser*)user
 - (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files
 {
+    if (![[IAGapState instance] logged_in])
+        return;
+    
     if (_general_send_controller == nil)
         _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithFiles:files forUser:nil];
@@ -480,6 +483,9 @@ transactionsProgressForUser:(IAUser*)user
 
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
 {
+    if (![[IAGapState instance] logged_in])
+        return;
+    
     if (_general_send_controller == nil)
         _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller filesOverStatusBarIcon];
