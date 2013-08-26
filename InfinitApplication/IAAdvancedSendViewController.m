@@ -157,7 +157,7 @@
         [_user_search_controller setDelegate:self];
         _file_list = [_delegate advancedSendViewWantsFileList:self];
         _row_height = 40.0;
-        _max_rows_shown = 5;
+        _max_rows_shown = 3;
         _message = @"";
         [self performSelector:@selector(setFocus:)
                    withObject:[NSNumber numberWithInt:focus]
