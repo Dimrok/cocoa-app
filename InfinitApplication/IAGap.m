@@ -364,9 +364,14 @@ return [NSString stringWithUTF8String:str]; \
     return gap_transaction_total_size(_state, transaction_id.unsignedIntValue);
 }
 
-- (NSTimeInterval)transaction_timestamp:(NSNumber*)transaction_id
+- (NSTimeInterval)transaction_ctime:(NSNumber*)transaction_id
 {
-    return gap_transaction_timestamp(_state, transaction_id.unsignedIntValue);
+    return gap_transaction_ctime(_state, transaction_id.unsignedIntValue);
+}
+
+- (NSTimeInterval)transaction_mtime:(NSNumber*)transaction_id
+{
+    return gap_transaction_mtime(_state, transaction_id.unsignedIntValue);
 }
 
 - (int)transaction_is_directory:(NSNumber*)transaction_id
@@ -437,6 +442,12 @@ return [NSString stringWithUTF8String:str]; \
 - (NSString*)user_realid:(NSNumber*)user_id
 {
     RETURN_CSTRING(gap_user_realid(_state, user_id.unsignedIntValue));
+}
+
+- (BOOL)user_is_favorite:(NSNumber*)user_id
+{
+    BOOL res = gap_is_favorite(_state, user_id.unsignedIntValue);
+    return res;
 }
 
 - (gap_UserStatus)user_status:(NSNumber*)user_id
