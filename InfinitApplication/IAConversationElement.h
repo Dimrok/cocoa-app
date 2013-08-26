@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum __IAConversationCellViewMode
+{
+    CONVERSATION_CELL_VIEW_NORMAL = 0,
+    CONVERSATION_CELL_VIEW_FILE_LIST = 1,
+    CONVERSATION_CELL_VIEW_MESSAGE = 2,
+} IAConversationCellViewMode;
+
 @interface IAConversationElement : NSObject
+
+@property (nonatomic, readonly) BOOL on_left;
+@property (nonatomic, readonly) IATransaction* transaction;
+@property (nonatomic, readwrite) IAConversationCellViewMode mode;
+
+- (id)initWithTransaction:(IATransaction*)transaction;
+
 
 @end
