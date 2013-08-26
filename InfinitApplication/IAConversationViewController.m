@@ -8,9 +8,9 @@
 
 #import "IAConversationViewController.h"
 
-#import "IAConversationCellView.h"
-
 #import "IAAvatarManager.h"
+#import "IAConversationCellView.h"
+#import "IAConversationElement.h"
 
 @interface IAConversationViewController ()
 
@@ -70,8 +70,10 @@
     id<IAConversationViewProtocol> _delegate;
     
     IAUser* _user;
-    NSArray* _transaction_list;
+    NSMutableArray* _element_list;
+    NSMutableArray* _rows_with_progress;
     CGFloat _max_table_height;
+    NSTimer* _progress_timer;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -84,13 +86,11 @@
         _delegate = delegate;
         _user = user;
         _max_table_height = 290.0;
-        _transaction_list = [_delegate conversationView:self
-                       wantsReversedTransactionsForUser:_user];
+        [self getReversedTransactionList];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarReceivedCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
-        IALog(@"%@ %@", self, _transaction_list);
     }
     return self;
 }
@@ -102,7 +102,8 @@
 
 - (BOOL)closeOnFocusLost
 {
-    return YES;
+    // XXX debugging
+    return NO;
 }
 
 - (void)setupPersonView
@@ -128,6 +129,10 @@
     NSAttributedString* handle_str = [[NSAttributedString alloc] initWithString:_user.handle
                                                                      attributes:handle_attrs];
     self.user_handle.attributedStringValue = handle_str;
+    if (_user.status == gap_user_status_online)
+        [self.user_online setHidden:NO];
+    else
+        [self.user_online setHidden:YES];
 }
 
 - (void)awakeFromNib
@@ -142,9 +147,60 @@
     self.main_view.frame.size.height;
     [self.content_height_constraint.animator setConstant:(y_diff +
                                                           self.content_height_constraint.constant)];
-    _transaction_list = nil; // XXX work around for crash on calling layout
+    _element_list = nil; // XXX work around for crash on calling layout
     [self.view layoutSubtreeIfNeeded];
-    [self userTransactionsUpdated];
+    [self generateUserTransactionList];
+}
+
+//- Progress Update Functions ----------------------------------------------------------------------
+
+- (void)setUpdatorRunning:(BOOL)is_running
+{
+	if (is_running && _progress_timer == nil)
+		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                           target:self
+                                                         selector:@selector(updateProgress)
+                                                         userInfo:nil
+                                                          repeats:YES];
+	else if (!is_running && _progress_timer != nil)
+	{
+		[_progress_timer invalidate];
+		_progress_timer = nil;
+	}
+}
+
+- (void)updateListOfRowsWithProgress
+{
+    if (_rows_with_progress == nil)
+        _rows_with_progress = [NSMutableArray array];
+    else
+        [_rows_with_progress removeAllObjects];
+    
+    for (IAConversationElement* element in _element_list)
+    {
+        NSUInteger row = 0;
+        if (element.transaction.view_mode == TRANSACTION_VIEW_RUNNING)
+            [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row++]];
+    }
+    
+    if (_rows_with_progress.count > 0)
+        [self setUpdatorRunning:YES];
+    else
+    {
+        [self updateProgress]; // Update progress for case that transfer has finished
+        [self setUpdatorRunning:NO];
+    }
+}
+
+- (void)updateProgress
+{
+    for (NSNumber* row in _rows_with_progress)
+    {
+        IAConversationCellView* cell = [self.table_view viewAtColumn:0
+                                                                 row:row.unsignedIntegerValue
+                                                         makeIfNecessary:NO];
+        [cell updateProgress];
+    }
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -164,18 +220,38 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
-- (void)userTransactionsUpdated
+- (void)getReversedTransactionList
 {
-    _transaction_list = [_delegate conversationView:self
-                   wantsReversedTransactionsForUser:_user];
-    [self updateTable];
+    NSArray* user_transactions = [_delegate conversationView:self
+                                    wantsTransactionsForUser:_user];
+    NSSortDescriptor* ascending = [NSSortDescriptor sortDescriptorWithKey:nil
+                                                                ascending:YES
+                                                                 selector:@selector(compare:)];
+    NSArray* transaction_list;
+    transaction_list = [user_transactions sortedArrayUsingDescriptors:
+                        [NSArray arrayWithObject:ascending]];
+    _element_list = [NSMutableArray array];
+    for (IATransaction* transaction in transaction_list)
+    {
+        IAConversationElement* element = [[IAConversationElement alloc]
+                                          initWithTransaction:transaction];
+        [_element_list addObject:element];
+    }
+}
+
+- (void)generateUserTransactionList
+{
+    [self getReversedTransactionList];
+    [self.table_view reloadData];
+    [self resizeContentView];
+    [self.table_view scrollRowToVisible:(_element_list.count - 1)];
+    [self updateListOfRowsWithProgress];
 }
 
 //- Table Functions --------------------------------------------------------------------------------
 
-- (void)updateTable
+- (void)resizeContentView
 {
-    [self.table_view reloadData];
     CGFloat y_diff = [self tableHeight] - self.content_height_constraint.constant;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
@@ -192,7 +268,7 @@
 - (CGFloat)tableHeight
 {
     CGFloat total_height = 0.0;
-    for (NSInteger i = 0; i < _transaction_list.count; i++)
+    for (NSInteger i = 0; i < _element_list.count; i++)
     {
         total_height += [self tableView:self.table_view heightOfRow:i];
     }
@@ -202,36 +278,162 @@
         return total_height;
 }
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
-{
-    return _transaction_list.count;
-}
-
 - (CGFloat)tableView:(NSTableView*)tableView
          heightOfRow:(NSInteger)row
 {
-    IATransaction* transaction = [_transaction_list objectAtIndex:row];
-    return [IAConversationCellView cellHeight:transaction.view_mode];
+    return [IAConversationCellView heightOfCellWithElement:_element_list[row]];
 }
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
+{
+    return _element_list.count;
+}
+
+
+//    TRANSACTION_VIEW_NONE = 0,
+//    TRANSACTION_VIEW_PENDING_SEND = 1,
+//    TRANSACTION_VIEW_WAITING_REGISTER = 2,
+//    TRANSACTION_VIEW_WAITING_ONLINE = 3,
+//    TRANSACTION_VIEW_WAITING_ACCEPT = 4,
+//    TRANSACTION_VIEW_PREPARING = 5,
+//    TRANSACTION_VIEW_RUNNING = 6,
+//    TRANSACTION_VIEW_PAUSE_USER = 7,
+//    TRANSACTION_VIEW_PAUSE_AUTO = 8,
+//    TRANSACTION_VIEW_REJECTED = 9,
+//    TRANSACTION_VIEW_FINISHED = 10,
+//    TRANSACTION_VIEW_CANCELLED_SELF = 11,
+//    TRANSACTION_VIEW_CANCELLED_OTHER = 12,
+//    TRANSACTION_VIEW_FAILED = 13
 
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
 {
-    IATransaction* transaction = [_transaction_list objectAtIndex:row];
+    IAConversationElement* element = _element_list[row];
     IAConversationCellView* cell;
-    if (transaction.from_me)
-    {
-        // XXX make left cell
-        cell = [self.table_view makeViewWithIdentifier:@"conversation_cell_view_right"
-                                                 owner:self];
-    }
+    
+    NSString* left_right_select;
+    if (element.transaction.from_me)
+        left_right_select = @"right";
     else
+        left_right_select = @"left";
+    
+    switch (element.mode)
     {
-        cell = [self.table_view makeViewWithIdentifier:@"conversation_cell_view_right"
-                                                 owner:self];
+        case CONVERSATION_CELL_VIEW_MESSAGE:
+            cell = [self.table_view makeViewWithIdentifier:
+                    [NSString stringWithFormat:@"conversation_cell_message_%@", left_right_select]
+                                         owner:self];
+            break;
+        
+        case CONVERSATION_CELL_VIEW_FILE_LIST:
+            cell = [self.table_view makeViewWithIdentifier:
+                    [NSString stringWithFormat:@"conversation_cell_none_files_%@", left_right_select]
+                                         owner:self];
+            break;
+            
+        case CONVERSATION_CELL_VIEW_NORMAL:
+            switch (element.transaction.view_mode)
+            {
+                case TRANSACTION_VIEW_PENDING_SEND:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_none_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                
+                case TRANSACTION_VIEW_WAITING_REGISTER:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_message_cancel_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                    
+                case TRANSACTION_VIEW_WAITING_ONLINE:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_message_cancel_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+
+                case TRANSACTION_VIEW_WAITING_ACCEPT:
+                    if (element.transaction.from_me)
+                    {
+                        cell = [self.table_view makeViewWithIdentifier:
+                                [NSString stringWithFormat:@"conversation_cell_message_cancel_%@",
+                                 left_right_select]
+                                                                 owner:self];
+                    }
+                    else
+                    {
+                        cell = [self.table_view makeViewWithIdentifier:
+                                [NSString stringWithFormat:@"conversation_cell_buttons_%@",
+                                 left_right_select]
+                                                                 owner:self];
+                    }
+                    break;
+                
+                case TRANSACTION_VIEW_REJECTED:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_info_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                    
+                case TRANSACTION_VIEW_PREPARING:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_progress_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                
+                case TRANSACTION_VIEW_RUNNING:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_progress_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                    
+                case TRANSACTION_VIEW_FINISHED:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_none_%@",
+                                                       left_right_select]
+                                                             owner:self];
+                    break;
+                    
+                case TRANSACTION_VIEW_CANCELLED_SELF:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_info_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                    
+                case TRANSACTION_VIEW_CANCELLED_OTHER:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_info_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                    
+                case TRANSACTION_VIEW_FAILED:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_info_%@",
+                             left_right_select]
+                                                             owner:self];
+                    break;
+                    
+                default:
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_none_%@",
+                                                       left_right_select]
+                                                             owner:self];
+                    break;
+            }
+            
+        default:
+            break;
     }
-    [cell setupCellWithTransaction:transaction];
+    [cell setupCellWithElement:element];
     return cell;
 }
 
@@ -251,9 +453,160 @@
     [_delegate conversationViewWantsBack:self];
 }
 
+- (IBAction)collapseFilesClicked:(NSButton*)sender
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    
+    IAConversationElement* element = _element_list[row];
+    
+    element.mode = CONVERSATION_CELL_VIEW_NORMAL;
+    [self.table_view beginUpdates];
+    [_element_list replaceObjectAtIndex:row
+                             withObject:element];
+    [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                               columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+    [self.table_view endUpdates];
+    [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
+    [self resizeContentView];
+    [self.table_view scrollRowToVisible:row];
+}
+
+- (IBAction)expandFilesClicked:(NSButton*)sender
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    
+    IAConversationElement* element = _element_list[row];
+    if (element.transaction.files_count == 1)
+        return;
+    
+    element.mode = CONVERSATION_CELL_VIEW_FILE_LIST;
+    [self.table_view beginUpdates];
+    [_element_list replaceObjectAtIndex:row
+                             withObject:element];
+    [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                               columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+    [self.table_view endUpdates];
+    [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
+    [self resizeContentView];
+    [self.table_view scrollRowToVisible:row];
+}
+
 - (IBAction)transferButtonClicked:(NSButton*)sender
 {
     [_delegate conversationView:self wantsTransferForUser:_user];
+}
+
+- (IBAction)messageButtonClicked:(NSButton*)sender
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    
+    IAConversationElement* element = _element_list[row];
+    
+    if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
+        element.mode = CONVERSATION_CELL_VIEW_NORMAL;
+    else
+        element.mode = CONVERSATION_CELL_VIEW_MESSAGE;
+    
+    [self.table_view beginUpdates];
+    [_element_list replaceObjectAtIndex:row
+                             withObject:element];
+    [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                           withAnimation:NSTableViewAnimationSlideRight];
+    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                           withAnimation:NSTableViewAnimationSlideLeft];
+    [self.table_view scrollRowToVisible:row];
+    [self.table_view endUpdates];
+    [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
+    [self resizeContentView];
+}
+
+- (IBAction)acceptButtonClicked:(NSButton*)sender
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    IAConversationElement* element = _element_list[row];
+    [_delegate conversationView:self
+         wantsAcceptTransaction:element.transaction];
+}
+
+- (IBAction)cancelButtonClicked:(NSButton*)sender
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    IAConversationElement* element = _element_list[row];
+    [_delegate conversationView:self
+         wantsCancelTransaction:element.transaction];
+}
+
+- (IBAction)rejectButtonClicked:(NSButton*)sender
+{
+    NSUInteger row = [self.table_view rowForView:sender];
+    IAConversationElement* element = _element_list[row];
+    [_delegate conversationView:self
+         wantsRejectTransaction:element.transaction];
+}
+
+//- Transaction Callbacks --------------------------------------------------------------------------
+
+- (void)transactionAdded:(IATransaction*)transaction
+{
+    if (![transaction.other_user isEqual:_user])
+        return;
+    
+    IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
+    [self.table_view beginUpdates];
+    [_element_list addObject:element];
+    NSUInteger list_bottom = _element_list.count - 1;
+    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:list_bottom]
+                           withAnimation:NSTableViewAnimationSlideDown];
+    [self.table_view endUpdates];
+    [self.table_view scrollRowToVisible:list_bottom];
+    [self resizeContentView];
+
+    [self updateListOfRowsWithProgress];
+}
+
+- (void)transactionUpdated:(IATransaction*)transaction
+{
+    if (![transaction.other_user isEqual:_user])
+        return;
+    
+    NSUInteger count = 0;
+    for (IAConversationElement* element in _element_list)
+    {
+        if (element.transaction.transaction_id == transaction.transaction_id)
+            break;
+        count++;
+    }
+    IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
+    [self.table_view beginUpdates];
+    [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
+                           withAnimation:NSTableViewAnimationSlideLeft];
+    [_element_list removeObjectAtIndex:count];
+    [_element_list addObject:element];
+    NSUInteger list_bottom = _element_list.count - 1;
+    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:list_bottom]
+                           withAnimation:NSTableViewAnimationSlideRight];
+    [self.table_view endUpdates];
+    [self.table_view scrollRowToVisible:list_bottom];
+    [self resizeContentView];
+
+    [self updateListOfRowsWithProgress];
+}
+
+//- User callbacks ---------------------------------------------------------------------------------
+
+- (void)userUpdated:(IAUser*)user
+{
+    if (![user isEqual:_user])
+        return;
+    
+    [self setupPersonView];
+}
+
+//- Change View Handling ---------------------------------------------------------------------------
+
+- (void)aboutToChangeView
+{
+    [self setUpdatorRunning:NO];
 }
 
 @end

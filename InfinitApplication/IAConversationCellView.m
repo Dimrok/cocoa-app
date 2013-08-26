@@ -10,9 +10,6 @@
 
 //- Conversation Bubble View -----------------------------------------------------------------------
 
-@interface IAConversationBubbleView : NSView
-@end
-
 @implementation IAConversationBubbleView
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -40,62 +37,21 @@
 {
 @private
     IATransaction* _transaction;
-}
-
-//typedef enum __IATransactionViewMode
-//{
-//    TRANSACTION_VIEW_NONE = 0,
-//    TRANSACTION_VIEW_PENDING_SEND,
-//    TRANSACTION_VIEW_WAITING_REGISTER,
-//    TRANSACTION_VIEW_WAITING_ONLINE,
-//    TRANSACTION_VIEW_WAITING_ACCEPT,
-//    TRANSACTION_VIEW_PREPARING,
-//    TRANSACTION_VIEW_RUNNING,
-//    TRANSACTION_VIEW_PAUSE_USER,
-//    TRANSACTION_VIEW_PAUSE_AUTO,
-//    TRANSACTION_VIEW_FINISHED,
-//    TRANSACTION_VIEW_CANCELLED_SELF,
-//    TRANSACTION_VIEW_CANCELLED_OTHER,
-//    TRANSACTION_VIEW_FAILED
-//} IATransactionViewMode;
-
-+ (CGFloat)cellHeight:(IATransactionViewMode)view_mode
-{
-    CGFloat no_message = 62.0;
-    CGFloat message = no_message + 25.0;
-    CGFloat buttons = no_message + 35.0;
-    CGFloat progress = no_message + 35.0;
-    switch (view_mode) {
-        case TRANSACTION_VIEW_PENDING_SEND:
-            return buttons;
-        case TRANSACTION_VIEW_WAITING_REGISTER:
-            return message;
-        case TRANSACTION_VIEW_WAITING_ONLINE:
-            return buttons;
-        case TRANSACTION_VIEW_WAITING_ACCEPT:
-            return buttons;
-        case TRANSACTION_VIEW_PREPARING:
-            return progress;
-        case TRANSACTION_VIEW_RUNNING:
-            return progress;
-        case TRANSACTION_VIEW_PAUSE_USER:
-            return buttons;
-        case TRANSACTION_VIEW_PAUSE_AUTO:
-            return buttons;
-        case TRANSACTION_VIEW_FINISHED:
-            return no_message;
-        case TRANSACTION_VIEW_CANCELLED_SELF:
-            return message;
-        case TRANSACTION_VIEW_CANCELLED_OTHER:
-            return message;
-        case TRANSACTION_VIEW_FAILED:
-            return message;
-        default:
-            return no_message;
-    }
+    IAConversationBubbleView* _current_bubble;
+    BOOL _files_shown;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+    if (self = [super initWithFrame:frameRect])
+    {
+        _files_shown = NO;
+        self.progress_indicator = nil;
+    }
+    return self;
+}
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -106,67 +62,268 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
++ (CGFloat)heightOfCellWithElement:(IAConversationElement*)element
+{
+    CGFloat normal = 56.0;
+    CGFloat message = 70.0;
+    CGFloat file_list = normal;
+//    if (element.transaction.files_count > 3)
+//    {
+        file_list += 14.0 + 15.0 * 3;
+//    }
+//    else
+//    {
+//        file_list += 14.0 + 15.0 * element.transaction.files_count;
+//    }
+    CGFloat buttons = normal + 30.0;
+    CGFloat progress = normal + 30.0;
+    CGFloat error = normal + 25.0;
+    switch (element.mode)
+    {
+        case CONVERSATION_CELL_VIEW_MESSAGE:
+            return message;
+
+        case CONVERSATION_CELL_VIEW_FILE_LIST:
+            return file_list;
+            
+        case CONVERSATION_CELL_VIEW_NORMAL:
+            switch (element.transaction.view_mode)
+            {
+                case TRANSACTION_VIEW_PENDING_SEND:
+                    return buttons;
+                
+                case TRANSACTION_VIEW_WAITING_REGISTER:
+                    return buttons;
+                
+                case TRANSACTION_VIEW_WAITING_ONLINE:
+                    return buttons;
+                    
+                case TRANSACTION_VIEW_WAITING_ACCEPT:
+                    return buttons;
+                    
+                case TRANSACTION_VIEW_PREPARING:
+                    return progress;
+                
+                case TRANSACTION_VIEW_RUNNING:
+                    return progress;
+                    
+                case TRANSACTION_VIEW_PAUSE_AUTO:
+                    return buttons;
+                
+                case TRANSACTION_VIEW_PAUSE_USER:
+                    return buttons;
+                
+                case TRANSACTION_VIEW_REJECTED:
+                    return error;
+                    
+                case TRANSACTION_VIEW_CANCELLED_SELF:
+                    return error;
+                    
+                case TRANSACTION_VIEW_CANCELLED_OTHER:
+                    return error;
+                    
+                case TRANSACTION_VIEW_FINISHED:
+                    return normal;
+                    
+                case TRANSACTION_VIEW_FAILED:
+                    return error;
+                    
+                default:
+                    return normal;
+            }
+        
+        default:
+            return normal;
+    }
+}
+
+- (void)updateProgress
+{
+    if (self.progress_indicator == nil)
+        return;
+    
+    self.progress_indicator.doubleValue = _transaction.progress;
+}
 
 
 //- Drawing Functions ------------------------------------------------------------------------------
 
-- (void)setupCellWithTransaction:(IATransaction*)transaction
+//    TRANSACTION_VIEW_NONE = 0,
+//    TRANSACTION_VIEW_PENDING_SEND = 1,
+//    TRANSACTION_VIEW_WAITING_REGISTER = 2,
+//    TRANSACTION_VIEW_WAITING_ONLINE = 3,
+//    TRANSACTION_VIEW_WAITING_ACCEPT = 4,
+//    TRANSACTION_VIEW_PREPARING = 5,
+//    TRANSACTION_VIEW_RUNNING = 6,
+//    TRANSACTION_VIEW_PAUSE_USER = 7,
+//    TRANSACTION_VIEW_PAUSE_AUTO = 8,
+//    TRANSACTION_VIEW_REJECTED = 9,
+//    TRANSACTION_VIEW_FINISHED = 10,
+//    TRANSACTION_VIEW_CANCELLED_SELF = 11,
+//    TRANSACTION_VIEW_CANCELLED_OTHER = 12,
+//    TRANSACTION_VIEW_FAILED = 13
+
+- (void)setupCellWithElement:(IAConversationElement*)element
 {
-    _transaction = transaction;
+    _transaction = element.transaction;
+    
+    NSMutableParagraphStyle* text_align = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    if (element.on_left)
+        text_align.alignment = NSLeftTextAlignment;
+    else
+        text_align.alignment = NSRightTextAlignment;
+    
+    if (_transaction.message.length == 0)
+        [self.message_button setHidden:YES];
+    
     NSMutableParagraphStyle* date_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     date_para.alignment = NSCenterTextAlignment;
     NSDictionary* date_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                                paragraphStyle:date_para
                                                        colour:IA_GREY_COLOUR(206.0)
                                                        shadow:nil];
-    NSString* date_str = [IAFunctions relativeDateOf:transaction.timestamp];
+    NSString* date_str = [IAFunctions relativeDateOf:_transaction.last_edit_timestamp];
     self.date.attributedStringValue = [[NSAttributedString alloc] initWithString:date_str
                                                                       attributes:date_attrs];
     
-    NSMutableParagraphStyle* files_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    files_para.alignment = NSRightTextAlignment;
     NSDictionary* files_name_attrs = [IAFunctions
                                       textStyleWithFont:[NSFont systemFontOfSize:12.0]
-                                      paragraphStyle:files_para
+                                      paragraphStyle:text_align
                                       colour:IA_GREY_COLOUR(46.0)
                                       shadow:nil];
     NSString* files_str;
-    if (transaction.files_count > 1)
+    if (_transaction.files_count > 1)
     {
-        files_str = [NSString stringWithFormat:@"%ld %@", transaction.files_count,
+        files_str = [NSString stringWithFormat:@"%ld %@", _transaction.files_count,
                      NSLocalizedString(@"files", @"files")];
     }
     else
     {
         self.files_icon.image = [[NSWorkspace sharedWorkspace]
-                                 iconForFileType:[transaction.first_filename pathExtension]];
-        files_str = transaction.first_filename;
+                                 iconForFileType:[_transaction.files[0] pathExtension]];
+        files_str = _transaction.files[0];
     }
     self.files_label.attributedStringValue = [[NSAttributedString alloc]
                                               initWithString:files_str
                                               attributes:files_name_attrs];
+    
+    if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
+    {
+        self.message_text.stringValue = _transaction.message;
+        self.message_button.state = NSOnState;
+    }
+    else if (element.mode == CONVERSATION_CELL_VIEW_FILE_LIST)
+    {
+        // xxx
+    }
+    else if (element.mode == CONVERSATION_CELL_VIEW_NORMAL)
+    {
+        self.message_button.state = NSOffState;
+        NSDictionary* info_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                                   paragraphStyle:text_align
+                                                           colour:IA_GREY_COLOUR(56.0)
+                                                           shadow:nil];
+        
+        NSString* info;
+        
+        switch (_transaction.view_mode)
+        {
+            case TRANSACTION_VIEW_PENDING_SEND:
+                break;
+                
+            case TRANSACTION_VIEW_WAITING_REGISTER:
+                if (_transaction.from_me)
+                {
+                    info = NSLocalizedString(@"Waiting for user to register...",
+                                             @"waiting for user to register");
+                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                                   initWithString:info
+                                                                   attributes:info_attrs];
+                }
+                break;
+                
+            case TRANSACTION_VIEW_WAITING_ONLINE:
+                if (_transaction.from_me)
+                {
+                    info = NSLocalizedString(@"Waiting for user to be online...",
+                                             @"waiting for user to be online");
+                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                                   initWithString:info
+                                                                   attributes:info_attrs];
+                }
+                break;
+                
+            case TRANSACTION_VIEW_WAITING_ACCEPT:
+                if (_transaction.from_me)
+                {
+                    info = NSLocalizedString(@"Waiting for user to accept...",
+                                             @"waiting for user to accept");
+                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                                   initWithString:info
+                                                                   attributes:info_attrs];
+                }
+                break;
+                
+            case TRANSACTION_VIEW_REJECTED:
+                if (_transaction.from_me)
+                {
+                    info = NSLocalizedString(@"Send rejected", @"send rejected");
+                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                                   initWithString:info
+                                                                   attributes:info_attrs];
+                }
+                break;
+            
+            case TRANSACTION_VIEW_PREPARING:
+                [self.progress_indicator setIndeterminate:YES];
+                break;
+                
+            case TRANSACTION_VIEW_RUNNING:
+                [self.progress_indicator setIndeterminate:NO];
+                break;
+            
+            case TRANSACTION_VIEW_CANCELLED_OTHER:
+                break;
+                
+            case TRANSACTION_VIEW_CANCELLED_SELF:
+                break;
+                
+            case TRANSACTION_VIEW_FINISHED:
+                break;
+            
+            case TRANSACTION_VIEW_FAILED:
+                info = NSLocalizedString(@"Transfer failed", @"transfer failed");
+                self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                               initWithString:info
+                                                               attributes:info_attrs];
+                break;
+                            
+            default:
+                break;
+        }
+    }
 }
 
 //- Table Handling ---------------------------------------------------------------------------------
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
-    if (_transaction.files_count > 1)
-        return _transaction.files_count;
-    else
-        return 0;
+    return _transaction.files_count;
+}
+
+- (id)tableView:(NSTableView*)tableView
+objectValueForTableColumn:(NSTableColumn*)tableColumn
+            row:(NSInteger)row
+{
+    return _transaction.files[row];
+}
+
+- (CGFloat)tableView:(NSTableView*)tableView
+         heightOfRow:(NSInteger)row
+{
+    return 15.0;
 }
 
 //- Button Handling --------------------------------------------------------------------------------
-
-- (IBAction)messageButtonClicked:(NSButton*)sender
-{
-    
-}
-
-- (IBAction)expandFilesClicked:(NSButton*)sender
-{
-    
-}
 
 @end
