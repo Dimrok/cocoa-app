@@ -237,7 +237,7 @@
 	if (is_running && _progress_timer == nil)
 		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                            target:self
-                                                         selector:@selector(updateProgress:)
+                                                         selector:@selector(updateProgress)
                                                          userInfo:nil
                                                           repeats:YES];
 	else if (!is_running && _progress_timer != nil)
@@ -268,17 +268,21 @@
     if (_rows_with_progress.count > 0)
         [self setUpdatorRunning:YES];
     else
+    {
+        [self updateProgress]; // Update progress for case that transfer has finished
         [self setUpdatorRunning:NO];
+    }
 }
 
-- (void)updateProgress:(NSNotification*)notification
+- (void)updateProgress
 {
     for (NSNumber* row in _rows_with_progress)
     {
         IANotificationListCellView* cell = [self.table_view viewAtColumn:0
                                                                      row:row.unsignedIntegerValue
                                                          makeIfNecessary:NO];
-        [cell setTotalTransactionProgress:[_delegate notificationList:self transactionsProgressForUser:[[_transaction_list objectAtIndex:row.unsignedIntegerValue] other_user]]];
+        [cell setTotalTransactionProgress:[_delegate notificationList:self
+                                          transactionsProgressForUser:[[_transaction_list objectAtIndex:row.unsignedIntegerValue] other_user]]];
     }
 }
 
@@ -340,15 +344,11 @@
                  row:(NSInteger)row
 {
     IATransaction* transaction = [_transaction_list objectAtIndex:row];
-    if (transaction.transaction_id == 0)
+    if (transaction.transaction_id.unsignedIntValue == gap_null())
         return nil;
     IANotificationListCellView* cell = [tableView makeViewWithIdentifier:@"notification_cell"
                                                                    owner:self];
-    IAUser* user;
-    if (transaction.from_me)
-        user = transaction.recipient;
-    else
-        user = transaction.sender;
+    IAUser* user = transaction.other_user;
     
     [cell setupCellWithTransaction:transaction
             withRunningTransactions:[_delegate notificationList:self
@@ -420,6 +420,20 @@
 
 //- Transaction Handling ---------------------------------------------------------------------------
 
+// We only need to update the top badge on adding or updating transactions as the top row contains
+// the latest modification.
+- (void)updateTopBadge
+{
+    IANotificationListCellView* cell = [self.table_view viewAtColumn:0
+                                                                 row:0
+                                                     makeIfNecessary:NO];
+    if (cell == nil)
+        return;
+    
+    [cell setBadgeCount:[_delegate notificationList:self
+                          activeTransactionsForUser:[_transaction_list[0] other_user]]];
+}
+
 - (void)transactionAdded:(IATransaction*)transaction
 {
     if ([_transaction_list containsObject:transaction])
@@ -462,12 +476,14 @@
         [self.table_view endUpdates];
     }
     
+    [self updateTopBadge];
+    
     if (self.content_height_constraint.constant < _max_rows_shown * _row_height)
         [self resizeContentView];
 }
 
 - (void)transactionUpdated:(IATransaction*)transaction
-{    
+{
     for (IATransaction* existing_transaction in _transaction_list)
     {
         if (existing_transaction.transaction_id == transaction.transaction_id)
@@ -496,6 +512,7 @@
             break;
         }
     }
+    [self updateTopBadge];
     [self updateListOfRowsWithProgress];
 }
 
