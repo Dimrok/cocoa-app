@@ -190,7 +190,7 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _row_height = 45.0;
-        _max_rows_shown = 5;
+        _max_rows_shown = 3;
         _delegate = nil;
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarCallback:)
