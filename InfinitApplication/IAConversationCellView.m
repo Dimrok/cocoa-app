@@ -67,14 +67,14 @@
     CGFloat normal = 56.0;
     CGFloat message = 70.0;
     CGFloat file_list = normal;
-//    if (element.transaction.files_count > 3)
-//    {
+    if (element.transaction.files_count > 3)
+    {
         file_list += 14.0 + 15.0 * 3;
-//    }
-//    else
-//    {
-//        file_list += 14.0 + 15.0 * element.transaction.files_count;
-//    }
+    }
+    else
+    {
+        file_list += 14.0 + 15.0 * element.transaction.files_count;
+    }
     CGFloat buttons = normal + 30.0;
     CGFloat progress = normal + 30.0;
     CGFloat error = normal + 25.0;
@@ -139,29 +139,11 @@
 
 - (void)updateProgress
 {
-    if (self.progress_indicator == nil)
-        return;
-    
     self.progress_indicator.doubleValue = _transaction.progress;
 }
 
 
 //- Drawing Functions ------------------------------------------------------------------------------
-
-//    TRANSACTION_VIEW_NONE = 0,
-//    TRANSACTION_VIEW_PENDING_SEND = 1,
-//    TRANSACTION_VIEW_WAITING_REGISTER = 2,
-//    TRANSACTION_VIEW_WAITING_ONLINE = 3,
-//    TRANSACTION_VIEW_WAITING_ACCEPT = 4,
-//    TRANSACTION_VIEW_PREPARING = 5,
-//    TRANSACTION_VIEW_RUNNING = 6,
-//    TRANSACTION_VIEW_PAUSE_USER = 7,
-//    TRANSACTION_VIEW_PAUSE_AUTO = 8,
-//    TRANSACTION_VIEW_REJECTED = 9,
-//    TRANSACTION_VIEW_FINISHED = 10,
-//    TRANSACTION_VIEW_CANCELLED_SELF = 11,
-//    TRANSACTION_VIEW_CANCELLED_OTHER = 12,
-//    TRANSACTION_VIEW_FAILED = 13
 
 - (void)setupCellWithElement:(IAConversationElement*)element
 {
@@ -214,7 +196,7 @@
     }
     else if (element.mode == CONVERSATION_CELL_VIEW_FILE_LIST)
     {
-        // xxx
+        // Do nothing
     }
     else if (element.mode == CONVERSATION_CELL_VIEW_NORMAL)
     {
@@ -283,12 +265,21 @@
                 break;
             
             case TRANSACTION_VIEW_CANCELLED_OTHER:
+                info = NSLocalizedString(@"Transaction cancelled", @"transaction cancelled");
+                self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                               initWithString:info
+                                                               attributes:info_attrs];
                 break;
                 
             case TRANSACTION_VIEW_CANCELLED_SELF:
+                info = NSLocalizedString(@"Transaction cancelled", @"transaction cancelled");
+                self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                               initWithString:info
+                                                               attributes:info_attrs];
                 break;
                 
             case TRANSACTION_VIEW_FINISHED:
+                // Do nothing
                 break;
             
             case TRANSACTION_VIEW_FAILED:
@@ -299,6 +290,7 @@
                 break;
                             
             default:
+                // Do nothing
                 break;
         }
     }

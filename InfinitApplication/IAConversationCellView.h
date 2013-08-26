@@ -16,7 +16,6 @@
 @interface IAConversationCellView : NSTableCellView <NSTableViewDataSource,
                                                      NSTableViewDelegate>
 
-@property (nonatomic, strong) IBOutlet IAConversationBubbleView* bubble_view;
 @property (nonatomic, strong) IBOutlet NSTextField* date;
 @property (nonatomic, strong) IBOutlet NSButton* files_icon;
 @property (nonatomic, strong) IBOutlet NSTextField* files_label;

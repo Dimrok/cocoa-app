@@ -576,6 +576,10 @@
             break;
         count++;
     }
+    
+    if ([_element_list[count] transaction].view_mode == transaction.view_mode)
+        return;
+    
     IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
     [self.table_view beginUpdates];
     [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
