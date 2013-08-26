@@ -111,10 +111,7 @@
 }
 
 - (void)setBadgeCount:(NSUInteger)count
-{
-    if (count == 0)
-        return;
-    
+{    
     [self.badge_view setBadgeCount:count];
 }
 
