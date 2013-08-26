@@ -7,8 +7,7 @@
 //
 //  This manager is responsible for handling transactions. This means that it handles remote
 //  changes to transaction state through gap, local user interactions with transactions (accept,
-//  send, cancel, etc.), as well as setting the current view mode of each transaction. In order to
-//  this, it requires information about user status changes.
+//  send, cancel, etc.), as well as setting the current view mode of each transaction.
 
 #import <Foundation/Foundation.h>
 
@@ -26,7 +25,9 @@
 
 - (NSUInteger)activeTransactionsForUser:(IAUser*)user;
 
-- (NSUInteger)totalActiveTransactions;
+- (NSUInteger)totalActiveOrUnreadTransactions;
+
+- (void)markTransactionsRead;
 
 - (BOOL)transferringTransactionsForUser:(IAUser*)user;
 

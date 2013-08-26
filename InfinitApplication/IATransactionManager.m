@@ -32,10 +32,6 @@
                                                    name:IA_GAP_EVENT_TRANSACTION_NOTIFICATION
                                                  object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(onNotificationsRead:)
-                                                   name:IA_GAP_EVENT_TRANSACTION_READ_NOTIFICATION
-                                                 object:nil];
-        [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(onGapError:)
                                                    name:IA_GAP_EVENT_ERROR
                                                  object:nil];
@@ -256,15 +252,21 @@
 
 //- Transaction Lists ------------------------------------------------------------------------------
 
-- (NSUInteger)totalActiveTransactions
+- (NSUInteger)totalActiveOrUnreadTransactions
 {
     NSUInteger res = 0;
     for (IATransaction* transaction in _transactions)
     {
-        if (transaction.is_active)
+        if (transaction.is_new || transaction.is_active)
             res++;
     }
     return res;
+}
+
+- (void)markTransactionsRead
+{
+    for (IATransaction* transaction in _transactions)
+        transaction.is_new = NO;
 }
 
 - (NSArray*)latestTransactionPerUser
