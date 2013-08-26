@@ -133,6 +133,8 @@
 
 - (void)showNotifications
 {
+    [_transaction_manager markTransactionsRead];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
     _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
     [self openOrChangeViewController:_notification_view_controller];
 }
@@ -319,6 +321,24 @@
     [self showNotifications];
 }
 
+- (void)conversationView:(IAConversationViewController*)sender
+  wantsAcceptTransaction:(IATransaction*)transaction
+{
+    [_transaction_manager acceptTransaction:transaction];
+}
+
+- (void)conversationView:(IAConversationViewController*)sender
+  wantsCancelTransaction:(IATransaction*)transaction
+{
+    [_transaction_manager cancelTransaction:transaction];
+}
+
+- (void)conversationView:(IAConversationViewController*)sender
+  wantsRejectTransaction:(IATransaction*)transaction
+{
+    [_transaction_manager rejectTransaction:transaction];
+}
+
 //- General Send Controller Protocol ---------------------------------------------------------------
 
 - (void)sendController:(IAGeneralSendController*)sender
@@ -493,7 +513,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
           transactionAdded:(IATransaction*)transaction
 {
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveTransactions]];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
     if (_current_view_controller == nil)
         return;
     [_current_view_controller transactionAdded:transaction];
@@ -502,7 +522,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
         transactionUpdated:(IATransaction*)transaction
 {
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveTransactions]];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
     if (_current_view_controller == nil)
         return;
     [_current_view_controller transactionUpdated:transaction];
