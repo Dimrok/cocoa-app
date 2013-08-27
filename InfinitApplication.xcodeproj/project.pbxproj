@@ -1442,6 +1442,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Externals/lib\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1461,6 +1462,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Externals/lib\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
