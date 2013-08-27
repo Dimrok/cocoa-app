@@ -41,13 +41,9 @@
 {
     _is_favourite = favourite;
     if (favourite)
-    {
         self.result_star.image = [IAFunctions imageNamed:@"icon-star-selected"];
-    }
     else
-    {
         self.result_star.image = [IAFunctions imageNamed:@"icon-star"];
-    }
 }
 
 //- Cell Actions -----------------------------------------------------------------------------------
