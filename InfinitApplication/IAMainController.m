@@ -513,7 +513,11 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
           transactionAdded:(IATransaction*)transaction
 {
+    if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
+        [_transaction_manager markTransactionsRead];
+    
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
+    
     if (_current_view_controller == nil)
         return;
     [_current_view_controller transactionAdded:transaction];
@@ -522,7 +526,11 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
         transactionUpdated:(IATransaction*)transaction
 {
+    if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
+        [_transaction_manager markTransactionsRead];
+    
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
+    
     if (_current_view_controller == nil)
         return;
     [_current_view_controller transactionUpdated:transaction];
