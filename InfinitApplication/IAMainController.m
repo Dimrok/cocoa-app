@@ -234,7 +234,7 @@
 {
     [self logoutCallback:result];
     [[IAGapState instance] freeGap];
-    [_delegate quitApplication:self];
+    [_delegate terminateApplication:self];
 }
 
 - (BOOL)credentialsInChain:(NSString*)username
@@ -284,7 +284,7 @@
     else
     {
         [[IAGapState instance] freeGap];
-        [_delegate quitApplication:self];
+        [_delegate terminateApplication:self];
     }
 }
 
@@ -404,7 +404,7 @@
 
 - (void)notificationListWantsQuit:(IANotificationListViewController*)sender
 {
-    [_delegate quitApplication:self];
+    [self handleQuit];
 }
 
 - (void)notificationListGotTransferClick:(IANotificationListViewController*)sender

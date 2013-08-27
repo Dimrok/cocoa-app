@@ -42,6 +42,6 @@
 
 @protocol IAMainControllerProtocol <NSObject>
 
-- (void)quitApplication:(IAMainController*)sender;
+- (void)terminateApplication:(IAMainController*)sender;
 
 @end

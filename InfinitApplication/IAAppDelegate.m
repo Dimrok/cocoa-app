@@ -12,11 +12,18 @@
 
 @implementation IAAppDelegate
 
+//- Initialisation ---------------------------------------------------------------------------------
+
 - (void)awakeFromNib
 {
 //    [[SUUpdater sharedUpdater] setDelegate:self];
 //    [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
 //    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+}
+
+- (void)dealloc
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
@@ -39,6 +46,8 @@
     NSLog(@"%@ Sparkle updating, will relaunch", self);
 }
 
+//- Quit Handling ----------------------------------------------------------------------------------
+
 - (void)handleQuitEvent:(NSAppleEventDescriptor*)event
          withReplyEvent:(NSAppleEventDescriptor*)reply_event
 {
@@ -46,7 +55,22 @@
     [_controller handleQuit];
 }
 
-- (void)quitApplication:(IAMainController*)sender
+- (IBAction)cleanQuit:(id)sender
+{
+    [_controller handleQuit];
+    [self performSelector:@selector(delayedTerminate)
+               withObject:nil
+               afterDelay:10.0];
+}
+
+- (void)delayedTerminate
+{
+    [NSApp terminate:self];
+}
+
+//- Main Controller Protocol -----------------------------------------------------------------------
+
+- (void)terminateApplication:(IAMainController*)sender
 {
     NSLog(@"%@ Terminating application", self);
     [NSApp terminate:self];
