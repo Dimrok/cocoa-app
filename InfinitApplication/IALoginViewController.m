@@ -119,6 +119,24 @@
                                          attributes:button_style];
 }
 
+- (void)setForgotPasswordRegisterButtonText
+{
+    NSDictionary* link_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                  colour:IA_RGB_COLOUR(109.0, 175.0, 223.0)
+                                                  shadow:nil];
+    
+    NSString* need_account = NSLocalizedString(@"Need an account?", @"need an account?");
+    NSString* forgot_password = NSLocalizedString(@"Forgot password?", @"forgot password?");
+    
+    self.create_account_button.attributedTitle = [[NSAttributedString alloc]
+                                                  initWithString:need_account
+                                                      attributes:link_attrs];
+    self.forgot_password_button.attributedTitle = [[NSAttributedString alloc]
+                                                   initWithString:forgot_password
+                                                       attributes:link_attrs];
+}
+
 // Shadows not drawn for transparent NSBorderlessWindowMask windows.
 // Work around by increasing view size and drawing manually.
 - (void)prepareForShadow
@@ -141,6 +159,7 @@
     [self prepareForShadow];
     
     [self setLoginButtonText];
+    [self setForgotPasswordRegisterButtonText];
 }
 
 - (void)showLoginWindowOnScreen:(NSScreen*)screen
@@ -177,7 +196,15 @@
     {
         [self showLoginWindowOnScreen:screen];
     }
-    self.error_message.stringValue = error;
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSCenterTextAlignment;
+    NSDictionary* error_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                                paragraphStyle:para
+                                                        colour:IA_RGB_COLOUR(232.0, 117.0, 119.0)
+                                                        shadow:nil];
+    self.error_message.attributedStringValue = [[NSAttributedString alloc]
+                                                initWithString:error
+                                                attributes:error_attrs];
     [self.error_message setHidden:NO];
 }
 
