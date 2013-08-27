@@ -12,6 +12,13 @@
 #import "IAKeychainManager.h"
 
 @implementation IAKeychainManager
+{
+@private
+    NSString* _service_name;
+    NSString* _application_path;
+}
+
+//- Initialisation ---------------------------------------------------------------------------------
 
 + (IAKeychainManager*)sharedInstance
 {
@@ -28,15 +35,19 @@
 	if (self = [super init])
     {
         _service_name = @"Infinit";
+        _application_path = [IAGapState.instance.protocol getApplicationPath];
+        
     }
 	return self;
 }
 
-////Call SecKeychainFindGenericPassword to get a password from the keychain:
-- (OSStatus)GetPasswordKeychain:(NSString*)user_email
+//- General Functions ------------------------------------------------------------------------------
+
+// Call SecKeychainFindGenericPassword to get a password from the keychain:
+- (OSStatus)getPasswordKeychain:(NSString*)user_email
                    passwordData:(void**)password_data
                  passwordLength:(UInt32*)password_length
-                        itemRef:(SecKeychainItemRef*)itemRef
+                        itemRef:(SecKeychainItemRef*)item_ref
 {
     OSStatus status;
     status = SecKeychainFindGenericPassword(
@@ -47,40 +58,43 @@
                                             [user_email cStringUsingEncoding:NSASCIIStringEncoding],   // account name
                                             password_length, // length of password
                                             password_data, // pointer to password data
-                                            itemRef // the item reference
+                                            item_ref // the item reference
                                             );
     return (status);
 }
 
-//// Check if credentials are in keychain
-- (BOOL)CredentialsInKeychain:(NSString*)email_address
+// Check if credentials are in keychain
+- (BOOL)credentialsInKeychain:(NSString*)email_address
 {
-    if ([self GetPasswordKeychain:email_address
+    if ([self getPasswordKeychain:email_address
                      passwordData:NULL
                    passwordLength:NULL
                           itemRef:NULL] == noErr)
+    {
         return YES;
+    }
     else
+    {
         return NO;
+    }
 }
 
-- (OSStatus)AddPasswordKeychain:(NSString*)user_email
+- (OSStatus)addPasswordKeychain:(NSString*)user_email
                        password:(NSString*)password
 {
     OSStatus status;
     SecAccessRef access;
-    NSArray* trustedApplications = nil;
-    NSString* app_path = [IAGapState.instance.protocol getApplicationPath];
+    NSArray* trusted_applications = nil;
     
     SecTrustedApplicationRef infinit_app;
-    status = SecTrustedApplicationCreateFromPath(app_path.UTF8String, &infinit_app);
+    status = SecTrustedApplicationCreateFromPath(_application_path.UTF8String, &infinit_app);
     if (status != noErr)
         return status;
     
-    trustedApplications = [NSArray arrayWithObject:(__bridge id)infinit_app];
+    trusted_applications = [NSArray arrayWithObject:(__bridge id)infinit_app];
     
     status = SecAccessCreate((__bridge CFStringRef)_service_name,
-                             (__bridge CFArrayRef)(trustedApplications),
+                             (__bridge CFArrayRef)(trusted_applications),
                              &access);
     if (status != noErr)
         return status;
@@ -102,7 +116,8 @@
                                               access,
                                               NULL
                                              );
-    if (access) CFRelease(access);
+    if (access)
+        CFRelease(access);
     password = @"";
     password = nil;
     return status;

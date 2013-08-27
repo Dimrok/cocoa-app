@@ -9,20 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @interface IAKeychainManager : NSObject
-{
-    NSString* _service_name;
-}
 
 + (IAKeychainManager*)sharedInstance;
 
-- (OSStatus)GetPasswordKeychain:(NSString*)user_email
+- (OSStatus)getPasswordKeychain:(NSString*)user_email
                    passwordData:(void**)password_data
                  passwordLength:(UInt32*)password_length
-                        itemRef:(SecKeychainItemRef*)itemRef;
+                        itemRef:(SecKeychainItemRef*)item_ref;
 
-- (BOOL)CredentialsInKeychain:(NSString*)email_address;
+- (BOOL)credentialsInKeychain:(NSString*)email_address;
 
-- (OSStatus)AddPasswordKeychain:(NSString*)user_email
+- (OSStatus)addPasswordKeychain:(NSString*)user_email
                        password:(NSString*)password;
 
 @end

@@ -88,7 +88,7 @@
     void* pwd_ptr = NULL;
     UInt32 pwd_len = 0;
     OSStatus status;
-    status = [[IAKeychainManager sharedInstance] GetPasswordKeychain:username
+    status = [[IAKeychainManager sharedInstance] getPasswordKeychain:username
                                                         passwordData:&pwd_ptr
                                                       passwordLength:&pwd_len
                                                              itemRef:NULL];
@@ -243,7 +243,7 @@
 
 - (BOOL)credentialsInChain:(NSString*)username
 {
-    if ([[IAKeychainManager sharedInstance] CredentialsInKeychain:username])
+    if ([[IAKeychainManager sharedInstance] credentialsInKeychain:username])
         return YES;
     else
         return NO;
@@ -253,7 +253,7 @@
 {
     [[IAUserPrefs sharedInstance] setPref:_username forKey:@"user:email"];
     OSStatus add_status;
-    add_status = [[IAKeychainManager sharedInstance] AddPasswordKeychain:_username
+    add_status = [[IAKeychainManager sharedInstance] addPasswordKeychain:_username
                                                                 password:_password];
     if (add_status != noErr)
         IALog(@"%@ Error adding credentials to keychain");
