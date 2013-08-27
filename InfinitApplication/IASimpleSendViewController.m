@@ -124,7 +124,7 @@
 
     [self performSelector:@selector(setFocusToSearchField)
                withObject:nil
-               afterDelay:0];
+               afterDelay:0.4];
 }
 
 - (void)setFocusToSearchField
@@ -223,7 +223,7 @@
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
-    
+    // Do nothing
 }
 
 - (void)searchViewHadSendButtonClick:(IAUserSearchViewController*)sender
