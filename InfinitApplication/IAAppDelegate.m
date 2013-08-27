@@ -10,15 +10,28 @@
 
 #import <Sparkle/Sparkle.h>
 
+#import "IAAutoStartup.h"
+
 @implementation IAAppDelegate
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (void)awakeFromNib
+- (void)setupUpdater
 {
 //    [[SUUpdater sharedUpdater] setDelegate:self];
 //    [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
 //    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+}
+
+- (void)checkInLoginItems
+{
+//    if (![[IAAutoStartup sharedInstance] appInLoginItemList])
+//        [[IAAutoStartup sharedInstance] addAppAsLoginItem];
+}
+
+- (void)awakeFromNib
+{
+    [self setupUpdater];
 }
 
 - (void)dealloc
