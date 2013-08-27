@@ -61,7 +61,7 @@
 {
 	static NSBundle* bundle=nil;
 	if (bundle == nil)
-		bundle = [NSBundle bundleForClass:[self class]];
+		bundle = [NSBundle bundleForClass:self.class];
 	return bundle;
 }
 
