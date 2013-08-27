@@ -8,6 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IADesktopNotifier : NSObject
+@protocol IADesktopNotifierProtocol;
+
+@interface IADesktopNotifier : NSObject <NSUserNotificationCenterDelegate>
+
+- (id)initWithDelegate:(id<IADesktopNotifierProtocol>)delegate;
+
+- (void)clearAllNotifications;
+
+- (void)transactionAdded:(IATransaction*)transaction;
+
+- (void)transactionUpdated:(IATransaction*)transaction;
+
+@end
+
+@protocol IADesktopNotifierProtocol <NSObject>
+
+- (void)desktopNotifier:(IADesktopNotifier*)sender
+hadClickNotificationForUserId:(NSNumber*)user_id;
 
 @end

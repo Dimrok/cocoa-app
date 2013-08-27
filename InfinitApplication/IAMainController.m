@@ -35,6 +35,7 @@
     IAUserManager* _user_manager;
     
     // Other
+    IADesktopNotifier* _desktop_notifier;
     BOOL _new_credentials;
     NSString* _username;
     NSString* _password;
@@ -60,6 +61,8 @@
         
         _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
         _user_manager = [[IAUserManager alloc] initWithDelegate:self];
+        
+        _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
         if (![self tryAutomaticLogin])
         {
@@ -133,6 +136,7 @@
 
 - (void)showNotifications
 {
+    [_desktop_notifier clearAllNotifications];
     [_transaction_manager markTransactionsRead];
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
     _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
@@ -339,6 +343,14 @@
     [_transaction_manager rejectTransaction:transaction];
 }
 
+//- Desktop Notifier Protocol ----------------------------------------------------------------------
+
+- (void)desktopNotifier:(IADesktopNotifier*)sender
+hadClickNotificationForUserId:(NSNumber*)user_id
+{
+    [self showConversationViewForUser:[IAUser userWithId:user_id]];
+}
+
 //- General Send Controller Protocol ---------------------------------------------------------------
 
 - (void)sendController:(IAGeneralSendController*)sender
@@ -515,6 +527,8 @@ transactionsProgressForUser:(IAUser*)user
 {
     if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
         [_transaction_manager markTransactionsRead];
+    else
+        [_desktop_notifier transactionAdded:transaction];
     
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
     
@@ -528,6 +542,8 @@ transactionsProgressForUser:(IAUser*)user
 {
     if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
         [_transaction_manager markTransactionsRead];
+    else
+        [_desktop_notifier transactionUpdated:transaction];
     
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
     
