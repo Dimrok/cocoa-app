@@ -102,8 +102,7 @@
 
 - (BOOL)closeOnFocusLost
 {
-    // XXX debugging
-    return NO;
+    return YES;
 }
 
 - (void)setupPersonView

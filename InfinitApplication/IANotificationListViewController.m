@@ -181,9 +181,7 @@
 
 - (BOOL)closeOnFocusLost
 {
-    // XXX debugging
-//    return YES;
-    return NO;
+    return YES;
 }
 
 - (void)awakeFromNib
