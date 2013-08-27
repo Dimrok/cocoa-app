@@ -158,11 +158,10 @@
     }
                         completionHandler:^
      {
-         [[self.window.contentView animator] replaceSubview:_current_controller.view
-                                                       with:new_controller.view];
+         [self.window.contentView replaceSubview:_current_controller.view
+                                            with:new_controller.view];
          [self.window.contentView removeConstraints:_view_constraints];
          
-         [self.window display];
          [self.window invalidateShadow];
          
          _view_constraints = [NSMutableArray arrayWithArray:
