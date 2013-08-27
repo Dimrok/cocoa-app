@@ -366,6 +366,16 @@
     return row_view;
 }
 
+- (void)tableViewSelectionDidChange:(NSNotification*)notification
+{
+    NSUInteger row = self.table_view.selectedRow;
+    NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
+    if (visible_rows.location == row)
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+    else
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
+}
+
 //- User Interaction With Table --------------------------------------------------------------------
 
 - (IBAction)tableViewAction:(NSTableView*)sender
