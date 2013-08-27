@@ -385,14 +385,26 @@
         return;
     
     IATransaction* transaction = [_transaction_list objectAtIndex:row];
-    IAUser* user;
+    IAUser* user = transaction.other_user;
     
-    if (transaction.from_me)
-        user = transaction.recipient;
-    else
-        user = transaction.sender;
+    NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
+                                      NSMakeRange(0, _transaction_list.count)];
+    [other_users removeIndex:row];
     
-    [_delegate notificationList:self gotClickOnUser:user];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.25;
+         [self.table_view beginUpdates];
+         [_transaction_list removeObjectsAtIndexes:other_users];
+         [self.table_view removeRowsAtIndexes:other_users
+                                withAnimation:NSTableViewAnimationSlideRight];
+         [self.table_view endUpdates];
+         [self resizeContentView];
+     }
+                        completionHandler:^
+     {
+         [_delegate notificationList:self gotClickOnUser:user];
+     }];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
@@ -577,14 +589,26 @@
         return;
     
     IATransaction* transaction = [_transaction_list objectAtIndex:row];
-    IAUser* user;
+    IAUser* user = transaction.other_user;
     
-    if (transaction.from_me)
-        user = transaction.recipient;
-    else
-        user = transaction.sender;
+    NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
+                                      NSMakeRange(0, _transaction_list.count)];
+    [other_users removeIndex:row];
     
-    [_delegate notificationList:self gotClickOnUser:user];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+        context.duration = 0.25;
+        [self.table_view beginUpdates];
+        [_transaction_list removeObjectsAtIndexes:other_users];
+        [self.table_view removeRowsAtIndexes:other_users
+                               withAnimation:NSTableViewAnimationSlideRight];
+        [self.table_view endUpdates];
+        [self resizeContentView];
+     }
+                        completionHandler:^
+     {
+         [_delegate notificationList:self gotClickOnUser:user];
+     }];
 }
 
 //- Change View Handling ---------------------------------------------------------------------------
