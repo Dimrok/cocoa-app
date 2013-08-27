@@ -5,6 +5,7 @@
 //  Created by Christopher Crone on 8/5/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
+// The conversation view shows the transaction history for a given user
 
 #import "IAViewController.h"
 
