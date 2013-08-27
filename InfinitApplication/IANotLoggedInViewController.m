@@ -53,8 +53,15 @@
                                          initWithString:NSLocalizedString(@"LOGIN", @"login")
                                          attributes:button_style];
     
-    self.not_logged_message.stringValue = NSLocalizedString(@"Not currently logged in...",
-                                                            @"not logged in");
+    NSDictionary* message_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                                  paragraphStyle:style
+                                                          colour:IA_GREY_COLOUR(32.0)
+                                                          shadow:nil];
+    NSString* message = NSLocalizedString(@"Not currently logged in...", @"not logged in");
+    
+    self.not_logged_message.attributedStringValue = [[NSAttributedString alloc]
+                                                     initWithString:message
+                                                         attributes:message_attrs];
 }
 
 - (BOOL)closeOnFocusLost
