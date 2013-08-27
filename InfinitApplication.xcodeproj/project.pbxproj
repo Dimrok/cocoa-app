@@ -83,6 +83,7 @@
 		8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FD17A67EB0006028BC /* libtrophonius.dylib */; };
 		8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FE17A67EB0006028BC /* libudt.dylib */; };
 		8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */; };
+		833C319117CCC85200941C09 /* IADesktopNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 833C319017CCC85200941C09 /* IADesktopNotifier.m */; };
 		8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8346314F17A7042A00A7E17F /* IACentredSecureCell.m */; };
 		834D47DC17CB442B00EEB16A /* icon-expand-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47D817CB442B00EEB16A /* icon-expand-left.png */; };
 		834D47DD17CB442B00EEB16A /* icon-expand-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47D917CB442B00EEB16A /* icon-expand-left@2x.png */; };
@@ -394,6 +395,8 @@
 		8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "../../../Externals/lib/libstdc++.6.dylib"; sourceTree = "<group>"; };
 		8334C7FD17A67EB0006028BC /* libtrophonius.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtrophonius.dylib; path = ../../../Externals/lib/libtrophonius.dylib; sourceTree = "<group>"; };
 		8334C7FE17A67EB0006028BC /* libudt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libudt.dylib; path = ../../../Externals/lib/libudt.dylib; sourceTree = "<group>"; };
+		833C318F17CCC85200941C09 /* IADesktopNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADesktopNotifier.h; sourceTree = "<group>"; };
+		833C319017CCC85200941C09 /* IADesktopNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADesktopNotifier.m; sourceTree = "<group>"; };
 		8346314E17A7042A00A7E17F /* IACentredSecureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredSecureCell.h; sourceTree = "<group>"; };
 		8346314F17A7042A00A7E17F /* IACentredSecureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredSecureCell.m; sourceTree = "<group>"; };
 		834D47D817CB442B00EEB16A /* icon-expand-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-expand-left.png"; sourceTree = "<group>"; };
@@ -605,13 +608,14 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
+				833C318A17CCC81100941C09 /* Desktop Notifier */,
 				83281BBA17AFFCFA00CAE422 /* Conversation View */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
 				831FB22217A90BB700696604 /* Notification View */,
 				83C124B517A7CE9800BE1252 /* Managers */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
 				832808D917A2D66E0025B6F8 /* Window Controller */,
-				832808D317A2D5E80025B6F8 /* Application Controller */,
+				832808D317A2D5E80025B6F8 /* Main Controller */,
 				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
 				8328081C17A2B4A60025B6F8 /* IAAppDelegate.h */,
 				8328081D17A2B4A60025B6F8 /* IAAppDelegate.m */,
@@ -716,13 +720,13 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		832808D317A2D5E80025B6F8 /* Application Controller */ = {
+		832808D317A2D5E80025B6F8 /* Main Controller */ = {
 			isa = PBXGroup;
 			children = (
 				832808D017A2C9E40025B6F8 /* IAMainController.h */,
 				832808D117A2C9E40025B6F8 /* IAMainController.m */,
 			);
-			name = "Application Controller";
+			name = "Main Controller";
 			sourceTree = "<group>";
 		};
 		832808D917A2D66E0025B6F8 /* Window Controller */ = {
@@ -777,6 +781,15 @@
 				8333AB4917BD1FB200D8B6DE /* icon-note@2x.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		833C318A17CCC81100941C09 /* Desktop Notifier */ = {
+			isa = PBXGroup;
+			children = (
+				833C318F17CCC85200941C09 /* IADesktopNotifier.h */,
+				833C319017CCC85200941C09 /* IADesktopNotifier.m */,
+			);
+			name = "Desktop Notifier";
 			sourceTree = "<group>";
 		};
 		836AAF7217AE8891001ECF2E /* Advanced Send View */ = {
@@ -1284,6 +1297,7 @@
 				83D4206E17C4DDC000D4E168 /* IAAvatarBadgeView.m in Sources */,
 				83D4207517C51E7C00D4E168 /* IANotificationAvatarView.m in Sources */,
 				834D47EB17CB4EAF00EEB16A /* IAConversationElement.m in Sources */,
+				833C319117CCC85200941C09 /* IADesktopNotifier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
