@@ -206,6 +206,12 @@
                                                            colour:IA_GREY_COLOUR(56.0)
                                                            shadow:nil];
         
+        NSDictionary* error_attrs = [IAFunctions
+                                     textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                     paragraphStyle:text_align
+                                     colour:IA_RGB_COLOUR(255.0, 0.0, 0.0)
+                                     shadow:nil];
+        
         NSString* info;
         
         switch (_transaction.view_mode)
@@ -258,9 +264,12 @@
             
             case TRANSACTION_VIEW_PREPARING:
                 [self.progress_indicator setIndeterminate:YES];
+                [self.progress_indicator startAnimation:nil];
                 break;
                 
             case TRANSACTION_VIEW_RUNNING:
+                [self.progress_indicator stopAnimation:nil];
+                self.progress_indicator.maxValue = 1.0;
                 [self.progress_indicator setIndeterminate:NO];
                 break;
             
@@ -286,7 +295,7 @@
                 info = NSLocalizedString(@"Transfer failed", @"transfer failed");
                 self.information_text.attributedStringValue = [[NSAttributedString alloc]
                                                                initWithString:info
-                                                               attributes:info_attrs];
+                                                               attributes:error_attrs];
                 break;
                             
             default:
