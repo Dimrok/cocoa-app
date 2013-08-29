@@ -175,6 +175,7 @@
     id<IAUserSearchViewProtocol> _delegate;
     
     NSMutableArray* _search_results;
+    NSUInteger _token_count;
     
     BOOL _no_results;
     
@@ -191,6 +192,7 @@
         _row_height = 45.0;
         _max_rows_shown = 3;
         _delegate = nil;
+        _token_count = 0;
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -371,19 +373,25 @@
 - (void)controlTextDidChange:(NSNotification*)aNotification
 {
     NSControl* control = aNotification.object;
-    if (control == self.search_field)
+    if (control != self.search_field)
+        return;
+    
+    [self cancelLastSearchOperation];
+    NSArray* tokens = self.search_field.objectValue;
+    NSString* search_string;
+    if ([tokens.lastObject isKindOfClass:NSString.class])
+        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+    else
+        search_string = @"";
+    if (search_string.length > 0)
+        [self doDelayedSearch:search_string];
+    else
+        [self clearResults];
+    
+    if (tokens.count < _token_count)
     {
-        [self cancelLastSearchOperation];
-        NSArray* tokens = self.search_field.objectValue;
-        NSString* search_string;
-        if ([tokens.lastObject isKindOfClass:NSString.class])
-            search_string = [self trimTrailingWhitespace:tokens.lastObject];
-        else
-            search_string = @"";
-        if (search_string.length > 0)
-            [self doDelayedSearch:search_string];
-        else
-            [self clearResults];
+        [_delegate searchViewWantsCheckInputs:self];
+        _token_count = tokens.count;
     }
 }
 
@@ -394,7 +402,19 @@ doCommandBySelector:(SEL)commandSelector
     if (control != self.search_field)
         return NO;
     
-    if (commandSelector == @selector(moveDown:))
+    if (commandSelector == @selector(insertNewline:))
+    {
+        [_delegate searchViewWantsCheckInputs:self];
+        NSArray* tokens = self.search_field.objectValue;
+        if (tokens.count == _token_count)
+        {
+            [_delegate searchViewGotEnterPress:self];
+            return YES;
+        }
+        _token_count = tokens.count;
+        return NO;
+    }
+    else if (commandSelector == @selector(moveDown:))
     {
         [self moveTableSelectionBy:1];
         return YES;
