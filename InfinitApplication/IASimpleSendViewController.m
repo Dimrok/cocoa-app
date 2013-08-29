@@ -174,6 +174,14 @@
         return NO;
     
     _recipient_list = [NSArray arrayWithArray:recipients];
+    for (id object in _recipient_list)
+    {
+        if ([object isKindOfClass:NSString.class] && ![IAFunctions stringIsValidEmail:object] &&
+            ![object isKindOfClass:IAUser.class])
+        {
+            return NO;
+        }
+    }
     return YES;
 }
 
@@ -242,7 +250,7 @@
  wantsAddFavourite:(IAUser*)user
 {
     [_delegate simpleSendView:self
-              wantsAddFavourite:user];
+            wantsAddFavourite:user];
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender
@@ -250,6 +258,28 @@ wantsRemoveFavourite:(IAUser*)user
 {
     [_delegate simpleSendView:self
          wantsRemoveFavourite:user];
+}
+
+- (void)searchViewWantsCheckInputs:(IAUserSearchViewController*)sender
+{
+    if ([self inputsGood])
+    {
+        // XXX change button to red
+    }
+    else
+    {
+        // XXX change button to grey
+    }
+}
+
+- (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender
+{
+    if ([self inputsGood])
+    {
+        [_delegate simpleSendView:self
+                   wantsSendFiles:_file_list
+                          toUsers:_recipient_list];
+    }
 }
 
 @end
