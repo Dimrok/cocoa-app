@@ -31,6 +31,8 @@
 
 - (void)addUser:(IAUser*)user;
 
+- (void)cursorAtEndOfSearchBox;
+
 - (NSArray*)recipientList;
 
 - (void)hideSendButton;

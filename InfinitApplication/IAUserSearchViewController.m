@@ -267,8 +267,7 @@
 
 - (void)cursorAtEndOfSearchBox
 {
-    NSText* field_editor = self.search_field.currentEditor;
-    [field_editor setSelectedRange:NSMakeRange(field_editor.string.length, 0)];
+    [self.search_field.currentEditor moveToEndOfLine:nil];
 }
 
 - (NSArray*)recipientList
@@ -278,13 +277,11 @@
 
 - (void)hideSendButton
 {
-    // XXX change search field size
     [self.send_button setHidden:YES];
 }
 
 - (void)showSendButton
 {
-    // XXX change search field size
     [self.send_button setHidden:NO];
 }
 
@@ -299,7 +296,7 @@
 {
     [self performSelector:@selector(doSearchNow:)
                withObject:search_string
-               afterDelay:0.5];
+               afterDelay:0.3];
 }
 
 - (void)doSearchNow:(NSString*)search_string
@@ -379,7 +376,7 @@
         [self cancelLastSearchOperation];
         NSArray* tokens = self.search_field.objectValue;
         NSString* search_string;
-        if ([tokens.lastObject isKindOfClass:[NSString class]])
+        if ([tokens.lastObject isKindOfClass:NSString.class])
             search_string = [self trimTrailingWhitespace:tokens.lastObject];
         else
             search_string = @"";
@@ -481,13 +478,15 @@ representedObjectForEditingString:(NSString*)editingString
 - (NSString*)tokenField:(NSTokenField*)tokenField
 displayStringForRepresentedObject:(id)representedObject
 {
-    if ([representedObject isKindOfClass:[NSString class]] &&
+    if ([representedObject isKindOfClass:NSString.class] &&
         [IAFunctions stringIsValidEmail:representedObject])
     {
+        [self cursorAtEndOfSearchBox];
         return representedObject;
     }
-    else if ([representedObject isKindOfClass:[IAUser class]])
+    else if ([representedObject isKindOfClass:IAUser.class])
     {
+        [self cursorAtEndOfSearchBox];
         return [(IAUser*)representedObject fullname];
     }
     return nil;
