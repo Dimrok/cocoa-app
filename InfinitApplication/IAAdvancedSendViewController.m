@@ -142,6 +142,9 @@
     CGFloat _row_height;
     NSInteger _max_rows_shown;
     NSString* _message;
+    
+    NSDictionary* _characters_attrs;
+    NSUInteger _note_limit;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -159,6 +162,7 @@
         _row_height = 40.0;
         _max_rows_shown = 3;
         _message = @"";
+        _note_limit = 100;
         [self performSelector:@selector(setFocus:)
                    withObject:[NSNumber numberWithInt:focus]
                    afterDelay:0.3];
@@ -199,6 +203,16 @@
     [self setButtonHoverImages];
     [self initialiseSendButton];
     [_user_search_controller hideSendButton];
+    _characters_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                colour:IA_GREY_COLOUR(217.0)
+                                                shadow:nil];
+    NSString* characters_str = [NSString stringWithFormat:@"(%lu %@)", _note_limit,
+                                NSLocalizedString(@"characters remaining",
+                                                  @"characters remaining")];
+    self.characters_label.attributedStringValue = [[NSAttributedString alloc]
+                                                   initWithString:characters_str
+                                                       attributes:_characters_attrs];
 }
 
 - (void)loadView
@@ -253,7 +267,18 @@
         return NO;
     
     _recipient_list = [NSArray arrayWithArray:recipients];
-    _message = self.note_field.stringValue;
+    
+    for (id object in _recipient_list)
+    {
+        if ([object isKindOfClass:NSString.class] && ![IAFunctions stringIsValidEmail:object] &&
+            ![object isKindOfClass:IAUser.class])
+        {
+            return NO;
+        }
+    }
+    
+    _message = [self.note_field.stringValue substringWithRange:NSMakeRange(0, _note_limit)];
+    
     return YES;
 }
 
@@ -262,13 +287,33 @@
 - (void)controlTextDidChange:(NSNotification*)aNotification
 {
     NSControl* control = aNotification.object;
-    if (control == self.note_field)
+    if (control != self.note_field)
+        return;
+   
+    if (self.note_field.stringValue.length > _note_limit)
     {
-        if (self.note_field.stringValue.length == 0)
-            [self.characters_label setHidden:NO];
-        else
-            [self.characters_label setHidden:YES];
+        self.note_field.stringValue = [self.note_field.stringValue
+                                       substringWithRange:NSMakeRange(0, _note_limit)];
     }
+    
+    NSUInteger note_length = self.note_field.stringValue.length;
+    
+    NSString* characters_str;
+    if (_note_limit - note_length == 1)
+    {
+        characters_str = NSLocalizedString(@"(1 character remaining)",
+                                           @"(1 character remaining)");
+    }
+    else
+    {
+        characters_str = [NSString stringWithFormat:@"(%lu %@)", (_note_limit - note_length),
+                          NSLocalizedString(@"characters remaining",
+                                            @"characters remaining")];
+    }
+   
+    self.characters_label.attributedStringValue = [[NSAttributedString alloc]
+                                                   initWithString:characters_str
+                                                       attributes:_characters_attrs];
 }
 
 - (BOOL)control:(NSControl*)control
