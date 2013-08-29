@@ -288,22 +288,6 @@
     return _element_list.count;
 }
 
-
-//    TRANSACTION_VIEW_NONE = 0,
-//    TRANSACTION_VIEW_PENDING_SEND = 1,
-//    TRANSACTION_VIEW_WAITING_REGISTER = 2,
-//    TRANSACTION_VIEW_WAITING_ONLINE = 3,
-//    TRANSACTION_VIEW_WAITING_ACCEPT = 4,
-//    TRANSACTION_VIEW_PREPARING = 5,
-//    TRANSACTION_VIEW_RUNNING = 6,
-//    TRANSACTION_VIEW_PAUSE_USER = 7,
-//    TRANSACTION_VIEW_PAUSE_AUTO = 8,
-//    TRANSACTION_VIEW_REJECTED = 9,
-//    TRANSACTION_VIEW_FINISHED = 10,
-//    TRANSACTION_VIEW_CANCELLED_SELF = 11,
-//    TRANSACTION_VIEW_CANCELLED_OTHER = 12,
-//    TRANSACTION_VIEW_FAILED = 13
-
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
@@ -584,11 +568,11 @@
     [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
                            withAnimation:NSTableViewAnimationSlideLeft];
     [_element_list removeObjectAtIndex:count];
-    [_element_list addObject:element];
-    NSUInteger list_bottom = _element_list.count - 1;
-    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:list_bottom]
+    [_element_list insertObject:element atIndex:count];
+    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
                            withAnimation:NSTableViewAnimationSlideRight];
     [self.table_view endUpdates];
+    NSUInteger list_bottom = _element_list.count - 1;
     [self.table_view scrollRowToVisible:list_bottom];
     [self resizeContentView];
 
