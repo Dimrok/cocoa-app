@@ -439,18 +439,16 @@
 
 //- Transaction Handling ---------------------------------------------------------------------------
 
-// We only need to update the top badge on adding or updating transactions as the top row contains
-// the latest modification.
-- (void)updateTopBadge
+- (void)updateBadgeForRow:(NSUInteger)row
 {
     IANotificationListCellView* cell = [self.table_view viewAtColumn:0
-                                                                 row:0
+                                                                 row:row
                                                      makeIfNecessary:NO];
     if (cell == nil)
         return;
     
     [cell setBadgeCount:[_delegate notificationList:self
-                          activeTransactionsForUser:[_transaction_list[0] other_user]]];
+                          activeTransactionsForUser:[_transaction_list[row] other_user]]];
 }
 
 - (void)transactionAdded:(IATransaction*)transaction
@@ -495,7 +493,7 @@
         [self.table_view endUpdates];
     }
     
-    [self updateTopBadge];
+    [self updateBadgeForRow:0];
     
     if (self.content_height_constraint.constant < _max_rows_shown * _row_height)
         [self resizeContentView];
@@ -508,30 +506,19 @@
         if (existing_transaction.transaction_id == transaction.transaction_id)
         {
             NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
-            if (row != 0) // Move the transaction to the top
-            {
-                [self.table_view beginUpdates];
-                [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                                       withAnimation:NSTableViewAnimationSlideRight];
-                [_transaction_list removeObjectAtIndex:row];
-                [_transaction_list insertObject:transaction
-                                        atIndex:0];
-                [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                                       withAnimation:NSTableViewAnimationSlideDown];
-                [self.table_view endUpdates];
-            }
-            else
-            {
-                [self.table_view beginUpdates];
-                [_transaction_list replaceObjectAtIndex:0 withObject:transaction];
-                [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
-                                           columnIndexes:[NSIndexSet indexSetWithIndex:0]];
-                [self.table_view endUpdates];
-            }
+            [self.table_view beginUpdates];
+            [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                                   withAnimation:NSTableViewAnimationSlideRight];
+            [_transaction_list removeObjectAtIndex:row];
+            [_transaction_list insertObject:transaction
+                                    atIndex:row];
+            [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                                   withAnimation:NSTableViewAnimationSlideDown];
+            [self.table_view endUpdates];
+            [self updateBadgeForRow:row];
             break;
         }
     }
-    [self updateTopBadge];
     [self updateListOfRowsWithProgress];
 }
 
