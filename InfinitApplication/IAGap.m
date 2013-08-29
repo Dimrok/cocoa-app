@@ -379,11 +379,6 @@ return [NSString stringWithUTF8String:str]; \
     return gap_transaction_is_directory(_state, transaction_id.unsignedIntValue);
 }
 
-- (gap_TransactionStatus)transaction_status:(NSNumber*)transaction_id
-{
-    return gap_transaction_status(_state, transaction_id.unsignedIntValue);
-}
-
 - (NSString*)transaction_message:(NSNumber*)transaction_id
 {
     RETURN_CSTRING(gap_transaction_message(_state, transaction_id.unsignedIntValue));
