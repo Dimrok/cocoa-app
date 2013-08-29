@@ -430,4 +430,21 @@ wantsRemoveFavourite:(IAUser*)user
            wantsRemoveFavourite:user];
 }
 
+- (void)searchViewWantsCheckInputs:(IAUserSearchViewController*)sender
+{
+    if ([self inputsGood])
+    {
+        // XXX change send button to red
+    }
+    else
+    {
+        // XXX change send button to grey
+    }
+}
+
+- (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender
+{
+    // Do nothing
+}
+
 @end
