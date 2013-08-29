@@ -138,7 +138,7 @@
 {
     [_desktop_notifier clearAllNotifications];
     [_transaction_manager markTransactionsRead];
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
     _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
     [self openOrChangeViewController:_notification_view_controller];
 }
@@ -440,7 +440,7 @@ hadClickNotificationForUserId:(NSNumber*)user_id
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
      activeTransactionsForUser:(IAUser*)user
 {
-    return [_transaction_manager activeTransactionsForUser:user];
+    return [_transaction_manager activeAndUnreadTransactionsForUser:user];
 }
 
 - (BOOL)notificationList:(IANotificationListViewController*)sender
@@ -530,7 +530,7 @@ transactionsProgressForUser:(IAUser*)user
     else
         [_desktop_notifier transactionAdded:transaction];
     
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
     
     if (_current_view_controller == nil)
         return;
@@ -545,7 +545,7 @@ transactionsProgressForUser:(IAUser*)user
     else
         [_desktop_notifier transactionUpdated:transaction];
     
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveOrUnreadTransactions]];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
     
     if (_current_view_controller == nil)
         return;

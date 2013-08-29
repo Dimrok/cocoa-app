@@ -142,43 +142,6 @@
 
 //- Transaction View Mode Handling -----------------------------------------------------------------
 
-// View modes:
-//    TRANSACTION_VIEW_NONE = 0,
-//    TRANSACTION_VIEW_PENDING_SEND = 1,
-//    TRANSACTION_VIEW_WAITING_REGISTER = 2,
-//    TRANSACTION_VIEW_WAITING_ONLINE = 3,
-//    TRANSACTION_VIEW_WAITING_ACCEPT = 4,
-//    TRANSACTION_VIEW_PREPARING = 5,
-//    TRANSACTION_VIEW_RUNNING = 6,
-//    TRANSACTION_VIEW_PAUSE_USER = 7,
-//    TRANSACTION_VIEW_PAUSE_AUTO = 8,
-//    TRANSACTION_VIEW_REJECTED = 9,
-//    TRANSACTION_VIEW_FINISHED = 10,
-//    TRANSACTION_VIEW_CANCELLED_SELF = 11,
-//    TRANSACTION_VIEW_CANCELLED_OTHER = 12,
-//    TRANSACTION_VIEW_FAILED = 13
-
-// Transaction states:
-//    TransferState_NewTransaction = 0,
-//    TransferState_SenderCreateNetwork = 1,
-//    TransferState_SenderCreateTransaction = 2,
-//    TransferState_SenderCopyFiles = 3,
-//    TransferState_SenderWaitForDecision = 4,
-//    TransferState_RecipientWaitForDecision = 5,
-//    TransferState_RecipientAccepted = 6,
-//    TransferState_GrantPermissions = 7,
-//    TransferState_PublishInterfaces = 8,
-//    TransferState_Connect = 9,
-//    TransferState_PeerDisconnected = 10,
-//    TransferState_PeerConnectionLost = 11,
-//    TransferState_Transfer = 12,
-//    TransferState_CleanLocal = 13,
-//    TransferState_CleanRemote = 14,
-//    TransferState_Finished = 15,
-//    TransferState_Rejected = 16,
-//    TransferState_Canceled = 17,
-//    TransferState_Failed = 18,
-
 - (IATransactionViewMode)transactionViewMode:(IATransaction*)transaction
 {
     switch (transaction.status)
@@ -252,12 +215,12 @@
 
 //- Transaction Lists ------------------------------------------------------------------------------
 
-- (NSUInteger)totalActiveOrUnreadTransactions
+- (NSUInteger)totalUntreatedAndUnreadTransactions
 {
     NSUInteger res = 0;
     for (IATransaction* transaction in _transactions)
     {
-        if (transaction.is_new || transaction.is_active)
+        if (transaction.is_new || transaction.needs_action)
             res++;
     }
     return res;
@@ -314,13 +277,13 @@
     return [NSArray arrayWithArray:transactions];
 }
 
-- (NSUInteger)activeTransactionsForUser:(IAUser*)user
+- (NSUInteger)activeAndUnreadTransactionsForUser:(IAUser*)user
 {
     NSArray* transactions = [NSArray arrayWithArray:[self transactionsForUser:user]];
     NSUInteger res = 0;
     for (IATransaction* transaction in transactions)
     {
-        if (transaction.is_active)
+        if (transaction.is_active || transaction.needs_action)
             res++;
     }
     return res;

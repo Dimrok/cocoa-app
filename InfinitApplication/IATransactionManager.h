@@ -23,9 +23,9 @@
 
 - (NSArray*)transactionsForUser:(IAUser*)user;
 
-- (NSUInteger)activeTransactionsForUser:(IAUser*)user;
+- (NSUInteger)activeAndUnreadTransactionsForUser:(IAUser*)user;
 
-- (NSUInteger)totalActiveOrUnreadTransactions;
+- (NSUInteger)totalUntreatedAndUnreadTransactions;
 
 - (void)markTransactionsRead;
 
