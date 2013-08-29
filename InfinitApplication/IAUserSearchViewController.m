@@ -64,13 +64,12 @@
 {
     if (_tracking_area == nil)
     {
-        NSDictionary* dict = @{@"row": self};
         _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
                                                       options:(NSTrackingInVisibleRect |
                                                                NSTrackingActiveAlways |
                                                                NSTrackingMouseEnteredAndExited)
                                                         owner:self
-                                                     userInfo:dict];
+                                                     userInfo:nil];
     }
 }
 
