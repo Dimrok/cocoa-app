@@ -117,7 +117,8 @@
                                     metrics:nil
                                     views:@{@"search_view": _user_search_controller.view}]];
     
-    CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size new:_user_search_controller.view.frame.size];
+    CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size
+                                     new:_user_search_controller.view.frame.size];
     self.content_height_constraint.constant += y_diff;
     
     [self.view layoutSubtreeIfNeeded];
@@ -130,6 +131,7 @@
 - (void)setFocusToSearchField
 {
     [self.view.window makeFirstResponder:_user_search_controller.search_field];
+    [_user_search_controller cursorAtEndOfSearchBox];
 }
 
 - (BOOL)closeOnFocusLost
