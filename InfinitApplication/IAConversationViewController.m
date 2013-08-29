@@ -572,8 +572,7 @@
     [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
                            withAnimation:NSTableViewAnimationSlideRight];
     [self.table_view endUpdates];
-    NSUInteger list_bottom = _element_list.count - 1;
-    [self.table_view scrollRowToVisible:list_bottom];
+    [self.table_view scrollRowToVisible:count];
     [self resizeContentView];
 
     [self updateListOfRowsWithProgress];
