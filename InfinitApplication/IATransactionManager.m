@@ -156,7 +156,12 @@
             return TRANSACTION_VIEW_PENDING_SEND;
             
         case TransferState_SenderCopyFiles:
-            return TRANSACTION_VIEW_PENDING_SEND;
+            if (transaction.recipient.is_ghost)
+                return TRANSACTION_VIEW_WAITING_REGISTER;
+            else if (transaction.recipient.status != gap_user_status_online)
+                return TRANSACTION_VIEW_WAITING_ONLINE;
+            else
+                return TRANSACTION_VIEW_WAITING_ACCEPT;
             
         case TransferState_SenderWaitForDecision:
             if (transaction.recipient.is_ghost)
