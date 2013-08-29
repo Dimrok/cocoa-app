@@ -56,7 +56,6 @@
 		8334C7E217A67D2D006028BC /* Gap.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
 		8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; };
 		8334C82117A692BD006028BC /* libagent.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E317A67EAF006028BC /* libagent.dylib */; };
-		8334C82217A692BD006028BC /* libasio-udt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E417A67EAF006028BC /* libasio-udt.dylib */; };
 		8334C82317A692BD006028BC /* libboost_chrono-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */; };
 		8334C82417A692BD006028BC /* libboost_signals-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */; };
 		8334C82517A692BD006028BC /* libboost_system-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */; };
@@ -81,8 +80,6 @@
 		8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */; };
 		8334C83A17A692BD006028BC /* libstdc++.6.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */; };
 		8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FD17A67EB0006028BC /* libtrophonius.dylib */; };
-		8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FE17A67EB0006028BC /* libudt.dylib */; };
-		8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */; };
 		833C319117CCC85200941C09 /* IADesktopNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 833C319017CCC85200941C09 /* IADesktopNotifier.m */; };
 		8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8346314F17A7042A00A7E17F /* IACentredSecureCell.m */; };
 		834D47DC17CB442B00EEB16A /* icon-expand-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47D817CB442B00EEB16A /* icon-expand-left.png */; };
@@ -109,6 +106,7 @@
 		8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8398836017A6C1F9009409B3 /* IALoginViewController.xib */; };
 		8398836417A6C5C4009409B3 /* infinit_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 8398836317A6C5C4009409B3 /* infinit_logo_large.png */; };
 		8398836A17A6FDE7009409B3 /* IACenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */; };
+		83A3B6F217CE119C0007B1D4 /* libasio-fs.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A3B6F017CE117A0007B1D4 /* libasio-fs.dylib */; };
 		83A8097E17C26C890086A80D /* bg-triangle-top-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */; };
 		83A8097F17C26C890086A80D /* bg-triangle-top-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */; };
 		83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097C17C26C890086A80D /* bg-triangle-top-white.png */; };
@@ -250,11 +248,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				83A3B6F217CE119C0007B1D4 /* libasio-fs.dylib in Copy Infinit Libraries */,
 				8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */,
 				8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */,
-				8334C85217A69501006028BC /* libboost_unit_test_framework-mt.dylib in Copy Infinit Libraries */,
 				8334C82117A692BD006028BC /* libagent.dylib in Copy Infinit Libraries */,
-				8334C82217A692BD006028BC /* libasio-udt.dylib in Copy Infinit Libraries */,
 				8334C82317A692BD006028BC /* libboost_chrono-mt.dylib in Copy Infinit Libraries */,
 				8334C82417A692BD006028BC /* libboost_signals-mt.dylib in Copy Infinit Libraries */,
 				8334C82517A692BD006028BC /* libboost_system-mt.dylib in Copy Infinit Libraries */,
@@ -279,7 +276,6 @@
 				8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */,
 				8334C83A17A692BD006028BC /* libstdc++.6.dylib in Copy Infinit Libraries */,
 				8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */,
-				8334C83C17A692BD006028BC /* libudt.dylib in Copy Infinit Libraries */,
 			);
 			name = "Copy Infinit Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,7 +318,7 @@
 		831FB23117A9345100696604 /* icon-transfer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer@2x.png"; sourceTree = "<group>"; };
 		831FB23417A9370400696604 /* bg-header-top-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-gray.png"; sourceTree = "<group>"; };
 		831FB23517A9370400696604 /* bg-header-top-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-gray@2x.png"; sourceTree = "<group>"; };
-		8328080717A2B4A60025B6F8 /* Infinit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8328080717A2B4A60025B6F8 /* InfinitApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinitApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8328080A17A2B4A60025B6F8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		8328080D17A2B4A60025B6F8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		8328080E17A2B4A60025B6F8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -368,12 +364,10 @@
 		8333D45B17A976570093942B /* IAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAViewController.h; sourceTree = "<group>"; };
 		8333D45C17A976570093942B /* IAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAViewController.m; sourceTree = "<group>"; };
 		8334C7E317A67EAF006028BC /* libagent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libagent.dylib; path = ../../../Externals/lib/libagent.dylib; sourceTree = "<group>"; };
-		8334C7E417A67EAF006028BC /* libasio-udt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libasio-udt.dylib"; path = "../../../Externals/lib/libasio-udt.dylib"; sourceTree = "<group>"; };
 		8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_chrono-mt.dylib"; path = "../../../Externals/lib/libboost_chrono-mt.dylib"; sourceTree = "<group>"; };
 		8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_signals-mt.dylib"; path = "../../../Externals/lib/libboost_signals-mt.dylib"; sourceTree = "<group>"; };
 		8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../Externals/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "../../../Externals/lib/libboost_thread-mt.dylib"; sourceTree = "<group>"; };
-		8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_unit_test_framework-mt.dylib"; path = "../../../Externals/lib/libboost_unit_test_framework-mt.dylib"; sourceTree = "<group>"; };
 		8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
 		8334C7EB17A67EB0006028BC /* libcryptography.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptography.dylib; path = ../../../Externals/lib/libcryptography.dylib; sourceTree = "<group>"; };
 		8334C7EC17A67EB0006028BC /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
@@ -394,7 +388,6 @@
 		8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../Externals/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
 		8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "../../../Externals/lib/libstdc++.6.dylib"; sourceTree = "<group>"; };
 		8334C7FD17A67EB0006028BC /* libtrophonius.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtrophonius.dylib; path = ../../../Externals/lib/libtrophonius.dylib; sourceTree = "<group>"; };
-		8334C7FE17A67EB0006028BC /* libudt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libudt.dylib; path = ../../../Externals/lib/libudt.dylib; sourceTree = "<group>"; };
 		833C318F17CCC85200941C09 /* IADesktopNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADesktopNotifier.h; sourceTree = "<group>"; };
 		833C319017CCC85200941C09 /* IADesktopNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADesktopNotifier.m; sourceTree = "<group>"; };
 		8346314E17A7042A00A7E17F /* IACentredSecureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredSecureCell.h; sourceTree = "<group>"; };
@@ -432,6 +425,7 @@
 		8398836517A6FA73009409B3 /* IADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADefine.h; sourceTree = "<group>"; };
 		8398836817A6FDE6009409B3 /* IACenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACenteredTextFieldCell.h; sourceTree = "<group>"; };
 		8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACenteredTextFieldCell.m; sourceTree = "<group>"; };
+		83A3B6F017CE117A0007B1D4 /* libasio-fs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libasio-fs.dylib"; path = "../../../Externals/lib/libasio-fs.dylib"; sourceTree = "<group>"; };
 		83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey.png"; sourceTree = "<group>"; };
 		83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey@2x.png"; sourceTree = "<group>"; };
 		83A8097C17C26C890086A80D /* bg-triangle-top-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-white.png"; sourceTree = "<group>"; };
@@ -579,7 +573,7 @@
 		8328080817A2B4A60025B6F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8328080717A2B4A60025B6F8 /* Infinit.app */,
+				8328080717A2B4A60025B6F8 /* InfinitApplication.app */,
 				8328082717A2B4A60025B6F8 /* InfinitApplicationTests.octest */,
 			);
 			name = Products;
@@ -921,12 +915,11 @@
 			isa = PBXGroup;
 			children = (
 				8334C7E317A67EAF006028BC /* libagent.dylib */,
-				8334C7E417A67EAF006028BC /* libasio-udt.dylib */,
+				83A3B6F017CE117A0007B1D4 /* libasio-fs.dylib */,
 				8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */,
 				8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */,
 				8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */,
 				8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */,
-				8334C7E917A67EB0006028BC /* libboost_unit_test_framework-mt.dylib */,
 				8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */,
 				8334C7EB17A67EB0006028BC /* libcryptography.dylib */,
 				8334C7EC17A67EB0006028BC /* libcurl.4.dylib */,
@@ -949,7 +942,6 @@
 				8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */,
 				8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */,
 				8334C7FD17A67EB0006028BC /* libtrophonius.dylib */,
-				8334C7FE17A67EB0006028BC /* libudt.dylib */,
 			);
 			name = "Infinit Libraries";
 			path = InfinitApplication;
@@ -996,9 +988,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8328080617A2B4A60025B6F8 /* Infinit */ = {
+		8328080617A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "Infinit" */;
+			buildConfigurationList = 8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplication" */;
 			buildPhases = (
 				83CD6F7E17A65FA7004F55D1 /* ShellScript */,
 				8328080317A2B4A60025B6F8 /* Sources */,
@@ -1013,9 +1005,9 @@
 				8334C81F17A681CB006028BC /* PBXTargetDependency */,
 				83CD6F7D17A65F51004F55D1 /* PBXTargetDependency */,
 			);
-			name = Infinit;
+			name = InfinitApplication;
 			productName = InfinitApplication;
-			productReference = 8328080717A2B4A60025B6F8 /* Infinit.app */;
+			productReference = 8328080717A2B4A60025B6F8 /* InfinitApplication.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8328082617A2B4A60025B6F8 /* InfinitApplicationTests */ = {
@@ -1069,7 +1061,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				8328080617A2B4A60025B6F8 /* Infinit */,
+				8328080617A2B4A60025B6F8 /* InfinitApplication */,
 				8328082617A2B4A60025B6F8 /* InfinitApplicationTests */,
 			);
 		};
@@ -1314,7 +1306,7 @@
 /* Begin PBXTargetDependency section */
 		8328082C17A2B4A60025B6F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8328080617A2B4A60025B6F8 /* Infinit */;
+			target = 8328080617A2B4A60025B6F8 /* InfinitApplication */;
 			targetProxy = 8328082B17A2B4A60025B6F8 /* PBXContainerItemProxy */;
 		};
 		8334C81F17A681CB006028BC /* PBXTargetDependency */ = {
@@ -1524,7 +1516,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "Infinit" */ = {
+		8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplication" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8328083917A2B4A60025B6F8 /* Debug */,
