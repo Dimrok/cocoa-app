@@ -473,7 +473,7 @@
             [self.table_view beginUpdates];
             NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
             [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                                   withAnimation:NSTableViewAnimationSlideLeft];
+                                   withAnimation:NSTableViewAnimationSlideRight];
             [_transaction_list removeObject:existing_transaction];
             [_transaction_list insertObject:transaction
                                     atIndex:0];
