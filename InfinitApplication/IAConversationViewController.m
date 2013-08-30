@@ -175,11 +175,11 @@
     else
         [_rows_with_progress removeAllObjects];
     
+    NSUInteger row = _element_list.count - 1;
     for (IAConversationElement* element in _element_list)
     {
-        NSUInteger row = 0;
         if (element.transaction.view_mode == TRANSACTION_VIEW_RUNNING)
-            [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row++]];
+            [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row--]];
     }
     
     if (_rows_with_progress.count > 0)
