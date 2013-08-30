@@ -31,6 +31,7 @@
     IAWindowController* _window_controller;
     
     // Managers
+    IAMeManager* _me_manager;
     IATransactionManager* _transaction_manager;
     IAUserManager* _user_manager;
     
@@ -59,6 +60,7 @@
         _window_controller = [[IAWindowController alloc] initWithDelegate:self];
         _current_view_controller = nil;
         
+        _me_manager = [[IAMeManager alloc] initWithDelegate:self];
         _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
         _user_manager = [[IAUserManager alloc] initWithDelegate:self];
         
@@ -103,7 +105,8 @@
         if (password.length == 0)
             return NO;
         
-        [self loginWithUsername:username password:password];
+        [self loginWithUsername:username
+                       password:password];
         
         password = @"";
         password = nil;
@@ -191,6 +194,10 @@
     if (result.success)
     {
         IALog(@"%@ Logged in", self);
+        
+        // XXX No on_connection callback on login, this is a work around
+        [_status_bar_icon setConnected:gap_user_status_online];
+        
         if ([_login_view_controller loginWindowOpen])
             [_login_view_controller closeLoginWindow];
         
@@ -416,6 +423,14 @@ hadClickNotificationForUserId:(NSNumber*)user_id
     }
 }
 
+//- Me Manager Protocol ----------------------------------------------------------------------------
+
+- (void)meManager:(IAMeManager*)sender
+hadConnectionStateChange:(gap_UserStatus)status
+{
+    [_status_bar_icon setConnected:status];
+}
+
 //- Notification List Protocol ---------------------------------------------------------------------
 
 - (void)notificationListWantsQuit:(IANotificationListViewController*)sender
@@ -554,6 +569,13 @@ transactionsProgressForUser:(IAUser*)user
     if (_current_view_controller == nil)
         return;
     [_current_view_controller transactionUpdated:transaction];
+}
+
+- (void)transactionManagerHasGotHistory:(IATransactionManager*)sender
+{
+    if (_current_view_controller == nil)
+        return;
+    [self showNotifications];
 }
 
 //- User Manager Protocol --------------------------------------------------------------------------

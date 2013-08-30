@@ -15,6 +15,7 @@
 #import "IAConversationViewController.h"
 #import "IADesktopNotifier.h"
 #import "IALoginViewController.h"
+#import "IAMeManager.h"
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
 #import "IAGeneralSendController.h"
@@ -29,6 +30,7 @@
                                         IADesktopNotifierProtocol,
                                         IAGeneralSendControllerProtocol,
                                         IALoginViewControllerProtocol,
+                                        IAMeManagerProtocol,
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
                                         IAStatusBarIconProtocol,

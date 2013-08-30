@@ -16,7 +16,11 @@
 @property (nonatomic, readonly) BOOL isHighlighted;
 
 - (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate statusItem:(NSStatusItem*)status_item;
+
+- (void)setConnected:(gap_UserStatus)connected;
+
 - (void)setHighlighted:(BOOL)is_highlighted;
+
 - (void)setNumberOfItems:(NSInteger)number_of_items;
 
 @end

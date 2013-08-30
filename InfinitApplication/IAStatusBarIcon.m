@@ -13,6 +13,7 @@ typedef enum IAStatusBarIconStatus {
     STATUS_BAR_ICON_NORMAL = 0,
     STATUS_BAR_ICON_FIRE,
     STATUS_BAR_ICON_CLICKED,
+    STATUS_BAR_ICON_NO_CONNECTION,
 } IAStatusBarIconStatus;
 
 @implementation IAStatusBarIcon
@@ -20,9 +21,10 @@ typedef enum IAStatusBarIconStatus {
 @private
     id _delegate;
     NSArray* _drag_types;
-    NSImage* _icon[3];
+    NSImage* _icon[4];
     NSImageView* _icon_view;
     BOOL _is_highlighted;
+    gap_UserStatus _connected;
     NSInteger _number_of_items;
 }
 
@@ -37,6 +39,7 @@ typedef enum IAStatusBarIconStatus {
         _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType,
                                                 nil];
         _number_of_items = 0;
+        _connected = gap_user_status_offline;
         [self registerForDraggedTypes:_drag_types];
     }
     
@@ -51,6 +54,8 @@ typedef enum IAStatusBarIconStatus {
         _icon[STATUS_BAR_ICON_NORMAL] = [IAFunctions imageNamed:@"status_bar_icon_normal"];
         _icon[STATUS_BAR_ICON_FIRE] = [IAFunctions imageNamed:@"status_bar_icon_fire"];
         _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"status_bar_icon_clicked"];
+        _icon[STATUS_BAR_ICON_NO_CONNECTION] = [IAFunctions
+                                                imageNamed:@"icon_status_bar_no_connection"];
         CGFloat width = [status_item length];
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
         NSRect rect = NSMakeRect(0.0, 0.0, width, height);
@@ -71,6 +76,8 @@ typedef enum IAStatusBarIconStatus {
     NSImage* icon;
     if (_is_highlighted)
         icon = _icon[STATUS_BAR_ICON_CLICKED];
+    else if (_connected == gap_user_status_offline)
+        icon = _icon[STATUS_BAR_ICON_NO_CONNECTION];
     else if (_number_of_items > 0)
         icon = _icon[STATUS_BAR_ICON_FIRE];
     else
@@ -109,6 +116,12 @@ typedef enum IAStatusBarIconStatus {
 }
 
 //- General Functions ------------------------------------------------------------------------------
+
+- (void)setConnected:(gap_UserStatus)connected
+{
+    _connected = connected;
+    [self setNeedsDisplay:YES];
+}
 
 - (void)setHighlighted:(BOOL)is_highlighted
 {
