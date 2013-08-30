@@ -170,6 +170,7 @@
     [self.spinner stopAnimation:nil];
     [self.email_address setEnabled:YES];
     [self.password setEnabled:YES];
+    [self.login_button setEnabled:YES];
     
     NSRect frame = NSZeroRect;
     frame.size = self.view.bounds.size;
@@ -205,6 +206,7 @@
     [self.spinner stopAnimation:nil];
     [self.email_address setEnabled:YES];
     [self.password setEnabled:YES];
+    [self.login_button setEnabled:YES];
     
     [self.view.window makeFirstResponder:self.email_address];
     
@@ -309,6 +311,7 @@
             [self.spinner startAnimation:nil];
             [self.email_address setEnabled:NO];
             [self.password setEnabled:NO];
+            [self.login_button setEnabled:NO];
             [_delegate tryLogin:self
                        username:self.email_address.stringValue
                        password:self.password.stringValue];
