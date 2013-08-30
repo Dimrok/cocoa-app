@@ -57,4 +57,6 @@
 - (void)transactionManager:(IATransactionManager*)sender
         transactionUpdated:(IATransaction*)transaction;
 
+- (void)transactionManagerHasGotHistory:(IATransactionManager*)sender;
+
 @end

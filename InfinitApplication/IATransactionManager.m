@@ -58,6 +58,7 @@
         transaction.view_mode = [self transactionViewMode:transaction];
         [_transactions addObject:transaction];
     }
+    [_delegate transactionManagerHasGotHistory:self];
 }
 
 - (NSInteger)indexOfTransactionWithId:(NSNumber*)transaction_id
