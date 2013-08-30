@@ -166,6 +166,11 @@
 {
     if (_window != nil)
         return;
+    
+    [self.spinner stopAnimation:nil];
+    [self.email_address setEnabled:YES];
+    [self.password setEnabled:YES];
+    
     NSRect frame = NSZeroRect;
     frame.size = self.view.bounds.size;
     frame.origin = [self centreFrame:frame onScreen:screen];
@@ -196,6 +201,13 @@
     {
         [self showLoginWindowOnScreen:screen];
     }
+    
+    [self.spinner stopAnimation:nil];
+    [self.email_address setEnabled:YES];
+    [self.password setEnabled:YES];
+    
+    [self.view.window makeFirstResponder:self.email_address];
+    
     NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     para.alignment = NSCenterTextAlignment;
     NSDictionary* error_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
@@ -294,6 +306,9 @@
     {
         if ([self inputsGood])
         {
+            [self.spinner startAnimation:nil];
+            [self.email_address setEnabled:NO];
+            [self.password setEnabled:NO];
             [_delegate tryLogin:self
                        username:self.email_address.stringValue
                        password:self.password.stringValue];

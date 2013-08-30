@@ -27,6 +27,7 @@
 @property (nonatomic, strong) IBOutlet NSButton* login_button;
 @property (nonatomic, strong) IBOutlet IALoginView* login_view;
 @property (nonatomic, strong) IBOutlet NSTextField* password;
+@property (nonatomic, strong) IBOutlet NSProgressIndicator* spinner;
 
 - (id)initWithDelegate:(id<IALoginViewControllerProtocol>)delegate;
 
