@@ -247,12 +247,14 @@
     switch (focus.intValue) {
         case ADVANCED_VIEW_USER_SEARCH_FOCUS:
             [self.view.window makeFirstResponder:_user_search_controller.search_field];
+            [_user_search_controller cursorAtEndOfSearchBox];
             break;
         case ADVANCED_VIEW_NOTE_FOCUS:
             [self.view.window makeFirstResponder:self.note_field];
             break;
         default:
             [self.view.window makeFirstResponder:_user_search_controller.search_field];
+            [_user_search_controller cursorAtEndOfSearchBox];
             break;
     }
 }
@@ -329,6 +331,7 @@ doCommandBySelector:(SEL)commandSelector
     if (commandSelector == @selector(insertTab:))
     {
         [self.view.window makeFirstResponder:_user_search_controller.search_field];
+        [_user_search_controller cursorAtEndOfSearchBox];
         return YES;
     }
     return NO;
