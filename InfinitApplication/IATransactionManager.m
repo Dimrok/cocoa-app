@@ -187,15 +187,31 @@
                 return TRANSACTION_VIEW_WAITING_ACCEPT;
             
         case gap_transaction_waiting_for_accept:
-            if (transaction.recipient.is_ghost)
-                return TRANSACTION_VIEW_WAITING_REGISTER;
-            else if (transaction.recipient.status != gap_user_status_online)
-                return TRANSACTION_VIEW_WAITING_ONLINE;
+            if (transaction.from_me)
+            {
+                if (transaction.recipient.is_ghost)
+                    return TRANSACTION_VIEW_WAITING_REGISTER;
+                else if (transaction.recipient.status != gap_user_status_online)
+                    return TRANSACTION_VIEW_WAITING_ONLINE;
+                else
+                    return TRANSACTION_VIEW_WAITING_ACCEPT;
+            }
             else
+            {
                 return TRANSACTION_VIEW_WAITING_ACCEPT;
+            }
+        
+        case gap_transaction_accepted:
+            if (transaction.other_user.status == gap_user_status_online)
+                return TRANSACTION_VIEW_PREPARING;
+            else
+                return TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE;
             
         case gap_transaction_preparing:
-            return TRANSACTION_VIEW_PREPARING;
+            if (transaction.other_user.status == gap_user_status_online)
+                return TRANSACTION_VIEW_PREPARING;
+            else
+                return TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE;
             
         case gap_transaction_running:
             return TRANSACTION_VIEW_RUNNING;

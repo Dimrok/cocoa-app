@@ -101,6 +101,9 @@
                 case TRANSACTION_VIEW_WAITING_ACCEPT:
                     return buttons;
                     
+                case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
+                    return buttons;
+                    
                 case TRANSACTION_VIEW_PREPARING:
                     return progress;
                 
@@ -256,6 +259,17 @@
                 if (_transaction.from_me)
                 {
                     info = NSLocalizedString(@"Send rejected", @"send rejected");
+                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                                   initWithString:info
+                                                                   attributes:info_attrs];
+                }
+                break;
+                
+            case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
+                if (_transaction.from_me)
+                {
+                    info = NSLocalizedString(@"Waiting for user to be online...",
+                                             @"Waiting for user to be online");
                     self.information_text.attributedStringValue = [[NSAttributedString alloc]
                                                                    initWithString:info
                                                                    attributes:info_attrs];
