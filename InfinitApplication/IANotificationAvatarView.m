@@ -42,6 +42,14 @@
 
 //- Mouse Handling ---------------------------------------------------------------------------------
 
+- (void)resetCursorRects
+{
+    [super resetCursorRects];
+    if (_mode == AVATAR_VIEW_NORMAL)
+        return;
+    NSCursor* cursor = [NSCursor pointingHandCursor];
+    [self addCursorRect:self.bounds cursor:cursor];
+}
 
 - (void)ensureTrackingArea
 {
