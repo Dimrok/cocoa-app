@@ -285,6 +285,7 @@
                 [self.progress_indicator stopAnimation:nil];
                 self.progress_indicator.maxValue = 1.0;
                 [self.progress_indicator setIndeterminate:NO];
+                self.progress_indicator.doubleValue = _transaction.progress;
                 break;
             
             case TRANSACTION_VIEW_CANCELLED_OTHER:
