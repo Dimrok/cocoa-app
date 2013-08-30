@@ -21,6 +21,8 @@
 
 - (id)initWithDelegate:(id<IATransactionManagerProtocol>)delegate;
 
+- (void)getHistory;
+
 - (NSArray*)transactionsForUser:(IAUser*)user;
 
 - (NSUInteger)activeAndUnreadTransactionsForUser:(IAUser*)user;

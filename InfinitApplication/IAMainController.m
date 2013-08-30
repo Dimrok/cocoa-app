@@ -201,6 +201,9 @@
         [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
                             performSelector:nil
                                    onObject:nil];
+        // XXX We must find a better way to manage fetching of history per user
+        [_transaction_manager getHistory];
+        [[IAGapState instance] startPolling];
     }
     else
     {

@@ -46,6 +46,20 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (void)getHistory
+{
+    NSArray* transaction_ids = [IAGapState.instance getTransactionList];
+    for (NSNumber* transaction_id in transaction_ids)
+    {
+        IATransaction* transaction = [IATransaction
+                                      transactionWithId:transaction_id
+                                              andStatus:[[IAGapState instance]
+                                                         getStatusForTransaction:transaction_id]];
+        transaction.view_mode = [self transactionViewMode:transaction];
+        [_transactions addObject:transaction];
+    }
+}
+
 - (NSInteger)indexOfTransactionWithId:(NSNumber*)transaction_id
 {
     NSInteger count = 0;
@@ -142,20 +156,29 @@
 
 //- Transaction View Mode Handling -----------------------------------------------------------------
 
+
+//    gap_transaction_none,
+//    gap_transaction_pending,
+//    gap_transaction_copying,
+//    gap_transaction_waiting_for_accept,
+//    gap_transaction_accepted,
+//    gap_transaction_preparing,
+//    gap_transaction_running,
+//    gap_transaction_cleaning,
+//    gap_transaction_finished,
+//    gap_transaction_failed,
+//    gap_transaction_canceled,
+//    gap_transaction_rejected,
+
+
 - (IATransactionViewMode)transactionViewMode:(IATransaction*)transaction
 {
     switch (transaction.status)
-    {
-        case TransferState_NewTransaction:
-            return TRANSACTION_VIEW_NONE;
-            
-        case TransferState_SenderCreateNetwork:
+    {            
+        case gap_transaction_pending:
             return TRANSACTION_VIEW_PENDING_SEND;
             
-        case TransferState_SenderCreateTransaction:
-            return TRANSACTION_VIEW_PENDING_SEND;
-            
-        case TransferState_SenderCopyFiles:
+        case gap_transaction_copying:
             if (transaction.recipient.is_ghost)
                 return TRANSACTION_VIEW_WAITING_REGISTER;
             else if (transaction.recipient.status != gap_user_status_online)
@@ -163,7 +186,7 @@
             else
                 return TRANSACTION_VIEW_WAITING_ACCEPT;
             
-        case TransferState_SenderWaitForDecision:
+        case gap_transaction_waiting_for_accept:
             if (transaction.recipient.is_ghost)
                 return TRANSACTION_VIEW_WAITING_REGISTER;
             else if (transaction.recipient.status != gap_user_status_online)
@@ -171,46 +194,25 @@
             else
                 return TRANSACTION_VIEW_WAITING_ACCEPT;
             
-        case TransferState_RecipientWaitForDecision:
-            return TRANSACTION_VIEW_WAITING_ACCEPT;
-            
-        case TransferState_RecipientAccepted:
+        case gap_transaction_preparing:
             return TRANSACTION_VIEW_PREPARING;
             
-        case TransferState_GrantPermissions:
-            return TRANSACTION_VIEW_PREPARING;
-            
-        case TransferState_PublishInterfaces:
-            return TRANSACTION_VIEW_PREPARING;
-            
-        case TransferState_Connect:
-            return TRANSACTION_VIEW_PREPARING;
-            
-        case TransferState_PeerDisconnected: // XXX Currently will restart transfer
-            return TRANSACTION_VIEW_PAUSE_AUTO;
-            
-        case TransferState_PeerConnectionLost: // XXX Currently will restart transfer
-            return TRANSACTION_VIEW_PAUSE_AUTO;
-            
-        case TransferState_Transfer:
+        case gap_transaction_running:
             return TRANSACTION_VIEW_RUNNING;
             
-        case TransferState_CleanLocal:
+        case gap_transaction_cleaning:
             return transaction.view_mode;
             
-        case TransferState_CleanRemote:
-            return transaction.view_mode;
-            
-        case TransferState_Finished:
+        case gap_transaction_finished:
             return TRANSACTION_VIEW_FINISHED;
             
-        case TransferState_Rejected:
+        case gap_transaction_rejected:
             return TRANSACTION_VIEW_REJECTED;
             
-        case TransferState_Canceled: // Must include logic to say who cancelled transaction
+        case gap_transaction_canceled: // Must include logic to say who cancelled transaction
             return TRANSACTION_VIEW_CANCELLED_SELF;
         
-        case TransferState_Failed:
+        case gap_transaction_failed:
             return TRANSACTION_VIEW_FAILED;
             
         default:
