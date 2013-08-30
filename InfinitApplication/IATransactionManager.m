@@ -381,13 +381,4 @@
     IALog(@"%@ Error (%d: %@) for transaction %@(", self, error_code, error_reason, transaction);
 }
 
-- (void)onNotificationsRead:(NSNotification*)notification
-{
-    for (IATransaction* transaction in _transactions)
-    {
-        if (!transaction.from_me && !transaction.view_mode == TRANSACTION_VIEW_WAITING_ACCEPT)
-            transaction.is_new = NO;
-    }
-}
-
 @end
