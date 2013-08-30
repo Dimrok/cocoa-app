@@ -144,7 +144,7 @@
                                  
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
-        context.duration = 0.2;
+        context.duration = 0.15;
         if (x_diff != 0)
         {
             [self.window.animator setFrameOrigin:
