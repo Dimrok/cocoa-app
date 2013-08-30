@@ -100,6 +100,7 @@
 		83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB617C60FD60009292D /* icon-reject@2x.png */; };
 		83929BC017C618CD0009292D /* icon-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBE17C618CD0009292D /* icon-accept.png */; };
 		83929BC117C618CD0009292D /* icon-accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBF17C618CD0009292D /* icon-accept@2x.png */; };
+		83974CF317D127E200894E8D /* IAConversationHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83974CF217D127E200894E8D /* IAConversationHeaderView.m */; };
 		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
 		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
 		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
@@ -416,6 +417,8 @@
 		83929BB617C60FD60009292D /* icon-reject@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject@2x.png"; sourceTree = "<group>"; };
 		83929BBE17C618CD0009292D /* icon-accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-accept.png"; sourceTree = "<group>"; };
 		83929BBF17C618CD0009292D /* icon-accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-accept@2x.png"; sourceTree = "<group>"; };
+		83974CF117D127E200894E8D /* IAConversationHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAConversationHeaderView.h; sourceTree = "<group>"; };
+		83974CF217D127E200894E8D /* IAConversationHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationHeaderView.m; sourceTree = "<group>"; };
 		8398834D17A6A5AE009409B3 /* IAAutoStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAutoStartup.h; sourceTree = "<group>"; };
 		8398834E17A6A5AE009409B3 /* IAAutoStartup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAutoStartup.m; sourceTree = "<group>"; };
 		8398835017A6A5BB009409B3 /* IAKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAKeychainManager.h; sourceTree = "<group>"; };
@@ -762,6 +765,8 @@
 				8308BCB317BD35E400B2763A /* IAConversationCellView.m */,
 				834D47E917CB4EAF00EEB16A /* IAConversationElement.h */,
 				834D47EA17CB4EAF00EEB16A /* IAConversationElement.m */,
+				83974CF117D127E200894E8D /* IAConversationHeaderView.h */,
+				83974CF217D127E200894E8D /* IAConversationHeaderView.m */,
 			);
 			name = "Conversation View";
 			sourceTree = "<group>";
@@ -1300,6 +1305,7 @@
 				834D47EB17CB4EAF00EEB16A /* IAConversationElement.m in Sources */,
 				833C319117CCC85200941C09 /* IADesktopNotifier.m in Sources */,
 				831AA69F17D0FCC00004AE8D /* IAMeManager.m in Sources */,
+				83974CF317D127E200894E8D /* IAConversationHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

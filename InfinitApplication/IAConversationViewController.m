@@ -16,43 +16,6 @@
 
 @end
 
-//- Conversation Header View -----------------------------------------------------------------------
-
-@interface IAConversationHeaderView : NSView
-@end
-
-@implementation IAConversationHeaderView
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    // White background
-    NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:
-                                                        NSMakeRect(0.0,
-                                                                   2.0,
-                                                                   self.bounds.size.width,
-                                                                   self.bounds.size.height - 2.0)];
-    [IA_GREY_COLOUR(255.0) set];
-    [white_bg fill];
-    
-    // Grey line
-    NSBezierPath* grey_line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
-                                                                          1.0,
-                                                                          self.bounds.size.width,
-                                                                          1.0)];
-    [IA_GREY_COLOUR(223.0) set];
-    [grey_line fill];
-    
-    // White line
-    NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
-                                                                           0.0,
-                                                                           self.bounds.size.width,
-                                                                           1.0)];
-    [IA_GREY_COLOUR(255.0) set];
-    [white_line fill];
-}
-
-@end
-
 //- Conversation Row View --------------------------------------------------------------------------
 
 @interface IAConversationRowView : NSTableRowView
@@ -107,6 +70,8 @@
 
 - (void)setupPersonView
 {
+    [self.person_view setDelegate:self];
+    
     self.avatar_view.image = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
                                                                             andLoadIfNeeded:YES]
                                                ofDiameter:50.0
@@ -539,6 +504,13 @@
          wantsRejectTransaction:element.transaction];
 }
 
+//- Conversation Header View -----------------------------------------------------------------------
+
+- (void)conversationHeaderGotClick:(IAConversationHeaderView*)sender
+{
+    [_delegate conversationViewWantsBack:self];
+}
+
 //- Transaction Callbacks --------------------------------------------------------------------------
 
 - (void)transactionAdded:(IATransaction*)transaction
@@ -594,7 +566,7 @@
     [self updateListOfRowsWithProgress];
 }
 
-//- User callbacks ---------------------------------------------------------------------------------
+//- User Callbacks ---------------------------------------------------------------------------------
 
 - (void)userUpdated:(IAUser*)user
 {

@@ -8,15 +8,17 @@
 // The conversation view shows the transaction history for a given user
 
 #import "IAViewController.h"
+#import "IAConversationHeaderView.h"
 
 @protocol IAConversationViewProtocol;
 
 @interface IAConversationViewController : IAViewController <NSTableViewDataSource,
-                                                            NSTableViewDelegate>
+                                                            NSTableViewDelegate,
+                                                            IAConversationHeaderProtocol>
 
 @property (nonatomic, strong) IBOutlet NSImageView* avatar_view;
 @property (nonatomic, strong) IBOutlet NSButton* back_button;
-@property (nonatomic, strong) IBOutlet NSView* person_view;
+@property (nonatomic, strong) IBOutlet IAConversationHeaderView* person_view;
 @property (nonatomic, strong) IBOutlet NSScrollView* scroll_view;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSButton* transfer_button;
