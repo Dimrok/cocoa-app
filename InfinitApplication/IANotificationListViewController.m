@@ -251,9 +251,9 @@
     else
         [_rows_with_progress removeAllObjects];
     
+    NSUInteger row = 0;
     for (IATransaction* transaction in _transaction_list)
     {
-        NSUInteger row = 0;
         if ([_delegate notificationList:self
         transferringTransactionsForUser:transaction.other_user])
         {
@@ -305,7 +305,6 @@
      }
                         completionHandler:^
      {
-         [self.view layoutSubtreeIfNeeded];
      }];
 }
 
@@ -473,7 +472,7 @@
             [self.table_view beginUpdates];
             NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
             [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                                   withAnimation:NSTableViewAnimationSlideRight];
+                                   withAnimation:NSTableViewAnimationSlideLeft];
             [_transaction_list removeObject:existing_transaction];
             [_transaction_list insertObject:transaction
                                     atIndex:0];
