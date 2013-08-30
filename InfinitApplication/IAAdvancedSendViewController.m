@@ -86,6 +86,24 @@
 
 @end
 
+//- Footer View ------------------------------------------------------------------------------------
+
+@interface IAAdvancedSendViewFooterView : IAFooterView
+@end
+
+@implementation IAAdvancedSendViewFooterView
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSBezierPath* bg = [IAFunctions roundedBottomBezierWithRect:self.bounds
+                                                   cornerRadius:6.0];
+    [IA_GREY_COLOUR(255.0) set];
+    [bg fill];
+}
+
+@end
+
+
 //- File Table Row View ----------------------------------------------------------------------------
 
 @interface IASendFileListRowView : NSTableRowView
@@ -236,10 +254,19 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (void)setSendButtonState
+{
+    if ([self inputsGood])
+        [self.send_button setEnabled:YES];
+    else
+        [self.send_button setEnabled:NO];
+}
+
 - (void)filesUpdated
 {
     _file_list = [_delegate advancedSendViewWantsFileList:self];
     [self updateTable];
+    [self setSendButtonState];
 }
 
 - (void)setFocus:(NSNumber*)focus
@@ -481,21 +508,20 @@ wantsRemoveFavourite:(IAUser*)user
            wantsRemoveFavourite:user];
 }
 
-- (void)searchViewWantsCheckInputs:(IAUserSearchViewController*)sender
+- (void)searchViewInputsChanged:(IAUserSearchViewController*)sender
 {
-    if ([self inputsGood])
-    {
-        // XXX change send button to red
-    }
-    else
-    {
-        // XXX change send button to grey
-    }
+    [self setSendButtonState];
 }
 
 - (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender
 {
-    // Do nothing
+    if ([self inputsGood])
+    {
+        [_delegate advancedSendView:self
+                     wantsSendFiles:_file_list
+                            toUsers:_recipient_list
+                        withMessage:_message];
+    }
 }
 
 @end

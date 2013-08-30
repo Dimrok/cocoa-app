@@ -126,6 +126,7 @@
     [self performSelector:@selector(setFocusToSearchField)
                withObject:nil
                afterDelay:0.4];
+    [_user_search_controller.send_button setEnabled:NO];
 }
 
 - (void)setFocusToSearchField
@@ -140,6 +141,14 @@
 }
 
 //- General Functions ------------------------------------------------------------------------------
+
+- (void)setSendButtonState
+{
+    if ([self inputsGood])
+        [_user_search_controller.send_button setEnabled:YES];
+    else
+        [_user_search_controller.send_button setEnabled:NO];
+}
 
 - (void)updateAddFilesButton
 {
@@ -162,6 +171,7 @@
 {
     _file_list = [_delegate simpleSendViewWantsFileList:self];
     [self updateAddFilesButton];
+    [self setSendButtonState];
 }
 
 - (BOOL)inputsGood
@@ -260,16 +270,9 @@ wantsRemoveFavourite:(IAUser*)user
          wantsRemoveFavourite:user];
 }
 
-- (void)searchViewWantsCheckInputs:(IAUserSearchViewController*)sender
+- (void)searchViewInputsChanged:(IAUserSearchViewController*)sender
 {
-    if ([self inputsGood])
-    {
-        // XXX change button to red
-    }
-    else
-    {
-        // XXX change button to grey
-    }
+    [self setSendButtonState];
 }
 
 - (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender

@@ -265,6 +265,7 @@
     NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
     [temp addObject:user];
     [self.search_field setObjectValue:temp];
+    [_delegate searchViewInputsChanged:self];
 }
 
 - (void)cursorAtEndOfSearchBox
@@ -388,9 +389,9 @@
     else
         [self clearResults];
     
-    if (tokens.count < _token_count)
+    if (tokens.count < _token_count || tokens.count == 0)
     {
-        [_delegate searchViewWantsCheckInputs:self];
+        [_delegate searchViewInputsChanged:self];
         _token_count = tokens.count;
     }
 }
@@ -404,7 +405,7 @@ doCommandBySelector:(SEL)commandSelector
     
     if (commandSelector == @selector(insertNewline:))
     {
-        [_delegate searchViewWantsCheckInputs:self];
+        [_delegate searchViewInputsChanged:self];
         NSArray* tokens = self.search_field.objectValue;
         if (tokens.count == _token_count)
         {

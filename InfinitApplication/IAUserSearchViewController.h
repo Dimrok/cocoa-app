@@ -57,7 +57,7 @@
 - (void)searchView:(IAUserSearchViewController*)sender
  wantsRemoveFavourite:(IAUser*)user;
 
-- (void)searchViewWantsCheckInputs:(IAUserSearchViewController*)sender;
+- (void)searchViewInputsChanged:(IAUserSearchViewController*)sender;
 
 - (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender;
 
