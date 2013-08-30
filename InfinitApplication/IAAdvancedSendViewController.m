@@ -277,7 +277,10 @@
         }
     }
     
-    _message = [self.note_field.stringValue substringWithRange:NSMakeRange(0, _note_limit)];
+    if (self.note_field.stringValue.length > _note_limit)
+        _message = [self.note_field.stringValue substringWithRange:NSMakeRange(0, _note_limit)];
+    else
+        _message = self.note_field.stringValue;
     
     return YES;
 }
