@@ -247,6 +247,11 @@
     [self updateListOfRowsWithProgress];
 }
 
+- (void)scrollAfterRowAdd
+{
+    [self.table_view scrollRowToVisible:_element_list.count - 1];
+}
+
 //- Table Functions --------------------------------------------------------------------------------
 
 - (void)resizeContentView
@@ -260,7 +265,6 @@
      }
                         completionHandler:^
      {
-         [self.view layoutSubtreeIfNeeded];
      }];
 }
 
@@ -362,6 +366,14 @@
                              left_right_select]
                                                              owner:self];
                     break;
+                
+                case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
+                {
+                    cell = [self.table_view makeViewWithIdentifier:
+                            [NSString stringWithFormat:@"conversation_cell_message_cancel_%@",
+                             left_right_select]
+                                                             owner:self];
+                }
                     
                 case TRANSACTION_VIEW_PREPARING:
                     cell = [self.table_view makeViewWithIdentifier:
@@ -541,9 +553,13 @@
     [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:list_bottom]
                            withAnimation:NSTableViewAnimationSlideDown];
     [self.table_view endUpdates];
-    [self.table_view scrollRowToVisible:list_bottom];
     [self resizeContentView];
-
+    
+    // XXX Scrolling before row animation is complete doesn't scroll properly
+    [self performSelector:@selector(scrollAfterRowAdd)
+               withObject:nil
+               afterDelay:0.2];
+    
     [self updateListOfRowsWithProgress];
 }
 
@@ -572,9 +588,9 @@
     [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
                            withAnimation:NSTableViewAnimationSlideLeft];
     [self.table_view endUpdates];
-    [self.table_view scrollRowToVisible:count];
     [self resizeContentView];
 
+    [self.table_view scrollRowToVisible:count];
     [self updateListOfRowsWithProgress];
 }
 
