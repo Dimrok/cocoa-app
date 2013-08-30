@@ -254,7 +254,7 @@
     CGFloat y_diff = [self tableHeight] - self.content_height_constraint.constant;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.15;
          [self.content_height_constraint.animator setConstant:(y_diff +
                                                         self.content_height_constraint.constant)];
      }
@@ -566,7 +566,7 @@
     IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
     [self.table_view beginUpdates];
     [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-                           withAnimation:NSTableViewAnimationSlideLeft];
+                           withAnimation:NSTableViewAnimationSlideRight];
     [_element_list removeObjectAtIndex:count];
     [_element_list insertObject:element atIndex:count];
     [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
