@@ -232,7 +232,7 @@
 - (void)setUpdatorRunning:(BOOL)is_running
 {
 	if (is_running && _progress_timer == nil)
-		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                            target:self
                                                          selector:@selector(updateProgress)
                                                          userInfo:nil
@@ -403,6 +403,7 @@
                         completionHandler:^
      {
          [_delegate notificationList:self gotClickOnUser:user];
+         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
      }];
 }
 
@@ -594,6 +595,7 @@
                         completionHandler:^
      {
          [_delegate notificationList:self gotClickOnUser:user];
+         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
      }];
 }
 
