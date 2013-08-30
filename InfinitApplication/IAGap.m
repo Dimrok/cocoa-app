@@ -20,7 +20,7 @@ static
 void on_user_status(uint32_t const user_id, gap_UserStatus status);
 
 static
-void on_transaction(uint32_t const transaction_id, TransferState status);
+void on_transaction(uint32_t const transaction_id, gap_TransactionStatus status);
 
 static
 void on_error_callback(gap_Status errcode, char const* reason, uint32_t const transaction_id);
@@ -490,6 +490,11 @@ return [NSString stringWithUTF8String:str]; \
     return array;
 }
 
+- (gap_TransactionStatus)transaction_status:(NSNumber*)transaction_id
+{
+    return gap_transaction_status(_state, transaction_id.unsignedIntValue);
+}
+
 - (NSNumber*)send_files_to_user:(NSNumber*)recipient_id
                           files:(NSArray*)files
                         message:(NSString*)message
@@ -626,10 +631,10 @@ static void on_user_status(uint32_t const user_id,
     }
 }
 
-static void on_transaction(uint32_t const transaction_id, TransferState status)
+static void on_transaction(uint32_t const transaction_id, gap_TransactionStatus status)
 {
     assert(transaction_id != gap_null());
-    IALog(@">>> On transaction notif: %d", transaction_id);
+//    IALog(@">>> On transaction notif: %d", transaction_id);
     @try
     {
         NSMutableDictionary* msg = [NSMutableDictionary dictionary];
