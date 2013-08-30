@@ -351,6 +351,7 @@
 - (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForUserId:(NSNumber*)user_id
 {
+    [_status_bar_icon setHighlighted:YES];
     [self showConversationViewForUser:[IAUser userWithId:user_id]];
 }
 
