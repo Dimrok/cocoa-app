@@ -102,7 +102,8 @@
 
 - (BOOL)closeOnFocusLost
 {
-    return YES;
+    // XXX debug
+    return NO;
 }
 
 - (void)setupPersonView
@@ -570,7 +571,7 @@
     [_element_list removeObjectAtIndex:count];
     [_element_list insertObject:element atIndex:count];
     [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-                           withAnimation:NSTableViewAnimationSlideRight];
+                           withAnimation:NSTableViewAnimationSlideLeft];
     [self.table_view endUpdates];
     [self.table_view scrollRowToVisible:count];
     [self resizeContentView];
