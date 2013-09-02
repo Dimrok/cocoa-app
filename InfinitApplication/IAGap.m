@@ -19,6 +19,8 @@
 
 //- Callbacks for notifications -----------------------------------------------------
 
+static BOOL _callbacks_set = NO;
+
 static
 void on_user_status(uint32_t const user_id, gap_UserStatus status);
 
@@ -190,18 +192,28 @@ void on_connection_status(gap_UserStatus status);
     return _metrics_protocol;
 }
 
-- (gap_Status)login:(NSString*)email
-           password:(NSString*)hash_password;
+- (void)setCallbacks
 {
-    [IAGap sendNotif:IA_GAP_EVENT_LOGIN_OPERATION withInfo:nil];
     if ((gap_user_status_callback(_state, &on_user_status) != gap_ok) ||
         (gap_transaction_callback(_state, &on_transaction) != gap_ok) ||
         (gap_connection_callback(_state, &on_connection_status) != gap_ok))
         // XXX add error callback
         //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
     {
-        IALog(@"WARNING: Cannot set callbacks");
+        IALog(@"%@ WARNING: Cannot set callbacks", self);
     }
+    else
+    {
+        _callbacks_set = YES;
+    }
+}
+
+- (gap_Status)login:(NSString*)email
+           password:(NSString*)hash_password;
+{
+    [IAGap sendNotif:IA_GAP_EVENT_LOGIN_OPERATION withInfo:nil];
+    if (_callbacks_set == NO)
+        [self setCallbacks];
     gap_Status res = gap_login(_state, email.UTF8String, hash_password.UTF8String);
     if (res == gap_ok)
     {
