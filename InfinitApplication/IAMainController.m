@@ -9,8 +9,10 @@
 #import "IAMainController.h"
 
 #import <Gap/IAGapState.h>
+
 #import "IAGap.h"
 #import "IAKeychainManager.h"
+#import "IANoConnectionViewController.h"
 #import "IAUserPrefs.h"
 
 @implementation IAMainController
@@ -26,6 +28,7 @@
     IAConversationViewController* _conversation_view_controller;
     IAGeneralSendController* _general_send_controller;
     IALoginViewController* _login_view_controller;
+    IANoConnectionViewController* _no_connection_view_controller;
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
     IAWindowController* _window_controller;
@@ -157,6 +160,12 @@
     [self openOrChangeViewController:controller];
 }
 
+- (void)showNotConnectedView
+{
+    _no_connection_view_controller = [[IANoConnectionViewController alloc] init];
+    [self openOrChangeViewController:_no_connection_view_controller];
+}
+
 //- Window Handling --------------------------------------------------------------------------------
 
 - (void)closeNotificationWindow
@@ -194,6 +203,8 @@
     if (result.success)
     {
         IALog(@"%@ Logged in", self);
+        
+        [_me_manager setConnection_status:gap_user_status_online];
         
         // XXX No on_connection callback on login, this is a work around
         [_status_bar_icon setConnected:gap_user_status_online];
@@ -309,6 +320,11 @@
     if (![[IAGapState instance] logged_in])
     {
         [self showNotLoggedInView];
+        return;
+    }
+    else if ([_me_manager connection_status] != gap_user_status_online)
+    {
+        [self showNotConnectedView];
         return;
     }
     [self showNotifications];
@@ -429,6 +445,12 @@ hadClickNotificationForUserId:(NSNumber*)user_id
 hadConnectionStateChange:(gap_UserStatus)status
 {
     [_status_bar_icon setConnected:status];
+    if (_current_view_controller == nil)
+        return;
+    if (status == gap_user_status_online)
+        [self showNotifications];
+    else
+        [self showNotConnectedView];
 }
 
 //- Notification List Protocol ---------------------------------------------------------------------
