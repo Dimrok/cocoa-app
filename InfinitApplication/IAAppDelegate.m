@@ -11,10 +11,36 @@
 #import <Sparkle/Sparkle.h>
 
 #import "IAAutoStartup.h"
+#import "IACrashReportManager.h"
+#import "IALogFileManager.h"
+
+//- Automatic Relaunching --------------------------------------------------------------------------
+
+@implementation NSApplication (Relaunch)
+
+- (void)relaunchAfterDelay:(float)seconds
+{
+	NSTask* task = [[NSTask alloc] init];
+	NSMutableArray* args = [NSMutableArray array];
+	[args addObject:[NSString stringWithFormat:@"sleep %f; open \"%@\"",
+                                               seconds,
+                                               [[NSBundle mainBundle] bundlePath]]];
+	[task setLaunchPath:@"/bin/sh"];
+	[task setArguments:args];
+	[task launch];
+	
+	[self terminate:nil];
+}
+
+@end
 
 @implementation IAAppDelegate
+{
+@private
+    IALogFileManager* _log_manager;
+}
 
-//- Initialisation ---------------------------------------------------------------------------------
+//- Sparkle Updator --------------------------------------------------------------------------------
 
 - (void)setupUpdater
 {
@@ -23,15 +49,25 @@
 //    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 }
 
+//- Login Items ------------------------------------------------------------------------------------
+
+// XXX This will later be managed in settings
 - (void)checkInLoginItems
 {
 //    if (![[IAAutoStartup sharedInstance] appInLoginItemList])
 //        [[IAAutoStartup sharedInstance] addAppAsLoginItem];
 }
 
-- (void)awakeFromNib
+//- Initialisation ---------------------------------------------------------------------------------
+
+- (id)init
 {
-    [self setupUpdater];
+    if (self = [super init])
+    {
+        // Log manager must be initialised here, before the new log file is written.
+        _log_manager = [IALogFileManager sharedInstance];
+    }
+    return self;
 }
 
 - (void)dealloc
@@ -39,9 +75,15 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
+- (void)awakeFromNib
+{
+    [self setupUpdater];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     _controller = [[IAMainController alloc] initWithDelegate:self];
+    [IACrashReportManager setupCrashReporter];
     NSAppleEventManager* appleEventManager = [NSAppleEventManager sharedAppleEventManager];
     [appleEventManager setEventHandler:self
                            andSelector:@selector(handleQuitEvent:withReplyEvent:)
@@ -71,6 +113,7 @@
 - (IBAction)cleanQuit:(id)sender
 {
     [_controller handleQuit];
+    // If there's a problem quiting after 10 sec, terminate
     [self performSelector:@selector(delayedTerminate)
                withObject:nil
                afterDelay:10.0];
