@@ -147,6 +147,8 @@
 		83C99E2C17ABA13100AFF091 /* icon-files-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C99E2A17ABA13100AFF091 /* icon-files-hover@2x.png */; };
 		83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD106817D48D9700AA0A19 /* IALogFileManager.m */; };
 		83CD108017D49D7E00AA0A19 /* IACrashReportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD107F17D49D7E00AA0A19 /* IACrashReportManager.m */; };
+		83CD108917D4F95200AA0A19 /* IANoConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD108717D4F95200AA0A19 /* IANoConnectionViewController.m */; };
+		83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */; };
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
 		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
@@ -582,6 +584,9 @@
 		83CD106817D48D9700AA0A19 /* IALogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IALogFileManager.m; sourceTree = "<group>"; };
 		83CD107E17D49D7E00AA0A19 /* IACrashReportManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACrashReportManager.h; sourceTree = "<group>"; };
 		83CD107F17D49D7E00AA0A19 /* IACrashReportManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACrashReportManager.m; sourceTree = "<group>"; };
+		83CD108617D4F95200AA0A19 /* IANoConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANoConnectionViewController.h; sourceTree = "<group>"; };
+		83CD108717D4F95200AA0A19 /* IANoConnectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANoConnectionViewController.m; sourceTree = "<group>"; };
+		83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANoConnectionViewController.xib; sourceTree = "<group>"; };
 		83CD6FB317A672E5004F55D1 /* IAGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGap.h; sourceTree = "<group>"; };
 		83CD6FB417A672E5004F55D1 /* IAGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGap.m; sourceTree = "<group>"; };
 		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
@@ -720,6 +725,7 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
+				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				833C318A17CCC81100941C09 /* Desktop Notifier */,
 				83281BBA17AFFCFA00CAE422 /* Conversation View */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
@@ -1045,6 +1051,16 @@
 				83C99E1017AB9C9100AFF091 /* icon-add-people@2x.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		83CD108517D4F92D00AA0A19 /* No Connection View */ = {
+			isa = PBXGroup;
+			children = (
+				83CD108617D4F95200AA0A19 /* IANoConnectionViewController.h */,
+				83CD108717D4F95200AA0A19 /* IANoConnectionViewController.m */,
+				83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */,
+			);
+			name = "No Connection View";
 			sourceTree = "<group>";
 		};
 		83CD6FB217A672C7004F55D1 /* Gap */ = {
@@ -1450,6 +1466,7 @@
 				834D47E717CB446A00EEB16A /* icon-collapse.png in Resources */,
 				834D47E817CB446A00EEB16A /* icon-collapse@2x.png in Resources */,
 				831AA6A617D101BA0004AE8D /* icon_status_bar_no_connection.png in Resources */,
+				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1538,6 +1555,7 @@
 				83974CF317D127E200894E8D /* IAConversationHeaderView.m in Sources */,
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.m in Sources */,
+				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
