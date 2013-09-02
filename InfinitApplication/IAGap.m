@@ -7,10 +7,13 @@
 //
 
 #import "IAGap.h"
-#import "IAGapMetrics.h"
+
 #import <Gap/IAGapProtocol.h>
 #import <Gap/gap.h>
 #import <Gap/IAGapState.h>
+
+#import "IAGapMetrics.h"
+#import "IALogFileManager.h"
 
 //#define BUILD_PRODUCTION 1
 
@@ -92,44 +95,8 @@ void on_error_callback(gap_Status errcode, char const* reason, uint32_t const tr
     [info setObject:[NSNumber numberWithInteger:(NSInteger)getpid()]
              forKey:@"pid"];
     
-    [[[NotificationForwarder alloc] init:msg withInfo:info] fire];
-}
-
-- (NSString*)logPath
-{
-    return [NSHomeDirectory() stringByAppendingPathComponent:@".infinit"];
-}
-
-- (NSString*)logFile
-{
-    NSString* log_filename = [[NSString alloc] initWithFormat:@"state_%0.0f.log", [[NSDate date] timeIntervalSince1970]];
-    NSString* log_file = [[self logPath] stringByAppendingPathComponent:log_filename];
-    return log_file;
-}
-
-- (NSTimeInterval)numberFromString:(NSString*)str
-{
-    NSString* num_str;
-    NSScanner* scanner = [NSScanner scannerWithString:str];
-    NSCharacterSet* numbers = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    [scanner scanUpToCharactersFromSet:numbers intoString:NULL];
-    [scanner scanCharactersFromSet:numbers intoString:&num_str];
-    return [num_str doubleValue];
-}
-
-- (void)removeOldLogs
-{
-    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-    NSTimeInterval cut_off = now - (7 * 24 * 60 *60); // One week ago
-    NSArray* dir_files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[self logPath] error:nil];
-    NSArray* log_files = [dir_files filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH '.log'"]];
-    for (NSString* file in log_files)
-    {
-        if ([file hasPrefix:@"state"] && [self numberFromString:file] < cut_off)
-        {
-            [[NSFileManager defaultManager] removeItemAtPath:[[self logPath] stringByAppendingPathComponent:file] error:nil];
-        }
-    }
+    [[[NotificationForwarder alloc] init:msg
+                                withInfo:info] fire];
 }
 
 - (id)init
@@ -160,9 +127,8 @@ void on_error_callback(gap_Status errcode, char const* reason, uint32_t const tr
                                                        attributes:nil
                                                             error:nil];
         }
-//        setenv("ELLE_LOG_FILE", [[self logFile] UTF8String], 0);
-        setenv("ELLE_LOG_FILE", "/Users/chris/.infinit/state.log", 0);
-        [self removeOldLogs];
+        setenv("ELLE_LOG_FILE", [[[IALogFileManager sharedInstance] currentLogFilePath] UTF8String], 0);
+        [[IALogFileManager sharedInstance] removeOldLogFile];
 
 #ifdef BUILD_PRODUCTION
         setenv("INFINIT_APERTUS_HOST", "apertus.api.production.infinit.io", 0);
