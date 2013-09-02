@@ -28,6 +28,9 @@ void on_transaction(uint32_t const transaction_id, gap_TransactionStatus status)
 static
 void on_error_callback(gap_Status errcode, char const* reason, uint32_t const transaction_id);
 
+static
+void on_connection_status(gap_UserStatus status);
+
 
 @interface NotificationForwarder : NSObject
 
@@ -192,7 +195,8 @@ void on_error_callback(gap_Status errcode, char const* reason, uint32_t const tr
 {
     [IAGap sendNotif:IA_GAP_EVENT_LOGIN_OPERATION withInfo:nil];
     if ((gap_user_status_callback(_state, &on_user_status) != gap_ok) ||
-        (gap_transaction_callback(_state, &on_transaction) != gap_ok))
+        (gap_transaction_callback(_state, &on_transaction) != gap_ok) ||
+        (gap_connection_callback(_state, &on_connection_status) != gap_ok))
         // XXX add error callback
         //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
     {
@@ -594,6 +598,21 @@ static void on_user_status(uint32_t const user_id,
     @catch (NSException* exception)
     {
         IALog(@"WARNING: on user status exception: %@", exception);
+    }
+}
+
+static void on_connection_status(gap_UserStatus status)
+{
+    @try
+    {
+        NSMutableDictionary* msg = [NSMutableDictionary dictionary];
+        [msg setValue:[NSNumber numberWithInt:status]
+               forKey:@"connection_status"];
+        [IAGap sendNotif:IA_GAP_EVENT_CONNECTION_STATUS_NOTIFICATION withInfo:msg];
+    }
+    @catch (NSException* exception)
+    {
+        IALog(@"WARNING: on_connection_status exception: %@", exception.reason);
     }
 }
 
