@@ -104,13 +104,10 @@
 //                    encoding:NSUTF8StringEncoding
 //                       error:&error];
 //    if (error.code != 0)
-//        IALog(@"%@ WARNING: Writing crash report failed");
+//        NSLog(@"%@ WARNING: Writing crash report failed", self);
     
     NSString* last_state_log = [[IALogFileManager sharedInstance] lastLogFilePath];
     NSString* crash_file_path = [IACrashReportManager getAppleCrashReport];
-    
-    NSLog(@"xxx last_state_log: %@", last_state_log);
-    NSLog(@"xxx crash_file_path: %@", crash_file_path);
     
     if (last_state_log != nil && crash_file_path != nil)
         gap_send_last_crash_logs(crash_file_path.UTF8String, last_state_log.UTF8String);

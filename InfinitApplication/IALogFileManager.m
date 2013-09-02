@@ -172,7 +172,6 @@ static IALogFileManager* _instance = nil;
 
 - (void)removeLogFileWithNumber:(NSInteger)num
 {
-    NSLog(@"xxx deleting log with number %d", num);
     if (num == -1)
         return;
     
