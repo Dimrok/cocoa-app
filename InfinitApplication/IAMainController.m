@@ -157,6 +157,11 @@
 
 - (void)showSendView:(IAViewController*)controller
 {
+    if ([_me_manager connection_status] != gap_user_status_online)
+    {
+        [self showNotConnectedView];
+        return;
+    }
     [self openOrChangeViewController:controller];
 }
 
@@ -322,11 +327,6 @@
         [self showNotLoggedInView];
         return;
     }
-    else if ([_me_manager connection_status] != gap_user_status_online)
-    {
-        [self showNotConnectedView];
-        return;
-    }
     [self showNotifications];
 }
 
@@ -445,12 +445,11 @@
 hadConnectionStateChange:(gap_UserStatus)status
 {
     [_status_bar_icon setConnected:status];
-    if (_current_view_controller == nil)
-        return;
-    if (status == gap_user_status_online)
+    if ([_current_view_controller isKindOfClass:IANoConnectionViewController.class] &&
+        status == gap_user_status_online)
+    {
         [self showNotifications];
-    else
-        [self showNotConnectedView];
+    }
 }
 
 //- Notification List Protocol ---------------------------------------------------------------------
