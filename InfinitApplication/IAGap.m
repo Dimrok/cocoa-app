@@ -114,12 +114,14 @@ void on_connection_status(gap_UserStatus status);
                "TRACE,"
                "infinit.crypto*:LOG,"
                "infinit.protocol*:LOG,"
-               "infinit.surface*:DEBUG,"
+               "*surface*:DEBUG,"
+               "surface.gap.bridge:DEBUG,"
                "elle.*:LOG,"
                "reactor*:LOG,"
                "elle.metrics.*:LOG,"
-               "infinit.surface.gap.User:NONE",
-               0);
+               "infinit.surface.gap.User:NONE,"
+               "infinit.plasma.trophonius.Client:DUMP"
+               ,0);
         setenv("ELLE_LOG_PID", "1", 0);
         setenv("ELLE_LOG_TID", "1", 0);
         setenv("ELLE_LOG_TIME", "1", 0);
