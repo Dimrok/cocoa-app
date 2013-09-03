@@ -82,7 +82,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.2;
          [(NSWindow*)self.window.animator setAlphaValue:0.0];
      }
                         completionHandler:^
@@ -108,7 +108,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.2;
          [(NSWindow*)self.window.animator setAlphaValue:1.0];
      }
                         completionHandler:^
@@ -144,7 +144,7 @@
                                  
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
-        context.duration = 0.15;
+        context.duration = 0.1;
         if (x_diff != 0)
         {
             [self.window.animator setFrameOrigin:
