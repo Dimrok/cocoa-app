@@ -8,6 +8,20 @@
 
 #import "IAConversationCellView.h"
 
+//- Clickable Text Field ---------------------------------------------------------------------------
+
+@interface IAClickableTextField : NSTextField
+@end
+
+@implementation IAClickableTextField
+
+- (void)mouseDown:(NSEvent*)theEvent
+{
+    [self sendAction:self.action to:self.target];
+}
+
+@end
+
 //- Conversation Bubble View -----------------------------------------------------------------------
 
 @implementation IAConversationBubbleView
@@ -192,6 +206,12 @@
                                               initWithString:files_str
                                               attributes:files_name_attrs];
     
+    if (!_transaction.from_me && _transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+    {
+        self.files_label.action = @selector(finishedFileClicked);
+        self.files_label.target = self;
+    }
+    
     if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
     {
         self.message_text.stringValue = _transaction.message;
@@ -340,6 +360,22 @@ objectValueForTableColumn:(NSTableColumn*)tableColumn
     return 15.0;
 }
 
-//- Button Handling --------------------------------------------------------------------------------
+//- User Interaction Handling ----------------------------------------------------------------------
+
+- (void)finishedFileClicked
+{
+    NSString* download_dir = [NSHomeDirectory() stringByAppendingPathComponent:@"/Downloads"];
+    NSMutableArray* file_urls = [NSMutableArray array];
+    for (NSString* filename in _transaction.files)
+    {
+        NSString* file_path = [download_dir stringByAppendingPathComponent:filename];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:file_path])
+        {
+            [file_urls addObject:[[NSURL fileURLWithPath:file_path] absoluteURL]];
+        }
+    }
+    if (file_urls.count > 0)
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:file_urls];
+}
 
 @end
