@@ -57,7 +57,6 @@
 								<string key="NSFrameSize">{317, 39}</string>
 								<reference key="NSSuperview" ref="965821269"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="774745137">
@@ -214,7 +213,7 @@
 														<string key="NSFrameSize">{317, 0}</string>
 														<reference key="NSSuperview" ref="683668934"/>
 														<reference key="NSWindow"/>
-														<reference key="NSNextKeyView" ref="404392336"/>
+														<reference key="NSNextKeyView" ref="285051680"/>
 														<string key="NSReuseIdentifierKey">_NS:13</string>
 														<string key="NSAntiCompressionPriority">{750, 250}</string>
 														<bool key="NSEnabled">YES</bool>
@@ -338,7 +337,7 @@
 										<string key="NSFrame">{{0, 35}, {317, 0}}</string>
 										<reference key="NSSuperview" ref="163121679"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="285051680"/>
+										<reference key="NSNextKeyView" ref="683668934"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<string key="NSHuggingPriority">{250, 750}</string>
 										<string key="NSAntiCompressionPriority">{750, 750}</string>
@@ -380,10 +379,8 @@
 												<reference key="NSColor" ref="777740912"/>
 											</object>
 											<object class="NSColor" key="NSTextColor">
-												<int key="NSColorSpace">6</int>
-												<string key="NSCatalogName">System</string>
-												<string key="NSColorName">textColor</string>
-												<reference key="NSColor" ref="153415457"/>
+												<int key="NSColorSpace">1</int>
+												<bytes key="NSRGB">MC41MDE5NjA3ODQzIDAuNTAxOTYwNzg0MyAwLjUwMTk2MDc4NDMAA</bytes>
 											</object>
 										</object>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -2490,30 +2487,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IAAdvancedSendViewController</string>
 					<string key="superclassName">IAViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addFilesClicked:">NSButton</string>
-						<string key="cancelSendClicked:">NSButton</string>
-						<string key="removeFileClicked:">NSButton</string>
-						<string key="sendButtonClicked:">NSButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addFilesClicked:">
-							<string key="name">addFilesClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBActionInfo" key="cancelSendClicked:">
-							<string key="name">cancelSendClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBActionInfo" key="removeFileClicked:">
-							<string key="name">removeFileClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBActionInfo" key="sendButtonClicked:">
-							<string key="name">sendButtonClicked:</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="add_files_button">NSButton</string>
 						<string key="advanced_height_constraint">NSLayoutConstraint</string>
