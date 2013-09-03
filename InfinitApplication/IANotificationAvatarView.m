@@ -123,12 +123,12 @@
                                               endAngle:0.0
                                              clockwise:YES];
         [accept_mask closePath];
-        [IA_RGBA_COLOUR(0.0, 255.0, 0.0, 0.75) set];
+        [IA_RGBA_COLOUR(180.0, 219.0, 89.0, 0.9) set];
         [accept_mask fill];
         
         NSImage* accept_icon = [IAFunctions imageNamed:@"icon-accept"];
         NSRect accept_image_frame = NSMakeRect(centre.x - accept_icon.size.width / 2.0,
-                                               centre.y + border,
+                                               centre.y + border + 1.0,
                                                accept_icon.size.width,
                                                accept_icon.size.height);
         [accept_icon drawInRect:accept_image_frame
@@ -147,12 +147,12 @@
                                             startAngle:180.0
                                               endAngle:0.0];
         [reject_mask closePath];
-        [IA_RGBA_COLOUR(255.0, 0.0, 0.0, 0.75) set];
+        [IA_RGBA_COLOUR(255.0, 61.0, 42.0, 0.82) set];
         [reject_mask fill];
         
         NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
         NSRect cancel_image_frame = NSMakeRect(centre.x - cancel_icon.size.width / 2.0,
-                                               centre.y - avatar_image_frame.size.height / 2.0 + border,
+                                               centre.y - avatar_image_frame.size.height / 2.0 + border + 1.0,
                                                cancel_icon.size.width,
                                                cancel_icon.size.height);
         [cancel_icon drawInRect:cancel_image_frame
@@ -164,7 +164,7 @@
     if (_mode == AVATAR_VIEW_CANCEL && _mouse_over)
     {
         NSBezierPath* cancel_mask = [NSBezierPath bezierPathWithOvalInRect:avatar_image_frame];
-        [IA_RGBA_COLOUR(255.0, 0.0, 0.0, 0.75) set];
+        [IA_RGBA_COLOUR(255.0, 61.0, 42.0, 0.82) set];
         [cancel_mask fill];
         
         NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];

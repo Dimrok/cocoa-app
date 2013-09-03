@@ -47,7 +47,7 @@
 
 - (void)setFileName:(NSString*)file_name
 {
-    NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+    NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.5]
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                   colour:IA_GREY_COLOUR(153.0)
                                                   shadow:nil];
