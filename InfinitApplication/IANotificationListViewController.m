@@ -180,8 +180,7 @@
 
 - (BOOL)closeOnFocusLost
 {
-    // XXX debug
-    return NO;
+    return YES;
 }
 
 
