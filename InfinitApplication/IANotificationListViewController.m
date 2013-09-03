@@ -180,14 +180,8 @@
 
 - (BOOL)closeOnFocusLost
 {
-    return YES;
-}
-
-- (void)awakeFromNib
-{
-    NSString* version_str = [NSString stringWithFormat:@"v%@",
-                             [NSString stringWithUTF8String:INFINIT_VERSION]];
-    _version_item.title = version_str;
+    // XXX debug
+    return NO;
 }
 
 
@@ -205,10 +199,11 @@
         CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
         [self.content_height_constraint.animator setConstant:(y_diff +
                                                        self.content_height_constraint.constant)];
-        _transaction_list = nil; // XXX work around for crash on calling layout
-        [self.view layoutSubtreeIfNeeded];
         [self generateTable];
     }
+    NSString* version_str = [NSString stringWithFormat:@"v%@",
+                             [NSString stringWithUTF8String:INFINIT_VERSION]];
+    _version_item.title = version_str;
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -287,8 +282,6 @@
 
 - (void)generateTable
 {
-     _transaction_list = [NSMutableArray
-                          arrayWithArray:[_delegate notificationListWantsLastTransactions:self]];
     [self resizeContentView];
     [self updateListOfRowsWithProgress];
     [self.table_view reloadData];

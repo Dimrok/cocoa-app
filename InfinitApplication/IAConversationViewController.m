@@ -99,20 +99,14 @@
         [self.user_online setHidden:YES];
 }
 
-- (void)awakeFromNib
-{
-    [self setupPersonView];
-}
-
 - (void)loadView
 {
     [super loadView];
+    [self setupPersonView];
     CGFloat y_diff = (self.person_view.frame.size.height + [self tableHeight]) -
     self.main_view.frame.size.height;
     [self.content_height_constraint.animator setConstant:(y_diff +
                                                           self.content_height_constraint.constant)];
-    _element_list = nil; // XXX work around for crash on calling layout
-    [self.view layoutSubtreeIfNeeded];
     [self generateUserTransactionList];
 }
 
@@ -205,7 +199,6 @@
 
 - (void)generateUserTransactionList
 {
-    [self getReversedTransactionList];
     [self.table_view reloadData];
     [self resizeContentView];
     [self.table_view scrollRowToVisible:(_element_list.count - 1)];
