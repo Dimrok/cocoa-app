@@ -79,7 +79,7 @@
 + (CGFloat)heightOfCellWithElement:(IAConversationElement*)element
 {
     CGFloat normal = 56.0;
-    CGFloat message = 70.0;
+    CGFloat message = 110.0;
     CGFloat file_list = normal;
     if (element.transaction.files_count > 3)
     {
