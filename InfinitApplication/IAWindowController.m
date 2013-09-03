@@ -118,7 +118,6 @@
                         completionHandler:^
      {
          self.window.alphaValue = 1.0;
-         [_current_controller openWindowAnimationFinished];
      }];
 }
 
