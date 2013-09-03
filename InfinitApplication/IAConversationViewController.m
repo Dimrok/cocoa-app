@@ -86,7 +86,7 @@
                                                                    attributes:name_attrs];
     self.user_fullname.attributedStringValue = name_str;
     NSDictionary* handle_attrs = [IAFunctions
-                                  textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                  textStyleWithFont:[NSFont systemFontOfSize:11.5]
                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                   colour:IA_GREY_COLOUR(193.0)
                                   shadow:nil];

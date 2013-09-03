@@ -29,16 +29,20 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Grey border
-    NSBezierPath* grey_border = [NSBezierPath bezierPathWithRect:self.bounds];
+    NSBezierPath* grey_border = [NSBezierPath bezierPathWithRoundedRect:self.bounds
+                                                                xRadius:4.0
+                                                                yRadius:4.0];
     [IA_GREY_COLOUR(212.0) set];
     [grey_border stroke];
     
     // White background
-    NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:
+    NSBezierPath* white_bg = [NSBezierPath bezierPathWithRoundedRect:
                               NSMakeRect(1.0,
                                          1.0,
                                          self.bounds.size.width - 2.0,
-                                         self.bounds.size.height - 2.0)];
+                                         self.bounds.size.height - 2.0)
+                                                             xRadius:4.0
+                                                             yRadius:4.0];
     [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
 }
@@ -78,7 +82,7 @@
 
 + (CGFloat)heightOfCellWithElement:(IAConversationElement*)element
 {
-    CGFloat normal = 56.0;
+    CGFloat normal = 66.0;
     CGFloat message = 110.0;
     CGFloat file_list = normal;
     if (element.transaction.files_count > 3)
@@ -89,9 +93,9 @@
     {
         file_list += 14.0 + 15.0 * element.transaction.files_count;
     }
-    CGFloat buttons = normal + 30.0;
-    CGFloat progress = normal + 30.0;
-    CGFloat error = normal + 25.0;
+    CGFloat buttons = 92.0;
+    CGFloat progress = 92.0;
+    CGFloat error = 92.0;
     switch (element.mode)
     {
         case CONVERSATION_CELL_VIEW_MESSAGE:
@@ -214,7 +218,13 @@
     
     if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
     {
-        self.message_text.stringValue = _transaction.message;
+        NSDictionary* note_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.5]
+                                                   paragraphStyle:text_align
+                                                           colour:IA_GREY_COLOUR(184.0)
+                                                           shadow:nil];
+        NSAttributedString* note_str = [[NSAttributedString alloc] initWithString:_transaction.message
+                                                                       attributes:note_attrs];
+        self.message_text.attributedStringValue = note_str;
         self.message_button.state = NSOnState;
     }
     else if (element.mode == CONVERSATION_CELL_VIEW_FILE_LIST)
@@ -226,7 +236,7 @@
         self.message_button.state = NSOffState;
         NSDictionary* info_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                                    paragraphStyle:text_align
-                                                           colour:IA_GREY_COLOUR(56.0)
+                                                           colour:IA_GREY_COLOUR(204.0)
                                                            shadow:nil];
         
         NSDictionary* error_attrs = [IAFunctions
