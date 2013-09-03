@@ -61,7 +61,7 @@
 							<int key="NSCellFlags">68157504</int>
 							<int key="NSCellFlags2">138413056</int>
 							<string key="NSContents">No results...</string>
-							<object class="NSFont" key="NSSupport" id="708995249">
+							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">16</int>
@@ -166,9 +166,9 @@
 										</array>
 										<double key="NSIntercellSpacingWidth">3</double>
 										<double key="NSIntercellSpacingHeight">2</double>
-										<object class="NSColor" key="NSBackgroundColor">
-											<int key="NSColorSpace">1</int>
-											<bytes key="NSRGB">MC45NTY4NjI3NDUxIDAuOTU2ODYyNzQ1MSAwLjk1Njg2Mjc0NTEAA</bytes>
+										<object class="NSColor" key="NSBackgroundColor" id="1033237311">
+											<int key="NSColorSpace">3</int>
+											<bytes key="NSWhite">MQA</bytes>
 										</object>
 										<object class="NSColor" key="NSGridColor">
 											<int key="NSColorSpace">6</int>
@@ -293,7 +293,11 @@
 								<object class="NSTokenFieldCell" key="NSCell" id="102183655">
 									<int key="NSCellFlags">338690112</int>
 									<int key="NSCellFlags2">33856</int>
-									<reference key="NSSupport" ref="708995249"/>
+									<object class="NSFont" key="NSSupport">
+										<string key="NSName">LucidaGrande-Bold</string>
+										<double key="NSSize">12</double>
+										<int key="NSfFlags">16</int>
+									</object>
 									<string key="NSPlaceholderString">Search for a friend...</string>
 									<string key="NSCellIdentifier">_NS:9</string>
 									<reference key="NSControlView" ref="534702987"/>
@@ -302,10 +306,7 @@
 										<int key="NSColorSpace">6</int>
 										<string key="NSCatalogName">System</string>
 										<string key="NSColorName">textBackgroundColor</string>
-										<object class="NSColor" key="NSColor">
-											<int key="NSColorSpace">3</int>
-											<bytes key="NSWhite">MQA</bytes>
-										</object>
+										<reference key="NSColor" ref="1033237311"/>
 									</object>
 									<reference key="NSTextColor" ref="113287717"/>
 									<reference key="NSDelegate" ref="534702987"/>
@@ -1561,6 +1562,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IAUserSearchViewController</string>
 					<string key="superclassName">NSViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="sendButtonClicked:">NSButton</string>
+						<string key="tableViewAction:">NSTableView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="sendButtonClicked:">
+							<string key="name">sendButtonClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBActionInfo" key="tableViewAction:">
+							<string key="name">tableViewAction:</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="no_results_message">NSTextField</string>
 						<string key="results_view">NSScrollView</string>

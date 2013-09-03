@@ -131,7 +131,7 @@
                                   self.bounds.size.width,
                                   1.0);
     NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
-    [IA_GREY_COLOUR(209.0) set];
+    [IA_GREY_COLOUR(235.0) set];
     [dark_line fill];
     
     // White line
@@ -151,7 +151,7 @@
                                     self.bounds.size.width,
                                     self.bounds.size.height - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
-        [IA_GREY_COLOUR(255.0) set];
+        [IA_RGBA_COLOUR(242.0, 253.0, 255.0, 0.75) set];
         [bg_path fill];
     }
     else
@@ -162,7 +162,7 @@
                                     self.bounds.size.width,
                                     self.bounds.size.height - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
-        [IA_GREY_COLOUR(246.0) set];
+        [IA_GREY_COLOUR(255.0) set];
         [bg_path fill];
     }
 }
@@ -213,16 +213,12 @@
     [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-- (void)awakeFromNib
-{
-    [self.no_results_message setHidden:YES];
-    self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
-    [self initialiseSendButton];
-}
-
 - (void)loadView
 {
     [super loadView];
+    [self.no_results_message setHidden:YES];
+    self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
+    [self initialiseSendButton];
     [self.view setFrameSize:NSMakeSize(self.view.frame.size.width,
                                        self.search_box_view.frame.size.height + [self tableHeight])];
 }
