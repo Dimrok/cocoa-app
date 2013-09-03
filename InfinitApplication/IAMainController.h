@@ -12,6 +12,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <Gap/IAUserManager.h>
+
 #import "IAConversationViewController.h"
 #import "IADesktopNotifier.h"
 #import "IALoginViewController.h"
@@ -21,7 +23,6 @@
 #import "IAGeneralSendController.h"
 #import "IAStatusBarIcon.h"
 #import "IATransactionManager.h"
-#import "IAUserManager.h"
 #import "IAWindowController.h"
 
 @protocol IAMainControllerProtocol;

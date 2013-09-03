@@ -65,7 +65,7 @@
         
         _me_manager = [[IAMeManager alloc] initWithDelegate:self];
         _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
-        _user_manager = [[IAUserManager alloc] initWithDelegate:self];
+        _user_manager = [IAUserManager sharedInstanceWithDelegate:self];
         
         _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
@@ -371,11 +371,11 @@
 
 //- Desktop Notifier Protocol ----------------------------------------------------------------------
 
-- (void)desktopNotifier:(IADesktopNotifier*)sender
-hadClickNotificationForUserId:(NSNumber*)user_id
+- (void)            desktopNotifier:(IADesktopNotifier*)sender
+      hadClickNotificationForUserId:(NSNumber*)user_id
 {
     [_status_bar_icon setHighlighted:YES];
-    [self showConversationViewForUser:[IAUser userWithId:user_id]];
+    [self showConversationViewForUser:[IAUserManager userWithId:user_id]];
 }
 
 //- General Send Controller Protocol ---------------------------------------------------------------
@@ -412,19 +412,19 @@ hadClickNotificationForUserId:(NSNumber*)user_id
 
 - (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender
 {
-    return [_user_manager favouritesList];
+    return [IAUserManager favouritesList];
 }
 
 - (void)sendController:(IAGeneralSendController*)sender
      wantsAddFavourite:(IAUser*)user
 {
-    [_user_manager addFavourite:user];
+    [IAUserManager addFavourite:user];
 }
 
 - (void)sendController:(IAGeneralSendController*)sender
   wantsRemoveFavourite:(IAUser*)user
 {
-    [_user_manager removeFavourite:user];
+    [IAUserManager removeFavourite:user];
 }
 
 //- Login Window Protocol --------------------------------------------------------------------------

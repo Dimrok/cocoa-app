@@ -69,7 +69,7 @@ void on_connection_status(gap_UserStatus status);
     IALog(@"Forwarding %@: %@", _msg, _info);
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:_msg object:nil userInfo:_info];
-    
+
     NSDistributedNotificationCenter* dc = [NSDistributedNotificationCenter defaultCenter];
     [dc postNotificationName:_msg object:nil userInfo:_info deliverImmediately:YES];
 }
@@ -94,12 +94,11 @@ void on_connection_status(gap_UserStatus status);
 {
     if (info == nil)
         info = [NSMutableDictionary dictionary];
-    
+
     [info setObject:[IAGapState instance].self_id
              forKey:@"self_id"];
     [info setObject:[NSNumber numberWithInteger:(NSInteger)getpid()]
              forKey:@"pid"];
-    
     [[[NotificationForwarder alloc] init:msg
                                 withInfo:info] fire];
 }
@@ -138,7 +137,7 @@ void on_connection_status(gap_UserStatus status);
 #ifdef BUILD_PRODUCTION
         setenv("INFINIT_APERTUS_HOST", "apertus.api.production.infinit.io", 0);
         setenv("INFINIT_APERTUS_PORT", "9899", 0);
-        
+
         setenv("INFINIT_META_HOST", "v1.meta.api.production.infinit.io", 0);
         setenv("INFINIT_META_PORT", "12345", 0);
 
@@ -157,26 +156,26 @@ void on_connection_status(gap_UserStatus status);
 #else
         setenv("INFINIT_APERTUS_HOST", "apertus.api.development.infinit.io", 0);
 //        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 0);
-//        setenv("INFINIT_APERTUS_HOST", "192.168.110.107", 0);
+//        setenv("INFINIT_APERTUS_HOST", "192.168.110.52", 0);
         setenv("INFINIT_APERTUS_PORT", "9899", 0);
 
         setenv("INFINIT_META_HOST", "v1.meta.api.development.infinit.io", 0);
 //        setenv("INFINIT_META_HOST", "127.0.0.1", 0);
-//        setenv("INFINIT_META_HOST", "192.168.110.107", 0);
+//        setenv("INFINIT_META_HOST", "192.168.110.52", 0);
         setenv("INFINIT_META_PORT", "12345", 0);
 
         setenv("INFINIT_TROPHONIUS_HOST", "v1.trophonius.api.development.infinit.io", 0);
 //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 0);
-//        setenv("INFINIT_TROPHONIUS_HOST", "192.168.110.107", 0);
+//        setenv("INFINIT_TROPHONIUS_HOST", "192.168.110.52", 0);
         setenv("INFINIT_TROPHONIUS_PORT", "23456", 0);
 
         setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 0);
 #endif
-        
+
         _state = gap_new();
 
         NSLog(@"METAURL= %s", gap_meta_url(_state));
-        
+
         if (_state == NULL)
             return nil;
     }
@@ -503,7 +502,7 @@ return [NSString stringWithUTF8String:str]; \
                           files:(NSArray*)files
                         message:(NSString*)message
 {
-    
+
     char const** cfiles = (char const**)calloc([files count] + 1, sizeof(char*));
     if (cfiles == NULL)
         return [NSNumber numberWithUnsignedInt:gap_null()];
@@ -658,7 +657,7 @@ static void on_error_callback(gap_Status errcode, char const* reason, uint32_t c
                    forKey:@"transaction_id"];
         [msg setObject:[NSString stringWithUTF8String:reason]
                 forKey:@"reason"];
-        
+
         [msg setObject:[NSNumber numberWithInt:errcode]
                 forKey:@"error_code"];
         [IAGap sendNotif:IA_GAP_EVENT_ERROR withInfo:msg];

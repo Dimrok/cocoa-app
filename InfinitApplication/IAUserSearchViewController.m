@@ -6,8 +6,9 @@
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IAUserSearchViewController.h"
+#import <Gap/IAUserManager.h>
 
+#import "IAUserSearchViewController.h"
 #import "IAAvatarManager.h"
 
 @interface IAUserSearchViewController ()
@@ -335,7 +336,7 @@
     NSNumber* user_id = [data objectForKey:@"user_id"];
     if (user_id.unsignedIntValue != 0)
     {
-        IAUser* user = [IAUser userWithId:user_id];
+        IAUser* user = [IAUserManager userWithId:user_id];
         _search_results = [NSMutableArray arrayWithObject:user];
     }
     else
