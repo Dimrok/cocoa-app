@@ -78,6 +78,9 @@
     if (!_window_is_open)
         return;
     
+    _window_is_open = NO;
+    [self.window.contentView removeConstraints:_view_constraints];
+    
     [_current_controller aboutToChangeView];
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
@@ -87,7 +90,6 @@
      }
                         completionHandler:^
      {
-         _window_is_open = NO;
          self.window.alphaValue = 0.0;
          [self.window orderOut:nil];
          [self.window close];
@@ -102,6 +104,8 @@
     if (_window_is_open)
         return;
     
+    _window_is_open = YES;
+    
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [self.window makeKeyAndOrderFront:nil];
     [self.window setLevel:NSFloatingWindowLevel];
@@ -113,8 +117,8 @@
      }
                         completionHandler:^
      {
-         _window_is_open = YES;
          self.window.alphaValue = 1.0;
+         [_current_controller openWindowAnimationFinished];
      }];
 }
 
@@ -136,6 +140,9 @@
 
 - (void)changeToViewController:(IAViewController*)new_controller
 {
+    if (!_window_is_open)
+        return;
+    
     NSSize new_size = new_controller.view.frame.size;
     NSSize old_size = _current_controller.view.frame.size;
     CGFloat x_diff = new_size.width - old_size.width;
@@ -187,9 +194,9 @@
 - (void)openWithViewController:(IAViewController*)controller
                   withMidpoint:(NSPoint)midpoint
 {
-    if (controller == nil)
+    if (controller == nil || _window_is_open)
         return;
-    
+
     _current_controller = controller;
     
     NSRect frame;

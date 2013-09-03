@@ -18,7 +18,7 @@
 
 @interface IAWindowController : NSWindowController <NSWindowDelegate>
 
-@property (nonatomic, readonly) BOOL windowIsOpen;
+@property (atomic, readwrite) BOOL windowIsOpen;
 
 - (id)initWithDelegate:(id<IAWindowControllerProtocol>)delegate;
 
