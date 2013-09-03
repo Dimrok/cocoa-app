@@ -114,7 +114,7 @@ void on_connection_status(gap_UserStatus status);
                "TRACE,"
                "infinit.crypto*:LOG,"
                "infinit.protocol*:LOG,"
-               "infinit.surface*:DEBUG,"
+               "*.surface*:DEBUG,"
                "elle.*:LOG,"
                "reactor*:LOG,"
                "elle.metrics.*:LOG,"

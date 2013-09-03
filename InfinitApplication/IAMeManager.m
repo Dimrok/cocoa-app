@@ -49,8 +49,7 @@
     }
     
     _connection_status = received_status.intValue;
-    [_delegate meManager:self
-hadConnectionStateChange:_connection_status];
+    [_delegate meManager:self hadConnectionStateChange:_connection_status];
 }
 
 //- General Functions ------------------------------------------------------------------------------
