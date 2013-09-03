@@ -22,7 +22,7 @@
 #import "IANotLoggedInViewController.h"
 #import "IAGeneralSendController.h"
 #import "IAStatusBarIcon.h"
-#import "IATransactionManager.h"
+#import <Gap/IATransactionManager.h>
 #import "IAWindowController.h"
 
 @protocol IAMainControllerProtocol;

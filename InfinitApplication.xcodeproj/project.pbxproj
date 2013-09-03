@@ -118,7 +118,6 @@
 		83A8098117C26C890086A80D /* bg-triangle-top-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097D17C26C890086A80D /* bg-triangle-top-white@2x.png */; };
 		83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */; };
 		83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */; };
-		83C124B817A7CEB000BE1252 /* IATransactionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C124B717A7CEB000BE1252 /* IATransactionManager.m */; };
 		83C124C017A7EF0000BE1252 /* bg-main-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C124BE17A7EF0000BE1252 /* bg-main-button.png */; };
 		83C124C117A7EF0000BE1252 /* bg-main-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C124BF17A7EF0000BE1252 /* bg-main-button@2x.png */; };
 		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
@@ -547,8 +546,6 @@
 		83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASendFileListCellView.m; sourceTree = "<group>"; };
 		83B3F5B117B53C1600C19859 /* IANotificationListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationListCellView.h; sourceTree = "<group>"; };
 		83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationListCellView.m; sourceTree = "<group>"; };
-		83C124B617A7CEB000BE1252 /* IATransactionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IATransactionManager.h; sourceTree = "<group>"; };
-		83C124B717A7CEB000BE1252 /* IATransactionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IATransactionManager.m; sourceTree = "<group>"; };
 		83C124BE17A7EF0000BE1252 /* bg-main-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-main-button.png"; sourceTree = "<group>"; };
 		83C124BF17A7EF0000BE1252 /* bg-main-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-main-button@2x.png"; sourceTree = "<group>"; };
 		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
@@ -977,8 +974,6 @@
 		83C124B517A7CE9800BE1252 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				83C124B617A7CEB000BE1252 /* IATransactionManager.h */,
-				83C124B717A7CEB000BE1252 /* IATransactionManager.m */,
 				831FB21C17A8FE1700696604 /* IAAvatarManager.h */,
 				831FB21D17A8FE1700696604 /* IAAvatarManager.m */,
 				831AA69D17D0FCC00004AE8D /* IAMeManager.h */,
@@ -1523,7 +1518,6 @@
 				8398836117A6C1F9009409B3 /* IALoginViewController.m in Sources */,
 				8398836A17A6FDE7009409B3 /* IACenteredTextFieldCell.m in Sources */,
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
-				83C124B817A7CEB000BE1252 /* IATransactionManager.m in Sources */,
 				831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */,
 				831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */,
 				8333D45D17A976570093942B /* IAViewController.m in Sources */,
