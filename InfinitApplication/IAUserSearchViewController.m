@@ -624,6 +624,7 @@ displayStringForRepresentedObject:(id)representedObject
                                 notificationWithName:NSControlTextDidChangeNotification
                                               object:self.search_field]];
     [self cursorAtEndOfSearchBox];
+    [_delegate searchViewInputsChanged:self];
 }
 
 - (void)moveTableSelectionBy:(NSInteger)displacement
