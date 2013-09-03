@@ -247,9 +247,8 @@
                                             new:_user_search_controller.view.frame.size];
     [self.search_height_constraint.animator setConstant:(y_diff_search +
                                                          self.search_height_constraint.constant)];
-    _file_list = nil; // XXX work around for crash on calling layout
-    [self.view layoutSubtreeIfNeeded];
-    [self filesUpdated];
+    [self updateTable];
+    [self setSendButtonState];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -377,7 +376,6 @@ doCommandBySelector:(SEL)commandSelector
      }
                         completionHandler:^
      {
-         [self.view.window.contentView layoutSubtreeIfNeeded];
      }];
     [self.table_view reloadData];
 }
