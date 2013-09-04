@@ -150,6 +150,10 @@
     if (_favourites.count == 0)
         return;
     
+    // XXX For now we only handle up to 5 favourites
+    if (_favourites.count > 5)
+        _favourites = [_favourites subarrayWithRange:NSMakeRange(0, 5)];
+    
     NSRect frame = NSZeroRect;
     frame.size = self.view.bounds.size;
     NSPoint midpoint = [_delegate favouritesViewWantsMidpoint:self];
