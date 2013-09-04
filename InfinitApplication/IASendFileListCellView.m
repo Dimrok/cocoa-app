@@ -43,6 +43,7 @@
     
     NSDictionary* file_properties = [NSFileManager.defaultManager attributesOfItemAtPath:file_path
                                                                                      error:NULL];
+    // XXX Folder size doesn't work, need to go inside and calculate
     NSUInteger file_size = [file_properties fileSize];
     NSString* file_size_str = [IAFunctions fileSizeStringFrom:file_size];
     NSMutableParagraphStyle* paragraph_style = [[NSParagraphStyle defaultParagraphStyle]
@@ -56,13 +57,11 @@
                                                                            attributes:style];
     
     self.file_icon_and_name.image = [[NSWorkspace sharedWorkspace] iconForFile:file_path];
-    [self.file_icon_and_name setTarget:self];
-    [self.file_icon_and_name setAction:@selector(filenameClicked)];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
 
-- (void)filenameClicked
+- (IBAction)filenameClicked:(NSButton*)sender
 {
     if ([[NSFileManager defaultManager] fileExistsAtPath:_file_path])
     {
