@@ -22,6 +22,7 @@
 @property (nonatomic, strong) IBOutlet NSScrollView* scroll_view;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSButton* transfer_button;
+@property (nonatomic, strong) IBOutlet NSButton* user_favourite;
 @property (nonatomic, strong) IBOutlet NSTextField* user_fullname;
 @property (nonatomic, strong) IBOutlet NSTextField* user_handle;
 @property (nonatomic, strong) IBOutlet NSImageView* user_online;
@@ -48,5 +49,10 @@
   wantsCancelTransaction:(IATransaction*)transaction;
 - (void)conversationView:(IAConversationViewController*)sender
   wantsRejectTransaction:(IATransaction*)transaction;
+
+- (void)conversationView:(IAConversationViewController*)sender
+       wantsAddFavourite:(IAUser*)user;
+- (void)conversationView:(IAConversationViewController*)sender
+    wantsRemoveFavourite:(IAUser*)user;
 
 @end

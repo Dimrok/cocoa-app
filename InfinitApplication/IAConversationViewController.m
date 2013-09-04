@@ -97,6 +97,11 @@
         [self.user_online setHidden:NO];
     else
         [self.user_online setHidden:YES];
+    
+    if (_user.is_favourite)
+        self.user_favourite.image = [IAFunctions imageNamed:@"icon-star-selected"];
+    else
+        self.user_favourite.image = [IAFunctions imageNamed:@"icon-star"];
 }
 
 - (void)loadView
@@ -404,6 +409,20 @@
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
     [_delegate conversationViewWantsBack:self];
+}
+
+- (IBAction)favouriteButtonClicked:(NSButton*)sender
+{
+    if (_user.is_favourite)
+    {
+        [_delegate conversationView:self wantsRemoveFavourite:_user];
+        self.user_favourite.image = [IAFunctions imageNamed:@"icon-star"];
+    }
+    else
+    {
+        [_delegate conversationView:self wantsAddFavourite:_user];
+        self.user_favourite.image = [IAFunctions imageNamed:@"icon-star-selected"];
+    }
 }
 
 - (IBAction)collapseFilesClicked:(NSButton*)sender
