@@ -793,6 +793,10 @@
 		8328084017A2B5100025B6F8 /* Common Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83F1148717AE709F00DCF662 /* icon-star-selected.png */,
+				83F1148817AE709F00DCF662 /* icon-star-selected@2x.png */,
+				83F1148917AE709F00DCF662 /* icon-star.png */,
+				83F1148A17AE709F00DCF662 /* icon-star@2x.png */,
 				83D4205617C4CF7F00D4E168 /* icon-status.png */,
 				83D4205717C4CF7F00D4E168 /* icon-status@2x.png */,
 				83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */,
@@ -1039,10 +1043,6 @@
 				838AAC7617D736FE009083D4 /* btn-send-files-disabled@2x.png */,
 				838AAC5717D72485009083D4 /* btn-send-files-simple-disabled.png */,
 				838AAC5817D72485009083D4 /* btn-send-files-simple-disabled@2x.png */,
-				83F1148717AE709F00DCF662 /* icon-star-selected.png */,
-				83F1148817AE709F00DCF662 /* icon-star-selected@2x.png */,
-				83F1148917AE709F00DCF662 /* icon-star.png */,
-				83F1148A17AE709F00DCF662 /* icon-star@2x.png */,
 				83F1147A17AE5A9900DCF662 /* icon-delete.png */,
 				83F1147B17AE5A9900DCF662 /* icon-delete@2x.png */,
 				83F1147617AE542800DCF662 /* icon-search.png */,
@@ -1688,7 +1688,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -1724,7 +1724,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
