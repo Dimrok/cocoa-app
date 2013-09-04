@@ -35,6 +35,7 @@
     NSWindow* _window;
     NSSize _favourite_size;
     NSPoint _start_pos;
+    BOOL _window_open;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -140,8 +141,10 @@
 
 - (void)showFavourites
 {
-    if (_window != nil)
+    if (_window != nil || _window_open)
         return;
+    
+    _window_open = YES;
     
     _favourites = [_delegate favouritesViewWantsFavourites:self];
     if (_favourites.count == 0)
@@ -177,8 +180,10 @@
 
 - (void)hideFavourites
 {
-    if (_window == nil)
+    if (_window == nil || !_window_open)
         return;
+    
+    _window_open = NO;
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
