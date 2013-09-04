@@ -9,6 +9,10 @@
 #import "IASendFileListCellView.h"
 
 @implementation IASendFileListCellView
+{
+@private
+    NSString* _file_path;
+}
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -26,15 +30,16 @@
 
 - (void)setupCellWithFilePath:(NSString*)file_path
 {
+    _file_path = file_path;
     NSString* file_name = [file_path lastPathComponent];
     NSDictionary* file_name_style = [IAFunctions
                                         textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                            paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                    colour:IA_RGB_COLOUR(85.0, 158.0, 201.0)
                                                    shadow:nil];
-    self.file_name.attributedStringValue = [[NSAttributedString alloc]
-                                                initWithString:file_name
-                                                    attributes:file_name_style];
+    self.file_icon_and_name.attributedTitle = [[NSAttributedString alloc]
+                                               initWithString:file_name
+                                                   attributes:file_name_style];
     
     NSDictionary* file_properties = [NSFileManager.defaultManager attributesOfItemAtPath:file_path
                                                                                      error:NULL];
@@ -50,7 +55,21 @@
     self.file_size.attributedStringValue = [[NSAttributedString alloc] initWithString:file_size_str
                                                                            attributes:style];
     
-    self.file_type_image.image = [[NSWorkspace sharedWorkspace] iconForFile:file_path];
+    self.file_icon_and_name.image = [[NSWorkspace sharedWorkspace] iconForFile:file_path];
+    [self.file_icon_and_name setTarget:self];
+    [self.file_icon_and_name setAction:@selector(filenameClicked)];
+}
+
+//- Button Handling --------------------------------------------------------------------------------
+
+- (void)filenameClicked
+{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_file_path])
+    {
+        NSArray* file_url = [NSArray arrayWithObject:[[NSURL fileURLWithPath:_file_path]
+                                                       absoluteURL]];
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:file_url];
+    }
 }
 
 @end

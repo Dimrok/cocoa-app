@@ -10,9 +10,8 @@
 
 @interface IASendFileListCellView : NSTableCellView
 
-@property (nonatomic, strong) IBOutlet NSTextField* file_name;
+@property (nonatomic, strong) IBOutlet NSButton* file_icon_and_name;
 @property (nonatomic, strong) IBOutlet NSTextField* file_size;
-@property (nonatomic, strong) IBOutlet NSImageView* file_type_image;
 @property (nonatomic, strong) IBOutlet NSButton* remove_file_button;
 
 - (void)setupCellWithFilePath:(NSString*)file_path;
