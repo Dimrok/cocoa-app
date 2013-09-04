@@ -234,6 +234,16 @@
                                                    initWithString:characters_str
                                                    attributes:_characters_attrs];
     
+    NSString* add_files_str = [NSString stringWithFormat:@"%@", NSLocalizedString(@"Add files...",
+                                                                                  @"add files...")];
+    NSDictionary* add_files_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                                    paragraphStyle:[NSParagraphStyle
+                                                                    defaultParagraphStyle]
+                                                            colour:IA_GREY_COLOUR(179.0)
+                                                            shadow:nil];
+    self.add_files_button.attributedTitle = [[NSAttributedString alloc] initWithString:add_files_str
+                                                                            attributes:add_files_attrs];
+    
     [self.search_view addSubview:_user_search_controller.view];
     [self.search_view addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|[search_view]|"
