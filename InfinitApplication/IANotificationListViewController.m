@@ -295,7 +295,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.15;
          [self.content_height_constraint.animator
           setConstant:(self.content_height_constraint.constant + y_diff)];
      }
@@ -387,7 +387,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.15;
          [self.table_view beginUpdates];
          [_transaction_list removeObjectsAtIndexes:other_users];
          [self.table_view removeRowsAtIndexes:other_users
@@ -579,7 +579,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-        context.duration = 0.25;
+        context.duration = 0.15;
         [self.table_view beginUpdates];
         [_transaction_list removeObjectsAtIndexes:other_users];
         [self.table_view removeRowsAtIndexes:other_users
