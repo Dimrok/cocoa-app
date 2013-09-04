@@ -242,7 +242,7 @@
         NSDictionary* error_attrs = [IAFunctions
                                      textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                      paragraphStyle:text_align
-                                     colour:IA_RGB_COLOUR(255.0, 0.0, 0.0)
+                                     colour:IA_RGB_COLOUR(222.0, 104.0, 81.0)
                                      shadow:nil];
         
         NSString* info;
