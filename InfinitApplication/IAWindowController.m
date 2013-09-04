@@ -50,8 +50,7 @@
     BOOL _window_is_open;
     IAViewController* _current_controller;
     NSMutableArray* _view_constraints;
-//    NSUInteger open_count;
-//    NSUInteger close_count;
+    BOOL _animating;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -64,8 +63,6 @@
     {
         _delegate = delegate;
         _window_is_open = NO;
-//        open_count = 0;
-//        close_count = 0;
     }
     return self;
 }
@@ -79,11 +76,11 @@
 
 - (void)closeWindow
 {
-    if (!_window_is_open)
+    if (!_window_is_open || _animating)
         return;
     
     _window_is_open = NO;
-//    IALog(@"xxx %lu closeWindow", ++close_count);
+    _animating = YES;
     
     [self.window.contentView removeConstraints:_view_constraints];
     
@@ -96,20 +93,18 @@
      }
                         completionHandler:^
      {
-//         IALog(@"xxx %lu closeWindow completionHandler", close_count);
          self.window.alphaValue = 0.0;
          [self.window orderOut:nil];
          [self.window close];
          [_current_controller.view removeFromSuperview];
          [_delegate windowController:self
             hasCurrentViewController:nil];
+         _animating = NO;
      }];
 }
 
 - (void)openWindow
 {
-//    IALog(@"xxx %lu openWindow", open_count);
-    
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [self.window makeKeyAndOrderFront:nil];
     [self.window setLevel:NSFloatingWindowLevel];
@@ -121,10 +116,10 @@
      }
                         completionHandler:^
      {
-//         IALog(@"xxx %lu openWindow completionHandler", open_count);
          self.window.alphaValue = 1.0;
          [_delegate windowController:self
             hasCurrentViewController:_current_controller];
+         _animating = NO;
      }];
 }
 
@@ -146,8 +141,10 @@
 
 - (void)changeToViewController:(IAViewController*)new_controller
 {
-    if (!_window_is_open)
+    if (!_window_is_open || _animating)
         return;
+    
+    _animating = YES;
     
     NSSize new_size = new_controller.view.frame.size;
     NSSize old_size = _current_controller.view.frame.size;
@@ -194,18 +191,19 @@
          _current_controller = new_controller;
          [_delegate windowController:self
             hasCurrentViewController:_current_controller];
+         
+         _animating = NO;
      }];
 }
 
 - (void)openWithViewController:(IAViewController*)controller
                   withMidpoint:(NSPoint)midpoint
 {
-    if (controller == nil || _window_is_open)
+    if (controller == nil || _window_is_open || _animating)
         return;
     
     _window_is_open = YES;
-    
-//    IALog(@"xxx %lu openWithViewController", ++open_count);
+    _animating = YES;
 
     _current_controller = controller;
     
