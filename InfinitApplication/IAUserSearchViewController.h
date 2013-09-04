@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "IASearchResultsCellView.h"
+#import "IASimpleSendButton.h"
 
 @protocol IAUserSearchViewProtocol;
 
@@ -23,7 +24,7 @@
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSScrollView* results_view;
 @property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
-@property (nonatomic, strong) IBOutlet NSButton* send_button;
+@property (nonatomic, strong) IBOutlet IASimpleSendButton* send_button;
 
 - (id)init;
 

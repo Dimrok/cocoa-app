@@ -126,7 +126,7 @@
     [self performSelector:@selector(setFocusToSearchField)
                withObject:nil
                afterDelay:0.4];
-    [_user_search_controller.send_button setEnabled:NO];
+    [self setSendButtonState];
 }
 
 - (void)setFocusToSearchField

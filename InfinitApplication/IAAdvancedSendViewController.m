@@ -216,8 +216,10 @@
                                         attributes:button_style];
 }
 
-- (void)awakeFromNib
+- (void)loadView
 {
+    [super loadView];
+    
     [self setButtonHoverImages];
     [self initialiseSendButton];
     [_user_search_controller hideSendButton];
@@ -230,12 +232,8 @@
                                                   @"characters remaining")];
     self.characters_label.attributedStringValue = [[NSAttributedString alloc]
                                                    initWithString:characters_str
-                                                       attributes:_characters_attrs];
-}
-
-- (void)loadView
-{
-    [super loadView];
+                                                   attributes:_characters_attrs];
+    
     [self.search_view addSubview:_user_search_controller.view];
     [self.search_view addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|[search_view]|"
@@ -370,7 +368,7 @@ doCommandBySelector:(SEL)commandSelector
     CGFloat y_diff = [self tableHeight] - self.files_view.frame.size.height;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.15;
          [self.advanced_height_constraint.animator
           setConstant:(self.advanced_height_constraint.constant + y_diff)];
      }

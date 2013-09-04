@@ -96,6 +96,14 @@
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
+		838AAC5917D72485009083D4 /* btn-send-files-simple-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AAC5717D72485009083D4 /* btn-send-files-simple-disabled.png */; };
+		838AAC5A17D72485009083D4 /* btn-send-files-simple-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AAC5817D72485009083D4 /* btn-send-files-simple-disabled@2x.png */; };
+		838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7317D73261009083D4 /* IASimpleSendButton.m */; };
+		838AAC7717D736FE009083D4 /* btn-send-files-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AAC7517D736FE009083D4 /* btn-send-files-disabled.png */; };
+		838AAC7817D736FE009083D4 /* btn-send-files-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AAC7617D736FE009083D4 /* btn-send-files-disabled@2x.png */; };
+		838AAC7B17D73734009083D4 /* IAAdvancedSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7A17D73734009083D4 /* IAAdvancedSendButton.m */; };
+		838AAC7E17D737B8009083D4 /* btn-send-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AAC7C17D737B8009083D4 /* btn-send-files.png */; };
+		838AAC7F17D737B8009083D4 /* btn-send-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 838AAC7D17D737B8009083D4 /* btn-send-files@2x.png */; };
 		83929BB717C60FD60009292D /* icon-reject.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB517C60FD60009292D /* icon-reject.png */; };
 		83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB617C60FD60009292D /* icon-reject@2x.png */; };
 		83929BC017C618CD0009292D /* icon-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBE17C618CD0009292D /* icon-accept.png */; };
@@ -516,6 +524,16 @@
 		836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendViewController.h; sourceTree = "<group>"; };
 		836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAdvancedSendViewController.m; sourceTree = "<group>"; };
 		836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAAdvancedSendViewController.xib; sourceTree = "<group>"; };
+		838AAC5717D72485009083D4 /* btn-send-files-simple-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple-disabled.png"; sourceTree = "<group>"; };
+		838AAC5817D72485009083D4 /* btn-send-files-simple-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple-disabled@2x.png"; sourceTree = "<group>"; };
+		838AAC7217D73261009083D4 /* IASimpleSendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASimpleSendButton.h; sourceTree = "<group>"; };
+		838AAC7317D73261009083D4 /* IASimpleSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASimpleSendButton.m; sourceTree = "<group>"; };
+		838AAC7517D736FE009083D4 /* btn-send-files-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-disabled.png"; sourceTree = "<group>"; };
+		838AAC7617D736FE009083D4 /* btn-send-files-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-disabled@2x.png"; sourceTree = "<group>"; };
+		838AAC7917D73734009083D4 /* IAAdvancedSendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendButton.h; sourceTree = "<group>"; };
+		838AAC7A17D73734009083D4 /* IAAdvancedSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAdvancedSendButton.m; sourceTree = "<group>"; };
+		838AAC7C17D737B8009083D4 /* btn-send-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files.png"; sourceTree = "<group>"; };
+		838AAC7D17D737B8009083D4 /* btn-send-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files@2x.png"; sourceTree = "<group>"; };
 		8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrashReporter.xcodeproj; path = ../plcrashreporter/CrashReporter.xcodeproj; sourceTree = "<group>"; };
 		83929BB517C60FD60009292D /* icon-reject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject.png"; sourceTree = "<group>"; };
 		83929BB617C60FD60009292D /* icon-reject@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject@2x.png"; sourceTree = "<group>"; };
@@ -915,6 +933,8 @@
 				836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */,
 				83A99B2B17AF9474008DE473 /* IASendFileListCellView.h */,
 				83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */,
+				838AAC7917D73734009083D4 /* IAAdvancedSendButton.h */,
+				838AAC7A17D73734009083D4 /* IAAdvancedSendButton.m */,
 			);
 			name = "Advanced Send View";
 			sourceTree = "<group>";
@@ -1013,6 +1033,12 @@
 		83C99E0C17AB9C7B00AFF091 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				838AAC7C17D737B8009083D4 /* btn-send-files.png */,
+				838AAC7D17D737B8009083D4 /* btn-send-files@2x.png */,
+				838AAC7517D736FE009083D4 /* btn-send-files-disabled.png */,
+				838AAC7617D736FE009083D4 /* btn-send-files-disabled@2x.png */,
+				838AAC5717D72485009083D4 /* btn-send-files-simple-disabled.png */,
+				838AAC5817D72485009083D4 /* btn-send-files-simple-disabled@2x.png */,
 				83F1148717AE709F00DCF662 /* icon-star-selected.png */,
 				83F1148817AE709F00DCF662 /* icon-star-selected@2x.png */,
 				83F1148917AE709F00DCF662 /* icon-star.png */,
@@ -1134,6 +1160,8 @@
 				83F1148217AE63E700DCF662 /* IAUserSearchViewController.h */,
 				83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */,
 				83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */,
+				838AAC7217D73261009083D4 /* IASimpleSendButton.h */,
+				838AAC7317D73261009083D4 /* IASimpleSendButton.m */,
 			);
 			name = "Search Results";
 			sourceTree = "<group>";
@@ -1457,6 +1485,12 @@
 				834D47E817CB446A00EEB16A /* icon-collapse@2x.png in Resources */,
 				831AA6A617D101BA0004AE8D /* icon_status_bar_no_connection.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
+				838AAC5917D72485009083D4 /* btn-send-files-simple-disabled.png in Resources */,
+				838AAC5A17D72485009083D4 /* btn-send-files-simple-disabled@2x.png in Resources */,
+				838AAC7717D736FE009083D4 /* btn-send-files-disabled.png in Resources */,
+				838AAC7817D736FE009083D4 /* btn-send-files-disabled@2x.png in Resources */,
+				838AAC7E17D737B8009083D4 /* btn-send-files.png in Resources */,
+				838AAC7F17D737B8009083D4 /* btn-send-files@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1544,6 +1578,8 @@
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.m in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.m in Sources */,
+				838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */,
+				838AAC7B17D73734009083D4 /* IAAdvancedSendButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
