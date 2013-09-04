@@ -369,6 +369,18 @@
     [_transaction_manager rejectTransaction:transaction];
 }
 
+- (void)conversationView:(IAConversationViewController*)sender
+       wantsAddFavourite:(IAUser*)user
+{
+    [IAUserManager addFavourite:user];
+}
+
+- (void)conversationView:(IAConversationViewController*)sender
+    wantsRemoveFavourite:(IAUser*)user
+{
+    [IAUserManager removeFavourite:user];
+}
+
 //- Desktop Notifier Protocol ----------------------------------------------------------------------
 
 - (void)            desktopNotifier:(IADesktopNotifier*)sender
