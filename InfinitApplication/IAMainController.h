@@ -12,6 +12,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import <Gap/IATransactionManager.h>
 #import <Gap/IAUserManager.h>
 
 #import "IAConversationViewController.h"
@@ -22,7 +23,6 @@
 #import "IANotLoggedInViewController.h"
 #import "IAGeneralSendController.h"
 #import "IAStatusBarIcon.h"
-#import <Gap/IATransactionManager.h>
 #import "IAWindowController.h"
 
 @protocol IAMainControllerProtocol;
