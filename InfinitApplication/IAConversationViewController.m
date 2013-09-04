@@ -219,7 +219,11 @@
 
 - (void)resizeContentView
 {
-    CGFloat y_diff = [self tableHeight] - self.content_height_constraint.constant;
+    CGFloat y_diff = [self tableHeight] - (self.content_height_constraint.constant -
+                                           self.person_view.frame.size.height);
+    if (y_diff == 0.0)
+        return;
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
