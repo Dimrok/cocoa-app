@@ -50,6 +50,8 @@
     BOOL _window_is_open;
     IAViewController* _current_controller;
     NSMutableArray* _view_constraints;
+//    NSUInteger open_count;
+//    NSUInteger close_count;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -62,6 +64,8 @@
     {
         _delegate = delegate;
         _window_is_open = NO;
+//        open_count = 0;
+//        close_count = 0;
     }
     return self;
 }
@@ -79,17 +83,20 @@
         return;
     
     _window_is_open = NO;
+//    IALog(@"xxx %lu closeWindow", ++close_count);
+    
     [self.window.contentView removeConstraints:_view_constraints];
     
     [_current_controller aboutToChangeView];
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.2;
+         context.duration = 0.1;
          [(NSWindow*)self.window.animator setAlphaValue:0.0];
      }
                         completionHandler:^
      {
+//         IALog(@"xxx %lu closeWindow completionHandler", close_count);
          self.window.alphaValue = 0.0;
          [self.window orderOut:nil];
          [self.window close];
@@ -101,10 +108,7 @@
 
 - (void)openWindow
 {
-    if (_window_is_open)
-        return;
-    
-    _window_is_open = YES;
+//    IALog(@"xxx %lu openWindow", open_count);
     
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [self.window makeKeyAndOrderFront:nil];
@@ -112,12 +116,15 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.2;
+         context.duration = 0.1;
          [(NSWindow*)self.window.animator setAlphaValue:1.0];
      }
                         completionHandler:^
      {
+//         IALog(@"xxx %lu openWindow completionHandler", open_count);
          self.window.alphaValue = 1.0;
+         [_delegate windowController:self
+            hasCurrentViewController:_current_controller];
      }];
 }
 
@@ -195,6 +202,10 @@
 {
     if (controller == nil || _window_is_open)
         return;
+    
+    _window_is_open = YES;
+    
+//    IALog(@"xxx %lu openWithViewController", ++open_count);
 
     _current_controller = controller;
     
@@ -220,8 +231,6 @@
     [self.window.contentView addConstraints:_view_constraints];
     
     [self openWindow];
-    [_delegate windowController:self
-       hasCurrentViewController:_current_controller];
     
 }
 
