@@ -289,6 +289,10 @@
 - (void)resizeContentView
 {
     CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
+    
+    if (y_diff == 0.0)
+        return;
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.25;
@@ -495,7 +499,7 @@
 {
     for (IATransaction* existing_transaction in _transaction_list)
     {
-        if (existing_transaction.transaction_id == transaction.transaction_id)
+        if ([existing_transaction.transaction_id isEqualToNumber:transaction.transaction_id])
         {
             NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
             [self.table_view beginUpdates];
