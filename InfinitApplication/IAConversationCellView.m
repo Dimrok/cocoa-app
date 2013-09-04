@@ -178,6 +178,8 @@
     
     if (_transaction.message.length == 0)
         [self.message_button setHidden:YES];
+    else
+        [self.message_button setHidden:NO];
     
     NSMutableParagraphStyle* date_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     date_para.alignment = NSCenterTextAlignment;
@@ -229,10 +231,21 @@
     }
     else if (element.mode == CONVERSATION_CELL_VIEW_FILE_LIST)
     {
-        // Do nothing
+        self.files_icon.image = [IAFunctions imageNamed:@"icon-collapse"];
     }
     else if (element.mode == CONVERSATION_CELL_VIEW_NORMAL)
     {
+        if (_transaction.files_count > 1)
+        {
+            NSString* side;
+            if (element.on_left)
+                side = @"left";
+            else
+                side = @"right";
+            self.files_icon.image = [IAFunctions imageNamed:[NSString
+                                                             stringWithFormat:@"icon-expand-%@", side]];
+        }
+        
         self.message_button.state = NSOffState;
         NSDictionary* info_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                                    paragraphStyle:text_align
