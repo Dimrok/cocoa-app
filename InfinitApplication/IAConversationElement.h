@@ -13,6 +13,7 @@ typedef enum __IAConversationCellViewMode
     CONVERSATION_CELL_VIEW_NORMAL = 0,
     CONVERSATION_CELL_VIEW_FILE_LIST = 1,
     CONVERSATION_CELL_VIEW_MESSAGE = 2,
+    CONVERSATION_CELL_VIEW_SPACER = 3,
 } IAConversationCellViewMode;
 
 @interface IAConversationElement : NSObject

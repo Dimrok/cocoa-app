@@ -212,6 +212,9 @@
 
 - (void)generateUserTransactionList
 {
+    IAConversationElement* spacer_element = [[IAConversationElement alloc] initWithTransaction:nil];
+    spacer_element.mode = CONVERSATION_CELL_VIEW_SPACER;
+    [_element_list addObject:spacer_element];
     [self.table_view reloadData];
     [self resizeContentView];
     [self.table_view scrollRowToVisible:(_element_list.count - 1)];
@@ -292,6 +295,11 @@
             cell = [self.table_view makeViewWithIdentifier:
                     [NSString stringWithFormat:@"conversation_cell_none_files_%@", left_right_select]
                                          owner:self];
+            break;
+        
+        case CONVERSATION_CELL_VIEW_SPACER:
+            cell = [self.table_view makeViewWithIdentifier:@"conversation_spacer"
+                                                     owner:self];
             break;
             
         case CONVERSATION_CELL_VIEW_NORMAL:
@@ -559,8 +567,8 @@
     
     IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
     [self.table_view beginUpdates];
-    [_element_list addObject:element];
-    NSUInteger list_bottom = _element_list.count - 1;
+    NSUInteger list_bottom = _element_list.count - 2;
+    [_element_list insertObject:element atIndex:list_bottom];
     [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:list_bottom]
                            withAnimation:NSTableViewAnimationSlideDown];
     [self.table_view endUpdates];

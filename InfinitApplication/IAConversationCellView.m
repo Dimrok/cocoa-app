@@ -85,6 +85,7 @@
     CGFloat normal = 66.0;
     CGFloat message = 110.0;
     CGFloat file_list = normal;
+    CGFloat spacer = 25.0;
     if (element.transaction.files_count > 3)
     {
         file_list += 14.0 + 15.0 * 3;
@@ -103,6 +104,9 @@
 
         case CONVERSATION_CELL_VIEW_FILE_LIST:
             return file_list;
+            
+        case CONVERSATION_CELL_VIEW_SPACER:
+            return spacer;
             
         case CONVERSATION_CELL_VIEW_NORMAL:
             switch (element.transaction.view_mode)
@@ -168,6 +172,9 @@
 
 - (void)setupCellWithElement:(IAConversationElement*)element
 {
+    if (element.transaction == nil) // Spacer element
+        return;
+    
     _transaction = element.transaction;
     
     NSMutableParagraphStyle* text_align = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
