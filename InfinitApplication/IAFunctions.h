@@ -5,6 +5,8 @@
 //  Created by Christopher Crone on 7/26/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
+// Library of functions which are used throughout the application. These include generating human
+// friendly times, making round avatars, etc.
 
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
