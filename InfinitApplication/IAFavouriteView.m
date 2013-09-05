@@ -66,7 +66,7 @@
         avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
                                                                 andLoadIfNeeded:YES]
                                    ofDiameter:self.bounds.size.width
-                        withBorderOfThickness:3.0
+                        withBorderOfThickness:2.0
                                      inColour:IA_GREY_COLOUR(255.0)
                             andShadowOfRadius:2.0];
     }
@@ -75,8 +75,8 @@
         avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
                                                                 andLoadIfNeeded:YES]
                                    ofDiameter:self.bounds.size.width
-                        withBorderOfThickness:3.0
-                                     inColour:IA_GREY_COLOUR(206.0)
+                        withBorderOfThickness:2.0
+                                     inColour:IA_GREY_COLOUR(208.0)
                             andShadowOfRadius:2.0];
     }
     [avatar drawInRect:self.bounds
