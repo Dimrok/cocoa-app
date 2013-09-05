@@ -9,7 +9,7 @@
 #import "IAViewController.h"
 
 #import "IAUserSearchViewController.h"
-#import "IAAdvancedSendButton.h"
+#import "IABottomButton.h"
 
 typedef enum IAAdvancedSendViewFocus
 {
@@ -36,7 +36,7 @@ typedef enum IAAdvancedSendViewFocus
 @property (nonatomic, strong) IBOutlet NSTextField* note_field;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_height_constraint;
 @property (nonatomic, strong) IBOutlet NSView* search_view;
-@property (nonatomic, strong) IBOutlet IAAdvancedSendButton* send_button;
+@property (nonatomic, strong) IBOutlet IABottomButton* send_button;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 - (id)initWithDelegate:(id<IAAdvancedSendViewProtocol>)delegate

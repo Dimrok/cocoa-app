@@ -1,14 +1,14 @@
 //
-//  IAAdvancedSendButton.m
+//  IABottomButton.m
 //  InfinitApplication
 //
 //  Created by Christopher Crone on 9/4/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IAAdvancedSendButton.h"
+#import "IABottomButton.h"
 
-@implementation IAAdvancedSendButton
+@implementation IABottomButton
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -41,12 +41,19 @@
     _enabled = flag;
     if (flag)
     {
-        self.image = [IAFunctions imageNamed:@"btn-send-files"];
+        self.image = [IAFunctions imageNamed:@"bg-main-button"];
     }
     else
     {
-        self.image = [IAFunctions imageNamed:@"btn-send-files-disabled"];
+        self.image = [IAFunctions imageNamed:@"bg-main-button-disabled"];
     }
+}
+
+- (void)mouseDown:(NSEvent*)theEvent
+{
+    if (!_enabled)
+        return;
+    [super mouseDown:theEvent];
 }
 
 @end

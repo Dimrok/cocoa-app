@@ -8,6 +8,7 @@
 //  This view controller is responsible for the login window.
 
 #import <Cocoa/Cocoa.h>
+#import "IABottomButton.h"
 
 @interface IALoginWindow : NSWindow
 @end
@@ -24,7 +25,7 @@
 @property (nonatomic, strong) IBOutlet NSTextField* email_address;
 @property (nonatomic, strong) IBOutlet NSTextField* error_message;
 @property (nonatomic, strong) IBOutlet NSButton* forgot_password_button;
-@property (nonatomic, strong) IBOutlet NSButton* login_button;
+@property (nonatomic, strong) IBOutlet IABottomButton* login_button;
 @property (nonatomic, strong) IBOutlet IALoginView* login_view;
 @property (nonatomic, strong) IBOutlet NSTextField* password;
 @property (nonatomic, strong) IBOutlet NSProgressIndicator* spinner;

@@ -311,7 +311,7 @@
 												<int key="NSvFlags">-2147483392</int>
 												<string key="NSFrame">{{-100, -100}, {223, 15}}</string>
 												<reference key="NSSuperview" ref="30500637"/>
-												<reference key="NSNextKeyView" ref="703388978"/>
+												<reference key="NSNextKeyView" ref="285051680"/>
 												<string key="NSReuseIdentifierKey">_NS:60</string>
 												<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 												<int key="NSsFlags">1</int>
@@ -322,7 +322,7 @@
 										</array>
 										<string key="NSFrame">{{0, 35}, {317, 0}}</string>
 										<reference key="NSSuperview" ref="163121679"/>
-										<reference key="NSNextKeyView" ref="285051680"/>
+										<reference key="NSNextKeyView" ref="957528778"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<string key="NSHuggingPriority">{250, 750}</string>
 										<string key="NSAntiCompressionPriority">{750, 750}</string>
@@ -347,7 +347,7 @@
 											<int key="NSCellFlags">-1809842175</int>
 											<int key="NSCellFlags2">4227072</int>
 											<string key="NSContents"/>
-											<object class="NSFont" key="NSSupport" id="720387618">
+											<object class="NSFont" key="NSSupport" id="945664643">
 												<string key="NSName">LucidaGrande</string>
 												<double key="NSSize">12</double>
 												<int key="NSfFlags">16</int>
@@ -549,7 +549,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{288, 15}, {14, 14}}</string>
 							<reference key="NSSuperview" ref="404392336"/>
-							<reference key="NSNextKeyView" ref="957528778"/>
+							<reference key="NSNextKeyView" ref="703388978"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="844471788">
@@ -739,7 +739,7 @@
 										<int key="NSCellFlags">68157504</int>
 										<int key="NSCellFlags2">71304192</int>
 										<string key="NSContents">Size</string>
-										<reference key="NSSupport" ref="720387618"/>
+										<reference key="NSSupport" ref="945664643"/>
 										<string key="NSCellIdentifier">_NS:1535</string>
 										<reference key="NSControlView" ref="489181165"/>
 										<reference key="NSBackgroundColor" ref="429696100"/>
@@ -2330,7 +2330,7 @@
 				<string key="570.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="60.CustomClassName">IAAdvancedSendButton</string>
+				<string key="60.CustomClassName">IABottomButton</string>
 				<boolean value="NO" key="60.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="60.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="61.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

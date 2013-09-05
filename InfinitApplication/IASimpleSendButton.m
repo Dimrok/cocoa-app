@@ -49,4 +49,11 @@
     }
 }
 
+- (void)mouseDown:(NSEvent*)theEvent
+{
+    if (!_enabled)
+        return;
+    [super mouseDown:theEvent];
+}
+
 @end

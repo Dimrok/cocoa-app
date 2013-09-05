@@ -1,5 +1,5 @@
 //
-//  IAAdvancedSendButton.h
+//  IABottomButton.h
 //  InfinitApplication
 //
 //  Created by Christopher Crone on 9/4/13.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface IAAdvancedSendButton : NSButton
+@interface IABottomButton : NSButton
 
 @property(nonatomic, readwrite) BOOL enabled;
 
