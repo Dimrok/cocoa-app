@@ -378,7 +378,7 @@
     if (row < 0 || row > _transaction_list.count - 1)
         return;
     
-    IATransaction* transaction = [_transaction_list objectAtIndex:row];
+    IATransaction* transaction = _transaction_list[row];
     IAUser* user = transaction.other_user;
     
     NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
