@@ -213,6 +213,13 @@
     [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
+- (void)awakeFromNib
+{
+    // Workaround for 15" Macbook Pro always rendering scroll bars
+    // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
+    [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
+}
+
 - (void)loadView
 {
     [super loadView];
