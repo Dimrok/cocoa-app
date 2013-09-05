@@ -15,8 +15,6 @@
 #import "IAGapMetrics.h"
 #import "IALogFileManager.h"
 
-//#define BUILD_PRODUCTION 1
-
 //- Callbacks for notifications -----------------------------------------------------
 
 static BOOL _callbacks_set = NO;
