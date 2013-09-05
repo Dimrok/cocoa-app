@@ -13,6 +13,7 @@
 @interface IALoginWindow : NSWindow
 @end
 
+@class IALinkButton;
 @class IALoginView;
 
 @protocol IALoginViewControllerProtocol;
@@ -21,10 +22,10 @@
                                                      NSWindowDelegate>
 
 @property (nonatomic, strong) IBOutlet NSButton* close_button;
-@property (nonatomic, strong) IBOutlet NSButton* create_account_button;
+@property (nonatomic, strong) IBOutlet IALinkButton* create_account_button;
 @property (nonatomic, strong) IBOutlet NSTextField* email_address;
 @property (nonatomic, strong) IBOutlet NSTextField* error_message;
-@property (nonatomic, strong) IBOutlet NSButton* forgot_password_button;
+@property (nonatomic, strong) IBOutlet IALinkButton* forgot_password_button;
 @property (nonatomic, strong) IBOutlet IABottomButton* login_button;
 @property (nonatomic, strong) IBOutlet IALoginView* login_view;
 @property (nonatomic, strong) IBOutlet NSTextField* password;

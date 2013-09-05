@@ -16,7 +16,84 @@
 @interface IALoginViewController ()
 @end
 
-//- Login window -----------------------------------------------------------------------------------
+//- Link Button ------------------------------------------------------------------------------------
+
+@interface IALinkButton : NSButton
+@end
+
+@implementation IALinkButton
+{
+@private
+    NSTrackingArea* _tracking_area;
+    NSDictionary* _hover_attrs;
+    NSDictionary* _normal_attrs;
+}
+
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        _normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
+                                                shadow:nil];
+        _hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                               colour:IA_RGB_COLOUR(11.0, 117.0, 162)
+                                               shadow:nil];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    _tracking_area = nil;
+}
+
+- (void)resetCursorRects
+{
+    [super resetCursorRects];
+    NSCursor* cursor = [NSCursor pointingHandCursor];
+    [self addCursorRect:self.bounds cursor:cursor];
+}
+
+- (void)ensureTrackingArea
+{
+    _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
+                                                  options:(NSTrackingInVisibleRect |
+                                                           NSTrackingActiveAlways |
+                                                           NSTrackingMouseEnteredAndExited)
+                                                    owner:self
+                                                 userInfo:nil];
+}
+
+- (void)updateTrackingAreas
+{
+    [super updateTrackingAreas];
+    [self ensureTrackingArea];
+    if (![[self trackingAreas] containsObject:_tracking_area])
+    {
+        [self addTrackingArea:_tracking_area];
+    }
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+    NSAttributedString* title = self.attributedTitle;
+    self.attributedTitle = [[NSAttributedString alloc] initWithString:title.string
+                                                           attributes:_hover_attrs];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+    NSAttributedString* title = self.attributedTitle;
+    self.attributedTitle = [[NSAttributedString alloc] initWithString:title.string
+                                                           attributes:_normal_attrs];
+}
+
+@end
+
+//- Login Window -----------------------------------------------------------------------------------
 
 @implementation IALoginWindow
 
@@ -28,7 +105,7 @@
 
 @end
 
-//- Login view -------------------------------------------------------------------------------------
+//- Login View -------------------------------------------------------------------------------------
 
 @interface IALoginView : NSView
 
@@ -127,11 +204,11 @@
 
 - (void)setForgotPasswordRegisterButtonText
 {
-    NSDictionary* link_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                  colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
-                                                  shadow:nil];
-    
+    NSDictionary* link_attrs = [IAFunctions
+                                textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                           colour:IA_RGB_COLOUR(11.0, 117.0, 162)
+                                           shadow:nil];
     NSString* need_account = NSLocalizedString(@"Need an account?", @"need an account?");
     NSString* forgot_password = NSLocalizedString(@"Forgot password?", @"forgot password?");
     
@@ -308,7 +385,7 @@
     return YES;
 }
 
-- (IBAction)loginClicked:(NSButton*)sender
+- (IBAction)loginClicked:(IABottomButton*)sender
 {
     if (sender == self.login_button)
     {
@@ -335,13 +412,13 @@
 
 //- Register and Forgot Password -------------------------------------------------------------------
 
-- (IBAction)registerButtonClicked:(NSButton*)sender
+- (IBAction)registerButtonClicked:(IALinkButton*)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL
         URLWithString:[NSString stringWithUTF8String:INFINIT_REGISTER_URL]]];
 }
 
-- (IBAction)forgotPasswordButtonClicked:(NSButton*)sender
+- (IBAction)forgotPasswordButtonClicked:(IALinkButton*)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL
         URLWithString:[NSString stringWithUTF8String:INFINIT_FORGOT_PASSWORD_URL]]];
