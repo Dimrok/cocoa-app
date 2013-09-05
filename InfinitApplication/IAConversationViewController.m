@@ -527,6 +527,20 @@
     [_delegate conversationViewWantsBack:self];
 }
 
+//- User Table Interaction -------------------------------------------------------------------------
+
+// XXX debug only, remove code and connection for real build
+- (IBAction)tableViewAction:(NSTableView*)sender
+{
+    NSInteger row = [self.table_view clickedRow];
+    if (row < 0 || row > _element_list.count - 1)
+        return;
+    
+    IATransaction* transaction = [_element_list[row] transaction];
+    NSAlert* popup = [NSAlert alertWithMessageText:@"Transaction" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", transaction.description];
+    [popup runModal];
+}
+
 //- Transaction Callbacks --------------------------------------------------------------------------
 
 - (void)transactionAdded:(IATransaction*)transaction
