@@ -28,7 +28,7 @@
 
 @protocol IASimpleSendViewProtocol <NSObject>
 
-- (void)simpleSendViewWantsAddFile:(IASimpleSendViewController*)sender;
+- (void)simpleSendViewWantsOpenFileDialogBox:(IASimpleSendViewController*)sender;
 
 - (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender;
 

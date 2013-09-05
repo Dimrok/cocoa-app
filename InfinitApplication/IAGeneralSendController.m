@@ -57,6 +57,32 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
+- (void)openFileDialogForView:(id)sender
+{
+    // XXX Should subclass the send views to use shared protocol
+    if (![sender isKindOfClass:IASimpleSendViewController.class] &&
+        ![sender isKindOfClass:IAAdvancedSendViewController.class])
+    {
+        return;
+    }
+    
+    NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
+    file_dialog.canChooseFiles = YES;
+    file_dialog.canChooseDirectories = YES;
+    file_dialog.allowsMultipleSelection = YES;
+    
+    if ([file_dialog runModal] == NSOKButton)
+    {
+        NSArray* dialog_files = [file_dialog URLs];
+        for (NSURL* file_url in dialog_files)
+        {
+            if (![_files containsObject:[file_url path]])
+                [_files addObject:[file_url path]];
+        }
+    }
+    [sender filesUpdated];
+}
+
 //- Open Functions ---------------------------------------------------------------------------------
 
 - (void)openWithNoFile
@@ -121,9 +147,9 @@
 
 //- Simple Send View Protocol ----------------------------------------------------------------------
 
-- (void)simpleSendViewWantsAddFile:(IASimpleSendViewController*)sender
+- (void)simpleSendViewWantsOpenFileDialogBox:(IASimpleSendViewController*)sender
 {
-    [self openAdvancedViewWithFocus:ADVANCED_VIEW_USER_SEARCH_FOCUS];
+    [self openFileDialogForView:sender];
 }
 
 - (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender
@@ -194,21 +220,7 @@
 
 - (void)advancedSendViewWantsOpenFileDialogBox:(IAAdvancedSendViewController*)sender
 {
-    NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
-    file_dialog.canChooseFiles = YES;
-    file_dialog.canChooseDirectories = YES;
-    file_dialog.allowsMultipleSelection = YES;
-    
-    if ([file_dialog runModal] == NSOKButton)
-    {
-        NSArray* dialog_files = [file_dialog URLs];
-        for (NSURL* file_url in dialog_files)
-        {
-            if (![_files containsObject:[file_url path]])
-                [_files addObject:[file_url path]];
-        }
-    }
-    [sender filesUpdated];
+    [self openFileDialogForView:sender];
 }
 
 - (void)advancedSendView:(IAAdvancedSendViewController*)sender

@@ -213,7 +213,7 @@
 
 - (IBAction)addFileClicked:(NSButton*)sender
 {
-    [_delegate simpleSendViewWantsAddFile:self];
+    [_delegate simpleSendViewWantsOpenFileDialogBox:self];
 }
 
 //- User Search View Protocol ----------------------------------------------------------------------
