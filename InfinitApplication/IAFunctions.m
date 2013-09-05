@@ -266,13 +266,19 @@
 + (NSString*)relativeDateOf:(NSTimeInterval)timestamp
 {
     NSDate* transaction_date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     formatter.locale = [NSLocale currentLocale];
     NSString* res;
-    if (timestamp < [[NSDate date] timeIntervalSince1970] &&
-        timestamp > ([[NSDate date] timeIntervalSince1970] - 180.0))
+    if (timestamp <  now && timestamp > (now - 3 * 60.0)) // 3 min ago
     {
         res = NSLocalizedString(@"Now", @"Now");
+    }
+    else if (timestamp < now && timestamp > (now - 60 * 60.0)) // an hour ago
+    {
+        CGFloat time_ago = floor((now - timestamp) / 60.0);
+        res = [NSString stringWithFormat:@"%.0f %@", time_ago, NSLocalizedString(@"min ago",
+                                                                                 @"min ago")];
     }
     else if ([IAFunctions isToday:transaction_date])
     {
