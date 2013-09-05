@@ -103,8 +103,9 @@
     [self.cancel_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
 }
 
-- (void)awakeFromNib
+- (void)loadView
 {
+    [super loadView];
     [_user_search_controller setDelegate:self];
     [self setButtonHoverImages];
     
@@ -121,8 +122,6 @@
                                      new:_user_search_controller.view.frame.size];
     self.content_height_constraint.constant += y_diff;
     
-    [self.view layoutSubtreeIfNeeded];
-
     [self performSelector:@selector(setFocusToSearchField)
                withObject:nil
                afterDelay:0.4];
@@ -229,7 +228,6 @@
         context.duration = 0.15;
         [self.content_height_constraint.animator
                 setConstant:(self.content_height_constraint.constant + y_diff)];
-        [self.view.window.contentView layoutSubtreeIfNeeded];
     }
                         completionHandler:^
     {

@@ -478,7 +478,6 @@ doCommandBySelector:(SEL)commandSelector
          context.duration = 0.15;
          [self.search_height_constraint.animator
                 setConstant:(self.search_height_constraint.constant + y_diff)];
-         [self.view.window.contentView layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {
