@@ -113,6 +113,14 @@
     [self.content_height_constraint.animator setConstant:(y_diff +
                                                           self.content_height_constraint.constant)];
     [self generateUserTransactionList];
+    
+#ifndef BUILD_PRODUCTION
+    
+    [self.table_view setTarget:self];
+    [self.table_view setAction:@selector(tableViewAction:)];
+    
+#endif
+    
 }
 
 //- Progress Update Functions ----------------------------------------------------------------------
@@ -529,7 +537,7 @@
 
 //- User Table Interaction -------------------------------------------------------------------------
 
-// XXX debug only, remove code and connection for real build
+#ifndef BUILD_PRODUCTION
 - (IBAction)tableViewAction:(NSTableView*)sender
 {
     NSInteger row = [self.table_view clickedRow];
@@ -540,6 +548,7 @@
     NSAlert* popup = [NSAlert alertWithMessageText:@"Transaction" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", transaction.description];
     [popup runModal];
 }
+#endif
 
 //- Transaction Callbacks --------------------------------------------------------------------------
 
