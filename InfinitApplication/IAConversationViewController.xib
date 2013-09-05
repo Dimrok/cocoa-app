@@ -1682,14 +1682,6 @@
 					<int key="connectionID">3465</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">tableViewAction:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="129618432"/>
-					</object>
-					<int key="connectionID">3469</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="129618432"/>
