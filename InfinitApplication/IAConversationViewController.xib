@@ -273,7 +273,7 @@
 									<object class="NSScroller" id="358818621">
 										<reference key="NSNextResponder" ref="237458781"/>
 										<int key="NSvFlags">-2147479296</int>
-										<string key="NSFrame">{{301, 0}, {16, 0}}</string>
+										<string key="NSFrame">{{-100, -100}, {16, 0}}</string>
 										<reference key="NSSuperview" ref="237458781"/>
 										<reference key="NSNextKeyView" ref="511185124"/>
 										<string key="NSReuseIdentifierKey">_NS:58</string>
@@ -285,7 +285,7 @@
 									<object class="NSScroller" id="812366437">
 										<reference key="NSNextResponder" ref="237458781"/>
 										<int key="NSvFlags">-2147479296</int>
-										<string key="NSFrame">{{1, 119}, {223, 15}}</string>
+										<string key="NSFrame">{{-100, -100}, {223, 15}}</string>
 										<reference key="NSSuperview" ref="237458781"/>
 										<reference key="NSNextKeyView" ref="41670261"/>
 										<string key="NSReuseIdentifierKey">_NS:60</string>
@@ -300,7 +300,7 @@
 								<reference key="NSSuperview" ref="995413466"/>
 								<reference key="NSNextKeyView" ref="358818621"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<int key="NSsFlags">150128</int>
+								<int key="NSsFlags">150096</int>
 								<reference key="NSVScroller" ref="358818621"/>
 								<reference key="NSHScroller" ref="812366437"/>
 								<reference key="NSContentView" ref="511185124"/>
@@ -1655,7 +1655,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{254, 39}, {18, 17}}</string>
 							<reference key="NSSuperview" ref="543573024"/>
-							<reference key="NSNextKeyView" ref="843220349"/>
+							<reference key="NSNextKeyView" ref="148456553"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1010740012">
@@ -4313,7 +4313,7 @@
 							<reference ref="543573024"/>
 							<reference ref="988810289"/>
 							<reference ref="280365856"/>
-							<object class="NSTableCellView" id="843220349">
+							<object class="NSTableCellView" id="148456553">
 								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">4370</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
@@ -11697,7 +11697,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">3472</int>
-						<reference key="object" ref="843220349"/>
+						<reference key="object" ref="148456553"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="1039544837"/>
 					</object>
@@ -12755,7 +12755,7 @@
 					<reference ref="470208813"/>
 					<reference ref="663471778"/>
 					<reference ref="543573024"/>
-					<reference ref="843220349"/>
+					<reference ref="148456553"/>
 				</array>
 				<string key="400.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="402.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>

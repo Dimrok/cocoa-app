@@ -309,7 +309,7 @@
 											<object class="NSScroller" id="957528778">
 												<reference key="NSNextResponder" ref="30500637"/>
 												<int key="NSvFlags">-2147483392</int>
-												<string key="NSFrame">{{1, 119}, {223, 15}}</string>
+												<string key="NSFrame">{{-100, -100}, {223, 15}}</string>
 												<reference key="NSSuperview" ref="30500637"/>
 												<reference key="NSNextKeyView" ref="703388978"/>
 												<string key="NSReuseIdentifierKey">_NS:60</string>
@@ -326,7 +326,7 @@
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<string key="NSHuggingPriority">{250, 750}</string>
 										<string key="NSAntiCompressionPriority">{750, 750}</string>
-										<int key="NSsFlags">150128</int>
+										<int key="NSsFlags">150096</int>
 										<reference key="NSVScroller" ref="285051680"/>
 										<reference key="NSHScroller" ref="957528778"/>
 										<reference key="NSContentView" ref="683668934"/>
@@ -347,7 +347,7 @@
 											<int key="NSCellFlags">-1809842175</int>
 											<int key="NSCellFlags2">4227072</int>
 											<string key="NSContents"/>
-											<object class="NSFont" key="NSSupport" id="11702493">
+											<object class="NSFont" key="NSSupport" id="720387618">
 												<string key="NSName">LucidaGrande</string>
 												<double key="NSSize">12</double>
 												<int key="NSfFlags">16</int>
@@ -739,7 +739,7 @@
 										<int key="NSCellFlags">68157504</int>
 										<int key="NSCellFlags2">71304192</int>
 										<string key="NSContents">Size</string>
-										<reference key="NSSupport" ref="11702493"/>
+										<reference key="NSSupport" ref="720387618"/>
 										<string key="NSCellIdentifier">_NS:1535</string>
 										<reference key="NSControlView" ref="489181165"/>
 										<reference key="NSBackgroundColor" ref="429696100"/>
