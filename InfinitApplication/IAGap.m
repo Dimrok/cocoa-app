@@ -637,7 +637,7 @@ static void on_transaction(uint32_t const transaction_id, gap_TransactionStatus 
         [msg setValue:[NSNumber numberWithUnsignedInt:transaction_id]
                forKey:@"transaction_id"];
         [msg setValue:[NSNumber numberWithInt:status]
-               forKey:@"status"];
+               forKey:@"transaction_status"];
         [IAGap sendNotif:IA_GAP_EVENT_TRANSACTION_NOTIFICATION withInfo:msg];
     }
     @catch (NSException* exception)
