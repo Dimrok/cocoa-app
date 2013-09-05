@@ -75,7 +75,7 @@
     self.avatar_view.image = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
                                                                             andLoadIfNeeded:YES]
                                                ofDiameter:50.0
-                                    withBorderOfThickness:3.0
+                                    withBorderOfThickness:2.0
                                                  inColour:IA_GREY_COLOUR(255.0)
                                         andShadowOfRadius:1.0];
     NSDictionary* name_attrs = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
@@ -193,7 +193,7 @@
                                        ofDiameter:50.0
                             withBorderOfThickness:2.0
                                          inColour:IA_GREY_COLOUR(255.0)
-                                andShadowOfRadius:2.0];
+                                andShadowOfRadius:1.0];
 }
 
 //- General Functions ------------------------------------------------------------------------------

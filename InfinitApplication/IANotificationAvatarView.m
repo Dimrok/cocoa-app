@@ -168,7 +168,7 @@
         [cancel_mask fill];
         
         NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
-        NSRect cancel_image_frame = NSMakeRect(avatar_image_frame.size.width / 2.0 + border,
+        NSRect cancel_image_frame = NSMakeRect(avatar_image_frame.size.width / 2.0 + border - 1.0,
                                                avatar_image_frame.size.height / 2.0,
                                                cancel_icon.size.width,
                                                cancel_icon.size.height);

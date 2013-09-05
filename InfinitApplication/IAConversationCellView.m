@@ -85,7 +85,7 @@
     CGFloat normal = 66.0;
     CGFloat message = 110.0;
     CGFloat file_list = normal;
-    CGFloat spacer = 25.0;
+    CGFloat spacer = 15.0;
     if (element.transaction.files_count > 3)
     {
         file_list += 14.0 + 15.0 * 3;

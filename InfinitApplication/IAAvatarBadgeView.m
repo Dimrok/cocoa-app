@@ -23,7 +23,7 @@
                 operation:NSCompositeSourceOver
                  fraction:1.0];
         NSDictionary* num_attrs = [IAFunctions
-                                   textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
+                                   textStyleWithFont:[NSFont boldSystemFontOfSize:11.0]
                                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                               colour:IA_GREY_COLOUR(255.0)
                                               shadow:nil];
