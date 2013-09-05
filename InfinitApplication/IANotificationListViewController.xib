@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12F33</string>
+		<string key="IBDocument.SystemVersion">12F36</string>
 		<string key="IBDocument.InterfaceBuilderVersion">4504</string>
 		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
@@ -205,7 +205,7 @@
 												<array class="NSMutableArray" key="NSSubviews"/>
 												<string key="NSFrameSize">{317, 75}</string>
 												<reference key="NSSuperview" ref="675472725"/>
-												<reference key="NSNextKeyView" ref="264162119"/>
+												<reference key="NSNextKeyView" ref="717741214"/>
 												<string key="NSReuseIdentifierKey">_NS:13</string>
 												<string key="NSAntiCompressionPriority">{750, 250}</string>
 												<bool key="NSEnabled">YES</bool>
@@ -257,8 +257,6 @@
 															</object>
 															<reference key="NSTextColor" ref="382711178"/>
 														</object>
-														<int key="NSResizingMask">3</int>
-														<bool key="NSIsResizeable">YES</bool>
 														<bool key="NSIsEditable">YES</bool>
 														<reference key="NSTableView" ref="94902610"/>
 													</object>
@@ -325,7 +323,7 @@
 								</array>
 								<string key="NSFrameSize">{317, 75}</string>
 								<reference key="NSSuperview" ref="293821247"/>
-								<reference key="NSNextKeyView" ref="717741214"/>
+								<reference key="NSNextKeyView" ref="675472725"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{250, 750}</string>
 								<string key="NSAntiCompressionPriority">{750, 200}</string>
@@ -764,7 +762,7 @@
 										<object class="NSFont" key="NSSupport">
 											<string key="NSName">LucidaGrande</string>
 											<double key="NSSize">12</double>
-											<int key="NSfFlags">4883</int>
+											<int key="NSfFlags">16</int>
 										</object>
 										<string key="NSCellIdentifier">_NS:1535</string>
 										<reference key="NSControlView" ref="887439264"/>

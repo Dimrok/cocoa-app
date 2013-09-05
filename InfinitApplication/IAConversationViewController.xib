@@ -230,8 +230,6 @@
 																<reference key="NSColor" ref="677668641"/>
 															</object>
 														</object>
-														<int key="NSResizingMask">1</int>
-														<bool key="NSIsResizeable">YES</bool>
 														<bool key="NSIsEditable">YES</bool>
 														<reference key="NSTableView" ref="129618432"/>
 													</object>
@@ -1657,7 +1655,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{254, 39}, {18, 17}}</string>
 							<reference key="NSSuperview" ref="543573024"/>
-							<reference key="NSNextKeyView" ref="62384996"/>
+							<reference key="NSNextKeyView" ref="382944980"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1010740012">
@@ -4315,7 +4313,7 @@
 							<reference ref="543573024"/>
 							<reference ref="988810289"/>
 							<reference ref="280365856"/>
-							<object class="NSTableCellView" id="62384996">
+							<object class="NSTableCellView" id="382944980">
 								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">4370</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
@@ -11699,7 +11697,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">3472</int>
-						<reference key="object" ref="62384996"/>
+						<reference key="object" ref="382944980"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="1039544837"/>
 					</object>
@@ -12757,7 +12755,7 @@
 					<reference ref="470208813"/>
 					<reference ref="663471778"/>
 					<reference ref="543573024"/>
-					<reference ref="62384996"/>
+					<reference ref="382944980"/>
 				</array>
 				<string key="400.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="402.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
