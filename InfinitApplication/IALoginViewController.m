@@ -14,7 +14,6 @@
 #define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot-password"
 
 @interface IALoginViewController ()
-
 @end
 
 //- Login window -----------------------------------------------------------------------------------
@@ -75,6 +74,7 @@
 @private
     id<IALoginViewControllerProtocol> _delegate;
     NSWindow* _window;
+    NSDictionary* _error_attrs;
 }
 
 + (IALoginWindow*)windowWithFrame:(NSRect)frame screen:(NSScreen*)screen
@@ -98,6 +98,12 @@
     if (self = [super initWithNibName:[self className] bundle:nil])
     {
         _delegate = delegate;
+        NSMutableParagraphStyle* error_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        error_para.alignment = NSCenterTextAlignment;
+        _error_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                       paragraphStyle:error_para
+                                               colour:IA_RGB_COLOUR(222.0, 104.0, 81.0)
+                                               shadow:nil];
     }
     return self;
 }
@@ -123,7 +129,7 @@
 {
     NSDictionary* link_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                  colour:IA_RGB_COLOUR(109.0, 175.0, 223.0)
+                                                  colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
                                                   shadow:nil];
     
     NSString* need_account = NSLocalizedString(@"Need an account?", @"need an account?");
@@ -209,16 +215,10 @@
     [self.login_button setEnabled:YES];
     
     [self.view.window makeFirstResponder:self.email_address];
-    
-    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    para.alignment = NSCenterTextAlignment;
-    NSDictionary* error_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
-                                                paragraphStyle:para
-                                                        colour:IA_RGB_COLOUR(232.0, 117.0, 119.0)
-                                                        shadow:nil];
+
     self.error_message.attributedStringValue = [[NSAttributedString alloc]
                                                 initWithString:error
-                                                attributes:error_attrs];
+                                                attributes:_error_attrs];
     [self.error_message setHidden:NO];
 }
 
@@ -287,15 +287,21 @@
 {
     if (![IAFunctions stringIsValidEmail:self.email_address.stringValue])
     {
-        self.error_message.stringValue = NSLocalizedString(@"Please enter a valid email address",
-                                                           @"email not valid");
+        NSString* error = NSLocalizedString(@"Please enter a valid email address",
+                                            @"email not valid");
+        self.error_message.attributedStringValue = [[NSAttributedString alloc]
+                                                    initWithString:error
+                                                    attributes:_error_attrs];
         [self.error_message setHidden:NO];
         return NO;
     }
     else if (self.password.stringValue.length == 0)
     {
-        self.error_message.stringValue = NSLocalizedString(@"Please enter your password",
-                                                           @"no password entered");
+        NSString* error = NSLocalizedString(@"Please enter your password",
+                                            @"no password entered");
+        self.error_message.attributedStringValue = [[NSAttributedString alloc]
+                                                    initWithString:error
+                                                    attributes:_error_attrs];
         [self.error_message setHidden:NO];
         return NO;
     }
