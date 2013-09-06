@@ -337,7 +337,10 @@
     if (user_id.unsignedIntValue != 0)
     {
         IAUser* user = [IAUserManager userWithId:user_id];
-        _search_results = [NSMutableArray arrayWithObject:user];
+        if ([user isEqual:[[IAGapState instance] self_user]])
+            _search_results = [NSMutableArray array];
+        else
+            _search_results = [NSMutableArray arrayWithObject:user];
     }
     else
     {
@@ -356,6 +359,14 @@
     }
     _search_results = [NSMutableArray arrayWithArray:[results.data sortedArrayUsingSelector:
                                                       @selector(compare:)]];
+    for (IAUser* user in _search_results)
+    {
+        if ([user isEqual:[[IAGapState instance] self_user]])
+        {
+            [_search_results removeObject:user];
+            break;
+        }
+    }
     [self updateResultsTable];
 }
 
