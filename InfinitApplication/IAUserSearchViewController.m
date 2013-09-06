@@ -475,6 +475,9 @@ hasMenuForRepresentedObject:(id)representedObject
       shouldAddObjects:(NSArray*)tokens
                atIndex:(NSUInteger)index
 {
+    // XXX Limit number of people that can be added to 10 for now. Should tell the user.
+    if (index > 9)
+        return [NSArray array];
     NSMutableArray* allowed_tokens = [NSMutableArray arrayWithArray:tokens];
     for (id new_token in allowed_tokens)
     {
