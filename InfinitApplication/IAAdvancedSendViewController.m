@@ -231,7 +231,7 @@
     
     [self setButtonHoverImages];
     [self initialiseSendButton];
-    [_user_search_controller hideSendButton];
+    [_user_search_controller removeSendButton];
     _characters_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                         paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                 colour:IA_GREY_COLOUR(217.0)

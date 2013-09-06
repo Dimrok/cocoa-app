@@ -282,14 +282,11 @@
     return self.search_field.objectValue;
 }
 
-- (void)hideSendButton
+- (void)removeSendButton
 {
-    [self.send_button setHidden:YES];
-}
-
-- (void)showSendButton
-{
-    [self.send_button setHidden:NO];
+    CGFloat button_width = self.send_button.frame.size.width - 15.0;
+    [self.send_button removeFromSuperview];
+    [self.search_field_width setConstant:(self.search_field_width.constant + button_width)];
 }
 
 //- Search Functions -------------------------------------------------------------------------------
