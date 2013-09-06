@@ -408,14 +408,26 @@
                 }
                 break;
                 
+            // XXX No notion of rejected state yet so use cancelled
             case TRANSACTION_VIEW_REJECTED:
-                if (_transaction.from_me)
-                {
-                    info = NSLocalizedString(@"Send rejected", @"send rejected");
-                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
-                                                                   initWithString:info
-                                                                   attributes:info_attrs];
-                }
+                info = NSLocalizedString(@"Transaction cancelled", @"transaction cancelled");
+                self.information_text.attributedStringValue = [[NSAttributedString alloc]
+                                                               initWithString:info
+                                                               attributes:info_attrs];
+//                if (_transaction.from_me)
+//                {
+//                    info = NSLocalizedString(@"Send rejected", @"send rejected");
+//                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
+//                                                                   initWithString:info
+//                                                                   attributes:info_attrs];
+//                }
+//                else
+//                {
+//                    info = NSLocalizedString(@"Transfer rejected", @"transfer rejected");
+//                    self.information_text.attributedStringValue = [[NSAttributedString alloc]
+//                                                                   initWithString:info
+//                                                                   attributes:info_attrs];
+//                }
                 break;
                 
             case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
