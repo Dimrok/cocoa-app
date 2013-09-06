@@ -205,7 +205,7 @@
 														<reference key="NSNextResponder" ref="683668934"/>
 														<int key="NSvFlags">4352</int>
 														<array class="NSMutableArray" key="NSSubviews"/>
-														<string key="NSFrameSize">{317, 1}</string>
+														<string key="NSFrameSize">{317, 0}</string>
 														<reference key="NSSuperview" ref="683668934"/>
 														<reference key="NSNextKeyView" ref="404392336"/>
 														<string key="NSReuseIdentifierKey">_NS:13</string>
@@ -260,7 +260,7 @@
 															</object>
 														</array>
 														<double key="NSIntercellSpacingWidth">3</double>
-														<double key="NSIntercellSpacingHeight">2</double>
+														<double key="NSIntercellSpacingHeight">0.0</double>
 														<object class="NSColor" key="NSBackgroundColor">
 															<int key="NSColorSpace">1</int>
 															<bytes key="NSRGB">MC45NjQ3MDU4ODI0IDAuOTY0NzA1ODgyNCAwLjk2NDcwNTg4MjQAA</bytes>
@@ -301,7 +301,6 @@
 												<reference key="NSSuperview" ref="30500637"/>
 												<reference key="NSNextKeyView" ref="683668934"/>
 												<string key="NSReuseIdentifierKey">_NS:58</string>
-												<bool key="NSEnabled">YES</bool>
 												<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 												<reference key="NSTarget" ref="30500637"/>
 												<string key="NSAction">_doScroller:</string>
@@ -326,11 +325,11 @@
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<string key="NSHuggingPriority">{250, 750}</string>
 										<string key="NSAntiCompressionPriority">{750, 750}</string>
-										<int key="NSsFlags">150096</int>
+										<int key="NSsFlags">150032</int>
 										<reference key="NSVScroller" ref="285051680"/>
 										<reference key="NSHScroller" ref="957528778"/>
 										<reference key="NSContentView" ref="683668934"/>
-										<bytes key="NSScrollAmts">QSAAAEEgAABCKAAAQigAAA</bytes>
+										<bytes key="NSScrollAmts">QSAAAEEgAABCIAAAQiAAAA</bytes>
 										<double key="NSMinMagnification">0.25</double>
 										<double key="NSMaxMagnification">4</double>
 										<double key="NSMagnification">1</double>
