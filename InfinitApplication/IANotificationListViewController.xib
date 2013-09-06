@@ -406,11 +406,11 @@
 						<string key="NSTitle">Send Feedback</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<object class="NSCustomResource" key="NSOnImage" id="860997489">
+						<object class="NSCustomResource" key="NSOnImage" id="982608879">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuCheckmark</string>
 						</object>
-						<object class="NSCustomResource" key="NSMixedImage" id="150836327">
+						<object class="NSCustomResource" key="NSMixedImage" id="735816296">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuMixedState</string>
 						</object>
@@ -422,8 +422,8 @@
 						<string key="NSTitle"/>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="860997489"/>
-						<reference key="NSMixedImage" ref="150836327"/>
+						<reference key="NSOnImage" ref="982608879"/>
+						<reference key="NSMixedImage" ref="735816296"/>
 					</object>
 					<object class="NSMenuItem" id="888697973">
 						<reference key="NSMenu" ref="64764261"/>
@@ -431,16 +431,16 @@
 						<string key="NSTitle">Version</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="860997489"/>
-						<reference key="NSMixedImage" ref="150836327"/>
+						<reference key="NSOnImage" ref="982608879"/>
+						<reference key="NSMixedImage" ref="735816296"/>
 					</object>
 					<object class="NSMenuItem" id="120391481">
 						<reference key="NSMenu" ref="64764261"/>
 						<string key="NSTitle">Quit Infinit</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="860997489"/>
-						<reference key="NSMixedImage" ref="150836327"/>
+						<reference key="NSOnImage" ref="982608879"/>
+						<reference key="NSMixedImage" ref="735816296"/>
 					</object>
 				</array>
 			</object>
