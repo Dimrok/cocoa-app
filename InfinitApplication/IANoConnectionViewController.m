@@ -12,7 +12,7 @@
 
 @end
 
-@interface IANoConnectionView : NSView
+@interface IANoConnectionView : IAMainView
 @end
 
 @implementation IANoConnectionView
@@ -22,6 +22,11 @@
     NSBezierPath* path = [NSBezierPath bezierPathWithRect:self.bounds];
     [IA_GREY_COLOUR(246.0) set];
     [path fill];
+}
+
+- (NSSize)intrinsicContentSize
+{
+    return self.bounds.size;
 }
 
 @end
@@ -36,6 +41,11 @@
     {
     }
     return self;
+}
+
+- (BOOL)closeOnFocusLost
+{
+    return YES;
 }
 
 - (void)awakeFromNib
@@ -53,9 +63,10 @@
                                                             attributes:message_attrs];
 }
 
-- (BOOL)closeOnFocusLost
+- (void)loadView
 {
-    return YES;
+    [super loadView];
+    [self.view layoutSubtreeIfNeeded];
 }
 
 @end
