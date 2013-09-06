@@ -13,7 +13,6 @@
 #import "IAAvatarManager.h"
 
 @interface IANotificationListViewController ()
-
 @end
 
 //- Notification List Row View ---------------------------------------------------------------------
@@ -371,9 +370,20 @@
     NSUInteger row = self.table_view.selectedRow;
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
     if (visible_rows.location == row)
+    {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-    else
+        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+    }
+    else if (_transaction_list.count - 1 == row)
+    {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
+        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+    }
+    else
+    {
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
+        self.table_view.backgroundColor = IA_GREY_COLOUR(246.0);
+    }
 }
 
 //- User Interaction With Table --------------------------------------------------------------------

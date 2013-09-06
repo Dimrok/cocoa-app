@@ -183,7 +183,7 @@
         _note_limit = 100;
         [self performSelector:@selector(setFocus:)
                    withObject:[NSNumber numberWithInt:focus]
-                   afterDelay:0.3];
+                   afterDelay:0.2];
     }
     return self;
 }
@@ -221,6 +221,8 @@
     // Workaround for 15" Macbook Pro always rendering scroll bars
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
+
+    [self.note_field setBezeled:YES];
 }
 
 - (void)loadView
@@ -285,6 +287,8 @@
 
 - (void)setFocus:(NSNumber*)focus
 {
+    [self.note_field.cell setPlaceholderString:NSLocalizedString(@"Optional note...",
+                                                                 "Optional note...")];
     switch (focus.intValue) {
         case ADVANCED_VIEW_USER_SEARCH_FOCUS:
             [self.view.window makeFirstResponder:_user_search_controller.search_field];

@@ -92,6 +92,7 @@
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
 		838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7317D73261009083D4 /* IASimpleSendButton.m */; };
 		838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7A17D73734009083D4 /* IABottomButton.m */; };
+		838FE0A117D9BAEA004160DB /* IAPaddedTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */; };
 		83929BB717C60FD60009292D /* icon-reject.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB517C60FD60009292D /* icon-reject.png */; };
 		83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB617C60FD60009292D /* icon-reject@2x.png */; };
 		83929BC017C618CD0009292D /* icon-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBE17C618CD0009292D /* icon-accept.png */; };
@@ -520,6 +521,8 @@
 		838AAC7317D73261009083D4 /* IASimpleSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASimpleSendButton.m; sourceTree = "<group>"; };
 		838AAC7917D73734009083D4 /* IABottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IABottomButton.h; sourceTree = "<group>"; };
 		838AAC7A17D73734009083D4 /* IABottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IABottomButton.m; sourceTree = "<group>"; };
+		838FE09F17D9BAEA004160DB /* IAPaddedTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPaddedTextFieldCell.h; sourceTree = "<group>"; };
+		838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPaddedTextFieldCell.m; sourceTree = "<group>"; };
 		8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrashReporter.xcodeproj; path = ../plcrashreporter/CrashReporter.xcodeproj; sourceTree = "<group>"; };
 		83929BB517C60FD60009292D /* icon-reject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject.png"; sourceTree = "<group>"; };
 		83929BB617C60FD60009292D /* icon-reject@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject@2x.png"; sourceTree = "<group>"; };
@@ -935,6 +938,8 @@
 				836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */,
 				83A99B2B17AF9474008DE473 /* IASendFileListCellView.h */,
 				83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */,
+				838FE09F17D9BAEA004160DB /* IAPaddedTextFieldCell.h */,
+				838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */,
 			);
 			name = "Advanced Send View";
 			sourceTree = "<group>";
@@ -1560,6 +1565,7 @@
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
+				838FE0A117D9BAEA004160DB /* IAPaddedTextFieldCell.m in Sources */,
 				8308BCB417BD35E400B2763A /* IAConversationCellView.m in Sources */,
 				83D4206E17C4DDC000D4E168 /* IAAvatarBadgeView.m in Sources */,
 				83D4207517C51E7C00D4E168 /* IANotificationAvatarView.m in Sources */,
