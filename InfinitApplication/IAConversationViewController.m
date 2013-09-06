@@ -135,7 +135,7 @@
 - (void)setUpdatorRunning:(BOOL)is_running
 {
 	if (is_running && _progress_timer == nil)
-		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.5
                                                            target:self
                                                          selector:@selector(updateProgress)
                                                          userInfo:nil
@@ -154,7 +154,7 @@
     else
         [_rows_with_progress removeAllObjects];
     
-    NSUInteger row = _element_list.count - 1;
+    NSUInteger row = _element_list.count - 2; // Start with the bottom transaction and work up
     for (IAConversationElement* element in _element_list)
     {
         if (element.transaction.view_mode == TRANSACTION_VIEW_RUNNING)
@@ -174,10 +174,13 @@
 {
     for (NSNumber* row in _rows_with_progress)
     {
-        IAConversationCellView* cell = [self.table_view viewAtColumn:0
-                                                                 row:row.unsignedIntegerValue
-                                                         makeIfNecessary:NO];
-        [cell updateProgress];
+        if (row.integerValue < _element_list.count)
+        {
+            IAConversationCellView* cell = [self.table_view viewAtColumn:0
+                                                                     row:row.unsignedIntegerValue
+                                                             makeIfNecessary:NO];
+            [cell updateProgress];
+        }
     }
 }
 
@@ -560,7 +563,8 @@
         return;
     
     IATransaction* transaction = [_element_list[row] transaction];
-    NSAlert* popup = [NSAlert alertWithMessageText:@"Transaction" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", transaction.description];
+    NSString* message = [NSString stringWithFormat:@"row number: %ld\n%@", row, transaction.description];
+    NSAlert* popup = [NSAlert alertWithMessageText:@"Transaction" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", message];
     [popup runModal];
 }
 #endif
@@ -574,7 +578,7 @@
     
     IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
     [self.table_view beginUpdates];
-    NSUInteger list_bottom = _element_list.count - 2;
+    NSUInteger list_bottom = _element_list.count - 1;
     [_element_list insertObject:element atIndex:list_bottom];
     [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:list_bottom]
                            withAnimation:NSTableViewAnimationSlideDown];

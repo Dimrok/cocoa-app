@@ -231,7 +231,7 @@
 - (void)setUpdatorRunning:(BOOL)is_running
 {
 	if (is_running && _progress_timer == nil)
-		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:0.5
+		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                            target:self
                                                          selector:@selector(updateProgress)
                                                          userInfo:nil
@@ -274,11 +274,16 @@
 {
     for (NSNumber* row in _rows_with_progress)
     {
-        IANotificationListCellView* cell = [self.table_view viewAtColumn:0
-                                                                     row:row.unsignedIntegerValue
-                                                         makeIfNecessary:NO];
-        [cell setTotalTransactionProgress:[_delegate notificationList:self
-                                          transactionsProgressForUser:[[_transaction_list objectAtIndex:row.unsignedIntegerValue] other_user]]];
+        if (row.integerValue < _transaction_list.count)
+        {
+            IANotificationListCellView* cell = [self.table_view viewAtColumn:0
+                                                                         row:row.unsignedIntegerValue
+                                                             makeIfNecessary:NO];
+            [cell setTotalTransactionProgress:[_delegate notificationList:self
+                                              transactionsProgressForUser:
+                                               [[_transaction_list objectAtIndex:
+                                                 row.unsignedIntegerValue] other_user]]];
+        }
     }
 }
 
