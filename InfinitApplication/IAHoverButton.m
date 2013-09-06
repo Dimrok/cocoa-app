@@ -107,7 +107,7 @@
                                             shadow:nil];
 }
 
-- (void)settextHoverColour:(NSColor*)colour
+- (void)setTextHoverColour:(NSColor*)colour
 {
     _hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
