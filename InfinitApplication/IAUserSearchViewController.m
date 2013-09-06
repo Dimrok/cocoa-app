@@ -301,6 +301,8 @@
     [self performSelector:@selector(doSearchNow:)
                withObject:search_string
                afterDelay:0.3];
+    self.search_image.image = [IAFunctions imageNamed:@"loading"];
+    self.search_image.animates = YES;
 }
 
 - (void)doSearchNow:(NSString*)search_string
@@ -346,6 +348,8 @@
     {
         _search_results = [NSMutableArray array];
     }
+    self.search_image.animates = NO;
+    self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
     [self updateResultsTable];
 }
 
@@ -367,6 +371,8 @@
             break;
         }
     }
+    self.search_image.animates = NO;
+    self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
     [self updateResultsTable];
 }
 

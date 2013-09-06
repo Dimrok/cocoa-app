@@ -89,6 +89,7 @@
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
+		837E6D0C17DA324100FC3141 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 837E6D0B17DA324100FC3141 /* loading.gif */; };
 		838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7317D73261009083D4 /* IASimpleSendButton.m */; };
 		838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7A17D73734009083D4 /* IABottomButton.m */; };
 		838FE0A117D9BAEA004160DB /* IAPaddedTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */; };
@@ -515,6 +516,7 @@
 		836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendViewController.h; sourceTree = "<group>"; };
 		836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAdvancedSendViewController.m; sourceTree = "<group>"; };
 		836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAAdvancedSendViewController.xib; sourceTree = "<group>"; };
+		837E6D0B17DA324100FC3141 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		838AAC7217D73261009083D4 /* IASimpleSendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASimpleSendButton.h; sourceTree = "<group>"; };
 		838AAC7317D73261009083D4 /* IASimpleSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASimpleSendButton.m; sourceTree = "<group>"; };
 		838AAC7917D73734009083D4 /* IABottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IABottomButton.h; sourceTree = "<group>"; };
@@ -1040,6 +1042,7 @@
 		83C99E0C17AB9C7B00AFF091 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				837E6D0B17DA324100FC3141 /* loading.gif */,
 				839DFC3217D8F99B001D60DD /* btn-send-files-simple-disabled.png */,
 				839DFC3317D8F99B001D60DD /* btn-send-files-simple-disabled@2x.png */,
 				839DFC3417D8F99B001D60DD /* btn-send-files-simple.png */,
@@ -1472,6 +1475,7 @@
 				83D4207117C4DE9800D4E168 /* badge.png in Resources */,
 				83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */,
 				83929BB717C60FD60009292D /* icon-reject.png in Resources */,
+				837E6D0C17DA324100FC3141 /* loading.gif in Resources */,
 				83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */,
 				839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */,
 				83929BC017C618CD0009292D /* icon-accept.png in Resources */,

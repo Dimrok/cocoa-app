@@ -25,6 +25,7 @@
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSScrollView* results_view;
 @property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
+@property (nonatomic, strong) IBOutlet NSImageView* search_image;
 @property (nonatomic, strong) IBOutlet IASimpleSendButton* send_button;
 
 - (id)init;
