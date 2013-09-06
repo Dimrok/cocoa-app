@@ -99,20 +99,14 @@
     [self setNeedsDisplay:YES];
 }
 
-- (void)setTextNormalColour:(NSColor*)colour
+- (void)setNormalTextAttributes:(NSDictionary*)attrs
 {
-    _normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:colour
-                                            shadow:nil];
+    _normal_attrs = attrs;
 }
 
-- (void)setTextHoverColour:(NSColor*)colour
+- (void)setHoverTextAttributes:(NSDictionary*)attrs
 {
-    _hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                           colour:colour
-                                           shadow:nil];
+    _hover_attrs = attrs;
 }
 
 @end

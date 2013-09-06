@@ -14,7 +14,7 @@
 
 - (void)setHoverImage:(NSImage*)hoverImage;
 
-- (void)setTextNormalColour:(NSColor*)colour;
-- (void)setTextHoverColour:(NSColor*)colour;
+- (void)setHoverTextAttributes:(NSDictionary*)attrs;
+- (void)setNormalTextAttributes:(NSDictionary*)attrs;
 
 @end
