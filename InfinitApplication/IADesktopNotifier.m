@@ -132,7 +132,7 @@
     
     res.title = title;
     res.informativeText = message;
-    res.userInfo = @{@"user_id": transaction.other_user.user_id};
+    res.userInfo = @{@"transaction_id": transaction.transaction_id};
     
     return res;
 }
@@ -171,14 +171,14 @@
        didActivateNotification:(NSUserNotification*)notification
 {
     NSDictionary* dict = notification.userInfo;
-    NSNumber* user_id;
-    if ([[dict objectForKey:@"user_id"] isKindOfClass:NSNumber.class])
-        user_id = [dict objectForKey:@"user_id"];
+    NSNumber* transaction_id;
+    if ([[dict objectForKey:@"transaction_id"] isKindOfClass:NSNumber.class])
+        transaction_id = [dict objectForKey:@"transaction_id"];
     
-    if (user_id == nil || user_id.unsignedIntValue == 0)
+    if (transaction_id == nil || transaction_id.unsignedIntValue == 0)
         return;
     
-    [_delegate desktopNotifier:self hadClickNotificationForUserId:user_id];
+    [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
 }
 
 @end

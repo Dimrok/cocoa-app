@@ -25,6 +25,6 @@
 @protocol IADesktopNotifierProtocol <NSObject>
 
 - (void)desktopNotifier:(IADesktopNotifier*)sender
-hadClickNotificationForUserId:(NSNumber*)user_id;
+hadClickNotificationForTransactionId:(NSNumber*)transaction_id;
 
 @end
