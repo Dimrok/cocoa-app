@@ -454,6 +454,11 @@
     [_delegate notificationListWantsQuit:self];
 }
 
+- (IBAction)onFeedbackClick:(NSMenuItem*)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://feedback.infinit.io"]];
+}
+
 //- Transaction Handling ---------------------------------------------------------------------------
 
 - (void)updateBadgeForRow:(NSUInteger)row
