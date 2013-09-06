@@ -544,6 +544,8 @@ displayStringForRepresentedObject:(id)representedObject
               changedSize:self.view.frame.size
          withActiveSearch:NO];
     _search_results = nil;
+    self.search_image.animates = NO;
+    self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
 }
 
 - (void)updateResultsTable
