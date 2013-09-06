@@ -185,7 +185,7 @@
     CGFloat normal = 66.0;
     CGFloat message = 110.0;
     CGFloat file_list = normal;
-    CGFloat spacer = 15.0;
+    CGFloat spacer = IA_CONVERSATION_VIEW_SPACER_SIZE;
     if (element.transaction.files_count > 3)
     {
         file_list += 14.0 + 15.0 * 3;

@@ -260,7 +260,7 @@
 
 - (CGFloat)tableHeight
 {
-    CGFloat total_height = 0.0;
+    CGFloat total_height = IA_CONVERSATION_VIEW_SPACER_SIZE;
     for (NSInteger i = 0; i < _element_list.count; i++)
     {
         total_height += [self tableView:self.table_view heightOfRow:i];

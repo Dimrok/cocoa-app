@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "IAConversationElement.h"
 
+#define IA_CONVERSATION_VIEW_SPACER_SIZE 10.0
+
 @class IAClickableTextField;
 
 @interface IAConversationBubbleView : NSView
