@@ -305,6 +305,11 @@
 
 - (void)handleQuit
 {
+    if ([_window_controller windowIsOpen])
+    {
+        [_status_bar_icon setHidden:YES];
+        [self closeNotificationWindow];
+    }
     if ([[IAGapState instance] logged_in])
     {
         [[IAGapState instance] logout:@selector(logoutAndQuitCallback:)
