@@ -144,7 +144,6 @@
 {
     [_desktop_notifier clearAllNotifications];
     [_transaction_manager markTransactionsRead];
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
     _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
     [self openOrChangeViewController:_notification_view_controller];
 }
@@ -318,6 +317,11 @@
     }
 }
 
+- (void)updateStatusBarIcon
+{
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
+}
+
 //- View Logic -------------------------------------------------------------------------------------
 
 - (void)selectView
@@ -383,11 +387,16 @@
 
 //- Desktop Notifier Protocol ----------------------------------------------------------------------
 
-- (void)            desktopNotifier:(IADesktopNotifier*)sender
-      hadClickNotificationForUserId:(NSNumber*)user_id
+- (void)desktopNotifier:(IADesktopNotifier*)sender
+hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 {
     [_status_bar_icon setHighlighted:YES];
-    [self showConversationViewForUser:[IAUserManager userWithId:user_id]];
+    IATransaction* transaction = [_transaction_manager transactionWithId:transaction_id];
+    if (transaction == nil)
+        return;
+    
+    [self showConversationViewForUser:transaction.other_user];
+    [_transaction_manager markTransactionAsRead:transaction];
 }
 
 //- General Send Controller Protocol ---------------------------------------------------------------
@@ -578,11 +587,20 @@ transactionsProgressForUser:(IAUser*)user
           transactionAdded:(IATransaction*)transaction
 {
     if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
+    {
         [_transaction_manager markTransactionsRead];
+    }
+    else if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
+    {
+        if (transaction.other_user == [(IAConversationViewController*)_current_view_controller user])
+        {
+            [_transaction_manager markTransactionAsRead:transaction];
+        }
+    }
     else
+    {
         [_desktop_notifier transactionAdded:transaction];
-    
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
+    }
     
     if (_current_view_controller == nil)
         return;
@@ -593,11 +611,20 @@ transactionsProgressForUser:(IAUser*)user
         transactionUpdated:(IATransaction*)transaction
 {
     if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
+    {
         [_transaction_manager markTransactionsRead];
+    }
+    else if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
+    {
+        if (transaction.other_user == [(IAConversationViewController*)_current_view_controller user])
+        {
+            [_transaction_manager markTransactionAsRead:transaction];
+        }
+    }
     else
+    {
         [_desktop_notifier transactionUpdated:transaction];
-    
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
+    }
     
     if (_current_view_controller == nil)
         return;
@@ -609,6 +636,11 @@ transactionsProgressForUser:(IAUser*)user
     if (_current_view_controller == nil)
         return;
     [self showNotifications];
+}
+
+- (void)transactionManagerUpdatedReadTransactions:(IATransactionManager*)sender
+{
+    [self updateStatusBarIcon];
 }
 
 //- User Manager Protocol --------------------------------------------------------------------------
