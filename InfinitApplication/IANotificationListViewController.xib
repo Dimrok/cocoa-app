@@ -209,7 +209,7 @@
 												<array class="NSMutableArray" key="NSSubviews"/>
 												<string key="NSFrameSize">{317, 72}</string>
 												<reference key="NSSuperview" ref="675472725"/>
-												<reference key="NSNextKeyView" ref="717741214"/>
+												<reference key="NSNextKeyView" ref="264162119"/>
 												<string key="NSReuseIdentifierKey">_NS:13</string>
 												<string key="NSAntiCompressionPriority">{750, 250}</string>
 												<bool key="NSEnabled">YES</bool>
@@ -327,7 +327,7 @@
 								</array>
 								<string key="NSFrameSize">{317, 72}</string>
 								<reference key="NSSuperview" ref="293821247"/>
-								<reference key="NSNextKeyView" ref="675472725"/>
+								<reference key="NSNextKeyView" ref="717741214"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{250, 750}</string>
 								<string key="NSAntiCompressionPriority">{750, 200}</string>
@@ -406,11 +406,11 @@
 						<string key="NSTitle">Send Feedback</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<object class="NSCustomResource" key="NSOnImage" id="982608879">
+						<object class="NSCustomResource" key="NSOnImage" id="1053584503">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuCheckmark</string>
 						</object>
-						<object class="NSCustomResource" key="NSMixedImage" id="735816296">
+						<object class="NSCustomResource" key="NSMixedImage" id="360253527">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuMixedState</string>
 						</object>
@@ -422,8 +422,8 @@
 						<string key="NSTitle"/>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="982608879"/>
-						<reference key="NSMixedImage" ref="735816296"/>
+						<reference key="NSOnImage" ref="1053584503"/>
+						<reference key="NSMixedImage" ref="360253527"/>
 					</object>
 					<object class="NSMenuItem" id="888697973">
 						<reference key="NSMenu" ref="64764261"/>
@@ -431,16 +431,16 @@
 						<string key="NSTitle">Version</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="982608879"/>
-						<reference key="NSMixedImage" ref="735816296"/>
+						<reference key="NSOnImage" ref="1053584503"/>
+						<reference key="NSMixedImage" ref="360253527"/>
 					</object>
 					<object class="NSMenuItem" id="120391481">
 						<reference key="NSMenu" ref="64764261"/>
 						<string key="NSTitle">Quit Infinit</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="982608879"/>
-						<reference key="NSMixedImage" ref="735816296"/>
+						<reference key="NSOnImage" ref="1053584503"/>
+						<reference key="NSMixedImage" ref="360253527"/>
 					</object>
 				</array>
 			</object>
@@ -688,7 +688,7 @@
 						<string key="label">user_full_name</string>
 						<object class="NSTableCellView" key="source" id="264162119">
 							<nil key="NSNextResponder"/>
-							<int key="NSvFlags">4370</int>
+							<int key="NSvFlags">4114</int>
 							<array class="NSMutableArray" key="NSSubviews">
 								<object class="NSTextField" id="440962000">
 									<reference key="NSNextResponder" ref="264162119"/>
