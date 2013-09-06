@@ -42,7 +42,6 @@
 		832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */; };
 		83281BBE17AFFD1D00CAE422 /* IAConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83281BBC17AFFD1D00CAE422 /* IAConversationViewController.m */; };
 		83281BBF17AFFD1D00CAE422 /* IAConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83281BBD17AFFD1D00CAE422 /* IAConversationViewController.xib */; };
-		83281BC917B0050600CAE422 /* IAHoverButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83281BC817B0050600CAE422 /* IAHoverButtonCell.m */; };
 		8333AB4A17BD1FB200D8B6DE /* icon-note-clicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 8333AB4617BD1FB200D8B6DE /* icon-note-clicked.png */; };
 		8333AB4B17BD1FB200D8B6DE /* icon-note-clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8333AB4717BD1FB200D8B6DE /* icon-note-clicked@2x.png */; };
 		8333AB4C17BD1FB200D8B6DE /* icon-note.png in Resources */ = {isa = PBXBuildFile; fileRef = 8333AB4817BD1FB200D8B6DE /* icon-note.png */; };
@@ -93,6 +92,7 @@
 		838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7317D73261009083D4 /* IASimpleSendButton.m */; };
 		838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7A17D73734009083D4 /* IABottomButton.m */; };
 		838FE0A117D9BAEA004160DB /* IAPaddedTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */; };
+		838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0B717DA097C004160DB /* IAHoverButton.m */; };
 		83929BB717C60FD60009292D /* icon-reject.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB517C60FD60009292D /* icon-reject.png */; };
 		83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BB617C60FD60009292D /* icon-reject@2x.png */; };
 		83929BC017C618CD0009292D /* icon-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBE17C618CD0009292D /* icon-accept.png */; };
@@ -465,8 +465,6 @@
 		83281BBB17AFFD1D00CAE422 /* IAConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAConversationViewController.h; sourceTree = "<group>"; };
 		83281BBC17AFFD1D00CAE422 /* IAConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationViewController.m; sourceTree = "<group>"; };
 		83281BBD17AFFD1D00CAE422 /* IAConversationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAConversationViewController.xib; sourceTree = "<group>"; };
-		83281BC717B0050600CAE422 /* IAHoverButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAHoverButtonCell.h; sourceTree = "<group>"; };
-		83281BC817B0050600CAE422 /* IAHoverButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAHoverButtonCell.m; sourceTree = "<group>"; };
 		8333AB4617BD1FB200D8B6DE /* icon-note-clicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-note-clicked.png"; sourceTree = "<group>"; };
 		8333AB4717BD1FB200D8B6DE /* icon-note-clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-note-clicked@2x.png"; sourceTree = "<group>"; };
 		8333AB4817BD1FB200D8B6DE /* icon-note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-note.png"; sourceTree = "<group>"; };
@@ -523,6 +521,8 @@
 		838AAC7A17D73734009083D4 /* IABottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IABottomButton.m; sourceTree = "<group>"; };
 		838FE09F17D9BAEA004160DB /* IAPaddedTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPaddedTextFieldCell.h; sourceTree = "<group>"; };
 		838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPaddedTextFieldCell.m; sourceTree = "<group>"; };
+		838FE0B617DA097C004160DB /* IAHoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAHoverButton.h; sourceTree = "<group>"; };
+		838FE0B717DA097C004160DB /* IAHoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAHoverButton.m; sourceTree = "<group>"; };
 		8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrashReporter.xcodeproj; path = ../plcrashreporter/CrashReporter.xcodeproj; sourceTree = "<group>"; };
 		83929BB517C60FD60009292D /* icon-reject.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject.png"; sourceTree = "<group>"; };
 		83929BB617C60FD60009292D /* icon-reject@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject@2x.png"; sourceTree = "<group>"; };
@@ -982,8 +982,8 @@
 				8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */,
 				8346314E17A7042A00A7E17F /* IACentredSecureCell.h */,
 				8346314F17A7042A00A7E17F /* IACentredSecureCell.m */,
-				83281BC717B0050600CAE422 /* IAHoverButtonCell.h */,
-				83281BC817B0050600CAE422 /* IAHoverButtonCell.m */,
+				838FE0B617DA097C004160DB /* IAHoverButton.h */,
+				838FE0B717DA097C004160DB /* IAHoverButton.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1538,6 +1538,7 @@
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */,
+				838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */,
 				832808CF17A2C1480025B6F8 /* IAFunctions.m in Sources */,
 				832808D217A2C9E40025B6F8 /* IAMainController.m in Sources */,
 				832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.m in Sources */,
@@ -1560,7 +1561,6 @@
 				836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */,
 				83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */,
 				83281BBE17AFFD1D00CAE422 /* IAConversationViewController.m in Sources */,
-				83281BC917B0050600CAE422 /* IAHoverButtonCell.m in Sources */,
 				83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */,
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,

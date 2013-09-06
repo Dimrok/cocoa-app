@@ -8,8 +8,9 @@
 
 #import "IAViewController.h"
 
-#import "IAUserSearchViewController.h"
 #import "IABottomButton.h"
+#import "IAHoverButton.h"
+#import "IAUserSearchViewController.h"
 
 typedef enum IAAdvancedSendViewFocus
 {
@@ -24,10 +25,10 @@ typedef enum IAAdvancedSendViewFocus
                                                             NSTextViewDelegate,
                                                             IAUserSearchViewProtocol>
 
-@property (nonatomic, strong) IBOutlet NSButton* add_files_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* add_files_button;
 @property (nonatomic, strong) IBOutlet NSView* advanced_view;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* advanced_height_constraint;
-@property (nonatomic, strong) IBOutlet NSButton* cancel_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* cancel_button;
 @property (nonatomic, strong) IBOutlet NSTextField* characters_label;
 @property (nonatomic, strong) IBOutlet NSView* files_view;
 @property (nonatomic, strong) IBOutlet IAFooterView* footer_view;

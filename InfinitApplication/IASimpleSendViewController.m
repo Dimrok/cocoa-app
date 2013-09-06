@@ -8,8 +8,6 @@
 
 #import "IASimpleSendViewController.h"
 
-#import "IAHoverButtonCell.h"
-
 @interface IASimpleSendViewController ()
 
 @end
@@ -95,19 +93,20 @@
     return self;
 }
 
-- (void)setButtonHoverImages
+- (void)setupHoverButtons
 {
-    [self.add_files_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
-    [self.add_person_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-people-hover"]];
-    [self.add_note_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-note-hover"]];
-    [self.cancel_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
+    [self.add_files_button setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
+    [self.add_files_button setTextNormalColour:IA_GREY_COLOUR(179.0)];
+    [self.add_person_button setHoverImage:[IAFunctions imageNamed:@"icon-add-people-hover"]];
+    [self.add_note_button setHoverImage:[IAFunctions imageNamed:@"icon-add-note-hover"]];
+    [self.cancel_button setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
 }
 
 - (void)loadView
 {
     [super loadView];
     [_user_search_controller setDelegate:self];
-    [self setButtonHoverImages];
+    [self setupHoverButtons];
     
     [self updateAddFilesButton];
     

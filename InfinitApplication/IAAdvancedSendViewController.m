@@ -8,7 +8,6 @@
 
 #import "IAAdvancedSendViewController.h"
 
-#import "IAHoverButtonCell.h"
 #import "IASendFileListCellView.h"
 
 
@@ -193,10 +192,11 @@
     return NO;
 }
 
-- (void)setButtonHoverImages
+- (void)setupHoverButtons
 {
-    [self.add_files_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
-    [self.cancel_button.cell setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
+    [self.add_files_button setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
+    [self.add_files_button setTextNormalColour:IA_GREY_COLOUR(179.0)];
+    [self.cancel_button setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
 }
 
 - (void)initialiseSendButton
@@ -229,7 +229,7 @@
 {
     [super loadView];
     
-    [self setButtonHoverImages];
+    [self setupHoverButtons];
     [self initialiseSendButton];
     [_user_search_controller removeSendButton];
     _characters_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]

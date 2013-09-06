@@ -133,6 +133,7 @@ typedef enum IAStatusBarIconStatus {
 {
     _number_of_items = number_of_items;
     [self setNeedsDisplay:YES];
+    IALog(@"xxx check registered drag types %@", self.registeredDraggedTypes);
 }
 
 //- Click Operations -------------------------------------------------------------------------------

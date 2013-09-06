@@ -8,16 +8,17 @@
 
 #import "IAViewController.h"
 
+#import "IAHoverButton.h"
 #import "IAUserSearchViewController.h"
 
 @protocol IASimpleSendViewProtocol;
 
 @interface IASimpleSendViewController : IAViewController <IAUserSearchViewProtocol>
 
-@property (nonatomic, strong) IBOutlet NSButton* add_files_button;
-@property (nonatomic, strong) IBOutlet NSButton* add_person_button;
-@property (nonatomic, strong) IBOutlet NSButton* add_note_button;
-@property (nonatomic, strong) IBOutlet NSButton* cancel_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* add_files_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* add_person_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* add_note_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* cancel_button;
 
 - (id)initWithDelegate:(id<IASimpleSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller;

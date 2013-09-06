@@ -1,22 +1,20 @@
 //
-//  IAHoverButtonCell.h
+//  IAHoverButton.h
 //  InfinitApplication
 //
-//  Created by Christopher Crone on 8/5/13.
+//  Created by Christopher Crone on 9/6/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
-@interface IAHoverButtonCell : NSButtonCell
-{
-@private
-    NSImage* _normal_image;
-    NSImage* _hover_image;
-}
+@interface IAHoverButton : NSButton
 
 @property (nonatomic, strong) NSImage* hoverImage;
 
 - (void)setHoverImage:(NSImage*)hoverImage;
+
+- (void)setTextNormalColour:(NSColor*)colour;
+- (void)setTextHoverColour:(NSColor*)colour;
 
 @end
