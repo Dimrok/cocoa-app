@@ -41,6 +41,8 @@
 
 //- Initialisation ---------------------------------------------------------------------------------
 
+@synthesize user = _user;
+
 - (id)initWithDelegate:(id<IAConversationViewProtocol>)delegate
               andUser:(IAUser*)user
 {
