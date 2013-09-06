@@ -11,12 +11,103 @@
 //- Clickable Text Field ---------------------------------------------------------------------------
 
 @interface IAClickableTextField : NSTextField
+
+@property (nonatomic, readwrite) BOOL clickable;
+
 @end
 
 @implementation IAClickableTextField
+{
+@private
+    NSTrackingArea* _tracking_area;
+    NSDictionary* _hover_attrs;
+    NSDictionary* _normal_attrs;
+}
+
+@synthesize clickable = _clickable;
+
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder])
+    {
+        NSParagraphStyle* para = [self.attributedStringValue attribute:NSParagraphStyleAttributeName
+                                                               atIndex:0
+                                                        effectiveRange:nil];
+        _hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                       paragraphStyle:para
+                                               colour:IA_RGB_COLOUR(102.0, 174.0, 211.0)
+                                               shadow:nil];
+        _normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                        paragraphStyle:para
+                                                colour:IA_GREY_COLOUR(128.0)
+                                                shadow:nil];
+        _clickable = NO;
+    }
+    return self;
+}
+
+- (void)resetCursorRects
+{
+    if (!_clickable)
+        return;
+    
+    [super resetCursorRects];
+    NSCursor* cursor = [NSCursor pointingHandCursor];
+    [self addCursorRect:self.bounds cursor:cursor];
+}
+
+- (void)ensureTrackingArea
+{
+    if (!_clickable)
+        return;
+    
+    _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
+                                                  options:(NSTrackingInVisibleRect |
+                                                           NSTrackingActiveAlways |
+                                                           NSTrackingMouseEnteredAndExited)
+                                                    owner:self
+                                                 userInfo:nil];
+}
+
+- (void)updateTrackingAreas
+{
+    if (!_clickable)
+        return;
+    
+    [super updateTrackingAreas];
+    [self ensureTrackingArea];
+    if (![[self trackingAreas] containsObject:_tracking_area])
+    {
+        [self addTrackingArea:_tracking_area];
+    }
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+    if (!_clickable)
+        return;
+    
+    NSAttributedString* old_str = self.attributedStringValue;
+    self.attributedStringValue = [[NSAttributedString alloc] initWithString:old_str.string
+                                                                 attributes:_hover_attrs];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+    if (!_clickable)
+        return;
+    
+    NSAttributedString* old_str = self.attributedStringValue;
+    self.attributedStringValue = [[NSAttributedString alloc] initWithString:old_str.string
+                                                                 attributes:_normal_attrs];
+}
+
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
+    if (!_clickable)
+        return;
+    
     [self sendAction:self.action to:self.target];
 }
 
@@ -79,6 +170,15 @@
 }
 
 //- General Functions ------------------------------------------------------------------------------
+
+- (BOOL)fileWithNameExists:(NSString*)filename
+{
+    NSString* path = [[NSHomeDirectory() stringByAppendingPathComponent:@"Downloads"]
+                      stringByAppendingPathComponent:filename];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+        return YES;
+    return NO;
+}
 
 + (CGFloat)heightOfCellWithElement:(IAConversationElement*)element
 {
@@ -201,7 +301,7 @@
     NSDictionary* files_name_attrs = [IAFunctions
                                       textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                       paragraphStyle:text_align
-                                      colour:IA_GREY_COLOUR(46.0)
+                                      colour:IA_GREY_COLOUR(128.0)
                                       shadow:nil];
     NSString* files_str;
     if (_transaction.files_count > 1)
@@ -219,10 +319,13 @@
                                               initWithString:files_str
                                               attributes:files_name_attrs];
     
-    if (!_transaction.from_me && _transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+    if (!_transaction.from_me &&
+        _transaction.view_mode == TRANSACTION_VIEW_FINISHED &&
+        [self fileWithNameExists:_transaction.files[0]])
     {
         self.files_label.action = @selector(finishedFileClicked);
         self.files_label.target = self;
+        self.files_label.clickable = YES;
     }
     
     if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
@@ -399,7 +502,7 @@ objectValueForTableColumn:(NSTableColumn*)tableColumn
     for (NSString* filename in _transaction.files)
     {
         NSString* file_path = [download_dir stringByAppendingPathComponent:filename];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:file_path])
+        if ([self fileWithNameExists:filename])
         {
             [file_urls addObject:[[NSURL fileURLWithPath:file_path] absoluteURL]];
         }
