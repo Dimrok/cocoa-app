@@ -445,6 +445,7 @@ doCommandBySelector:(SEL)commandSelector
     }
     else if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
     {
+        [self clearResults];
         [_delegate searchViewWantsLoseFocus:self];
         return YES;
     }
