@@ -382,7 +382,7 @@ doCommandBySelector:(SEL)commandSelector
     if (control != self.note_field)
         return NO;
 
-    if (commandSelector == @selector(insertTab:))
+    if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
     {
         [self.view.window makeFirstResponder:_user_search_controller.search_field];
         [_user_search_controller cursorAtEndOfSearchBox];
