@@ -627,7 +627,8 @@ transactionsProgressForUser:(IAUser*)user
 
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
 {
-    if (![[IAGapState instance] logged_in])
+    if (![[IAGapState instance] logged_in] ||
+        [_me_manager connection_status] != gap_user_status_online)
         return;
     
     if (_general_send_controller == nil)
