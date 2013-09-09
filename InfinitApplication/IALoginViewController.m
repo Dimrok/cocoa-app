@@ -202,7 +202,10 @@
      }];
 }
 
-- (void)showLoginWindowOnScreen:(NSScreen*)screen withError:(NSString*)error
+- (void)showLoginWindowOnScreen:(NSScreen*)screen
+                      withError:(NSString*)error
+                   withUsername:(NSString*)username
+                    andPassword:(NSString*)password
 {
     if (_window == nil)
     {
@@ -220,6 +223,17 @@
                                                 initWithString:error
                                                 attributes:_error_attrs];
     [self.error_message setHidden:NO];
+    
+    // If we have credentials, put them in
+    if (username.length > 0 && password.length > 0)
+    {
+        self.email_address.stringValue = username;
+        self.password.stringValue = password;
+        password = @"";
+        password = nil;
+        [self.create_account_button setHidden:YES];
+        [self.forgot_password_button setHidden:YES];
+    }
 }
 
 //- General Functions ------------------------------------------------------------------------------

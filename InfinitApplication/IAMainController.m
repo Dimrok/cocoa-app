@@ -183,7 +183,8 @@
 
 //- Login and Logout -------------------------------------------------------------------------------
 
-- (void)loginWithUsername:(NSString*)username password:(NSString*)password
+- (void)loginWithUsername:(NSString*)username
+                 password:(NSString*)password
 {
     NSString* device_name = @"TODO"; // XXX use NSHost to get device name
     
@@ -244,10 +245,58 @@
                 error = NSLocalizedString(@"Unknown login error", @"unknown login error");
                 break;
         }
+        
+        
         if (_login_view_controller == nil)
             _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
+        
+        
+        NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+        BOOL had_error = NO;
+        
+        if (username == nil || username.length == 0 || ![self credentialsInChain:username])
+        {
+            username = @"";
+        }
+        else
+        {
+            void* pwd_ptr = NULL;
+            UInt32 pwd_len = 0;
+            OSStatus status;
+            status = [[IAKeychainManager sharedInstance] getPasswordKeychain:username
+                                                                passwordData:&pwd_ptr
+                                                              passwordLength:&pwd_len
+                                                                     itemRef:NULL];
+            if (status == noErr)
+            {
+                if (pwd_ptr == NULL)
+                {
+                    IALog(@"%@ WARNING: Problem getting password pointer", self);
+                    had_error = YES;
+                }
+                
+                NSString* password = [[NSString alloc] initWithBytes:pwd_ptr
+                                                              length:pwd_len
+                                                            encoding:NSUTF8StringEncoding];
+                if (password.length == 0)
+                {
+                    IALog(@"%@ WARNING: Password length of zero", self);
+                    had_error = YES;
+                }
+                
+                [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
+                                                      withError:error
+                                                   withUsername:username
+                                                    andPassword:password];
+                password = @"";
+                password = nil;
+            }
+        }
+        
         [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
-                                              withError:error];
+                                              withError:error
+                                           withUsername:username
+                                            andPassword:@""];
     }
 }
 

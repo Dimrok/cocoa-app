@@ -36,9 +36,15 @@
 - (id)initWithDelegate:(id<IALoginViewControllerProtocol>)delegate;
 
 - (void)closeLoginWindow;
+
 - (BOOL)loginWindowOpen;
+
 - (void)showLoginWindowOnScreen:(NSScreen*)screen;
-- (void)showLoginWindowOnScreen:(NSScreen*)screen withError:(NSString*)error;
+
+- (void)showLoginWindowOnScreen:(NSScreen*)screen
+                      withError:(NSString*)error
+                   withUsername:(NSString*)username
+                    andPassword:(NSString*)password;
 
 @end
 
