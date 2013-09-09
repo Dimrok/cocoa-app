@@ -51,16 +51,7 @@
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                   colour:IA_GREY_COLOUR(153.0)
                                                   shadow:nil];
-    NSString* res = file_name;
-    NSInteger str_len = 25;
-    if (res.length > str_len)
-    {
-        NSString* file_extension = [file_name pathExtension];
-        NSString* temp = [[file_name stringByDeletingPathExtension]
-                          substringToIndex:(str_len - file_extension.length)];
-        res = [temp stringByAppendingFormat:@"...%@", file_extension];
-    }
-    self.file_name.attributedStringValue = [[NSAttributedString alloc] initWithString:res
+    self.file_name.attributedStringValue = [[NSAttributedString alloc] initWithString:file_name
                                                                            attributes:attrs];
 }
 
