@@ -14,9 +14,6 @@
 @implementation IANotificationListCellView
 {
     IAUser* _user;
-    CGFloat _progress_angle;
-    CGFloat _progress_start_angle;
-    NSBezierPath* _last_progress;
     id<IANotificationListCellProtocol> _delegate;
 }
 
@@ -26,8 +23,6 @@
 {
     if (self = [super initWithFrame:frameRect])
     {
-        _progress_start_angle = 45.0;
-        _progress_angle = _progress_start_angle;
     }
     return self;
 }
