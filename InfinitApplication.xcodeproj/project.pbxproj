@@ -17,6 +17,8 @@
 		83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */; };
 		831AA69F17D0FCC00004AE8D /* IAMeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831AA69E17D0FCC00004AE8D /* IAMeManager.m */; };
 		831AA6A617D101BA0004AE8D /* icon_status_bar_no_connection.png in Resources */ = {isa = PBXBuildFile; fileRef = 831AA6A517D101BA0004AE8D /* icon_status_bar_no_connection.png */; };
+		831B757217DDC3FB0082A068 /* libfrete.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
+		831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
 		831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB21D17A8FE1700696604 /* IAAvatarManager.m */; };
 		831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB22417A90BE900696604 /* IANotificationListViewController.m */; };
 		831FB22717A90BE900696604 /* IANotificationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831FB22517A90BE900696604 /* IANotificationListViewController.xib */; };
@@ -86,6 +88,8 @@
 		834D47EB17CB4EAF00EEB16A /* IAConversationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 834D47EA17CB4EAF00EEB16A /* IAConversationElement.m */; };
 		8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */; };
 		8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */; };
+		8364316817DDC39B00572726 /* libstation.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
+		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
@@ -361,6 +365,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */,
+				8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */,
 				83A3B6F217CE119C0007B1D4 /* libasio-fs.dylib in Copy Infinit Libraries */,
 				8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */,
 				8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */,
@@ -424,6 +430,7 @@
 		831AA69D17D0FCC00004AE8D /* IAMeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMeManager.h; sourceTree = "<group>"; };
 		831AA69E17D0FCC00004AE8D /* IAMeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAMeManager.m; sourceTree = "<group>"; };
 		831AA6A517D101BA0004AE8D /* icon_status_bar_no_connection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_status_bar_no_connection.png; sourceTree = "<group>"; };
+		831B757117DDC3FB0082A068 /* libfrete.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfrete.dylib; path = ../../../Externals/lib/libfrete.dylib; sourceTree = "<group>"; };
 		831FB21C17A8FE1700696604 /* IAAvatarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAvatarManager.h; sourceTree = "<group>"; };
 		831FB21D17A8FE1700696604 /* IAAvatarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAvatarManager.m; sourceTree = "<group>"; };
 		831FB22317A90BE900696604 /* IANotificationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationListViewController.h; sourceTree = "<group>"; };
@@ -511,6 +518,7 @@
 		834D47EA17CB4EAF00EEB16A /* IAConversationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationElement.m; sourceTree = "<group>"; };
 		8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_asio.dylib; path = ../../../Externals/lib/libcurly_asio.dylib; sourceTree = "<group>"; };
 		8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_sched.dylib; path = ../../../Externals/lib/libcurly_sched.dylib; sourceTree = "<group>"; };
+		8364316717DDC39B00572726 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../Externals/lib/libstation.dylib; sourceTree = "<group>"; };
 		836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsCellView.h; sourceTree = "<group>"; };
 		836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsCellView.m; sourceTree = "<group>"; };
 		836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendViewController.h; sourceTree = "<group>"; };
@@ -640,8 +648,10 @@
 				839456C517D213B200BF343E /* CrashReporter.framework in Frameworks */,
 				83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */,
 				8398835717A6AC96009409B3 /* Security.framework in Frameworks */,
+				8364316817DDC39B00572726 /* libstation.dylib in Frameworks */,
 				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
+				831B757217DDC3FB0082A068 /* libfrete.dylib in Frameworks */,
 				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
 				8334C7E117A67D22006028BC /* Gap.framework in Frameworks */,
 			);
@@ -1095,6 +1105,8 @@
 		83CD6FB917A67398004F55D1 /* Infinit Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				831B757117DDC3FB0082A068 /* libfrete.dylib */,
+				8364316717DDC39B00572726 /* libstation.dylib */,
 				8334C7E317A67EAF006028BC /* libagent.dylib */,
 				83A3B6F017CE117A0007B1D4 /* libasio-fs.dylib */,
 				8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */,
@@ -1743,7 +1755,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Externals/lib\"",
+					"\\\"$(SRCROOT)/../../Externals/lib\\\"",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1763,7 +1776,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../Externals/lib\"",
+					"\\\"$(SRCROOT)/../../Externals/lib\\\"",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
