@@ -332,6 +332,7 @@
             [self.email_address setEnabled:NO];
             [self.password setEnabled:NO];
             [self.login_button setEnabled:NO];
+            [self.error_message setHidden:YES];
             [_delegate tryLogin:self
                        username:self.email_address.stringValue
                        password:self.password.stringValue];
