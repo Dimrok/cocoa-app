@@ -318,11 +318,6 @@ return [NSString stringWithUTF8String:str]; \
     RETURN_CSTRING(gap_transaction_recipient_device_id(_state, transaction_id.unsignedIntValue));
 }
 
-- (NSString*)transaction_network_id:(NSNumber*)transaction_id
-{
-    RETURN_CSTRING(gap_transaction_network_id(_state, transaction_id.unsignedIntValue));
-}
-
 - (NSArray*)transaction_files:(NSNumber*)transaction_id
 {
     char** files = gap_transaction_files(_state, transaction_id.unsignedIntValue);
