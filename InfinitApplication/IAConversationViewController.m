@@ -607,6 +607,9 @@
             break;
         count++;
     }
+    
+    if (count >= _element_list.count)
+        return;
 
     IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
     [self.table_view beginUpdates];
