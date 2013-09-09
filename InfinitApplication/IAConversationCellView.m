@@ -319,6 +319,12 @@
         self.files_label.target = self;
         self.files_label.clickable = YES;
     }
+    else if (!_transaction.from_me &&
+            _transaction.view_mode == TRANSACTION_VIEW_FINISHED &&
+            ![self fileWithNameExists:_transaction.files[0]])
+    {
+        self.files_label.clickable = NO;
+    }
     
     if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
     {
