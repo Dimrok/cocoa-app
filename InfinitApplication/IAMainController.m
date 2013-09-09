@@ -209,11 +209,6 @@
     {
         IALog(@"%@ Logged in", self);
         
-        [_me_manager setConnection_status:gap_user_status_online];
-        
-        // XXX No on_connection callback on login, this is a work around
-        [_status_bar_icon setConnected:gap_user_status_online];
-        
         if ([_login_view_controller loginWindowOpen])
             [_login_view_controller closeLoginWindow];
         
@@ -227,6 +222,7 @@
         // XXX We must find a better way to manage fetching of history per user
         [_transaction_manager getHistory];
         [[IAGapState instance] startPolling];
+        [self updateStatusBarIcon];
     }
     else
     {
