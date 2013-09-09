@@ -246,8 +246,7 @@
                                                 colour:IA_GREY_COLOUR(217.0)
                                                 shadow:nil];
     NSString* characters_str = [NSString stringWithFormat:@"(%lu %@)", _note_limit,
-                                NSLocalizedString(@"characters remaining",
-                                                  @"characters remaining")];
+                                NSLocalizedString(@"chars left", @"chars left")];
     self.characters_label.attributedStringValue = [[NSAttributedString alloc]
                                                    initWithString:characters_str
                                                    attributes:_characters_attrs];
@@ -360,14 +359,12 @@
     NSString* characters_str;
     if (_note_limit - note_length == 1)
     {
-        characters_str = NSLocalizedString(@"(1 character remaining)",
-                                           @"(1 character remaining)");
+        characters_str = NSLocalizedString(@"(1 char left)", @"(1 char left)");
     }
     else
     {
         characters_str = [NSString stringWithFormat:@"(%lu %@)", (_note_limit - note_length),
-                          NSLocalizedString(@"characters remaining",
-                                            @"characters remaining")];
+                          NSLocalizedString(@"chars left", @"chars left")];
     }
    
     self.characters_label.attributedStringValue = [[NSAttributedString alloc]
