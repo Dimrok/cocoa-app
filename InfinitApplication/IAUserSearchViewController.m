@@ -535,6 +535,18 @@ displayStringForRepresentedObject:(id)representedObject
     return nil;
 }
 
+- (NSArray*)tokenField:(NSTokenField*)tokenField
+    readFromPasteboard:(NSPasteboard*)pboard
+{
+    NSMutableArray* res = [NSMutableArray array];
+    for (id obj in pboard.pasteboardItems)
+    {
+        if ([obj isKindOfClass:NSString.class])
+            [res addObject:obj];
+    }
+    return res;
+}
+
 //- Table Drawing Functions ------------------------------------------------------------------------
 
 - (void)clearResults
