@@ -11,6 +11,7 @@
 @implementation IANotificationAvatarView
 {
 @private
+    CGFloat _badge_angle_size;
     CGFloat _start_angle;
     NSTrackingArea* _tracking_area;
     NSInteger _tracking_options;
@@ -23,8 +24,9 @@
 {
     if (self = [super initWithFrame:frame])
     {
+        _badge_angle_size = 45.0;
         _total_progress = 0.0;
-        _start_angle = 45.0;
+        _start_angle = 45.0 - (_badge_angle_size / 2.0);
         _mouse_over = NO;
         _tracking_options = (NSTrackingInVisibleRect |
                             NSTrackingActiveAlways |
@@ -91,12 +93,11 @@
         CGFloat radius = _avatar.size.width / 2.0 + 1.0;
         
         NSBezierPath* progress = [NSBezierPath bezierPath];
-        [progress moveToPoint:NSMakePoint(centre.x + radius * cos(_start_angle),
-                                          centre.y + radius * sin(_start_angle))];
+        CGFloat new_angle = _start_angle - _total_progress * (360.0 - _badge_angle_size);
         [progress appendBezierPathWithArcWithCenter:centre
                                              radius:radius
                                          startAngle:_start_angle
-                                           endAngle:(_start_angle - _total_progress * 360)
+                                           endAngle:new_angle
                                           clockwise:YES];
         [IA_RGB_COLOUR(65.0, 165.0, 236.0) set];
         progress.lineWidth = 3.0;
