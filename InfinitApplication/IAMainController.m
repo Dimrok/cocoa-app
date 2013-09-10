@@ -31,6 +31,7 @@
     IANoConnectionViewController* _no_connection_view_controller;
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
+    IAOnboardingViewController* _onboard_controller;
     IAWindowController* _window_controller;
     
     // Managers
@@ -223,6 +224,12 @@
         [_transaction_manager getHistory];
         [[IAGapState instance] startPolling];
         [self updateStatusBarIcon];
+        
+        if (true) // XXX (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"]);
+        {
+            _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
+            [_onboard_controller startOnboarding];
+        }
     }
     else
     {
@@ -592,6 +599,20 @@ transactionsProgressForUser:(IAUser*)user
         _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
     [_login_view_controller showLoginWindowOnScreen:[self currentScreen]];
     [self closeNotificationWindow];
+}
+
+//- Onboarding Protocol ----------------------------------------------------------------------------
+
+- (NSPoint)onboardingViewWantsInfinitIconPosition:(IAOnboardingViewController*)sender
+{
+    return [self statusBarIconMiddle];
+}
+
+- (void)onboardingComplete:(IAOnboardingViewController*)sender
+{
+    [_onboard_controller closeOnboarding];
+    _onboard_controller = nil;
+//    [[IAUserPrefs sharedInstance] setPref:@"2" forKey:@"onboarded"];
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------

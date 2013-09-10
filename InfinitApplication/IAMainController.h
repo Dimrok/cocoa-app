@@ -17,11 +17,12 @@
 
 #import "IAConversationViewController.h"
 #import "IADesktopNotifier.h"
+#import "IAGeneralSendController.h"
 #import "IALoginViewController.h"
 #import "IAMeManager.h"
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
-#import "IAGeneralSendController.h"
+#import "IAOnboardingViewController.h"
 #import "IAStatusBarIcon.h"
 #import "IAWindowController.h"
 
@@ -34,6 +35,7 @@
                                         IAMeManagerProtocol,
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
+                                        IAOnboardingViewProtocol,
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,
