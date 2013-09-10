@@ -15,7 +15,6 @@
 @interface IALoginWindow : NSWindow
 @end
 
-@class IALinkButton;
 @class IALoginView;
 
 @protocol IALoginViewControllerProtocol;

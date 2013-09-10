@@ -73,7 +73,7 @@
 {
 @private
     id<IALoginViewControllerProtocol> _delegate;
-    NSWindow* _window;
+    IALoginWindow* _window;
     NSDictionary* _error_attrs;
 }
 
@@ -350,13 +350,13 @@
 
 //- Register and Forgot Password -------------------------------------------------------------------
 
-- (IBAction)registerButtonClicked:(IALinkButton*)sender
+- (IBAction)registerButtonClicked:(IAHoverButton*)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL
         URLWithString:[NSString stringWithUTF8String:INFINIT_REGISTER_URL]]];
 }
 
-- (IBAction)forgotPasswordButtonClicked:(IALinkButton*)sender
+- (IBAction)forgotPasswordButtonClicked:(IAHoverButton*)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL
         URLWithString:[NSString stringWithUTF8String:INFINIT_FORGOT_PASSWORD_URL]]];
