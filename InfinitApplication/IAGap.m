@@ -31,6 +31,43 @@ void on_error_callback(gap_Status errcode, char const* reason, uint32_t const tr
 static
 void on_connection_status(gap_UserStatus status);
 
+// XXX Should move that in IAFWFUNCTIONS
+@interface NSApplication (Relaunch)
+- (void)relaunchAfterDelay:(float)seconds;
+@end
+
+static
+void on_critical_event(char const* str)
+{
+    NSLog(@"LOG LOL BAD BAD");
+        NSLog(@"LOG LOL BAD BAD: %s", str);
+    exit(1);
+    NSString* message = @"BITEBITE";
+    NSAlert* popup = [NSAlert alertWithMessageText:NSLocalizedString(@"Critical error", @"Critical error")
+                                     defaultButton:NSLocalizedString(@"Restart", @"Restart")
+                                   alternateButton:NSLocalizedString(@"Quit", @"Quit")
+                                       otherButton:nil
+                         informativeTextWithFormat:@"%@", NSLocalizedString(message, message)];
+
+//    NSString* message = [NSString stringWithFormat:@"Infinit encountered an internal error: %s  The application will relaunch in 60 seconds.", str];
+//    NSAlert* popup = [NSAlert alertWithMessageText:NSLocalizedString(@"Critical error", @"Critical error")
+//                                     defaultButton:NSLocalizedString(@"Restart", @"Restart")
+//                                   alternateButton:NSLocalizedString(@"Quit", @"Quit")
+//                                       otherButton:nil
+//                         informativeTextWithFormat:@"%@", NSLocalizedString(message, message)];
+    //[NSApp relaunchAfterDelay:60];
+    NSInteger res = [popup runModal];
+    switch (res)
+    {
+    case NSAlertDefaultReturn: // restart
+//        [NSApp relaunchAfterDelay:0];
+        break;
+    case NSAlertAlternateReturn: // QUIT LOL
+    default:
+        [NSApp terminate:nil];
+    }
+}
+
 
 @interface NotificationForwarder : NSObject
 
@@ -195,7 +232,8 @@ void on_connection_status(gap_UserStatus status);
 {
     if ((gap_user_status_callback(_state, &on_user_status) != gap_ok) ||
         (gap_transaction_callback(_state, &on_transaction) != gap_ok) ||
-        (gap_connection_callback(_state, &on_connection_status) != gap_ok))
+        (gap_connection_callback(_state, &on_connection_status) != gap_ok) ||
+        (gap_critical_callback(_state, &on_critical_event) != gap_ok))
         // XXX add error callback
         //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
     {
