@@ -227,7 +227,7 @@
         
          _login_view_controller = nil;
         
-        if (true) // XXX (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"]);
+        if (false) // XXX (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"]);
         {
             _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
             [_onboard_controller startOnboarding];
