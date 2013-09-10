@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) IBOutlet NSTextField* message;
 @property (nonatomic, strong) IBOutlet NSButton* back_button;
+@property (nonatomic, strong) IBOutlet NSButton* close_button;
+@property (nonatomic, strong) IBOutlet NSImageView* files_icon;
 @property (nonatomic, strong) IBOutlet NSButton* next_button;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* view_height;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* view_width;

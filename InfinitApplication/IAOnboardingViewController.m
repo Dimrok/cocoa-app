@@ -30,6 +30,11 @@
 
 @implementation IAOnboardingView
 
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
+}
+
 @end
 
 @implementation IAOnboardingViewController
@@ -90,6 +95,10 @@
     NSString* message_str = NSLocalizedString(@"Drag files up to the Infinit icon to send them", nil);
     self.message.attributedStringValue = [[NSAttributedString alloc] initWithString:message_str
                                                                          attributes:_message_attrs];
+    NSPoint icon_position = [_delegate onboardingViewWantsInfinitIconPosition:self];
+    IALog(@"xxx %f,%f", icon_position.x, icon_position.y);
+    icon_position.x -= self.files_icon.frame.size.width / 2.0;
+    icon_position.y -= self.files_icon.frame.size.height;
 }
 
 //- Opening/Closing Window -------------------------------------------------------------------------
@@ -111,6 +120,8 @@
     [self firstOnboardingScreen];
     
     [_window makeKeyAndOrderFront:nil];
+    
+    [_window makeFirstResponder:self.view];
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
@@ -159,6 +170,11 @@
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
     
+}
+
+- (IBAction)closeButtonClicked:(NSButton*)sender
+{
+    [_delegate onboardingComplete:self];
 }
 
 @end
