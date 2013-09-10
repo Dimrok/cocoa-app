@@ -225,6 +225,8 @@
         [[IAGapState instance] startPolling];
         [self updateStatusBarIcon];
         
+         _login_view_controller = nil;
+        
         if (true) // XXX (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"]);
         {
             _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
