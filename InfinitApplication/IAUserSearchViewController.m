@@ -179,6 +179,8 @@
     NSUInteger _token_count;
     
     BOOL _no_results;
+    NSAttributedString* _no_result_str;
+    NSAttributedString* _no_email_str;
     
     CGFloat _row_height;
     NSInteger _max_rows_shown;
@@ -198,6 +200,18 @@
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
+        NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        para.alignment = NSCenterTextAlignment;
+        NSDictionary* no_result_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                                        paragraphStyle:para
+                                                                colour:IA_GREY_COLOUR(32.0)
+                                                                shadow:nil];
+        _no_result_str = [[NSAttributedString alloc] initWithString:
+                          NSLocalizedString(@"User not on Infinit...", @"user not on infinit")
+                                                         attributes:no_result_style];
+        _no_email_str = [[NSAttributedString alloc] initWithString:
+                         NSLocalizedString(@"Send an invitation", @"send an invitatio")
+                                                        attributes:no_result_style];
     }
     
     return self;
@@ -218,6 +232,7 @@
     // Workaround for 15" Macbook Pro always rendering scroll bars
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
+    self.no_results_message.attributedStringValue = _no_result_str;
 }
 
 - (void)loadView
@@ -267,6 +282,10 @@
     if (user == nil)
         return;
     NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
+    if ([temp.lastObject isKindOfClass:NSString.class])
+    {
+        [temp removeObject:temp.lastObject];
+    }
     [temp addObject:user];
     [self.search_field setObjectValue:temp];
     [_delegate searchViewInputsChanged:self];
@@ -301,8 +320,11 @@
     [self performSelector:@selector(doSearchNow:)
                withObject:search_string
                afterDelay:0.3];
-    self.search_image.image = [IAFunctions imageNamed:@"loading"];
-    self.search_image.animates = YES;
+    if (!self.search_image.animates)
+    {
+        self.search_image.image = [IAFunctions imageNamed:@"loading"];
+        self.search_image.animates = YES;
+    }
 }
 
 - (void)doSearchNow:(NSString*)search_string
@@ -348,8 +370,12 @@
     {
         _search_results = [NSMutableArray array];
     }
-    self.search_image.animates = NO;
-    self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
+    if (self.search_image.animates)
+    {
+        self.search_image.animates = NO;
+        self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
+    }
+    self.no_results_message.attributedStringValue = _no_email_str;
     [self updateResultsTable];
 }
 
@@ -373,6 +399,7 @@
     }
     self.search_image.animates = NO;
     self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
+    self.no_results_message.attributedStringValue = _no_result_str;
     [self updateResultsTable];
 }
 
@@ -397,15 +424,23 @@
     
     [self cancelLastSearchOperation];
     NSArray* tokens = self.search_field.objectValue;
+    
     NSString* search_string;
     if ([tokens.lastObject isKindOfClass:NSString.class])
         search_string = [self trimTrailingWhitespace:tokens.lastObject];
     else
         search_string = @"";
+    
     if (search_string.length > 0)
+    {
         [self doDelayedSearch:search_string];
+        if ([IAFunctions stringIsValidEmail:search_string])
+            [_delegate searchViewInputsChanged:self];
+    }
     else
+    {
         [self clearResults];
+    }
     
     if (tokens.count < _token_count || tokens.count == 0)
     {
@@ -423,7 +458,15 @@ doCommandBySelector:(SEL)commandSelector
     
     if (commandSelector == @selector(insertNewline:))
     {
+        NSInteger row = self.table_view.selectedRow;
+        if (row > -1 && row < _search_results.count)
+        {
+            [self addUser:[_search_results objectAtIndex:row]];
+            [self clearResults];
+        }
+        
         [_delegate searchViewInputsChanged:self];
+        
         NSArray* tokens = self.search_field.objectValue;
         if (tokens.count == _token_count)
         {
@@ -511,11 +554,7 @@ editingStringForRepresentedObject:(id)representedObject
 - (id)tokenField:(NSTokenField*)tokenField
 representedObjectForEditingString:(NSString*)editingString
 {
-    NSInteger row = self.table_view.selectedRow;
-    if (row > -1 || row < _search_results.count)
-        return [_search_results objectAtIndex:row];
-    else
-        return editingString;
+    return editingString;
 }
 
 - (NSString*)tokenField:(NSTokenField*)tokenField
