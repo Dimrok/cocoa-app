@@ -201,6 +201,7 @@
 
 - (void)setViewMode:(IANotificationAvatarMode)mode
 {
+    _mouse_over = NO;
     _mode = mode;
     [self setNeedsDisplay:YES];
 }
