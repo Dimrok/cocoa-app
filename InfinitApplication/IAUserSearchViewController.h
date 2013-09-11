@@ -19,14 +19,14 @@
                                                           NSTokenFieldDelegate,
                                                           IASearchResultsCellProtocol>
 
+@property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
+@property (nonatomic, strong) IBOutlet NSScrollView* results_view;
 @property (nonatomic, strong) IBOutlet NSView* search_box_view;
 @property (nonatomic, strong) IBOutlet NSTokenField* search_field;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_field_width;
-@property (nonatomic, strong) IBOutlet NSTableView* table_view;
-@property (nonatomic, strong) IBOutlet NSScrollView* results_view;
-@property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
 @property (nonatomic, strong) IBOutlet NSImageView* search_image;
 @property (nonatomic, strong) IBOutlet IASimpleSendButton* send_button;
+@property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 - (id)init;
 
