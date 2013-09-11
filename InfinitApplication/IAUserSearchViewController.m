@@ -210,7 +210,7 @@
                           NSLocalizedString(@"User not on Infinit...", @"user not on infinit")
                                                          attributes:no_result_style];
         _no_email_str = [[NSAttributedString alloc] initWithString:
-                         NSLocalizedString(@"Send an invitation", @"send an invitatio")
+                         NSLocalizedString(@"Invite this person to Infinit...", @"invite this person")
                                                         attributes:no_result_style];
     }
     
