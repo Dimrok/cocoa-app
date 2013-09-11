@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		83014ABD17BB6B7700ECDE96 /* avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 83014ABC17BB6B7700ECDE96 /* avatar_default.png */; };
 		83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83014AC317BB6E2E00ECDE96 /* AddressBook.framework */; };
 		83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83014AC617BB742700ECDE96 /* IAFavouritesView.m */; };
 		8301B8FC17BA61F000FD6CAC /* status_bar_icon_fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */; };
@@ -115,6 +114,7 @@
 		8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8398836017A6C1F9009409B3 /* IALoginViewController.xib */; };
 		8398836417A6C5C4009409B3 /* infinit_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 8398836317A6C5C4009409B3 /* infinit_logo_large.png */; };
 		8398836A17A6FDE7009409B3 /* IACenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */; };
+		839A2C3617E0CB85001386A5 /* avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 839A2C3517E0CB85001386A5 /* avatar_default.png */; };
 		839DFC1417D8ECEF001D60DD /* icon-transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1217D8ECEF001D60DD /* icon-transfer.png */; };
 		839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */; };
 		839DFC1817D8ED45001D60DD /* icon-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1617D8ED45001D60DD /* icon-back.png */; };
@@ -417,7 +417,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		83014ABC17BB6B7700ECDE96 /* avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_default.png; sourceTree = "<group>"; };
 		83014AC317BB6E2E00ECDE96 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		83014AC517BB742700ECDE96 /* IAFavouritesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFavouritesView.h; sourceTree = "<group>"; };
 		83014AC617BB742700ECDE96 /* IAFavouritesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFavouritesView.m; sourceTree = "<group>"; };
@@ -558,6 +557,7 @@
 		8398836517A6FA73009409B3 /* IADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADefine.h; sourceTree = "<group>"; };
 		8398836817A6FDE6009409B3 /* IACenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACenteredTextFieldCell.h; sourceTree = "<group>"; };
 		8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACenteredTextFieldCell.m; sourceTree = "<group>"; };
+		839A2C3517E0CB85001386A5 /* avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_default.png; sourceTree = "<group>"; };
 		839DFC1217D8ECEF001D60DD /* icon-transfer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer.png"; sourceTree = "<group>"; };
 		839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer@2x.png"; sourceTree = "<group>"; };
 		839DFC1617D8ED45001D60DD /* icon-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back.png"; sourceTree = "<group>"; };
@@ -811,6 +811,7 @@
 			isa = PBXGroup;
 			children = (
 				8395154E17DCB04800DE535F /* icon-gear.png */,
+				839A2C3517E0CB85001386A5 /* avatar_default.png */,
 				8395154F17DCB04800DE535F /* icon-gear@2x.png */,
 				839DFC2617D8F4F1001D60DD /* bg-main-button-disabled.png */,
 				839DFC2717D8F4F1001D60DD /* bg-main-button-disabled@2x.png */,
@@ -826,7 +827,6 @@
 				83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */,
 				83A8097C17C26C890086A80D /* bg-triangle-top-white.png */,
 				83A8097D17C26C890086A80D /* bg-triangle-top-white@2x.png */,
-				83014ABC17BB6B7700ECDE96 /* avatar_default.png */,
 				831FB23417A9370400696604 /* bg-header-top-gray.png */,
 				831FB23517A9370400696604 /* bg-header-top-gray@2x.png */,
 				83C99E0817AB9A1700AFF091 /* bg-header-top-white.png */,
@@ -1431,6 +1431,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				839A2C3617E0CB85001386A5 /* avatar_default.png in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
 				8328081B17A2B4A60025B6F8 /* Credits.rtf in Resources */,
 				8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */,
@@ -1485,7 +1486,6 @@
 				83281BBF17AFFD1D00CAE422 /* IAConversationViewController.xib in Resources */,
 				8301B8FC17BA61F000FD6CAC /* status_bar_icon_fire.png in Resources */,
 				83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */,
-				83014ABD17BB6B7700ECDE96 /* avatar_default.png in Resources */,
 				8333AB4A17BD1FB200D8B6DE /* icon-note-clicked.png in Resources */,
 				8333AB4B17BD1FB200D8B6DE /* icon-note-clicked@2x.png in Resources */,
 				8333AB4C17BD1FB200D8B6DE /* icon-note.png in Resources */,
