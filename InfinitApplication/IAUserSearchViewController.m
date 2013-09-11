@@ -27,15 +27,6 @@
     NSBezierPath* white_bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:6.0];
     [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
-    
-    // Grey Line
-    NSRect grey_line_box = NSMakeRect(self.bounds.origin.x,
-                                      self.bounds.origin.y + 1.0,
-                                      self.bounds.size.width,
-                                      1.0);
-    NSBezierPath* grey_line = [NSBezierPath bezierPathWithOvalInRect:grey_line_box];
-    [IA_GREY_COLOUR(246.0) set];
-    [grey_line fill];
 }
 
 - (NSSize)intrinsicContentSize
@@ -127,7 +118,7 @@
 {
     // Dark line
     NSRect dark_rect = NSMakeRect(self.bounds.origin.x,
-                                  self.bounds.origin.y + self.bounds.size.height - 1.0,
+                                  self.bounds.origin.y + 1.0,
                                   self.bounds.size.width,
                                   1.0);
     NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
@@ -136,7 +127,7 @@
     
     // White line
     NSRect white_rect = NSMakeRect(self.bounds.origin.x,
-                                   self.bounds.origin.y + self.bounds.size.height - 2.0,
+                                   self.bounds.origin.y + 2.0,
                                    self.bounds.size.width,
                                    1.0);
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
@@ -147,7 +138,7 @@
     {
         // Background
         NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
-                                    self.bounds.origin.y,
+                                    self.bounds.origin.y + 2.0,
                                     self.bounds.size.width,
                                     self.bounds.size.height - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
@@ -158,7 +149,7 @@
     {
         // Background
         NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
-                                    self.bounds.origin.y,
+                                    self.bounds.origin.y + 2.0,
                                     self.bounds.size.width,
                                     self.bounds.size.height - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
@@ -688,17 +679,13 @@ displayStringForRepresentedObject:(id)representedObject
     NSInteger row = self.table_view.clickedRow;
     if (row < 0 || row > _search_results.count - 1)
         return;
-    [self mouseSelectedUser];
-}
-
-- (void)mouseSelectedUser
-{
+    
+    [self addUser:_search_results[row]];
+    
     [self.view.window makeFirstResponder:self.search_field];
-    [self controlTextDidChange:[NSNotification
-                                notificationWithName:NSControlTextDidChangeNotification
-                                              object:self.search_field]];
     [self cursorAtEndOfSearchBox];
     [_delegate searchViewInputsChanged:self];
+    [self clearResults];
 }
 
 - (void)moveTableSelectionBy:(NSInteger)displacement
