@@ -99,7 +99,7 @@
 {
     if (self.selected)
     {
-        // Grey background
+        // White background
         NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
                                            self.bounds.origin.y + 2.0,
                                            self.bounds.size.width,
@@ -126,7 +126,7 @@
                                          self.bounds.size.width,
                                          1.0);
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_line_frame];
-    [IA_GREY_COLOUR(255.0) set];
+    [IA_GREY_COLOUR(220.0) set];
     [white_line fill];
     
     // Grey line
@@ -135,7 +135,7 @@
                                         self.bounds.size.width,
                                         1.0);
     NSBezierPath* grey_line = [NSBezierPath bezierPathWithRect:grey_line_frame];
-    [IA_GREY_COLOUR(220.0) set];
+    [IA_GREY_COLOUR(255.0) set];
     [grey_line fill];
 }
 
