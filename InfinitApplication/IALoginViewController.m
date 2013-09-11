@@ -11,7 +11,7 @@
 #import <Gap/IAGapState.h>
 
 #define INFINIT_REGISTER_URL "http://infinit.io/register"
-#define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot-password"
+#define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot_password"
 
 @interface IALoginViewController ()
 @end
@@ -354,12 +354,14 @@
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL
         URLWithString:[NSString stringWithUTF8String:INFINIT_REGISTER_URL]]];
+    [self closeLoginWindow];
 }
 
 - (IBAction)forgotPasswordButtonClicked:(IAHoverButton*)sender
 {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL
         URLWithString:[NSString stringWithUTF8String:INFINIT_FORGOT_PASSWORD_URL]]];
+    [self closeLoginWindow];
 }
 
 @end
