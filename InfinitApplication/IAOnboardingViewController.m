@@ -219,6 +219,7 @@
             break;
             
         default:
+            [_delegate onboardingViewWantsStopPulseStatusBarIcon:self];
             [_delegate onboardingComplete:self];
             break;
     }
@@ -240,6 +241,7 @@
 
 - (IBAction)closeButtonClicked:(NSButton*)sender
 {
+    [_delegate onboardingViewWantsStopPulseStatusBarIcon:self];
     [_delegate onboardingComplete:self];
 }
 
