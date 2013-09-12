@@ -144,8 +144,6 @@
                                  os_description.UTF8String,
                                  additional_info.UTF8String);
     }
-    
-    
     [crash_reporter purgePendingCrashReport];
 }
 
