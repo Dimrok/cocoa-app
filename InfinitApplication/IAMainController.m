@@ -620,6 +620,16 @@ transactionsProgressForUser:(IAUser*)user
 //    [[IAUserPrefs sharedInstance] setPref:@"2" forKey:@"onboarded"];
 }
 
+- (void)onboardingViewWantsStartPulseStatusBarIcon:(IAOnboardingViewController*)sender
+{
+    [_status_bar_icon startPulse];
+}
+
+- (void)onboardingViewWantsStopPulseStatusBarIcon:(IAOnboardingViewController*)sender
+{
+    [_status_bar_icon stopPulse];
+}
+
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
 
 - (void)statusBarIconClicked:(IAStatusBarIcon*)sender
