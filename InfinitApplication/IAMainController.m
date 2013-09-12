@@ -58,6 +58,8 @@
         IAGap* state = [[IAGap alloc] init];
         [IAGapState setupWithProtocol:state];
         
+        [IACrashReportManager setupCrashReporter];
+        
         _status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:34.0];
         _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_status_item];
         _status_item.view = _status_bar_icon;
