@@ -42,21 +42,29 @@
 
 //- Sparkle Updator --------------------------------------------------------------------------------
 
+#ifdef BUILD_PRODUCTION
+
 - (void)setupUpdater
 {
-//    [[SUUpdater sharedUpdater] setDelegate:self];
-//    [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
-//    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+    [[SUUpdater sharedUpdater] setDelegate:self];
+    [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
+    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 }
 
+#endif
+
 //- Login Items ------------------------------------------------------------------------------------
+
+#ifdef BUILD_PRODUCTION
 
 // XXX This will later be managed in settings
 - (void)checkInLoginItems
 {
-//    if (![[IAAutoStartup sharedInstance] appInLoginItemList])
-//        [[IAAutoStartup sharedInstance] addAppAsLoginItem];
+    if (![[IAAutoStartup sharedInstance] appInLoginItemList])
+        [[IAAutoStartup sharedInstance] addAppAsLoginItem];
 }
+
+#endif
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -77,7 +85,9 @@
 
 - (void)awakeFromNib
 {
+#ifdef BUILD_PRODUCTION
     [self setupUpdater];
+#endif
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
