@@ -10,6 +10,7 @@
 
 #import <Gap/IAGapState.h>
 
+#import "IACrashReportManager.h"
 #import "IAGap.h"
 #import "IAKeychainManager.h"
 #import "IANoConnectionViewController.h"
@@ -209,6 +210,8 @@
     if (result.success)
     {
         IALog(@"%@ Logged in", self);
+        
+        [IACrashReportManager sendExistingCrashReports];
         
         if ([_login_view_controller loginWindowOpen])
             [_login_view_controller closeLoginWindow];

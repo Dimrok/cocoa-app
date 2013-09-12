@@ -11,6 +11,7 @@
 #import <CrashReporter/CrashReporter.h>
 
 #import "IALogFileManager.h"
+#import "IAUserPrefs.h"
 
 @implementation IACrashReportManager
 
@@ -23,13 +24,18 @@
     
 //    [self removeOldCrashReports];
     
-    // Check if we previously crashed
-    if ([crash_reporter hasPendingCrashReport])
-        [IACrashReportManager handleCrashReport];
-    
     // Enable the Crash Reporter
     if (![crash_reporter enableCrashReporterAndReturnError:&error])
         NSLog(@"%@ WARNING: Could not enable crash reporter: %@", self, error);
+}
+
++ (void)sendExistingCrashReports
+{
+    PLCrashReporter* crash_reporter = [PLCrashReporter sharedReporter];
+    
+    // Check if we previously crashed
+    if ([crash_reporter hasPendingCrashReport])
+        [IACrashReportManager handleCrashReport];
 }
 
 + (void)removeOldCrashReports
@@ -64,6 +70,20 @@
         return [dir stringByAppendingPathComponent:infinit_crashes[infinit_crashes.count - 1]];
     
     return nil;
+}
+
++ (NSString*)osVersion
+{
+    SInt32 OSXversionMajor, OSXversionMinor, OSXversionBugFix;
+    if(Gestalt(gestaltSystemVersionMajor, &OSXversionMajor) == noErr &&
+       Gestalt(gestaltSystemVersionMinor, &OSXversionMinor) == noErr &&
+       Gestalt(gestaltSystemVersionBugFix, &OSXversionBugFix) == noErr)
+    {
+        return [NSString stringWithFormat:@"%@.%@.%@", [NSNumber numberWithInt:OSXversionMajor],
+                                                       [NSNumber numberWithInt:OSXversionMinor],
+                                                       [NSNumber numberWithInt:OSXversionBugFix]];
+    }
+    return @"Unknown";
 }
 
 // XXX For now we just use this to find out when we crashed and fetch the Apple crash report. Plan
@@ -106,11 +126,24 @@
 //    if (error.code != 0)
 //        NSLog(@"%@ WARNING: Writing crash report failed", self);
     
+    NSLog(@"%@ Sending existing crash report", self);
+    
     NSString* last_state_log = [[IALogFileManager sharedInstance] lastLogFilePath];
     NSString* crash_file_path = [IACrashReportManager getAppleCrashReport];
     
+    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [IACrashReportManager osVersion]];
+    
+    NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+    NSString* additional_info = @"None";
+    
     if (last_state_log != nil && crash_file_path != nil)
-        gap_send_last_crash_logs(crash_file_path.UTF8String, last_state_log.UTF8String);
+    {
+        gap_send_last_crash_logs(user_name.UTF8String,
+                                 crash_file_path.UTF8String,
+                                 last_state_log.UTF8String,
+                                 os_description.UTF8String,
+                                 additional_info.UTF8String);
+    }
     
     
     [crash_reporter purgePendingCrashReport];

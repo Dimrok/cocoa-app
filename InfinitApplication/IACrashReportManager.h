@@ -14,4 +14,6 @@
 
 + (void)setupCrashReporter;
 
++ (void)sendExistingCrashReports;
+
 @end
