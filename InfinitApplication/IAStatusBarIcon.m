@@ -98,11 +98,18 @@ typedef enum IAStatusBarIconStatus {
                                             colour:IA_GREY_COLOUR(255.0)
                                             shadow:nil];
         }
-        else
+        else if (_connected == gap_user_status_online)
         {
             style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                             colour:IA_RGB_COLOUR(221.0, 0.0, 0.0)
+                                            shadow:nil];
+        }
+        else if (_connected != gap_user_status_online)
+        {
+            style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_GREY_COLOUR(93.0)
                                             shadow:nil];
         }
         NSString* number_str = _number_of_items > 9 ?
