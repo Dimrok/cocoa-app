@@ -11,7 +11,6 @@
 #import <Sparkle/Sparkle.h>
 
 #import "IAAutoStartup.h"
-#import "IACrashReportManager.h"
 #import "IALogFileManager.h"
 
 //- Automatic Relaunching --------------------------------------------------------------------------
@@ -93,7 +92,6 @@
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     _controller = [[IAMainController alloc] initWithDelegate:self];
-    [IACrashReportManager setupCrashReporter];
     NSAppleEventManager* appleEventManager = [NSAppleEventManager sharedAppleEventManager];
     [appleEventManager setEventHandler:self
                            andSelector:@selector(handleQuitEvent:withReplyEvent:)
