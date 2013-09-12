@@ -14,6 +14,9 @@
 
 //- Onboarding Window ------------------------------------------------------------------------------
 
+@interface IAOnboardingWindow : NSWindow
+@end
+
 @implementation IAOnboardingWindow
 
 - (BOOL)canBecomeKeyWindow
@@ -43,6 +46,9 @@
     id<IAOnboardingViewProtocol> _delegate;
     IAOnboardingWindow* _window;
     NSDictionary* _message_attrs;
+    NSDictionary* _back_button_attrs;
+    NSDictionary* _next_button_attrs;
+    NSInteger _onboard_screen;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -57,7 +63,7 @@
                                                 defer:YES
                                                screen:screen];
     result.alphaValue = 0.0;
-	result.backgroundColor = IA_RGBA_COLOUR(32.0, 32.0, 32.0, 0.5);
+	result.backgroundColor = [NSColor clearColor];
     result.hasShadow = NO;
 	result.opaque = NO;
     [result setLevel:CGShieldingWindowLevel()];
@@ -69,16 +75,22 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
-        NSMutableParagraphStyle* message_para = [[NSParagraphStyle defaultParagraphStyle]
+        NSMutableParagraphStyle* centre_para = [[NSParagraphStyle defaultParagraphStyle]
                                                  mutableCopy];
-        message_para.alignment = NSCenterTextAlignment;
-        _message_attrs = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:20.0]
-                                         paragraphStyle:message_para
-                                                 colour:IA_GREY_COLOUR(255.0)
-                                                 shadow:[IAFunctions
-                                                         shadowWithOffset:NSMakeSize(1.0, -1.0)
-                                                               blurRadius:2.0
-                                                                    color:IA_GREY_COLOUR(0.0)]];
+        centre_para.alignment = NSCenterTextAlignment;
+        _message_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:15.0]
+                                         paragraphStyle:centre_para
+                                                 colour:IA_RGB_COLOUR(81.0, 81.0, 73.0)
+                                                 shadow:nil];
+        _back_button_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:13.0]
+                                             paragraphStyle:centre_para
+                                                     colour:IA_RGB_COLOUR(81.0, 81.0, 73.0)
+                                                     shadow:nil];
+        _next_button_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:13.0]
+                                             paragraphStyle:centre_para
+                                                     colour:IA_RGB_COLOUR(81.0, 81.0, 73.0)
+                                                     shadow:nil];
+        _onboard_screen = 1;
     }
     return self;
 }
@@ -88,17 +100,56 @@
     [super loadView];
 }
 
-//- Onboardin Screens ------------------------------------------------------------------------------
+//- Onboarding Screens -----------------------------------------------------------------------------
 
 - (void)firstOnboardingScreen
 {
+    [_window.contentView addSubview:self.view];
+    [self.back_button setHidden:YES];
+    [self.files_icon setHidden:YES];
+    [_delegate onboardingViewWantsStartPulseStatusBarIcon:self];
+    
+    NSString* back_str = NSLocalizedString(@"Back", @"Back");
+    self.back_button.attributedTitle = [[NSAttributedString alloc] initWithString:back_str
+                                                                       attributes:_back_button_attrs];
+    NSString* next_str = NSLocalizedString(@"Next", @"Next");
+    self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
+                                                                       attributes:_next_button_attrs];
+    
+    NSPoint centre = NSMakePoint(_window.frame.size.width / 2.0,
+                                 _window.frame.size.height / 2.0);
+    [self.message_view setFrameOrigin:NSMakePoint(centre.x - self.message_view.frame.size.width / 2.0,
+                                                  centre.y - self.message_view.frame.size.height / 2.0)];
+    NSString* message_str = NSLocalizedString(@"The Infinit icon can be found in the status bar", nil);
+    self.message.attributedStringValue = [[NSAttributedString alloc] initWithString:message_str
+                                                                         attributes:_message_attrs];
+}
+
+- (void)secondOnboardingScreen
+{
+    [self.back_button setHidden:NO];
+    [self.files_icon setHidden:NO];
+    [_delegate onboardingViewWantsStopPulseStatusBarIcon:self];
+    
+    NSString* back_str = NSLocalizedString(@"Back", @"Back");
+    self.back_button.attributedTitle = [[NSAttributedString alloc] initWithString:back_str
+                                                                       attributes:_back_button_attrs];
+    NSString* next_str = NSLocalizedString(@"Done", @"Done");
+    self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
+                                                                       attributes:_next_button_attrs];
+    
+    NSPoint centre = NSMakePoint(_window.frame.size.width / 2.0,
+                                 _window.frame.size.height / 2.0);
+    [self.message_view setFrameOrigin:NSMakePoint(centre.x - self.message_view.frame.size.width / 2.0,
+                                                  centre.y - self.message_view.frame.size.height / 2.0)];
     NSString* message_str = NSLocalizedString(@"Drag files up to the Infinit icon to send them", nil);
     self.message.attributedStringValue = [[NSAttributedString alloc] initWithString:message_str
                                                                          attributes:_message_attrs];
     NSPoint icon_position = [_delegate onboardingViewWantsInfinitIconPosition:self];
-    IALog(@"xxx %f,%f", icon_position.x, icon_position.y);
-    icon_position.x -= self.files_icon.frame.size.width / 2.0;
-    icon_position.y -= self.files_icon.frame.size.height;
+    
+    [_window.contentView addSubview:self.files_icon];
+    [self.files_icon setFrameOrigin:NSMakePoint(icon_position.x - 30.0,
+                                                icon_position.y - self.files_icon.frame.size.height + 15.0)];
 }
 
 //- Opening/Closing Window -------------------------------------------------------------------------
@@ -112,10 +163,6 @@
                                                    screen:[NSScreen mainScreen]];
     _window.alphaValue = 0.0;
     _window.delegate = self;
-    _window.contentView = self.view;
-    self.view_height.constant = [NSScreen mainScreen].frame.size.height;
-    self.view_width.constant = [NSScreen mainScreen].frame.size.width;
-    [self.view setFrameOrigin:NSZeroPoint];
     
     [self firstOnboardingScreen];
     
@@ -160,16 +207,35 @@
     [self openOnboardingWindow];
 }
 
+- (void)selectScreen
+{
+    switch (_onboard_screen)
+    {
+        case 1:
+            [self firstOnboardingScreen];
+            break;
+        case 2:
+            [self secondOnboardingScreen];
+            break;
+            
+        default:
+            [_delegate onboardingComplete:self];
+            break;
+    }
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)nextButtonClicked:(NSButton*)sender
 {
-    [_delegate onboardingComplete:self];
+    ++_onboard_screen;
+    [self selectScreen];
 }
 
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
-    
+    --_onboard_screen;
+    [self selectScreen];
 }
 
 - (IBAction)closeButtonClicked:(NSButton*)sender

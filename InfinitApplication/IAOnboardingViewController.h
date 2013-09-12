@@ -8,20 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface IAOnboardingWindow : NSWindow
-@end
-
 @protocol IAOnboardingViewProtocol;
+
+@class IAOnboardingView;
 
 @interface IAOnboardingViewController : NSViewController <NSWindowDelegate>
 
-@property (nonatomic, strong) IBOutlet NSTextField* message;
 @property (nonatomic, strong) IBOutlet NSButton* back_button;
 @property (nonatomic, strong) IBOutlet NSButton* close_button;
 @property (nonatomic, strong) IBOutlet NSImageView* files_icon;
+@property (nonatomic, strong) IBOutlet NSTextField* message;
+@property (nonatomic, strong) IBOutlet IAOnboardingView* message_view;
 @property (nonatomic, strong) IBOutlet NSButton* next_button;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* view_height;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* view_width;
 
 - (id)initWithDelegate:(id<IAOnboardingViewProtocol>)delegate;
 
@@ -34,6 +32,8 @@
 @protocol IAOnboardingViewProtocol <NSObject>
 
 - (NSPoint)onboardingViewWantsInfinitIconPosition:(IAOnboardingViewController*)sender;
+- (void)onboardingViewWantsStartPulseStatusBarIcon:(IAOnboardingViewController*)sender;
+- (void)onboardingViewWantsStopPulseStatusBarIcon:(IAOnboardingViewController*)sender;
 
 - (void)onboardingComplete:(IAOnboardingViewController*)sender;
 
