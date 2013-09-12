@@ -23,7 +23,9 @@ typedef enum IAStatusBarIconStatus {
     NSArray* _drag_types;
     NSImage* _icon[4];
     NSImageView* _icon_view;
+    BOOL _animating;
     BOOL _is_highlighted;
+    BOOL _pulse;
     gap_UserStatus _connected;
     NSInteger _number_of_items;
 }
@@ -40,6 +42,8 @@ typedef enum IAStatusBarIconStatus {
                                                 nil];
         _number_of_items = 0;
         _connected = gap_user_status_offline;
+        _pulse = NO;
+        _animating = NO;
         [self registerForDraggedTypes:_drag_types];
     }
     
@@ -78,7 +82,7 @@ typedef enum IAStatusBarIconStatus {
         icon = _icon[STATUS_BAR_ICON_CLICKED];
     else if (_connected == gap_user_status_offline)
         icon = _icon[STATUS_BAR_ICON_NO_CONNECTION];
-    else if (_number_of_items > 0)
+    else if (_number_of_items > 0 || _pulse)
         icon = _icon[STATUS_BAR_ICON_FIRE];
     else
         icon = _icon[STATUS_BAR_ICON_NORMAL];
@@ -140,6 +144,53 @@ typedef enum IAStatusBarIconStatus {
 {
     _number_of_items = number_of_items;
     [self setNeedsDisplay:YES];
+}
+
+- (void)pulseIcon
+{
+    CGFloat half_duration = 0.3;
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* fade_context)
+     {
+         fade_context.duration = half_duration;
+         [self.animator setAlphaValue:0.1];
+     }
+                        completionHandler:^
+     {
+         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* unfade_context)
+          {
+              unfade_context.duration = half_duration;
+              [self.animator setAlphaValue:1.0];
+          }
+                             completionHandler:^
+         {
+             [self setAlphaValue:1.0];
+             if (_pulse)
+                 [self pulseIcon];
+             else
+                 _animating = NO;
+         }];
+     }];
+}
+
+- (void)startPulse
+{
+    if (_pulse || _animating)
+        return;
+    
+    _animating = YES;
+    
+    _pulse = YES;
+    [self setNeedsDisplay:YES];
+    [self pulseIcon];
+}
+
+- (void)stopPulse
+{
+    if (!_pulse)
+        return;
+    
+    [self setNeedsDisplay:YES];
+    _pulse = NO;
 }
 
 //- Click Operations -------------------------------------------------------------------------------

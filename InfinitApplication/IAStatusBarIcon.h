@@ -23,6 +23,10 @@
 
 - (void)setNumberOfItems:(NSInteger)number_of_items;
 
+- (void)startPulse;
+
+- (void)stopPulse;
+
 @end
 
 
