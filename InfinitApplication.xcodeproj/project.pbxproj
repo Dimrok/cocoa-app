@@ -771,7 +771,7 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
-				83A8C92A17DF4AF100A07393 /* Onboarding Window */,
+				83A8C92A17DF4AF100A07393 /* Onboarding */,
 				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				833C318A17CCC81100941C09 /* Desktop Notifier */,
 				83281BBA17AFFCFA00CAE422 /* Conversation View */,
@@ -1035,7 +1035,7 @@
 			name = "Login Window";
 			sourceTree = "<group>";
 		};
-		83A8C92A17DF4AF100A07393 /* Onboarding Window */ = {
+		83A8C92A17DF4AF100A07393 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
 				83A8C94417DF618E00A07393 /* IAOnboardingViewController.h */,
@@ -1043,7 +1043,7 @@
 				83A8C94617DF618E00A07393 /* IAOnboardingViewController.xib */,
 				83EADC3017E2071400D49D77 /* Resources */,
 			);
-			name = "Onboarding Window";
+			name = Onboarding;
 			sourceTree = "<group>";
 		};
 		83C124B517A7CE9800BE1252 /* Managers */ = {

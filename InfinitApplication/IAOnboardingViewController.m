@@ -120,7 +120,7 @@
                                  _window.frame.size.height / 2.0);
     [self.message_view setFrameOrigin:NSMakePoint(centre.x - self.message_view.frame.size.width / 2.0,
                                                   centre.y - self.message_view.frame.size.height / 2.0)];
-    NSString* message_str = NSLocalizedString(@"The Infinit icon can be found in the status bar", nil);
+    NSString* message_str = NSLocalizedString(@"The Infinit icon can be found in the menu bar", nil);
     self.message.attributedStringValue = [[NSAttributedString alloc] initWithString:message_str
                                                                          attributes:_message_attrs];
 }
