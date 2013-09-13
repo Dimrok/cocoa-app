@@ -479,8 +479,19 @@ doCommandBySelector:(SEL)commandSelector
     }
     else if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
     {
-        [self clearResults];
-        [_delegate searchViewWantsLoseFocus:self];
+        if (_search_results.count > 0)
+        {
+            NSInteger row = self.table_view.selectedRow;
+            if (row > -1 && row < _search_results.count)
+            {
+                [self addUser:[_search_results objectAtIndex:row]];
+                [self clearResults];
+            }
+        }
+        else
+        {
+            [_delegate searchViewWantsLoseFocus:self];
+        }
         return YES;
     }
     return NO;
