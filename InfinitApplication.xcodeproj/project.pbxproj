@@ -668,11 +668,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				839456C517D213B200BF343E /* CrashReporter.framework in Frameworks */,
 				83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */,
 				8398835717A6AC96009409B3 /* Security.framework in Frameworks */,
 				8364316817DDC39B00572726 /* libstation.dylib in Frameworks */,
-				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
 				831B757217DDC3FB0082A068 /* libfrete.dylib in Frameworks */,
 				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
@@ -726,8 +726,6 @@
 		832807FE17A2B4A60025B6F8 = {
 			isa = PBXGroup;
 			children = (
-				83014AC317BB6E2E00ECDE96 /* AddressBook.framework */,
-				8398835617A6AC95009409B3 /* Security.framework */,
 				8328081017A2B4A60025B6F8 /* InfinitApplication */,
 				83CD6FB917A67398004F55D1 /* Infinit Libraries */,
 				8328082D17A2B4A60025B6F8 /* InfinitApplicationTests */,
@@ -751,6 +749,8 @@
 		8328080917A2B4A60025B6F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83014AC317BB6E2E00ECDE96 /* AddressBook.framework */,
+				8398835617A6AC95009409B3 /* Security.framework */,
 				8328080A17A2B4A60025B6F8 /* Cocoa.framework */,
 				8328082817A2B4A60025B6F8 /* SenTestingKit.framework */,
 				8328080C17A2B4A60025B6F8 /* Other Frameworks */,
@@ -1744,6 +1744,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1766,6 +1767,7 @@
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1786,6 +1788,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1801,6 +1804,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Release;

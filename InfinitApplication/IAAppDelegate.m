@@ -39,31 +39,34 @@
     IALogFileManager* _log_manager;
 }
 
-//- Sparkle Updator --------------------------------------------------------------------------------
-
-#ifdef BUILD_PRODUCTION
+//- Sparkle Updater --------------------------------------------------------------------------------
 
 - (void)setupUpdater
 {
+#ifdef BUILD_PRODUCTION
     [[SUUpdater sharedUpdater] setDelegate:self];
+    [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
+    [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
     [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+#endif
 }
 
-#endif
+- (void)updaterWillRelaunchApplication:(SUUpdater*)updater
+{
+    NSLog(@"%@ Will relaunch", self);
+}
 
 //- Login Items ------------------------------------------------------------------------------------
-
-#ifdef BUILD_PRODUCTION
 
 // XXX This will later be managed in settings
 - (void)checkInLoginItems
 {
+#ifdef BUILD_PRODUCTION
     if (![[IAAutoStartup sharedInstance] appInLoginItemList])
         [[IAAutoStartup sharedInstance] addAppAsLoginItem];
-}
-
 #endif
+}
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -82,16 +85,15 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-- (void)awakeFromNib
+- (void)applicationWillFinishLaunching:(NSNotification*)notification
 {
-#ifdef BUILD_PRODUCTION
     [self setupUpdater];
-#endif
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     _controller = [[IAMainController alloc] initWithDelegate:self];
+    [self checkInLoginItems];
     NSAppleEventManager* appleEventManager = [NSAppleEventManager sharedAppleEventManager];
     [appleEventManager setEventHandler:self
                            andSelector:@selector(handleQuitEvent:withReplyEvent:)
@@ -102,11 +104,6 @@
 - (void)applicationWillResignActive:(NSNotification*)notification
 {
     
-}
-
-- (void)updaterWillRelaunchApplication:(SUUpdater*)updater
-{
-    NSLog(@"%@ Sparkle updating, will relaunch", self);
 }
 
 //- Quit Handling ----------------------------------------------------------------------------------
