@@ -232,7 +232,7 @@
         
          _login_view_controller = nil;
         
-        if (false) // XXX (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"]);
+        if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
         {
             _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
             [_onboard_controller startOnboarding];
@@ -619,7 +619,7 @@ transactionsProgressForUser:(IAUser*)user
 {
     [_onboard_controller closeOnboarding];
     _onboard_controller = nil;
-//    [[IAUserPrefs sharedInstance] setPref:@"2" forKey:@"onboarded"];
+    [[IAUserPrefs sharedInstance] setPref:@"2" forKey:@"onboarded"];
 }
 
 - (void)onboardingViewWantsStartPulseStatusBarIcon:(IAOnboardingViewController*)sender
