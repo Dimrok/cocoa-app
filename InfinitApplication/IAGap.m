@@ -39,8 +39,8 @@ void on_connection_status(gap_UserStatus status);
 static
 void on_critical_event(char const* str)
 {
-    NSLog(@"LOG LOL BAD BAD");
-        NSLog(@"LOG LOL BAD BAD: %s", str);
+//    NSLog(@"LOG LOL BAD BAD");
+//        NSLog(@"LOG LOL BAD BAD: %s", str);
     exit(1);
     NSString* message = @"BITEBITE";
     NSAlert* popup = [NSAlert alertWithMessageText:NSLocalizedString(@"Critical error", @"Critical error")
@@ -146,16 +146,9 @@ void on_critical_event(char const* str)
         NSString* binary_dir = [NSString pathWithComponents:[exe_path subarrayWithRange:NSMakeRange(0, [exe_path count] - 1)]];
         setenv("INFINIT_BINARY_DIR", binary_dir.UTF8String, 1);
         setenv("ELLE_LOG_LEVEL",
-               "TRACE,"
-               "infinit.crypto*:LOG,"
-               "infinit.protocol*:LOG,"
                "*surface*:DEBUG,"
-               "elle.*:LOG,"
-               "reactor*:LOG,"
-               "reactor.fsm.Machine:DEBUG,"
-               "elle.metrics.*:LOG,"
-               "infinit.surface.gap.User:NONE,"
-               "infinit.plasma.trophonius.Client:DUMP"
+               "reactor.fsm.Machine:TRACE,"
+               "infinit.surface.gap.User:TRACE"
                , 0);
         setenv("ELLE_LOG_PID", "1", 0);
         setenv("ELLE_LOG_TID", "1", 0);
@@ -172,13 +165,13 @@ void on_critical_event(char const* str)
         [[IALogFileManager sharedInstance] removeOldLogFile];
 
 #ifdef BUILD_PRODUCTION
-        setenv("INFINIT_APERTUS_HOST", "apertus.api.production.infinit.io", 0);
+        setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.production.infinit.io", 0);
         setenv("INFINIT_APERTUS_PORT", "9899", 0);
 
-        setenv("INFINIT_META_HOST", "v1.meta.api.production.infinit.io", 0);
+        setenv("INFINIT_META_HOST", "v2.meta.api.production.infinit.io", 0);
         setenv("INFINIT_META_PORT", "12345", 0);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "v1.trophonius.api.production.infinit.io", 0);
+        setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.production.infinit.io", 0);
         setenv("INFINIT_TROPHONIUS_PORT", "23456", 0);
 
         setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 0);
