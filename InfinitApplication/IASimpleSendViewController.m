@@ -95,7 +95,6 @@
 
 - (void)setupHoverButtons
 {
-    [self.add_files_button setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
     NSDictionary* normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                                  paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                          colour:IA_GREY_COLOUR(179.0)
@@ -104,10 +103,15 @@
                                                 paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                         colour:IA_RGB_COLOUR(11.0, 117.0, 162)
                                                         shadow:nil];
+    
+    [self.add_files_button setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
     [self.add_files_button setNormalTextAttributes:normal_attrs];
     [self.add_files_button setHoverTextAttributes:hover_attrs];
+    
     [self.add_person_button setHoverImage:[IAFunctions imageNamed:@"icon-add-people-hover"]];
+    
     [self.add_note_button setHoverImage:[IAFunctions imageNamed:@"icon-add-note-hover"]];
+    
     [self.cancel_button setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
 }
 
