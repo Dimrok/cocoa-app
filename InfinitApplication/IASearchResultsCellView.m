@@ -65,12 +65,16 @@
         _is_favourite = NO;
         self.result_star.image = [IAFunctions imageNamed:@"icon-star"];
         [_delegate searchResultCellWantsRemoveFavourite:self];
+        [self.result_star setToolTip:NSLocalizedString(@"Add user as favourite",
+                                                       @"add user as favourite")];
     }
     else
     {
         _is_favourite = YES;
         self.result_star.image = [IAFunctions imageNamed:@"icon-star-selected"];
         [_delegate searchResultCellWantsAddFavourite:self];
+        [self.result_star setToolTip:NSLocalizedString(@"Remove user as favourite",
+                                                       @"remove user as favourite")];
     }
 }
 
