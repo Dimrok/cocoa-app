@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12F36</string>
+		<string key="IBDocument.SystemVersion">12F37</string>
 		<string key="IBDocument.InterfaceBuilderVersion">4504</string>
 		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
@@ -114,7 +114,7 @@
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						<bool key="NSControlAutosetMaxLayoutWidth">YES</bool>
-						<double key="NSPreferredMaxLayoutWidth">90</double>
+						<double key="NSPreferredMaxLayoutWidth">206</double>
 					</object>
 					<object class="NSButton" id="151168990">
 						<reference key="NSNextResponder" ref="735706002"/>
@@ -1078,6 +1078,14 @@
 				<string key="442.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="443.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="447.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="452.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="151168990"/>
+						<string key="toolTip">Cancel onboarding</string>
+					</object>
+				</object>
 				<array class="NSMutableArray" key="452.IBNSViewMetadataConstraints">
 					<reference ref="885767071"/>
 					<reference ref="1001680191"/>
