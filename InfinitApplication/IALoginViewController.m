@@ -75,6 +75,7 @@
     id<IALoginViewControllerProtocol> _delegate;
     IALoginWindow* _window;
     NSDictionary* _error_attrs;
+    BOOL _logging_in;
 }
 
 + (IALoginWindow*)windowWithFrame:(NSRect)frame screen:(NSScreen*)screen
@@ -173,6 +174,8 @@
     if (_window != nil)
         return;
     
+    _logging_in = NO;
+    
     [self.spinner stopAnimation:nil];
     [self.email_address setEnabled:YES];
     [self.password setEnabled:YES];
@@ -211,6 +214,8 @@
     {
         [self showLoginWindowOnScreen:screen];
     }
+    
+    _logging_in = NO;
     
     [self.spinner stopAnimation:nil];
     [self.email_address setEnabled:YES];
@@ -324,19 +329,21 @@
 
 - (IBAction)loginClicked:(IABottomButton*)sender
 {
-    if (sender == self.login_button)
+    if (_logging_in)
+        return;
+    
+    _logging_in = YES;
+    
+    if ([self inputsGood])
     {
-        if ([self inputsGood])
-        {
-            [self.spinner startAnimation:nil];
-            [self.email_address setEnabled:NO];
-            [self.password setEnabled:NO];
-            [self.login_button setEnabled:NO];
-            [self.error_message setHidden:YES];
-            [_delegate tryLogin:self
-                       username:self.email_address.stringValue
-                       password:self.password.stringValue];
-        }
+        [self.login_button setEnabled:NO];
+        [self.spinner startAnimation:nil];
+        [self.email_address setEnabled:NO];
+        [self.password setEnabled:NO];
+        [self.error_message setHidden:YES];
+        [_delegate tryLogin:self
+                   username:self.email_address.stringValue
+                   password:self.password.stringValue];
     }
 }
 
