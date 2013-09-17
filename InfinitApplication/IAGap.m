@@ -161,45 +161,45 @@ void on_critical_event(char const* str)
                                                        attributes:nil
                                                             error:nil];
         }
-        setenv("ELLE_LOG_FILE", [[[IALogFileManager sharedInstance] currentLogFilePath] UTF8String], 0);
+        setenv("ELLE_LOG_FILE", [[[IALogFileManager sharedInstance] currentLogFilePath] UTF8String], 1);
         [[IALogFileManager sharedInstance] removeOldLogFile];
 
 #ifdef BUILD_PRODUCTION
-        setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.production.infinit.io", 0);
-        setenv("INFINIT_APERTUS_PORT", "9899", 0);
+        setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.production.infinit.io", 1);
+        setenv("INFINIT_APERTUS_PORT", "9899", 1);
 
-        setenv("INFINIT_META_HOST", "v2.meta.api.production.infinit.io", 0);
-        setenv("INFINIT_META_PORT", "12345", 0);
+        setenv("INFINIT_META_HOST", "v2.meta.api.production.infinit.io", 1);
+        setenv("INFINIT_META_PORT", "12345", 1);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.production.infinit.io", 0);
-        setenv("INFINIT_TROPHONIUS_PORT", "23456", 0);
+        setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.production.infinit.io", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
 
-        setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 0);
+        setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
 
-        setenv("INFINIT_METRICS_GOOGLE_TID", "UA-31957100-4", 0);
-        setenv("INFINIT_METRICS_INVESTORS_GOOGLE_TID", "UA-31957100-2", 0);
+        setenv("INFINIT_METRICS_GOOGLE_TID", "UA-31957100-4", 1);
+        setenv("INFINIT_METRICS_INVESTORS_GOOGLE_TID", "UA-31957100-2", 1);
 
-        setenv("INFINIT_METRICS_KISSMETRICS_TID", "eb9c8d61d0cded222fd85cbfa0dbcd3884c6d034", 0);
-        setenv("INFINIT_METRICS_KISSMETRICS_USER_TID", "852a52e101e7c25ef806cd7ae8ce706a9c238498", 0);
-        setenv("INFINIT_METRICS_KISSMETRICS_NETWORK_TID", "88e0663996d002fb7a6c5e547cac5cb815c640f0", 0);
-        setenv("INFINIT_METRICS_KISSMETRICS_TRANSACTION_TID", "a36c426570d8f1dc404891a284f033d003bbe9c2", 0);
+        setenv("INFINIT_METRICS_KISSMETRICS_TID", "eb9c8d61d0cded222fd85cbfa0dbcd3884c6d034", 1);
+        setenv("INFINIT_METRICS_KISSMETRICS_USER_TID", "852a52e101e7c25ef806cd7ae8ce706a9c238498", 1);
+        setenv("INFINIT_METRICS_KISSMETRICS_NETWORK_TID", "88e0663996d002fb7a6c5e547cac5cb815c640f0", 1);
+        setenv("INFINIT_METRICS_KISSMETRICS_TRANSACTION_TID", "a36c426570d8f1dc404891a284f033d003bbe9c2", 1);
 #else
-        setenv("INFINIT_APERTUS_HOST", "apertus.api.development.infinit.io", 0);
-//        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 0);
-//        setenv("INFINIT_APERTUS_HOST", "192.168.110.52", 0);
-        setenv("INFINIT_APERTUS_PORT", "9899", 0);
+        setenv("INFINIT_APERTUS_HOST", "apertus.api.development.infinit.io", 1);
+//        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_APERTUS_HOST", "192.168.110.52", 1);
+        setenv("INFINIT_APERTUS_PORT", "9899", 1);
 
-        setenv("INFINIT_META_HOST", "v1.meta.api.development.infinit.io", 0);
-//        setenv("INFINIT_META_HOST", "127.0.0.1", 0);
-//        setenv("INFINIT_META_HOST", "192.168.110.52", 0);
-        setenv("INFINIT_META_PORT", "12345", 0);
+        setenv("INFINIT_META_HOST", "meta.api.development.infinit.io", 1);
+//        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_META_HOST", "192.168.110.52", 1);
+        setenv("INFINIT_META_PORT", "12345", 1);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "v1.trophonius.api.development.infinit.io", 0);
-//        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 0);
-//        setenv("INFINIT_TROPHONIUS_HOST", "192.168.110.52", 0);
-        setenv("INFINIT_TROPHONIUS_PORT", "23456", 0);
+        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.api.development.infinit.io", 1);
+//        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_TROPHONIUS_HOST", "192.168.110.52", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
 
-        setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 0);
+        setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
 
         _state = gap_new();
