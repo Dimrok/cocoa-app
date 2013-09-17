@@ -168,7 +168,7 @@
 												<array class="NSMutableArray" key="NSSubviews"/>
 												<string key="NSFrameSize">{317, 1}</string>
 												<reference key="NSSuperview" ref="511185124"/>
-												<reference key="NSNextKeyView" ref="812366437"/>
+												<reference key="NSNextKeyView" ref="684522633"/>
 												<string key="NSReuseIdentifierKey">_NS:13</string>
 												<bool key="NSEnabled">YES</bool>
 												<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -298,7 +298,7 @@
 								</array>
 								<string key="NSFrameSize">{317, 0}</string>
 								<reference key="NSSuperview" ref="995413466"/>
-								<reference key="NSNextKeyView" ref="511185124"/>
+								<reference key="NSNextKeyView" ref="812366437"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="NSsFlags">150096</int>
 								<reference key="NSVScroller" ref="358818621"/>
@@ -328,7 +328,7 @@
 											<reference key="NSSupport" ref="383365896"/>
 											<string key="NSCellIdentifier">_NS:9</string>
 											<reference key="NSControlView" ref="960505511"/>
-											<int key="NSButtonFlags">-2042347520</int>
+											<int key="NSButtonFlags">-935051264</int>
 											<int key="NSButtonFlags2">134</int>
 											<object class="NSCustomResource" key="NSNormalImage">
 												<string key="NSClassName">NSImage</string>
@@ -1901,7 +1901,7 @@
 															<array class="NSMutableArray" key="NSSubviews"/>
 															<string key="NSFrameSize">{194, 49}</string>
 															<reference key="NSSuperview" ref="920500391"/>
-															<reference key="NSNextKeyView" ref="71925740"/>
+															<reference key="NSNextKeyView" ref="256592633"/>
 															<string key="NSReuseIdentifierKey">_NS:13</string>
 															<bool key="NSEnabled">YES</bool>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -2003,7 +2003,7 @@
 											</array>
 											<string key="NSFrame">{{16, 13}, {194, 49}}</string>
 											<reference key="NSSuperview" ref="673272916"/>
-											<reference key="NSNextKeyView" ref="920500391"/>
+											<reference key="NSNextKeyView" ref="71925740"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<int key="NSsFlags">150032</int>
 											<reference key="NSVScroller" ref="256592633"/>
@@ -2594,7 +2594,7 @@
 															<array class="NSMutableArray" key="NSSubviews"/>
 															<string key="NSFrameSize">{194, 49}</string>
 															<reference key="NSSuperview" ref="363681921"/>
-															<reference key="NSNextKeyView" ref="1027435819"/>
+															<reference key="NSNextKeyView" ref="427406459"/>
 															<string key="NSReuseIdentifierKey">_NS:13</string>
 															<bool key="NSEnabled">YES</bool>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -2693,7 +2693,7 @@
 											</array>
 											<string key="NSFrame">{{16, 13}, {194, 49}}</string>
 											<reference key="NSSuperview" ref="663616094"/>
-											<reference key="NSNextKeyView" ref="363681921"/>
+											<reference key="NSNextKeyView" ref="1027435819"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<int key="NSsFlags">150032</int>
 											<reference key="NSVScroller" ref="427406459"/>
@@ -11820,6 +11820,14 @@
 				</array>
 				<string key="1271.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1271.userInterfaceItemIdentifier">conversation_cell_none_right</string>
+				<object class="NSMutableDictionary" key="1292.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="221161643"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<array key="1292.IBNSViewMetadataConstraints">
 					<reference ref="500386075"/>
 				</array>
@@ -11897,6 +11905,14 @@
 				<string key="1893.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1895.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1897.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="1898.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="196550743"/>
+						<string key="toolTip">Hide message</string>
+					</object>
+				</object>
 				<array key="1898.IBNSViewMetadataConstraints">
 					<reference ref="762791428"/>
 				</array>
@@ -11948,6 +11964,14 @@
 				<string key="1954.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1957.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1961.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="1962.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="26590118"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<array class="NSMutableArray" key="1962.IBNSViewMetadataConstraints">
 					<reference ref="797142528"/>
 				</array>
@@ -12020,6 +12044,14 @@
 				<string key="2099.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2100.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2104.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2106.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="606868516"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2106.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2106.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2107.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12050,6 +12082,14 @@
 				<boolean value="NO" key="2140.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2140.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2141.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2149.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="452167196"/>
+						<string key="toolTip">Cancel transfer</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2149.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2150.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12067,6 +12107,14 @@
 				</array>
 				<string key="2187.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2187.userInterfaceItemIdentifier">conversation_cell_progress_right</string>
+				<object class="NSMutableDictionary" key="2188.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="206065753"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2188.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2188.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2190.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12096,6 +12144,14 @@
 				<string key="2199.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2200.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2201.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2202.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="866840606"/>
+						<string key="toolTip">Cancel transfer</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2202.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2202.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array key="2204.IBNSViewMetadataConstraints">
@@ -12138,6 +12194,14 @@
 				</array>
 				<string key="2243.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2243.userInterfaceItemIdentifier">conversation_cell_info_right</string>
+				<object class="NSMutableDictionary" key="2244.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="950513417"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2244.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2244.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2246.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12222,6 +12286,14 @@
 				<boolean value="NO" key="2383.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2383.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2387.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2392.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="637028974"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<array key="2392.IBNSViewMetadataConstraints">
 					<reference ref="591569209"/>
 				</array>
@@ -12265,6 +12337,14 @@
 				</array>
 				<string key="2444.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2444.userInterfaceItemIdentifier">conversation_cell_none_files_left</string>
+				<object class="NSMutableDictionary" key="2445.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="271753747"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<array class="NSMutableArray" key="2445.IBNSViewMetadataConstraints">
 					<reference ref="269272916"/>
 				</array>
@@ -12362,6 +12442,14 @@
 				<string key="2514.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2515.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2516.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2523.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="663754898"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2523.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2523.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2524.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12429,6 +12517,14 @@
 				<string key="2568.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2569.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2570.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2577.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="946137604"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2577.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2577.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2578.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12451,6 +12547,14 @@
 				</array>
 				<boolean value="NO" key="2590.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2590.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2591.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="498969087"/>
+						<string key="toolTip">Cancel transfer</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2591.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2591.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2592.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12479,6 +12583,14 @@
 				</array>
 				<string key="2634.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2634.userInterfaceItemIdentifier">conversation_cell_message_left</string>
+				<object class="NSMutableDictionary" key="2635.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="552546999"/>
+						<string key="toolTip">Hide message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2635.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2635.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2638.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12520,6 +12632,14 @@
 				</array>
 				<string key="2664.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2664.userInterfaceItemIdentifier">conversation_cell_buttons_left</string>
+				<object class="NSMutableDictionary" key="2665.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="539851358"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2665.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2665.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2666.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12605,6 +12725,14 @@
 				</array>
 				<string key="2737.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2737.userInterfaceItemIdentifier">conversation_cell_message_cancel_left</string>
+				<object class="NSMutableDictionary" key="2738.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="203466829"/>
+						<string key="toolTip">Show message</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2738.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2738.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2739.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -12631,6 +12759,14 @@
 				<string key="2749.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2750.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="2751.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="2752.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="589252584"/>
+						<string key="toolTip">Cancel transfer</string>
+					</object>
+				</object>
 				<boolean value="NO" key="2752.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="2752.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array key="2753.IBNSViewMetadataConstraints">
@@ -12881,11 +13017,27 @@
 				</array>
 				<boolean value="NO" key="64.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="64.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="65.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="1062259332"/>
+						<string key="toolTip">Send a file</string>
+					</object>
+				</object>
 				<array class="NSMutableArray" key="65.IBNSViewMetadataConstraints">
 					<reference ref="400659196"/>
 				</array>
 				<boolean value="NO" key="65.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="66.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="852691109"/>
+						<string key="toolTip">All transfers</string>
+					</object>
+				</object>
 				<array key="66.IBNSViewMetadataConstraints">
 					<reference ref="614065165"/>
 					<reference ref="685203665"/>

@@ -101,9 +101,17 @@
         [self.user_online setHidden:YES];
     
     if (_user.is_favourite)
+    {
         self.user_favourite.image = [IAFunctions imageNamed:@"icon-star-selected"];
+        [self.user_favourite setToolTip:NSLocalizedString(@"Remove user as favourite",
+                                                          @"remove user as favourite")];
+    }
     else
+    {
         self.user_favourite.image = [IAFunctions imageNamed:@"icon-star"];
+        [self.user_favourite setToolTip:NSLocalizedString(@"Add user as favourite",
+                                                          @"add user as favourite")];
+    }
 }
 
 - (void)awakeFromNib
@@ -449,11 +457,15 @@
     {
         [_delegate conversationView:self wantsRemoveFavourite:_user];
         self.user_favourite.image = [IAFunctions imageNamed:@"icon-star"];
+        [self.user_favourite setToolTip:NSLocalizedString(@"Add user as favourite",
+                                                          @"add user as favourite")];
     }
     else
     {
         [_delegate conversationView:self wantsAddFavourite:_user];
         self.user_favourite.image = [IAFunctions imageNamed:@"icon-star-selected"];
+        [self.user_favourite setToolTip:NSLocalizedString(@"Remove user as favourite",
+                                                          @"remove user as favourite")];
     }
 }
 

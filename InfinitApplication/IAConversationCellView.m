@@ -300,12 +300,17 @@
     {
         files_str = [NSString stringWithFormat:@"%ld %@", _transaction.files_count,
                      NSLocalizedString(@"files", @"files")];
+        [self.files_icon setToolTip:NSLocalizedString(@"Show file list", @"show file list")];
+        [self.files_icon setEnabled:YES];
     }
     else
     {
         self.files_icon.image = [[NSWorkspace sharedWorkspace]
                                  iconForFileType:[_transaction.files[0] pathExtension]];
         files_str = _transaction.files[0];
+        [self.files_icon setEnabled:NO];
+        self.files_icon.alphaValue = 1.0;
+        [self.files_icon setToolTip:@""];
     }
     self.files_label.attributedStringValue = [[NSAttributedString alloc]
                                               initWithString:files_str
@@ -340,6 +345,8 @@
     else if (element.mode == CONVERSATION_CELL_VIEW_FILE_LIST)
     {
         self.files_icon.image = [IAFunctions imageNamed:@"icon-collapse"];
+        [self.files_icon setToolTip:NSLocalizedString(@"Hide file list", @"hide file list")];
+        [self.files_icon setEnabled:YES];
     }
     else if (element.mode == CONVERSATION_CELL_VIEW_NORMAL)
     {
