@@ -537,6 +537,11 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
     }
 }
 
+- (void)loginViewCloseButtonClicked:(IALoginViewController*)sender
+{
+    [self handleQuit];
+}
+
 //- Me Manager Protocol ----------------------------------------------------------------------------
 
 - (void)meManager:(IAMeManager*)sender
