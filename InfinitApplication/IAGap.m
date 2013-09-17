@@ -270,8 +270,7 @@ void on_critical_event(char const* str)
 
 - (BOOL)logged_in
 {
-    BOOL logged_in =  gap_logged_in(_state);
-    return logged_in;
+    return gap_logged_in(_state);
 }
 
 - (gap_Status)register_:(NSString*)fullname
