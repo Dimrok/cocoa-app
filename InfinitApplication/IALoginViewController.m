@@ -344,8 +344,7 @@
 
 - (IBAction)closeButtonClicked:(NSButton*)sender
 {
-    if (sender == self.close_button)
-        [self closeLoginWindow];
+    [_delegate loginViewCloseButtonClicked:self];
 }
 
 //- Register and Forgot Password -------------------------------------------------------------------
