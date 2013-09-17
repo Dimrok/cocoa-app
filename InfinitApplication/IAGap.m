@@ -184,17 +184,17 @@ void on_critical_event(char const* str)
         setenv("INFINIT_METRICS_KISSMETRICS_NETWORK_TID", "88e0663996d002fb7a6c5e547cac5cb815c640f0", 1);
         setenv("INFINIT_METRICS_KISSMETRICS_TRANSACTION_TID", "a36c426570d8f1dc404891a284f033d003bbe9c2", 1);
 #else
-        setenv("INFINIT_APERTUS_HOST", "apertus.api.development.infinit.io", 1);
+        setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.development.infinit.io", 1);
 //        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_APERTUS_HOST", "192.168.110.52", 1);
         setenv("INFINIT_APERTUS_PORT", "9899", 1);
 
-        setenv("INFINIT_META_HOST", "meta.api.development.infinit.io", 1);
+        setenv("INFINIT_META_HOST", "v2.meta.api.development.infinit.io", 1);
 //        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_META_HOST", "192.168.110.52", 1);
         setenv("INFINIT_META_PORT", "12345", 1);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.api.development.infinit.io", 1);
+        setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.development.infinit.io", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "192.168.110.52", 1);
         setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
