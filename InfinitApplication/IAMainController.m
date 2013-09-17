@@ -207,36 +207,41 @@
     password = nil;
 }
 
+- (void)onSuccessfulLogin
+{
+    IALog(@"%@ Logged in", self);
+    
+    [IACrashReportManager sendExistingCrashReports];
+    
+    if ([_login_view_controller loginWindowOpen])
+        [_login_view_controller closeLoginWindow];
+    
+    if (_new_credentials)
+        [self addCredentialsToKeychain];
+    
+    // XXX Should allow changing of avatar in settings, not upload every successful login
+    [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
+                        performSelector:nil
+                               onObject:nil];
+    // XXX We must find a better way to manage fetching of history per user
+    [_transaction_manager getHistory];
+    [[IAGapState instance] startPolling];
+    [self updateStatusBarIcon];
+    
+    _login_view_controller = nil;
+    
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
+    {
+        _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
+        [_onboard_controller startOnboarding];
+    }
+}
+
 - (void)loginCallback:(IAGapOperationResult*)result
 {
     if (result.success)
     {
-        IALog(@"%@ Logged in", self);
-        
-        [IACrashReportManager sendExistingCrashReports];
-        
-        if ([_login_view_controller loginWindowOpen])
-            [_login_view_controller closeLoginWindow];
-        
-        if (_new_credentials)
-            [self addCredentialsToKeychain];
-        
-        // XXX Should allow changing of avatar in settings, not upload every successful login
-        [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
-                            performSelector:nil
-                                   onObject:nil];
-        // XXX We must find a better way to manage fetching of history per user
-        [_transaction_manager getHistory];
-        [[IAGapState instance] startPolling];
-        [self updateStatusBarIcon];
-        
-         _login_view_controller = nil;
-        
-        if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
-        {
-            _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
-            [_onboard_controller startOnboarding];
-        }
+        [self onSuccessfulLogin];
     }
     else
     {
@@ -247,10 +252,18 @@
             case gap_network_error:
                 error = NSLocalizedString(@"Connection problem", @"no route to internet");
                 break;
+                
             case gap_email_password_dont_match:
                 error = NSLocalizedString(@"Username or password incorrect",
                                           @"username or password wrong");
                 break;
+                
+            case gap_already_logged_in:
+                if ([_login_view_controller loginWindowOpen])
+                    [_login_view_controller closeLoginWindow];
+                _login_view_controller = nil;
+                return;
+                
             default:
                 error = NSLocalizedString(@"Unknown login error", @"unknown login error");
                 break;
