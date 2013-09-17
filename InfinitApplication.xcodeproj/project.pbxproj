@@ -15,7 +15,7 @@
 		83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */; };
 		83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */; };
 		831AA69F17D0FCC00004AE8D /* IAMeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831AA69E17D0FCC00004AE8D /* IAMeManager.m */; };
-		831AA6A617D101BA0004AE8D /* icon_status_bar_no_connection.png in Resources */ = {isa = PBXBuildFile; fileRef = 831AA6A517D101BA0004AE8D /* icon_status_bar_no_connection.png */; };
+		831AA6A617D101BA0004AE8D /* status_bar_icon_no_connection.png in Resources */ = {isa = PBXBuildFile; fileRef = 831AA6A517D101BA0004AE8D /* status_bar_icon_no_connection.png */; };
 		831B757217DDC3FB0082A068 /* libfrete.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
 		831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
 		831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB21D17A8FE1700696604 /* IAAvatarManager.m */; };
@@ -439,7 +439,7 @@
 		83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFavouriteView.m; sourceTree = "<group>"; };
 		831AA69D17D0FCC00004AE8D /* IAMeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMeManager.h; sourceTree = "<group>"; };
 		831AA69E17D0FCC00004AE8D /* IAMeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAMeManager.m; sourceTree = "<group>"; };
-		831AA6A517D101BA0004AE8D /* icon_status_bar_no_connection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_status_bar_no_connection.png; sourceTree = "<group>"; };
+		831AA6A517D101BA0004AE8D /* status_bar_icon_no_connection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_bar_icon_no_connection.png; sourceTree = "<group>"; };
 		831B757117DDC3FB0082A068 /* libfrete.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfrete.dylib; path = ../../../Externals/lib/libfrete.dylib; sourceTree = "<group>"; };
 		831FB21C17A8FE1700696604 /* IAAvatarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAvatarManager.h; sourceTree = "<group>"; };
 		831FB21D17A8FE1700696604 /* IAAvatarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAvatarManager.m; sourceTree = "<group>"; };
@@ -886,7 +886,7 @@
 				8301B8FB17BA61EF00FD6CAC /* status_bar_icon_fire.png */,
 				832808C817A2C0BC0025B6F8 /* status_bar_icon_clicked.png */,
 				832808C917A2C0BC0025B6F8 /* status_bar_icon_normal.png */,
-				831AA6A517D101BA0004AE8D /* icon_status_bar_no_connection.png */,
+				831AA6A517D101BA0004AE8D /* status_bar_icon_no_connection.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1562,7 +1562,7 @@
 				83EADC2317E204FF00D49D77 /* icon-star-selected@2x.png in Resources */,
 				834D47E717CB446A00EEB16A /* icon-collapse.png in Resources */,
 				834D47E817CB446A00EEB16A /* icon-collapse@2x.png in Resources */,
-				831AA6A617D101BA0004AE8D /* icon_status_bar_no_connection.png in Resources */,
+				831AA6A617D101BA0004AE8D /* status_bar_icon_no_connection.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
 				839DFC1417D8ECEF001D60DD /* icon-transfer.png in Resources */,
 			);
