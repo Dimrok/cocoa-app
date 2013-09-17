@@ -59,7 +59,7 @@ typedef enum IAStatusBarIconStatus {
         _icon[STATUS_BAR_ICON_FIRE] = [IAFunctions imageNamed:@"status_bar_icon_fire"];
         _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"status_bar_icon_clicked"];
         _icon[STATUS_BAR_ICON_NO_CONNECTION] = [IAFunctions
-                                                imageNamed:@"icon_status_bar_no_connection"];
+                                                imageNamed:@"status_bar_icon_no_connection"];
         CGFloat width = [status_item length];
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
         NSRect rect = NSMakeRect(0.0, 0.0, width, height);
