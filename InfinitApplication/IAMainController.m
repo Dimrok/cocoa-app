@@ -60,7 +60,7 @@
         
         [IACrashReportManager setupCrashReporter];
         
-        _status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:34.0];
+        _status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:30.0];
         _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_status_item];
         _status_item.view = _status_bar_icon;
         
