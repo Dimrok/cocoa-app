@@ -55,11 +55,11 @@ typedef enum IAStatusBarIconStatus {
     if (self = [super init])
     {
         _delegate = delegate;
-        _icon[STATUS_BAR_ICON_NORMAL] = [IAFunctions imageNamed:@"status_bar_icon_normal"];
-        _icon[STATUS_BAR_ICON_FIRE] = [IAFunctions imageNamed:@"status_bar_icon_fire"];
-        _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"status_bar_icon_clicked"];
+        _icon[STATUS_BAR_ICON_NORMAL] = [IAFunctions imageNamed:@"icon-menu-bar-active"];
+        _icon[STATUS_BAR_ICON_FIRE] = [IAFunctions imageNamed:@"icon-menu-bar-fire"];
+        _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"icon-menu-bar-clicked"];
         _icon[STATUS_BAR_ICON_NO_CONNECTION] = [IAFunctions
-                                                imageNamed:@"status_bar_icon_no_connection"];
+                                                imageNamed:@"icon-menu-bar-inactive"];
         CGFloat width = [status_item length];
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
         NSRect rect = NSMakeRect(0.0, 0.0, width, height);

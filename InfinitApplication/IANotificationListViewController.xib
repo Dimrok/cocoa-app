@@ -167,10 +167,10 @@
 									<int key="NSCellFlags">68157504</int>
 									<int key="NSCellFlags2">138413056</int>
 									<string key="NSContents">No notifications...</string>
-									<object class="NSFont" key="NSSupport" id="28">
+									<object class="NSFont" key="NSSupport" id="926777810">
 										<string key="NSName">LucidaGrande</string>
 										<double key="NSSize">12</double>
-										<int key="NSfFlags">4883</int>
+										<int key="NSfFlags">16</int>
 									</object>
 									<string key="NSCellIdentifier">_NS:1535</string>
 									<reference key="NSControlView" ref="630894277"/>
@@ -209,7 +209,7 @@
 												<array class="NSMutableArray" key="NSSubviews"/>
 												<string key="NSFrameSize">{317, 72}</string>
 												<reference key="NSSuperview" ref="675472725"/>
-												<reference key="NSNextKeyView" ref="264162119"/>
+												<reference key="NSNextKeyView" ref="717741214"/>
 												<string key="NSReuseIdentifierKey">_NS:13</string>
 												<string key="NSAntiCompressionPriority">{750, 250}</string>
 												<bool key="NSEnabled">YES</bool>
@@ -327,7 +327,7 @@
 								</array>
 								<string key="NSFrameSize">{317, 72}</string>
 								<reference key="NSSuperview" ref="293821247"/>
-								<reference key="NSNextKeyView" ref="717741214"/>
+								<reference key="NSNextKeyView" ref="675472725"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{250, 750}</string>
 								<string key="NSAntiCompressionPriority">{750, 200}</string>
@@ -762,7 +762,7 @@
 										<int key="NSCellFlags">67108928</int>
 										<int key="NSCellFlags2">272632320</int>
 										<string key="NSContents">File name</string>
-										<reference key="NSSupport" ref="28"/>
+										<reference key="NSSupport" ref="926777810"/>
 										<string key="NSCellIdentifier">_NS:1535</string>
 										<reference key="NSControlView" ref="887439264"/>
 										<reference key="NSBackgroundColor" ref="691863287"/>
