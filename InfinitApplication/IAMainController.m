@@ -693,11 +693,6 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
           transactionAdded:(IATransaction*)transaction
 {
-    if (_current_view_controller == nil)
-        return;
-    
-    [_current_view_controller transactionAdded:transaction];
-    
     if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
     {
         [_transaction_manager markTransactionsRead];
@@ -709,20 +704,18 @@ transactionsProgressForUser:(IAUser*)user
             [_transaction_manager markTransactionAsRead:transaction];
         }
     }
-    else
-    {
-        [_desktop_notifier transactionAdded:transaction];
-    }
+
+    [_desktop_notifier transactionAdded:transaction];
+    
+    if (_current_view_controller == nil)
+        return;
+    
+    [_current_view_controller transactionAdded:transaction];
 }
 
 - (void)transactionManager:(IATransactionManager*)sender
         transactionUpdated:(IATransaction*)transaction
 {
-    if (_current_view_controller == nil)
-        return;
-    
-    [_current_view_controller transactionUpdated:transaction];
-    
     if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
     {
         [_transaction_manager markTransactionsRead];
@@ -734,10 +727,13 @@ transactionsProgressForUser:(IAUser*)user
             [_transaction_manager markTransactionAsRead:transaction];
         }
     }
-    else
-    {
-        [_desktop_notifier transactionUpdated:transaction];
-    }
+    
+    [_desktop_notifier transactionUpdated:transaction];
+    
+    if (_current_view_controller == nil)
+        return;
+    
+    [_current_view_controller transactionUpdated:transaction];
 }
 
 - (void)transactionManagerHasGotHistory:(IATransactionManager*)sender
