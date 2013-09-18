@@ -447,11 +447,13 @@
                 break;
             
             case TRANSACTION_VIEW_PREPARING:
+                [self.progress_indicator setUsesThreadedAnimation:YES];
                 [self.progress_indicator setIndeterminate:YES];
                 [self.progress_indicator startAnimation:nil];
                 break;
                 
             case TRANSACTION_VIEW_RUNNING:
+                [self.progress_indicator setUsesThreadedAnimation:YES];
                 [self.progress_indicator stopAnimation:nil];
                 self.progress_indicator.maxValue = 1.0;
                 [self.progress_indicator setIndeterminate:NO];
