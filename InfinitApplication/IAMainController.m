@@ -699,7 +699,7 @@ transactionsProgressForUser:(IAUser*)user
     }
     else if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
     {
-        if (transaction.other_user == [(IAConversationViewController*)_current_view_controller user])
+        if ([transaction.other_user isEqual:[(IAConversationViewController*)_current_view_controller user]])
         {
             [_transaction_manager markTransactionAsRead:transaction];
         }
@@ -723,7 +723,7 @@ transactionsProgressForUser:(IAUser*)user
     }
     else if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
     {
-        if (transaction.other_user == [(IAConversationViewController*)_current_view_controller user])
+        if ([transaction.other_user isEqual:[(IAConversationViewController*)_current_view_controller user]])
         {
             [_transaction_manager markTransactionAsRead:transaction];
         }
