@@ -183,6 +183,8 @@ void on_critical_event(char const* str)
         setenv("INFINIT_METRICS_KISSMETRICS_USER_TID", "852a52e101e7c25ef806cd7ae8ce706a9c238498", 1);
         setenv("INFINIT_METRICS_KISSMETRICS_NETWORK_TID", "88e0663996d002fb7a6c5e547cac5cb815c640f0", 1);
         setenv("INFINIT_METRICS_KISSMETRICS_TRANSACTION_TID", "a36c426570d8f1dc404891a284f033d003bbe9c2", 1);
+        
+        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "ca10e9afa1f125fa832f5cbae9b6cbbb", 1);
 #else
         setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.development.infinit.io", 1);
 //        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 1);
