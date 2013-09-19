@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
 		<string key="IBDocument.SystemVersion">12F37</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4504</string>
+		<string key="IBDocument.InterfaceBuilderVersion">4510</string>
 		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">4504</string>
+			<string key="NS.object.0">4510</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -231,7 +231,6 @@
 						<reference key="NSSuperview" ref="420626012"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1008525745"/>
-						<bool key="NSViewIsLayerTreeHost">YES</bool>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSHuggingPriority">{750, 750}</string>
 						<string key="NSAntiCompressionPriority">{750, 250}</string>
@@ -251,6 +250,7 @@
 							<object class="NSButton" id="1009898587">
 								<reference key="NSNextResponder" ref="190357789"/>
 								<int key="NSvFlags">268</int>
+								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrame">{{247, 0}, {70, 46}}</string>
 								<reference key="NSSuperview" ref="190357789"/>
 								<reference key="NSWindow"/>
@@ -514,6 +514,7 @@
 									</set>
 									<string key="NSFrame">{{8, 8}, {25, 25}}</string>
 									<reference key="NSSuperview" ref="435265283"/>
+									<reference key="NSNextKeyView" ref="973133474"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSImageCell" key="NSCell" id="357496511">
@@ -568,6 +569,7 @@
 									<array class="NSMutableArray" key="NSSubviews"/>
 									<string key="NSFrame">{{279, 13}, {17, 15}}</string>
 									<reference key="NSSuperview" ref="435265283"/>
+									<reference key="NSNextKeyView" ref="1000879543"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<bool key="NSEnabled">YES</bool>
 									<object class="NSButtonCell" key="NSCell" id="31640359">
@@ -1703,6 +1705,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">IAUserSearchViewController</string>
 					<string key="superclassName">NSViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="sendButtonClicked:">NSButton</string>
+						<string key="tableViewAction:">NSTableView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="sendButtonClicked:">
+							<string key="name">sendButtonClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBActionInfo" key="tableViewAction:">
+							<string key="name">tableViewAction:</string>
+							<string key="candidateClassName">NSTableView</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="no_results_message">NSTextField</string>
 						<string key="results_view">NSScrollView</string>
