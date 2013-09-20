@@ -292,7 +292,7 @@
     }
     else
     {
-        formatter.dateFormat = @"dd/MM";
+        formatter.dateFormat = @"d MMM";
         res = [formatter stringFromDate:transaction_date];
     }
     return res;
