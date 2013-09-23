@@ -123,7 +123,6 @@
 
 - (void)loadView
 {
-    self.animating = YES;
     [super loadView];
     [self setupPersonView];
     CGFloat y_diff = (self.person_view.frame.size.height + [self tableHeight]) -
@@ -246,7 +245,6 @@
     [self resizeContentView];
     [self.table_view scrollRowToVisible:(_element_list.count - 1)];
     [self updateListOfRowsWithProgress];
-    self.animating = NO;
 }
 
 - (void)scrollAfterRowAdd
@@ -254,11 +252,23 @@
     [self.table_view scrollRowToVisible:_element_list.count - 1];
 }
 
+- (void)backToNotificationView
+{
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         [self.content_height_constraint.animator setConstant:NSHeight(self.person_view.frame)];
+     }
+                        completionHandler:^
+     {
+         [_delegate conversationViewWantsBack:self];
+     }];
+}
+
 //- Table Functions --------------------------------------------------------------------------------
 
 - (void)resizeContentView
 {
-    self.animating = YES;
     CGFloat y_diff = [self tableHeight] - (self.content_height_constraint.constant -
                                            self.person_view.frame.size.height);
     if (y_diff == 0.0)
@@ -272,7 +282,6 @@
      }
                         completionHandler:^
      {
-         self.animating = NO;
      }];
 }
 
@@ -458,7 +467,7 @@
 
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
-    [_delegate conversationViewWantsBack:self];
+    [self backToNotificationView];
 }
 
 - (IBAction)favouriteButtonClicked:(NSButton*)sender
@@ -574,9 +583,7 @@
 
 - (void)conversationHeaderGotClick:(IAConversationHeaderView*)sender
 {
-    if (self.animating)
-        return;
-    [_delegate conversationViewWantsBack:self];
+    [self backToNotificationView];
 }
 
 //- User Table Interaction -------------------------------------------------------------------------
@@ -590,7 +597,11 @@
     
     IATransaction* transaction = [_element_list[row] transaction];
     NSString* message = [NSString stringWithFormat:@"row number: %ld\n%@", row, transaction.description];
-    NSAlert* popup = [NSAlert alertWithMessageText:@"Transaction" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", message];
+    NSAlert* popup = [NSAlert alertWithMessageText:@"Transaction"
+                                     defaultButton:@"OK"
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:@"%@", message];
     [popup runModal];
 }
 #endif

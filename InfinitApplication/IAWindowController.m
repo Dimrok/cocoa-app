@@ -88,7 +88,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.1;
+         context.duration = 0.15;
          [(NSWindow*)self.window.animator setAlphaValue:0.0];
      }
                         completionHandler:^
@@ -111,7 +111,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.1;
+         context.duration = 0.15;
          [(NSWindow*)self.window.animator setAlphaValue:1.0];
      }
                         completionHandler:^
@@ -141,7 +141,7 @@
 
 - (void)changeToViewController:(IAViewController*)new_controller
 {
-    if (!_window_is_open || _animating || _current_controller.animating)
+    if (!_window_is_open || _animating)
         return;
     
     _animating = YES;
@@ -154,7 +154,7 @@
                                  
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
-        context.duration = 0.1;
+        context.duration = 0.15;
         if (x_diff != 0)
         {
             [self.window.animator setFrameOrigin:
@@ -199,7 +199,7 @@
 - (void)openWithViewController:(IAViewController*)controller
                   withMidpoint:(NSPoint)midpoint
 {
-    if (controller == nil || _window_is_open || _animating || _current_controller.animating)
+    if (controller == nil || _window_is_open || _animating)
         return;
     
     _window_is_open = YES;

@@ -226,6 +226,9 @@
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
+    if (theEvent.clickCount > 1)
+        return;
+
     // Determine button click based on where the click was on the avatar and the current mode
     NSPoint click_location = [self convertPoint:theEvent.locationInWindow fromView:nil];
     switch (_mode)

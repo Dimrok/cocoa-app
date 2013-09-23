@@ -151,6 +151,7 @@
     NSMutableArray* _transaction_list;
     NSMutableArray* _rows_with_progress;
     NSTimer* _progress_timer;
+    BOOL _changing;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -168,6 +169,7 @@
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
+        _changing = NO;
     }
     return self;
 }
@@ -191,7 +193,6 @@
 
 - (void)loadView
 {
-    self.animating = YES;
     [super loadView];
     if (_transaction_list.count == 0)
     {
@@ -299,7 +300,6 @@
 
 - (void)resizeContentView
 {
-    self.animating = YES;
     CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
     
     if (y_diff == 0.0)
@@ -313,7 +313,6 @@
      }
                         completionHandler:^
      {
-         self.animating = NO;
      }];
 }
 
@@ -394,15 +393,14 @@
     }
 }
 
-//- User Interaction With Table --------------------------------------------------------------------
+//- General Functions ------------------------------------------------------------------------------
 
-- (IBAction)tableViewAction:(NSTableView*)sender
+- (void)userRowGotClicked:(NSInteger)row
 {
-    NSInteger row = [self.table_view clickedRow];
-    if (row < 0 || row > _transaction_list.count - 1 || self.animating)
+    if (_changing)
         return;
     
-    self.animating = YES;
+    _changing = YES;
     
     IATransaction* transaction = _transaction_list[row];
     IAUser* user = transaction.other_user;
@@ -413,7 +411,7 @@
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.duration = 0.25;
+         context.duration = 0.15;
          [self.table_view beginUpdates];
          [_transaction_list removeObjectsAtIndexes:other_users];
          [self.table_view removeRowsAtIndexes:other_users
@@ -425,8 +423,17 @@
      {
          [_delegate notificationList:self gotClickOnUser:user];
          self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-         self.animating = NO;
      }];
+}
+
+//- User Interaction With Table --------------------------------------------------------------------
+
+- (IBAction)tableViewAction:(NSTableView*)sender
+{
+    NSInteger row = [self.table_view clickedRow];
+    if (row < 0 || row > _transaction_list.count - 1)
+        return;
+    [self userRowGotClicked:row];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
@@ -599,40 +606,17 @@
 - (void)notificationListCellAvatarClicked:(IANotificationListCellView*)sender
 {
     NSInteger row = [self.table_view rowForView:sender];
-    if (row < 0 || row >= _transaction_list.count || self.animating)
+    if (row < 0 || row >= _transaction_list.count)
         return;
     
-    self.animating = YES;
-    
-    IATransaction* transaction = [_transaction_list objectAtIndex:row];
-    IAUser* user = transaction.other_user;
-    
-    NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
-                                      NSMakeRange(0, _transaction_list.count)];
-    [other_users removeIndex:row];
-    
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-        context.duration = 0.25;
-        [self.table_view beginUpdates];
-        [_transaction_list removeObjectsAtIndexes:other_users];
-        [self.table_view removeRowsAtIndexes:other_users
-                               withAnimation:NSTableViewAnimationSlideRight];
-        [self.table_view endUpdates];
-        [self resizeContentView];
-     }
-                        completionHandler:^
-     {
-         [_delegate notificationList:self gotClickOnUser:user];
-         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-         self.animating = NO;
-     }];
+    [self userRowGotClicked:row];
 }
 
 //- Change View Handling ---------------------------------------------------------------------------
 
 - (void)aboutToChangeView
 {
+    _changing = YES;
     [self setUpdatorRunning:NO];
 }
 
