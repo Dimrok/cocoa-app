@@ -98,12 +98,26 @@
 
 - (void)setBadgeCount:(NSUInteger)count
 {    
-    [self.badge_view setBadgeCount:count];
+    [self.badge_view.animator setBadgeCount:count];
 }
 
 - (void)setTotalTransactionProgress:(CGFloat)progress
 {
-    [self.avatar_view setTotalProgress:progress];
+    if (self.avatar_view.totalProgress < progress)
+    {
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+         {
+             context.duration = 1.0;
+             [self.avatar_view.animator setTotalProgress:progress];
+         }
+                            completionHandler:^
+        {
+        }];
+    }
+    else
+    {
+        [self.avatar_view setTotalProgress:progress];
+    }
 }
 
 - (void)setAvatarMode:(IATransactionViewMode)view_mode
@@ -160,7 +174,7 @@
     
     // Configure avatar view
     [self setBadgeCount:count];
-    [self setTotalTransactionProgress:progress];
+    [self.avatar_view setTotalProgress:progress];
     [self setAvatarMode:transaction.view_mode
              whenFromMe:transaction.from_me];
     [self.avatar_view setDelegate:self];

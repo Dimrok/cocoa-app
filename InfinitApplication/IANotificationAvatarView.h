@@ -21,7 +21,7 @@ typedef enum __IANotificationAvatarMode
 
 @property (nonatomic, setter = setAvatar:) NSImage* avatar;
 @property (nonatomic, setter = setDelegate:) id<IANotificationAvatarProtocol> delegate;
-@property (nonatomic, setter = setTotalProgress:) CGFloat total_progress;
+@property (nonatomic, setter = setTotalProgress:) CGFloat totalProgress;
 @property (nonatomic, setter = setViewMode:) IANotificationAvatarMode mode;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "IANotificationAvatarView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation IANotificationAvatarView
 {
 @private
@@ -19,6 +21,8 @@
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
+
+@synthesize totalProgress = _total_progress;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -78,8 +82,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSRect avatar_frame = NSMakeRect((self.frame.size.width - _avatar.size.width) / 2.0,
-                                     (self.frame.size.height - _avatar.size.height) / 2.0,
+    NSRect avatar_frame = NSMakeRect((NSWidth(self.frame) - _avatar.size.width) / 2.0,
+                                     (NSHeight(self.frame) - _avatar.size.height) / 2.0,
                                      _avatar.size.width,
                                      _avatar.size.height);
     [_avatar drawInRect:avatar_frame
@@ -89,7 +93,7 @@
     
     if (_total_progress > 0.0)
     {
-        NSPoint centre = NSMakePoint(self.frame.size.width / 2.0, self.frame.size.height / 2.0);
+        NSPoint centre = NSMakePoint(NSWidth(self.frame) / 2.0, NSHeight(self.frame) / 2.0);
         CGFloat radius = _avatar.size.width / 2.0 + 1.0;
         
         NSBezierPath* progress = [NSBezierPath bezierPath];
@@ -108,18 +112,18 @@
     CGFloat border = 3.0;
     NSRect avatar_image_frame = NSMakeRect(avatar_frame.origin.x + border,
                                            avatar_frame.origin.y + border,
-                                           avatar_frame.size.width - 2.0 * border,
-                                           avatar_frame.size.height - 2.0 * border);
+                                           NSWidth(avatar_frame) - 2.0 * border,
+                                           NSHeight(avatar_frame) - 2.0 * border);
     
     if (_mode == AVATAR_VIEW_ACCEPT_REJECT)
     {
-        NSPoint centre = NSMakePoint(self.frame.size.width / 2.0, self.frame.size.height / 2.0);
+        NSPoint centre = NSMakePoint(NSWidth(self.frame) / 2.0, NSHeight(self.frame) / 2.0);
         // Accept
         NSBezierPath* accept_mask = [NSBezierPath bezierPath];
-        [accept_mask moveToPoint:NSMakePoint(centre.x - avatar_image_frame.size.width / 2.0,
+        [accept_mask moveToPoint:NSMakePoint(centre.x - NSWidth(avatar_image_frame) / 2.0,
                                              centre.y)];
         [accept_mask appendBezierPathWithArcWithCenter:centre
-                                                radius:(avatar_image_frame.size.width / 2.0)
+                                                radius:(NSWidth(avatar_image_frame) / 2.0)
                                             startAngle:180.0
                                               endAngle:0.0
                                              clockwise:YES];
@@ -141,10 +145,10 @@
         
         // Reject
         NSBezierPath* reject_mask = [NSBezierPath bezierPath];
-        [reject_mask moveToPoint:NSMakePoint(centre.x - avatar_image_frame.size.width / 2.0,
+        [reject_mask moveToPoint:NSMakePoint(centre.x - NSWidth(avatar_image_frame) / 2.0,
                                              centre.y)];
         [reject_mask appendBezierPathWithArcWithCenter:centre
-                                                radius:(avatar_image_frame.size.width / 2.0)
+                                                radius:(NSWidth(avatar_image_frame) / 2.0)
                                             startAngle:180.0
                                               endAngle:0.0];
         [reject_mask closePath];
@@ -153,7 +157,7 @@
         
         NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
         NSRect cancel_image_frame = NSMakeRect(centre.x - cancel_icon.size.width / 2.0,
-                                               centre.y - avatar_image_frame.size.height / 2.0 + border + 1.0,
+                                               centre.y - NSHeight(avatar_image_frame) / 2.0 + border + 1.0,
                                                cancel_icon.size.width,
                                                cancel_icon.size.height);
         [cancel_icon drawInRect:cancel_image_frame
@@ -169,8 +173,8 @@
         [cancel_mask fill];
         
         NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
-        NSRect cancel_image_frame = NSMakeRect(avatar_image_frame.size.width / 2.0 + border - 1.0,
-                                               avatar_image_frame.size.height / 2.0,
+        NSRect cancel_image_frame = NSMakeRect(NSWidth(avatar_image_frame) / 2.0 + border - 1.0,
+                                               NSHeight(avatar_image_frame) / 2.0,
                                                cancel_icon.size.width,
                                                cancel_icon.size.height);
         [cancel_icon drawInRect:cancel_image_frame
@@ -244,6 +248,16 @@
         default:
             return;
     }
+}
+
+//- Animation --------------------------------------------------------------------------------------
+
++ (id)defaultAnimationForKey:(NSString*)key
+{
+    if ([key isEqualToString:@"totalProgress"])
+        return [CABasicAnimation animation];
+    
+    return [super defaultAnimationForKey:key];
 }
 
 @end
