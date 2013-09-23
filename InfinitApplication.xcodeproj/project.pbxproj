@@ -14,7 +14,6 @@
 		83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */; };
 		83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */; };
 		831AA69F17D0FCC00004AE8D /* IAMeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831AA69E17D0FCC00004AE8D /* IAMeManager.m */; };
-		831B757217DDC3FB0082A068 /* libfrete.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
 		831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
 		831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB21D17A8FE1700696604 /* IAAvatarManager.m */; };
 		831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB22417A90BE900696604 /* IANotificationListViewController.m */; };
@@ -54,7 +53,6 @@
 		8334C82617A692BD006028BC /* libboost_thread-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */; };
 		8334C82817A692BD006028BC /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */; };
 		8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EB17A67EB0006028BC /* libcryptography.dylib */; };
-		8334C82A17A692BD006028BC /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EC17A67EB0006028BC /* libcurl.4.dylib */; };
 		8334C82B17A692BD006028BC /* libcurly.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7ED17A67EB0006028BC /* libcurly.dylib */; };
 		8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EE17A67EB0006028BC /* libelle.dylib */; };
 		8334C82D17A692BD006028BC /* libetoile.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EF17A67EB0006028BC /* libetoile.dylib */; };
@@ -83,11 +81,13 @@
 		834D47EB17CB4EAF00EEB16A /* IAConversationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 834D47EA17CB4EAF00EEB16A /* IAConversationElement.m */; };
 		8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */; };
 		8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */; };
-		8364316817DDC39B00572726 /* libstation.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
 		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
+		836F867317EC775000D7202C /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */; };
+		836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */; };
+		836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867517ECA30300D7202C /* QuartzCore.framework */; };
 		837E6D0C17DA324100FC3141 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 837E6D0B17DA324100FC3141 /* loading.gif */; };
 		838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7317D73261009083D4 /* IASimpleSendButton.m */; };
 		838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7A17D73734009083D4 /* IABottomButton.m */; };
@@ -380,6 +380,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */,
 				831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */,
 				8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */,
 				83A3B6F217CE119C0007B1D4 /* libasio-fs.dylib in Copy Infinit Libraries */,
@@ -392,7 +393,6 @@
 				8334C82617A692BD006028BC /* libboost_thread-mt.dylib in Copy Infinit Libraries */,
 				8334C82817A692BD006028BC /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */,
 				8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */,
-				8334C82A17A692BD006028BC /* libcurl.4.dylib in Copy Infinit Libraries */,
 				8334C82B17A692BD006028BC /* libcurly.dylib in Copy Infinit Libraries */,
 				8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */,
 				8334C82D17A692BD006028BC /* libetoile.dylib in Copy Infinit Libraries */,
@@ -496,7 +496,6 @@
 		8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "../../../Externals/lib/libboost_thread-mt.dylib"; sourceTree = "<group>"; };
 		8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
 		8334C7EB17A67EB0006028BC /* libcryptography.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptography.dylib; path = ../../../Externals/lib/libcryptography.dylib; sourceTree = "<group>"; };
-		8334C7EC17A67EB0006028BC /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		8334C7ED17A67EB0006028BC /* libcurly.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly.dylib; path = ../../../Externals/lib/libcurly.dylib; sourceTree = "<group>"; };
 		8334C7EE17A67EB0006028BC /* libelle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libelle.dylib; path = ../../../Externals/lib/libelle.dylib; sourceTree = "<group>"; };
 		8334C7EF17A67EB0006028BC /* libetoile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libetoile.dylib; path = ../../../Externals/lib/libetoile.dylib; sourceTree = "<group>"; };
@@ -534,6 +533,8 @@
 		836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendViewController.h; sourceTree = "<group>"; };
 		836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAdvancedSendViewController.m; sourceTree = "<group>"; };
 		836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAAdvancedSendViewController.xib; sourceTree = "<group>"; };
+		836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../Externals/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
+		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		837E6D0B17DA324100FC3141 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		838AAC7217D73261009083D4 /* IASimpleSendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASimpleSendButton.h; sourceTree = "<group>"; };
 		838AAC7317D73261009083D4 /* IASimpleSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASimpleSendButton.m; sourceTree = "<group>"; };
@@ -676,15 +677,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */,
 				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				839456C517D213B200BF343E /* CrashReporter.framework in Frameworks */,
 				83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */,
 				8398835717A6AC96009409B3 /* Security.framework in Frameworks */,
-				8364316817DDC39B00572726 /* libstation.dylib in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
-				831B757217DDC3FB0082A068 /* libfrete.dylib in Frameworks */,
 				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
 				8334C7E117A67D22006028BC /* Gap.framework in Frameworks */,
+				836F867317EC775000D7202C /* libboost_iostreams-mt.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,6 +758,7 @@
 		8328080917A2B4A60025B6F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				836F867517ECA30300D7202C /* QuartzCore.framework */,
 				83014AC317BB6E2E00ECDE96 /* AddressBook.framework */,
 				8398835617A6AC95009409B3 /* Security.framework */,
 				8328080A17A2B4A60025B6F8 /* Cocoa.framework */,
@@ -1158,12 +1160,12 @@
 				8334C7E317A67EAF006028BC /* libagent.dylib */,
 				83A3B6F017CE117A0007B1D4 /* libasio-fs.dylib */,
 				8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */,
+				836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */,
 				8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */,
 				8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */,
 				8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */,
 				8334C7EA17A67EB0006028BC /* libcrypto.1.0.0.dylib */,
 				8334C7EB17A67EB0006028BC /* libcryptography.dylib */,
-				8334C7EC17A67EB0006028BC /* libcurl.4.dylib */,
 				8334C7ED17A67EB0006028BC /* libcurly.dylib */,
 				8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */,
 				8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */,
