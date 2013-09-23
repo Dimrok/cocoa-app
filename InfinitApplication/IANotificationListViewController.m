@@ -191,6 +191,7 @@
 
 - (void)loadView
 {
+    self.animating = YES;
     [super loadView];
     if (_transaction_list.count == 0)
     {
@@ -298,6 +299,7 @@
 
 - (void)resizeContentView
 {
+    self.animating = YES;
     CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
     
     if (y_diff == 0.0)
@@ -311,6 +313,7 @@
      }
                         completionHandler:^
      {
+         self.animating = NO;
      }];
 }
 
@@ -396,8 +399,10 @@
 - (IBAction)tableViewAction:(NSTableView*)sender
 {
     NSInteger row = [self.table_view clickedRow];
-    if (row < 0 || row > _transaction_list.count - 1)
+    if (row < 0 || row > _transaction_list.count - 1 || self.animating)
         return;
+    
+    self.animating = YES;
     
     IATransaction* transaction = _transaction_list[row];
     IAUser* user = transaction.other_user;
@@ -420,6 +425,7 @@
      {
          [_delegate notificationList:self gotClickOnUser:user];
          self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+         self.animating = NO;
      }];
 }
 
@@ -593,8 +599,10 @@
 - (void)notificationListCellAvatarClicked:(IANotificationListCellView*)sender
 {
     NSInteger row = [self.table_view rowForView:sender];
-    if (row < 0 || row >= _transaction_list.count)
+    if (row < 0 || row >= _transaction_list.count || self.animating)
         return;
+    
+    self.animating = YES;
     
     IATransaction* transaction = [_transaction_list objectAtIndex:row];
     IAUser* user = transaction.other_user;
@@ -617,6 +625,7 @@
      {
          [_delegate notificationList:self gotClickOnUser:user];
          self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+         self.animating = NO;
      }];
 }
 

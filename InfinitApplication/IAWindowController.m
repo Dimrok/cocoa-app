@@ -141,7 +141,7 @@
 
 - (void)changeToViewController:(IAViewController*)new_controller
 {
-    if (!_window_is_open || _animating)
+    if (!_window_is_open || _animating || _current_controller.animating)
         return;
     
     _animating = YES;
@@ -199,7 +199,7 @@
 - (void)openWithViewController:(IAViewController*)controller
                   withMidpoint:(NSPoint)midpoint
 {
-    if (controller == nil || _window_is_open || _animating)
+    if (controller == nil || _window_is_open || _animating || _current_controller.animating)
         return;
     
     _window_is_open = YES;

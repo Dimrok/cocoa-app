@@ -25,6 +25,7 @@
 
 @interface IAViewController : NSViewController
 
+@property (nonatomic, readwrite) BOOL animating;
 @property (nonatomic, retain) IBOutlet NSLayoutConstraint* content_height_constraint;
 @property (nonatomic, retain) IBOutlet NSLayoutConstraint* content_width_constraint;
 @property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
