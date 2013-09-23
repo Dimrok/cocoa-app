@@ -19,6 +19,7 @@
     if (self = [super initWithFrame:frame])
     {
         _enabled = NO;
+        [self setIgnoresMultiClick:YES];
     }
     
     return self;
