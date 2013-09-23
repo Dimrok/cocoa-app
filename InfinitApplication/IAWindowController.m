@@ -154,6 +154,7 @@
                                  
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
+        context.allowsImplicitAnimation = YES;
         context.duration = 0.15;
         if (x_diff != 0)
         {
@@ -165,6 +166,7 @@
             [_current_controller.content_height_constraint.animator setConstant:new_size.height];
         if (new_size.width != old_size.width)
             [_current_controller.content_width_constraint.animator setConstant:new_size.width];
+        [self.window layoutIfNeeded];
     }
                         completionHandler:^
      {
