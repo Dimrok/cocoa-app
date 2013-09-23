@@ -90,7 +90,8 @@
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
-    [_delegate conversationHeaderGotClick:self];
+    if (theEvent.clickCount == 1)
+        [_delegate conversationHeaderGotClick:self];
 }
 
 @end
