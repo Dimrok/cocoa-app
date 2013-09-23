@@ -43,6 +43,7 @@
     // Other
     IADesktopNotifier* _desktop_notifier;
     BOOL _new_credentials;
+    BOOL _logging_in;
     NSString* _username;
     NSString* _password;
 }
@@ -73,6 +74,8 @@
         
         _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
+        _logging_in = NO;
+        
         if (![self tryAutomaticLogin])
         {
             IALog(@"%@ Autologin failed", self);
@@ -86,32 +89,11 @@
 - (BOOL)tryAutomaticLogin
 {
     NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+    NSString* password = [self getPasswordForUsername:username];
     
-    if (username == nil ||
-        [username isEqualToString:@""] ||
-        ![self credentialsInChain:username])
+    if (username.length > 0 && password.length > 0)
     {
-        return NO;
-    }
-    
-    void* pwd_ptr = NULL;
-    UInt32 pwd_len = 0;
-    OSStatus status;
-    status = [[IAKeychainManager sharedInstance] getPasswordKeychain:username
-                                                        passwordData:&pwd_ptr
-                                                      passwordLength:&pwd_len
-                                                             itemRef:NULL];
-    if (status == noErr)
-    {
-        if (pwd_ptr == NULL)
-            return NO;
-        
-        NSString* password = [[NSString alloc] initWithBytes:pwd_ptr
-                                                      length:pwd_len
-                                                    encoding:NSUTF8StringEncoding];
-        if (password.length == 0)
-            return NO;
-        
+        _logging_in = YES;
         [self loginWithUsername:username
                        password:password];
         
@@ -190,6 +172,7 @@
 - (void)loginWithUsername:(NSString*)username
                  password:(NSString*)password
 {
+    _logging_in = YES;
     NSString* device_name = @"TODO"; // XXX use NSHost to get device name
     
     [[IAGapState instance] login:username
@@ -239,6 +222,7 @@
 
 - (void)loginCallback:(IAGapOperationResult*)result
 {
+    _logging_in = NO;
     if (result.success)
     {
         [self onSuccessfulLogin];
@@ -275,51 +259,17 @@
         
         
         NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
-        BOOL had_error = NO;
+        NSString* password = [self getPasswordForUsername:username];
         
-        if (username == nil || username.length == 0 || ![self credentialsInChain:username])
-        {
-            username = @"";
-        }
-        else
-        {
-            void* pwd_ptr = NULL;
-            UInt32 pwd_len = 0;
-            OSStatus status;
-            status = [[IAKeychainManager sharedInstance] getPasswordKeychain:username
-                                                                passwordData:&pwd_ptr
-                                                              passwordLength:&pwd_len
-                                                                     itemRef:NULL];
-            if (status == noErr)
-            {
-                if (pwd_ptr == NULL)
-                {
-                    IALog(@"%@ WARNING: Problem getting password pointer", self);
-                    had_error = YES;
-                }
-                
-                NSString* password = [[NSString alloc] initWithBytes:pwd_ptr
-                                                              length:pwd_len
-                                                            encoding:NSUTF8StringEncoding];
-                if (password.length == 0)
-                {
-                    IALog(@"%@ WARNING: Password length of zero", self);
-                    had_error = YES;
-                }
-                
-                [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
-                                                      withError:error
-                                                   withUsername:username
-                                                    andPassword:password];
-                password = @"";
-                password = nil;
-            }
-        }
+        if (password == nil)
+            password = @"";
         
         [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
                                               withError:error
                                            withUsername:username
-                                            andPassword:@""];
+                                            andPassword:password];
+        password = @"";
+        password = nil;
     }
 }
 
@@ -356,6 +306,38 @@
         IALog(@"%@ Error adding credentials to keychain");
     _password = @"";
     _password = nil;
+}
+
+- (NSString*)getPasswordForUsername:(NSString*)username
+{
+    if (username == nil ||
+        [username isEqualToString:@""] ||
+        ![self credentialsInChain:username])
+    {
+        return NO;
+    }
+    
+    void* pwd_ptr = NULL;
+    UInt32 pwd_len = 0;
+    OSStatus status;
+    status = [[IAKeychainManager sharedInstance] getPasswordKeychain:username
+                                                        passwordData:&pwd_ptr
+                                                      passwordLength:&pwd_len
+                                                             itemRef:NULL];
+    if (status == noErr)
+    {
+        if (pwd_ptr == NULL)
+            return nil;
+        
+        NSString* password = [[NSString alloc] initWithBytes:pwd_ptr
+                                                      length:pwd_len
+                                                    encoding:NSUTF8StringEncoding];
+        if (password.length == 0)
+            return nil;
+        
+        return password;
+    }
+    return nil;
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -622,7 +604,18 @@ transactionsProgressForUser:(IAUser*)user
 {
     if (_login_view_controller == nil)
         _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
-    [_login_view_controller showLoginWindowOnScreen:[self currentScreen]];
+    if (!_logging_in)
+        [_login_view_controller showLoginWindowOnScreen:[self currentScreen]];
+    else
+    {
+        NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+        NSString* password = [self getPasswordForUsername:username];
+        [_login_view_controller showLoginWindowOnScreenAsLoggingIn:[self currentScreen]
+                                                      withUsername:username
+                                                       andPassword:password];
+        password = @"";
+        password = nil;
+    }
     [self closeNotificationWindow];
 }
 

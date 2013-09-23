@@ -179,7 +179,6 @@
     [self.spinner stopAnimation:nil];
     [self.email_address setEnabled:YES];
     [self.password setEnabled:YES];
-    [self.login_button setEnabled:YES];
     
     NSRect frame = NSZeroRect;
     frame.size = self.view.bounds.size;
@@ -202,6 +201,11 @@
      }
                         completionHandler:^
      {
+         if (_logging_in)
+             [self.login_button setEnabled:NO];
+         else
+             [self.login_button setEnabled:YES];
+         
      }];
 }
 
@@ -214,13 +218,14 @@
     {
         [self showLoginWindowOnScreen:screen];
     }
-    
-    _logging_in = NO;
-    
-    [self.spinner stopAnimation:nil];
-    [self.email_address setEnabled:YES];
-    [self.password setEnabled:YES];
-    [self.login_button setEnabled:YES];
+    else
+    {
+        _logging_in = NO;
+        [self.spinner stopAnimation:nil];
+        [self.email_address setEnabled:YES];
+        [self.password setEnabled:YES];
+        [self.login_button setEnabled:YES];
+    }
     
     [self.view.window makeFirstResponder:self.email_address];
 
@@ -239,6 +244,37 @@
         [self.create_account_button setHidden:YES];
         [self.forgot_password_button setHidden:YES];
     }
+}
+
+- (void)showLoginWindowOnScreenAsLoggingIn:(NSScreen*)screen
+                              withUsername:(NSString*)username
+                               andPassword:(NSString*)password
+{
+    if (_window == nil)
+    {
+        [self showLoginWindowOnScreen:screen];
+    }
+    
+    _logging_in = YES;
+    
+    [self.view.window makeFirstResponder:self.email_address];
+    [self.error_message setHidden:YES];
+    
+    // If we have credentials, put them in
+    if (username.length > 0 && password.length > 0)
+    {
+        self.email_address.stringValue = username;
+        self.password.stringValue = password;
+        password = @"";
+        password = nil;
+        [self.create_account_button setHidden:YES];
+        [self.forgot_password_button setHidden:YES];
+    }
+    
+    [self.spinner startAnimation:nil];
+    [self.email_address setEnabled:NO];
+    [self.password setEnabled:NO];
+    [self.login_button setEnabled:NO];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -332,10 +368,9 @@
     if (_logging_in)
         return;
     
-    _logging_in = YES;
-    
     if ([self inputsGood])
     {
+         _logging_in = YES;
         [self.login_button setEnabled:NO];
         [self.spinner startAnimation:nil];
         [self.email_address setEnabled:NO];
@@ -351,7 +386,11 @@
 
 - (IBAction)closeButtonClicked:(NSButton*)sender
 {
-    [_delegate loginViewCloseButtonClicked:self];
+    // Don't quit Infinit if we're logging in
+    if (_logging_in)
+        [self closeLoginWindow];
+    else
+        [_delegate loginViewCloseButtonClicked:self];
 }
 
 //- Register and Forgot Password -------------------------------------------------------------------

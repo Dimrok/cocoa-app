@@ -45,6 +45,10 @@
                    withUsername:(NSString*)username
                     andPassword:(NSString*)password;
 
+- (void)showLoginWindowOnScreenAsLoggingIn:(NSScreen*)screen
+                              withUsername:(NSString*)username
+                               andPassword:(NSString*)password;
+
 @end
 
 @protocol IALoginViewControllerProtocol <NSObject>
