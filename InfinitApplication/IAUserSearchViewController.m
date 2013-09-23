@@ -119,7 +119,7 @@
     // Dark line
     NSRect dark_rect = NSMakeRect(self.bounds.origin.x,
                                   self.bounds.origin.y + 1.0,
-                                  self.bounds.size.width,
+                                  NSWidth(self.bounds),
                                   1.0);
     NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
     [IA_GREY_COLOUR(235.0) set];
@@ -128,7 +128,7 @@
     // White line
     NSRect white_rect = NSMakeRect(self.bounds.origin.x,
                                    self.bounds.origin.y + 2.0,
-                                   self.bounds.size.width,
+                                   NSWidth(self.bounds),
                                    1.0);
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
     [IA_GREY_COLOUR(255.0) set];
@@ -139,8 +139,8 @@
         // Background
         NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
                                     self.bounds.origin.y + 2.0,
-                                    self.bounds.size.width,
-                                    self.bounds.size.height - 2.0);
+                                    NSWidth(self.bounds),
+                                    NSHeight(self.bounds) - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
         [IA_RGBA_COLOUR(242.0, 253.0, 255.0, 0.75) set];
         [bg_path fill];
@@ -150,8 +150,8 @@
         // Background
         NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
                                     self.bounds.origin.y + 2.0,
-                                    self.bounds.size.width,
-                                    self.bounds.size.height - 2.0);
+                                    NSWidth(self.bounds),
+                                    NSHeight(self.bounds) - 2.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
         [IA_GREY_COLOUR(255.0) set];
         [bg_path fill];
@@ -232,8 +232,8 @@
     [self.no_results_message setHidden:YES];
     self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
     [self initialiseSendButton];
-    [self.view setFrameSize:NSMakeSize(self.view.frame.size.width,
-                                       self.search_box_view.frame.size.height + [self tableHeight])];
+    [self.view setFrameSize:NSMakeSize(NSWidth(self.view.frame),
+                                       NSHeight(self.search_box_view.frame) + [self tableHeight])];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -294,7 +294,7 @@
 
 - (void)removeSendButton
 {
-    CGFloat button_width = self.send_button.frame.size.width - 15.0;
+    CGFloat button_width = NSWidth(self.send_button.frame) - 15.0;
     [self.send_button removeFromSuperview];
     [self.search_field_width setConstant:(self.search_field_width.constant + button_width)];
 }
@@ -608,15 +608,15 @@ displayStringForRepresentedObject:(id)representedObject
     if (_search_results.count == 0) // No results so show message
     {
         [self.no_results_message setHidden:NO];
-        new_size = NSMakeSize(self.view.frame.size.width,
-                              self.search_box_view.frame.size.height +
-                                self.no_results_message.frame.size.height + 10.0);
+        new_size = NSMakeSize(NSWidth(self.view.frame),
+                              NSHeight(self.search_box_view.frame) +
+                              NSHeight(self.no_results_message.frame) + 10.0);
     }
     else
     {
         [self.no_results_message setHidden:YES];
-        new_size = NSMakeSize(self.view.frame.size.width,
-                              self.search_box_view.frame.size.height + [self tableHeight]);
+        new_size = NSMakeSize(NSWidth(self.view.frame),
+                              NSHeight(self.search_box_view.frame) + [self tableHeight]);
     }
     [_delegate searchView:self
               changedSize:new_size

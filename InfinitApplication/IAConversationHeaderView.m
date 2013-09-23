@@ -43,15 +43,15 @@
     NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:
                               NSMakeRect(0.0,
                                          2.0,
-                                         self.bounds.size.width,
-                                         self.bounds.size.height - 2.0)];
+                                         NSWidth(self.bounds),
+                                         NSHeight(self.bounds) - 2.0)];
     [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
     
     // Grey line
     NSBezierPath* grey_line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
                                                                           1.0,
-                                                                          self.bounds.size.width,
+                                                                          NSWidth(self.bounds),
                                                                           1.0)];
     [IA_GREY_COLOUR(223.0) set];
     [grey_line fill];
@@ -59,7 +59,7 @@
     // White line
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
                                                                            0.0,
-                                                                           self.bounds.size.width,
+                                                                           NSWidth(self.bounds),
                                                                            1.0)];
     [IA_GREY_COLOUR(255.0) set];
     [white_line fill];

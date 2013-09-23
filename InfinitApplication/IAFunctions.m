@@ -16,8 +16,8 @@
     NSBezierPath* res = [NSBezierPath bezierPath];
     CGFloat x = rect.origin.x;
     CGFloat y = rect.origin.y;
-    CGFloat width = rect.size.width;
-    CGFloat height = rect.size.height;
+    CGFloat width = NSWidth(rect);
+    CGFloat height = NSHeight(rect);
     [res moveToPoint:NSMakePoint(x, y + height)];
     [res appendBezierPathWithArcWithCenter:NSMakePoint(x + corner_radius, y + corner_radius)
                                     radius:corner_radius
@@ -39,8 +39,8 @@
     NSBezierPath* res = [NSBezierPath bezierPath];
     CGFloat x = rect.origin.x;
     CGFloat y = rect.origin.y;
-    CGFloat width = rect.size.width;
-    CGFloat height = rect.size.height;
+    CGFloat width = NSWidth(rect);
+    CGFloat height = NSHeight(rect);
     [res moveToPoint:NSMakePoint(x, y)];
     [res lineToPoint:NSMakePoint(x + width, y)];
     [res appendBezierPathWithArcWithCenter:NSMakePoint(x + width - corner_radius,

@@ -39,8 +39,8 @@
 {
     // Dark line
     NSRect dark_line_rect = NSMakeRect(self.bounds.origin.x,
-                                       self.bounds.origin.y + self.bounds.size.height - 1.0,
-                                       self.bounds.size.width,
+                                       self.bounds.origin.y + NSHeight(self.bounds) - 1.0,
+                                       NSWidth(self.bounds),
                                        1.0);
     NSBezierPath* dark_path = [NSBezierPath bezierPathWithRect:dark_line_rect];
     [IA_GREY_COLOUR(223.0) set];
@@ -48,8 +48,8 @@
     
     // White line
     NSRect white_line_rect = NSMakeRect(self.bounds.origin.x,
-                                        self.bounds.origin.y + self.bounds.size.height - 2.0,
-                                        self.bounds.size.width,
+                                        self.bounds.origin.y + NSHeight(self.bounds) - 2.0,
+                                        NSWidth(self.bounds),
                                         1.0);
     NSBezierPath* white_path = [NSBezierPath bezierPathWithRect:white_line_rect];
     [IA_GREY_COLOUR(255.0) set];
@@ -58,8 +58,8 @@
     // Grey background with rounded corners
     NSRect grey_rect = NSMakeRect(self.bounds.origin.x,
                                   self.bounds.origin.y,
-                                  self.bounds.size.width,
-                                  self.bounds.size.height - 2.0);
+                                  NSWidth(self.bounds),
+                                  NSHeight(self.bounds) - 2.0);
     NSBezierPath* grey_path = [IAFunctions roundedBottomBezierWithRect:grey_rect cornerRadius:5.0];
     [IA_GREY_COLOUR(242.0) set];
     [grey_path fill];

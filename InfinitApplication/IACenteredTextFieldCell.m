@@ -39,7 +39,7 @@
     NSInteger offset = floor((NSHeight(frame) -
                               ([[self font] ascender] - [[self font] descender])) / 2.0);
     NSRect new_frame = NSMakeRect(frame.origin.x, frame.origin.y,
-                                  frame.size.width, frame.size.height);
+                                  NSWidth(frame), NSHeight(frame));
     return NSInsetRect(new_frame, 7.0, offset - 4.0);
 }
 

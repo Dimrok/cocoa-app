@@ -122,7 +122,7 @@ typedef enum IAStatusBarIconStatus {
                                                             initWithString:number_str
                                                                 attributes:style];
         [notifications_str drawAtPoint:
-            NSMakePoint(self.bounds.size.width - notifications_str.size.width, 9.0)];
+            NSMakePoint(NSWidth(self.bounds) - notifications_str.size.width, 9.0)];
     }
 }
 

@@ -116,10 +116,10 @@
     self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
                                                                        attributes:_next_button_attrs];
     
-    NSPoint centre = NSMakePoint(_window.frame.size.width / 2.0,
-                                 _window.frame.size.height / 2.0);
-    [self.message_view setFrameOrigin:NSMakePoint(centre.x - self.message_view.frame.size.width / 2.0,
-                                                  centre.y - self.message_view.frame.size.height / 2.0)];
+    NSPoint centre = NSMakePoint(NSMidX(_window.frame),
+                                 NSMidY(_window.frame));
+    [self.message_view setFrameOrigin:NSMakePoint(centre.x - NSMidX(self.message_view.frame),
+                                                  centre.y - NSMidY(self.message_view.frame))];
     NSString* message_str = NSLocalizedString(@"The Infinit icon can be found in the menu bar.", nil);
     self.message.attributedStringValue = [[NSAttributedString alloc] initWithString:message_str
                                                                          attributes:_message_attrs];
@@ -138,10 +138,9 @@
     self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
                                                                        attributes:_next_button_attrs];
     
-    NSPoint centre = NSMakePoint(_window.frame.size.width / 2.0,
-                                 _window.frame.size.height / 2.0);
-    [self.message_view setFrameOrigin:NSMakePoint(centre.x - self.message_view.frame.size.width / 2.0,
-                                                  centre.y - self.message_view.frame.size.height / 2.0)];
+    NSPoint centre = NSMakePoint(NSMidX(_window.frame), NSMidY(_window.frame));
+    [self.message_view setFrameOrigin:NSMakePoint(centre.x - NSWidth(self.message_view.frame) / 2.0,
+                                                  centre.y - NSHeight(self.message_view.frame) / 2.0)];
     NSString* message_str = NSLocalizedString(@"Drag files up to the Infinit icon to send them.", nil);
     self.message.attributedStringValue = [[NSAttributedString alloc] initWithString:message_str
                                                                          attributes:_message_attrs];
@@ -149,7 +148,7 @@
     
     [_window.contentView addSubview:self.files_icon];
     [self.files_icon setFrameOrigin:NSMakePoint(icon_position.x - 30.0,
-                                                icon_position.y - self.files_icon.frame.size.height + 15.0)];
+                                                icon_position.y - NSHeight(self.files_icon.frame) + 15.0)];
 }
 
 //- Opening/Closing Window -------------------------------------------------------------------------

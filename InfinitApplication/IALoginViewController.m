@@ -55,8 +55,8 @@
     NSRect inner_bounds = NSZeroRect;
     inner_bounds.origin = NSMakePoint(self.bounds.origin.x + shadow_size / 2.0,
                                       self.bounds.origin.y + shadow_size / 2.0);
-    inner_bounds.size = NSMakeSize(self.bounds.size.width - shadow_size,
-                                   self.bounds.size.height - shadow_size);
+    inner_bounds.size = NSMakeSize(NSWidth(self.bounds) - shadow_size,
+                                   NSHeight(self.bounds) - shadow_size);
     NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:inner_bounds
                                                          xRadius:corner_radius
                                                          yRadius:corner_radius];
@@ -151,8 +151,8 @@
     NSRect new_main_rect = NSZeroRect;
     new_main_rect.origin = NSMakePoint(self.view.frame.origin.x,
                                      self.view.frame.origin.y);
-    new_main_rect.size = NSMakeSize(self.login_view.frame.size.width + self.login_view.shadow_size,
-                                    self.login_view.frame.size.height + self.login_view.shadow_size);
+    new_main_rect.size = NSMakeSize(NSWidth(self.login_view.frame) + self.login_view.shadow_size,
+                                    NSHeight(self.login_view.frame) + self.login_view.shadow_size);
     self.view.frame = new_main_rect;    
 }
 
@@ -184,7 +184,7 @@
     frame.size = self.view.bounds.size;
     frame.origin = [self centreFrame:frame onScreen:screen];
     
-    NSRect rect = NSMakeRect(5.0, 5.0, self.login_view.frame.size.width, self.login_view.frame.size.height);
+    NSRect rect = NSMakeRect(5.0, 5.0, NSWidth(self.login_view.frame), NSHeight(self.login_view.frame));
     self.login_view.frame = rect;
     [self.view addSubview:self.login_view];
     _window = [IALoginViewController windowWithFrame:frame screen:screen];
@@ -281,8 +281,8 @@
 
 - (NSPoint)centreFrame:(NSRect)frame onScreen:(NSScreen*)screen
 {
-    CGFloat x = floor(NSWidth(screen.frame) / 2.0 - NSWidth(frame) / 2.0);
-    CGFloat y = floor(NSHeight(screen.frame) / 2.0 - NSHeight(frame) / 2.0);
+    CGFloat x = floor(NSMidX(screen.frame) - NSMidX(frame));
+    CGFloat y = floor(NSMidY(screen.frame) - NSMidY(frame));
     return NSMakePoint(x, y);
 }
 

@@ -70,8 +70,8 @@
 - (void)loadView
 {
     [super loadView];
-    _start_pos = NSMakePoint((self.view.frame.size.width - _favourite_size.width) / 2.0,
-                             self.view.frame.size.height);
+    _start_pos = NSMakePoint((NSWidth(self.view.frame) - _favourite_size.width) / 2.0,
+                             NSHeight(self.view.frame));
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -81,8 +81,8 @@
 {
     // Leave a margin on the sides of the view
     CGFloat margin = 5.0;
-    NSSize frame_size = NSMakeSize(self.view.frame.size.width - 2 * margin,
-                                   self.view.frame.size.height);
+    NSSize frame_size = NSMakeSize(NSWidth(self.view.frame) - 2 * margin,
+                                   NSHeight(self.view.frame));
     // Select aribitrary arc radius
     CGFloat arc_radius = 1.25 * frame_size.height;
     // Calculate maximum angle that we can use for displaying favourites
@@ -157,8 +157,8 @@
     NSRect frame = NSZeroRect;
     frame.size = self.view.bounds.size;
     NSPoint midpoint = [_delegate favouritesViewWantsMidpoint:self];
-    frame.origin = NSMakePoint(midpoint.x - (self.view.frame.size.width / 2.0),
-                               midpoint.y - self.view.frame.size.height);
+    frame.origin = NSMakePoint(midpoint.x - NSWidth(self.view.frame) / 2.0,
+                               midpoint.y - NSHeight(self.view.frame));
 
     [self.favourites_view setDelegate:self];
     

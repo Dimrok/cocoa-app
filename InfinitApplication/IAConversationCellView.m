@@ -130,8 +130,8 @@
     NSBezierPath* white_bg = [NSBezierPath bezierPathWithRoundedRect:
                               NSMakeRect(1.0,
                                          1.0,
-                                         self.bounds.size.width - 2.0,
-                                         self.bounds.size.height - 2.0)
+                                         NSWidth(self.bounds) - 2.0,
+                                         NSHeight(self.bounds) - 2.0)
                                                              xRadius:4.0
                                                              yRadius:4.0];
     [IA_GREY_COLOUR(255.0) set];
