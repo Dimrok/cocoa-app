@@ -200,6 +200,8 @@ void on_critical_event(char const* str)
 //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "192.168.110.52", 1);
         setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
+        
+//        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "fd3652b9b4bc907fdd029eac64d98fa8", 1);
 
         setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
