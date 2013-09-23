@@ -8,6 +8,8 @@
 
 #import "IAAvatarBadgeView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation IAAvatarBadgeView
 {
     NSUInteger _count;
@@ -39,12 +41,13 @@
             num_str = [[NSAttributedString alloc] initWithString:@"+"
                                                       attributes:num_attrs];
         }
-        [num_str drawAtPoint:NSMakePoint((self.bounds.size.width - num_str.size.width) / 2.0,
-                                         (self.bounds.size.height - num_str.size.height) / 2.0
+        [num_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - num_str.size.width) / 2.0,
+                                         (NSHeight(self.bounds) - num_str.size.height) / 2.0
                                             + 3.0)];
     }
 }
 
+//- General Functions ------------------------------------------------------------------------------
 
 - (void)setBadgeCount:(NSUInteger)count
 {
@@ -54,6 +57,16 @@
         _count = count;
     
     [self setNeedsDisplay:YES];
+}
+
+//- Animation --------------------------------------------------------------------------------------
+
++ (id)defaultAnimationForKey:(NSString*)key
+{
+    if ([key isEqualToString:@"totalProgress"])
+        return [CABasicAnimation animation];
+    
+    return [super defaultAnimationForKey:key];
 }
 
 @end
