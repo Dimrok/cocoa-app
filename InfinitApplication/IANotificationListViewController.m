@@ -102,8 +102,8 @@
         // White background
         NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
                                            self.bounds.origin.y + 2.0,
-                                           self.bounds.size.width,
-                                           self.bounds.size.height - 2.0);
+                                           NSWidth(self.bounds),
+                                           NSHeight(self.bounds) - 2.0);
         NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:white_bg_frame];
         [IA_GREY_COLOUR(255.0) set];
         [white_bg fill];
@@ -113,8 +113,8 @@
         // Grey background
         NSRect grey_bg_frame = NSMakeRect(self.bounds.origin.x,
                                           self.bounds.origin.y + 2.0,
-                                          self.bounds.size.width,
-                                          self.bounds.size.height - 2.0);
+                                          NSWidth(self.bounds),
+                                          NSHeight(self.bounds) - 2.0);
         NSBezierPath* grey_bg = [NSBezierPath bezierPathWithRect:grey_bg_frame];
         [IA_GREY_COLOUR(246.0) set];
         [grey_bg fill];
@@ -123,7 +123,7 @@
     // White line
     NSRect white_line_frame = NSMakeRect(self.bounds.origin.x,
                                          1.0,
-                                         self.bounds.size.width,
+                                         NSWidth(self.bounds),
                                          1.0);
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_line_frame];
     [IA_GREY_COLOUR(220.0) set];
@@ -132,7 +132,7 @@
     // Grey line
     NSRect grey_line_frame = NSMakeRect(self.bounds.origin.x,
                                         0.0,
-                                        self.bounds.size.width,
+                                        NSWidth(self.bounds),
                                         1.0);
     NSBezierPath* grey_line = [NSBezierPath bezierPathWithRect:grey_line_frame];
     [IA_GREY_COLOUR(255.0) set];
@@ -427,7 +427,7 @@
 
 - (IBAction)settingsButtonClicked:(NSButton*)sender
 {
-    NSPoint point = NSMakePoint(sender.frame.origin.x + sender.frame.size.width,
+    NSPoint point = NSMakePoint(sender.frame.origin.x + NSWidth(sender.frame),
                                 sender.frame.origin.y);
     NSPoint menu_origin = [sender.superview convertPoint:point toView:nil];
     NSEvent* event = [NSEvent mouseEventWithType:NSLeftMouseDown
@@ -494,12 +494,12 @@
             [self.table_view beginUpdates];
             NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
             [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                                   withAnimation:NSTableViewAnimationSlideLeft];
+                                   withAnimation:NSTableViewAnimationSlideRight];
             [_transaction_list removeObject:existing_transaction];
             [_transaction_list insertObject:transaction
                                     atIndex:0];
             [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                                   withAnimation:NSTableViewAnimationSlideDown];
+                                   withAnimation:NSTableViewAnimationSlideLeft];
             [self.table_view endUpdates];
             found = YES;
             break;
@@ -530,12 +530,12 @@
             NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
             [self.table_view beginUpdates];
             [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                                   withAnimation:NSTableViewAnimationSlideRight];
+                                   withAnimation:NSTableViewAnimationEffectNone];
             [_transaction_list removeObjectAtIndex:row];
             [_transaction_list insertObject:transaction
                                     atIndex:row];
             [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                                   withAnimation:NSTableViewAnimationSlideDown];
+                                   withAnimation:NSTableViewAnimationEffectNone];
             [self.table_view endUpdates];
             [self updateBadgeForRow:row];
             break;
