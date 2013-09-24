@@ -127,6 +127,7 @@
     [self setupPersonView];
     CGFloat y_diff = (self.person_view.frame.size.height + [self tableHeight]) -
     self.main_view.frame.size.height;
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          [self.content_height_constraint.animator setConstant:(y_diff +
@@ -256,8 +257,10 @@
 {
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
+         context.allowsImplicitAnimation = YES;
          context.duration = 0.15;
          [self.content_height_constraint.animator setConstant:NSHeight(self.person_view.frame)];
+         [self.view layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {

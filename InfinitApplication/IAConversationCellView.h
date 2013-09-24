@@ -7,7 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 #import "IAConversationElement.h"
+#import "IAConversationProgressBar.h"
 
 #define IA_CONVERSATION_VIEW_SPACER_SIZE 10.0
 
@@ -25,7 +27,7 @@
 @property (nonatomic, strong) IBOutlet NSTextField* information_text;
 @property (nonatomic, strong) IBOutlet NSButton* message_button;
 @property (nonatomic, strong) IBOutlet NSTextField* message_text;
-@property (nonatomic, strong) IBOutlet NSProgressIndicator* progress_indicator;
+@property (nonatomic, strong) IBOutlet IAConversationProgressBar* progress_indicator;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 + (CGFloat)heightOfCellWithElement:(IAConversationElement*)element;

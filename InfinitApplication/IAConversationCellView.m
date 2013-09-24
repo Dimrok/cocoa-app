@@ -39,7 +39,7 @@
                                                shadow:nil];
         _normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                         paragraphStyle:para
-                                                colour:IA_GREY_COLOUR(128.0)
+                                                colour:IA_GREY_COLOUR(62.0)
                                                 shadow:nil];
         _clickable = NO;
     }
@@ -187,7 +187,7 @@
     CGFloat file_list = 124.0;
     CGFloat spacer = IA_CONVERSATION_VIEW_SPACER_SIZE;
     CGFloat buttons = 92.0;
-    CGFloat progress = 92.0;
+    CGFloat progress = 98.0;
     CGFloat error = 92.0;
     switch (element.mode)
     {
@@ -256,7 +256,14 @@
 
 - (void)updateProgress
 {
-    self.progress_indicator.doubleValue = _transaction.progress;
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 1.5;
+         [self.progress_indicator.animator setDoubleValue:_transaction.progress];
+     }
+                        completionHandler:^
+     {
+     }];
 }
 
 
@@ -293,7 +300,7 @@
     NSDictionary* files_name_attrs = [IAFunctions
                                       textStyleWithFont:[NSFont systemFontOfSize:12.0]
                                       paragraphStyle:text_align
-                                      colour:IA_GREY_COLOUR(128.0)
+                                      colour:IA_GREY_COLOUR(62.0)
                                       shadow:nil];
     NSString* files_str;
     if (_transaction.files_count > 1)
@@ -447,17 +454,14 @@
                 break;
             
             case TRANSACTION_VIEW_PREPARING:
-                [self.progress_indicator setUsesThreadedAnimation:YES];
                 [self.progress_indicator setIndeterminate:YES];
-                [self.progress_indicator startAnimation:nil];
                 break;
                 
             case TRANSACTION_VIEW_RUNNING:
-                [self.progress_indicator setUsesThreadedAnimation:YES];
-                [self.progress_indicator stopAnimation:nil];
                 self.progress_indicator.maxValue = 1.0;
+                self.progress_indicator.totalSize = _transaction.total_size;
                 [self.progress_indicator setIndeterminate:NO];
-                self.progress_indicator.doubleValue = _transaction.progress;
+                [self.progress_indicator setDoubleValue:_transaction.progress];
                 break;
             
             case TRANSACTION_VIEW_CANCELLED_OTHER:
