@@ -310,6 +310,7 @@
          context.duration = 0.15;
          [self.content_height_constraint.animator
           setConstant:(self.content_height_constraint.constant + y_diff)];
+         
      }
                         completionHandler:^
      {
@@ -409,15 +410,19 @@
                                       NSMakeRange(0, _transaction_list.count)];
     [other_users removeIndex:row];
     
+    self.table_view.backgroundColor = IA_GREY_COLOUR(246.0);
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
+         context.allowsImplicitAnimation = YES;
          context.duration = 0.15;
          [self.table_view beginUpdates];
          [_transaction_list removeObjectsAtIndexes:other_users];
          [self.table_view removeRowsAtIndexes:other_users
-                                withAnimation:NSTableViewAnimationSlideRight];
+                                withAnimation:NSTableViewAnimationEffectFade];
          [self.table_view endUpdates];
-         [self resizeContentView];
+         [self.content_height_constraint.animator setConstant:_row_height];
+         [self.view layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {
