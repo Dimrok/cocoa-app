@@ -210,6 +210,31 @@
     return res;
 }
 
++ (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left
+{
+    NSString* res;
+    
+    if (seconds_left < 10)
+        res = NSLocalizedString(@"less than 10 s", @"less than 10 s");
+    else if (seconds_left < 60)
+        res = NSLocalizedString(@"less than 1 min", @"less than 1 min");
+    else if (seconds_left < 90)
+        res = NSLocalizedString(@"about 1 min", @"about 1 min");
+    else if (seconds_left < 3600)
+        res = [NSString stringWithFormat:@"%.0f min", seconds_left / 60];
+    else if (seconds_left < 86400)
+        res = [NSString stringWithFormat:@"%.0f h", seconds_left / 3600];
+    else
+    {
+        double days = seconds_left / 86400;
+        double hours = days - floor(days);
+        days = floor(days);
+        res = [NSString stringWithFormat:@"%.0f d %.1f h", days, hours];
+    }
+    
+    return res;
+}
+
 + (NSImage*)defaultAvatar
 {
 	return [IAFunctions imageNamed:@"avatar_default"];

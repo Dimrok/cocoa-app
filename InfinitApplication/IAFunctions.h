@@ -40,6 +40,8 @@
 
 + (NSString*)fileSizeStringFrom:(NSUInteger)file_size;
 
++ (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left;
+
 + (NSImage*)defaultAvatar;
 
 + (NSImage*)addressBookUserAvatar;
