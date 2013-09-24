@@ -5,6 +5,9 @@
 //  Created by Christopher Crone on 3/21/13.
 //  Copyright (c) 2013 infinit. All rights reserved.
 //
+// This library makes use of older Keychain functions as they provide more flexibility. Notably,
+// when Infinit injected code into the Finder, Keychain permissions had to be set for the Infinit
+// application from the Finder.
 
 #import <Security/Security.h>
 
@@ -43,24 +46,27 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
-// Call SecKeychainFindGenericPassword to get a password from the keychain:
+// Call SecKeychainFindGenericPassword to get a password from the keychain
+// Making use of older, Keychain API as it is more flexible. See top of file.
 - (OSStatus)getPasswordKeychain:(NSString*)user_email
                    passwordData:(void**)password_data
                  passwordLength:(UInt32*)password_length
                         itemRef:(SecKeychainItemRef*)item_ref
 {
     OSStatus status;
+    
     status = SecKeychainFindGenericPassword(
                                             NULL, // default keychain
                                             (UInt32)_service_name.length, // length of service name
-                                            [_service_name cStringUsingEncoding:NSASCIIStringEncoding], // service name
+                                            _service_name.UTF8String, // service name
                                             (UInt32)user_email.length, // length of account name
-                                            [user_email cStringUsingEncoding:NSASCIIStringEncoding],   // account name
+                                            user_email.UTF8String,   // account name
                                             password_length, // length of password
                                             password_data, // pointer to password data
                                             item_ref // the item reference
                                             );
-    return (status);
+    
+    return status;
 }
 
 // Check if credentials are in keychain
@@ -79,6 +85,31 @@
     }
 }
 
+// Update user's password in keychain
+- (OSStatus)changeUser:(NSString*)user_email
+              password:(NSString*)password
+{
+    OSStatus status = noErr;
+    SecKeychainItemRef item_ref = NULL;
+    
+    status = [self getPasswordKeychain:user_email
+                          passwordData:NULL
+                        passwordLength:0
+                               itemRef:&item_ref];
+    if (status != noErr)
+        return status;
+    
+    status = SecKeychainItemModifyContent(item_ref,
+                                          NULL,
+                                          (UInt32)password.length,
+                                          password.UTF8String);
+    password = @"";
+    password = nil;
+    return status;
+}
+
+// Add credentials to keychain
+// Making use of older, Keychain API as it is more flexible. See top of file.
 - (OSStatus)addPasswordKeychain:(NSString*)user_email
                        password:(NSString*)password
 {

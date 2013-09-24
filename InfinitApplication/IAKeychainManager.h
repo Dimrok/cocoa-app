@@ -19,6 +19,9 @@
 
 - (BOOL)credentialsInKeychain:(NSString*)email_address;
 
+- (OSStatus)changeUser:(NSString*)user_email
+              password:(NSString*)password;
+
 - (OSStatus)addPasswordKeychain:(NSString*)user_email
                        password:(NSString*)password;
 
