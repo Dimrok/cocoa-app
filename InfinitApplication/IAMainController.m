@@ -43,6 +43,7 @@
     // Other
     IADesktopNotifier* _desktop_notifier;
     BOOL _new_credentials;
+    BOOL _update_credentials;
     BOOL _logging_in;
     NSString* _username;
     NSString* _password;
@@ -75,6 +76,8 @@
         _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
         _logging_in = NO;
+        _update_credentials = NO;
+        _new_credentials = NO;
         
         if (![self tryAutomaticLogin])
         {
@@ -180,7 +183,7 @@
                    andDeviceName:device_name
                  performSelector:@selector(loginCallback:)
                         onObject:self];
-    if (![self credentialsInChain:username])
+    if (![self credentialsInChain:username] || _update_credentials)
     {
         _new_credentials = YES;
         _username = username;
@@ -199,8 +202,16 @@
     if ([_login_view_controller loginWindowOpen])
         [_login_view_controller closeLoginWindow];
     
-    if (_new_credentials)
+    if (_update_credentials && [[IAKeychainManager sharedInstance] credentialsInKeychain:_username])
+    {
+        [[IAKeychainManager sharedInstance] changeUser:_username password:_password];
+        _password = @"";
+        _password = nil;
+    }
+    else if (_new_credentials)
+    {
         [self addCredentialsToKeychain];
+    }
     
     // XXX Should allow changing of avatar in settings, not upload every successful login
     [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
@@ -263,6 +274,9 @@
         
         if (password == nil)
             password = @"";
+        
+        _new_credentials = YES;
+        _update_credentials = YES;
         
         [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
                                               withError:error
