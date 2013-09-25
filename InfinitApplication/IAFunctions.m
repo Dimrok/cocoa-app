@@ -116,7 +116,7 @@
 
 + (NSShadow*)shadowWithOffset:(NSSize)offset
                    blurRadius:(CGFloat)blur_radius
-                        color:(NSColor*)colour
+                       colour:(NSColor*)colour
 {
     NSShadow* shadow = [[NSShadow alloc] init];
     shadow.shadowOffset = offset;

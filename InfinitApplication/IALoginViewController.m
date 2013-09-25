@@ -49,7 +49,7 @@
 {
     NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, 0.0)
                                           blurRadius:shadow_size
-                                               color:IA_RGBA_COLOUR(0.0, 0.0, 0.0, 0.5)];
+                                              colour:IA_RGBA_COLOUR(0.0, 0.0, 0.0, 0.5)];
     [shadow set];
     CGFloat corner_radius = 5.0;
     NSRect inner_bounds = NSZeroRect;
@@ -115,7 +115,7 @@
     style.alignment = NSCenterTextAlignment;
     NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
                                           blurRadius:1.0
-                                               color:[NSColor blackColor]];
+                                              colour:[NSColor blackColor]];
     
     NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
                                                  paragraphStyle:style

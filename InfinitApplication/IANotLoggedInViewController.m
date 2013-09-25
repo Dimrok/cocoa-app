@@ -43,7 +43,7 @@
     style.alignment = NSCenterTextAlignment;
     NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
                                           blurRadius:1.0
-                                               color:[NSColor blackColor]];
+                                              colour:[NSColor blackColor]];
     
     NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
                                                  paragraphStyle:style

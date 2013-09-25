@@ -30,7 +30,7 @@
 
 + (NSShadow*)shadowWithOffset:(NSSize)offset
                    blurRadius:(CGFloat)blur_radius
-                        color:(NSColor*)colour;
+                       colour:(NSColor*)colour;
 
 + (NSImage*)makeRoundAvatar:(NSImage*)square_image
                  ofDiameter:(CGFloat)diameter
