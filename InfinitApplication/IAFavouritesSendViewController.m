@@ -91,10 +91,19 @@
     CGFloat start_angle = - (0.5 * arc_angle);
     // Find the difference in angle between each view
     CGFloat delta = 0.0;
-    if (total > 1)
+    if (total == 2)
+    {
+        delta = arc_angle / 2;
+        start_angle = - delta / 2.0;
+    }
+    else if (total > 2)
+    {
         delta = arc_angle / (total - 1);
+    }
     else
+    {
         start_angle = 0.0;
+    }
     // End coordinates are rotated by 90º
     CGFloat y = arc_radius * cos(start_angle + (number * delta)) - (0.5 * _favourite_size.width);
     CGFloat x = arc_radius * sin(start_angle + (number * delta)) - (0.5 * _favourite_size.height);
