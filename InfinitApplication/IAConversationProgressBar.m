@@ -48,23 +48,42 @@
 {
     CGFloat border_thickness = 1.0;
     NSBezierPath* border_path = [NSBezierPath bezierPathWithRoundedRect:self.bounds
-                                                                 xRadius:5.0
-                                                                 yRadius:5.0];
+                                                                xRadius:5.0
+                                                                yRadius:5.0];
     [IA_RGB_COLOUR(194.0, 208.0, 216.0) set];
     [border_path setLineWidth:border_thickness];
     [border_path stroke];
+    
+    if (_indeterminate)
+        return;
+    
     NSRect progress_rect = NSMakeRect(self.bounds.origin.x + border_thickness,
                                       self.bounds.origin.y + border_thickness,
                                       (NSWidth(self.bounds) / self.maxValue * self.doubleValue) -
-                                      border_thickness,
+                                           border_thickness,
                                       NSHeight(self.bounds) - 2.0 * border_thickness);
-    NSBezierPath* progress_bar = [NSBezierPath bezierPathWithRoundedRect:progress_rect
-                                                                 xRadius:4.0
-                                                                 yRadius:4.0];
+    NSBezierPath* progress_bar = [NSBezierPath bezierPathWithRect:progress_rect];
     [IA_RGB_COLOUR(216.0, 237.0, 243.0) set];
     [progress_bar fill];
+    NSBezierPath* progress_line = [NSBezierPath bezierPathWithRect:
+                                   NSMakeRect(progress_rect.origin.x + progress_rect.size.width,
+                                              progress_rect.origin.y,
+                                              1.0,
+                                              progress_rect.size.height)];
+    [IA_RGB_COLOUR(194.0, 208.0, 216.0) set];
+    [progress_line fill];
     
-    if (_total_size == nil || _indeterminate)
+    NSRect progress_mask_rect = NSMakeRect(self.bounds.origin.x + border_thickness,
+                                           self.bounds.origin.y + border_thickness,
+                                           NSWidth(self.bounds) - border_thickness,
+                                           NSHeight(self.bounds) - 2.0 * border_thickness);
+    
+    NSBezierPath* progress_mask = [NSBezierPath bezierPathWithRoundedRect:progress_mask_rect
+                                                                  xRadius:4.0
+                                                                  yRadius:4.0];
+    [progress_mask addClip];
+    
+    if (_total_size == nil)
         return;
     
     NSDictionary* data_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:10.0]
