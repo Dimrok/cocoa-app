@@ -34,6 +34,12 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>LSMultipleInstancesProhibited</key>
+	<true/>
+	<key>NSContactsUsageDescription</key>
+	<string>Infinit needs access to your contacts in order to get your avatar.</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 	<key>SUFeedURL</key>
 	<string>http://download.infinit.io/sparkle-cast.xml</string>
 </dict>
