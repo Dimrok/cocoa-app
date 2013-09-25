@@ -17,6 +17,7 @@
     IAUser* _user;
     NSArray* _drag_types;
     BOOL _hovering;
+    CGFloat _avatar_diameter;
 }
 
 @synthesize user = _user;
@@ -38,6 +39,7 @@
                                                selector:@selector(avatarReceived:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
+        _avatar_diameter = 60.0;
     }
     return self;
 }
@@ -65,7 +67,7 @@
     {
         avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
                                                                 andLoadIfNeeded:YES]
-                                   ofDiameter:NSWidth(self.bounds)
+                                   ofDiameter:_avatar_diameter
                         withBorderOfThickness:2.0
                                      inColour:IA_GREY_COLOUR(255.0)
                             andShadowOfRadius:2.0];
@@ -74,15 +76,49 @@
     {
         avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
                                                                 andLoadIfNeeded:YES]
-                                   ofDiameter:NSWidth(self.bounds)
+                                   ofDiameter:_avatar_diameter
                         withBorderOfThickness:2.0
                                      inColour:IA_GREY_COLOUR(208.0)
                             andShadowOfRadius:2.0];
     }
-    [avatar drawInRect:self.bounds
+    CGFloat avatar_w_diff = NSWidth(self.bounds) - _avatar_diameter;
+    NSRect avatar_rect = NSMakeRect(self.bounds.origin.x + (avatar_w_diff / 2.0),
+                                    self.bounds.origin.y + NSHeight(self.bounds) - _avatar_diameter,
+                                    _avatar_diameter,
+                                    _avatar_diameter);
+    [avatar drawInRect:avatar_rect
               fromRect:NSZeroRect
              operation:NSCompositeSourceOver
               fraction:1.0];
+    
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSCenterTextAlignment;
+    NSShadow* name_shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
+                                          blurRadius:2.0
+                                              colour:IA_GREY_COLOUR(0.0)];
+    
+    NSMutableDictionary* style = [NSMutableDictionary dictionaryWithDictionary:
+                                  [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
+                                                  paragraphStyle:para
+                                                          colour:IA_GREY_COLOUR(255.0)
+                                                          shadow:name_shadow]];
+    [style setValue:IA_GREY_COLOUR(0.0) forKey:NSStrokeColorAttributeName];
+    [style setValue:@-0.25 forKey:NSStrokeWidthAttributeName];
+    NSString* name_str = [[_user.fullname componentsSeparatedByString:@" "] objectAtIndex:0];
+    if (name_str.length < 3)
+        name_str = _user.fullname;
+    NSAttributedString* name = [[NSAttributedString alloc] initWithString:name_str
+                                                               attributes:style];
+    if (name.size.width > NSWidth(self.bounds))
+    {
+        [style setValue:[NSFont systemFontOfSize:11.0] forKey:NSFontAttributeName];
+        name = [[NSAttributedString alloc] initWithString:name_str
+                                               attributes:style];
+    }
+    
+    CGFloat name_w_diff = NSWidth(self.bounds) - name.size.width;
+    [name drawAtPoint:NSMakePoint(self.bounds.origin.x + (name_w_diff / 2.0), self.bounds.origin.y)];
+    
 }
 
 //- Drag Operations --------------------------------------------------------------------------------

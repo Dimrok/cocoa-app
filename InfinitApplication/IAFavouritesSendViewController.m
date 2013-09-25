@@ -62,7 +62,7 @@
         _delegate = delegate;
         _favourites = [_delegate favouritesViewWantsFavourites:self];
         _favourite_views = [NSMutableArray array];
-        _favourite_size = NSMakeSize(65.0, 65.0);
+        _favourite_size = NSMakeSize(80.0, 75.0); // Add space for name at the bottom
     }
     return self;
 }
@@ -106,10 +106,10 @@
     }
     // End coordinates are rotated by 90º
     CGFloat y = arc_radius * cos(start_angle + (number * delta)) - (0.5 * _favourite_size.width);
-    CGFloat x = arc_radius * sin(start_angle + (number * delta)) - (0.5 * _favourite_size.height);
+    CGFloat x = arc_radius * sin(start_angle + (number * delta)) - (0.5 * _favourite_size.width);
     // Move coordinates into frame
     x += 0.5 * frame_size.width + margin;
-    y -= arc_radius - frame_size.height - 0.25 * _favourite_size.height;
+    y -= arc_radius - frame_size.height - 0.45 * _favourite_size.height;
     y = frame_size.height - y;
     return NSMakeRect(x, y, _favourite_size.width, _favourite_size.height);
 }
