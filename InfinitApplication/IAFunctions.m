@@ -243,12 +243,20 @@
 + (NSImage*)addressBookUserAvatar
 {
 	ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
-	NSData* image_data = address_book.me.imageData;
+    if (address_book == nil)
+        IALog(@"WARNING: Infinit doesn't have access to Address Book");
+    
+	NSData* image_data = nil;
+    
+    if (address_book != nil)
+        image_data = address_book.me.imageData;
+    
 	NSImage* result;
     if (image_data == nil)
         result = [self defaultAvatar];
     else
         result = [[NSImage alloc] initWithData:image_data];
+    
 	return result;
 }
 
