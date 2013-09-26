@@ -191,6 +191,7 @@
     return res;
 }
 
+// Do not confuse MB and MiB. Apple use MB, GB, etc for their file and storage sizes.
 + (NSString*)fileSizeStringFrom:(NSUInteger)file_size
 {
     NSString* res;
