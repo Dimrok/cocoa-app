@@ -13,17 +13,26 @@
 @implementation IAAvatarBadgeView
 {
     NSUInteger _count;
+    NSImage* _badge;
+}
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+    if (self = [super initWithFrame:frameRect])
+    {
+        _badge = [IAFunctions imageNamed:@"badge"];
+    }
+    return self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
     if (_count > 0)
     {
-        NSImage* badge = [IAFunctions imageNamed:@"badge"];
-        [badge drawInRect:self.bounds
-                 fromRect:NSZeroRect
-                operation:NSCompositeSourceOver
-                 fraction:1.0];
+        [_badge drawInRect:self.bounds
+                  fromRect:NSZeroRect
+                 operation:NSCompositeSourceOver
+                  fraction:1.0];
         NSDictionary* num_attrs = [IAFunctions
                                    textStyleWithFont:[NSFont boldSystemFontOfSize:11.0]
                                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
