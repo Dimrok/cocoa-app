@@ -18,6 +18,9 @@
     NSTrackingArea* _tracking_area;
     NSInteger _tracking_options;
     BOOL _mouse_over;
+    
+    NSImage* _accept_icon;
+    NSImage* _cancel_icon;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -36,6 +39,8 @@
                             NSTrackingActiveAlways |
                             NSTrackingMouseEnteredAndExited|
                             NSTrackingMouseMoved);
+        _accept_icon = [IAFunctions imageNamed:@"icon-accept"];
+        _cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
     }
     
     return self;
@@ -131,15 +136,14 @@
         [IA_RGBA_COLOUR(180.0, 219.0, 89.0, 0.9) set];
         [accept_mask fill];
         
-        NSImage* accept_icon = [IAFunctions imageNamed:@"icon-accept"];
-        NSRect accept_image_frame = NSMakeRect(centre.x - accept_icon.size.width / 2.0,
+        NSRect accept_image_frame = NSMakeRect(centre.x - _accept_icon.size.width / 2.0,
                                                centre.y + border + 1.0,
-                                               accept_icon.size.width,
-                                               accept_icon.size.height);
-        [accept_icon drawInRect:accept_image_frame
-                       fromRect:NSZeroRect
-                      operation:NSCompositeSourceOver
-                       fraction:1.0];
+                                               _accept_icon.size.width,
+                                               _accept_icon.size.height);
+        [_accept_icon drawInRect:accept_image_frame
+                        fromRect:NSZeroRect
+                       operation:NSCompositeSourceOver
+                        fraction:1.0];
         
         
         
@@ -155,12 +159,11 @@
         [IA_RGBA_COLOUR(255.0, 61.0, 42.0, 0.82) set];
         [reject_mask fill];
         
-        NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
-        NSRect cancel_image_frame = NSMakeRect(centre.x - cancel_icon.size.width / 2.0,
+        NSRect cancel_image_frame = NSMakeRect(centre.x - _cancel_icon.size.width / 2.0,
                                                centre.y - NSHeight(avatar_image_frame) / 2.0 + border + 1.0,
-                                               cancel_icon.size.width,
-                                               cancel_icon.size.height);
-        [cancel_icon drawInRect:cancel_image_frame
+                                               _cancel_icon.size.width,
+                                               _cancel_icon.size.height);
+        [_cancel_icon drawInRect:cancel_image_frame
                        fromRect:NSZeroRect
                       operation:NSCompositeSourceOver
                        fraction:1.0];
@@ -172,12 +175,11 @@
         [IA_RGBA_COLOUR(255.0, 61.0, 42.0, 0.82) set];
         [cancel_mask fill];
         
-        NSImage* cancel_icon = [IAFunctions imageNamed:@"icon-reject"];
         NSRect cancel_image_frame = NSMakeRect(NSWidth(avatar_image_frame) / 2.0 + border - 1.0,
                                                NSHeight(avatar_image_frame) / 2.0,
-                                               cancel_icon.size.width,
-                                               cancel_icon.size.height);
-        [cancel_icon drawInRect:cancel_image_frame
+                                               _cancel_icon.size.width,
+                                               _cancel_icon.size.height);
+        [_cancel_icon drawInRect:cancel_image_frame
                        fromRect:NSZeroRect
                       operation:NSCompositeSourceOver
                        fraction:1.0];
