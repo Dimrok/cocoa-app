@@ -17,16 +17,22 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.5.3</string>
+	<string>0.5.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.5.3</string>
+	<string>0.5.4</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
+	<key>LSMultipleInstancesProhibited</key>
+	<true/>
 	<key>LSUIElement</key>
+	<true/>
+	<key>NSContactsUsageDescription</key>
+	<string>Infinit needs access to your contacts in order to get your avatar.</string>
+	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2013 Infinit. All rights reserved.</string>
@@ -34,12 +40,6 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>LSMultipleInstancesProhibited</key>
-	<true/>
-	<key>NSContactsUsageDescription</key>
-	<string>Infinit needs access to your contacts in order to get your avatar.</string>
-	<key>NSHighResolutionCapable</key>
-	<true/>
 	<key>SUFeedURL</key>
 	<string>http://download.infinit.io/sparkle-cast.xml</string>
 </dict>
