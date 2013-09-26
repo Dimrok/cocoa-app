@@ -25,11 +25,6 @@
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [super drawRect:dirtyRect];
-}
-
 //- General Functions ------------------------------------------------------------------------------
 
 - (BOOL)isEnabled
