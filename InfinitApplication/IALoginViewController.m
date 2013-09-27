@@ -61,7 +61,7 @@
                                                          xRadius:corner_radius
                                                          yRadius:corner_radius];
     
-    [IA_GREY_COLOUR(246.0) set];
+    [IA_GREY_COLOUR(248.0) set];
     [path fill];
 }
 

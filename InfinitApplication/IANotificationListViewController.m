@@ -116,7 +116,7 @@
                                           NSWidth(self.bounds),
                                           NSHeight(self.bounds) - 2.0);
         NSBezierPath* grey_bg = [NSBezierPath bezierPathWithRect:grey_bg_frame];
-        [IA_GREY_COLOUR(246.0) set];
+        [IA_GREY_COLOUR(248.0) set];
         [grey_bg fill];
     }
     
@@ -390,7 +390,7 @@
     else
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
-        self.table_view.backgroundColor = IA_GREY_COLOUR(246.0);
+        self.table_view.backgroundColor = IA_GREY_COLOUR(248.0);
     }
 }
 
