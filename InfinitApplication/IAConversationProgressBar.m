@@ -164,12 +164,12 @@
 - (void)setIndeterminate:(BOOL)flag
 {
     _indeterminate = flag;
-    if (flag)
+    if (_indeterminate)
     {
         CGFloat w_diff = NSWidth(self.bounds) - _indeterminate_image.size.width;
         CGFloat h_diff = NSHeight(self.bounds) - _indeterminate_image.size.height;
-        NSRect centred_rect = NSMakeRect(self.bounds.origin.x + (w_diff / 2.0),
-                                         self.bounds.origin.y + (h_diff / 2.0),
+        NSRect centred_rect = NSMakeRect(self.frame.origin.x + (w_diff / 2.0),
+                                         self.frame.origin.y + (h_diff / 2.0),
                                          _indeterminate_image.size.width,
                                          _indeterminate_image.size.height);
         if (_indeterminate_view == nil)
@@ -177,7 +177,6 @@
             _indeterminate_view = [[NSImageView alloc] initWithFrame:centred_rect];
         }
         [self.superview addSubview:_indeterminate_view];
-        [_indeterminate_view setFrameOrigin:NSMakePoint(40.0, 15.0)];
         _indeterminate_view.image = _indeterminate_image;
         _indeterminate_view.animates = YES;
         [self setNeedsDisplay:YES];
