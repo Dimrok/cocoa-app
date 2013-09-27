@@ -760,6 +760,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)userManager:(IAUserManager*)sender
     hasNewStatusFor:(IAUser*)user
 {
+    [_transaction_manager updateTransactionsForUser:user];
     if (_current_view_controller == nil)
         return;
     [_current_view_controller userUpdated:user];
