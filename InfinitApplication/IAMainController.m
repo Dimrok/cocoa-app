@@ -32,7 +32,7 @@
     IANoConnectionViewController* _no_connection_view_controller;
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
-    IAOnboardingViewController* _onboard_controller;
+    IASmallOnboardingViewController* _small_onboard_controller;
     IAWindowController* _window_controller;
     
     // Managers
@@ -224,11 +224,11 @@
     
     _login_view_controller = nil;
     
-    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
-    {
-        _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
-        [_onboard_controller startOnboarding];
-    }
+//    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
+//    {
+    _small_onboard_controller = [[IASmallOnboardingViewController alloc] initWithDelegate:self];
+    [_small_onboard_controller startOnboardingWithStatusBarItem:_status_item];
+//    }
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
@@ -633,28 +633,12 @@ transactionsProgressForUser:(IAUser*)user
     [self closeNotificationWindow];
 }
 
-//- Onboarding Protocol ----------------------------------------------------------------------------
+//- Small Onboarding Protocol ----------------------------------------------------------------------
 
-- (NSPoint)onboardingViewWantsInfinitIconPosition:(IAOnboardingViewController*)sender
+- (void)smallOnboardingDoneOnboarding:(IASmallOnboardingViewController*)sender
 {
-    return [self statusBarIconMiddle];
-}
-
-- (void)onboardingComplete:(IAOnboardingViewController*)sender
-{
-    [_onboard_controller closeOnboarding];
-    _onboard_controller = nil;
-    [[IAUserPrefs sharedInstance] setPref:@"2" forKey:@"onboarded"];
-}
-
-- (void)onboardingViewWantsStartPulseStatusBarIcon:(IAOnboardingViewController*)sender
-{
-    [_status_bar_icon startPulse];
-}
-
-- (void)onboardingViewWantsStopPulseStatusBarIcon:(IAOnboardingViewController*)sender
-{
-    [_status_bar_icon stopPulse];
+    _small_onboard_controller = nil;
+//    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
