@@ -45,6 +45,7 @@
     BOOL _new_credentials;
     BOOL _update_credentials;
     BOOL _logging_in;
+    BOOL _onboarding;
     NSString* _username;
     NSString* _password;
 }
@@ -76,6 +77,7 @@
         _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
         _logging_in = NO;
+        _onboarding = NO;
         _update_credentials = NO;
         _new_credentials = NO;
         
@@ -226,6 +228,7 @@
     
 //    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
 //    {
+    _onboarding = YES;
     _small_onboard_controller = [[IASmallOnboardingViewController alloc] initWithDelegate:self];
     [_small_onboard_controller startOnboardingWithStatusBarItem:_status_item];
 //    }
@@ -637,6 +640,7 @@ transactionsProgressForUser:(IAUser*)user
 
 - (void)smallOnboardingDoneOnboarding:(IASmallOnboardingViewController*)sender
 {
+    _onboarding = NO;
     _small_onboard_controller = nil;
 //    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
 }
@@ -645,6 +649,9 @@ transactionsProgressForUser:(IAUser*)user
 
 - (void)statusBarIconClicked:(IAStatusBarIcon*)sender
 {
+    if (_onboarding)
+        return;
+    
     if ([_window_controller windowIsOpen])
     {
         [sender setHighlighted:NO];
