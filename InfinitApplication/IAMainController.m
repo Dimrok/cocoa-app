@@ -398,6 +398,11 @@
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
 }
 
+- (void)skipSmallOnboarding
+{
+    [_small_onboard_controller skipOnboarding];
+}
+
 //- View Logic -------------------------------------------------------------------------------------
 
 - (void)selectView
@@ -650,7 +655,24 @@ transactionsProgressForUser:(IAUser*)user
 - (void)statusBarIconClicked:(IAStatusBarIcon*)sender
 {
     if (_onboarding)
-        return;
+    {
+        NSAlert* skip_onboarding = [NSAlert alertWithMessageText:NSLocalizedString(@"Skip onboarding?",
+                                                                                   @"Skip onboarding?")
+                                                   defaultButton:NSLocalizedString(@"Skip", @"skip")
+                                                 alternateButton:NSLocalizedString(@"Continue", @"continue")
+                                                     otherButton:nil
+                                       informativeTextWithFormat:NSLocalizedString(@"",
+                                                                                   @"")];
+        NSInteger response = [skip_onboarding runModal];
+        if (response == NSAlertDefaultReturn)
+        {
+            [self skipSmallOnboarding];
+        }
+        else if (response == NSAlertAlternateReturn)
+        {
+            return;
+        }
+    }
     
     if ([_window_controller windowIsOpen])
     {
