@@ -111,6 +111,12 @@
     [self moveToPage:0];
 }
 
+- (void)skipOnboarding
+{
+    [self.popover close];
+    [_delegate smallOnboardingDoneOnboarding:self];
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)backClicked:(NSButton*)sender
