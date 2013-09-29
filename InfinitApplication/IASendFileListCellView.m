@@ -28,6 +28,38 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (NSUInteger)sizeForFolderAtPath:(NSString*)source
+                            error:(NSError**)error
+{
+    NSArray* contents;
+    unsigned long long size = 0;
+    NSEnumerator* enumerator;
+    NSString* path;
+    BOOL is_directory;
+    
+    // Determine Paths to Add
+    if ([[NSFileManager defaultManager] fileExistsAtPath:source isDirectory:&is_directory] && is_directory)
+    {
+        contents = [[NSFileManager defaultManager] subpathsAtPath:source];
+    }
+    else
+    {
+        contents = [NSArray array];
+    }
+    // Add Size Of All Paths
+    enumerator = [contents objectEnumerator];
+    while (path = [enumerator nextObject])
+    {
+        NSDictionary * fattrs = [[NSFileManager defaultManager]
+                                 attributesOfItemAtPath:[source stringByAppendingPathComponent:path]
+                                                  error:error];
+        size += [[fattrs objectForKey:NSFileSize] unsignedLongLongValue];
+    }
+    // Return Total Size in Bytes
+    
+    return size;
+}
+
 - (void)setupCellWithFilePath:(NSString*)file_path
 {
     _file_path = file_path;
@@ -41,10 +73,19 @@
                                                initWithString:file_name
                                                    attributes:file_name_style];
     
-    NSDictionary* file_properties = [NSFileManager.defaultManager attributesOfItemAtPath:file_path
-                                                                                     error:NULL];
-    // XXX Folder size doesn't work, need to go inside and calculate
-    NSUInteger file_size = [file_properties fileSize];
+    BOOL is_directory;
+    NSUInteger file_size = 0;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
+    {
+        file_size = [self sizeForFolderAtPath:file_path error:nil];
+    }
+    else
+    {
+        NSDictionary* file_properties = [[NSFileManager defaultManager] attributesOfItemAtPath:file_path
+                                                                                         error:NULL];
+        file_size = [file_properties fileSize];
+    }
     NSString* file_size_str = [IAFunctions fileSizeStringFrom:file_size];
     NSMutableParagraphStyle* paragraph_style = [[NSParagraphStyle defaultParagraphStyle]
                                                 mutableCopy];
