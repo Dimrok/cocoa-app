@@ -76,56 +76,56 @@
         case TRANSACTION_VIEW_WAITING_ACCEPT:
             if (transaction.from_me)
                 return nil;
-            title = NSLocalizedString(@"New share", @"new share");
+            title = NSLocalizedString(@"Incoming!", @"incoming!");
             message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
-                       NSLocalizedString(@"would like to share", @"would like to share"),
+                       NSLocalizedString(@"wants to send", @"wants to send"),
                        filename,
-                       NSLocalizedString(@"with you", @"with you")];
+                       NSLocalizedString(@"to you", @"to you")];
             break;
         
         case TRANSACTION_VIEW_REJECTED:
             if (!transaction.from_me)
                 return nil;
-            title = NSLocalizedString(@"Share declined", @"share declined");
+            title = NSLocalizedString(@"Shenanigans!", @"shenanigans!");
             message = [NSString stringWithFormat:@"%@ %@", transaction.other_user.fullname,
-                       NSLocalizedString(@"declined your share", @"declined your share")];
+                       NSLocalizedString(@"declined your transfer", @"declined your transfer")];
             break;
             
         case TRANSACTION_VIEW_CANCELLED_OTHER:
-            title = NSLocalizedString(@"Transfer cancelled", @"transfer cancelled");
+            title = NSLocalizedString(@"Nuts!", @"nuts!");
             message = [NSString stringWithFormat:@"%@ %@ %@",
-                       NSLocalizedString(@"Transfer with", @"transfer with"),
+                       NSLocalizedString(@"Your transfer with", @"your transfer with"),
                        transaction.other_user.fullname,
-                       NSLocalizedString(@"cancelled", @"cancelled")];
+                       NSLocalizedString(@"was cancelled", @"was cancelled")];
             break;
             
         case TRANSACTION_VIEW_CANCELLED_SELF:
-            title = NSLocalizedString(@"Transfer cancelled", @"transfer cancelled");
+            title = NSLocalizedString(@"Nuts!", @"nuts!");
             message = [NSString stringWithFormat:@"%@ %@ %@",
-                       NSLocalizedString(@"Transfer with", @"transfer with"),
+                       NSLocalizedString(@"Your transfer with", @"your transfer with"),
                        transaction.other_user.fullname,
-                       NSLocalizedString(@"cancelled", @"cancelled")];
+                       NSLocalizedString(@"was cancelled", @"was cancelled")];
             break;
             
         case TRANSACTION_VIEW_FAILED:
-            title = NSLocalizedString(@"Transfer failed", @"transfer failed");
-            message = [NSString stringWithFormat:@"%@ %@",
-                       NSLocalizedString(@"Problem connecting with", @"problem connecting with"),
+            title = NSLocalizedString(@"Oh no!", @"oh no!");
+            message = [NSString stringWithFormat:@"%@ %@ %@", filename,
+                       NSLocalizedString(@"Couldn't be sent to", @"couldn't be sent to"),
                        transaction.other_user.fullname];
             break;
             
         case TRANSACTION_VIEW_FINISHED:
-            title = NSLocalizedString(@"Transfer successful", @"transfer successful");
+            title = NSLocalizedString(@"Success!", @"success");
             if (transaction.from_me)
-                message = [NSString stringWithFormat:@"%@ %@ %@", filename,
-                           NSLocalizedString(@"sent to", @"sent to"),
-                           transaction.other_user.fullname];
+                message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
+                           NSLocalizedString(@"received", @"received"),
+                           filename];
             else
                 message = [NSString stringWithFormat:@"%@ %@ %@", filename,
                            NSLocalizedString(@"received from", @"received from"),
                            transaction.other_user.fullname];
-            
             break;
+            
         default:
             break;
     }
