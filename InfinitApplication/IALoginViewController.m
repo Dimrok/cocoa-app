@@ -38,26 +38,10 @@
 
 @implementation IALoginView
 
-@synthesize shadow_size;
-
-- (void)awakeFromNib
-{
-    shadow_size = 10.0;
-}
-
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, 0.0)
-                                          blurRadius:shadow_size
-                                              colour:IA_RGBA_COLOUR(0.0, 0.0, 0.0, 0.5)];
-    [shadow set];
     CGFloat corner_radius = 5.0;
-    NSRect inner_bounds = NSZeroRect;
-    inner_bounds.origin = NSMakePoint(self.bounds.origin.x + shadow_size / 2.0,
-                                      self.bounds.origin.y + shadow_size / 2.0);
-    inner_bounds.size = NSMakeSize(NSWidth(self.bounds) - shadow_size,
-                                   NSHeight(self.bounds) - shadow_size);
-    NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:inner_bounds
+    NSBezierPath* path = [NSBezierPath bezierPathWithRoundedRect:self.bounds
                                                          xRadius:corner_radius
                                                          yRadius:corner_radius];
     
@@ -144,26 +128,12 @@
                                                        attributes:link_attrs];
 }
 
-// Shadows not drawn for transparent NSBorderlessWindowMask windows.
-// Work around by increasing view size and drawing manually.
-- (void)prepareForShadow
-{
-    NSRect new_main_rect = NSZeroRect;
-    new_main_rect.origin = NSMakePoint(self.view.frame.origin.x,
-                                     self.view.frame.origin.y);
-    new_main_rect.size = NSMakeSize(NSWidth(self.login_view.frame) + self.login_view.shadow_size,
-                                    NSHeight(self.login_view.frame) + self.login_view.shadow_size);
-    self.view.frame = new_main_rect;    
-}
-
 - (void)awakeFromNib
 {    
     [self.email_address setDelegate:self];
     [self.error_message setHidden:YES];
     self.error_message.stringValue = @"";
     [self.password setDelegate:self];
-
-    [self prepareForShadow];
     
     [self setLoginButtonText];
     [self setForgotPasswordRegisterButtonText];
