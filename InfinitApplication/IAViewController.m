@@ -66,6 +66,11 @@
 
 @implementation IAMainView
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)setFrame:(NSRect)frameRect
 {
     [super setFrame:frameRect];
