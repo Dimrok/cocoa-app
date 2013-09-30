@@ -32,6 +32,7 @@
     IANoConnectionViewController* _no_connection_view_controller;
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
+    IAPopoverViewController* _popover_controller;
     IASmallOnboardingViewController* _small_onboard_controller;
     IAWindowController* _window_controller;
     
@@ -84,11 +85,27 @@
         if (![self tryAutomaticLogin])
         {
             IALog(@"%@ Autologin failed", self);
-            _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
-            [_login_view_controller showLoginWindowOnScreen:[self currentScreen]];
+            // Need a delay, otherwise the popover draws in the wrong place
+            [self performSelector:@selector(delayedLoginPopover) withObject:nil afterDelay:0.2];
         }
     }
     return self;
+}
+
+- (void)delayedLoginPopover
+{
+    if (_popover_controller == nil)
+        _popover_controller = [[IAPopoverViewController alloc] initWithDelegate:self];
+    NSString* heading = NSLocalizedString(@"Click the icon to login",
+                                          @"click the icon to login");
+    NSString* message = NSLocalizedString(@"Infinit has been installed. Click on the icon to login.",
+                                          @"Infinit has been installed. Click on the icon to login");
+    [_popover_controller showHeading:heading
+                          andMessage:message
+                          leftButton:Nil
+                       midddleButton:nil
+                         rightButton:nil
+                           belowView:_status_item.view];
 }
 
 - (BOOL)tryAutomaticLogin
@@ -648,6 +665,31 @@ transactionsProgressForUser:(IAUser*)user
     [self closeNotificationWindow];
 }
 
+//- Popover Protocol -------------------------------------------------------------------------------
+
+- (void)popoverHadMiddleButtonClicked:(IAPopoverViewController*)sender
+{
+    
+}
+
+- (void)popoverHadLeftButtonClicked:(IAPopoverViewController*)sender
+{
+    if (_onboarding)
+    {
+        [_popover_controller hidePopover];
+        [_small_onboard_controller continueOnboarding];
+    }
+}
+
+- (void)popoverHadRightButtonClicked:(IAPopoverViewController*)sender
+{
+    if (_onboarding)
+    {
+        [_popover_controller hidePopover];
+        [_small_onboard_controller skipOnboarding];
+    }
+}
+
 //- Small Onboarding Protocol ----------------------------------------------------------------------
 
 - (void)smallOnboardingDoneOnboarding:(IASmallOnboardingViewController*)sender
@@ -663,22 +705,25 @@ transactionsProgressForUser:(IAUser*)user
 {
     if (_onboarding)
     {
-        NSAlert* skip_onboarding = [NSAlert alertWithMessageText:NSLocalizedString(@"Skip onboarding?",
-                                                                                   @"Skip onboarding?")
-                                                   defaultButton:NSLocalizedString(@"Skip", @"skip")
-                                                 alternateButton:NSLocalizedString(@"Continue", @"continue")
-                                                     otherButton:nil
-                                       informativeTextWithFormat:NSLocalizedString(@"",
-                                                                                   @"")];
-        NSInteger response = [skip_onboarding runModal];
-        if (response == NSAlertDefaultReturn)
-        {
-            [self skipSmallOnboarding];
-        }
-        else if (response == NSAlertAlternateReturn)
-        {
-            return;
-        }
+        [_small_onboard_controller hideOnboarding];
+        if (_popover_controller == nil)
+            _popover_controller = [[IAPopoverViewController alloc] initWithDelegate:self];
+        NSString* heading = NSLocalizedString(@"Skip onboarding", @"skip onboarding");
+        NSString* message = NSLocalizedString(@"Stop onboarding and show the application?",
+                                              @"stop onboarding and show the application");
+        [_popover_controller showHeading:heading
+                              andMessage:message
+                              leftButton:NSLocalizedString(@"Back", @"back")
+                           midddleButton:nil
+                             rightButton:NSLocalizedString(@"Skip", @"skip")
+                               belowView:_status_item.view];
+        return;
+    }
+    
+    if (_popover_controller != nil)
+    {
+        [_popover_controller hidePopover];
+        _popover_controller = nil;
     }
     
     if ([_window_controller windowIsOpen])
@@ -773,6 +818,20 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManagerUpdatedReadTransactions:(IATransactionManager*)sender
 {
     [self updateStatusBarIcon];
+}
+
+- (void)transactionManager:(IATransactionManager*)sender
+   needsShowInvitedHeading:(NSString*)heading
+                andMessage:(NSString*)message
+{
+    if (_popover_controller == nil)
+        _popover_controller = [[IAPopoverViewController alloc] initWithDelegate:self];
+    [_popover_controller showHeading:heading
+                          andMessage:message
+                          leftButton:nil
+                       midddleButton:nil
+                         rightButton:nil
+                           belowView:_status_item.view];
 }
 
 //- User Manager Protocol --------------------------------------------------------------------------
