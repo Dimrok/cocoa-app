@@ -175,6 +175,9 @@
     
     CGFloat _row_height;
     NSInteger _max_rows_shown;
+    
+    NSImage* _static_image;
+    NSImage* _loading_iamge;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -203,6 +206,8 @@
         _no_email_str = [[NSAttributedString alloc] initWithString:
                          NSLocalizedString(@"Invite this person to Infinit...", @"invite this person")
                                                         attributes:no_result_style];
+        _static_image = [IAFunctions imageNamed:@"icon-search"];
+        _loading_iamge = [IAFunctions imageNamed:@"loading"];
     }
     
     return self;
@@ -294,9 +299,18 @@
 
 - (void)removeSendButton
 {
-    CGFloat button_width = NSWidth(self.send_button.frame) - 15.0;
-    [self.send_button removeFromSuperview];
-    [self.search_field_width setConstant:(self.search_field_width.constant + button_width)];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         context.allowsImplicitAnimation = YES;
+         [self.send_button.animator setAlphaValue:0.0];
+     }
+                        completionHandler:^
+     {
+         CGFloat button_width = NSWidth(self.send_button.frame) - 15.0;
+         [self.send_button removeFromSuperview];
+         [self.search_field_width setConstant:(self.search_field_width.constant + button_width)];
+     }];
 }
 
 //- Search Functions -------------------------------------------------------------------------------
@@ -313,7 +327,7 @@
                afterDelay:0.3];
     if (!self.search_image.animates)
     {
-        self.search_image.image = [IAFunctions imageNamed:@"loading"];
+        self.search_image.image = _loading_iamge;
         self.search_image.animates = YES;
     }
 }
@@ -340,6 +354,19 @@
 
 - (void)searchUserEmailCallback:(IAGapOperationResult*)result
 {
+    NSString* search_string;
+    NSArray* tokens = self.search_field.objectValue;
+    if ([tokens.lastObject isKindOfClass:NSString.class])
+        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+    else
+        search_string = @"";
+    
+    if (search_string.length == 0)
+    {
+        [self clearResults];
+        return;
+    }
+    
     if (!result.success)
     {
         IALog(@"%@ WARNING: Searching for email address failed", self);
@@ -364,7 +391,7 @@
     if (self.search_image.animates)
     {
         self.search_image.animates = NO;
-        self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
+        self.search_image.image = _static_image;
     }
     self.no_results_message.attributedStringValue = _no_email_str;
     [self updateResultsTable];
@@ -372,6 +399,19 @@
 
 - (void)searchResultsCallback:(IAGapOperationResult*)results
 {
+    NSString* search_string;
+    NSArray* tokens = self.search_field.objectValue;
+    if ([tokens.lastObject isKindOfClass:NSString.class])
+        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+    else
+        search_string = @"";
+    
+    if (search_string.length == 0)
+    {
+        [self clearResults];
+        return;
+    }
+    
     if (!results.success)
     {
         IALog(@"%@ WARNING: Searching for users failed with error: %d", self, results.status);
@@ -389,7 +429,7 @@
         }
     }
     self.search_image.animates = NO;
-    self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
+    self.search_image.image = _static_image;
     self.no_results_message.attributedStringValue = _no_result_str;
     [self updateResultsTable];
 }
@@ -599,7 +639,7 @@ displayStringForRepresentedObject:(id)representedObject
          withActiveSearch:NO];
     _search_results = nil;
     self.search_image.animates = NO;
-    self.search_image.image = [IAFunctions imageNamed:@"icon-search"];
+    self.search_image.image = _static_image;
 }
 
 - (void)updateResultsTable

@@ -89,6 +89,8 @@
         _delegate = delegate;
         _user_search_controller = search_controller;
         _file_list = [_delegate simpleSendViewWantsFileList:self];
+        [self.view setWantsLayer:YES];
+        [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
     }
     return self;
 }
@@ -215,7 +217,16 @@
 
 - (IBAction)addPersonClicked:(NSButton*)sender
 {
-    [_delegate simpleSendViewWantsAddRecipient:self];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         context.allowsImplicitAnimation = YES;
+         [_user_search_controller removeSendButton];
+     }
+                        completionHandler:^
+     {
+         [_delegate simpleSendViewWantsAddRecipient:self];
+     }];
 }
 
 - (IBAction)cancelSendClicked:(NSButton*)sender

@@ -8,6 +8,8 @@
 
 #import "IANotificationListViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import <Gap/version.h>
 
 #import "IAAvatarManager.h"
@@ -170,6 +172,8 @@
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
         _changing = NO;
+        [self.view setWantsLayer:YES];
+        [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
     }
     return self;
 }
@@ -401,33 +405,46 @@
     if (_changing)
         return;
     
+    [self setUpdatorRunning:NO];
+    
     _changing = YES;
     
     IATransaction* transaction = _transaction_list[row];
     IAUser* user = transaction.other_user;
     
+    NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
+    
+    NSMutableIndexSet* invisible_users = [NSMutableIndexSet indexSetWithIndexesInRange:
+                                          NSMakeRange(0, _transaction_list.count)];
+    NSMutableIndexSet* visible_users = [NSMutableIndexSet indexSetWithIndexesInRange:visible_rows];
+    [invisible_users removeIndexes:visible_users];
+    
+    [self.table_view beginUpdates];
+    [_transaction_list removeObjectsAtIndexes:invisible_users];
+    [self.table_view removeRowsAtIndexes:invisible_users
+                           withAnimation:NSTableViewAnimationEffectNone];
+    [self.table_view endUpdates];
+    
+    NSInteger new_row = [_transaction_list indexOfObject:transaction];
     NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
                                       NSMakeRange(0, _transaction_list.count)];
-    [other_users removeIndex:row];
+    [other_users removeIndex:new_row];
     
-    self.table_view.backgroundColor = IA_GREY_COLOUR(246.0);
+    self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.allowsImplicitAnimation = YES;
          context.duration = 0.15;
+         context.allowsImplicitAnimation = YES;
          [self.table_view beginUpdates];
-         [_transaction_list removeObjectsAtIndexes:other_users];
-         [self.table_view removeRowsAtIndexes:other_users
-                                withAnimation:NSTableViewAnimationEffectFade];
+         [self.table_view moveRowAtIndex:new_row toIndex:0];
          [self.table_view endUpdates];
          [self.content_height_constraint.animator setConstant:_row_height];
-         [self.view layoutSubtreeIfNeeded];
+         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
      }
                         completionHandler:^
      {
          [_delegate notificationList:self gotClickOnUser:user];
-         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
      }];
 }
 
@@ -462,14 +479,22 @@
 
 - (IBAction)transferButtonClicked:(NSButton*)sender
 {
-    [_delegate notificationListGotTransferClick:self];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         [self.content_height_constraint.animator setConstant:72.0];
+     }
+                        completionHandler:^
+     {
+         [_delegate notificationListGotTransferClick:self];
+     }];
 }
 
 //- Menu Handling ----------------------------------------------------------------------------------
 
 - (IBAction)quitClicked:(NSMenuItem*)sender
 {
-    [_delegate notificationListWantsQuit:self];
+     [_delegate notificationListWantsQuit:self];
 }
 
 - (IBAction)onFeedbackClick:(NSMenuItem*)sender

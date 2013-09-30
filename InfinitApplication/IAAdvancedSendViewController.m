@@ -207,6 +207,8 @@
         [self performSelector:@selector(setFocus:)
                    withObject:[NSNumber numberWithInt:focus]
                    afterDelay:0.2];
+        [self.view setWantsLayer:YES];
+        [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
     }
     return self;
 }
@@ -266,7 +268,6 @@
     
     [self setupHoverButtons];
     [self initialiseSendButton];
-    [_user_search_controller removeSendButton];
     _characters_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
                                         paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                 colour:IA_GREY_COLOUR(217.0)

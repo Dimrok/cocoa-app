@@ -56,6 +56,8 @@
                                                selector:@selector(avatarReceivedCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
+        [self.view setWantsLayer:YES];
+        [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
     }
     return self;
 }
@@ -257,10 +259,9 @@
 {
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
-         context.allowsImplicitAnimation = YES;
          context.duration = 0.15;
+         context.allowsImplicitAnimation = YES;
          [self.content_height_constraint.animator setConstant:NSHeight(self.person_view.frame)];
-         [self.view layoutSubtreeIfNeeded];
      }
                         completionHandler:^
      {
@@ -280,11 +281,11 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         [self.content_height_constraint.animator setConstant:(y_diff +
-                                                        self.content_height_constraint.constant)];
      }
                         completionHandler:^
      {
+         [self.content_height_constraint.animator setConstant:(y_diff +
+                                                               self.content_height_constraint.constant)];
      }];
 }
 
@@ -393,12 +394,11 @@
                     break;
                 
                 case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
-                {
                     cell = [self.table_view makeViewWithIdentifier:
                             [NSString stringWithFormat:@"conversation_cell_message_cancel_%@",
                              left_right_select]
                                                              owner:self];
-                }
+                    break;
                     
                 case TRANSACTION_VIEW_PREPARING:
                     cell = [self.table_view makeViewWithIdentifier:
@@ -449,6 +449,7 @@
                                                              owner:self];
                     break;
             }
+            break;
             
         default:
             break;
@@ -506,7 +507,10 @@
     [self.table_view endUpdates];
     [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
     [self resizeContentView];
-    [self.table_view scrollRowToVisible:row];
+    if (row == _element_list.count - 2) // Scroll to spacer at bottom if it's the last file
+        [self.table_view scrollRowToVisible:(_element_list.count - 1)];
+    else
+        [self.table_view scrollRowToVisible:row];
 }
 
 - (IBAction)expandFilesClicked:(NSButton*)sender
@@ -526,12 +530,24 @@
     [self.table_view endUpdates];
     [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
     [self resizeContentView];
-    [self.table_view scrollRowToVisible:row];
+    if (row == _element_list.count - 2) // Scroll to spacer at bottom if it's the last file
+        [self.table_view scrollRowToVisible:(_element_list.count - 1)];
+    else
+        [self.table_view scrollRowToVisible:row];
 }
 
 - (IBAction)transferButtonClicked:(NSButton*)sender
 {
-    [_delegate conversationView:self wantsTransferForUser:_user];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         [self.content_height_constraint.animator setConstant:72.0];
+         [self.table_view removeFromSuperview];
+     }
+                        completionHandler:^
+     {
+         [_delegate conversationView:self wantsTransferForUser:_user];
+     }];
 }
 
 - (IBAction)messageButtonClicked:(NSButton*)sender
@@ -660,7 +676,10 @@
     [self.table_view endUpdates];
     [self resizeContentView];
 
-    [self.table_view scrollRowToVisible:count];
+    if (count == _element_list.count - 2)
+        [self.table_view scrollRowToVisible:(_element_list.count - 1)];
+    else
+        [self.table_view scrollRowToVisible:count];
     [self updateListOfRowsWithProgress];
 }
 
