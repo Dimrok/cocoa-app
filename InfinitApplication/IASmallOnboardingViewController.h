@@ -23,6 +23,10 @@
 
 - (void)startOnboardingWithStatusBarItem:(NSStatusItem*)item;
 
+- (void)hideOnboarding;
+
+- (void)continueOnboarding;
+
 - (void)skipOnboarding;
 
 @end

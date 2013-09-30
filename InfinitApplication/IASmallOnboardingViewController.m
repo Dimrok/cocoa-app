@@ -17,6 +17,7 @@
     id<IASmallOnboardingProtocol> _delegate;
     
     NSInteger _page;
+    NSView* _position_view;
     
     NSMutableArray* _headings;
     NSMutableArray* _messages;
@@ -106,8 +107,9 @@
 
 - (void)startOnboardingWithStatusBarItem:(NSStatusItem*)item
 {
+    _position_view = item.view;
     [self _setupPopover];
-    [self.popover showRelativeToRect:item.view.bounds ofView:item.view preferredEdge:NSMinYEdge];
+    [self.popover showRelativeToRect:item.view.frame ofView:item.view preferredEdge:NSMinYEdge];
     [self moveToPage:0];
 }
 
@@ -115,6 +117,17 @@
 {
     [self.popover close];
     [_delegate smallOnboardingDoneOnboarding:self];
+}
+
+- (void)hideOnboarding
+{
+    [self.popover close];
+}
+
+- (void)continueOnboarding
+{
+    [self.popover showRelativeToRect:_position_view.frame ofView:_position_view preferredEdge:NSMinYEdge];
+    [self moveToPage:_page];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
