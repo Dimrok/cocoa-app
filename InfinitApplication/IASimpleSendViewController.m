@@ -220,7 +220,6 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         context.allowsImplicitAnimation = YES;
          [_user_search_controller removeSendButton];
      }
                         completionHandler:^

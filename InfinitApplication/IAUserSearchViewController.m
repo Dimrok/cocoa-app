@@ -302,7 +302,6 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         context.allowsImplicitAnimation = YES;
          [self.send_button.animator setAlphaValue:0.0];
      }
                         completionHandler:^

@@ -260,7 +260,6 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         context.allowsImplicitAnimation = YES;
          [self.content_height_constraint.animator setConstant:NSHeight(self.person_view.frame)];
      }
                         completionHandler:^

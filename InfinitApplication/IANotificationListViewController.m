@@ -435,7 +435,6 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         context.allowsImplicitAnimation = YES;
          [self.table_view beginUpdates];
          [self.table_view moveRowAtIndex:new_row toIndex:0];
          [self.table_view endUpdates];
