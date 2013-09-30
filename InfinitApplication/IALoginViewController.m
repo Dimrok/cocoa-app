@@ -146,6 +146,9 @@
     
     _logging_in = NO;
     
+    [self.create_account_button setHidden:NO];
+    [self.forgot_password_button setHidden:NO];
+    
     [self.spinner stopAnimation:nil];
     [self.email_address setEnabled:YES];
     [self.password setEnabled:YES];
@@ -195,6 +198,8 @@
         [self.email_address setEnabled:YES];
         [self.password setEnabled:YES];
         [self.login_button setEnabled:YES];
+        [self.create_account_button setHidden:NO];
+        [self.forgot_password_button setHidden:NO];
     }
     
     [self.view.window makeFirstResponder:self.email_address];
@@ -211,8 +216,6 @@
         self.password.stringValue = password;
         password = @"";
         password = nil;
-        [self.create_account_button setHidden:YES];
-        [self.forgot_password_button setHidden:YES];
     }
 }
 
@@ -245,6 +248,9 @@
     [self.email_address setEnabled:NO];
     [self.password setEnabled:NO];
     [self.login_button setEnabled:NO];
+    
+    [self.create_account_button setHidden:YES];
+    [self.forgot_password_button setHidden:YES];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -259,9 +265,8 @@
 - (void)closeLoginWindow
 {
     if (_window == nil)
-    {
         return;
-    }
+    
     _window.delegate = nil;
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
@@ -273,6 +278,7 @@
      {
          [_window orderOut:nil];
          _window = nil;
+         self.view = nil;
      }];
 }
 
@@ -282,28 +288,6 @@
         return NO;
     else
         return YES;
-}
-
-//- Text Fields ------------------------------------------------------------------------------------
-
-- (void)controlTextDidChange:(NSNotification*)aNotification
-{
-    NSControl* control = aNotification.object;
-    [self.error_message setHidden:YES];
-    if (control == self.email_address)
-    {
-        if (self.email_address.stringValue.length == 0)
-            [self.create_account_button setHidden:NO];
-        else
-            [self.create_account_button setHidden:YES];
-    }
-    else if (control == self.password)
-    {
-        if (self.password.stringValue.length == 0)
-            [self.forgot_password_button setHidden:NO];
-        else
-            [self.forgot_password_button setHidden:YES];
-    }
 }
 
 //- Login ------------------------------------------------------------------------------------------
@@ -349,6 +333,8 @@
         [_delegate tryLogin:self
                    username:self.email_address.stringValue
                    password:self.password.stringValue];
+        [self.create_account_button setHidden:YES];
+        [self.forgot_password_button setHidden:YES];
     }
 }
 
@@ -358,9 +344,9 @@
 {
     // Don't quit Infinit if we're logging in
     if (_logging_in)
-        [self closeLoginWindow];
+        [_delegate loginViewClose:self];
     else
-        [_delegate loginViewCloseButtonClicked:self];
+        [_delegate loginViewCloseAndQuit:self];
 }
 
 //- Register and Forgot Password -------------------------------------------------------------------

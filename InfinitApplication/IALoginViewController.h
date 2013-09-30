@@ -56,5 +56,8 @@
         username:(NSString*)username
         password:(NSString*)password;
 
-- (void)loginViewCloseButtonClicked:(IALoginViewController*)sender;
+- (void)loginViewClose:(IALoginViewController*)sender;
+
+- (void)loginViewCloseAndQuit:(IALoginViewController*)sender;
+
 @end
