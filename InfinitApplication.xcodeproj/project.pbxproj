@@ -83,6 +83,8 @@
 		8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */; };
 		8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */; };
 		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
+		8365685C17F9BC350021D49D /* IAPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365685A17F9BC350021D49D /* IAPopoverViewController.m */; };
+		8365685D17F9BC350021D49D /* IAPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8365685B17F9BC350021D49D /* IAPopoverViewController.xib */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
@@ -525,6 +527,9 @@
 		8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_asio.dylib; path = ../../../Externals/lib/libcurly_asio.dylib; sourceTree = "<group>"; };
 		8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_sched.dylib; path = ../../../Externals/lib/libcurly_sched.dylib; sourceTree = "<group>"; };
 		8364316717DDC39B00572726 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../Externals/lib/libstation.dylib; sourceTree = "<group>"; };
+		8365685917F9BC350021D49D /* IAPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPopoverViewController.h; sourceTree = "<group>"; };
+		8365685A17F9BC350021D49D /* IAPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPopoverViewController.m; sourceTree = "<group>"; };
+		8365685B17F9BC350021D49D /* IAPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAPopoverViewController.xib; sourceTree = "<group>"; };
 		8368F2BD17F1890C00135C37 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsCellView.h; sourceTree = "<group>"; };
 		836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsCellView.m; sourceTree = "<group>"; };
@@ -771,6 +776,7 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
+				8365684417F9BC200021D49D /* Popover View */,
 				83B2FD0F17F58F3100893B52 /* Small Onboarding */,
 				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				833C318A17CCC81100941C09 /* Desktop Notifier */,
@@ -972,6 +978,16 @@
 				833C319017CCC85200941C09 /* IADesktopNotifier.m */,
 			);
 			name = "Desktop Notifier";
+			sourceTree = "<group>";
+		};
+		8365684417F9BC200021D49D /* Popover View */ = {
+			isa = PBXGroup;
+			children = (
+				8365685917F9BC350021D49D /* IAPopoverViewController.h */,
+				8365685A17F9BC350021D49D /* IAPopoverViewController.m */,
+				8365685B17F9BC350021D49D /* IAPopoverViewController.xib */,
+			);
+			name = "Popover View";
 			sourceTree = "<group>";
 		};
 		836AAF7217AE8891001ECF2E /* Advanced Send View */ = {
@@ -1539,6 +1555,7 @@
 				837E6D0C17DA324100FC3141 /* loading.gif in Resources */,
 				83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */,
 				83ED2FC417E9A50600BB35A0 /* icon-menu-bar-clicked@2x.png in Resources */,
+				8365685D17F9BC350021D49D /* IAPopoverViewController.xib in Resources */,
 				839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */,
 				83EADC2A17E205BA00D49D77 /* btn-send-files-simple.png in Resources */,
 				83929BC017C618CD0009292D /* icon-accept.png in Resources */,
@@ -1641,6 +1658,7 @@
 				833C319117CCC85200941C09 /* IADesktopNotifier.m in Sources */,
 				831AA69F17D0FCC00004AE8D /* IAMeManager.m in Sources */,
 				83974CF317D127E200894E8D /* IAConversationHeaderView.m in Sources */,
+				8365685C17F9BC350021D49D /* IAPopoverViewController.m in Sources */,
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.m in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.m in Sources */,
