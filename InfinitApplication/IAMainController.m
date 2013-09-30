@@ -246,6 +246,7 @@
 //    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
 //    {
     _onboarding = YES;
+    [self closeNotificationWindow];
     _small_onboard_controller = [[IASmallOnboardingViewController alloc] initWithDelegate:self];
     [_small_onboard_controller startOnboardingWithStatusBarItem:_status_item];
 //    }
