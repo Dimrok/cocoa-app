@@ -212,7 +212,15 @@
 
 - (IBAction)addNoteClicked:(NSButton*)sender
 {
-    [_delegate simpleSendViewWantsAddNote:self];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         [_user_search_controller removeSendButton];
+     }
+                        completionHandler:^
+     {
+         [_delegate simpleSendViewWantsAddNote:self];
+     }];
 }
 
 - (IBAction)addPersonClicked:(NSButton*)sender
