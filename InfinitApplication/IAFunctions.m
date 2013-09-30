@@ -225,12 +225,16 @@
         res = [NSString stringWithFormat:@"%.0f min", seconds_left / 60];
     else if (seconds_left < 86400)
         res = [NSString stringWithFormat:@"%.0f h", seconds_left / 3600];
-    else
+    else if (seconds_left < 172800)
     {
         double days = seconds_left / 86400;
         double hours = days - floor(days);
         days = floor(days);
         res = [NSString stringWithFormat:@"%.0f d %.1f h", days, hours];
+    }
+    else
+    {
+        res = NSLocalizedString(@"more two days", @"more than two days");
     }
     
     return res;
