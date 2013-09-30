@@ -252,8 +252,8 @@
                 break;
                 
             case gap_email_password_dont_match:
-                error = NSLocalizedString(@"Username or password incorrect",
-                                          @"username or password wrong");
+                error = NSLocalizedString(@"Email or password incorrect",
+                                          @"email or password wrong");
                 break;
                 
             case gap_already_logged_in:
@@ -541,8 +541,15 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
     }
 }
 
-- (void)loginViewCloseButtonClicked:(IALoginViewController*)sender
+- (void)loginViewClose:(IALoginViewController*)sender
 {
+    [_login_view_controller closeLoginWindow];
+    _login_view_controller = nil;
+}
+
+- (void)loginViewCloseAndQuit:(IALoginViewController*)sender
+{
+    [_login_view_controller closeLoginWindow];
     [self handleQuit];
 }
 
