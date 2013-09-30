@@ -272,13 +272,10 @@
 
 - (void)resizeContentView
 {
-    if (self.content_height_constraint.constant == _max_table_height)
+    if (self.content_height_constraint.constant == NSHeight(self.person_view.frame) + _max_table_height)
         return;
     
-    CGFloat y_diff = [self tableHeight] - (self.content_height_constraint.constant -
-                                           self.person_view.frame.size.height);
-    if (y_diff <= 0.0)
-        return;
+    CGFloat new_height = NSHeight(self.person_view.frame) + [self tableHeight];
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
@@ -286,8 +283,7 @@
      }
                         completionHandler:^
      {
-         [self.content_height_constraint.animator setConstant:(y_diff +
-                                                               self.content_height_constraint.constant)];
+         [self.content_height_constraint.animator setConstant:new_height];
      }];
 }
 
