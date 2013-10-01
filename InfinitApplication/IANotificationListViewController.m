@@ -175,8 +175,10 @@
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
         _changing = NO;
+#ifdef IA_CORE_ANIMATION_ENABLED
         [self.view setWantsLayer:YES];
         [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
+#endif
     }
     return self;
 }

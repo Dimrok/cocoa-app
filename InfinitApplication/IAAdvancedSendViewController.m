@@ -207,8 +207,10 @@
         [self performSelector:@selector(setFocus:)
                    withObject:[NSNumber numberWithInt:focus]
                    afterDelay:0.2];
+#ifdef IA_CORE_ANIMATION_ENABLED
         [self.view setWantsLayer:YES];
         [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
+#endif
     }
     return self;
 }

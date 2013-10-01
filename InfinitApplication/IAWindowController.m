@@ -55,6 +55,7 @@
 
 @implementation IANotificationContentView
 
+#ifdef IA_CORE_ANIMATION_ENABLED
 - (void)drawRect:(NSRect)dirtyRect
 {
     [IA_GREY_COLOUR(248.0) set];
@@ -94,6 +95,7 @@
                                                                   cornerRadius:5.0];
     [bottom_background fill];
 }
+#endif
 
 @end
 
