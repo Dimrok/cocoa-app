@@ -42,6 +42,7 @@
 
 - (void)awakeFromNib
 {
+    [self setFocusRingType:NSFocusRingTypeNone];
     _normal_image = self.image;
 }
 
