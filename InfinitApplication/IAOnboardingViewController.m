@@ -110,6 +110,7 @@
 {
     [super loadView];
     [_delegate onboardingControllerStarted:self];
+    [self.view setAlphaValue:1.0];
 }
 
 - (BOOL)closeOnFocusLost
