@@ -106,6 +106,11 @@
     [self moveToPage:0];
 }
 
+- (BOOL)closeOnFocusLost
+{
+    return NO;
+}
+
 //- General Functions ------------------------------------------------------------------------------
 
 - (void)moveToPage:(NSInteger)page
