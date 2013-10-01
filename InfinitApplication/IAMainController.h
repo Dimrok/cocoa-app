@@ -23,7 +23,7 @@
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
 #import "IAPopoverViewController.h"
-#import "IASmallOnboardingViewController.h"
+#import "IAOnboardingViewController.h"
 #import "IAStatusBarIcon.h"
 #import "IAWindowController.h"
 
@@ -37,7 +37,7 @@
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
                                         IAPopoverViewProtocol,
-                                        IASmallOnboardingProtocol,
+                                        IAOnboardingProtocol,
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,

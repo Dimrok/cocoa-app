@@ -33,7 +33,7 @@
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
     IAPopoverViewController* _popover_controller;
-    IASmallOnboardingViewController* _small_onboard_controller;
+    IAOnboardingViewController* _onboard_controller;
     IAWindowController* _window_controller;
     
     // Managers
@@ -158,7 +158,8 @@
 
 - (void)showNotLoggedInView
 {
-    _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self];
+    if (_not_logged_view_controller == nil)
+        _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self];
     [self openOrChangeViewController:_not_logged_view_controller];
 }
 
@@ -174,8 +175,16 @@
 
 - (void)showNotConnectedView
 {
-    _no_connection_view_controller = [[IANoConnectionViewController alloc] init];
+    if (_no_connection_view_controller == nil)
+        _no_connection_view_controller = [[IANoConnectionViewController alloc] init];
     [self openOrChangeViewController:_no_connection_view_controller];
+}
+
+- (void)showOnboardingView
+{
+    if (_onboard_controller == nil)
+        _onboard_controller = [[IAOnboardingViewController alloc] initWithDelegate:self];
+    [self openOrChangeViewController:_onboard_controller];
 }
 
 //- Window Handling --------------------------------------------------------------------------------
@@ -247,8 +256,7 @@
 //    {
     _onboarding = YES;
     [self closeNotificationWindow];
-    _small_onboard_controller = [[IASmallOnboardingViewController alloc] initWithDelegate:self];
-    [_small_onboard_controller startOnboardingWithStatusBarItem:_status_item];
+    [self showOnboardingView];
 //    }
 }
 
@@ -414,11 +422,6 @@
 - (void)updateStatusBarIcon
 {
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
-}
-
-- (void)skipSmallOnboarding
-{
-    [_small_onboard_controller skipOnboarding];
 }
 
 //- View Logic -------------------------------------------------------------------------------------
@@ -666,38 +669,28 @@ transactionsProgressForUser:(IAUser*)user
     [self closeNotificationWindow];
 }
 
+//- Onboarding Protocol ----------------------------------------------------------------------------
+
+- (void)onboardingDone:(IAOnboardingViewController*)sender
+{
+    _onboarding = NO;
+    [self closeNotificationWindow];
+    _onboard_controller = nil;
+    //    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
+}
+
 //- Popover Protocol -------------------------------------------------------------------------------
 
 - (void)popoverHadMiddleButtonClicked:(IAPopoverViewController*)sender
 {
-    
 }
 
 - (void)popoverHadLeftButtonClicked:(IAPopoverViewController*)sender
 {
-    if (_onboarding)
-    {
-        [_popover_controller hidePopover];
-        [_small_onboard_controller continueOnboarding];
-    }
 }
 
 - (void)popoverHadRightButtonClicked:(IAPopoverViewController*)sender
 {
-    if (_onboarding)
-    {
-        [_popover_controller hidePopover];
-        [_small_onboard_controller skipOnboarding];
-    }
-}
-
-//- Small Onboarding Protocol ----------------------------------------------------------------------
-
-- (void)smallOnboardingDoneOnboarding:(IASmallOnboardingViewController*)sender
-{
-    _onboarding = NO;
-    _small_onboard_controller = nil;
-//    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
@@ -706,21 +699,9 @@ transactionsProgressForUser:(IAUser*)user
 {
     if (_onboarding)
     {
-        [_small_onboard_controller hideOnboarding];
-        if (_popover_controller == nil)
-            _popover_controller = [[IAPopoverViewController alloc] initWithDelegate:self];
-        NSString* heading = NSLocalizedString(@"Skip onboarding", @"skip onboarding");
-        NSString* message = NSLocalizedString(@"Stop onboarding and show the application?",
-                                              @"stop onboarding and show the application");
-        [_popover_controller showHeading:heading
-                              andMessage:message
-                              leftButton:NSLocalizedString(@"Back", @"back")
-                           midddleButton:nil
-                             rightButton:NSLocalizedString(@"Skip", @"skip")
-                               belowView:_status_item.view];
         return;
     }
-    
+
     if (_popover_controller != nil)
     {
         [_popover_controller hidePopover];
