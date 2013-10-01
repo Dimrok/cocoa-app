@@ -246,13 +246,13 @@
     [_element_list addObject:spacer_element];
     [self.table_view reloadData];
     [self resizeContentView];
-    [self.table_view scrollRowToVisible:(_element_list.count - 1)];
+    [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
     [self updateListOfRowsWithProgress];
 }
 
 - (void)scrollAfterRowAdd
 {
-    [self.table_view scrollRowToVisible:_element_list.count - 1];
+    [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
 }
 
 - (void)backToNotificationView
@@ -506,7 +506,7 @@
     [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
     [self resizeContentView];
     if (row == _element_list.count - 2) // Scroll to spacer at bottom if it's the last file
-        [self.table_view scrollRowToVisible:(_element_list.count - 1)];
+        [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
     else
         [self.table_view scrollRowToVisible:row];
 }
@@ -529,7 +529,7 @@
     [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
     [self resizeContentView];
     if (row == _element_list.count - 2) // Scroll to spacer at bottom if it's the last file
-        [self.table_view scrollRowToVisible:(_element_list.count - 1)];
+        [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
     else
         [self.table_view scrollRowToVisible:row];
 }
