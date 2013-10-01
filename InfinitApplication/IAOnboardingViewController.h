@@ -28,6 +28,8 @@
 
 @protocol IAOnboardingProtocol <NSObject>
 
-- (void)onboardingDone:(IAOnboardingViewController*)sender;
+- (void)onboardingControllerDone:(IAOnboardingViewController*)sender;
+
+- (void)onboardingControllerStarted:(IAOnboardingViewController*)sender;
 
 @end

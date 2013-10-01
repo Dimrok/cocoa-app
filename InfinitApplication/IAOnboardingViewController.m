@@ -106,6 +106,12 @@
     [self moveToPage:0];
 }
 
+- (void)loadView
+{
+    [super loadView];
+    [_delegate onboardingControllerStarted:self];
+}
+
 - (BOOL)closeOnFocusLost
 {
     return NO;
@@ -120,7 +126,7 @@
     
     if (page == _messages.count)
     {
-        [_delegate onboardingDone:self];
+        [_delegate onboardingControllerDone:self];
         return;
     }
     
@@ -142,12 +148,6 @@
         NSString* next_str = NSLocalizedString(@"NEXT", @"NEXT");
         self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
                                                                            attributes:_button_style];
-    }
-    
-    if (_page == _headings.count)
-    {
-        [_delegate onboardingDone:self];
-        return;
     }
     
     self.heading.stringValue = _headings[_page];

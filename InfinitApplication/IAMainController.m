@@ -256,8 +256,6 @@
 //    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
 //    {
     [self showOnboardingView];
-    if ([_current_view_controller isKindOfClass:IAOnboardingViewController.class])
-        _onboarding = YES;
 //    }
 }
 
@@ -672,12 +670,17 @@ transactionsProgressForUser:(IAUser*)user
 
 //- Onboarding Protocol ----------------------------------------------------------------------------
 
-- (void)onboardingDone:(IAOnboardingViewController*)sender
+- (void)onboardingControllerDone:(IAOnboardingViewController*)sender
 {
     _onboarding = NO;
     [self closeNotificationWindow];
     _onboard_controller = nil;
 //    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
+}
+
+- (void)onboardingControllerStarted:(IAOnboardingViewController*)sender
+{
+    _onboarding = YES;
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
