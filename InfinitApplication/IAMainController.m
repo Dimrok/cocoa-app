@@ -14,6 +14,7 @@
 #import "IAGap.h"
 #import "IAKeychainManager.h"
 #import "IANoConnectionViewController.h"
+#import "IAPopoverViewController.h"
 #import "IAUserPrefs.h"
 
 @implementation IAMainController
@@ -95,16 +96,13 @@
 - (void)delayedLoginPopover
 {
     if (_popover_controller == nil)
-        _popover_controller = [[IAPopoverViewController alloc] initWithDelegate:self];
+        _popover_controller = [[IAPopoverViewController alloc] init];
     NSString* heading = NSLocalizedString(@"Click the icon to login",
                                           @"click the icon to login");
     NSString* message = NSLocalizedString(@"Infinit has been installed. Click on the icon to login.",
                                           @"Infinit has been installed. Click on the icon to login");
     [_popover_controller showHeading:heading
                           andMessage:message
-                          leftButton:Nil
-                       midddleButton:nil
-                         rightButton:nil
                            belowView:_status_item.view];
 }
 
@@ -679,28 +677,12 @@ transactionsProgressForUser:(IAUser*)user
     //    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
 }
 
-//- Popover Protocol -------------------------------------------------------------------------------
-
-- (void)popoverHadMiddleButtonClicked:(IAPopoverViewController*)sender
-{
-}
-
-- (void)popoverHadLeftButtonClicked:(IAPopoverViewController*)sender
-{
-}
-
-- (void)popoverHadRightButtonClicked:(IAPopoverViewController*)sender
-{
-}
-
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
 
 - (void)statusBarIconClicked:(IAStatusBarIcon*)sender
 {
     if (_onboarding)
-    {
         return;
-    }
 
     if (_popover_controller != nil)
     {
@@ -807,12 +789,9 @@ transactionsProgressForUser:(IAUser*)user
                 andMessage:(NSString*)message
 {
     if (_popover_controller == nil)
-        _popover_controller = [[IAPopoverViewController alloc] initWithDelegate:self];
+        _popover_controller = [[IAPopoverViewController alloc] init];
     [_popover_controller showHeading:heading
                           andMessage:message
-                          leftButton:nil
-                       midddleButton:nil
-                         rightButton:nil
                            belowView:_status_item.view];
 }
 
