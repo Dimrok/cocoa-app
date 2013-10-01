@@ -255,9 +255,9 @@
     
 //    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
 //    {
-    _onboarding = YES;
-    [self closeNotificationWindow];
     [self showOnboardingView];
+    if ([_current_view_controller isKindOfClass:IAOnboardingViewController.class])
+        _onboarding = YES;
 //    }
 }
 
@@ -677,7 +677,7 @@ transactionsProgressForUser:(IAUser*)user
     _onboarding = NO;
     [self closeNotificationWindow];
     _onboard_controller = nil;
-    //    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
+//    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
