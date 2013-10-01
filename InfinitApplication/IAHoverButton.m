@@ -21,6 +21,7 @@
 //- Initialisation ---------------------------------------------------------------------------------
 
 @synthesize hoverImage = _hover_image;
+@synthesize hand_cursor = _hand_cursor;
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -34,6 +35,7 @@
                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                colour:IA_RGB_COLOUR(11.0, 117.0, 162)
                                                shadow:nil];
+        _hand_cursor = YES;
     }
     return self;
 }
@@ -50,6 +52,11 @@
 
 - (void)resetCursorRects
 {
+    if (!_hand_cursor)
+    {
+        [super resetCursorRects];
+        return;
+    }
     [super resetCursorRects];
     NSCursor* cursor = [NSCursor pointingHandCursor];
     [self addCursorRect:self.bounds cursor:cursor];

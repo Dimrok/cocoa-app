@@ -11,6 +11,7 @@
 @interface IAHoverButton : NSButton
 
 @property (nonatomic, strong) NSImage* hoverImage;
+@property (nonatomic) BOOL hand_cursor;
 
 - (void)setHoverImage:(NSImage*)hoverImage;
 
