@@ -17,7 +17,6 @@
 
 -(NSSize)intrinsicContentSize
 {
-    IALog(@"xxx called");
     if (![self.cell wraps])
         return [super intrinsicContentSize];
     
