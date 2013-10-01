@@ -135,6 +135,8 @@
     self.error_message.stringValue = @"";
     [self.password setDelegate:self];
     
+    self.close_button.hand_cursor = NO;
+    [self.close_button setHoverImage:[IAFunctions imageNamed:@"icon-onboarding-close-hover"]];
     [self setLoginButtonText];
     [self setForgotPasswordRegisterButtonText];
 }

@@ -22,7 +22,7 @@
 @interface IALoginViewController : NSViewController <NSTextFieldDelegate,
                                                      NSWindowDelegate>
 
-@property (nonatomic, strong) IBOutlet NSButton* close_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* close_button;
 @property (nonatomic, strong) IBOutlet IAHoverButton* create_account_button;
 @property (nonatomic, strong) IBOutlet NSTextField* email_address;
 @property (nonatomic, strong) IBOutlet NSTextField* error_message;
