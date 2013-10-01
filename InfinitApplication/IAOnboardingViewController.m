@@ -1,20 +1,34 @@
 //
-//  IASmallOnboardingViewController.m
+//  IAOnboardingViewController.m
 //  InfinitApplication
 //
 //  Created by Christopher Crone on 9/27/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IASmallOnboardingViewController.h"
+#import "IAOnboardingViewController.h"
 
-@interface IASmallOnboardingViewController ()
+@interface IAOnboardingMainView : IAMainView
 @end
 
-@implementation IASmallOnboardingViewController
+@implementation IAOnboardingMainView
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:self.bounds];
+    [IA_GREY_COLOUR(248.0) set];
+    [bg fill];
+}
+
+@end
+
+@interface IAOnboardingViewController ()
+@end
+
+@implementation IAOnboardingViewController
 {
 @private
-    id<IASmallOnboardingProtocol> _delegate;
+    id<IAOnboardingProtocol> _delegate;
     
     NSInteger _page;
     NSView* _position_view;
@@ -25,9 +39,7 @@
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-@synthesize popover;
-
-- (id)initWithDelegate:(id<IASmallOnboardingProtocol>)delegate
+- (id)initWithDelegate:(id<IAOnboardingProtocol>)delegate
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
@@ -59,17 +71,6 @@
 }
 
 //- General Functions ------------------------------------------------------------------------------
-
-- (void)_setupPopover
-{
-    if (!self.popover)
-    {
-        self.popover = [[NSPopover alloc] init];
-        self.popover.contentViewController = [[NSViewController alloc] init];
-        self.popover.contentViewController.view = self.view;
-        self.popover.appearance = NSPopoverAppearanceHUD;
-    }
-}
 
 - (void)moveToPage:(NSInteger)page
 {
@@ -108,8 +109,6 @@
 - (void)startOnboardingWithStatusBarItem:(NSStatusItem*)item
 {
     _position_view = item.view;
-    [self _setupPopover];
-    [self.popover showRelativeToRect:item.view.frame ofView:item.view preferredEdge:NSMinYEdge];
     [self moveToPage:0];
 }
 
@@ -126,7 +125,6 @@
 
 - (void)continueOnboarding
 {
-    [self.popover showRelativeToRect:_position_view.frame ofView:_position_view preferredEdge:NSMinYEdge];
     [self moveToPage:_page];
 }
 
