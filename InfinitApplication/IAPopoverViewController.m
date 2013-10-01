@@ -61,8 +61,7 @@
     self.popover.animates = YES;
     self.popover.contentViewController.view = self.view;
     self.heading.stringValue = heading;
-//    self.message.stringValue = message;
-    self.message.stringValue = @"Really really fucking long message to see if this damn work around solves the problem in both lion and 10.8";
+    self.message.stringValue = message;
     self.popover.appearance = NSPopoverAppearanceHUD;
     [self.popover showRelativeToRect:view.frame ofView:view preferredEdge:NSMinYEdge];
     [self.view layoutSubtreeIfNeeded];
