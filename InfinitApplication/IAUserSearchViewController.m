@@ -170,8 +170,10 @@
     NSUInteger _token_count;
     
     BOOL _no_results;
-    NSAttributedString* _no_result_str;
-    NSAttributedString* _no_email_str;
+    NSAttributedString* _no_result_head_str;
+    NSAttributedString* _no_result_msg_str;
+    NSAttributedString* _no_email_head_str;
+    NSAttributedString* _no_email_msg_str;
     
     CGFloat _row_height;
     NSInteger _max_rows_shown;
@@ -196,16 +198,30 @@
                                                  object:nil];
         NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         para.alignment = NSCenterTextAlignment;
-        NSDictionary* no_result_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
-                                                        paragraphStyle:para
-                                                                colour:IA_GREY_COLOUR(32.0)
-                                                                shadow:nil];
-        _no_result_str = [[NSAttributedString alloc] initWithString:
-                          NSLocalizedString(@"User not on Infinit...", @"user not on infinit")
-                                                         attributes:no_result_style];
-        _no_email_str = [[NSAttributedString alloc] initWithString:
-                         NSLocalizedString(@"Invite this person to Infinit...", @"invite this person")
-                                                        attributes:no_result_style];
+        NSDictionary* no_result_head_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
+                                                            paragraphStyle:para
+                                                                    colour:IA_GREY_COLOUR(32.0)
+                                                                    shadow:nil];
+        NSDictionary* no_result_msg_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                                            paragraphStyle:para
+                                                                    colour:IA_GREY_COLOUR(32.0)
+                                                                    shadow:nil];
+        _no_result_head_str = [[NSAttributedString alloc] initWithString:
+                               NSLocalizedString(@"No Search Results:",
+                                                 @"no search results")
+                                                             attributes:no_result_head_style];
+        _no_result_msg_str = [[NSAttributedString alloc] initWithString:
+                              NSLocalizedString(@"No results! Send to an email instead!",
+                                                @"no results! send to an email instead!")
+                                                         attributes:no_result_msg_style];
+        _no_email_head_str = [[NSAttributedString alloc] initWithString:
+                              NSLocalizedString(@"Friend not on Infinit?",
+                                                @"friend not on infinit?")
+                                                            attributes:no_result_head_style];
+        _no_email_msg_str = [[NSAttributedString alloc] initWithString:
+                             NSLocalizedString(@"Email your files by clicking SEND",
+                                               @"email your files by clicking send")
+                                                        attributes:no_result_msg_style];
         _static_image = [IAFunctions imageNamed:@"icon-search"];
         _loading_iamge = [IAFunctions imageNamed:@"loading"];
     }
@@ -228,13 +244,14 @@
     // Workaround for 15" Macbook Pro always rendering scroll bars
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
-    self.no_results_message.attributedStringValue = _no_result_str;
+    self.no_results_heading.attributedStringValue = _no_result_head_str;
+    self.no_results_message.attributedStringValue = _no_result_msg_str;
 }
 
 - (void)loadView
 {
     [super loadView];
-    [self.no_results_message setHidden:YES];
+    [self setNoResultsHidden:YES];
     self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
     [self initialiseSendButton];
     [self.view setFrameSize:NSMakeSize(NSWidth(self.view.frame),
@@ -255,6 +272,12 @@
 }
 
 //- General Functions ------------------------------------------------------------------------------
+
+- (void)setNoResultsHidden:(BOOL)hidden
+{
+    [self.no_results_heading setHidden:hidden];
+    [self.no_results_message setHidden:hidden];
+}
 
 - (void)initialiseSendButton
 {
@@ -392,7 +415,8 @@
         self.search_image.animates = NO;
         self.search_image.image = _static_image;
     }
-    self.no_results_message.attributedStringValue = _no_email_str;
+    self.no_results_heading.attributedStringValue = _no_email_head_str;
+    self.no_results_message.attributedStringValue = _no_email_msg_str;
     [self updateResultsTable];
 }
 
@@ -429,7 +453,8 @@
     }
     self.search_image.animates = NO;
     self.search_image.image = _static_image;
-    self.no_results_message.attributedStringValue = _no_result_str;
+    self.no_results_heading.attributedStringValue = _no_result_head_str;
+    self.no_results_message.attributedStringValue = _no_result_msg_str;
     [self updateResultsTable];
 }
 
@@ -631,7 +656,7 @@ displayStringForRepresentedObject:(id)representedObject
 
 - (void)clearResults
 {
-    [self.no_results_message setHidden:YES];
+    [self setNoResultsHidden:YES];
     [self.view setFrameSize:self.search_box_view.frame.size];
     [_delegate searchView:self
               changedSize:self.view.frame.size
@@ -646,14 +671,15 @@ displayStringForRepresentedObject:(id)representedObject
     NSSize new_size = NSZeroSize;
     if (_search_results.count == 0) // No results so show message
     {
-        [self.no_results_message setHidden:NO];
+        [self setNoResultsHidden:NO];
         new_size = NSMakeSize(NSWidth(self.view.frame),
                               NSHeight(self.search_box_view.frame) +
+                              NSHeight(self.no_results_heading.frame) +
                               NSHeight(self.no_results_message.frame) + 10.0);
     }
     else
     {
-        [self.no_results_message setHidden:YES];
+        [self setNoResultsHidden:YES];
         new_size = NSMakeSize(NSWidth(self.view.frame),
                               NSHeight(self.search_box_view.frame) + [self tableHeight]);
     }
