@@ -39,6 +39,7 @@
         rightButton:(NSString*)right_button_str
           belowView:(NSView*)view
 {
+    self.popover.animates = YES;
     self.popover.contentViewController.view = self.view;
     
     if (left_button_str == nil || left_button_str.length == 0)
@@ -75,6 +76,7 @@
     self.message.stringValue = message;
     self.popover.appearance = NSPopoverAppearanceHUD;
     [self.popover showRelativeToRect:view.frame ofView:view preferredEdge:NSMinYEdge];
+    self.popover.contentSize = self.view.frame.size;
 }
 
 - (void)hidePopover
