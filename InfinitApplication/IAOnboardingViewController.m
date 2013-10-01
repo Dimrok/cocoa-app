@@ -35,6 +35,10 @@
     
     NSMutableArray* _headings;
     NSMutableArray* _messages;
+    
+    NSDictionary* _heading_style;
+    NSDictionary* _message_style;
+    NSDictionary* _button_style;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -66,8 +70,40 @@
                                                @"The Infinit icon turns red for incoming transfers. Click the icon to choose to accept or decline transfers.")];
         [_messages addObject:NSLocalizedString(@"You can send to 3 email addresses for now. If you have any issues, let us know by email or on Twitter.",
                                                @"You can send to 3 email addresses for now. If you have any issues, let us know by email or on Twitter.")];
+        NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        para.alignment = NSCenterTextAlignment;
+        _heading_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
+                                         paragraphStyle:para
+                                                 colour:IA_GREY_COLOUR(0.0)
+                                                 shadow:nil];
+        
+        _message_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                         paragraphStyle:para
+                                                 colour:IA_GREY_COLOUR(167.0)
+                                                 shadow:nil];
+        NSShadow* button_shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
+                                                     blurRadius:1.0
+                                                         colour:IA_GREY_COLOUR(0.0)];
+        _button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
+                                        paragraphStyle:para
+                                                colour:IA_GREY_COLOUR(255.0)
+                                                shadow:button_shadow];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    NSString* back_str = NSLocalizedString(@"BACK", @"BACK");
+    NSString* next_str = NSLocalizedString(@"NEXT", @"NEXT");
+    self.skip_button.hand_cursor = NO;
+    [self.skip_button setToolTip:NSLocalizedString(@"Skip", @"skip")];
+    self.back_button.attributedTitle = [[NSAttributedString alloc] initWithString:back_str
+                                                                       attributes:_button_style];
+    self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
+                                                                       attributes:_button_style];
+    [self.skip_button setHoverImage:[IAFunctions imageNamed:@"icon-onboarding-close-hover"]];
+    [self moveToPage:0];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -77,55 +113,40 @@
     if (page < 0 || page > _headings.count)
         return;
     
+    if (page == _messages.count)
+    {
+        [_delegate onboardingDone:self];
+        return;
+    }
+    
     _page = page;
     
     if (_page == 0)
-    {
         [self.back_button setHidden:YES];
-        [self.skip_button setHidden:NO];
-    }
     else
-    {
         [self.back_button setHidden:NO];
-        [self.skip_button setHidden:YES];
-    }
     
     if (_page == _headings.count - 1)
-        self.next_button.title = NSLocalizedString(@"Done", @"done");
+    {
+        NSString* done_str = NSLocalizedString(@"DONE", @"DONE");
+        self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:done_str
+                                                                           attributes:_button_style];
+    }
     else
-        self.next_button.title = NSLocalizedString(@"Next", @"next");
+    {
+        NSString* next_str = NSLocalizedString(@"NEXT", @"NEXT");
+        self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
+                                                                           attributes:_button_style];
+    }
     
     if (_page == _headings.count)
     {
-        [self.popover close];
-        [_delegate smallOnboardingDoneOnboarding:self];
+        [_delegate onboardingDone:self];
         return;
     }
     
     self.heading.stringValue = _headings[_page];
     self.message.stringValue = _messages[_page];
-}
-
-- (void)startOnboardingWithStatusBarItem:(NSStatusItem*)item
-{
-    _position_view = item.view;
-    [self moveToPage:0];
-}
-
-- (void)skipOnboarding
-{
-    [self.popover close];
-    [_delegate smallOnboardingDoneOnboarding:self];
-}
-
-- (void)hideOnboarding
-{
-    [self.popover close];
-}
-
-- (void)continueOnboarding
-{
-    [self moveToPage:_page];
 }
 
 //- Button Handling --------------------------------------------------------------------------------

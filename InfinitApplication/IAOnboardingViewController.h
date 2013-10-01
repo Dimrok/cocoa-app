@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "IAHoverButton.h"
 #import "IAViewController.h"
 
 @protocol IAOnboardingProtocol;
@@ -18,23 +19,15 @@
 @property (nonatomic, strong) IBOutlet NSTextField* heading;
 @property (nonatomic, strong) IBOutlet NSTextField* message;
 @property (nonatomic, strong) IBOutlet NSButton* next_button;
-@property (nonatomic, strong) IBOutlet NSButton* skip_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* skip_button;
 
 - (id)initWithDelegate:(id<IAOnboardingProtocol>)delegate;
-
-- (void)startOnboardingWithStatusBarItem:(NSStatusItem*)item;
-
-- (void)hideOnboarding;
-
-- (void)continueOnboarding;
-
-- (void)skipOnboarding;
 
 @end
 
 
 @protocol IAOnboardingProtocol <NSObject>
 
-- (void)smallOnboardingDoneOnboarding:(IAOnboardingViewController*)sender;
+- (void)onboardingDone:(IAOnboardingViewController*)sender;
 
 @end
