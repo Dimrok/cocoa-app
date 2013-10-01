@@ -89,8 +89,10 @@
         _delegate = delegate;
         _user_search_controller = search_controller;
         _file_list = [_delegate simpleSendViewWantsFileList:self];
+#ifdef IA_CORE_ANIMATION_ENABLED
         [self.view setWantsLayer:YES];
         [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
+#endif
     }
     return self;
 }
