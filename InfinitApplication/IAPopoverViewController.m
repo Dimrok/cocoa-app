@@ -11,6 +11,33 @@
 @interface IAPopoverViewController ()
 @end
 
+//- Popover TextField Cell -------------------------------------------------------------------------
+
+@implementation IAPopoverTextField
+
+-(NSSize)intrinsicContentSize
+{
+    IALog(@"xxx called");
+    if (![self.cell wraps])
+        return [super intrinsicContentSize];
+    
+    NSRect frame = self.frame;
+    
+    CGFloat width = frame.size.width;
+    
+    // Make the frame very high, while keeping the width
+    frame.size.height = CGFLOAT_MAX;
+    
+    // Calculate new height within the frame
+    // with practically infinite height.
+    CGFloat height = [self.cell cellSizeForBounds: frame].height;
+    
+    return NSMakeSize(width, height);
+}
+
+@end
+
+
 @implementation IAPopoverViewController
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -34,7 +61,8 @@
     self.popover.animates = YES;
     self.popover.contentViewController.view = self.view;
     self.heading.stringValue = heading;
-    self.message.stringValue = message;
+//    self.message.stringValue = message;
+    self.message.stringValue = @"Really really fucking long message to see if this damn work around solves the problem in both lion and 10.8";
     self.popover.appearance = NSPopoverAppearanceHUD;
     [self.popover showRelativeToRect:view.frame ofView:view preferredEdge:NSMinYEdge];
     [self.view layoutSubtreeIfNeeded];

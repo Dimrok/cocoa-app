@@ -84,7 +84,6 @@
 		8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */; };
 		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
 		8365685C17F9BC350021D49D /* IAPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365685A17F9BC350021D49D /* IAPopoverViewController.m */; };
-		8365685D17F9BC350021D49D /* IAPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8365685B17F9BC350021D49D /* IAPopoverViewController.xib */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
@@ -101,6 +100,7 @@
 		838C6DF617FAD14D00BF947C /* icon-onboarding-close-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF217FAD14D00BF947C /* icon-onboarding-close-hover@2x.png */; };
 		838C6DF717FAD14D00BF947C /* icon-onboarding-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF317FAD14D00BF947C /* icon-onboarding-close.png */; };
 		838C6DF817FAD14D00BF947C /* icon-onboarding-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF417FAD14D00BF947C /* icon-onboarding-close@2x.png */; };
+		838C6DFA17FB0E6000BF947C /* IAPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF917FB0E6000BF947C /* IAPopoverViewController.xib */; };
 		838FE0A117D9BAEA004160DB /* IAPaddedTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */; };
 		838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0B717DA097C004160DB /* IAHoverButton.m */; };
 		8390D5C117F1F31D00990DCD /* loading-bar.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8390D5C017F1F31D00990DCD /* loading-bar.gif */; };
@@ -537,7 +537,6 @@
 		8364316717DDC39B00572726 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../Externals/lib/libstation.dylib; sourceTree = "<group>"; };
 		8365685917F9BC350021D49D /* IAPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPopoverViewController.h; sourceTree = "<group>"; };
 		8365685A17F9BC350021D49D /* IAPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPopoverViewController.m; sourceTree = "<group>"; };
-		8365685B17F9BC350021D49D /* IAPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAPopoverViewController.xib; sourceTree = "<group>"; };
 		8368F2BD17F1890C00135C37 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsCellView.h; sourceTree = "<group>"; };
 		836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsCellView.m; sourceTree = "<group>"; };
@@ -559,6 +558,7 @@
 		838C6DF217FAD14D00BF947C /* icon-onboarding-close-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-onboarding-close-hover@2x.png"; sourceTree = "<group>"; };
 		838C6DF317FAD14D00BF947C /* icon-onboarding-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-onboarding-close.png"; sourceTree = "<group>"; };
 		838C6DF417FAD14D00BF947C /* icon-onboarding-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-onboarding-close@2x.png"; sourceTree = "<group>"; };
+		838C6DF917FB0E6000BF947C /* IAPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAPopoverViewController.xib; sourceTree = "<group>"; };
 		838FE09F17D9BAEA004160DB /* IAPaddedTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPaddedTextFieldCell.h; sourceTree = "<group>"; };
 		838FE0A017D9BAEA004160DB /* IAPaddedTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPaddedTextFieldCell.m; sourceTree = "<group>"; };
 		838FE0B617DA097C004160DB /* IAHoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAHoverButton.h; sourceTree = "<group>"; };
@@ -1005,7 +1005,7 @@
 			children = (
 				8365685917F9BC350021D49D /* IAPopoverViewController.h */,
 				8365685A17F9BC350021D49D /* IAPopoverViewController.m */,
-				8365685B17F9BC350021D49D /* IAPopoverViewController.xib */,
+				838C6DF917FB0E6000BF947C /* IAPopoverViewController.xib */,
 			);
 			name = "Popover View";
 			sourceTree = "<group>";
@@ -1550,6 +1550,7 @@
 				83C99E2417AB9DFB00AFF091 /* icon-add-cancel@2x.png in Resources */,
 				83C99E2717AB9E3600AFF091 /* icon-files.png in Resources */,
 				839DFC3717D8F99B001D60DD /* btn-send-files-simple-disabled@2x.png in Resources */,
+				838C6DFA17FB0E6000BF947C /* IAPopoverViewController.xib in Resources */,
 				83C99E2817AB9E3600AFF091 /* icon-files@2x.png in Resources */,
 				83C99E2B17ABA13100AFF091 /* icon-files-hover.png in Resources */,
 				83C99E2C17ABA13100AFF091 /* icon-files-hover@2x.png in Resources */,
@@ -1594,7 +1595,6 @@
 				837E6D0C17DA324100FC3141 /* loading.gif in Resources */,
 				83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */,
 				83ED2FC417E9A50600BB35A0 /* icon-menu-bar-clicked@2x.png in Resources */,
-				8365685D17F9BC350021D49D /* IAPopoverViewController.xib in Resources */,
 				839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */,
 				838C6DF617FAD14D00BF947C /* icon-onboarding-close-hover@2x.png in Resources */,
 				83EADC2A17E205BA00D49D77 /* btn-send-files-simple.png in Resources */,

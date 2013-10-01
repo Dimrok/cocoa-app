@@ -8,10 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+@interface IAPopoverTextField : NSTextField
+@end
+
 @interface IAPopoverViewController : NSViewController <NSPopoverDelegate>
 
 @property (nonatomic, strong) IBOutlet NSTextField* heading;
-@property (nonatomic, strong) IBOutlet NSTextField* message;
+@property (nonatomic, strong) IBOutlet IAPopoverTextField* message;
 @property (nonatomic, strong) IBOutlet NSPopover* popover;
 
 - (id)init;
