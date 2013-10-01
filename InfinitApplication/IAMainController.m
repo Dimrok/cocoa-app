@@ -239,10 +239,13 @@
         [self addCredentialsToKeychain];
     }
     
-    // XXX Should allow changing of avatar in settings, not upload every successful login
-    [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
-                        performSelector:nil
-                               onObject:nil];
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"avatar_uploaded"] isEqualToString:@"1"])
+    {
+        [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
+                            performSelector:nil
+                                   onObject:nil];
+        [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"avatar_uploaded"];
+    }
     // XXX We must find a better way to manage fetching of history per user
     [_transaction_manager getHistory];
     [[IAGapState instance] startPolling];
