@@ -37,6 +37,7 @@
     self.message.stringValue = message;
     self.popover.appearance = NSPopoverAppearanceHUD;
     [self.popover showRelativeToRect:view.frame ofView:view preferredEdge:NSMinYEdge];
+    [self.view layoutSubtreeIfNeeded];
     self.popover.contentSize = self.view.frame.size;
 }
 
