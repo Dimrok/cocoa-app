@@ -101,7 +101,7 @@
     
     NSTimeInterval time_remaining = [self timeRemaining];
     
-    if (time_remaining <= 0.0 || _data_points.count < 50)
+    if (time_remaining <= 0.0 || _data_points.count < 75)
         return;
     
     NSDictionary* text_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:9.0]
@@ -140,7 +140,7 @@
     NSTimeInterval current_time = [NSDate timeIntervalSinceReferenceDate];
     NSTimeInterval time_interval = current_time - _last_time;
     double rate = (doubleValue - _double_value) / self.maxValue * _total_size.doubleValue / time_interval;
-    if (_data_points.count < 100)
+    if (_data_points.count < 200)
     {
         [_data_points addObject:[NSNumber numberWithDouble:rate]];
     }
