@@ -16,6 +16,11 @@
 
 //- Set Cell Values --------------------------------------------------------------------------------
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)setDelegate:(id<IASearchResultsCellProtocol>)delegate
 {
     _delegate = delegate;

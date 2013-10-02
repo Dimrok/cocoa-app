@@ -19,6 +19,11 @@
 
 @implementation IASimpleSendMainView
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     NSBezierPath* bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:6.0];

@@ -26,6 +26,11 @@
     return self;
 }
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 //- General Functions ------------------------------------------------------------------------------
 
 - (NSUInteger)sizeForFolderAtPath:(NSString*)source

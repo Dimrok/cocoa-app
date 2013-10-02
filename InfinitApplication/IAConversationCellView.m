@@ -117,6 +117,11 @@
 
 @implementation IAConversationBubbleView
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Grey border
@@ -160,6 +165,11 @@
         self.progress_indicator = nil;
     }
     return self;
+}
+
+- (BOOL)isOpaque
+{
+    return YES;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

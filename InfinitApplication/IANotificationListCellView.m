@@ -17,18 +17,12 @@
     id<IANotificationListCellProtocol> _delegate;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
-
-- (id)initWithFrame:(NSRect)frameRect
-{
-    if (self = [super initWithFrame:frameRect])
-    {
-    }
-    return self;
-}
-
-
 //- Setup Cell -------------------------------------------------------------------------------------
+
+- (BOOL)isOpaque
+{
+    return NO;
+}
 
 - (void)setUserFullName:(NSString*)fullname
 {

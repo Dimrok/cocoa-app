@@ -711,7 +711,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files
 {
-    if (![[IAGapState instance] logged_in])
+    if (![[IAGapState instance] logged_in] || _onboarding)
         return;
     
     if (_general_send_controller == nil)

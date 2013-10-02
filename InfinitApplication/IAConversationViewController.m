@@ -23,6 +23,11 @@
 
 @implementation IAConversationRowView
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 @end
 
 //- Conversation View Controller -------------------------------------------------------------------

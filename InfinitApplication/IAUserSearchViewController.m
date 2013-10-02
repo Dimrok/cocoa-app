@@ -21,6 +21,11 @@
 
 @implementation IASearchBoxView
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // White background
@@ -45,6 +50,16 @@
 {
 @private
     NSTrackingArea* _tracking_area;
+}
+
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
+- (BOOL)isFlipped
+{
+    return NO;
 }
 
 - (void)dealloc
@@ -118,29 +133,20 @@
 {
     // Dark line
     NSRect dark_rect = NSMakeRect(self.bounds.origin.x,
-                                  self.bounds.origin.y + 1.0,
+                                  NSHeight(self.bounds) - 1.0,
                                   NSWidth(self.bounds),
                                   1.0);
     NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
     [IA_GREY_COLOUR(235.0) set];
     [dark_line fill];
     
-    // White line
-    NSRect white_rect = NSMakeRect(self.bounds.origin.x,
-                                   self.bounds.origin.y + 2.0,
-                                   NSWidth(self.bounds),
-                                   1.0);
-    NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
-    [IA_GREY_COLOUR(255.0) set];
-    [white_line fill];
-    
     if (self.selected)
     {
         // Background
         NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
-                                    self.bounds.origin.y + 2.0,
+                                    self.bounds.origin.y,
                                     NSWidth(self.bounds),
-                                    NSHeight(self.bounds) - 2.0);
+                                    NSHeight(self.bounds) - 1.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
         [IA_RGBA_COLOUR(242.0, 253.0, 255.0, 0.75) set];
         [bg_path fill];
@@ -149,9 +155,9 @@
     {
         // Background
         NSRect bg_rect = NSMakeRect(self.bounds.origin.x,
-                                    self.bounds.origin.y + 2.0,
+                                    self.bounds.origin.y,
                                     NSWidth(self.bounds),
-                                    NSHeight(self.bounds) - 2.0);
+                                    NSHeight(self.bounds) - 1.0);
         NSBezierPath* bg_path = [NSBezierPath bezierPathWithRect:bg_rect];
         [IA_GREY_COLOUR(255.0) set];
         [bg_path fill];
@@ -188,7 +194,7 @@
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
-        _row_height = 45.0;
+        _row_height = 42.0;
         _max_rows_shown = 3;
         _delegate = nil;
         _token_count = 0;
@@ -682,11 +688,11 @@ displayStringForRepresentedObject:(id)representedObject
         [self setNoResultsHidden:YES];
         new_size = NSMakeSize(NSWidth(self.view.frame),
                               NSHeight(self.search_box_view.frame) + [self tableHeight]);
+        [self.table_view reloadData];
     }
     [_delegate searchView:self
               changedSize:new_size
          withActiveSearch:YES];
-    [self.table_view reloadData];
 }
 
 - (CGFloat)tableHeight
@@ -774,9 +780,9 @@ displayStringForRepresentedObject:(id)representedObject
         current_pos = _search_results.count - 1;
     else if (current_pos > _search_results.count - 1)
         current_pos = 0;
+    [self.table_view scrollRowToVisible:current_pos];
     [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:current_pos]
                  byExtendingSelection:NO];
-    [self.table_view scrollRowToVisible:current_pos];
 }
 
 //- Button Handling --------------------------------------------------------------------------------

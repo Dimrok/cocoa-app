@@ -57,6 +57,11 @@
 
 @implementation IAAdvancedSendViewMainView
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     // Dark line
@@ -133,6 +138,11 @@
 @end
 
 @implementation IASendFileListRowView
+
+- (BOOL)isOpaque
+{
+    return YES;
+}
 
 - (BOOL)isFlipped
 {

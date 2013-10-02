@@ -46,6 +46,11 @@
     return self;
 }
 
+- (BOOL)isOpaque
+{
+    return NO;
+}
+
 - (void)dealloc
 {
     _tracking_area = nil;

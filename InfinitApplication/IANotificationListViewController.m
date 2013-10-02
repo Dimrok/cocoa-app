@@ -36,6 +36,11 @@
     _tracking_area = nil;
 }
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)ensureTrackingArea
 {
     _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
@@ -624,6 +629,8 @@
         return;
     [_delegate notificationList:self
               acceptTransaction:[_transaction_list objectAtIndex:row]];
+    [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                               columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 - (void)notificationListCellCancelClicked:(IANotificationListCellView*)sender
@@ -633,6 +640,8 @@
         return;
     [_delegate notificationList:self
               cancelTransaction:[_transaction_list objectAtIndex:row]];
+    [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                               columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 - (void)notificationListCellRejectClicked:(IANotificationListCellView*)sender
@@ -642,6 +651,8 @@
         return;
     [_delegate notificationList:self
               rejectTransaction:[_transaction_list objectAtIndex:row]];
+    [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                               columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 - (void)notificationListCellAvatarClicked:(IANotificationListCellView*)sender
