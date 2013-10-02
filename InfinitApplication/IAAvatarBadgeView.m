@@ -25,6 +25,11 @@
     return self;
 }
 
+- (BOOL)isOpaque
+{
+    return NO;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
     if (_count > 0)
