@@ -18,6 +18,9 @@
     
     NSUInteger _max_chars;
     NSString* _file_path;
+    NSString* _message;
+    
+    NSUInteger _file_size_limit;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -28,6 +31,7 @@
     {
         _delegate = delegate;
         _max_chars = 2000;
+        _file_size_limit = 10 * 1024 * 1024;
     }
     return self;
 }
@@ -41,8 +45,13 @@
 
 - (void)show
 {
+    self.user_message.stringValue = @"";
+    _file_path = nil;
+    self.file_message.stringValue = NSLocalizedString(@"File must be less than 10 MB",
+                                                      @"File must be less than 10 MB");
     [self.window center];
     [self.window makeKeyAndOrderFront:nil];
+    [self.window makeFirstResponder:self.user_message];
 }
 
 - (void)close
@@ -73,7 +82,17 @@
     NSString* file_path;
     
     if ([file_dialog runModal] == NSOKButton)
-        file_path = [[file_dialog URLs] objectAtIndex:0];
+        file_path = [[[file_dialog URLs] objectAtIndex:0] path];
+    else
+        return;
+    
+    NSDictionary* file_properties = [[NSFileManager defaultManager] attributesOfItemAtPath:file_path
+                                                                                     error:NULL];
+    if ([file_properties fileSize] < _file_size_limit)
+    {
+        _file_path = file_path;
+        self.file_message.stringValue = [file_path lastPathComponent];
+    }
     
 }
 
@@ -84,7 +103,16 @@
 
 - (IBAction)sendClicked:(NSButton*)sender
 {
-    
+    _message = self.user_message.stringValue;
+    if (_message.length < 3)
+        _message = @"No message";
+    if (_message.length > _max_chars)
+        _message = [self.user_message.stringValue substringToIndex:_max_chars];
+    if (_file_path == nil)
+        _file_path = @"";
+    [_delegate reportProblemController:self
+                      wantsSendMessage:_message
+                               andFile:_file_path];
 }
 
 @end
