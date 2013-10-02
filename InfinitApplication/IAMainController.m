@@ -491,6 +491,9 @@
 - (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 {
+    if (_onboarding)
+        return;
+
     [_status_bar_icon setHighlighted:YES];
     IATransaction* transaction = [_transaction_manager transactionWithId:transaction_id];
     if (transaction == nil)
