@@ -94,14 +94,8 @@
 
 - (void)awakeFromNib
 {
-    NSString* back_str = NSLocalizedString(@"BACK", @"BACK");
-    NSString* next_str = NSLocalizedString(@"NEXT", @"NEXT");
     self.skip_button.hand_cursor = NO;
     [self.skip_button setToolTip:NSLocalizedString(@"Skip", @"skip")];
-    self.back_button.attributedTitle = [[NSAttributedString alloc] initWithString:back_str
-                                                                       attributes:_button_style];
-    self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
-                                                                       attributes:_button_style];
     [self.skip_button setHoverImage:[IAFunctions imageNamed:@"icon-onboarding-close-hover"]];
     [self moveToPage:0];
 }
@@ -137,19 +131,6 @@
         [self.back_button setHidden:YES];
     else
         [self.back_button setHidden:NO];
-    
-    if (_page == _headings.count - 1)
-    {
-        NSString* done_str = NSLocalizedString(@"DONE", @"DONE");
-        self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:done_str
-                                                                           attributes:_button_style];
-    }
-    else
-    {
-        NSString* next_str = NSLocalizedString(@"NEXT", @"NEXT");
-        self.next_button.attributedTitle = [[NSAttributedString alloc] initWithString:next_str
-                                                                           attributes:_button_style];
-    }
     
     self.heading.stringValue = _headings[_page];
     self.message.stringValue = _messages[_page];
