@@ -157,11 +157,6 @@
     [self openAdvancedViewWithFocus:ADVANCED_VIEW_NOTE_FOCUS];
 }
 
-- (void)simpleSendViewWantsAddRecipient:(IASimpleSendViewController*)sender
-{
-    [self openAdvancedViewWithFocus:ADVANCED_VIEW_USER_SEARCH_FOCUS];
-}
-
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender
 {
     _files = nil;

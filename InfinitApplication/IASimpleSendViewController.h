@@ -33,8 +33,6 @@
 
 - (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender;
 
-- (void)simpleSendViewWantsAddRecipient:(IASimpleSendViewController*)sender;
-
 - (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender;
 
 - (NSArray*)simpleSendViewWantsFileList:(IASimpleSendViewController*)sender;

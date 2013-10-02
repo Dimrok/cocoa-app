@@ -230,19 +230,6 @@
      }];
 }
 
-- (IBAction)addPersonClicked:(NSButton*)sender
-{
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-         context.duration = 0.15;
-         [_user_search_controller removeSendButton];
-     }
-                        completionHandler:^
-     {
-         [_delegate simpleSendViewWantsAddRecipient:self];
-     }];
-}
-
 - (IBAction)cancelSendClicked:(NSButton*)sender
 {
     [_delegate simpleSendViewWantsCancel:self];
