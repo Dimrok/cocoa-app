@@ -3,8 +3,8 @@
 //
 
 #ifdef __OBJC__
-//  #define BUILD_PRODUCTION 1
-    #define IA_CORE_ANIMATION_ENABLED 1
+//    #define BUILD_PRODUCTION 1
+//    #define IA_CORE_ANIMATION_ENABLED 1
     #import <Cocoa/Cocoa.h>
     #import <Gap/IAGapState.h>
     #import <Gap/IATransaction.h>
