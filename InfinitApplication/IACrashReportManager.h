@@ -12,8 +12,13 @@
 
 @interface IACrashReportManager : NSObject
 
-+ (void)setupCrashReporter;
++ (IACrashReportManager*)sharedInstance;
 
-+ (void)sendExistingCrashReports;
+- (void)setupCrashReporter;
+
+- (void)sendExistingCrashReports;
+
+- (void)sendUserReportWithMessage:(NSString*)message
+                          andFile:(NSString*)file_path;
 
 @end

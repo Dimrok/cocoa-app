@@ -15,8 +15,18 @@
 
 @implementation IACrashReportManager
 
++ (IACrashReportManager*)sharedInstance
+{
+    static IACrashReportManager* instance = nil;
+    if (instance == nil)
+    {
+        instance = [[IACrashReportManager alloc] init];
+    }
+    return instance;
+}
 
-+ (void)setupCrashReporter
+
+- (void)setupCrashReporter
 {
     NSLog(@"%@ Starting crash reporter", self);
     PLCrashReporter* crash_reporter = [PLCrashReporter sharedReporter];
@@ -29,16 +39,16 @@
         NSLog(@"%@ WARNING: Could not enable crash reporter: %@", self, error);
 }
 
-+ (void)sendExistingCrashReports
+- (void)sendExistingCrashReports
 {
     PLCrashReporter* crash_reporter = [PLCrashReporter sharedReporter];
     
     // Check if we previously crashed
     if ([crash_reporter hasPendingCrashReport])
-        [IACrashReportManager handleCrashReport];
+        [self handleCrashReport];
 }
 
-+ (void)removeOldCrashReports
+- (void)removeOldCrashReports
 {
     NSArray* dir_files = [[NSFileManager defaultManager]
                           contentsOfDirectoryAtPath:[[IALogFileManager sharedInstance] logPath]
@@ -55,7 +65,7 @@
 }
 
 // XXX Fetch Apple crash report until we are able to symbolicate our crash reports
-+ (NSString*)getAppleCrashReport
+- (NSString*)getAppleCrashReport
 {
     NSString* dir = [NSHomeDirectory() stringByAppendingPathComponent:
                                                                 @"Library/Logs/DiagnosticReports"];
@@ -72,7 +82,7 @@
     return nil;
 }
 
-+ (NSString*)osVersion
+- (NSString*)osVersion
 {
     SInt32 OSXversionMajor, OSXversionMinor, OSXversionBugFix;
     if(Gestalt(gestaltSystemVersionMajor, &OSXversionMajor) == noErr &&
@@ -88,7 +98,7 @@
 
 // XXX For now we just use this to find out when we crashed and fetch the Apple crash report. Plan
 // is to use our own when we can properly symbolicate the reports.
-+ (void)handleCrashReport
+- (void)handleCrashReport
 {
     PLCrashReporter* crash_reporter = [PLCrashReporter sharedReporter];
 //    NSData* crash_data;
@@ -129,9 +139,9 @@
     NSLog(@"%@ Sending existing crash report", self);
     
     NSString* last_state_log = [[IALogFileManager sharedInstance] lastLogFilePath];
-    NSString* crash_file_path = [IACrashReportManager getAppleCrashReport];
+    NSString* crash_file_path = [self getAppleCrashReport];
     
-    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [IACrashReportManager osVersion]];
+    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [self osVersion]];
     
     NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
     NSString* additional_info = @"None";
@@ -145,6 +155,36 @@
                                  additional_info.UTF8String);
     }
     [crash_reporter purgePendingCrashReport];
+}
+
+- (void)sendUserReportWithMessage:(NSString*)message
+                          andFile:(NSString*)file_path
+{
+    NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [self osVersion]];
+    
+    NSDictionary* user_report = @{@"user_name": user_name,
+                                  @"message": message,
+                                  @"file_path": file_path,
+                                  @"os_description": os_description};
+    
+    [self performSelectorInBackground:@selector(threadedSendUserReportWithMessage:)
+                           withObject:user_report];
+}
+
+- (void)threadedSendUserReportWithMessage:(NSDictionary*)user_report
+{
+    NSLog(@"%@ Sending user report", self);
+
+    NSString* user_name = [user_report valueForKey:@"user_name"];
+    NSString* message = [user_report valueForKey:@"message"];
+    NSString* file_path = [user_report valueForKey:@"file_path"];
+    NSString* os_description = [user_report valueForKey:@"os_description"];
+    
+    gap_send_user_report(user_name.UTF8String,
+                         message.UTF8String,
+                         file_path.UTF8String,
+                         os_description.UTF8String);
 }
 
 @end
