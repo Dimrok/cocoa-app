@@ -35,6 +35,7 @@
     IANotLoggedInViewController* _not_logged_view_controller;
     IAPopoverViewController* _popover_controller;
     IAOnboardingViewController* _onboard_controller;
+    IAReportProblemWindowController* _report_problem_controller;
     IAWindowController* _window_controller;
     
     // Managers
@@ -63,7 +64,7 @@
         IAGap* state = [[IAGap alloc] init];
         [IAGapState setupWithProtocol:state];
         
-        [IACrashReportManager setupCrashReporter];
+        [[IACrashReportManager sharedInstance] setupCrashReporter];
         
         _status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:30.0];
         _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_status_item];
@@ -223,7 +224,7 @@
 {
     IALog(@"%@ Logged in", self);
     
-    [IACrashReportManager sendExistingCrashReports];
+    [[IACrashReportManager sharedInstance] sendExistingCrashReports];
     
     if ([_login_view_controller loginWindowOpen])
         [_login_view_controller closeLoginWindow];
@@ -650,6 +651,15 @@ transactionsProgressForUser:(IAUser*)user
     [_transaction_manager rejectTransaction:transaction];
 }
 
+- (void)notificationListWantsReportProblem:(IANotificationListViewController*)sender
+{
+    [self closeNotificationWindow];
+    if (_report_problem_controller == nil)
+        _report_problem_controller = [[IAReportProblemWindowController alloc] initWithDelegate:self];
+    
+    [_report_problem_controller show];
+}
+
 //- Not Logged In View Protocol --------------------------------------------------------------------
 
 - (void)notLoggedInViewControllerWantsOpenLoginWindow:(IANotLoggedInViewController*)sender
@@ -684,6 +694,23 @@ transactionsProgressForUser:(IAUser*)user
 - (void)onboardingControllerStarted:(IAOnboardingViewController*)sender
 {
     _onboarding = YES;
+}
+
+//- Report Problem Protocol ------------------------------------------------------------------------
+
+- (void)reportProblemController:(IAReportProblemWindowController*)sender
+               wantsSendMessage:(NSString*)message
+                        andFile:(NSString*)file_path
+{
+    [_report_problem_controller close];
+    [[IACrashReportManager sharedInstance] sendUserReportWithMessage:message andFile:file_path];
+    _report_problem_controller = nil;
+}
+
+- (void)reportProblemControllerWantsCancel:(IAReportProblemWindowController*)sender
+{
+    [_report_problem_controller close];
+    _report_problem_controller = nil;
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
