@@ -147,7 +147,8 @@ void on_critical_event(char const* str)
         setenv("INFINIT_BINARY_DIR", binary_dir.UTF8String, 1);
         setenv("ELLE_LOG_LEVEL",
                "*surface*:DEBUG,"
-               "reactor.fsm.Machine:TRACE,"
+               "*frete*:DEBUG,"
+               "reactor.fsm.Machine:DEBUG,"
                "infinit.surface.gap.User:TRACE"
                , 0);
         setenv("ELLE_LOG_PID", "1", 0);
@@ -169,7 +170,7 @@ void on_critical_event(char const* str)
         setenv("INFINIT_APERTUS_PORT", "9899", 1);
 
         setenv("INFINIT_META_HOST", "v2.meta.api.production.infinit.io", 1);
-        setenv("INFINIT_META_PORT", "12345", 1);
+        setenv("INFINIT_META_PORT", "80", 1);
 
         setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.production.infinit.io", 1);
         setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
@@ -185,6 +186,12 @@ void on_critical_event(char const* str)
         setenv("INFINIT_METRICS_KISSMETRICS_TRANSACTION_TID", "a36c426570d8f1dc404891a284f033d003bbe9c2", 1);
         
         setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "ca10e9afa1f125fa832f5cbae9b6cbbb", 1);
+        
+        setenv("INFINIT_METRICS_HOST", "v2.metrics.api.production.infinit.io", 1);
+        setenv("INFINIT_METRICS_PORT", "80", 1);
+        
+//        setenv("INFINIT_METRICS_HOST", "", 1);
+//        setenv("INFINIT_METRICS_PORT", "", 1);
 #else
         setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.development.infinit.io", 1);
 //        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 1);
@@ -194,7 +201,7 @@ void on_critical_event(char const* str)
         setenv("INFINIT_META_HOST", "v2.meta.api.development.infinit.io", 1);
 //        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_META_HOST", "192.168.110.52", 1);
-        setenv("INFINIT_META_PORT", "12345", 1);
+        setenv("INFINIT_META_PORT", "80", 1);
 
         setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.development.infinit.io", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
@@ -202,6 +209,9 @@ void on_critical_event(char const* str)
         setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
         
 //        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "fd3652b9b4bc907fdd029eac64d98fa8", 1);
+        
+        setenv("INFINIT_METRICS_HOST", "v2.metrics.api.development.infinit.io", 1);
+        setenv("INFINIT_METRICS_PORT", "80", 1);
 
         setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
