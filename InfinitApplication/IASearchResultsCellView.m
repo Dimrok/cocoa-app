@@ -18,7 +18,7 @@
 
 - (BOOL)isOpaque
 {
-    return YES;
+    return NO;
 }
 
 - (void)setDelegate:(id<IASearchResultsCellProtocol>)delegate
