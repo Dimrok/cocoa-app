@@ -117,8 +117,6 @@
     [self.add_files_button setNormalTextAttributes:normal_attrs];
     [self.add_files_button setHoverTextAttributes:hover_attrs];
     
-    [self.add_person_button setHoverImage:[IAFunctions imageNamed:@"icon-add-people-hover"]];
-    
     [self.add_note_button setHoverImage:[IAFunctions imageNamed:@"icon-add-note-hover"]];
     
     [self.cancel_button setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];

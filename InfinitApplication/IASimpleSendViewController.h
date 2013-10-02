@@ -16,7 +16,6 @@
 @interface IASimpleSendViewController : IAViewController <IAUserSearchViewProtocol>
 
 @property (nonatomic, strong) IBOutlet IAHoverButton* add_files_button;
-@property (nonatomic, strong) IBOutlet IAHoverButton* add_person_button;
 @property (nonatomic, strong) IBOutlet IAHoverButton* add_note_button;
 @property (nonatomic, strong) IBOutlet IAHoverButton* cancel_button;
 
