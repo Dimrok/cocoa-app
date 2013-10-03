@@ -53,7 +53,11 @@
                                          initWithString:NSLocalizedString(@"LOGIN", @"login")
                                          attributes:button_style];
     
-    NSDictionary* message_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+    NSFont* message_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                      traits:NSUnboldFontMask
+                                                                      weight:5
+                                                                        size:12.0];
+    NSDictionary* message_attrs = [IAFunctions textStyleWithFont:message_font
                                                   paragraphStyle:style
                                                           colour:IA_GREY_COLOUR(32.0)
                                                           shadow:nil];
