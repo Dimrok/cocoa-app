@@ -54,10 +54,10 @@
 							<int key="NSCellFlags">67108864</int>
 							<int key="NSCellFlags2">138412032</int>
 							<string key="NSContents">Multiline Label</string>
-							<object class="NSFont" key="NSSupport" id="136971571">
-								<string key="NSName">LucidaGrande</string>
+							<object class="NSFont" key="NSSupport">
+								<string key="NSName">Helvetica-Light</string>
 								<double key="NSSize">13</double>
-								<int key="NSfFlags">1044</int>
+								<int key="NSfFlags">16</int>
 							</object>
 							<string key="NSCellIdentifier">_NS:9</string>
 							<reference key="NSControlView" ref="398727244"/>
@@ -80,7 +80,7 @@
 					<object class="NSTextField" id="820821549">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{118, 57}, {44, 17}}</string>
+						<string key="NSFrame">{{120, 57}, {40, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="398727244"/>
@@ -92,9 +92,9 @@
 							<int key="NSCellFlags2">138413056</int>
 							<string key="NSContents">Label</string>
 							<object class="NSFont" key="NSSupport">
-								<string key="NSName">LucidaGrande-Bold</string>
+								<string key="NSName">Helvetica</string>
 								<double key="NSSize">13</double>
-								<int key="NSfFlags">2072</int>
+								<int key="NSfFlags">16</int>
 							</object>
 							<string key="NSCellIdentifier">_NS:397</string>
 							<reference key="NSControlView" ref="820821549"/>
@@ -129,7 +129,11 @@
 					<int key="NSCellFlags">67108864</int>
 					<int key="NSCellFlags2">134217728</int>
 					<string key="NSContents">Button</string>
-					<reference key="NSSupport" ref="136971571"/>
+					<object class="NSFont" key="NSSupport">
+						<string key="NSName">LucidaGrande</string>
+						<double key="NSSize">13</double>
+						<int key="NSfFlags">1044</int>
+					</object>
 					<string key="NSCellIdentifier">_NS:9</string>
 					<reference key="NSControlView" ref="929802431"/>
 					<int key="NSButtonFlags">-2038284288</int>
