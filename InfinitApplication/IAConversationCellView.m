@@ -433,6 +433,9 @@
                     self.information_text.attributedStringValue = [[NSAttributedString alloc]
                                                                    initWithString:info
                                                                    attributes:info_attrs];
+                    self.cancel_button.hand_cursor = NO;
+                    [self.cancel_button setHoverImage:[IAFunctions
+                                                       imageNamed:@"icon-onboarding-close-hover"]];
                 }
                 break;
                 
@@ -444,6 +447,9 @@
                     self.information_text.attributedStringValue = [[NSAttributedString alloc]
                                                                    initWithString:info
                                                                    attributes:info_attrs];
+                    self.cancel_button.hand_cursor = NO;
+                    [self.cancel_button setHoverImage:[IAFunctions
+                                                       imageNamed:@"icon-onboarding-close-hover"]];
                 }
                 break;
                 
@@ -455,6 +461,9 @@
                     self.information_text.attributedStringValue = [[NSAttributedString alloc]
                                                                    initWithString:info
                                                                    attributes:info_attrs];
+                    self.cancel_button.hand_cursor = NO;
+                    [self.cancel_button setHoverImage:[IAFunctions
+                                                       imageNamed:@"icon-onboarding-close-hover"]];
                 }
                 break;
                 
@@ -490,6 +499,9 @@
             
             case TRANSACTION_VIEW_PREPARING:
                 [self.progress_indicator setIndeterminate:YES];
+                self.cancel_button.hand_cursor = NO;
+                [self.cancel_button setHoverImage:[IAFunctions
+                                                   imageNamed:@"icon-onboarding-close-hover"]];
                 break;
                 
             case TRANSACTION_VIEW_RUNNING:
@@ -497,6 +509,8 @@
                 self.progress_indicator.totalSize = _transaction.total_size;
                 [self.progress_indicator setIndeterminate:NO];
                 [self.progress_indicator setDoubleValue:_transaction.progress];
+                [self.cancel_button setHoverImage:[IAFunctions
+                                                   imageNamed:@"icon-onboarding-close-hover"]];
                 break;
             
             case TRANSACTION_VIEW_CANCELLED_OTHER:

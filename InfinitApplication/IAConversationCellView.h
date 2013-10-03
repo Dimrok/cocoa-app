@@ -10,6 +10,7 @@
 
 #import "IAConversationElement.h"
 #import "IAConversationProgressBar.h"
+#import "IAHoverButton.h"
 
 #define IA_CONVERSATION_VIEW_SPACER_SIZE 10.0
 
@@ -21,6 +22,7 @@
 @interface IAConversationCellView : NSTableCellView <NSTableViewDataSource,
                                                      NSTableViewDelegate>
 
+@property (nonatomic, strong) IBOutlet IAHoverButton* cancel_button;
 @property (nonatomic, strong) IBOutlet NSTextField* date;
 @property (nonatomic, strong) IBOutlet NSButton* files_icon;
 @property (nonatomic, strong) IBOutlet IAClickableTextField* files_label;
