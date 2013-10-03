@@ -254,10 +254,10 @@
     
     _login_view_controller = nil;
     
-//    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"2"])
-//    {
-    [self showOnboardingView];
-//    }
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"3"])
+    {
+        [self showOnboardingView];
+    }
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
@@ -688,7 +688,7 @@ transactionsProgressForUser:(IAUser*)user
     _onboarding = NO;
     [self closeNotificationWindow];
     _onboard_controller = nil;
-//    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
+    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
 }
 
 - (void)onboardingControllerStarted:(IAOnboardingViewController*)sender
