@@ -16,9 +16,6 @@
 
 //- Search Box View --------------------------------------------------------------------------------
 
-@interface IASearchBoxView : NSView
-@end
-
 @implementation IASearchBoxView
 
 - (BOOL)isOpaque
@@ -32,6 +29,19 @@
     NSBezierPath* white_bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:6.0];
     [IA_GREY_COLOUR(255.0) set];
     [white_bg fill];
+    if (_no_results)
+    {
+        NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0,
+                                                                         NSWidth(self.bounds), 1.0)];
+        [IA_GREY_COLOUR(235.0) set];
+        [line fill];
+    }
+}
+
+- (void)setNoResults:(BOOL)no_results
+{
+    _no_results = no_results;
+    [self setNeedsDisplay:YES];
 }
 
 - (NSSize)intrinsicContentSize
@@ -176,10 +186,9 @@
     NSUInteger _token_count;
     
     BOOL _no_results;
-    NSAttributedString* _no_result_head_str;
+    NSAttributedString* _add_file_str;
+    NSAttributedString* _invite_msg_str;
     NSAttributedString* _no_result_msg_str;
-    NSAttributedString* _no_email_head_str;
-    NSAttributedString* _no_email_msg_str;
     
     CGFloat _row_height;
     NSInteger _max_rows_shown;
@@ -204,39 +213,27 @@
                                                  object:nil];
         NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         para.alignment = NSCenterTextAlignment;
-        NSFont* no_result_head_font = [[NSFontManager sharedFontManager]
-                                       fontWithFamily:@"Helvetica"
-                                               traits:NSBoldFontMask
-                                               weight:0
-                                                 size:12.0];
-        NSDictionary* no_result_head_style = [IAFunctions textStyleWithFont:no_result_head_font
-                                                            paragraphStyle:para
-                                                                    colour:IA_GREY_COLOUR(32.0)
-                                                                    shadow:nil];
+
         NSFont* no_result_msg_font = [[NSFontManager sharedFontManager]
                                       fontWithFamily:@"Helvetica"
                                               traits:NSUnboldFontMask
-                                              weight:0
+                                              weight:5
                                                 size:12.0];
         NSDictionary* no_result_msg_style = [IAFunctions textStyleWithFont:no_result_msg_font
                                                             paragraphStyle:para
                                                                     colour:IA_GREY_COLOUR(32.0)
                                                                     shadow:nil];
-        _no_result_head_str = [[NSAttributedString alloc] initWithString:
-                               NSLocalizedString(@"No Search Results:",
-                                                 @"no search results")
-                                                             attributes:no_result_head_style];
         _no_result_msg_str = [[NSAttributedString alloc] initWithString:
-                              NSLocalizedString(@"No results! Send to an email instead!",
-                                                @"no results! send to an email instead!")
+                              NSLocalizedString(@"No results. Send to an email instead!",
+                                                @"no results. send to an email instead!")
                                                          attributes:no_result_msg_style];
-        _no_email_head_str = [[NSAttributedString alloc] initWithString:
-                              NSLocalizedString(@"Friend not on Infinit?",
-                                                @"friend not on infinit?")
-                                                            attributes:no_result_head_style];
-        _no_email_msg_str = [[NSAttributedString alloc] initWithString:
-                             NSLocalizedString(@"Email your files by clicking SEND",
-                                               @"email your files by clicking send")
+        _invite_msg_str = [[NSAttributedString alloc] initWithString:
+                           NSLocalizedString(@"Click send to invite your friend!",
+                                             @"Click send to invite your friend!")
+                                                        attributes:no_result_msg_style];
+        _add_file_str = [[NSAttributedString alloc] initWithString:
+                         NSLocalizedString(@"Add a file to invite your friend.",
+                                           @"add a file to invite your friend.")
                                                         attributes:no_result_msg_style];
         _static_image = [IAFunctions imageNamed:@"icon-search"];
         _loading_iamge = [IAFunctions imageNamed:@"loading"];
@@ -262,7 +259,6 @@
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
     [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
 
-    self.no_results_heading.attributedStringValue = _no_result_head_str;
     self.no_results_message.attributedStringValue = _no_result_msg_str;
 }
 
@@ -291,9 +287,22 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (void)checkInputs
+{
+    if ([_delegate searchViewWantsIfGotFile:self])
+    {
+        if ([self.no_results_message.stringValue isEqualToString:_add_file_str.string])
+            self.no_results_message.attributedStringValue = _invite_msg_str;
+    }
+    else
+    {
+        if ([self.no_results_message.stringValue isEqualToString:_invite_msg_str.string])
+            self.no_results_message.attributedStringValue = _add_file_str;
+    }
+}
+
 - (void)setNoResultsHidden:(BOOL)hidden
 {
-    [self.no_results_heading setHidden:hidden];
     [self.no_results_message setHidden:hidden];
 }
 
@@ -433,8 +442,10 @@
         self.search_image.animates = NO;
         self.search_image.image = _static_image;
     }
-    self.no_results_heading.attributedStringValue = _no_email_head_str;
-    self.no_results_message.attributedStringValue = _no_email_msg_str;
+    if ([_delegate searchViewWantsIfGotFile:self])
+        self.no_results_message.attributedStringValue = _invite_msg_str;
+    else
+        self.no_results_message.attributedStringValue = _add_file_str;
     [self updateResultsTable];
 }
 
@@ -471,7 +482,6 @@
     }
     self.search_image.animates = NO;
     self.search_image.image = _static_image;
-    self.no_results_heading.attributedStringValue = _no_result_head_str;
     self.no_results_message.attributedStringValue = _no_result_msg_str;
     [self updateResultsTable];
 }
@@ -682,6 +692,7 @@ displayStringForRepresentedObject:(id)representedObject
     _search_results = nil;
     self.search_image.animates = NO;
     self.search_image.image = _static_image;
+    [self.search_box_view setNoResults:NO];
 }
 
 - (void)updateResultsTable
@@ -693,8 +704,8 @@ displayStringForRepresentedObject:(id)representedObject
         [self setNoResultsHidden:NO];
         new_size = NSMakeSize(NSWidth(self.view.frame),
                               NSHeight(self.search_box_view.frame) +
-                              NSHeight(self.no_results_heading.frame) +
-                              NSHeight(self.no_results_message.frame) + 10.0);
+                              NSHeight(self.no_results_message.frame) + 20.0);
+        [self.search_box_view setNoResults:YES];
     }
     else
     {
@@ -702,6 +713,7 @@ displayStringForRepresentedObject:(id)representedObject
         [self setNoResultsHidden:YES];
         new_size = NSMakeSize(NSWidth(self.view.frame),
                               NSHeight(self.search_box_view.frame) + [self tableHeight]);
+        [self.search_box_view setNoResults:NO];
     }
     [_delegate searchView:self
               changedSize:new_size

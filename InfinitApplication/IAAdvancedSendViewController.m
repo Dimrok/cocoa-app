@@ -368,6 +368,7 @@
 {
     NSMutableArray* recipients = [NSMutableArray arrayWithArray:
                                   [_user_search_controller recipientList]];
+    [_user_search_controller checkInputs];
     if (recipients.count == 0)
         return NO;
     if (_file_list.count == 0)
@@ -536,6 +537,14 @@ doCommandBySelector:(SEL)commandSelector
 }
 
 //- User Search View Protocol ----------------------------------------------------------------------
+
+- (BOOL)searchViewWantsIfGotFile:(IAUserSearchViewController*)sender
+{
+    if ([[_delegate advancedSendViewWantsFileList:self] count] > 0)
+        return YES;
+    
+    return NO;
+}
 
 - (void)searchView:(IAUserSearchViewController*)sender
        changedSize:(NSSize)size
