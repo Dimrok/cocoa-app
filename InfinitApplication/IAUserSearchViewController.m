@@ -677,6 +677,7 @@ displayStringForRepresentedObject:(id)representedObject
     NSSize new_size = NSZeroSize;
     if (_search_results.count == 0) // No results so show message
     {
+        [self.table_view reloadData];
         [self setNoResultsHidden:NO];
         new_size = NSMakeSize(NSWidth(self.view.frame),
                               NSHeight(self.search_box_view.frame) +
@@ -685,10 +686,10 @@ displayStringForRepresentedObject:(id)representedObject
     }
     else
     {
+        [self.table_view reloadData];
         [self setNoResultsHidden:YES];
         new_size = NSMakeSize(NSWidth(self.view.frame),
                               NSHeight(self.search_box_view.frame) + [self tableHeight]);
-        [self.table_view reloadData];
     }
     [_delegate searchView:self
               changedSize:new_size
