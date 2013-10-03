@@ -33,19 +33,15 @@
         NSParagraphStyle* para = [self.attributedStringValue attribute:NSParagraphStyleAttributeName
                                                                atIndex:0
                                                         effectiveRange:nil];
-        NSFont* hover_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                        traits:NSUnboldFontMask
-                                                                        weight:0
-                                                                          size:12.0];
-        _hover_attrs = [IAFunctions textStyleWithFont:hover_font
+        NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                  traits:NSUnboldFontMask
+                                                                  weight:5
+                                                                    size:12.0];
+        _hover_attrs = [IAFunctions textStyleWithFont:font
                                        paragraphStyle:para
                                                colour:IA_RGB_COLOUR(102.0, 174.0, 211.0)
                                                shadow:nil];
-        NSFont* normal_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                         traits:NSUnboldFontMask
-                                                                         weight:0
-                                                                           size:12.0];
-        _normal_attrs = [IAFunctions textStyleWithFont:normal_font
+        _normal_attrs = [IAFunctions textStyleWithFont:font
                                         paragraphStyle:para
                                                 colour:IA_GREY_COLOUR(62.0)
                                                 shadow:nil];
