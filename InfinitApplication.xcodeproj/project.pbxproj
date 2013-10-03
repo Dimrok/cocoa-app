@@ -88,6 +88,8 @@
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
 		836DF7EC17FD70DE00B2B809 /* IACentredMessageTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */; };
+		836DF80317FD919C00B2B809 /* btn-accept-decline.png in Resources */ = {isa = PBXBuildFile; fileRef = 836DF80117FD919C00B2B809 /* btn-accept-decline.png */; };
+		836DF80417FD919C00B2B809 /* btn-accept-decline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836DF80217FD919C00B2B809 /* btn-accept-decline@2x.png */; };
 		836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */; };
 		836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867517ECA30300D7202C /* QuartzCore.framework */; };
 		837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */; };
@@ -544,6 +546,8 @@
 		836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAAdvancedSendViewController.xib; sourceTree = "<group>"; };
 		836DF7EA17FD70DE00B2B809 /* IACentredMessageTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredMessageTextCell.h; sourceTree = "<group>"; };
 		836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredMessageTextCell.m; sourceTree = "<group>"; };
+		836DF80117FD919C00B2B809 /* btn-accept-decline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-decline.png"; sourceTree = "<group>"; };
+		836DF80217FD919C00B2B809 /* btn-accept-decline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-decline@2x.png"; sourceTree = "<group>"; };
 		836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../Externals/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		837A7F6F17FC072300600ACD /* IAReportProblemWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAReportProblemWindowController.h; sourceTree = "<group>"; };
@@ -978,6 +982,8 @@
 			isa = PBXGroup;
 			children = (
 				8390D5C017F1F31D00990DCD /* loading-bar.gif */,
+				836DF80117FD919C00B2B809 /* btn-accept-decline.png */,
+				836DF80217FD919C00B2B809 /* btn-accept-decline@2x.png */,
 				839DFC1617D8ED45001D60DD /* icon-back.png */,
 				839DFC1717D8ED45001D60DD /* icon-back@2x.png */,
 				834D47E517CB446A00EEB16A /* icon-collapse.png */,
@@ -1590,10 +1596,12 @@
 				83D4205817C4CF7F00D4E168 /* icon-status.png in Resources */,
 				83ED2FC617E9A50600BB35A0 /* icon-menu-bar-fire@2x.png in Resources */,
 				83D4205917C4CF7F00D4E168 /* icon-status@2x.png in Resources */,
+				836DF80317FD919C00B2B809 /* btn-accept-decline.png in Resources */,
 				83D4206417C4DC6700D4E168 /* icon-check.png in Resources */,
 				83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */,
 				83D4206617C4DC6700D4E168 /* icon-error.png in Resources */,
 				83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */,
+				836DF80417FD919C00B2B809 /* btn-accept-decline@2x.png in Resources */,
 				83D4207117C4DE9800D4E168 /* badge.png in Resources */,
 				83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */,
 				83929BB717C60FD60009292D /* icon-reject.png in Resources */,
