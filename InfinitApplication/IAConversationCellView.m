@@ -206,7 +206,7 @@
     CGFloat spacer = IA_CONVERSATION_VIEW_SPACER_SIZE;
     CGFloat buttons = 92.0;
     CGFloat progress = 98.0;
-    CGFloat error = 92.0;
+    CGFloat error = 88.0;
     switch (element.mode)
     {
         case CONVERSATION_CELL_VIEW_MESSAGE:
@@ -321,7 +321,7 @@
     
     NSFont* file_name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
-                                                                        weight:0
+                                                                        weight:5
                                                                           size:12.0];
     NSDictionary* files_name_attrs = [IAFunctions
                                       textStyleWithFont:file_name_font
