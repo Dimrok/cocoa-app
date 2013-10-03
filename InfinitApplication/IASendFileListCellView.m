@@ -69,8 +69,12 @@
 {
     _file_path = file_path;
     NSString* file_name = [file_path lastPathComponent];
+    NSFont* file_name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:12.0];
     NSDictionary* file_name_style = [IAFunctions
-                                        textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                        textStyleWithFont:file_name_font
                                            paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                    colour:IA_RGB_COLOUR(85.0, 158.0, 201.0)
                                                    shadow:nil];
@@ -91,11 +95,15 @@
                                                                                          error:NULL];
         file_size = [file_properties fileSize];
     }
+    NSFont* file_size_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:12.0];
     NSString* file_size_str = [IAFunctions fileSizeStringFrom:file_size];
     NSMutableParagraphStyle* paragraph_style = [[NSParagraphStyle defaultParagraphStyle]
                                                 mutableCopy];
     paragraph_style.alignment = NSRightTextAlignment;
-    NSDictionary* style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+    NSDictionary* style = [IAFunctions textStyleWithFont:file_size_font
                                           paragraphStyle:paragraph_style
                                                   colour:IA_RGB_COLOUR(202.0, 202.0, 202.0)
                                                   shadow:nil];

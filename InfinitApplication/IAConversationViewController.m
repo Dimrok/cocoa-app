@@ -89,15 +89,25 @@
                                     withBorderOfThickness:2.0
                                                  inColour:IA_GREY_COLOUR(255.0)
                                         andShadowOfRadius:1.0];
-    NSDictionary* name_attrs = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
+    
+    NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                   traits:NSUnboldFontMask
+                                                                   weight:7
+                                                                     size:12.0];
+    NSDictionary* name_attrs = [IAFunctions textStyleWithFont:name_font
                                                paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                        colour:IA_GREY_COLOUR(29.0)
                                                        shadow:nil];
     NSAttributedString* name_str = [[NSAttributedString alloc] initWithString:_user.fullname
                                                                    attributes:name_attrs];
     self.user_fullname.attributedStringValue = name_str;
+    
+    NSFont* handle_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                     traits:NSUnboldFontMask
+                                                                     weight:0
+                                                                       size:11.5];
     NSDictionary* handle_attrs = [IAFunctions
-                                  textStyleWithFont:[NSFont systemFontOfSize:11.5]
+                                  textStyleWithFont:handle_font
                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                   colour:IA_GREY_COLOUR(193.0)
                                   shadow:nil];

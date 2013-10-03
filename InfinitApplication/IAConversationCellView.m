@@ -33,11 +33,19 @@
         NSParagraphStyle* para = [self.attributedStringValue attribute:NSParagraphStyleAttributeName
                                                                atIndex:0
                                                         effectiveRange:nil];
-        _hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+        NSFont* hover_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:12.0];
+        _hover_attrs = [IAFunctions textStyleWithFont:hover_font
                                        paragraphStyle:para
                                                colour:IA_RGB_COLOUR(102.0, 174.0, 211.0)
                                                shadow:nil];
-        _normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+        NSFont* normal_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                         traits:NSUnboldFontMask
+                                                                         weight:0
+                                                                           size:12.0];
+        _normal_attrs = [IAFunctions textStyleWithFont:normal_font
                                         paragraphStyle:para
                                                 colour:IA_GREY_COLOUR(62.0)
                                                 shadow:nil];
@@ -299,7 +307,11 @@
     
     NSMutableParagraphStyle* date_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     date_para.alignment = NSCenterTextAlignment;
-    NSDictionary* date_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+    NSFont* date_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                   traits:NSUnboldFontMask
+                                                                   weight:0
+                                                                     size:11.0];
+    NSDictionary* date_attrs = [IAFunctions textStyleWithFont:date_font
                                                paragraphStyle:date_para
                                                        colour:IA_GREY_COLOUR(206.0)
                                                        shadow:nil];
@@ -307,8 +319,12 @@
     self.date.attributedStringValue = [[NSAttributedString alloc] initWithString:date_str
                                                                       attributes:date_attrs];
     
+    NSFont* file_name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:12.0];
     NSDictionary* files_name_attrs = [IAFunctions
-                                      textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                      textStyleWithFont:file_name_font
                                       paragraphStyle:text_align
                                       colour:IA_GREY_COLOUR(62.0)
                                       shadow:nil];
@@ -350,7 +366,11 @@
     
     if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
     {
-        NSDictionary* note_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.5]
+        NSFont* note_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                       traits:NSUnboldFontMask
+                                                                       weight:0
+                                                                         size:11.5];
+        NSDictionary* note_attrs = [IAFunctions textStyleWithFont:note_font
                                                    paragraphStyle:text_align
                                                            colour:IA_GREY_COLOUR(184.0)
                                                            shadow:nil];
@@ -379,13 +399,21 @@
         }
         
         self.message_button.state = NSOffState;
-        NSDictionary* info_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+        NSFont* info_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                       traits:NSUnboldFontMask
+                                                                       weight:0
+                                                                         size:12.0];
+        NSDictionary* info_attrs = [IAFunctions textStyleWithFont:info_font
                                                    paragraphStyle:text_align
                                                            colour:IA_GREY_COLOUR(204.0)
                                                            shadow:nil];
         
+        NSFont* error_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:12.0];
         NSDictionary* error_attrs = [IAFunctions
-                                     textStyleWithFont:[NSFont systemFontOfSize:12.0]
+                                     textStyleWithFont:error_font
                                      paragraphStyle:text_align
                                      colour:IA_RGB_COLOUR(222.0, 104.0, 81.0)
                                      shadow:nil];

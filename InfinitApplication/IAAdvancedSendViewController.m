@@ -232,11 +232,15 @@
 
 - (void)setupHoverButtons
 {
-    NSDictionary* normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+    NSFont* add_files_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:12.0];
+    NSDictionary* normal_attrs = [IAFunctions textStyleWithFont:add_files_font
                                                  paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                          colour:IA_GREY_COLOUR(179.0)
                                                          shadow:nil];
-    NSDictionary* hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+    NSDictionary* hover_attrs = [IAFunctions textStyleWithFont:add_files_font
                                                 paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                         colour:IA_RGB_COLOUR(11.0, 117.0, 162)
                                                         shadow:nil];
@@ -281,7 +285,11 @@
     
     [self setupHoverButtons];
     [self initialiseSendButton];
-    _characters_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+    NSFont* characters_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                         traits:NSUnboldFontMask
+                                                                         weight:0
+                                                                           size:11.0];
+    _characters_attrs = [IAFunctions textStyleWithFont:characters_font
                                         paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                 colour:IA_GREY_COLOUR(217.0)
                                                 shadow:nil];
@@ -293,7 +301,11 @@
     
     NSString* add_files_str = [NSString stringWithFormat:@"%@", NSLocalizedString(@"Add files...",
                                                                                   @"add files...")];
-    NSDictionary* add_files_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+    NSFont* add_files_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:12.0];
+    NSDictionary* add_files_attrs = [IAFunctions textStyleWithFont:add_files_font
                                                     paragraphStyle:[NSParagraphStyle
                                                                     defaultParagraphStyle]
                                                             colour:IA_GREY_COLOUR(179.0)

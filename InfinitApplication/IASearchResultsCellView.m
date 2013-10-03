@@ -28,7 +28,11 @@
 
 - (void)setUserFullname:(NSString*)fullname
 {
-    NSDictionary* style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+    NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                   traits:NSUnboldFontMask
+                                                                   weight:0
+                                                                     size:12.0];
+    NSDictionary* style = [IAFunctions textStyleWithFont:name_font
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                   colour:IA_RGB_COLOUR(37.0, 47.0, 51.0)
                                                   shadow:nil];

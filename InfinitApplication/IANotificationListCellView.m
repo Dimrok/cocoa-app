@@ -26,7 +26,11 @@
 
 - (void)setUserFullName:(NSString*)fullname
 {
-    NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
+    NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                   traits:NSUnboldFontMask
+                                                                   weight:7
+                                                                     size:12.0];
+    NSDictionary* attrs = [IAFunctions textStyleWithFont:name_font
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                   colour:IA_GREY_COLOUR(29.0)
                                                   shadow:nil];
@@ -36,7 +40,11 @@
 
 - (void)setFileName:(NSString*)file_name
 {
-    NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.5]
+    NSFont* file_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                   traits:NSUnboldFontMask
+                                                                   weight:0
+                                                                     size:11.5];
+    NSDictionary* attrs = [IAFunctions textStyleWithFont:file_font
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                   colour:IA_GREY_COLOUR(153.0)
                                                   shadow:nil];

@@ -85,7 +85,11 @@
         _delegate = delegate;
         NSMutableParagraphStyle* error_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         error_para.alignment = NSCenterTextAlignment;
-        _error_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+        NSFont* error_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:5
+                                                                          size:12.0];
+        _error_attrs = [IAFunctions textStyleWithFont:error_font
                                        paragraphStyle:error_para
                                                colour:IA_RGB_COLOUR(222.0, 104.0, 81.0)
                                                shadow:nil];
@@ -100,7 +104,7 @@
     NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
                                           blurRadius:1.0
                                               colour:[NSColor blackColor]];
-    
+
     NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
                                                  paragraphStyle:style
                                                          colour:[NSColor whiteColor]
@@ -112,8 +116,12 @@
 
 - (void)setForgotPasswordRegisterButtonText
 {
+    NSFont* link_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                   traits:NSUnboldFontMask
+                                                                   weight:0
+                                                                     size:11.0];
     NSDictionary* link_attrs = [IAFunctions
-                                textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                textStyleWithFont:link_font
                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                            colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
                                            shadow:nil];
@@ -126,6 +134,20 @@
     self.forgot_password_button.attributedTitle = [[NSAttributedString alloc]
                                                    initWithString:forgot_password
                                                        attributes:link_attrs];
+    [self.create_account_button setNormalTextAttributes:link_attrs];
+    [self.forgot_password_button setNormalTextAttributes:link_attrs];
+    
+    NSFont* link_hover_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                         traits:NSUnboldFontMask
+                                                                         weight:0
+                                                                           size:11.0];
+    NSDictionary* link_hover_attrs = [IAFunctions
+                                      textStyleWithFont:link_hover_font
+                                         paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                 colour:IA_RGB_COLOUR(11.0, 117.0, 162)
+                                                 shadow:nil];
+    [self.create_account_button setHoverTextAttributes:link_hover_attrs];
+    [self.forgot_password_button setHoverTextAttributes:link_hover_attrs];
 }
 
 - (void)awakeFromNib
