@@ -250,6 +250,8 @@
     // Workaround for 15" Macbook Pro always rendering scroll bars
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
+    [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
+
     self.no_results_heading.attributedStringValue = _no_result_head_str;
     self.no_results_message.attributedStringValue = _no_result_msg_str;
 }
