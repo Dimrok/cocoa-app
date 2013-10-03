@@ -87,6 +87,7 @@
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836AAF7017AE876F001ECF2E /* IAAdvancedSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */; };
 		836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */; };
+		836DF7EC17FD70DE00B2B809 /* IACentredMessageTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */; };
 		836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */; };
 		836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867517ECA30300D7202C /* QuartzCore.framework */; };
 		837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */; };
@@ -129,7 +130,7 @@
 		8398835717A6AC96009409B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8398835617A6AC95009409B3 /* Security.framework */; };
 		8398836117A6C1F9009409B3 /* IALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835F17A6C1F9009409B3 /* IALoginViewController.m */; };
 		8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8398836017A6C1F9009409B3 /* IALoginViewController.xib */; };
-		8398836A17A6FDE7009409B3 /* IACenteredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */; };
+		8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */; };
 		839A2C3617E0CB85001386A5 /* avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 839A2C3517E0CB85001386A5 /* avatar_default.png */; };
 		839DFC1417D8ECEF001D60DD /* icon-transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1217D8ECEF001D60DD /* icon-transfer.png */; };
 		839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */; };
@@ -541,6 +542,8 @@
 		836AAF6D17AE876E001ECF2E /* IAAdvancedSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAdvancedSendViewController.h; sourceTree = "<group>"; };
 		836AAF6E17AE876F001ECF2E /* IAAdvancedSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAdvancedSendViewController.m; sourceTree = "<group>"; };
 		836AAF6F17AE876F001ECF2E /* IAAdvancedSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAAdvancedSendViewController.xib; sourceTree = "<group>"; };
+		836DF7EA17FD70DE00B2B809 /* IACentredMessageTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredMessageTextCell.h; sourceTree = "<group>"; };
+		836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredMessageTextCell.m; sourceTree = "<group>"; };
 		836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../Externals/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		837A7F6F17FC072300600ACD /* IAReportProblemWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAReportProblemWindowController.h; sourceTree = "<group>"; };
@@ -593,8 +596,8 @@
 		8398835F17A6C1F9009409B3 /* IALoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IALoginViewController.m; sourceTree = "<group>"; };
 		8398836017A6C1F9009409B3 /* IALoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IALoginViewController.xib; sourceTree = "<group>"; };
 		8398836517A6FA73009409B3 /* IADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADefine.h; sourceTree = "<group>"; };
-		8398836817A6FDE6009409B3 /* IACenteredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACenteredTextFieldCell.h; sourceTree = "<group>"; };
-		8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACenteredTextFieldCell.m; sourceTree = "<group>"; };
+		8398836817A6FDE6009409B3 /* IACentredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredTextFieldCell.h; sourceTree = "<group>"; };
+		8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredTextFieldCell.m; sourceTree = "<group>"; };
 		839A2C3517E0CB85001386A5 /* avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_default.png; sourceTree = "<group>"; };
 		839DFC1217D8ECEF001D60DD /* icon-transfer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer.png"; sourceTree = "<group>"; };
 		839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer@2x.png"; sourceTree = "<group>"; };
@@ -965,6 +968,8 @@
 				83974CF217D127E200894E8D /* IAConversationHeaderView.m */,
 				8327439117F0A19D008B4CA4 /* IAConversationProgressBar.h */,
 				8327439217F0A19D008B4CA4 /* IAConversationProgressBar.m */,
+				836DF7EA17FD70DE00B2B809 /* IACentredMessageTextCell.h */,
+				836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */,
 			);
 			name = "Conversation View";
 			sourceTree = "<group>";
@@ -1077,8 +1082,8 @@
 				832808CD17A2C1470025B6F8 /* IAFunctions.h */,
 				832808CE17A2C1480025B6F8 /* IAFunctions.m */,
 				8398836517A6FA73009409B3 /* IADefine.h */,
-				8398836817A6FDE6009409B3 /* IACenteredTextFieldCell.h */,
-				8398836917A6FDE7009409B3 /* IACenteredTextFieldCell.m */,
+				8398836817A6FDE6009409B3 /* IACentredTextFieldCell.h */,
+				8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */,
 				8346314E17A7042A00A7E17F /* IACentredSecureCell.h */,
 				8346314F17A7042A00A7E17F /* IACentredSecureCell.m */,
 				838FE0B617DA097C004160DB /* IAHoverButton.h */,
@@ -1674,7 +1679,7 @@
 				8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */,
 				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
 				8398836117A6C1F9009409B3 /* IALoginViewController.m in Sources */,
-				8398836A17A6FDE7009409B3 /* IACenteredTextFieldCell.m in Sources */,
+				8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */,
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
 				831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */,
 				831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */,
@@ -1705,6 +1710,7 @@
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.m in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.m in Sources */,
 				838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */,
+				836DF7EC17FD70DE00B2B809 /* IACentredMessageTextCell.m in Sources */,
 				838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
