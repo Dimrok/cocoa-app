@@ -15,28 +15,12 @@
 
 //- Automatic Relaunching --------------------------------------------------------------------------
 
-@implementation NSApplication (Relaunch)
-
-- (void)relaunchAfterDelay:(float)seconds
-{
-	NSTask* task = [[NSTask alloc] init];
-	NSMutableArray* args = [NSMutableArray array];
-	[args addObject:[NSString stringWithFormat:@"sleep %f; open \"%@\"",
-                                               seconds,
-                                               [[NSBundle mainBundle] bundlePath]]];
-	[task setLaunchPath:@"/bin/sh"];
-	[task setArguments:args];
-	[task launch];
-	
-	[self terminate:nil];
-}
-
-@end
-
 @implementation IAAppDelegate
 {
 @private
     IALogFileManager* _log_manager;
+    BOOL _updating;
+    NSInvocation* _update_invocation;
 }
 
 //- Sparkle Updater --------------------------------------------------------------------------------
@@ -44,12 +28,27 @@
 - (void)setupUpdater
 {
 #ifdef BUILD_PRODUCTION
-    [[SUUpdater sharedUpdater] setDelegate:self];
     [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
-    [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
     [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 #endif
+}
+
+// Overloaded so that we check for updates on the first launch
+// https://github.com/andymatuschak/Sparkle/wiki/customization
+- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater*)bundle
+{
+    return YES;
+}
+
+- (BOOL)updater:(SUUpdater*)updater
+shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
+  untilInvoking:(NSInvocation*)invocation
+{
+    _updating = YES;
+    [_controller handleQuit];
+    _update_invocation = invocation;
+    return YES;
 }
 
 - (void)updaterWillRelaunchApplication:(SUUpdater*)updater
@@ -76,6 +75,7 @@
     {
         // Log manager must be initialised here, before the new log file is written.
         _log_manager = [IALogFileManager sharedInstance];
+        _updating = NO;
     }
     return self;
 }
@@ -133,6 +133,11 @@
 
 - (void)terminateApplication:(IAMainController*)sender
 {
+    if (_updating)
+    {
+        [_update_invocation invoke];
+        return;
+    }
     NSLog(@"%@ Terminating application", self);
     [NSApp terminate:self];
 }
