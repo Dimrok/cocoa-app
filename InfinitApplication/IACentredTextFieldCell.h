@@ -8,5 +8,5 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface IACenteredTextFieldCell : NSTextFieldCell
+@interface IACentredTextFieldCell : NSTextFieldCell
 @end
