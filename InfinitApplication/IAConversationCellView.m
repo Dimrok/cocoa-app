@@ -337,8 +337,7 @@
         self.files_icon.image = [[NSWorkspace sharedWorkspace]
                                  iconForFileType:[_transaction.files[0] pathExtension]];
         files_str = _transaction.files[0];
-        [self.files_icon setEnabled:NO];
-        self.files_icon.alphaValue = 1.0;
+        [self.files_icon setEnabled:YES];
         [self.files_icon setToolTip:@""];
     }
     self.files_label.attributedStringValue = [[NSAttributedString alloc]
