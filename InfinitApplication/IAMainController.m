@@ -274,7 +274,8 @@
         switch (result.status)
         {
             case gap_network_error:
-                error = NSLocalizedString(@"Connection problem", @"no route to internet");
+                error = NSLocalizedString(@"Connection problem, check Internet connection",
+                                          @"no route to internet");
                 break;
                 
             case gap_email_password_dont_match:
