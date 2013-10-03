@@ -204,11 +204,21 @@
                                                  object:nil];
         NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         para.alignment = NSCenterTextAlignment;
-        NSDictionary* no_result_head_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
+        NSFont* no_result_head_font = [[NSFontManager sharedFontManager]
+                                       fontWithFamily:@"Helvetica"
+                                               traits:NSBoldFontMask
+                                               weight:0
+                                                 size:12.0];
+        NSDictionary* no_result_head_style = [IAFunctions textStyleWithFont:no_result_head_font
                                                             paragraphStyle:para
                                                                     colour:IA_GREY_COLOUR(32.0)
                                                                     shadow:nil];
-        NSDictionary* no_result_msg_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+        NSFont* no_result_msg_font = [[NSFontManager sharedFontManager]
+                                      fontWithFamily:@"Helvetica"
+                                              traits:NSUnboldFontMask
+                                              weight:0
+                                                size:12.0];
+        NSDictionary* no_result_msg_style = [IAFunctions textStyleWithFont:no_result_msg_font
                                                             paragraphStyle:para
                                                                     colour:IA_GREY_COLOUR(32.0)
                                                                     shadow:nil];
