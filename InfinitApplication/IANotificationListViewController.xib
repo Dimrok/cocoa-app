@@ -2232,11 +2232,6 @@
 						<reference key="parent" ref="326206700"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">517</int>
-						<reference key="object" ref="638530687"/>
-						<reference key="parent" ref="326206700"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">535</int>
 						<reference key="object" ref="920617021"/>
 						<reference key="parent" ref="264162119"/>
@@ -2500,13 +2495,18 @@
 						<reference key="parent" ref="64764261"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">928</int>
-						<reference key="object" ref="175669586"/>
-						<reference key="parent" ref="264162119"/>
+						<int key="objectID">517</int>
+						<reference key="object" ref="638530687"/>
+						<reference key="parent" ref="326206700"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">929</int>
 						<reference key="object" ref="921407956"/>
+						<reference key="parent" ref="264162119"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">928</int>
+						<reference key="object" ref="175669586"/>
 						<reference key="parent" ref="264162119"/>
 					</object>
 				</array>
@@ -2749,7 +2749,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">929</int>
+			<int key="maxID">936</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
