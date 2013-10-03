@@ -93,7 +93,7 @@
     NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
                                                                    weight:7
-                                                                     size:12.0];
+                                                                     size:13.0];
     NSDictionary* name_attrs = [IAFunctions textStyleWithFont:name_font
                                                paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                        colour:IA_GREY_COLOUR(29.0)
