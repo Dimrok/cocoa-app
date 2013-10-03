@@ -14,7 +14,6 @@ typedef enum __IANotificationAvatarMode
 {
     AVATAR_VIEW_NORMAL = 0,
     AVATAR_VIEW_ACCEPT_REJECT = 1,
-    AVATAR_VIEW_CANCEL = 2
 } IANotificationAvatarMode;
 
 @interface IANotificationAvatarView : NSView

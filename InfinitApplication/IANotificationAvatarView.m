@@ -173,22 +173,6 @@
                       operation:NSCompositeSourceOver
                        fraction:1.0];
     }
-    
-    if (_mode == AVATAR_VIEW_CANCEL && _mouse_over)
-    {
-        NSBezierPath* cancel_mask = [NSBezierPath bezierPathWithOvalInRect:avatar_image_frame];
-        [IA_RGBA_COLOUR(255.0, 61.0, 42.0, 0.82) set];
-        [cancel_mask fill];
-        
-        NSRect cancel_image_frame = NSMakeRect(NSWidth(avatar_image_frame) / 2.0 + border - 1.0,
-                                               NSHeight(avatar_image_frame) / 2.0,
-                                               _cancel_icon.size.width,
-                                               _cancel_icon.size.height);
-        [_cancel_icon drawInRect:cancel_image_frame
-                       fromRect:NSZeroRect
-                      operation:NSCompositeSourceOver
-                       fraction:1.0];
-    }
 }
 
 //- Outside functions ------------------------------------------------------------------------------
@@ -249,10 +233,6 @@
                 [_delegate avatarHadAcceptClicked:self];
             else if (click_location.y < self.frame.size.height / 2.0)
                 [_delegate avatarHadRejectClicked:self];
-            return;
-        
-        case AVATAR_VIEW_CANCEL:
-            [_delegate avatarHadCancelClicked:self];
             return;
             
         default:

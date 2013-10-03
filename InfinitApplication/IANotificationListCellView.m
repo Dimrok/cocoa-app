@@ -128,14 +128,8 @@
     switch (view_mode)
     {            
         case TRANSACTION_VIEW_WAITING_ACCEPT:
-            if (from_me)
-                [self.avatar_view setViewMode:AVATAR_VIEW_CANCEL];
-            else
+            if (!from_me)
                 [self.avatar_view setViewMode:AVATAR_VIEW_ACCEPT_REJECT];
-            break;
-            
-        case TRANSACTION_VIEW_RUNNING:
-            [self.avatar_view setViewMode:AVATAR_VIEW_CANCEL];
             break;
             
         default:
