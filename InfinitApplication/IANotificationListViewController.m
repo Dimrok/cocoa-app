@@ -492,7 +492,8 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         [self.content_height_constraint.animator setConstant:72.0];
+         if (self.content_height_constraint.constant > 72.0)
+             [self.content_height_constraint.animator setConstant:72.0];
      }
                         completionHandler:^
      {
