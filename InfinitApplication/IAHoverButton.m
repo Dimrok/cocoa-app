@@ -89,6 +89,7 @@
     self.attributedTitle = [[NSAttributedString alloc] initWithString:title.string
                                                            attributes:_hover_attrs];
     self.image = _hover_image;
+    [self setNeedsDisplay:YES];
 }
 
 - (void)mouseExited:(NSEvent*)theEvent
@@ -97,6 +98,7 @@
     self.attributedTitle = [[NSAttributedString alloc] initWithString:title.string
                                                            attributes:_normal_attrs];
     self.image = _normal_image;
+    [self setNeedsDisplay:YES];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -104,7 +106,6 @@
 - (void)setHoverImage:(NSImage*)new_image
 {
     _hover_image = new_image;
-    [self setNeedsDisplay:YES];
 }
 
 - (void)setNormalTextAttributes:(NSDictionary*)attrs
