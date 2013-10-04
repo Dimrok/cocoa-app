@@ -47,7 +47,7 @@
         if (_count < 10)
         {
             num_str = [[NSAttributedString alloc]
-                       initWithString:[NSNumber numberWithUnsignedInteger:_count].stringValue
+                       initWithString:[[NSNumber numberWithUnsignedInteger:_count] stringValue]
                                                       attributes:num_attrs];
         }
         else
@@ -57,7 +57,7 @@
         }
         [num_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - num_str.size.width) / 2.0,
                                          (NSHeight(self.bounds) - num_str.size.height) / 2.0
-                                            + 3.0)];
+                                            + 2.0)];
     }
 }
 
