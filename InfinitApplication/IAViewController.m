@@ -110,11 +110,6 @@
     // Called just before view is changed so that tidy up can occur, overload as needed
 }
 
-- (CGFloat)heightDiffOld:(NSSize)old_size new:(NSSize)new_size
-{
-    return new_size.height - old_size.height;
-}
-
 //- Transaction and User Update Handling -----------------------------------------------------------
 
 - (void)transactionAdded:(IATransaction*)transaction
