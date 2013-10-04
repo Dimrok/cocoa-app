@@ -506,11 +506,17 @@ doCommandBySelector:(SEL)commandSelector
 - (IBAction)removeFileClicked:(NSButton*)sender
 {
     NSInteger row = [self.table_view rowForView:sender];
-    [self.table_view beginUpdates];
-    [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                           withAnimation:NSTableViewAnimationSlideLeft];
-    [self.table_view endUpdates];
-    [_delegate advancedSendView:self wantsRemoveFileAtIndex:row];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         [self.table_view beginUpdates];
+         [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                                withAnimation:NSTableViewAnimationSlideRight];
+         [self.table_view endUpdates];
+     }
+                        completionHandler:^
+     {
+         [_delegate advancedSendView:self wantsRemoveFileAtIndex:row];
+     }];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
