@@ -212,15 +212,21 @@
     if (_transaction_list.count == 0)
     {
         [self.no_data_message setHidden:NO];
-        self.content_height_constraint.constant = 50.0;
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+         {
+             context.duration = 0.15;
+             [self.content_height_constraint.animator setConstant:50.0];
+         }
+                            completionHandler:^
+         {
+         }];
     }
     else
     {
         [self.no_data_message setHidden:YES];
-        CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
-        [self.content_height_constraint.animator setConstant:(y_diff +
-                                                       self.content_height_constraint.constant)];
-        [self generateTable];
+        [self.table_view reloadData];
+        [self resizeContentView];
+        [self updateListOfRowsWithProgress];
     }
     NSString* version_str = [NSString stringWithFormat:@"v%@",
                              [NSString stringWithUTF8String:INFINIT_VERSION]];
@@ -305,13 +311,6 @@
 }
 
 //- Table Functions --------------------------------------------------------------------------------
-
-- (void)generateTable
-{
-    [self resizeContentView];
-    [self updateListOfRowsWithProgress];
-    [self.table_view reloadData];
-}
 
 - (void)resizeContentView
 {
