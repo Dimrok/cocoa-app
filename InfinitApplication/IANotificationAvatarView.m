@@ -104,7 +104,7 @@
     if (_total_progress > 0.0)
     {
         NSPoint centre = NSMakePoint(NSWidth(self.frame) / 2.0, NSHeight(self.frame) / 2.0);
-        CGFloat radius = _avatar.size.width / 2.0 + 1.0;
+        CGFloat radius = _avatar.size.width / 2.0;
         
         NSBezierPath* progress = [NSBezierPath bezierPath];
         CGFloat new_angle = _start_angle - _total_progress * (360.0 - _badge_angle_size);
