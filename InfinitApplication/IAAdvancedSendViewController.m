@@ -277,11 +277,7 @@
     [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
 
     [self.note_field setBezeled:YES];
-}
-
-- (void)loadView
-{
-    [super loadView];
+    
     
     [self setupHoverButtons];
     [self initialiseSendButton];
@@ -313,19 +309,27 @@
     self.add_files_button.attributedTitle = [[NSAttributedString alloc] initWithString:add_files_str
                                                                             attributes:add_files_attrs];
     
+    [self setSendButtonState];
+}
+
+- (void)loadView
+{
+    [super loadView];
+    
+    CGFloat y_diff_search = NSHeight(_user_search_controller.view.frame) -
+        NSHeight(self.search_view.frame);
+    
     [self.search_view addSubview:_user_search_controller.view];
+    
+    [self.search_height_constraint setConstant:(y_diff_search +
+                                                self.search_height_constraint.constant)];
     [self.search_view addConstraints:[NSLayoutConstraint
                                       constraintsWithVisualFormat:@"V:|[search_view]|"
                                       options:0
                                       metrics:nil
                                       views:@{@"search_view": _user_search_controller.view}]];
     
-    CGFloat y_diff_search = [self heightDiffOld:self.search_view.frame.size
-                                            new:_user_search_controller.view.frame.size];
-    [self.search_height_constraint.animator setConstant:(y_diff_search +
-                                                         self.search_height_constraint.constant)];
     [self updateTable];
-    [self setSendButtonState];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -553,10 +557,9 @@ doCommandBySelector:(SEL)commandSelector
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender
-       changedSize:(NSSize)size
-  withActiveSearch:(BOOL)searching
+   changedToHeight:(CGFloat)height
 {
-    CGFloat y_diff = [self heightDiffOld:self.search_view.frame.size new:size];
+    CGFloat y_diff = height - NSHeight(self.search_view.frame);
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
@@ -566,11 +569,6 @@ doCommandBySelector:(SEL)commandSelector
                         completionHandler:^
      {
      }];
-    
-    if (searching)
-    {
-        // XXX change footer_view
-    }
 }
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender

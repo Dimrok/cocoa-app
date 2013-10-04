@@ -20,7 +20,7 @@
 
 - (BOOL)isOpaque
 {
-    return YES;
+    return NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -64,7 +64,7 @@
 
 - (BOOL)isOpaque
 {
-    return YES;
+    return NO;
 }
 
 - (BOOL)isFlipped
@@ -687,8 +687,7 @@ displayStringForRepresentedObject:(id)representedObject
     [self setNoResultsHidden:YES];
     [self.view setFrameSize:self.search_box_view.frame.size];
     [_delegate searchView:self
-              changedSize:self.view.frame.size
-         withActiveSearch:NO];
+          changedToHeight:NSHeight(self.view.frame)];
     _search_results = nil;
     self.search_image.animates = NO;
     self.search_image.image = _static_image;
@@ -697,27 +696,24 @@ displayStringForRepresentedObject:(id)representedObject
 
 - (void)updateResultsTable
 {
-    NSSize new_size = NSZeroSize;
+    CGFloat new_height;
     if (_search_results.count == 0) // No results so show message
     {
         [self.table_view reloadData];
         [self setNoResultsHidden:NO];
-        new_size = NSMakeSize(NSWidth(self.view.frame),
-                              NSHeight(self.search_box_view.frame) +
-                              NSHeight(self.no_results_message.frame) + 20.0);
+        new_height = NSHeight(self.search_box_view.frame) + NSHeight(self.no_results_message.frame)
+            + 20.0;
         [self.search_box_view setNoResults:YES];
     }
     else
     {
         [self.table_view reloadData];
         [self setNoResultsHidden:YES];
-        new_size = NSMakeSize(NSWidth(self.view.frame),
-                              NSHeight(self.search_box_view.frame) + [self tableHeight]);
+        new_height = NSHeight(self.search_box_view.frame) + [self tableHeight];
         [self.search_box_view setNoResults:NO];
     }
     [_delegate searchView:self
-              changedSize:new_size
-         withActiveSearch:YES];
+          changedToHeight:new_height];
 }
 
 - (CGFloat)tableHeight

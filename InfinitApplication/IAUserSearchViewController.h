@@ -53,8 +53,7 @@
 @protocol IAUserSearchViewProtocol <NSObject>
 
 - (void)searchView:(IAUserSearchViewController*)sender
-       changedSize:(NSSize)size
-  withActiveSearch:(BOOL)searching;
+   changedToHeight:(CGFloat)height;
 
 - (BOOL)searchViewWantsIfGotFile:(IAUserSearchViewController*)sender;
 

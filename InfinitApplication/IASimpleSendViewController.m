@@ -137,9 +137,7 @@
                                     metrics:nil
                                     views:@{@"search_view": _user_search_controller.view}]];
     
-    CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size
-                                     new:_user_search_controller.view.frame.size];
-    self.content_height_constraint.constant += y_diff;
+    self.content_height_constraint.constant = NSHeight(_user_search_controller.search_box_view.frame);
     
     [self performSelector:@selector(setFocusToSearchField)
                withObject:nil
@@ -250,24 +248,19 @@
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender
-       changedSize:(NSSize)size
-  withActiveSearch:(BOOL)searching
+   changedToHeight:(CGFloat)height
 {
-    CGFloat y_diff = [self heightDiffOld:self.main_view.frame.size new:size];
+    if (self.content_height_constraint.constant == height)
+        return;
+    
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
         context.duration = 0.15;
-        [self.content_height_constraint.animator
-                setConstant:(self.content_height_constraint.constant + y_diff)];
+        [self.content_height_constraint.animator setConstant:height];
     }
                         completionHandler:^
     {
     }];
-    
-    if (searching)
-    {
-        // XXX change footer_view
-    }
 }
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
