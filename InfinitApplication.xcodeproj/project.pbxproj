@@ -133,7 +133,6 @@
 		8398836117A6C1F9009409B3 /* IALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835F17A6C1F9009409B3 /* IALoginViewController.m */; };
 		8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8398836017A6C1F9009409B3 /* IALoginViewController.xib */; };
 		8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */; };
-		839A2C3617E0CB85001386A5 /* avatar_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 839A2C3517E0CB85001386A5 /* avatar_default.png */; };
 		839DFC1417D8ECEF001D60DD /* icon-transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1217D8ECEF001D60DD /* icon-transfer.png */; };
 		839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */; };
 		839DFC1817D8ED45001D60DD /* icon-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1617D8ED45001D60DD /* icon-back.png */; };
@@ -602,7 +601,6 @@
 		8398836517A6FA73009409B3 /* IADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADefine.h; sourceTree = "<group>"; };
 		8398836817A6FDE6009409B3 /* IACentredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredTextFieldCell.h; sourceTree = "<group>"; };
 		8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredTextFieldCell.m; sourceTree = "<group>"; };
-		839A2C3517E0CB85001386A5 /* avatar_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_default.png; sourceTree = "<group>"; };
 		839DFC1217D8ECEF001D60DD /* icon-transfer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer.png"; sourceTree = "<group>"; };
 		839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer@2x.png"; sourceTree = "<group>"; };
 		839DFC1617D8ED45001D60DD /* icon-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back.png"; sourceTree = "<group>"; };
@@ -868,7 +866,6 @@
 				83EADC2017E204FF00D49D77 /* icon-star-selected.png */,
 				83EADC2117E204FF00D49D77 /* icon-star-selected@2x.png */,
 				8395154E17DCB04800DE535F /* icon-gear.png */,
-				839A2C3517E0CB85001386A5 /* avatar_default.png */,
 				8395154F17DCB04800DE535F /* icon-gear@2x.png */,
 				839DFC1217D8ECEF001D60DD /* icon-transfer.png */,
 				839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */,
@@ -1521,7 +1518,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				839A2C3617E0CB85001386A5 /* avatar_default.png in Resources */,
 				837A7F8817FC25E000600ACD /* bg-main-button-disabled.png in Resources */,
 				83ED2FC117E9A50600BB35A0 /* icon-menu-bar-active.png in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
