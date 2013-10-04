@@ -38,7 +38,7 @@
 
 - (BOOL)isOpaque
 {
-    return YES;
+    return NO;
 }
 
 - (void)ensureTrackingArea
