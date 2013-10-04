@@ -75,7 +75,7 @@
                                         ofDiameter:50.0
                              withBorderOfThickness:2.0
                                           inColour:IA_GREY_COLOUR(255.0)
-                                 andShadowOfRadius:1.0]];
+                                 andShadowOfRadius:2.0]];
 }
 
 - (void)setTransferStatusIcon:(IATransactionViewMode)view_mode

@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12F37</string>
+		<string key="IBDocument.SystemVersion">12F45</string>
 		<string key="IBDocument.InterfaceBuilderVersion">4510</string>
-		<string key="IBDocument.AppKitVersion">1187.39</string>
+		<string key="IBDocument.AppKitVersion">1187.40</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -197,7 +197,7 @@
 							</object>
 							<object class="NSScrollView" id="820412190">
 								<reference key="NSNextResponder" ref="293821247"/>
-								<int key="NSvFlags">268</int>
+								<int key="NSvFlags">12</int>
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="NSClipView" id="675472725">
 										<reference key="NSNextResponder" ref="820412190"/>
@@ -261,7 +261,6 @@
 															</object>
 															<reference key="NSTextColor" ref="382711178"/>
 														</object>
-														<bool key="NSIsEditable">YES</bool>
 														<reference key="NSTableView" ref="94902610"/>
 													</object>
 												</array>
@@ -863,7 +862,7 @@
 								</object>
 								<object class="NSCustomView" id="679123569">
 									<reference key="NSNextResponder" ref="264162119"/>
-									<int key="NSvFlags">4364</int>
+									<int key="NSvFlags">4108</int>
 									<string key="NSFrame">{{5, 5}, {60, 60}}</string>
 									<reference key="NSSuperview" ref="264162119"/>
 									<reference key="NSNextKeyView" ref="286943847"/>
@@ -2465,21 +2464,6 @@
 						<reference key="parent" ref="264162119"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">785</int>
-						<reference key="object" ref="895934635"/>
-						<reference key="parent" ref="264162119"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">872</int>
-						<reference key="object" ref="711382565"/>
-						<reference key="parent" ref="264162119"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">793</int>
-						<reference key="object" ref="691373609"/>
-						<reference key="parent" ref="264162119"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">919</int>
 						<reference key="object" ref="909593076"/>
 						<reference key="parent" ref="627407291"/>
@@ -2507,6 +2491,21 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">928</int>
 						<reference key="object" ref="175669586"/>
+						<reference key="parent" ref="264162119"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">793</int>
+						<reference key="object" ref="691373609"/>
+						<reference key="parent" ref="264162119"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">872</int>
+						<reference key="object" ref="711382565"/>
+						<reference key="parent" ref="264162119"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">785</int>
+						<reference key="object" ref="895934635"/>
 						<reference key="parent" ref="264162119"/>
 					</object>
 				</array>
@@ -2592,7 +2591,6 @@
 				<boolean value="NO" key="277.IBNSViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="277.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="278.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="278.ibExternalAutomaticallyCalculatesRowSizeFromViewHeight"/>
 				<string key="279.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="281.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="282.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2749,7 +2747,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">936</int>
+			<int key="maxID">939</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

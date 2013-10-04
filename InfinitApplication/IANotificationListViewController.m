@@ -171,7 +171,7 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
-        _row_height = 75.0;
+        _row_height = 72.0;
         _max_rows_shown = 5;
         _transaction_list = [NSMutableArray
                              arrayWithArray:[_delegate notificationListWantsLastTransactions:self]];
