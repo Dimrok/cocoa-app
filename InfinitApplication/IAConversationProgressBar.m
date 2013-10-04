@@ -63,7 +63,7 @@
                                            border_thickness,
                                       NSHeight(self.bounds) - 2.0 * border_thickness);
     NSBezierPath* progress_bar = [NSBezierPath bezierPathWithRect:progress_rect];
-    [IA_RGB_COLOUR(216.0, 237.0, 243.0) set];
+    [IA_RGB_COLOUR(202.0, 217.0, 223.0) set];
     [progress_bar fill];
     NSBezierPath* progress_line = [NSBezierPath bezierPathWithRect:
                                    NSMakeRect(progress_rect.origin.x + progress_rect.size.width,
