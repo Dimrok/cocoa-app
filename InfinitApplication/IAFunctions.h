@@ -42,10 +42,10 @@
 
 + (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left;
 
-+ (NSImage*)defaultAvatar;
-
 + (NSImage*)addressBookUserAvatar;
 
 + (NSString*)relativeDateOf:(NSTimeInterval)timestamp;
+
++ (NSImage*)makeAvatarFor:(NSString*)fullname;
 
 @end

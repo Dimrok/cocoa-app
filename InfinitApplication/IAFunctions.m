@@ -142,52 +142,49 @@
     
     [NSGraphicsContext saveGraphicsState];
     
-    NSShadow* shadow = [[NSShadow alloc] init];
-    if (shadow_radius > 0.0)
-    {
-        shadow.shadowBlurRadius = shadow_radius;
-        shadow.shadowColor = IA_RGBA_COLOUR(0.0, 0.0, 0.0, 0.36);
-        shadow.shadowOffset = NSZeroSize;
-        [shadow set];
-    }
-    
-    if (border_thickness > 0.0)
-    {
-        NSBezierPath* grey_border = [NSBezierPath bezierPathWithOvalInRect:
+        NSShadow* shadow = [[NSShadow alloc] init];
+        if (shadow_radius > 0.0)
+        {
+            shadow.shadowBlurRadius = shadow_radius;
+            shadow.shadowColor = IA_RGBA_COLOUR(32.0, 32.0, 32.0, 0.2);
+            shadow.shadowOffset = NSZeroSize;
+            [shadow set];
+        }
+        
+        if (border_thickness > 0.0)
+        {
+            NSBezierPath* border = [NSBezierPath bezierPathWithOvalInRect:
                                      NSMakeRect(shadow_radius,
                                                 shadow_radius,
                                                 diameter - (2.0 * shadow_radius),
                                                 diameter - (2.0 * shadow_radius))];
-        [IA_RGB_COLOUR(239.0, 239.0, 239.0) set];
-        [grey_border stroke];
-        
-        NSBezierPath* outter_border = [NSBezierPath bezierPathWithOvalInRect:
-                                       NSMakeRect(shadow_radius + 1.0,
-                                                  shadow_radius + 1.0,
-                                                  diameter - (2.0 * shadow_radius) - 2.0,
-                                                  diameter - (2.0 * shadow_radius) - 2.0)];
-        [outter_border setLineWidth:(border_thickness)];
-        [colour set];
-        [outter_border stroke];
-    }
+            [colour set];
+            [border fill];
+        }
     
     [NSGraphicsContext restoreGraphicsState];
-
-    NSBezierPath* image_path = [NSBezierPath bezierPathWithOvalInRect:
-                                NSMakeRect(border_thickness + shadow_radius,
-                                           border_thickness + shadow_radius,
-                                           image_diameter,
-                                           image_diameter)];
-    [image_path addClip];
-    [square_image drawInRect:NSMakeRect(border_thickness + shadow_radius,
-                                        border_thickness + shadow_radius,
-                                        image_diameter,
-                                        image_diameter)
-                    fromRect:NSZeroRect
-                   operation:NSCompositeSourceOver
-                    fraction:1.0];
     
-    [res unlockFocus];
+    [NSGraphicsContext saveGraphicsState];
+    
+        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+
+        NSBezierPath* image_path = [NSBezierPath bezierPathWithOvalInRect:
+                                    NSMakeRect(border_thickness + shadow_radius,
+                                               border_thickness + shadow_radius,
+                                               image_diameter,
+                                               image_diameter)];
+        [image_path addClip];
+        [square_image drawInRect:NSMakeRect(border_thickness + shadow_radius,
+                                            border_thickness + shadow_radius,
+                                            image_diameter,
+                                            image_diameter)
+                        fromRect:NSZeroRect
+                       operation:NSCompositeSourceOver
+                        fraction:1.0];
+        
+        [res unlockFocus];
+        
+    [NSGraphicsContext restoreGraphicsState];
     return res;
 }
 
@@ -240,9 +237,42 @@
     return res;
 }
 
-+ (NSImage*)defaultAvatar
++ (NSImage*)makeAvatarFor:(NSString*)fullname
 {
-	return [IAFunctions imageNamed:@"avatar_default"];
+    NSImage* avatar = [[NSImage alloc] initWithSize:NSMakeSize(256.0, 256.0)];
+    
+    NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                              traits:NSUnboldFontMask
+                                                              weight:5
+                                                                size:105.0];
+    NSDictionary* style = [IAFunctions textStyleWithFont:font
+                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                  colour:IA_GREY_COLOUR(255.0)
+                                                  shadow:nil];
+    NSArray* chunks = [fullname componentsSeparatedByString:@" "];
+    NSMutableString* letters_str = [NSMutableString string];
+    for (NSString* chunk in chunks)
+        [letters_str appendString:[NSString stringWithFormat:@"%c", [chunk characterAtIndex:0]]];
+    
+    NSAttributedString* letters = [[NSAttributedString alloc]
+                                   initWithString:[letters_str uppercaseString]
+                                   attributes:style];
+    NSRect letter_rect = NSMakeRect((avatar.size.width - letters.size.width) / 2.0,
+                                    (avatar.size.height - letters.size.height) / 2.0,
+                                    letters.size.width,
+                                    letters.size.height);
+    
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
+                                                                   0.0,
+                                                                   avatar.size.width,
+                                                                   avatar.size.height)];
+    [avatar lockFocus];
+    [IA_RGB_COLOUR(202.0, 217.0, 223.0) set];
+    [bg fill];
+    [letters drawInRect:letter_rect];
+    [avatar unlockFocus];
+    
+    return avatar;
 }
 
 + (NSImage*)addressBookUserAvatar
@@ -258,7 +288,7 @@
     
 	NSImage* result;
     if (image_data == nil)
-        result = [self defaultAvatar];
+        result = [self makeAvatarFor:[[[IAGapState instance] self_user] fullname]];
     else
         result = [[NSImage alloc] initWithData:image_data];
     
