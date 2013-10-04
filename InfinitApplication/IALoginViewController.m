@@ -165,8 +165,10 @@
 
 - (void)showLoginWindowOnScreen:(NSScreen*)screen
 {
-    if (_window != nil)
+    if (_window != nil && _window.screen == screen)
         return;
+    else if (_window.screen != screen)
+        [self closeLoginWindow];
     
     _logging_in = NO;
     
@@ -211,6 +213,9 @@
                    withUsername:(NSString*)username
                     andPassword:(NSString*)password
 {
+    if (_window != nil && _window.screen != screen)
+        [self closeLoginWindow];
+    
     if (_window == nil)
     {
         [self showLoginWindowOnScreen:screen];
@@ -247,6 +252,9 @@
                               withUsername:(NSString*)username
                                andPassword:(NSString*)password
 {
+    if (_window != nil && _window.screen != screen)
+        [self closeLoginWindow];
+
     if (_window == nil)
     {
         [self showLoginWindowOnScreen:screen];
