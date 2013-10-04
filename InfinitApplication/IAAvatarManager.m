@@ -57,7 +57,7 @@
     
     if (res == nil) // Avatar not in cache so fetch it
     {
-        res = [IAFunctions imageNamed:@"avatar_default"];
+        res = [IAFunctions makeAvatarFor:user.fullname];
         if (load && [_download_queue member:user] == nil)
         {
             [_download_queue addObject:user];
