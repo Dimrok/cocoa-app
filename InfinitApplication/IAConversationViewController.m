@@ -145,18 +145,23 @@
 {
     [super loadView];
     [self setupPersonView];
-    CGFloat y_diff = (self.person_view.frame.size.height + [self tableHeight]) -
-    self.main_view.frame.size.height;
+    [self generateUserTransactionList];
+    CGFloat y_diff = self.content_height_constraint.constant -
+        (self.person_view.frame.size.height);
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
+         context.duration = 0.15;
          [self.content_height_constraint.animator setConstant:(y_diff +
              self.content_height_constraint.constant)];
      }
                         completionHandler:^
      {
+         [self.table_view reloadData];
+         [self resizeContentView];
+         [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
+         [self updateListOfRowsWithProgress];
      }];
-    [self generateUserTransactionList];
     
 #ifndef BUILD_PRODUCTION
     
@@ -262,10 +267,6 @@
     IAConversationElement* spacer_element = [[IAConversationElement alloc] initWithTransaction:nil];
     spacer_element.mode = CONVERSATION_CELL_VIEW_SPACER;
     [_element_list addObject:spacer_element];
-    [self.table_view reloadData];
-    [self resizeContentView];
-    [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
-    [self updateListOfRowsWithProgress];
 }
 
 - (void)scrollAfterRowAdd
