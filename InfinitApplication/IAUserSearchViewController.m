@@ -685,13 +685,12 @@ displayStringForRepresentedObject:(id)representedObject
 - (void)clearResults
 {
     [self setNoResultsHidden:YES];
-    [self.view setFrameSize:self.search_box_view.frame.size];
-    [_delegate searchView:self
-          changedToHeight:NSHeight(self.view.frame)];
     _search_results = nil;
     self.search_image.animates = NO;
     self.search_image.image = _static_image;
     [self.search_box_view setNoResults:NO];
+    [_delegate searchView:self
+          changedToHeight:NSHeight(self.search_box_view.frame)];
 }
 
 - (void)updateResultsTable
