@@ -146,22 +146,11 @@
     [super loadView];
     [self setupPersonView];
     [self generateUserTransactionList];
-    CGFloat y_diff = self.content_height_constraint.constant -
-        (self.person_view.frame.size.height);
     
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-         context.duration = 0.15;
-         [self.content_height_constraint.animator setConstant:(y_diff +
-             self.content_height_constraint.constant)];
-     }
-                        completionHandler:^
-     {
-         [self.table_view reloadData];
-         [self resizeContentView];
-         [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
-         [self updateListOfRowsWithProgress];
-     }];
+    [self.table_view reloadData];
+    [self resizeContentView];
+    [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
+    [self updateListOfRowsWithProgress];
     
 #ifndef BUILD_PRODUCTION
     
