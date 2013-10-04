@@ -209,6 +209,11 @@
 - (void)loadView
 {
     [super loadView];
+    
+    NSString* version_str = [NSString stringWithFormat:@"v%@",
+                             [NSString stringWithUTF8String:INFINIT_VERSION]];
+    _version_item.title = version_str;
+    
     if (_transaction_list.count == 0)
     {
         [self.no_data_message setHidden:NO];
@@ -228,9 +233,6 @@
         [self resizeContentView];
         [self updateListOfRowsWithProgress];
     }
-    NSString* version_str = [NSString stringWithFormat:@"v%@",
-                             [NSString stringWithUTF8String:INFINIT_VERSION]];
-    _version_item.title = version_str;
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -314,16 +316,13 @@
 
 - (void)resizeContentView
 {
-    CGFloat y_diff = [self tableHeight] - self.main_view.frame.size.height;
-    
-    if (y_diff == 0.0)
+    if (self.content_height_constraint.constant == [self tableHeight])
         return;
     
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         [self.content_height_constraint.animator
-          setConstant:(self.content_height_constraint.constant + y_diff)];
+         [self.content_height_constraint.animator setConstant:[self tableHeight]];
          
      }
                         completionHandler:^
