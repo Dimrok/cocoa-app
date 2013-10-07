@@ -142,4 +142,12 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
     [NSApp terminate:self];
 }
 
+- (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender
+{
+    IALog(@"%@ Checking for update verbosely", self);
+#ifdef BUILD_PRODUCTION
+    [[SUUpdater sharedUpdater] checkForUpdates:nil];
+#endif
+}
+
 @end

@@ -53,4 +53,6 @@
 
 - (void)terminateApplication:(IAMainController*)sender;
 
+- (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender;
+
 @end

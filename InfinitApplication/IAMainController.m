@@ -274,13 +274,17 @@
         switch (result.status)
         {
             case gap_network_error:
-                error = NSLocalizedString(@"Connection problem, check Internet connection",
-                                          @"no route to internet");
+                error = [NSString stringWithFormat:@"%@ (%d)",
+                         NSLocalizedString(@"Connection problem, check Internet connection",
+                                           @"no route to internet"),
+                         result.status];
                 break;
                 
             case gap_email_password_dont_match:
-                error = NSLocalizedString(@"Email or password incorrect",
-                                          @"email or password wrong");
+                error = [NSString stringWithFormat:@"%@ (%d)",
+                         NSLocalizedString(@"Email or password incorrect",
+                                           @"email or password wrong"),
+                         result.status];
                 break;
                 
             case gap_already_logged_in:
@@ -289,8 +293,17 @@
                 _login_view_controller = nil;
                 return;
                 
+            case gap_deprecated:
+                error = [NSString stringWithFormat:@"%@ (%d)",
+                         NSLocalizedString(@"Please update Infinit", @"please update infinit."),
+                         result.status];
+                [_delegate mainControllerWantsCheckForUpdate:self];
+                break;
+                
             default:
-                error = NSLocalizedString(@"Unknown login error", @"unknown login error");
+                error = [NSString stringWithFormat:@"%@ (%d)",
+                         NSLocalizedString(@"Unknown login error", @"unknown login error"),
+                         result.status];
                 break;
         }
         
