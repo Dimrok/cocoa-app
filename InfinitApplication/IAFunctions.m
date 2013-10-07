@@ -231,7 +231,7 @@
     }
     else
     {
-        res = NSLocalizedString(@"more two days", @"more than two days");
+        res = NSLocalizedString(@"more than two days", @"more than two days");
     }
     
     return res;
