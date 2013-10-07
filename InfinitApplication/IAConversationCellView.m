@@ -500,6 +500,7 @@
                 break;
                 
             case TRANSACTION_VIEW_RUNNING:
+                self.cancel_button.hand_cursor = NO;
                 self.progress_indicator.maxValue = 1.0;
                 self.progress_indicator.totalSize = _transaction.total_size;
                 [self.progress_indicator setIndeterminate:NO];
