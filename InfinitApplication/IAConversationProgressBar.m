@@ -101,7 +101,7 @@
     
     NSTimeInterval time_remaining = [self timeRemaining];
     
-    if (time_remaining <= 0.0 || _data_points.count < 75)
+    if (time_remaining <= 0.0 || _data_points.count < 75 || _total_size <= 0)
         return;
     
     NSDictionary* text_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:9.0]
