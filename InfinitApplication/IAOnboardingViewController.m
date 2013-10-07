@@ -58,8 +58,6 @@
                                                @"Search and Send")];
         [_headings addObject:NSLocalizedString(@"Receive File",
                                                @"Receive File")];
-        [_headings addObject:NSLocalizedString(@"Beta Reminder and Invites",
-                                               @"Beta Reminder and Invites")];
         
         _messages = [NSMutableArray array];
         [_messages addObject:NSLocalizedString(@"Drag and drop files and folders on the icon above to send them. ",
@@ -68,8 +66,6 @@
                                                @"You can then search for contacts on Infinit by name, or send directly to an email address.")];
         [_messages addObject:NSLocalizedString(@"The Infinit icon turns red for incoming transfers. Click the icon to choose to accept or decline transfers.",
                                                @"The Infinit icon turns red for incoming transfers. Click the icon to choose to accept or decline transfers.")];
-        [_messages addObject:NSLocalizedString(@"You can send to 3 email addresses for now. If you have any issues, let us know by email or on Twitter.",
-                                               @"You can send to 3 email addresses for now. If you have any issues, let us know by email or on Twitter.")];
         NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         para.alignment = NSCenterTextAlignment;
         _heading_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:12.0]
