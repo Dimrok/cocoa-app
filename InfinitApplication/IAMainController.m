@@ -674,6 +674,11 @@ transactionsProgressForUser:(IAUser*)user
     [_report_problem_controller show];
 }
 
+- (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender
+{
+    [_delegate mainControllerWantsCheckForUpdate:self];
+}
+
 //- Not Logged In View Protocol --------------------------------------------------------------------
 
 - (void)notLoggedInViewControllerWantsOpenLoginWindow:(IANotLoggedInViewController*)sender

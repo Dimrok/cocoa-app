@@ -523,6 +523,11 @@
     [_delegate notificationListWantsReportProblem:self];
 }
 
+- (IBAction)onCheckForUpdateClick:(NSMenuItem*)sender
+{
+    [_delegate notificationListWantsCheckForUpdate:self];
+}
+
 //- Transaction Handling ---------------------------------------------------------------------------
 
 - (void)updateBadgeForRow:(NSUInteger)row

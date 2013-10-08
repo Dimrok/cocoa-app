@@ -440,6 +440,14 @@
 						<reference key="NSOnImage" ref="865904368"/>
 						<reference key="NSMixedImage" ref="891855379"/>
 					</object>
+					<object class="NSMenuItem" id="67301100">
+						<reference key="NSMenu" ref="64764261"/>
+						<string key="NSTitle">Check for Update</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="865904368"/>
+						<reference key="NSMixedImage" ref="891855379"/>
+					</object>
 					<object class="NSMenuItem" id="888697973">
 						<reference key="NSMenu" ref="64764261"/>
 						<bool key="NSIsDisabled">YES</bool>
@@ -697,6 +705,14 @@
 						<reference key="destination" ref="317747973"/>
 					</object>
 					<int key="connectionID">925</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onCheckForUpdateClick:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="67301100"/>
+					</object>
+					<int key="connectionID">950</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -972,6 +988,7 @@
 							<reference ref="781283284"/>
 							<reference ref="210833322"/>
 							<reference ref="317747973"/>
+							<reference ref="67301100"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -2508,6 +2525,11 @@
 						<reference key="object" ref="638530687"/>
 						<reference key="parent" ref="326206700"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">948</int>
+						<reference key="object" ref="67301100"/>
+						<reference key="parent" ref="64764261"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2742,12 +2764,13 @@
 				<string key="942.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="944.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="947.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="948.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">947</int>
+			<int key="maxID">950</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

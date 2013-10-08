@@ -63,4 +63,6 @@ transactionsProgressForUser:(IAUser*)user;
 
 - (void)notificationListWantsReportProblem:(IANotificationListViewController*)sender;
 
+- (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender;
+
 @end
