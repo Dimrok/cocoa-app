@@ -52,7 +52,11 @@
 {
     NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.alignment = NSCenterTextAlignment;
-    NSDictionary* message_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:12.0]
+    NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                              traits:NSUnboldFontMask
+                                                              weight:0
+                                                                size:12.0];
+    NSDictionary* message_attrs = [IAFunctions textStyleWithFont:font
                                                   paragraphStyle:style
                                                           colour:IA_GREY_COLOUR(32.0)
                                                           shadow:nil];
