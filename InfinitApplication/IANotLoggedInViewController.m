@@ -27,12 +27,32 @@
 @end
 
 @implementation IANotLoggedInViewController
+{
+@private
+    NSDictionary* _message_attrs;
+}
+
+//- Initialisation ---------------------------------------------------------------------------------
+
+@synthesize mode = _mode;
 
 - (id)initWithDelegate:(id<IANotLoggedInViewProtocol>)delegate
+              withMode:(IANotLoggedInViewMode)mode
 {
     if (self = [super initWithNibName:[self className] bundle:nil])
     {
         _delegate = delegate;
+        _mode = mode;
+        NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        style.alignment = NSCenterTextAlignment;
+        NSFont* message_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                          traits:NSUnboldFontMask
+                                                                          weight:5
+                                                                            size:12.0];
+        _message_attrs = [IAFunctions textStyleWithFont:message_font
+                                         paragraphStyle:style
+                                                 colour:IA_GREY_COLOUR(32.0)
+                                                 shadow:nil];
     }
     return self;
 }
@@ -53,24 +73,37 @@
                                          initWithString:NSLocalizedString(@"LOGIN", @"login")
                                          attributes:button_style];
     
-    NSFont* message_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                      traits:NSUnboldFontMask
-                                                                      weight:5
-                                                                        size:12.0];
-    NSDictionary* message_attrs = [IAFunctions textStyleWithFont:message_font
-                                                  paragraphStyle:style
-                                                          colour:IA_GREY_COLOUR(32.0)
-                                                          shadow:nil];
-    NSString* message = NSLocalizedString(@"Not currently logged in...", @"not logged in");
-    
+    [self configureForMode:_mode];
+}
+
+- (void)configureForMode:(IANotLoggedInViewMode)mode
+{
+    NSString* message;
+    if (_mode == LOGGED_OUT)
+    {
+        message = NSLocalizedString(@"Not currently logged in...", @"not logged in");
+        [self.login_button setEnabled:YES];
+    }
+    else if (_mode == LOGGING_IN)
+    {
+        message = NSLocalizedString(@"Logging in...", @"logging in");
+        [self.login_button setEnabled:NO];
+    }
     self.not_logged_message.attributedStringValue = [[NSAttributedString alloc]
                                                      initWithString:message
-                                                         attributes:message_attrs];
+                                                     attributes:_message_attrs];
 }
 
 - (BOOL)closeOnFocusLost
 {
     return YES;
+}
+
+//- General Functions ------------------------------------------------------------------------------
+
+- (void)setMode:(IANotLoggedInViewMode)mode
+{
+    [self configureForMode:mode];
 }
 
 //- Button Handling --------------------------------------------------------------------------------

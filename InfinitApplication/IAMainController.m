@@ -158,7 +158,26 @@
 - (void)showNotLoggedInView
 {
     if (_not_logged_view_controller == nil)
-        _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self];
+    {
+        if (_logging_in)
+        {
+            _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self
+                                                                                       withMode:LOGGING_IN];
+        }
+        else
+        {
+            _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self
+                                                                                       withMode:LOGGED_OUT];
+        }
+    }
+    else
+    {
+        if (_logging_in)
+            [_not_logged_view_controller setMode:LOGGING_IN];
+        else
+            [_not_logged_view_controller setMode:LOGGED_OUT];
+        
+    }
     [self openOrChangeViewController:_not_logged_view_controller];
 }
 

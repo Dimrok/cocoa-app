@@ -11,6 +11,14 @@
 
 #import "IAViewController.h"
 
+#import "IABottomButton.h"
+
+typedef enum __IANotLoggedInViewMode
+{
+    LOGGED_OUT = 0,
+    LOGGING_IN = 1,
+} IANotLoggedInViewMode;
+
 @protocol IANotLoggedInViewProtocol;
 
 @interface IANotLoggedInViewController : IAViewController
@@ -20,9 +28,11 @@
 }
 
 @property (nonatomic, strong) IBOutlet NSTextField* not_logged_message;
-@property (nonatomic, strong) IBOutlet NSButton* login_button;
+@property (nonatomic, strong) IBOutlet IABottomButton* login_button;
+@property (nonatomic, setter = setMode:) IANotLoggedInViewMode mode;
 
-- (id)initWithDelegate:(id<IANotLoggedInViewProtocol>)delegate;
+- (id)initWithDelegate:(id<IANotLoggedInViewProtocol>)delegate
+              withMode:(IANotLoggedInViewMode)mode;
 
 @end
 
