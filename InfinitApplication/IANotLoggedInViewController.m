@@ -47,7 +47,7 @@
         style.alignment = NSCenterTextAlignment;
         NSFont* message_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                           traits:NSUnboldFontMask
-                                                                          weight:5
+                                                                          weight:0
                                                                             size:12.0];
         _message_attrs = [IAFunctions textStyleWithFont:message_font
                                          paragraphStyle:style
@@ -103,6 +103,7 @@
 
 - (void)setMode:(IANotLoggedInViewMode)mode
 {
+    _mode = mode;
     [self configureForMode:mode];
 }
 
