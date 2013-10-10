@@ -442,6 +442,10 @@ doCommandBySelector:(SEL)commandSelector
         [_user_search_controller cursorAtEndOfSearchBox];
         return YES;
     }
+    if (commandSelector == @selector(insertNewline:))
+    {
+        return YES;
+    }
     return NO;
 }
 
