@@ -621,6 +621,10 @@ hadConnectionStateChange:(gap_UserStatus)status
     {
         [self showNotifications];
     }
+    if (status == gap_user_status_online)
+        [IAUserManager resyncUserStatuses];
+    else if (status == gap_user_status_offline)
+        [IAUserManager setAllUsersOffline];
 }
 
 //- Notification List Protocol ---------------------------------------------------------------------
