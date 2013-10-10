@@ -185,12 +185,15 @@
     else
         [_rows_with_progress removeAllObjects];
     
-    NSUInteger row = _element_list.count - 2; // Start with the bottom transaction and work up
+    NSUInteger row = 0; // Start with the bottom transaction and work up
     for (IAConversationElement* element in _element_list)
     {
-        if (element.transaction.view_mode == TRANSACTION_VIEW_RUNNING)
+        if (element.mode != CONVERSATION_CELL_VIEW_SPACER &&
+            element.transaction.view_mode == TRANSACTION_VIEW_RUNNING)
+        {
             [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
-        row--;
+        }
+        row++;
     }
     
     if (_rows_with_progress.count > 0)
