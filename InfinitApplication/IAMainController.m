@@ -310,6 +310,7 @@
                 if ([_login_view_controller loginWindowOpen])
                     [_login_view_controller closeLoginWindow];
                 _login_view_controller = nil;
+                [[IAGapState instance] setLoggedIn:YES];
                 return;
                 
             case gap_deprecated:
@@ -708,18 +709,23 @@ transactionsProgressForUser:(IAUser*)user
 {
     if (_login_view_controller == nil)
         _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
+    NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+    NSString* password = [self getPasswordForUsername:username];
     if (!_logging_in)
-        [_login_view_controller showLoginWindowOnScreen:[self currentScreen]];
+    {
+        [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
+                                              withError:@""
+                                           withUsername:username
+                                            andPassword:password];
+    }
     else
     {
-        NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
-        NSString* password = [self getPasswordForUsername:username];
         [_login_view_controller showLoginWindowOnScreenAsLoggingIn:[self currentScreen]
                                                       withUsername:username
                                                        andPassword:password];
-        password = @"";
-        password = nil;
     }
+    password = @"";
+    password = nil;
     [self closeNotificationWindow];
 }
 
