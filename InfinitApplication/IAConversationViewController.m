@@ -189,16 +189,14 @@
     for (IAConversationElement* element in _element_list)
     {
         if (element.transaction.view_mode == TRANSACTION_VIEW_RUNNING)
-            [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row--]];
+            [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
+        row--;
     }
     
     if (_rows_with_progress.count > 0)
         [self setUpdatorRunning:YES];
     else
-    {
-        [self updateProgress]; // Update progress for case that transfer has finished
         [self setUpdatorRunning:NO];
-    }
 }
 
 - (void)updateProgress
