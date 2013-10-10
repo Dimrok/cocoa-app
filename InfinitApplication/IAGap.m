@@ -161,9 +161,7 @@ void on_critical_event(char const* str)
         
         setenv("INFINIT_METRICS_HOST", "v2.metrics.api.production.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
-        
-//        setenv("INFINIT_METRICS_HOST", "", 1);
-//        setenv("INFINIT_METRICS_PORT", "", 1);
+
 #else
         setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.development.infinit.io", 1);
 //        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 1);
@@ -184,6 +182,8 @@ void on_critical_event(char const* str)
         
         setenv("INFINIT_METRICS_HOST", "v2.metrics.api.development.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
+//        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_METRICS_PORT", "8080", 1);
 
         setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
