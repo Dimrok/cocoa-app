@@ -206,12 +206,10 @@
     
     [_current_controller aboutToChangeView];
     
-     [self.window.contentView removeConstraints:_view_constraints];
-     
-     [self.window.contentView replaceSubview:_current_controller.view
-                                        with:new_controller.view];
-     
-     _view_constraints = [NSMutableArray arrayWithArray:
+    [self.window.contentView replaceSubview:_current_controller.view
+                                       with:new_controller.view];
+    
+    _view_constraints = [NSMutableArray arrayWithArray:
                           [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
                                                                   options:NSLayoutFormatDirectionLeadingToTrailing
                                                                   metrics:nil
@@ -257,7 +255,7 @@
                                                     metrics:nil
                                                       views:@{@"view": controller.view}]];
     [_view_constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"H:|[view]|"
+                              constraintsWithVisualFormat:@"H:|[view]|"
                                                   options:NSLayoutFormatDirectionLeadingToTrailing
                                                   metrics:nil
                                                     views:@{@"view": controller.view}]];
