@@ -13,10 +13,6 @@
 @implementation IAConversationProgressBar
 {
 @private
-    NSTimeInterval _last_time;
-    double _transfer_rate;
-    NSMutableArray* _data_points;
-    
     NSImage* _indeterminate_image;
     NSImageView* _indeterminate_view;
 }
@@ -25,6 +21,7 @@
 
 @synthesize doubleValue = _double_value;
 @synthesize indeterminate = _indeterminate;
+@synthesize time_remaining = _time_remaining;
 @synthesize totalSize = _total_size;
 
 - (id)initWithCoder:(NSCoder*)aDecoder
@@ -33,9 +30,7 @@
     {
         _total_size = nil;
         _double_value = 0.0;
-        _transfer_rate = 0.0;
-        _data_points = [NSMutableArray array];
-        _last_time = [NSDate timeIntervalSinceReferenceDate];
+        _time_remaining = 0.0;
         _indeterminate_image = [IAFunctions imageNamed:@"loading-bar"];
         _indeterminate_view = nil;
     }
@@ -83,7 +78,7 @@
                                                                   yRadius:4.0];
     [progress_mask addClip];
     
-    if (_total_size == nil)
+    if (_total_size == nil || _total_size <= 0)
         return;
     
     NSDictionary* data_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:10.0]
@@ -99,9 +94,7 @@
     NSPoint size_pt = NSMakePoint(self.bounds.origin.x + 8.0, self.bounds.origin.y + 4.0);
     [file_size_str drawAtPoint:size_pt];
     
-    NSTimeInterval time_remaining = [self timeRemaining];
-    
-    if (time_remaining <= 0.0 || _data_points.count < 75 || _total_size <= 0)
+    if (_time_remaining <= 0.0)
         return;
     
     NSDictionary* text_style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:9.0]
@@ -109,7 +102,7 @@
                                                        colour:IA_RGB_COLOUR(150.0, 170.0, 184.0)
                                                        shadow:nil];
     
-    NSString* time_remaining_str = [IAFunctions timeRemainingFrom:time_remaining];
+    NSString* time_remaining_str = [IAFunctions timeRemainingFrom:_time_remaining];
     
     NSAttributedString* time_str = [[NSAttributedString alloc] initWithString:time_remaining_str
                                                                    attributes:text_style];
@@ -121,37 +114,15 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
-- (NSTimeInterval)timeRemaining
+- (void)setTimeRemaining:(NSTimeInterval)time_remaining
 {
-    double avg_rate = 0.0;
-    for (NSNumber* rate in _data_points)
-    {
-        avg_rate += rate.doubleValue / _data_points.count;
-    }
-    double data_remaining = (self.maxValue - _double_value) * _total_size.doubleValue;
-    if (avg_rate > 0.0)
-        return (data_remaining / avg_rate);
-    else
-        return 0.0;
+    _time_remaining = time_remaining;
+    [self setNeedsDisplay:YES];
 }
 
 - (void)setDoubleValue:(double)doubleValue
 {
-    NSTimeInterval current_time = [NSDate timeIntervalSinceReferenceDate];
-    NSTimeInterval time_interval = current_time - _last_time;
-    double rate = (doubleValue - _double_value) / self.maxValue * _total_size.doubleValue / time_interval;
-    if (_data_points.count < 200)
-    {
-        [_data_points addObject:[NSNumber numberWithDouble:rate]];
-    }
-    else
-    {
-        [_data_points removeObjectAtIndex:0];
-        [_data_points addObject:[NSNumber numberWithDouble:rate]];
-    }
-    if (doubleValue > _double_value)
-        _double_value = doubleValue;
-    _last_time = current_time;
+    _double_value = doubleValue;
     [self setNeedsDisplay:YES];
 }
 
@@ -194,6 +165,8 @@
 + (id)defaultAnimationForKey:(NSString*)key
 {
     if ([key isEqualToString:@"doubleValue"])
+        return [CABasicAnimation animation];
+    else if ([key isEqualToString:@"time_remaining"])
         return [CABasicAnimation animation];
     
     return [super defaultAnimationForKey:key];

@@ -11,6 +11,7 @@
 @interface IAConversationProgressBar : NSProgressIndicator
 
 @property (nonatomic, setter = setDoubleValue:) double doubleValue;
+@property (nonatomic, setter = setTimeRemaining:) NSTimeInterval time_remaining;
 @property (nonatomic, setter = setIndeterminate:) BOOL indeterminate;
 @property (nonatomic) NSNumber* totalSize;
 
