@@ -274,6 +274,7 @@
      {
          context.duration = 1.5;
          [self.progress_indicator.animator setDoubleValue:_transaction.progress];
+         [self.progress_indicator.animator setTimeRemaining:_transaction.time_remaining];
      }
                         completionHandler:^
      {
@@ -505,6 +506,7 @@
                 self.progress_indicator.totalSize = _transaction.total_size;
                 [self.progress_indicator setIndeterminate:NO];
                 [self.progress_indicator setDoubleValue:_transaction.progress];
+                [self.progress_indicator setTimeRemaining:_transaction.time_remaining];
                 [self.cancel_button setHoverImage:[IAFunctions
                                                    imageNamed:@"icon-onboarding-close-hover"]];
                 break;
