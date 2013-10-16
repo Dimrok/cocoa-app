@@ -14,7 +14,7 @@
 
 #define IA_CONVERSATION_VIEW_SPACER_SIZE 10.0
 
-@class IAClickableTextField;
+@class InfinitClickableTextField;
 
 @interface IAConversationBubbleView : NSView
 @end
@@ -25,7 +25,7 @@
 @property (nonatomic, strong) IBOutlet IAHoverButton* cancel_button;
 @property (nonatomic, strong) IBOutlet NSTextField* date;
 @property (nonatomic, strong) IBOutlet NSButton* files_icon;
-@property (nonatomic, strong) IBOutlet IAClickableTextField* files_label;
+@property (nonatomic, strong) IBOutlet InfinitClickableTextField* files_label;
 @property (nonatomic, strong) IBOutlet NSTextField* information_text;
 @property (nonatomic, strong) IBOutlet NSButton* message_button;
 @property (nonatomic, strong) IBOutlet NSTextField* message_text;

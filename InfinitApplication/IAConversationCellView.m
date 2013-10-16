@@ -10,13 +10,13 @@
 
 //- Clickable Text Field ---------------------------------------------------------------------------
 
-@interface IAClickableTextField : NSTextField
+@interface InfinitClickableTextField : NSTextField
 
 @property (nonatomic, readwrite) BOOL clickable;
 
 @end
 
-@implementation IAClickableTextField
+@implementation InfinitClickableTextField
 {
 @private
     NSTrackingArea* _tracking_area;
@@ -320,44 +320,43 @@
                                                                         traits:NSUnboldFontMask
                                                                         weight:5
                                                                           size:12.0];
-    NSDictionary* files_name_attrs = [IAFunctions
-                                      textStyleWithFont:file_name_font
-                                      paragraphStyle:text_align
-                                      colour:IA_GREY_COLOUR(62.0)
-                                      shadow:nil];
-    NSString* files_str;
-    if (_transaction.files_count > 1)
+    if (element.mode == CONVERSATION_CELL_VIEW_NORMAL ||
+        element.mode == CONVERSATION_CELL_VIEW_FILE_LIST)
     {
-        files_str = [NSString stringWithFormat:@"%ld %@", _transaction.files_count,
-                     NSLocalizedString(@"files", @"files")];
-        [self.files_icon setToolTip:NSLocalizedString(@"Show file list", @"show file list")];
-        [self.files_icon setEnabled:YES];
-    }
-    else
-    {
-        self.files_icon.image = [[NSWorkspace sharedWorkspace]
-                                 iconForFileType:[_transaction.files[0] pathExtension]];
-        files_str = _transaction.files[0];
-        [self.files_icon setEnabled:YES];
-        [self.files_icon setToolTip:@""];
-    }
-    self.files_label.attributedStringValue = [[NSAttributedString alloc]
-                                              initWithString:files_str
-                                              attributes:files_name_attrs];
-    
-    if (!_transaction.from_me &&
-        _transaction.view_mode == TRANSACTION_VIEW_FINISHED &&
-        [self fileWithNameExists:_transaction.files[0]])
-    {
-        self.files_label.action = @selector(finishedFileClicked);
-        self.files_label.target = self;
-        self.files_label.clickable = YES;
-    }
-    else if (!_transaction.from_me &&
-            _transaction.view_mode == TRANSACTION_VIEW_FINISHED &&
-            ![self fileWithNameExists:_transaction.files[0]])
-    {
+        NSDictionary* files_name_attrs = [IAFunctions
+                                          textStyleWithFont:file_name_font
+                                          paragraphStyle:text_align
+                                          colour:IA_GREY_COLOUR(62.0)
+                                          shadow:nil];
+        NSString* files_str;
+        if (_transaction.files_count > 1)
+        {
+            files_str = [NSString stringWithFormat:@"%ld %@", _transaction.files_count,
+                         NSLocalizedString(@"files", @"files")];
+            [self.files_icon setToolTip:NSLocalizedString(@"Show file list", @"show file list")];
+            [self.files_icon setEnabled:YES];
+        }
+        else
+        {
+            self.files_icon.image = [[NSWorkspace sharedWorkspace]
+                                     iconForFileType:[_transaction.files[0] pathExtension]];
+            files_str = _transaction.files[0];
+            [self.files_icon setEnabled:YES];
+            [self.files_icon setToolTip:@""];
+        }
+        self.files_label.attributedStringValue = [[NSAttributedString alloc]
+                                                  initWithString:files_str
+                                                  attributes:files_name_attrs];
         self.files_label.clickable = NO;
+        
+        if (!_transaction.from_me &&
+            _transaction.view_mode == TRANSACTION_VIEW_FINISHED &&
+            [self fileWithNameExists:_transaction.files[0]])
+        {
+            self.files_label.action = @selector(finishedFileClicked);
+            self.files_label.target = self;
+            self.files_label.clickable = YES;
+        }
     }
     
     if (element.mode == CONVERSATION_CELL_VIEW_MESSAGE)
