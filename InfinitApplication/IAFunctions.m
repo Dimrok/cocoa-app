@@ -249,7 +249,11 @@
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                   colour:IA_GREY_COLOUR(255.0)
                                                   shadow:nil];
-    NSArray* chunks = [fullname componentsSeparatedByString:@" "];
+    NSArray* chunks;
+    if (fullname.length > 0)
+        chunks = [fullname componentsSeparatedByString:@" "];
+    else // for case when fullname has no length, add a U for unknown
+        chunks = [NSArray arrayWithObject:@"U"];
     NSMutableString* letters_str = [NSMutableString string];
     for (NSString* chunk in chunks)
         [letters_str appendString:[NSString stringWithFormat:@"%c", [chunk characterAtIndex:0]]];
