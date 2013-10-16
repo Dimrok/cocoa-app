@@ -256,7 +256,8 @@
         chunks = [NSArray arrayWithObject:@"U"];
     NSMutableString* letters_str = [NSMutableString string];
     for (NSString* chunk in chunks)
-        [letters_str appendString:[NSString stringWithFormat:@"%c", [chunk characterAtIndex:0]]];
+        if (chunk.length > 0)
+            [letters_str appendString:[NSString stringWithFormat:@"%c", [chunk characterAtIndex:0]]];
     
     NSAttributedString* letters = [[NSAttributedString alloc]
                                    initWithString:[letters_str uppercaseString]
