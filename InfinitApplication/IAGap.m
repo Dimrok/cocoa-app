@@ -683,6 +683,7 @@ static void on_error_callback(gap_Status errcode, char const* reason, uint32_t c
 static void on_kicked_out()
 {
     IALog(@">>> On kicked out callback");
-    [[IAGapState instance] setLoggedIn:NO];
+    // Set not logged in and stop polling
+    [[IAGapState instance] kickedOut];
 }
 
