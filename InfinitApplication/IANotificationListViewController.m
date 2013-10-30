@@ -353,6 +353,8 @@
 
 - (void)boundsDidChange:(NSNotification*)notification
 {
+    if (_changing)
+        return;
     [self updateHeaderAndBackground];
 }
 
