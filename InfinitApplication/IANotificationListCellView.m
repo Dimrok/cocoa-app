@@ -82,6 +82,11 @@
 {
     switch (view_mode)
     {
+        case TRANSACTION_VIEW_WAITING_ACCEPT:
+            self.transfer_status.image = [IAFunctions imageNamed:@"icon-main-unread"];
+            [self.transfer_status setHidden:NO];
+            break;
+            
         case TRANSACTION_VIEW_FAILED:
             self.transfer_status.image = [IAFunctions imageNamed:@"icon-error"];
             [self.transfer_status setHidden:NO];

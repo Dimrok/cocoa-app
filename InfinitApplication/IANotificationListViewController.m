@@ -23,80 +23,26 @@
 //- Notification List Row View ---------------------------------------------------------------------
 
 @interface IANotificationListRowView : NSTableRowView
+
+@property (nonatomic, readwrite, setter = setUnread:) BOOL unread;
+@property (nonatomic, readwrite, setter = setClicked:) BOOL clicked;
+
 @end
 
 @implementation IANotificationListRowView
+
+@synthesize unread = _unread;
+@synthesize clicked = _clicked;
+
+- (void)setUnread:(BOOL)unread
 {
-@private
-    NSTrackingArea* _tracking_area;
+    _unread = unread;
+    [self setNeedsDisplay:YES];
 }
 
-- (void)dealloc
+- (void)setClicked:(BOOL)clicked
 {
-    _tracking_area = nil;
-}
-
-- (BOOL)isOpaque
-{
-    return NO;
-}
-
-- (void)ensureTrackingArea
-{
-    _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
-                                                  options:(NSTrackingInVisibleRect |
-                                                           NSTrackingActiveAlways |
-                                                           NSTrackingMouseEnteredAndExited)
-                                                    owner:self
-                                                 userInfo:nil];
-}
-
-- (void)updateTrackingAreas
-{
-    [super updateTrackingAreas];
-    [self ensureTrackingArea];
-    if (![[self trackingAreas] containsObject:_tracking_area])
-    {
-        [self addTrackingArea:_tracking_area];
-    }
-}
-
-- (void)mouseEntered:(NSEvent*)theEvent
-{
-    // xxx Should find a cleaner way to do this
-    id superview = [self superview];
-    if (superview != nil && [superview isKindOfClass:[NSTableView class]])
-    {
-        if (self.window == [[NSApplication sharedApplication] keyWindow])
-        {
-            NSInteger row = [(NSTableView*)[self superview] rowForView:self];
-            [(NSTableView*)[self superview] beginUpdates];
-            [(NSTableView*)[self superview] selectRowIndexes:[NSIndexSet indexSetWithIndex:row]
-                                        byExtendingSelection:NO];
-            [(NSTableView*)[self superview] endUpdates];
-        }
-    }
-}
-
-- (void)mouseExited:(NSEvent*)theEvent
-{
-    // xxx Should find a cleaner way to do this
-    id superview = [self superview];
-    if (superview != nil && [superview isKindOfClass:[NSTableView class]])
-    {
-        if (self.window == [[NSApplication sharedApplication] keyWindow])
-        {
-            NSInteger row = [(NSTableView*)[self superview] rowForView:self];
-            [(NSTableView*)[self superview] beginUpdates];
-            [(NSTableView*)[self superview] deselectRow:row];
-            [(NSTableView*)[self superview] endUpdates];
-        }
-    }
-}
-
-- (void)setSelected:(BOOL)selected
-{
-    [super setSelected:selected];
+    _clicked = clicked;
     [self setNeedsDisplay:YES];
 }
 
@@ -107,7 +53,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    if (self.selected)
+    if (self.unread || self.clicked)
     {
         // White background
         NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
@@ -179,6 +125,10 @@
                                                selector:@selector(avatarCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(boundsDidChange:)
+                                                   name:NSViewBoundsDidChangeNotification
+                                                 object:self.table_view.enclosingScrollView.contentView];
         _changing = NO;
 #ifdef IA_CORE_ANIMATION_ENABLED
         [self.view setWantsLayer:YES];
@@ -214,6 +164,8 @@
                              [NSString stringWithUTF8String:INFINIT_VERSION]];
     _version_item.title = version_str;
     
+    [self.table_view.enclosingScrollView.contentView setPostsBoundsChangedNotifications:YES];
+    
     if (_transaction_list.count == 0)
     {
         [self.no_data_message setHidden:NO];
@@ -232,6 +184,11 @@
         [self.table_view reloadData];
         [self resizeContentView];
         [self updateListOfRowsWithProgress];
+        if ([_transaction_list[0] view_mode] == TRANSACTION_VIEW_WAITING_ACCEPT)
+        {
+            self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+            self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+        }
     }
 }
 
@@ -343,7 +300,7 @@
 - (BOOL)tableView:(NSTableView*)aTableView
   shouldSelectRow:(NSInteger)row
 {
-    return YES;
+    return NO;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
@@ -377,6 +334,11 @@
                        andProgress:[_delegate notificationList:self
                                    transactionsProgressForUser:user]
                        andDelegate:self];
+    IANotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
+    if (transaction.view_mode == TRANSACTION_VIEW_WAITING_ACCEPT)
+        row_view.unread = YES;
+    else
+        row_view.unread = NO;
     return cell;
 }
 
@@ -389,18 +351,19 @@
     return row_view;
 }
 
-- (void)tableViewSelectionDidChange:(NSNotification*)notification
+- (void)boundsDidChange:(NSNotification*)notification
 {
-    NSUInteger row = self.table_view.selectedRow;
+    [self updateHeaderAndBackground];
+}
+
+- (void)updateHeaderAndBackground
+{
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
-    if (visible_rows.location == row)
+    IANotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
+                                                        makeIfNecessary:NO];
+    if (row_view.unread)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
-    }
-    else if (_transaction_list.count - 1 == row)
-    {
-        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
         self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
     }
     else
@@ -420,6 +383,8 @@
     [self setUpdatorRunning:NO];
     
     _changing = YES;
+    
+    [[self.table_view rowViewAtRow:row makeIfNecessary:NO] setClicked:YES];
     
     IATransaction* transaction = _transaction_list[row];
     IAUser* user = transaction.other_user;
@@ -587,6 +552,8 @@
         [self.table_view endUpdates];
     }
     
+    [self updateHeaderAndBackground];
+    
     [self updateBadgeForRow:0];
     
     if (self.content_height_constraint.constant < _max_rows_shown * _row_height)
@@ -613,6 +580,7 @@
             break;
         }
     }
+    [self updateHeaderAndBackground];
     [self updateListOfRowsWithProgress];
 }
 
