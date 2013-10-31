@@ -130,8 +130,6 @@
 		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
 		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
 		8398835717A6AC96009409B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8398835617A6AC95009409B3 /* Security.framework */; };
-		8398836117A6C1F9009409B3 /* IALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835F17A6C1F9009409B3 /* IALoginViewController.m */; };
-		8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8398836017A6C1F9009409B3 /* IALoginViewController.xib */; };
 		8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */; };
 		839DFC1417D8ECEF001D60DD /* icon-transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1217D8ECEF001D60DD /* icon-transfer.png */; };
 		839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */; };
@@ -599,9 +597,6 @@
 		8398835317A6AA9D009409B3 /* IAUserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserPrefs.h; sourceTree = "<group>"; };
 		8398835417A6AA9D009409B3 /* IAUserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAUserPrefs.m; sourceTree = "<group>"; };
 		8398835617A6AC95009409B3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		8398835E17A6C1F9009409B3 /* IALoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IALoginViewController.h; sourceTree = "<group>"; };
-		8398835F17A6C1F9009409B3 /* IALoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IALoginViewController.m; sourceTree = "<group>"; };
-		8398836017A6C1F9009409B3 /* IALoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IALoginViewController.xib; sourceTree = "<group>"; };
 		8398836517A6FA73009409B3 /* IADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADefine.h; sourceTree = "<group>"; };
 		8398836817A6FDE6009409B3 /* IACentredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredTextFieldCell.h; sourceTree = "<group>"; };
 		8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredTextFieldCell.m; sourceTree = "<group>"; };
@@ -820,7 +815,6 @@
 				8328081C17A2B4A60025B6F8 /* IAAppDelegate.h */,
 				8328081D17A2B4A60025B6F8 /* IAAppDelegate.m */,
 				8328081F17A2B4A60025B6F8 /* MainMenu.xib */,
-				8398835817A6BFBD009409B3 /* Login Window */,
 				8398834717A6A580009409B3 /* Utilities */,
 				83CD6FB217A672C7004F55D1 /* Gap */,
 				8328084017A2B5100025B6F8 /* Common Resources */,
@@ -1103,16 +1097,6 @@
 				838FE0B717DA097C004160DB /* IAHoverButton.m */,
 			);
 			name = Utilities;
-			sourceTree = "<group>";
-		};
-		8398835817A6BFBD009409B3 /* Login Window */ = {
-			isa = PBXGroup;
-			children = (
-				8398835E17A6C1F9009409B3 /* IALoginViewController.h */,
-				8398835F17A6C1F9009409B3 /* IALoginViewController.m */,
-				8398836017A6C1F9009409B3 /* IALoginViewController.xib */,
-			);
-			name = "Login Window";
 			sourceTree = "<group>";
 		};
 		83B2FD0F17F58F3100893B52 /* Onboarding View */ = {
@@ -1552,7 +1536,6 @@
 				8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */,
 				832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */,
 				837A7F9017FC25F200600ACD /* btn-send-files-simple-disabled.png in Resources */,
-				8398836217A6C1F9009409B3 /* IALoginViewController.xib in Resources */,
 				837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */,
 				839DFC1917D8ED45001D60DD /* icon-back@2x.png in Resources */,
 				837A7F8217FC225100600ACD /* icon-onboarding-next.png in Resources */,
@@ -1708,7 +1691,6 @@
 				8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */,
 				8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */,
 				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
-				8398836117A6C1F9009409B3 /* IALoginViewController.m in Sources */,
 				8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */,
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
 				831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */,
