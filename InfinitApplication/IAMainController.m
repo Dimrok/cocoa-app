@@ -14,6 +14,7 @@
 #import "IAGap.h"
 #import "IAKeychainManager.h"
 #import "IANoConnectionViewController.h"
+#import "IANotLoggedInViewController.h"
 #import "IAPopoverViewController.h"
 #import "IAUserPrefs.h"
 
@@ -29,7 +30,7 @@
     IAViewController* _current_view_controller;
     IAConversationViewController* _conversation_view_controller;
     IAGeneralSendController* _general_send_controller;
-    IALoginViewController* _login_view_controller;
+    InfinitLoginViewController* _login_view_controller;
     IANoConnectionViewController* _no_connection_view_controller;
     IANotificationListViewController* _notification_view_controller;
     IANotLoggedInViewController* _not_logged_view_controller;
@@ -87,24 +88,11 @@
         if (![self tryAutomaticLogin])
         {
             IALog(@"%@ Autologin failed", self);
-            // Need a delay, otherwise the popover draws in the wrong place
-            [self performSelector:@selector(delayedLoginPopover) withObject:nil afterDelay:0.2];
+            [_status_bar_icon setHighlighted:YES];
+            [self showLoginView];
         }
     }
     return self;
-}
-
-- (void)delayedLoginPopover
-{
-    if (_popover_controller == nil)
-        _popover_controller = [[IAPopoverViewController alloc] init];
-    NSString* heading = NSLocalizedString(@"Click the icon to login",
-                                          @"click the icon to login");
-    NSString* message = NSLocalizedString(@"Infinit has been installed. Click on the icon to login.",
-                                          @"Infinit has been installed. Click on the icon to login");
-    [_popover_controller showHeading:heading
-                          andMessage:message
-                           belowView:_status_item.view];
 }
 
 - (BOOL)tryAutomaticLogin
@@ -155,30 +143,34 @@
     [self openOrChangeViewController:_notification_view_controller];
 }
 
+- (void)showLoginView
+{
+    if (_login_view_controller == nil)
+    {
+        _login_view_controller = [[InfinitLoginViewController alloc] initWithDelegate:self
+                                                                             withMode:LOGIN_VIEW_NOT_LOGGED_IN];
+    }
+    [self openOrChangeViewController:_login_view_controller];
+}
+
 - (void)showNotLoggedInView
 {
-    if (_not_logged_view_controller == nil)
+    if (_logging_in)
     {
-        if (_logging_in)
+        if (_not_logged_view_controller == nil)
         {
-            _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self
-                                                                                       withMode:LOGGING_IN];
+            _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithMode:LOGGING_IN];
         }
         else
         {
-            _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithDelegate:self
-                                                                                       withMode:LOGGED_OUT];
+            [_not_logged_view_controller setMode:LOGGING_IN];
         }
+        [self openOrChangeViewController:_not_logged_view_controller];
     }
     else
     {
-        if (_logging_in)
-            [_not_logged_view_controller setMode:LOGGING_IN];
-        else
-            [_not_logged_view_controller setMode:LOGGED_OUT];
-        
+        [self showLoginView];
     }
-    [self openOrChangeViewController:_not_logged_view_controller];
 }
 
 - (void)showSendView:(IAViewController*)controller
@@ -245,9 +237,6 @@
     
     [[IACrashReportManager sharedInstance] sendExistingCrashReports];
     
-    if ([_login_view_controller loginWindowOpen])
-        [_login_view_controller closeLoginWindow];
-    
     if (_update_credentials && [[IAKeychainManager sharedInstance] credentialsInKeychain:_username])
     {
         [[IAKeychainManager sharedInstance] changeUser:_username password:_password];
@@ -307,8 +296,8 @@
                 break;
                 
             case gap_already_logged_in:
-                if ([_login_view_controller loginWindowOpen])
-                    [_login_view_controller closeLoginWindow];
+                if (_current_view_controller == _login_view_controller)
+                    [self closeNotificationWindow];
                 _login_view_controller = nil;
                 [[IAGapState instance] setLoggedIn:YES];
                 return;
@@ -329,8 +318,14 @@
         
         
         if (_login_view_controller == nil)
-            _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
-        
+        {
+            _login_view_controller = [[InfinitLoginViewController alloc] initWithDelegate:self
+                                                                                 withMode:LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
+        }
+        else
+        {
+            [_login_view_controller setLoginViewMode:LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
+        }
         
         NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
         NSString* password = [self getPasswordForUsername:username];
@@ -341,10 +336,16 @@
         _new_credentials = YES;
         _update_credentials = YES;
         
-        [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
-                                              withError:error
-                                           withUsername:username
-                                            andPassword:password];
+        if (_current_view_controller != _login_view_controller)
+        {
+            [_status_bar_icon setHighlighted:YES];
+            [self showLoginView];
+        }
+        
+        [_login_view_controller showWithError:error
+                                     username:username
+                                  andPassword:password];
+        
         password = @"";
         password = nil;
     }
@@ -589,7 +590,7 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 
 //- Login Window Protocol --------------------------------------------------------------------------
 
-- (void)tryLogin:(IALoginViewController*)sender
+- (void)tryLogin:(InfinitLoginViewController*)sender
         username:(NSString*)username
         password:(NSString*)password
 {
@@ -599,15 +600,14 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
     }
 }
 
-- (void)loginViewClose:(IALoginViewController*)sender
+- (void)loginViewWantsClose:(InfinitLoginViewController*)sender
 {
-    [_login_view_controller closeLoginWindow];
+    [self closeNotificationWindow];
     _login_view_controller = nil;
 }
 
-- (void)loginViewCloseAndQuit:(IALoginViewController*)sender
+- (void)loginViewWantsCloseAndQuit:(InfinitLoginViewController*)sender
 {
-    [_login_view_controller closeLoginWindow];
     [self handleQuit];
 }
 
@@ -701,32 +701,6 @@ transactionsProgressForUser:(IAUser*)user
 - (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender
 {
     [_delegate mainControllerWantsCheckForUpdate:self];
-}
-
-//- Not Logged In View Protocol --------------------------------------------------------------------
-
-- (void)notLoggedInViewControllerWantsOpenLoginWindow:(IANotLoggedInViewController*)sender
-{
-    if (_login_view_controller == nil)
-        _login_view_controller = [[IALoginViewController alloc] initWithDelegate:self];
-    NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
-    NSString* password = [self getPasswordForUsername:username];
-    if (!_logging_in)
-    {
-        [_login_view_controller showLoginWindowOnScreen:[self currentScreen]
-                                              withError:@""
-                                           withUsername:username
-                                            andPassword:password];
-    }
-    else
-    {
-        [_login_view_controller showLoginWindowOnScreenAsLoggingIn:[self currentScreen]
-                                                      withUsername:username
-                                                       andPassword:password];
-    }
-    password = @"";
-    password = nil;
-    [self closeNotificationWindow];
 }
 
 //- Onboarding Protocol ----------------------------------------------------------------------------

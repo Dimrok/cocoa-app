@@ -18,10 +18,9 @@
 #import "IAConversationViewController.h"
 #import "IADesktopNotifier.h"
 #import "IAGeneralSendController.h"
-#import "IALoginViewController.h"
+#import "InfinitLoginViewController.h"
 #import "IAMeManager.h"
 #import "IANotificationListViewController.h"
-#import "IANotLoggedInViewController.h"
 #import "IAOnboardingViewController.h"
 #import "IAReportProblemWindowController.h"
 #import "IAStatusBarIcon.h"
@@ -32,10 +31,9 @@
 @interface IAMainController : NSObject <IAConversationViewProtocol,
                                         IADesktopNotifierProtocol,
                                         IAGeneralSendControllerProtocol,
-                                        IALoginViewControllerProtocol,
+                                        InfinitLoginViewControllerProtocol,
                                         IAMeManagerProtocol,
                                         IANotificationListViewProtocol,
-                                        IANotLoggedInViewProtocol,
                                         IAOnboardingProtocol,
                                         IAReportProblemProtocol,
                                         IAStatusBarIconProtocol,
