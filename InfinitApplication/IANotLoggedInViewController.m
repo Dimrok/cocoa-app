@@ -36,12 +36,10 @@
 
 @synthesize mode = _mode;
 
-- (id)initWithDelegate:(id<IANotLoggedInViewProtocol>)delegate
-              withMode:(IANotLoggedInViewMode)mode
+- (id)initWithMode:(IANotLoggedInViewMode)mode
 {
     if (self = [super initWithNibName:[self className] bundle:nil])
     {
-        _delegate = delegate;
         _mode = mode;
         NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         style.alignment = NSCenterTextAlignment;
@@ -105,13 +103,6 @@
 {
     _mode = mode;
     [self configureForMode:mode];
-}
-
-//- Button Handling --------------------------------------------------------------------------------
-
-- (IBAction)openLoginWindow:(NSButton*)sender
-{
-    [_delegate notLoggedInViewControllerWantsOpenLoginWindow:self];
 }
 
 @end

@@ -22,22 +22,11 @@ typedef enum __IANotLoggedInViewMode
 @protocol IANotLoggedInViewProtocol;
 
 @interface IANotLoggedInViewController : IAViewController
-{
-@private
-    id<IANotLoggedInViewProtocol> _delegate;
-}
 
 @property (nonatomic, strong) IBOutlet NSTextField* not_logged_message;
 @property (nonatomic, strong) IBOutlet IABottomButton* login_button;
 @property (nonatomic, setter = setMode:) IANotLoggedInViewMode mode;
 
-- (id)initWithDelegate:(id<IANotLoggedInViewProtocol>)delegate
-              withMode:(IANotLoggedInViewMode)mode;
-
-@end
-
-@protocol IANotLoggedInViewProtocol <NSObject>
-
-- (void)notLoggedInViewControllerWantsOpenLoginWindow:(IANotLoggedInViewController*)sender;
+- (id)initWithMode:(IANotLoggedInViewMode)mode;
 
 @end
