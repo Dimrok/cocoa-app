@@ -92,7 +92,6 @@
 		836DF7EC17FD70DE00B2B809 /* IACentredMessageTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */; };
 		836DF80317FD919C00B2B809 /* btn-accept-decline.png in Resources */ = {isa = PBXBuildFile; fileRef = 836DF80117FD919C00B2B809 /* btn-accept-decline.png */; };
 		836DF80417FD919C00B2B809 /* btn-accept-decline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836DF80217FD919C00B2B809 /* btn-accept-decline@2x.png */; };
-		836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */; };
 		836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867517ECA30300D7202C /* QuartzCore.framework */; };
 		837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */; };
 		837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */; };
@@ -394,7 +393,6 @@
 				831667D717F3721900C79DD7 /* libcrash.dylib in Copy Infinit Libraries */,
 				83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */,
 				83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */,
-				836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */,
 				831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */,
 				8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */,
 				8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */,
@@ -554,7 +552,6 @@
 		836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredMessageTextCell.m; sourceTree = "<group>"; };
 		836DF80117FD919C00B2B809 /* btn-accept-decline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-decline.png"; sourceTree = "<group>"; };
 		836DF80217FD919C00B2B809 /* btn-accept-decline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-decline@2x.png"; sourceTree = "<group>"; };
-		836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../Externals/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		837A7F6F17FC072300600ACD /* IAReportProblemWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAReportProblemWindowController.h; sourceTree = "<group>"; };
 		837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAReportProblemWindowController.m; sourceTree = "<group>"; };
@@ -1224,7 +1221,6 @@
 				831667C117F371F700C79DD7 /* libcrash.dylib */,
 				83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */,
 				8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */,
-				836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */,
 				8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */,
 				8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */,
 				8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */,
