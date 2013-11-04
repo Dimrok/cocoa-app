@@ -504,6 +504,9 @@
                     self.information_text.attributedStringValue = [[NSAttributedString alloc]
                                                                    initWithString:info
                                                                    attributes:info_attrs];
+                self.cancel_button.hand_cursor = NO;
+                [self.cancel_button setHoverImage:[IAFunctions
+                                                   imageNamed:@"icon-onboarding-close-hover"]];
                 break;
             
             case TRANSACTION_VIEW_PREPARING:
