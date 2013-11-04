@@ -456,7 +456,7 @@
 
 - (void)updateStatusBarIcon
 {
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadConversation]];
 }
 
 //- View Logic -------------------------------------------------------------------------------------
@@ -656,7 +656,13 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
      activeTransactionsForUser:(IAUser*)user
 {
-    return [_transaction_manager activeAndUnreadTransactionsForUser:user];
+    return [_transaction_manager activeTransactionsForUser:user];
+}
+
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
+     unreadTransactionsForUser:(IAUser*)user
+{
+    return [_transaction_manager unreadAndNeedingActionTransactionsForUser:user];
 }
 
 - (BOOL)notificationList:(IANotificationListViewController*)sender

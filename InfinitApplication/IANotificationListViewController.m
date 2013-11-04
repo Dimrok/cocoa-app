@@ -184,7 +184,9 @@
         [self.table_view reloadData];
         [self resizeContentView];
         [self updateListOfRowsWithProgress];
-        if ([_transaction_list[0] view_mode] == TRANSACTION_VIEW_WAITING_ACCEPT)
+        IAUser* top_user = [_transaction_list[0] other_user];
+        if ([_delegate notificationList:self unreadTransactionsForUser:top_user] > 0 ||
+            [_delegate notificationList:self activeTransactionsForUser:top_user] > 0)
         {
             self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
             self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
@@ -328,14 +330,16 @@
     
     IAUser* user = transaction.other_user;
     
+    NSUInteger unread_notifications = [_delegate notificationList:self unreadTransactionsForUser:user];
+    NSUInteger active_transfers = [_delegate notificationList:self activeTransactionsForUser:user];
+    
     [cell setupCellWithTransaction:transaction
-            withRunningTransactions:[_delegate notificationList:self
-                                     activeTransactionsForUser:user]
-                       andProgress:[_delegate notificationList:self
-                                   transactionsProgressForUser:user]
+            withRunningTransactions:active_transfers
+            andUnreadNotifications:unread_notifications
+                       andProgress:[_delegate notificationList:self transactionsProgressForUser:user]
                        andDelegate:self];
     IANotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
-    if (transaction.view_mode == TRANSACTION_VIEW_WAITING_ACCEPT)
+    if (unread_notifications > 0 || active_transfers > 0)
         row_view.unread = YES;
     else
         row_view.unread = NO;

@@ -119,7 +119,15 @@
 
 //- Conversation Bubble View -----------------------------------------------------------------------
 
+@interface IAConversationBubbleView : NSView
+
+@property (nonatomic, readwrite) BOOL historic;
+
+@end
+
 @implementation IAConversationBubbleView
+
+@synthesize historic;
 
 - (BOOL)isOpaque
 {
@@ -135,16 +143,19 @@
     [IA_GREY_COLOUR(212.0) set];
     [grey_border stroke];
     
-    // White background
-    NSBezierPath* white_bg = [NSBezierPath bezierPathWithRoundedRect:
-                              NSMakeRect(1.0,
-                                         1.0,
-                                         NSWidth(self.bounds) - 2.0,
-                                         NSHeight(self.bounds) - 2.0)
-                                                             xRadius:4.0
-                                                             yRadius:4.0];
-    [IA_GREY_COLOUR(255.0) set];
-    [white_bg fill];
+    // Background
+    NSBezierPath* bg = [NSBezierPath bezierPathWithRoundedRect:NSMakeRect(1.0,
+                                                                          1.0,
+                                                                          NSWidth(self.bounds) - 2.0,
+                                                                          NSHeight(self.bounds) - 2.0)
+                                                       xRadius:4.0
+                                                       yRadius:4.0];
+    if (self.historic)
+        [IA_GREY_COLOUR(250.0) set];
+    else
+        [IA_GREY_COLOUR(255.0) set];
+    
+    [bg fill];
 }
 
 @end
@@ -155,8 +166,8 @@
 {
 @private
     IATransaction* _transaction;
-    IAConversationBubbleView* _current_bubble;
     BOOL _files_shown;
+    BOOL _historic;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -166,6 +177,7 @@
     if (self = [super initWithFrame:frameRect])
     {
         _files_shown = NO;
+        _historic = NO;
         self.progress_indicator = nil;
     }
     return self;
@@ -178,9 +190,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSBezierPath* grey_bg = [NSBezierPath bezierPathWithRect:self.bounds];
     [IA_GREY_COLOUR(248.0) set];
-    [grey_bg fill];
+    NSRectFill(self.bounds);
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -290,6 +301,9 @@
         return;
     
     _transaction = element.transaction;
+    
+    _historic = element.historic;
+    self.bubble_view.historic = _historic;
     
     NSMutableParagraphStyle* text_align = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     if (element.on_left)

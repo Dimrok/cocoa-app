@@ -16,12 +16,12 @@
 
 @class InfinitClickableTextField;
 
-@interface IAConversationBubbleView : NSView
-@end
+@class IAConversationBubbleView;
 
 @interface IAConversationCellView : NSTableCellView <NSTableViewDataSource,
                                                      NSTableViewDelegate>
 
+@property (nonatomic, strong) IBOutlet IAConversationBubbleView* bubble_view;
 @property (nonatomic, strong) IBOutlet IAHoverButton* cancel_button;
 @property (nonatomic, strong) IBOutlet NSTextField* date;
 @property (nonatomic, strong) IBOutlet NSButton* files_icon;

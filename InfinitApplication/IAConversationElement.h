@@ -18,9 +18,10 @@ typedef enum __IAConversationCellViewMode
 
 @interface IAConversationElement : NSObject
 
+@property (nonatomic, readwrite) BOOL historic;
+@property (nonatomic, readwrite) IAConversationCellViewMode mode;
 @property (nonatomic, readonly) BOOL on_left;
 @property (nonatomic, readonly) IATransaction* transaction;
-@property (nonatomic, readwrite) IAConversationCellViewMode mode;
 
 - (id)initWithTransaction:(IATransaction*)transaction;
 

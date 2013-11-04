@@ -244,12 +244,25 @@
     transaction_list = [user_transactions sortedArrayUsingDescriptors:
                         [NSArray arrayWithObject:ascending]];
     _element_list = [NSMutableArray array];
+    NSMutableArray* important_elements = [NSMutableArray array];
     for (IATransaction* transaction in transaction_list)
     {
-        IAConversationElement* element = [[IAConversationElement alloc]
-                                          initWithTransaction:transaction];
-        [_element_list addObject:element];
+        // Important transactions must be at bottom of list
+        if (transaction.is_active || transaction.is_new || transaction.needs_action)
+        {
+            IAConversationElement* element = [[IAConversationElement alloc]
+                                              initWithTransaction:transaction];
+            [important_elements addObject:element];
+        }
+        else
+        {
+            IAConversationElement* element = [[IAConversationElement alloc]
+                                              initWithTransaction:transaction];
+            [_element_list addObject:element];
+        }
     }
+    // Place important elements at bottom of list
+    [_element_list addObjectsFromArray:important_elements];
 }
 
 - (void)generateUserTransactionList
@@ -673,6 +686,7 @@
         return;
 
     IAConversationElement* element = [[IAConversationElement alloc] initWithTransaction:transaction];
+    element.historic = NO; // We want to keep it the same colour that it was before updating
     [self.table_view beginUpdates];
     [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
                            withAnimation:NSTableViewAnimationSlideRight];
