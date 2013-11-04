@@ -16,9 +16,7 @@
 
 - (void)clearAllNotifications;
 
-- (void)transactionAdded:(IATransaction*)transaction;
-
-- (void)transactionUpdated:(IATransaction*)transaction;
+- (void)desktopNotificationForTransaction:(IATransaction*)transaction;
 
 @end
 

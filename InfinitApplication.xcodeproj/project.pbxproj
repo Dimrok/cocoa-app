@@ -58,7 +58,6 @@
 		8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EE17A67EB0006028BC /* libelle.dylib */; };
 		8334C82D17A692BD006028BC /* libetoile.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EF17A67EB0006028BC /* libetoile.dylib */; };
 		8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; };
-		8334C82F17A692BD006028BC /* libgcc_s.1.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F117A67EB0006028BC /* libgcc_s.1.dylib */; };
 		8334C83017A692BD006028BC /* libhole.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F217A67EB0006028BC /* libhole.dylib */; };
 		8334C83117A692BD006028BC /* libinfinit.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F317A67EB0006028BC /* libinfinit.dylib */; };
 		8334C83217A692BD006028BC /* liblune.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F417A67EB0006028BC /* liblune.dylib */; };
@@ -69,9 +68,12 @@
 		8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F917A67EB0006028BC /* libprotocol.dylib */; };
 		8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FA17A67EB0006028BC /* libreactor.dylib */; };
 		8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */; };
-		8334C83A17A692BD006028BC /* libstdc++.6.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */; };
 		8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FD17A67EB0006028BC /* libtrophonius.dylib */; };
 		833C319117CCC85200941C09 /* IADesktopNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 833C319017CCC85200941C09 /* IADesktopNotifier.m */; };
+		834582941822774700899526 /* icon-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 834582901822774700899526 /* icon-gear.png */; };
+		834582951822774700899526 /* icon-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 834582911822774700899526 /* icon-gear@2x.png */; };
+		834582961822774700899526 /* icon-transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 834582921822774700899526 /* icon-transfer.png */; };
+		834582971822774700899526 /* icon-transfer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 834582931822774700899526 /* icon-transfer@2x.png */; };
 		8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8346314F17A7042A00A7E17F /* IACentredSecureCell.m */; };
 		834D47DC17CB442B00EEB16A /* icon-expand-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47D817CB442B00EEB16A /* icon-expand-left.png */; };
 		834D47DD17CB442B00EEB16A /* icon-expand-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47D917CB442B00EEB16A /* icon-expand-left@2x.png */; };
@@ -90,7 +92,6 @@
 		836DF7EC17FD70DE00B2B809 /* IACentredMessageTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */; };
 		836DF80317FD919C00B2B809 /* btn-accept-decline.png in Resources */ = {isa = PBXBuildFile; fileRef = 836DF80117FD919C00B2B809 /* btn-accept-decline.png */; };
 		836DF80417FD919C00B2B809 /* btn-accept-decline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836DF80217FD919C00B2B809 /* btn-accept-decline@2x.png */; };
-		836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */; };
 		836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867517ECA30300D7202C /* QuartzCore.framework */; };
 		837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */; };
 		837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */; };
@@ -123,16 +124,12 @@
 		83929BC117C618CD0009292D /* icon-accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83929BBF17C618CD0009292D /* icon-accept@2x.png */; };
 		839456C517D213B200BF343E /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
 		839456C617D213B900BF343E /* CrashReporter.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
-		8395155017DCB04800DE535F /* icon-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 8395154E17DCB04800DE535F /* icon-gear.png */; };
-		8395155117DCB04800DE535F /* icon-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8395154F17DCB04800DE535F /* icon-gear@2x.png */; };
 		83974CF317D127E200894E8D /* IAConversationHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83974CF217D127E200894E8D /* IAConversationHeaderView.m */; };
 		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
 		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
 		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
 		8398835717A6AC96009409B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8398835617A6AC95009409B3 /* Security.framework */; };
 		8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */; };
-		839DFC1417D8ECEF001D60DD /* icon-transfer.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1217D8ECEF001D60DD /* icon-transfer.png */; };
-		839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */; };
 		839DFC1817D8ED45001D60DD /* icon-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1617D8ED45001D60DD /* icon-back.png */; };
 		839DFC1917D8ED45001D60DD /* icon-back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1717D8ED45001D60DD /* icon-back@2x.png */; };
 		83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8368F2BD17F1890C00135C37 /* libcurl.4.dylib */; };
@@ -149,6 +146,8 @@
 		83B8A70F18201F0700AD775F /* icon-main-unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A70D18201F0700AD775F /* icon-main-unread@2x.png */; };
 		83B8A728182246E500AD775F /* InfinitLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.m */; };
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
+		83C709861822E22C00F530C4 /* libz.1.2.8.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C709851822E22C00F530C4 /* libz.1.2.8.dylib */; };
+		83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83C709851822E22C00F530C4 /* libz.1.2.8.dylib */; };
 		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
 		83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C7599017AA428700BE6CD5 /* IAWindowController.xib */; };
 		83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C99E0017AB8EAC00AFF091 /* IAGeneralSendController.m */; };
@@ -190,6 +189,10 @@
 		83EADC2317E204FF00D49D77 /* icon-star-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EADC2117E204FF00D49D77 /* icon-star-selected@2x.png */; };
 		83EADC2E17E205E800D49D77 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EADC2C17E205E800D49D77 /* logo.png */; };
 		83EADC2F17E205E800D49D77 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EADC2D17E205E800D49D77 /* logo@2x.png */; };
+		83ECD4CE1827A04F007DDB13 /* icon-main-download.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ECD4CA1827A04F007DDB13 /* icon-main-download.png */; };
+		83ECD4CF1827A04F007DDB13 /* icon-main-download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ECD4CB1827A04F007DDB13 /* icon-main-download@2x.png */; };
+		83ECD4D01827A04F007DDB13 /* icon-main-upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ECD4CC1827A04F007DDB13 /* icon-main-upload.png */; };
+		83ECD4D11827A04F007DDB13 /* icon-main-upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ECD4CD1827A04F007DDB13 /* icon-main-upload@2x.png */; };
 		83ED2FC117E9A50600BB35A0 /* icon-menu-bar-active.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ED2FB917E9A50600BB35A0 /* icon-menu-bar-active.png */; };
 		83ED2FC217E9A50600BB35A0 /* icon-menu-bar-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ED2FBA17E9A50600BB35A0 /* icon-menu-bar-active@2x.png */; };
 		83ED2FC317E9A50600BB35A0 /* icon-menu-bar-clicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ED2FBB17E9A50600BB35A0 /* icon-menu-bar-clicked.png */; };
@@ -386,10 +389,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */,
 				831667D717F3721900C79DD7 /* libcrash.dylib in Copy Infinit Libraries */,
 				83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */,
 				83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */,
-				836F867417EC778600D7202C /* libboost_iostreams-mt.dylib in Copy Infinit Libraries */,
 				831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */,
 				8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */,
 				8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */,
@@ -404,7 +407,6 @@
 				8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */,
 				8334C82D17A692BD006028BC /* libetoile.dylib in Copy Infinit Libraries */,
 				8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */,
-				8334C82F17A692BD006028BC /* libgcc_s.1.dylib in Copy Infinit Libraries */,
 				8334C83017A692BD006028BC /* libhole.dylib in Copy Infinit Libraries */,
 				8334C83117A692BD006028BC /* libinfinit.dylib in Copy Infinit Libraries */,
 				8334C83217A692BD006028BC /* liblune.dylib in Copy Infinit Libraries */,
@@ -415,7 +417,6 @@
 				8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */,
 				8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */,
 				8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */,
-				8334C83A17A692BD006028BC /* libstdc++.6.dylib in Copy Infinit Libraries */,
 				8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */,
 			);
 			name = "Copy Infinit Libraries";
@@ -509,7 +510,6 @@
 		8334C7EE17A67EB0006028BC /* libelle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libelle.dylib; path = ../../../Externals/lib/libelle.dylib; sourceTree = "<group>"; };
 		8334C7EF17A67EB0006028BC /* libetoile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libetoile.dylib; path = ../../../Externals/lib/libetoile.dylib; sourceTree = "<group>"; };
 		8334C7F017A67EB0006028BC /* libgap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgap.dylib; path = ../../../Externals/lib/libgap.dylib; sourceTree = "<group>"; };
-		8334C7F117A67EB0006028BC /* libgcc_s.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgcc_s.1.dylib; path = ../../../Externals/lib/libgcc_s.1.dylib; sourceTree = "<group>"; };
 		8334C7F217A67EB0006028BC /* libhole.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhole.dylib; path = ../../../Externals/lib/libhole.dylib; sourceTree = "<group>"; };
 		8334C7F317A67EB0006028BC /* libinfinit.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libinfinit.dylib; path = ../../../Externals/lib/libinfinit.dylib; sourceTree = "<group>"; };
 		8334C7F417A67EB0006028BC /* liblune.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblune.dylib; path = ../../../Externals/lib/liblune.dylib; sourceTree = "<group>"; };
@@ -520,10 +520,13 @@
 		8334C7F917A67EB0006028BC /* libprotocol.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotocol.dylib; path = ../../../Externals/lib/libprotocol.dylib; sourceTree = "<group>"; };
 		8334C7FA17A67EB0006028BC /* libreactor.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreactor.dylib; path = ../../../Externals/lib/libreactor.dylib; sourceTree = "<group>"; };
 		8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../Externals/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
-		8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "../../../Externals/lib/libstdc++.6.dylib"; sourceTree = "<group>"; };
 		8334C7FD17A67EB0006028BC /* libtrophonius.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtrophonius.dylib; path = ../../../Externals/lib/libtrophonius.dylib; sourceTree = "<group>"; };
 		833C318F17CCC85200941C09 /* IADesktopNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADesktopNotifier.h; sourceTree = "<group>"; };
 		833C319017CCC85200941C09 /* IADesktopNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADesktopNotifier.m; sourceTree = "<group>"; };
+		834582901822774700899526 /* icon-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-gear.png"; sourceTree = "<group>"; };
+		834582911822774700899526 /* icon-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-gear@2x.png"; sourceTree = "<group>"; };
+		834582921822774700899526 /* icon-transfer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer.png"; sourceTree = "<group>"; };
+		834582931822774700899526 /* icon-transfer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer@2x.png"; sourceTree = "<group>"; };
 		8346314E17A7042A00A7E17F /* IACentredSecureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredSecureCell.h; sourceTree = "<group>"; };
 		8346314F17A7042A00A7E17F /* IACentredSecureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredSecureCell.m; sourceTree = "<group>"; };
 		834D47D817CB442B00EEB16A /* icon-expand-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-expand-left.png"; sourceTree = "<group>"; };
@@ -549,7 +552,6 @@
 		836DF7EB17FD70DE00B2B809 /* IACentredMessageTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredMessageTextCell.m; sourceTree = "<group>"; };
 		836DF80117FD919C00B2B809 /* btn-accept-decline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-decline.png"; sourceTree = "<group>"; };
 		836DF80217FD919C00B2B809 /* btn-accept-decline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-accept-decline@2x.png"; sourceTree = "<group>"; };
-		836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../Externals/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		837A7F6F17FC072300600ACD /* IAReportProblemWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAReportProblemWindowController.h; sourceTree = "<group>"; };
 		837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAReportProblemWindowController.m; sourceTree = "<group>"; };
@@ -586,8 +588,6 @@
 		83929BB617C60FD60009292D /* icon-reject@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-reject@2x.png"; sourceTree = "<group>"; };
 		83929BBE17C618CD0009292D /* icon-accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-accept.png"; sourceTree = "<group>"; };
 		83929BBF17C618CD0009292D /* icon-accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-accept@2x.png"; sourceTree = "<group>"; };
-		8395154E17DCB04800DE535F /* icon-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-gear.png"; sourceTree = "<group>"; };
-		8395154F17DCB04800DE535F /* icon-gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-gear@2x.png"; sourceTree = "<group>"; };
 		83974CF117D127E200894E8D /* IAConversationHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAConversationHeaderView.h; sourceTree = "<group>"; };
 		83974CF217D127E200894E8D /* IAConversationHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationHeaderView.m; sourceTree = "<group>"; };
 		8398834D17A6A5AE009409B3 /* IAAutoStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAutoStartup.h; sourceTree = "<group>"; };
@@ -600,8 +600,6 @@
 		8398836517A6FA73009409B3 /* IADefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADefine.h; sourceTree = "<group>"; };
 		8398836817A6FDE6009409B3 /* IACentredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredTextFieldCell.h; sourceTree = "<group>"; };
 		8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredTextFieldCell.m; sourceTree = "<group>"; };
-		839DFC1217D8ECEF001D60DD /* icon-transfer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer.png"; sourceTree = "<group>"; };
-		839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-transfer@2x.png"; sourceTree = "<group>"; };
 		839DFC1617D8ED45001D60DD /* icon-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back.png"; sourceTree = "<group>"; };
 		839DFC1717D8ED45001D60DD /* icon-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back@2x.png"; sourceTree = "<group>"; };
 		83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
@@ -621,6 +619,7 @@
 		83B8A725182246E500AD775F /* InfinitLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginViewController.h; sourceTree = "<group>"; };
 		83B8A726182246E500AD775F /* InfinitLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLoginViewController.m; sourceTree = "<group>"; };
 		83B8A727182246E500AD775F /* InfinitLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitLoginViewController.xib; sourceTree = "<group>"; };
+		83C709851822E22C00F530C4 /* libz.1.2.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.8.dylib; path = ../../../Externals/lib/libz.1.2.8.dylib; sourceTree = "<group>"; };
 		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
 		83C7598F17AA428700BE6CD5 /* IAWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAWindowController.m; sourceTree = "<group>"; };
 		83C7599017AA428700BE6CD5 /* IAWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAWindowController.xib; sourceTree = "<group>"; };
@@ -671,6 +670,10 @@
 		83EADC2117E204FF00D49D77 /* icon-star-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star-selected@2x.png"; sourceTree = "<group>"; };
 		83EADC2C17E205E800D49D77 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		83EADC2D17E205E800D49D77 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		83ECD4CA1827A04F007DDB13 /* icon-main-download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-main-download.png"; sourceTree = "<group>"; };
+		83ECD4CB1827A04F007DDB13 /* icon-main-download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-main-download@2x.png"; sourceTree = "<group>"; };
+		83ECD4CC1827A04F007DDB13 /* icon-main-upload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-main-upload.png"; sourceTree = "<group>"; };
+		83ECD4CD1827A04F007DDB13 /* icon-main-upload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-main-upload@2x.png"; sourceTree = "<group>"; };
 		83ED2FB917E9A50600BB35A0 /* icon-menu-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu-bar-active.png"; sourceTree = "<group>"; };
 		83ED2FBA17E9A50600BB35A0 /* icon-menu-bar-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu-bar-active@2x.png"; sourceTree = "<group>"; };
 		83ED2FBB17E9A50600BB35A0 /* icon-menu-bar-clicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu-bar-clicked.png"; sourceTree = "<group>"; };
@@ -701,6 +704,7 @@
 				83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */,
 				8398835717A6AC96009409B3 /* Security.framework in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
+				83C709861822E22C00F530C4 /* libz.1.2.8.dylib in Frameworks */,
 				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
 				8334C7E117A67D22006028BC /* Gap.framework in Frameworks */,
 			);
@@ -857,6 +861,10 @@
 		8328084017A2B5100025B6F8 /* Common Resources */ = {
 			isa = PBXGroup;
 			children = (
+				834582901822774700899526 /* icon-gear.png */,
+				834582911822774700899526 /* icon-gear@2x.png */,
+				834582921822774700899526 /* icon-transfer.png */,
+				834582931822774700899526 /* icon-transfer@2x.png */,
 				837A7F8417FC25E000600ACD /* bg-main-button-disabled.png */,
 				837A7F8517FC25E000600ACD /* bg-main-button-disabled@2x.png */,
 				837A7F8617FC25E000600ACD /* bg-main-button.png */,
@@ -869,10 +877,6 @@
 				83EADC2D17E205E800D49D77 /* logo@2x.png */,
 				83EADC2017E204FF00D49D77 /* icon-star-selected.png */,
 				83EADC2117E204FF00D49D77 /* icon-star-selected@2x.png */,
-				8395154E17DCB04800DE535F /* icon-gear.png */,
-				8395154F17DCB04800DE535F /* icon-gear@2x.png */,
-				839DFC1217D8ECEF001D60DD /* icon-transfer.png */,
-				839DFC1317D8ECEF001D60DD /* icon-transfer@2x.png */,
 				83F1148917AE709F00DCF662 /* icon-star.png */,
 				83F1148A17AE709F00DCF662 /* icon-star@2x.png */,
 				83D4205617C4CF7F00D4E168 /* icon-status.png */,
@@ -1217,7 +1221,6 @@
 				831667C117F371F700C79DD7 /* libcrash.dylib */,
 				83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */,
 				8334C7E517A67EAF006028BC /* libboost_chrono-mt.dylib */,
-				836F867217EC775000D7202C /* libboost_iostreams-mt.dylib */,
 				8334C7E617A67EB0006028BC /* libboost_signals-mt.dylib */,
 				8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */,
 				8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */,
@@ -1229,7 +1232,6 @@
 				8334C7EE17A67EB0006028BC /* libelle.dylib */,
 				8334C7EF17A67EB0006028BC /* libetoile.dylib */,
 				8334C7F017A67EB0006028BC /* libgap.dylib */,
-				8334C7F117A67EB0006028BC /* libgcc_s.1.dylib */,
 				8334C7F217A67EB0006028BC /* libhole.dylib */,
 				8334C7F317A67EB0006028BC /* libinfinit.dylib */,
 				8334C7F417A67EB0006028BC /* liblune.dylib */,
@@ -1240,8 +1242,8 @@
 				8334C7F917A67EB0006028BC /* libprotocol.dylib */,
 				8334C7FA17A67EB0006028BC /* libreactor.dylib */,
 				8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */,
-				8334C7FC17A67EB0006028BC /* libstdc++.6.dylib */,
 				8334C7FD17A67EB0006028BC /* libtrophonius.dylib */,
+				83C709851822E22C00F530C4 /* libz.1.2.8.dylib */,
 			);
 			name = "Infinit Libraries";
 			path = InfinitApplication;
@@ -1259,6 +1261,10 @@
 		83D4205F17C4DC5800D4E168 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83ECD4CA1827A04F007DDB13 /* icon-main-download.png */,
+				83ECD4CB1827A04F007DDB13 /* icon-main-download@2x.png */,
+				83ECD4CC1827A04F007DDB13 /* icon-main-upload.png */,
+				83ECD4CD1827A04F007DDB13 /* icon-main-upload@2x.png */,
 				83B8A70C18201F0700AD775F /* icon-main-unread.png */,
 				83B8A70D18201F0700AD775F /* icon-main-unread@2x.png */,
 				83929BBE17C618CD0009292D /* icon-accept.png */,
@@ -1340,9 +1346,14 @@
 		832807FF17A2B4A60025B6F8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = IA;
+				CLASSPREFIX = Infinit;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Infinit;
+				TargetAttributes = {
+					8328080617A2B4A60025B6F8 = {
+						DevelopmentTeam = 2HV5CQC8MR;
+					};
+				};
 			};
 			buildConfigurationList = 8328080217A2B4A60025B6F8 /* Build configuration list for PBXProject "InfinitApplication" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1548,10 +1559,11 @@
 				83C99E0717AB98CE00AFF091 /* IASimpleSendViewController.xib in Resources */,
 				83C99E0A17AB9A1700AFF091 /* bg-header-top-white.png in Resources */,
 				838C6DF517FAD14D00BF947C /* icon-onboarding-close-hover.png in Resources */,
+				83ECD4D01827A04F007DDB13 /* icon-main-upload.png in Resources */,
 				83C99E0B17AB9A1700AFF091 /* bg-header-top-white@2x.png in Resources */,
 				83EADC2217E204FF00D49D77 /* icon-star-selected.png in Resources */,
 				83B8A70F18201F0700AD775F /* icon-main-unread@2x.png in Resources */,
-				8395155117DCB04800DE535F /* icon-gear@2x.png in Resources */,
+				83ECD4CF1827A04F007DDB13 /* icon-main-download@2x.png in Resources */,
 				837A7F8317FC225100600ACD /* icon-onboarding-next@2x.png in Resources */,
 				83C99E1917AB9DEE00AFF091 /* icon-add-note-hover.png in Resources */,
 				83C99E1A17AB9DEE00AFF091 /* icon-add-note-hover@2x.png in Resources */,
@@ -1580,7 +1592,9 @@
 				836AAF7117AE876F001ECF2E /* IAAdvancedSendViewController.xib in Resources */,
 				83ED2FC817E9A50600BB35A0 /* icon-menu-bar-inactive@2x.png in Resources */,
 				837A7F9217FC25F200600ACD /* btn-send-files-simple.png in Resources */,
+				834582961822774700899526 /* icon-transfer.png in Resources */,
 				83281BBF17AFFD1D00CAE422 /* IAConversationViewController.xib in Resources */,
+				834582971822774700899526 /* icon-transfer@2x.png in Resources */,
 				83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */,
 				837A7F8A17FC25E000600ACD /* bg-main-button.png in Resources */,
 				8333AB4A17BD1FB200D8B6DE /* icon-note-clicked.png in Resources */,
@@ -1588,6 +1602,7 @@
 				837A7F9317FC25F200600ACD /* btn-send-files-simple@2x.png in Resources */,
 				8333AB4B17BD1FB200D8B6DE /* icon-note-clicked@2x.png in Resources */,
 				837A7F8917FC25E000600ACD /* bg-main-button-disabled@2x.png in Resources */,
+				834582941822774700899526 /* icon-gear.png in Resources */,
 				8333AB4C17BD1FB200D8B6DE /* icon-note.png in Resources */,
 				8333AB4D17BD1FB200D8B6DE /* icon-note@2x.png in Resources */,
 				83EADC2E17E205E800D49D77 /* logo.png in Resources */,
@@ -1612,15 +1627,16 @@
 				837E6D0C17DA324100FC3141 /* loading.gif in Resources */,
 				83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */,
 				83ED2FC417E9A50600BB35A0 /* icon-menu-bar-clicked@2x.png in Resources */,
-				839DFC1517D8ECEF001D60DD /* icon-transfer@2x.png in Resources */,
+				834582951822774700899526 /* icon-gear@2x.png in Resources */,
 				838C6DF617FAD14D00BF947C /* icon-onboarding-close-hover@2x.png in Resources */,
 				83929BC017C618CD0009292D /* icon-accept.png in Resources */,
 				839DFC1817D8ED45001D60DD /* icon-back.png in Resources */,
-				8395155017DCB04800DE535F /* icon-gear.png in Resources */,
 				83929BC117C618CD0009292D /* icon-accept@2x.png in Resources */,
 				834D47DC17CB442B00EEB16A /* icon-expand-left.png in Resources */,
 				837A7F8017FC225100600ACD /* icon-onboarding-back.png in Resources */,
+				83ECD4CE1827A04F007DDB13 /* icon-main-download.png in Resources */,
 				837A7F8117FC225100600ACD /* icon-onboarding-back@2x.png in Resources */,
+				83ECD4D11827A04F007DDB13 /* icon-main-upload@2x.png in Resources */,
 				834D47DD17CB442B00EEB16A /* icon-expand-left@2x.png in Resources */,
 				834D47DE17CB442B00EEB16A /* icon-expand-right.png in Resources */,
 				834D47DF17CB442B00EEB16A /* icon-expand-right@2x.png in Resources */,
@@ -1628,7 +1644,6 @@
 				834D47E717CB446A00EEB16A /* icon-collapse.png in Resources */,
 				834D47E817CB446A00EEB16A /* icon-collapse@2x.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
-				839DFC1417D8ECEF001D60DD /* icon-transfer.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1667,7 +1682,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nINFINIT_SOURCE_DIR=\"${HOME}/sandbox/infinit\"\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\n[ -n \"$INFINIT_BUILD_DIR\" ] && (\n    cp -fv \"${INFINIT_BUILD_DIR}/lib/\"*.dylib \"${EXTERNALS_DIR}/lib\"\n)\n\nrealpath()\n{\n    python << EOF\nimport os\nprint(os.path.abspath(\"$1\"))\nEOF\n}\n\nget_external_libraries()\n{\n    otool -L \"${EXTERNALS_DIR}/lib/\"*.dylib \\\n    | grep -E 'elle|/opt' \\\n    | grep -v 'libelle.dylib' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nget_external_libraries_of()\n{\n    otool -L \"${1}\" \\\n    | grep -E 'elle|/opt' \\\n    | grep -v 'libelle.dylib' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nwhile true\ndo\n    EXTERNALS_LIBS=`get_external_libraries | tr '\\n' ' '`\n    echo \"Found external libraries: ${EXTERNALS_LIBS}\"\n    for lib in ${EXTERNALS_LIBS}\n    do\n        dest=\"${EXTERNALS_DIR}/lib\"/`basename \"${lib}\"`\n        dest=`realpath \"${dest}\"`\n        rm -f \"${dest}\"\n        cp -fv \"${lib}\" \"${dest}\"\n    done\n    [ \"${EXTERNALS_LIBS}\" = \"`get_external_libraries | tr '\\n' ' '`\" ] && echo \"END OF EXTERNALS\" && break\ndone\n\nfor lib in \"${EXTERNALS_DIR}/lib/\"*.dylib\ndo\n    chmod a+rwx \"${lib}\"\n#    strip -x \"${lib}\"\n    install_name_tool \"${lib}\" -id @rpath/`basename \"${lib}\"`\n    for dep in `get_external_libraries_of \"${lib}\" | tr '\\n' ' '`\n    do\n        echo \"PATCHING ${lib}: change ${dep} to @rpath/`basename ${dep}`\"\n        install_name_tool -change \"${dep}\" \"@rpath/`basename ${dep}`\" \"${lib}\"\n    done\n    echo \"Patched lib ${lib}:\"\n    otool -L \"${lib}\"\ndone\n\necho \"DONE\"\nexit 0";
+			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nINFINIT_SOURCE_DIR=\"${HOME}/sandbox/infinit\"\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\n[ -n \"$INFINIT_BUILD_DIR\" ] && (\n    cp -fv \"${INFINIT_BUILD_DIR}/lib/\"*.dylib \"${EXTERNALS_DIR}/lib\"\n)\n\nrealpath()\n{\n    python << EOF\nimport os\nprint(os.path.abspath(\"$1\"))\nEOF\n}\n\nget_external_libraries()\n{\n    otool -L \"${EXTERNALS_DIR}/lib/\"*.dylib \\\n    | grep -E 'elle|/opt|/usr/local' \\\n    | grep -v 'libelle.dylib' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nget_external_libraries_of()\n{\n    otool -L \"${1}\" \\\n    | grep -E 'elle|/opt|/usr/local' \\\n    | grep -v 'libelle.dylib' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nwhile true\ndo\n    EXTERNALS_LIBS=`get_external_libraries | tr '\\n' ' '`\n    echo \"Found external libraries: ${EXTERNALS_LIBS}\"\n    for lib in ${EXTERNALS_LIBS}\n    do\n        dest=\"${EXTERNALS_DIR}/lib\"/`basename \"${lib}\"`\n        dest=`realpath \"${dest}\"`\n        rm -f \"${dest}\"\n        cp -fv \"${lib}\" \"${dest}\"\n    done\n    [ \"${EXTERNALS_LIBS}\" = \"`get_external_libraries | tr '\\n' ' '`\" ] && echo \"END OF EXTERNALS\" && break\ndone\n\nfor lib in \"${EXTERNALS_DIR}/lib/\"*.dylib\ndo\n    chmod a+rwx \"${lib}\"\n#    strip -x \"${lib}\"\n    install_name_tool \"${lib}\" -id @rpath/`basename \"${lib}\"`\n    for dep in `get_external_libraries_of \"${lib}\" | tr '\\n' ' '`\n    do\n        echo \"PATCHING ${lib}: change ${dep} to @rpath/`basename ${dep}`\"\n        install_name_tool -change \"${dep}\" \"@rpath/`basename ${dep}`\" \"${lib}\"\n    done\n    echo \"Patched lib ${lib}:\"\n    otool -L \"${lib}\"\ndone\n\necho \"DONE\"\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1880,16 +1895,22 @@
 		8328083917A2B4A60025B6F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
 				INFOPLIST_FILE = "InfinitApplication/InfinitApplication-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1897,16 +1918,22 @@
 		8328083A17A2B4A60025B6F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
 				INFOPLIST_FILE = "InfinitApplication/InfinitApplication-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

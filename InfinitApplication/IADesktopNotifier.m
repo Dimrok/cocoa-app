@@ -83,6 +83,16 @@
                        NSLocalizedString(@"to you", @"to you")];
             break;
         
+        case TRANSACTION_VIEW_WAITING_ONLINE:
+        case TRANSACTION_VIEW_PREPARING:
+            if (transaction.from_me)
+                return nil;
+            title = NSLocalizedString(@"Accepted!", @"accepted!");
+            message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
+                       NSLocalizedString(@"accepted", @"accepted"),
+                       filename];
+            break;
+        
         case TRANSACTION_VIEW_REJECTED:
             if (!transaction.from_me)
                 return nil;
@@ -145,18 +155,8 @@
 
 //- Transaction Handling ---------------------------------------------------------------------------
 
-- (void)transactionAdded:(IATransaction*)transaction
+- (void)desktopNotificationForTransaction:(IATransaction*)transaction
 {
-    NSUserNotification* user_notification = [self notificationFromTransaction:transaction];
-    
-    if (user_notification == nil)
-        return;
-    
-    [_notification_centre deliverNotification:user_notification];
-}
-
-- (void)transactionUpdated:(IATransaction*)transaction
-{    
     NSUserNotification* user_notification = [self notificationFromTransaction:transaction];
     
     if (user_notification == nil)

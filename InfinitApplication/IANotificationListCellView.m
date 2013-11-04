@@ -38,7 +38,7 @@
                                                                                 attributes:attrs];
 }
 
-- (void)setFileName:(NSString*)file_name
+- (void)setInformationField:(NSString*)message
 {
     NSFont* file_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
@@ -48,8 +48,8 @@
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                   colour:IA_GREY_COLOUR(153.0)
                                                   shadow:nil];
-    self.file_name.attributedStringValue = [[NSAttributedString alloc] initWithString:file_name
-                                                                           attributes:attrs];
+    self.information.attributedStringValue = [[NSAttributedString alloc] initWithString:message
+                                                                             attributes:attrs];
 }
 
 
@@ -78,27 +78,30 @@
                                  andShadowOfRadius:2.0]];
 }
 
-- (void)setTransferStatusIcon:(IATransactionViewMode)view_mode
+- (void)setStatusIndicatorForTransaction:(IATransaction*)transaction
 {
-    switch (view_mode)
+    switch (transaction.view_mode)
     {
-        case TRANSACTION_VIEW_WAITING_ACCEPT:
-            self.transfer_status.image = [IAFunctions imageNamed:@"icon-main-unread"];
-            [self.transfer_status setHidden:NO];
+        case TRANSACTION_VIEW_RUNNING:
+            if (transaction.from_me)
+                self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-upload"];
+            else
+                self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-download"];
+            [self.status_indicator setHidden:NO];
             break;
             
         case TRANSACTION_VIEW_FAILED:
-            self.transfer_status.image = [IAFunctions imageNamed:@"icon-error"];
-            [self.transfer_status setHidden:NO];
+            self.status_indicator.image = [IAFunctions imageNamed:@"icon-error"];
+            [self.status_indicator setHidden:NO];
             break;
             
         case TRANSACTION_VIEW_FINISHED:
-            self.transfer_status.image = [IAFunctions imageNamed:@"icon-check"];
-            [self.transfer_status setHidden:NO];
+            self.status_indicator.image = [IAFunctions imageNamed:@"icon-check"];
+            [self.status_indicator setHidden:NO];
             break;
             
         default:
-            [self.transfer_status setHidden:YES];
+            [self.status_indicator setHidden:YES];
             break;
     }
 }
@@ -144,7 +147,8 @@
 }
 
 - (void)setupCellWithTransaction:(IATransaction*)transaction
-         withRunningTransactions:(NSUInteger)count
+         withRunningTransactions:(NSUInteger)running_transactions
+          andUnreadNotifications:(NSUInteger)unread_notifications
                      andProgress:(CGFloat)progress
                      andDelegate:(id<IANotificationListCellProtocol>)delegate
 {
@@ -161,23 +165,71 @@
     else
         [self.user_online setHidden:YES];
     
-    if (transaction.files_count == 1)
+    [self.status_indicator setHidden:YES];
+    
+    if (unread_notifications + running_transactions > 1)
     {
-        [self setFileName:transaction.files[0]];
+        NSString* message;
+        if (unread_notifications == 0)
+        {
+            message = [NSString stringWithFormat:
+                       @"%ld %@", running_transactions,
+                                  NSLocalizedString(@"running transfers", @"running transfers")];
+        }
+        else if(running_transactions == 0)
+        {
+            message = [NSString stringWithFormat:
+                       @"%ld %@", unread_notifications,
+                                  NSLocalizedString(@"unread notifications", @"unread notifications")];
+        }
+        else
+        {
+            message = [NSString stringWithFormat:
+                       @"%ld %@ %ld %@", unread_notifications,
+                                         NSLocalizedString(@"unread and", @"unread and"),
+                                         running_transactions,
+                                         NSLocalizedString(@"running", @"running")];
+        }
+        
+        [self setInformationField:message];
+        
+        self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
+        [self.status_indicator setHidden:NO];
+        self.avatar_view.mode = AVATAR_VIEW_NORMAL;
+    }
+    // XXX Unread transaction is not latest. Should handle this better.
+    else if (running_transactions == 0 && unread_notifications == 1 &&
+             !transaction.is_new && !transaction.needs_action)
+    {
+
+        NSString* message = NSLocalizedString(@"1 unread notification",
+                                              @"1 unread notification");
+        [self setInformationField:message];
+        self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
+        [self.status_indicator setHidden:NO];
+        self.avatar_view.mode = AVATAR_VIEW_NORMAL;
     }
     else
     {
-        [self setFileName:[NSString stringWithFormat:@"%ld %@", transaction.files_count,
-                           NSLocalizedString(@"files", @"files")]];
+        if (transaction.files_count == 1)
+        {
+            [self setInformationField:transaction.files[0]];
+        }
+        else
+        {
+            [self setInformationField:[NSString stringWithFormat:@"%ld %@", transaction.files_count,
+                                       NSLocalizedString(@"files", @"files")]];
+        }
+        [self setStatusIndicatorForTransaction:transaction];
+        [self setAvatarMode:transaction.view_mode
+                 whenFromMe:transaction.from_me];
     }
+    
     [self setLastActionTime:transaction.last_edit_timestamp];
-    [self setTransferStatusIcon:transaction.view_mode];
     
     // Configure avatar view
-    [self setBadgeCount:count];
+    [self setBadgeCount:running_transactions];
     [self.avatar_view setTotalProgress:progress];
-    [self setAvatarMode:transaction.view_mode
-             whenFromMe:transaction.from_me];
     [self.avatar_view setDelegate:self];
 }
 

@@ -138,7 +138,6 @@
 - (void)showNotifications
 {
     [_desktop_notifier clearAllNotifications];
-    [_transaction_manager markTransactionsRead];
     _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
     [self openOrChangeViewController:_notification_view_controller];
 }
@@ -456,7 +455,7 @@
 
 - (void)updateStatusBarIcon
 {
-    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadTransactions]];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadConversation]];
 }
 
 //- View Logic -------------------------------------------------------------------------------------
@@ -477,6 +476,12 @@
     wantsTransactionsForUser:(IAUser*)user
 {
     return [_transaction_manager transactionsForUser:user];
+}
+
+- (void)conversationView:(IAConversationViewController*)sender
+wantsMarkTransactionsReadForUser:(IAUser*)user
+{
+    [_transaction_manager markTransactionsReadForUser:user];
 }
 
 - (void)conversationView:(IAConversationViewController*)sender
@@ -635,6 +640,12 @@ hadConnectionStateChange:(gap_UserStatus)status
     [self handleQuit];
 }
 
+- (void)notificationList:(IANotificationListViewController*)sender
+wantsMarkTransactionRead:(IATransaction*)transaction
+{
+    [_transaction_manager markTransactionAsRead:transaction];
+}
+
 - (void)notificationListGotTransferClick:(IANotificationListViewController*)sender
 {
     if (_general_send_controller == nil)
@@ -656,7 +667,13 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
      activeTransactionsForUser:(IAUser*)user
 {
-    return [_transaction_manager activeAndUnreadTransactionsForUser:user];
+    return [_transaction_manager activeTransactionsForUser:user];
+}
+
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
+     unreadTransactionsForUser:(IAUser*)user
+{
+    return [_transaction_manager unreadAndNeedingActionTransactionsForUser:user];
 }
 
 - (BOOL)notificationList:(IANotificationListViewController*)sender
@@ -784,22 +801,44 @@ transactionsProgressForUser:(IAUser*)user
 
 //- Transaction Manager Protocol -------------------------------------------------------------------
 
-- (void)transactionManager:(IATransactionManager*)sender
-          transactionAdded:(IATransaction*)transaction
+- (BOOL)notificationViewOpen
 {
     if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
+        return YES;
+    return NO;
+}
+
+- (BOOL)conversationViewOpen
+{
+    if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
+        return YES;
+    return NO;
+}
+
+- (void)markTransactionReadIfNeeded:(IATransaction*)transaction
+{
+    if ([self notificationViewOpen])
     {
-        [_transaction_manager markTransactionsRead];
+        if ([_transaction_manager activeTransactionsForUser:transaction.other_user] == 0 &&
+            [_transaction_manager unreadAndNeedingActionTransactionsForUser:transaction.other_user] == 1)
+        {
+            [_transaction_manager markTransactionAsRead:transaction];
+        }
     }
-    else if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
+    else if ([self conversationViewOpen])
     {
         if ([transaction.other_user isEqual:[(IAConversationViewController*)_current_view_controller user]])
         {
             [_transaction_manager markTransactionAsRead:transaction];
         }
     }
+}
 
-    [_desktop_notifier transactionAdded:transaction];
+- (void)transactionManager:(IATransactionManager*)sender
+          transactionAdded:(IATransaction*)transaction
+{
+    [self markTransactionReadIfNeeded:transaction];
+    [_desktop_notifier desktopNotificationForTransaction:transaction];
     
     if (_current_view_controller == nil)
         return;
@@ -810,19 +849,8 @@ transactionsProgressForUser:(IAUser*)user
 - (void)transactionManager:(IATransactionManager*)sender
         transactionUpdated:(IATransaction*)transaction
 {
-    if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
-    {
-        [_transaction_manager markTransactionsRead];
-    }
-    else if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
-    {
-        if ([transaction.other_user isEqual:[(IAConversationViewController*)_current_view_controller user]])
-        {
-            [_transaction_manager markTransactionAsRead:transaction];
-        }
-    }
-    
-    [_desktop_notifier transactionUpdated:transaction];
+    [self markTransactionReadIfNeeded:transaction];
+    [_desktop_notifier desktopNotificationForTransaction:transaction];
     
     if (_current_view_controller == nil)
         return;
