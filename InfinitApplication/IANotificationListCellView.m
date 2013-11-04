@@ -197,6 +197,18 @@
         [self.status_indicator setHidden:NO];
         self.avatar_view.mode = AVATAR_VIEW_NORMAL;
     }
+    // XXX Unread transaction is not latest. Should handle this better.
+    else if (running_transactions == 0 && unread_notifications == 1 &&
+             !transaction.is_new && !transaction.needs_action)
+    {
+
+        NSString* message = NSLocalizedString(@"1 unread notification",
+                                              @"1 unread notification");
+        [self setInformationField:message];
+        self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
+        [self.status_indicator setHidden:NO];
+        self.avatar_view.mode = AVATAR_VIEW_NORMAL;
+    }
     else
     {
         if (transaction.files_count == 1)

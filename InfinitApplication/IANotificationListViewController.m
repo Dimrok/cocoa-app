@@ -651,6 +651,14 @@
 {
     _changing = YES;
     [self setUpdatorRunning:NO];
+    for (IATransaction* transaction in _transaction_list)
+    {
+        if ([_delegate notificationList:self activeTransactionsForUser:transaction.other_user] == 0 &&
+            [_delegate notificationList:self unreadTransactionsForUser:transaction.other_user] == 1)
+        {
+            [_delegate notificationList:self wantsMarkTransactionRead:transaction];
+        }
+    }
 }
 
 @end

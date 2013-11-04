@@ -40,6 +40,9 @@
     wantsTransactionsForUser:(IAUser*)user;
 
 - (void)conversationView:(IAConversationViewController*)sender
+wantsMarkTransactionsReadForUser:(IAUser*)user;
+
+- (void)conversationView:(IAConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user;
 
 - (void)conversationViewWantsBack:(IAConversationViewController*)sender;

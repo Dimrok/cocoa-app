@@ -43,6 +43,9 @@
 
 - (NSArray*)notificationListWantsLastTransactions:(IANotificationListViewController*)sender;
 
+- (void)notificationList:(IANotificationListViewController*)sender
+wantsMarkTransactionRead:(IATransaction*)transaction;
+
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
      activeTransactionsForUser:(IAUser*)user;
 

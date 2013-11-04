@@ -719,6 +719,7 @@
 - (void)aboutToChangeView
 {
     [self setUpdatorRunning:NO];
+    [_delegate conversationView:self wantsMarkTransactionsReadForUser:_user];
 }
 
 @end
