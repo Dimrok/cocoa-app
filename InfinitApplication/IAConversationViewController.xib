@@ -166,7 +166,7 @@
 												<reference key="NSNextResponder" ref="511185124"/>
 												<int key="NSvFlags">4352</int>
 												<array class="NSMutableArray" key="NSSubviews"/>
-												<string key="NSFrameSize">{317, 1}</string>
+												<string key="NSFrameSize">{317, 0}</string>
 												<reference key="NSSuperview" ref="511185124"/>
 												<reference key="NSNextKeyView" ref="684522633"/>
 												<string key="NSReuseIdentifierKey">_NS:13</string>
@@ -250,13 +250,13 @@
 													</object>
 												</object>
 												<double key="NSRowHeight">92</double>
-												<int key="NSTvFlags">373293056</int>
+												<int key="NSTvFlags">306184192</int>
 												<reference key="NSDelegate"/>
 												<reference key="NSDataSource"/>
-												<int key="NSColumnAutoresizingStyle">4</int>
+												<int key="NSColumnAutoresizingStyle">0</int>
 												<int key="NSDraggingSourceMaskForLocal">15</int>
 												<int key="NSDraggingSourceMaskForNonLocal">0</int>
-												<bool key="NSAllowsTypeSelect">YES</bool>
+												<bool key="NSAllowsTypeSelect">NO</bool>
 												<int key="NSTableViewSelectionHighlightStyle">-1</int>
 												<int key="NSTableViewDraggingDestinationStyle">0</int>
 												<int key="NSTableViewGroupRowStyle">1</int>
@@ -277,7 +277,6 @@
 										<reference key="NSSuperview" ref="237458781"/>
 										<reference key="NSNextKeyView" ref="511185124"/>
 										<string key="NSReuseIdentifierKey">_NS:58</string>
-										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<reference key="NSTarget" ref="237458781"/>
 										<string key="NSAction">_doScroller:</string>
@@ -300,7 +299,7 @@
 								<reference key="NSSuperview" ref="995413466"/>
 								<reference key="NSNextKeyView" ref="812366437"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<int key="NSsFlags">150096</int>
+								<int key="NSsFlags">150032</int>
 								<reference key="NSVScroller" ref="358818621"/>
 								<reference key="NSHScroller" ref="812366437"/>
 								<reference key="NSContentView" ref="511185124"/>
@@ -475,7 +474,7 @@
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSNextKeyView" ref="438274662"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<string key="NSClassName">IAMainView</string>
+						<string key="NSClassName">InfinitConversationMainView</string>
 					</object>
 					<object class="NSCustomView" id="89425535">
 						<reference key="NSNextResponder" ref="1005"/>
