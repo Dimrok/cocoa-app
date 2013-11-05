@@ -31,7 +31,7 @@
     {
         _delegate = delegate;
         _max_chars = 2000;
-        _file_size_limit = 10 * 1024 * 1024;
+        _file_size_limit = 5 * 1024 * 1024;
     }
     return self;
 }
@@ -47,8 +47,8 @@
 {
     self.user_message.stringValue = @"";
     _file_path = nil;
-    self.file_message.stringValue = NSLocalizedString(@"File must be less than 10 MB",
-                                                      @"File must be less than 10 MB");
+    self.file_message.stringValue = NSLocalizedString(@"File must be less than 5 MB",
+                                                      @"File must be less than 5 MB");
     [self.window center];
     [self.window makeKeyAndOrderFront:nil];
     [self.window makeFirstResponder:self.user_message];
