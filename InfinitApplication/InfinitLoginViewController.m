@@ -188,7 +188,6 @@
              username:(NSString*)username
           andPassword:(NSString*)password
 {
-    IALog(@"xxx show with error: %@\nusername: %@\npassword: %@", error, username, password);
     _logging_in = NO;
     if (username.length > 0 && password.length > 0)
     {
