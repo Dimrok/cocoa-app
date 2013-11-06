@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12F45</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4510</string>
-		<string key="IBDocument.AppKitVersion">1187.40</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.SystemVersion">13A598</string>
+		<string key="IBDocument.InterfaceBuilderVersion">4514</string>
+		<string key="IBDocument.AppKitVersion">1265</string>
+		<string key="IBDocument.HIToolboxVersion">695.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">4510</string>
+			<string key="NS.object.0">4514</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -52,7 +52,7 @@
 					<object class="NSTextField" id="534749917">
 						<reference key="NSNextResponder" ref="420626012"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{42, 11}, {36, 17}}</string>
+						<string key="NSFrame">{{43, 11}, {36, 17}}</string>
 						<reference key="NSSuperview" ref="420626012"/>
 						<string key="NSReuseIdentifierKey">_NS:397</string>
 						<string key="NSHuggingPriority">{251, 750}</string>
@@ -88,10 +88,11 @@
 							</object>
 						</object>
 						<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+						<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 					</object>
 					<object class="NSScrollView" id="431511938">
 						<reference key="NSNextResponder" ref="420626012"/>
-						<int key="NSvFlags">4364</int>
+						<int key="NSvFlags">4108</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSClipView" id="418167945">
 								<reference key="NSNextResponder" ref="431511938"/>
@@ -99,7 +100,7 @@
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="NSTableView" id="9545591">
 										<reference key="NSNextResponder" ref="418167945"/>
-										<int key="NSvFlags">4352</int>
+										<int key="NSvFlags">4096</int>
 										<array class="NSMutableArray" key="NSSubviews"/>
 										<string key="NSFrameSize">{317, 120}</string>
 										<reference key="NSSuperview" ref="418167945"/>
@@ -126,7 +127,7 @@
 													<int key="NSCellFlags2">2048</int>
 													<string key="NSContents"/>
 													<object class="NSFont" key="NSSupport">
-														<string key="NSName">LucidaGrande</string>
+														<string key="NSName">.LucidaGrandeUI</string>
 														<double key="NSSize">11</double>
 														<int key="NSfFlags">3100</int>
 													</object>
@@ -146,7 +147,7 @@
 													<int key="NSCellFlags2">2048</int>
 													<string key="NSContents">Text Cell</string>
 													<object class="NSFont" key="NSSupport" id="906405838">
-														<string key="NSName">LucidaGrande</string>
+														<string key="NSName">.LucidaGrandeUI</string>
 														<double key="NSSize">13</double>
 														<int key="NSfFlags">1044</int>
 													</object>
@@ -310,6 +311,7 @@
 									<int key="NSTokenStyle">0</int>
 								</object>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 								<int key="NSTokenFieldVersion">2</int>
 							</object>
 							<object class="NSImageView" id="335825581">
@@ -526,7 +528,7 @@
 								<object class="NSTextField" id="973133474">
 									<reference key="NSNextResponder" ref="435265283"/>
 									<int key="NSvFlags">266</int>
-									<string key="NSFrame">{{41, 12}, {237, 17}}</string>
+									<string key="NSFrame">{{42, 12}, {235, 17}}</string>
 									<reference key="NSSuperview" ref="435265283"/>
 									<reference key="NSNextKeyView" ref="508109691"/>
 									<string key="NSReuseIdentifierKey">_NS:20</string>
@@ -547,6 +549,7 @@
 										<reference key="NSTextColor" ref="113287717"/>
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+									<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 								</object>
 								<object class="NSButton" id="508109691">
 									<reference key="NSNextResponder" ref="435265283"/>
@@ -1623,7 +1626,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NSActionTemplate">{15, 15}</string>
+			<string key="NSActionTemplate">{14, 14}</string>
 			<string key="btn-send-files-simple-disabled">{69, 46}</string>
 			<string key="icon-search">{14, 14}</string>
 			<string key="icon-star">{17, 15}</string>

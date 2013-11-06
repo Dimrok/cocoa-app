@@ -304,6 +304,8 @@
 - (void)setNoResultsHidden:(BOOL)hidden
 {
     [self.no_results_message setHidden:hidden];
+    // XXX Work around for message rendering behind scroll view on 10.9
+    [self.table_view.enclosingScrollView setHidden:!hidden];
 }
 
 - (void)initialiseSendButton
