@@ -174,6 +174,8 @@
 		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
 		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
 		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
+		83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F49182A98C1001394B2 /* libmetaclient.dylib */; };
+		83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F60182A990F001394B2 /* libtransaction.dylib */; };
 		83D4205817C4CF7F00D4E168 /* icon-status.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4205617C4CF7F00D4E168 /* icon-status.png */; };
 		83D4205917C4CF7F00D4E168 /* icon-status@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4205717C4CF7F00D4E168 /* icon-status@2x.png */; };
 		83D4206417C4DC6700D4E168 /* icon-check.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206017C4DC6700D4E168 /* icon-check.png */; };
@@ -388,6 +390,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */,
+				83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */,
 				83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */,
 				831667D717F3721900C79DD7 /* libcrash.dylib in Copy Infinit Libraries */,
 				83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */,
@@ -653,6 +657,8 @@
 		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
 		83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGapMetrics.m; sourceTree = "<group>"; };
 		83CD702617A678C5004F55D1 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = ../Gap/Gap.xcodeproj; sourceTree = "<group>"; };
+		83CE1F49182A98C1001394B2 /* libmetaclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetaclient.dylib; path = ../../../Externals/lib/libmetaclient.dylib; sourceTree = "<group>"; };
+		83CE1F60182A990F001394B2 /* libtransaction.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtransaction.dylib; path = ../../../Externals/lib/libtransaction.dylib; sourceTree = "<group>"; };
 		83D4205617C4CF7F00D4E168 /* icon-status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-status.png"; sourceTree = "<group>"; };
 		83D4205717C4CF7F00D4E168 /* icon-status@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-status@2x.png"; sourceTree = "<group>"; };
 		83D4206017C4DC6700D4E168 /* icon-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check.png"; sourceTree = "<group>"; };
@@ -1213,6 +1219,8 @@
 		83CD6FB917A67398004F55D1 /* Infinit Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				83CE1F60182A990F001394B2 /* libtransaction.dylib */,
+				83CE1F49182A98C1001394B2 /* libmetaclient.dylib */,
 				831B757117DDC3FB0082A068 /* libfrete.dylib */,
 				8364316717DDC39B00572726 /* libstation.dylib */,
 				8334C7E317A67EAF006028BC /* libagent.dylib */,
