@@ -293,7 +293,7 @@
     
 	NSImage* result;
     if (image_data == nil)
-        result = [self makeAvatarFor:[[[IAGapState instance] self_user] fullname]];
+        result = nil;
     else
         result = [[NSImage alloc] initWithData:image_data];
     
