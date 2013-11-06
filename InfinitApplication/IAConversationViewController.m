@@ -85,7 +85,7 @@
     
     self.avatar_view.image = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
                                                                             andLoadIfNeeded:YES]
-                                               ofDiameter:50.0
+                                               ofDiameter:55.0
                                     withBorderOfThickness:2.0
                                                  inColour:IA_GREY_COLOUR(255.0)
                                         andShadowOfRadius:2.0];
