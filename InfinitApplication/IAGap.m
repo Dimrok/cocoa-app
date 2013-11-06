@@ -35,11 +35,13 @@ static
 void on_connection_status(gap_UserStatus status);
 
 static
+void on_received_avatar(uint32_t const user_id);
+
+static
 void on_critical_event(char const* str)
 {
     exit(1);
 }
-
 
 @interface NotificationForwarder : NSObject
 
@@ -213,7 +215,8 @@ void on_critical_event(char const* str)
         (gap_transaction_callback(_state, &on_transaction) != gap_ok) ||
         (gap_connection_callback(_state, &on_connection_status) != gap_ok) ||
         (gap_critical_callback(_state, &on_critical_event) != gap_ok) ||
-        (gap_kicked_out_callback(_state, &on_kicked_out) != gap_ok))
+        (gap_kicked_out_callback(_state, &on_kicked_out) != gap_ok) ||
+        (gap_avatar_available_callback(_state, &on_received_avatar) != gap_ok))
         // XXX add error callback
         //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
     {
@@ -415,6 +418,37 @@ return [NSString stringWithUTF8String:str]; \
 - (NSNumber*)self_id
 {
     return [NSNumber numberWithUnsignedInt:(gap_self_id(_state))];
+}
+
+- (void)set_avatar:(NSImage*)avatar
+{
+    
+    [avatar lockFocus];
+    NSBitmapImageRep* bitmapImageRep = [[NSBitmapImageRep alloc]
+                                        initWithFocusedViewRect:
+                                        NSMakeRect(0, 0, avatar.size.width, avatar.size.height)];
+    [avatar unlockFocus];
+    
+    NSData* image_data = [bitmapImageRep representationUsingType:NSPNGFileType properties:nil];
+    
+    gap_set_avatar(_state, &image_data.bytes, image_data.length);
+}
+
+- (NSImage*)get_avatar:(NSNumber*)user_id
+{
+    void* c_data;
+    size_t size;
+    gap_Status status = gap_avatar(_state, user_id.unsignedIntValue, &c_data, &size);
+    if (status == gap_ok)
+    {
+        NSData* avatar_data = [[NSData alloc] initWithBytes:c_data length:size];
+        NSImage* avatar = [[NSImage alloc] initWithData:avatar_data];
+        return avatar;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (NSString*)user_fullname:(NSNumber*)user_id
@@ -665,8 +699,10 @@ static void on_error_callback(gap_Status errcode, char const* reason, uint32_t c
     {
         NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
         if (transaction_id != 0)
+        {
             [msg setValue:[NSNumber numberWithUnsignedInt:transaction_id]
                    forKey:@"transaction_id"];
+        }
         [msg setObject:[NSString stringWithUTF8String:reason]
                 forKey:@"reason"];
 
@@ -685,5 +721,23 @@ static void on_kicked_out()
     IALog(@">>> On kicked out callback");
     // Set not logged in and stop polling
     [[IAGapState instance] kickedOut];
+}
+
+static void on_received_avatar(uint32_t const user_id)
+{
+    @try
+    {
+        NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
+        if (user_id != 0)
+        {
+            [msg setValue:[NSNumber numberWithUnsignedInt:user_id]
+                   forKey:@"user_id"];
+        }
+        [IAGap sendNotif:IA_GAP_EVENT_USER_AVATAR_NOTIFICATION withInfo:msg];
+    }
+    @catch (NSException* exception)
+    {
+        
+    }
 }
 

@@ -249,9 +249,11 @@
     
     if (![[[IAUserPrefs sharedInstance] prefsForKey:@"avatar_uploaded"] isEqualToString:@"1"])
     {
-        [[IAGapState instance] updateAvatar:[IAFunctions addressBookUserAvatar]
-                            performSelector:nil
-                                   onObject:nil];
+        NSImage* avatar = [IAFunctions addressBookUserAvatar];
+        if (avatar != nil)
+        {
+            [[IAGapState instance] setAvatar:avatar];
+        }
         [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"avatar_uploaded"];
     }
     // XXX We must find a better way to manage fetching of history per user

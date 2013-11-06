@@ -9,6 +9,7 @@
 #import "IAAvatarManager.h"
 
 #import <Gap/IAGapState.h>
+#import <Gap/IAUserManager.h>
 
 #import "IAFunctions.h"
 
@@ -20,11 +21,20 @@
 {
     if (self = [super init])
     {
-        _download_queue = [[NSMutableSet alloc] init];
         _cache = [[NSMutableDictionary alloc] init];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(receivedAvatarNotification:)
+                                                   name:IA_GAP_EVENT_USER_AVATAR_NOTIFICATION
+                                                 object:nil];
     }
     return self;
 }
+
+- (void)dealloc
+{
+    [NSNotificationCenter.defaultCenter removeObserver:self];
+}
+
 + (IAAvatarManager*)_instance
 {
     static IAAvatarManager* instance = nil;
@@ -52,54 +62,39 @@
         IALog(@"%@ WARNING: User id is nil", self);
         return nil;
     }
-    
+
     NSImage* res = [_cache objectForKey:user.user_id];
-    
+
     if (res == nil) // Avatar not in cache so fetch it
     {
-        res = [IAFunctions makeAvatarFor:user.fullname];
-        if (load && [_download_queue member:user] == nil)
+        res = [user fetchAvatar];
+        if (res == nil) // Avatar not in Gap either so make a fake one
         {
-            [_download_queue addObject:user];
-            [user fetchAvatarForTarget:self];
+            res = [IAFunctions makeAvatarFor:user.fullname];
         }
-        
     }
     return res;
 }
 
 //- Callbacks --------------------------------------------------------------------------------------
 
-- (void)user:(IAUser*)user
-   gotAvatar:(NSImage*)avatar
+- (void)receivedAvatarNotification:(NSNotification*)notification
 {
-    if (user == nil || user.user_id == nil || avatar == nil)
+    NSNumber* user_id = [notification.userInfo objectForKey:@"user_id"];
+    if (user_id.unsignedIntValue == 0)
     {
-        IALog(@"%@ WARNING: Got empty avatar or unknown user", self);
+        IALog(@"%@ WARNING: user_id is zero, unable to get avatar", self);
         return;
     }
-    
-    if ([_download_queue member:user] == nil)
-    {
-        IALog(@"%@ WARNING: Got unexpected avatar", self);
-        return;
-    }
-    
-    [_cache setObject:avatar
-               forKey:user.user_id];
-    [_download_queue removeObject:user];
+    IAUser* user = [IAUserManager userWithId:user_id];
+    NSImage* avatar = [user fetchAvatar];
+    if (avatar == nil) // If we don't get an avatar, make one
+        avatar = [IAFunctions makeAvatarFor:user.fullname];
+    [_cache setObject:avatar forKey:user.user_id];
     NSDictionary* result = @{@"user": user, @"avatar": avatar};
     [[NSNotificationCenter defaultCenter] postNotificationName:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                         object:self
                                                       userInfo:result];
-    
-}
-
-- (void)user:(IAUser*)user
-failedToGetAvatar:(NSError*)error
-{
-    IALog(@"%@ WARNING: Couldn't fetch avatar for %@: %@", self, user, error);
-    [_download_queue removeObject:user.user_id];
 }
 
 @end
