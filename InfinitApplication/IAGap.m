@@ -231,7 +231,6 @@ void on_critical_event(char const* str)
 - (gap_Status)login:(NSString*)email
            password:(NSString*)hash_password;
 {
-    [IAGap sendNotif:IA_GAP_EVENT_LOGIN_OPERATION withInfo:nil];
     if (_callbacks_set == NO)
         [self setCallbacks];
     gap_Status res = gap_login(_state, email.UTF8String, hash_password.UTF8String);
@@ -403,11 +402,6 @@ return [NSString stringWithUTF8String:str]; \
 - (gap_Status)set_device_name:(NSString*)name
 {
     return gap_set_device_name(_state, name.UTF8String);
-}
-
-- (NSString*)self_token
-{
-    RETURN_CSTRING(gap_user_token(_state));
 }
 
 - (NSString*)self_email
