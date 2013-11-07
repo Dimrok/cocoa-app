@@ -254,7 +254,7 @@
 
 - (void)awakeFromNib
 {
-    // Workaround for 15" Macbook Pro always rendering scroll bars
+    // WORKAROUND: Stop 15" Macbook Pro always rendering scroll bars
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
     [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
@@ -304,7 +304,7 @@
 - (void)setNoResultsHidden:(BOOL)hidden
 {
     [self.no_results_message setHidden:hidden];
-    // XXX Work around for message rendering behind scroll view on 10.9
+    // WORKAROUND: message rendering behind scroll view on 10.9
     [self.table_view.enclosingScrollView setHidden:!hidden];
 }
 

@@ -129,6 +129,17 @@
     [self.forgot_password_button setHoverTextAttributes:link_hover_attrs];
 }
 
+- (void)viewChanged
+{
+    // WORKAROUND: Set focus for 10.7 and 10.8
+    [self performSelector:@selector(delayedFocusOnEmailField) withObject:nil afterDelay:0.3];
+}
+
+- (void)delayedFocusOnEmailField
+{
+    [self.view.window makeFirstResponder:self.email_address];
+}
+
 - (void)awakeFromNib
 {
     _logging_in = NO;
