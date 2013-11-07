@@ -64,7 +64,6 @@
 		8334C83317A692BD006028BC /* libmetrics.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F517A67EB0006028BC /* libmetrics.dylib */; };
 		8334C83417A692BD006028BC /* libnucleus.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F617A67EB0006028BC /* libnucleus.dylib */; };
 		8334C83517A692BD006028BC /* libpapier.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F717A67EB0006028BC /* libpapier.dylib */; };
-		8334C83617A692BD006028BC /* libplasma.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F817A67EB0006028BC /* libplasma.dylib */; };
 		8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F917A67EB0006028BC /* libprotocol.dylib */; };
 		8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FA17A67EB0006028BC /* libreactor.dylib */; };
 		8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */; };
@@ -416,7 +415,6 @@
 				8334C83317A692BD006028BC /* libmetrics.dylib in Copy Infinit Libraries */,
 				8334C83417A692BD006028BC /* libnucleus.dylib in Copy Infinit Libraries */,
 				8334C83517A692BD006028BC /* libpapier.dylib in Copy Infinit Libraries */,
-				8334C83617A692BD006028BC /* libplasma.dylib in Copy Infinit Libraries */,
 				8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */,
 				8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */,
 				8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */,
@@ -519,7 +517,6 @@
 		8334C7F517A67EB0006028BC /* libmetrics.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetrics.dylib; path = ../../../Externals/lib/libmetrics.dylib; sourceTree = "<group>"; };
 		8334C7F617A67EB0006028BC /* libnucleus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnucleus.dylib; path = ../../../Externals/lib/libnucleus.dylib; sourceTree = "<group>"; };
 		8334C7F717A67EB0006028BC /* libpapier.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpapier.dylib; path = ../../../Externals/lib/libpapier.dylib; sourceTree = "<group>"; };
-		8334C7F817A67EB0006028BC /* libplasma.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libplasma.dylib; path = ../../../Externals/lib/libplasma.dylib; sourceTree = "<group>"; };
 		8334C7F917A67EB0006028BC /* libprotocol.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotocol.dylib; path = ../../../Externals/lib/libprotocol.dylib; sourceTree = "<group>"; };
 		8334C7FA17A67EB0006028BC /* libreactor.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreactor.dylib; path = ../../../Externals/lib/libreactor.dylib; sourceTree = "<group>"; };
 		8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../Externals/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
@@ -806,26 +803,26 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
-				83B8A7241822466F00AD775F /* Login View */,
-				837A7F5A17FC070600600ACD /* Report Problem Window */,
-				8365684417F9BC200021D49D /* Popover View */,
-				83B2FD0F17F58F3100893B52 /* Onboarding View */,
-				83CD108517D4F92D00AA0A19 /* No Connection View */,
-				833C318A17CCC81100941C09 /* Desktop Notifier */,
+				8328084017A2B5100025B6F8 /* Common Resources */,
 				83281BBA17AFFCFA00CAE422 /* Conversation View */,
+				833C318A17CCC81100941C09 /* Desktop Notifier */,
+				83CD6FB217A672C7004F55D1 /* Gap */,
+				83B8A7241822466F00AD775F /* Login View */,
+				832808D317A2D5E80025B6F8 /* Main Controller */,
+				83C124B517A7CE9800BE1252 /* Managers */,
+				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
 				831FB22217A90BB700696604 /* Notification View */,
-				83C124B517A7CE9800BE1252 /* Managers */,
+				83B2FD0F17F58F3100893B52 /* Onboarding View */,
+				8365684417F9BC200021D49D /* Popover View */,
+				837A7F5A17FC070600600ACD /* Report Problem Window */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
-				832808D917A2D66E0025B6F8 /* Window Controller */,
-				832808D317A2D5E80025B6F8 /* Main Controller */,
 				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
+				8398834717A6A580009409B3 /* Utilities */,
+				832808D917A2D66E0025B6F8 /* Window Controller */,
 				8328081C17A2B4A60025B6F8 /* IAAppDelegate.h */,
 				8328081D17A2B4A60025B6F8 /* IAAppDelegate.m */,
 				8328081F17A2B4A60025B6F8 /* MainMenu.xib */,
-				8398834717A6A580009409B3 /* Utilities */,
-				83CD6FB217A672C7004F55D1 /* Gap */,
-				8328084017A2B5100025B6F8 /* Common Resources */,
 				8328081117A2B4A60025B6F8 /* Supporting Files */,
 			);
 			path = InfinitApplication;
@@ -1244,7 +1241,6 @@
 				8334C7F517A67EB0006028BC /* libmetrics.dylib */,
 				8334C7F617A67EB0006028BC /* libnucleus.dylib */,
 				8334C7F717A67EB0006028BC /* libpapier.dylib */,
-				8334C7F817A67EB0006028BC /* libplasma.dylib */,
 				8334C7F917A67EB0006028BC /* libprotocol.dylib */,
 				8334C7FA17A67EB0006028BC /* libreactor.dylib */,
 				8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */,
