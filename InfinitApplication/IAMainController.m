@@ -205,7 +205,6 @@
     _conversation_view_controller = nil;
     _notification_view_controller = nil;
     _general_send_controller = nil;
-    _login_view_controller = nil;
 }
 
 //- Login and Logout -------------------------------------------------------------------------------
