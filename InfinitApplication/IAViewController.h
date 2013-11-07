@@ -33,6 +33,7 @@
 
 - (BOOL)closeOnFocusLost;
 
+- (void)viewChanged;
 - (void)aboutToChangeView;
 
 - (void)transactionAdded:(IATransaction*)transaction;

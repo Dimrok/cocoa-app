@@ -105,6 +105,11 @@
     return NO;
 }
 
+- (void)viewChanged
+{
+    // Called just before view is shown
+}
+
 - (void)aboutToChangeView
 {
     // Called just before view is changed so that tidy up can occur, overload as needed
