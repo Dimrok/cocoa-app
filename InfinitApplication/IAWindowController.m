@@ -45,6 +45,7 @@
 
 //- Content View -----------------------------------------------------------------------------------
 
+// WORKAROUND
 // If you use a borderless window with a layer backed content view, there is no window shadow. To
 // work around this, I leave the content view as a normal view and draw a white outline of the
 // window in it. The views drawn on this can then take advantage of being layer backed as well as
@@ -208,6 +209,7 @@
     
     [self.window.contentView replaceSubview:_current_controller.view
                                        with:new_controller.view];
+    [new_controller viewChanged];
     
     _view_constraints = [NSMutableArray arrayWithArray:
                           [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
@@ -248,6 +250,8 @@
     [self.window setFrame:frame display:NO animate:NO];
     
     [self.window.contentView addSubview:controller.view];
+    
+    [controller viewChanged];
     
     _view_constraints = [NSMutableArray arrayWithArray:
                          [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
