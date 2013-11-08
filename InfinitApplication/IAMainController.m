@@ -123,6 +123,7 @@
 
 - (void)openOrChangeViewController:(IAViewController*)view_controller
 {
+    [_status_bar_icon setHighlighted:YES];
     if ([_window_controller windowIsOpen])
     {
         [_window_controller changeToViewController:view_controller];
@@ -344,10 +345,7 @@
         _update_credentials = YES;
         
         if (_current_view_controller != _login_view_controller)
-        {
-            [_status_bar_icon setHighlighted:YES];
             [self showLoginView];
-        }
         
         [_login_view_controller showWithError:error
                                      username:username
@@ -544,7 +542,6 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
     if (_onboarding)
         return;
 
-    [_status_bar_icon setHighlighted:YES];
     IATransaction* transaction = [_transaction_manager transactionWithId:transaction_id];
     if (transaction == nil)
         return;
@@ -560,8 +557,7 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 {
     if (controller == nil)
         return;
-    
-    [_status_bar_icon setHighlighted:YES];
+
     [self showSendView:controller];
 }
 
@@ -776,12 +772,10 @@ transactionsProgressForUser:(IAUser*)user
     
     if ([_window_controller windowIsOpen])
     {
-        [sender setHighlighted:NO];
         [self closeNotificationWindow];
     }
     else
     {
-        [sender setHighlighted:YES];
         [self selectView];
     }
 }
