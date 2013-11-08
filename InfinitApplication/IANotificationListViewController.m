@@ -126,9 +126,9 @@
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(boundsDidChange:)
+                                               selector:@selector(scrollBoundsChanged)
                                                    name:NSViewBoundsDidChangeNotification
-                                                 object:self.table_view.enclosingScrollView.contentView];
+                                                 object:nil];
         _changing = NO;
 #ifdef IA_CORE_ANIMATION_ENABLED
         [self.view setWantsLayer:YES];
@@ -164,8 +164,6 @@
                              [NSString stringWithUTF8String:INFINIT_VERSION]];
     _version_item.title = version_str;
     
-    [self.table_view.enclosingScrollView.contentView setPostsBoundsChangedNotifications:YES];
-    
     if (_transaction_list.count == 0)
     {
         [self.no_data_message setHidden:NO];
@@ -192,6 +190,7 @@
             self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
         }
     }
+    [self.table_view.enclosingScrollView setPostsBoundsChangedNotifications:YES];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -355,13 +354,6 @@
     return row_view;
 }
 
-- (void)boundsDidChange:(NSNotification*)notification
-{
-    if (_changing)
-        return;
-    [self updateHeaderAndBackground];
-}
-
 - (void)updateHeaderAndBackground
 {
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
@@ -438,6 +430,13 @@
     if (row < 0 || row > _transaction_list.count - 1)
         return;
     [self userRowGotClicked:row];
+}
+
+- (void)scrollBoundsChanged
+{
+    if (_changing)
+        return;
+    [self updateHeaderAndBackground];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
