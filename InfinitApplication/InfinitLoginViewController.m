@@ -131,8 +131,12 @@
 
 - (void)viewChanged
 {
-    // WORKAROUND: Set focus for 10.7 and 10.8
-    [self performSelector:@selector(delayedFocusOnEmailField) withObject:nil afterDelay:0.3];
+    // WORKAROUND: Set focus on email field for 10.7 and 10.8
+    if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7 ||
+        [IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_8)
+    {
+        [self performSelector:@selector(delayedFocusOnEmailField) withObject:nil afterDelay:0.3];
+    }
 }
 
 - (void)delayedFocusOnEmailField
