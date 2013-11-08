@@ -8,10 +8,18 @@
 
 #import "IAViewController.h"
 
+@protocol IANoConnectionViewProtocol;
+
 @interface IANoConnectionViewController : IAViewController
 
 @property (nonatomic, strong) IBOutlet NSTextField* no_connection_message;
 
-- (id)init;
+- (id)initWithDelegate:(id<IANoConnectionViewProtocol>)delegate;
+
+@end
+
+@protocol IANoConnectionViewProtocol <NSObject>
+
+- (void)noConnectionViewWantsBack:(IANoConnectionViewController*)sender;
 
 @end

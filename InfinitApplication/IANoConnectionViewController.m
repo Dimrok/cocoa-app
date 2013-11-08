@@ -32,13 +32,18 @@
 @end
 
 @implementation IANoConnectionViewController
+{
+@private
+    id<IANoConnectionViewProtocol> _delegate;
+}
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (id)init
+- (id)initWithDelegate:(id<IANoConnectionViewProtocol>)delegate
 {
     if (self = [super initWithNibName:[self className] bundle:nil])
     {
+        _delegate = delegate;
     }
     return self;
 }
@@ -71,6 +76,13 @@
 {
     [super loadView];
     [self.view layoutSubtreeIfNeeded];
+}
+
+//- User Interaction -------------------------------------------------------------------------------
+
+- (IBAction)backButtonClicked:(NSButton*)sender
+{
+    [_delegate noConnectionViewWantsBack:self];
 }
 
 @end
