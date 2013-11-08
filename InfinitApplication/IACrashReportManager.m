@@ -82,20 +82,6 @@
     return nil;
 }
 
-- (NSString*)osVersion
-{
-    SInt32 OSXversionMajor, OSXversionMinor, OSXversionBugFix;
-    if(Gestalt(gestaltSystemVersionMajor, &OSXversionMajor) == noErr &&
-       Gestalt(gestaltSystemVersionMinor, &OSXversionMinor) == noErr &&
-       Gestalt(gestaltSystemVersionBugFix, &OSXversionBugFix) == noErr)
-    {
-        return [NSString stringWithFormat:@"%@.%@.%@", [NSNumber numberWithInt:OSXversionMajor],
-                                                       [NSNumber numberWithInt:OSXversionMinor],
-                                                       [NSNumber numberWithInt:OSXversionBugFix]];
-    }
-    return @"Unknown";
-}
-
 // XXX For now we just use this to find out when we crashed and fetch the Apple crash report. Plan
 // is to use our own when we can properly symbolicate the reports.
 - (void)handleCrashReport
@@ -141,7 +127,7 @@
     NSString* last_state_log = [[IALogFileManager sharedInstance] lastLogFilePath];
     NSString* crash_file_path = [self getAppleCrashReport];
     
-    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [self osVersion]];
+    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [IAFunctions osVersionString]];
     
     NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
     NSString* additional_info = @"None";
@@ -161,7 +147,7 @@
                           andFile:(NSString*)file_path
 {
     NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
-    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [self osVersion]];
+    NSString* os_description = [NSString stringWithFormat:@"OS X %@", [IAFunctions osVersionString]];
     
     NSDictionary* user_report = @{@"user_name": user_name,
                                   @"message": message,
