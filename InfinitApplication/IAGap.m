@@ -425,7 +425,7 @@ return [NSString stringWithUTF8String:str]; \
     
     NSData* image_data = [bitmapImageRep representationUsingType:NSPNGFileType properties:nil];
     
-    gap_set_avatar(_state, &image_data.bytes, image_data.length);
+    gap_update_avatar(_state, image_data.bytes, image_data.length);
 }
 
 - (NSImage*)get_avatar:(NSNumber*)user_id
