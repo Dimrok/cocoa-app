@@ -144,7 +144,7 @@
         if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
         {
             centred_rect = NSMakeRect(self.frame.origin.x + (w_diff / 2.0),
-                                      self.frame.origin.y + (h_diff / 2.0) - 2.0,
+                                      self.frame.origin.y + (h_diff / 2.0) - 3.0,
                                       _indeterminate_image.size.width,
                                       _indeterminate_image.size.height);
         }
