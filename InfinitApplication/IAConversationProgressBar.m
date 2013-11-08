@@ -139,10 +139,22 @@
     {
         CGFloat w_diff = NSWidth(self.bounds) - _indeterminate_image.size.width;
         CGFloat h_diff = NSHeight(self.bounds) - _indeterminate_image.size.height;
-        NSRect centred_rect = NSMakeRect(self.frame.origin.x + (w_diff / 2.0),
-                                         self.frame.origin.y + (h_diff / 2.0),
-                                         _indeterminate_image.size.width,
-                                         _indeterminate_image.size.height);
+        // WORKAROUND: 10.7 positions the indeterminate gif too high
+        NSRect centred_rect;
+        if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
+        {
+            centred_rect = NSMakeRect(self.frame.origin.x + (w_diff / 2.0),
+                                      self.frame.origin.y + (h_diff / 2.0) - 2.0,
+                                      _indeterminate_image.size.width,
+                                      _indeterminate_image.size.height);
+        }
+        else
+        {
+            centred_rect = NSMakeRect(self.frame.origin.x + (w_diff / 2.0),
+                                      self.frame.origin.y + (h_diff / 2.0),
+                                      _indeterminate_image.size.width,
+                                      _indeterminate_image.size.height);
+        }
         if (_indeterminate_view == nil)
         {
             _indeterminate_view = [[NSImageView alloc] initWithFrame:centred_rect];
