@@ -260,6 +260,9 @@
     }
                         completionHandler:^
     {
+        // WORKAROUND: Autolayout doesn't adjust scrollview size until scroll on 10.7
+        if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
+            [_user_search_controller.table_view.enclosingScrollView setNeedsLayout:YES];
     }];
 }
 
