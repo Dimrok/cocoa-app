@@ -11,6 +11,14 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
+typedef enum __INFINIT_OS_X_VERSION
+{
+    INFINIT_OS_X_VERSION_UNKNOWN = 0,
+    INFINIT_OS_X_VERSION_10_7 = 1,
+    INFINIT_OS_X_VERSION_10_8 = 2,
+    INFINIT_OS_X_VERSION_10_9 = 3,
+} INFINIT_OS_X_VERSION;
+
 @interface IAFunctions : NSObject
 
 + (NSBezierPath*)roundedBottomBezierWithRect:(NSRect)rect
@@ -47,5 +55,9 @@
 + (NSString*)relativeDateOf:(NSTimeInterval)timestamp;
 
 + (NSImage*)makeAvatarFor:(NSString*)fullname;
+
++ (NSString*)osVersionString;
+
++ (INFINIT_OS_X_VERSION)osxVersion;
 
 @end

@@ -371,4 +371,70 @@
     return res;
 }
 
++ (NSString*)osVersionString
+{
+    NSNumber* major_version = [IAFunctions osMajorVersion];
+    NSNumber* minor_version = [IAFunctions osMinorVersion];
+    NSNumber* bugfix_version = [IAFunctions osBugfixVersion];
+    if (major_version.integerValue == -1 ||
+        minor_version.integerValue == -1 ||
+        bugfix_version.integerValue == -1)
+    {
+        return @"Unknown";
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%@.%@.%@", major_version,
+                                                       minor_version,
+                                                       bugfix_version];
+    }
+}
+
++ (NSNumber*)osMajorVersion
+{
+    SInt32 major_version;
+    if (Gestalt(gestaltSystemVersionMajor, &major_version) == noErr)
+        return [NSNumber numberWithInt:major_version];
+    else
+        return nil;
+}
+
++ (NSNumber*)osMinorVersion
+{
+    SInt32 minor_version;
+    if (Gestalt(gestaltSystemVersionMinor, &minor_version) == noErr)
+        return [NSNumber numberWithInt:minor_version];
+    else
+        return nil;
+}
+
++ (NSNumber*)osBugfixVersion
+{
+    SInt32 bugfix_version;
+    if (Gestalt(gestaltSystemVersionBugFix, &bugfix_version) == noErr)
+        return [NSNumber numberWithInt:bugfix_version];
+    else
+        return nil;
+}
+
++ (INFINIT_OS_X_VERSION)osxVersion
+{
+    NSInteger major_version = [[IAFunctions osMajorVersion] integerValue];
+    NSInteger minor_version = [[IAFunctions osMinorVersion] integerValue];
+    if (major_version != 10)
+        return INFINIT_OS_X_VERSION_UNKNOWN;
+    switch (minor_version)
+    {
+        case 7:
+            return INFINIT_OS_X_VERSION_10_7;
+        case 8:
+            return INFINIT_OS_X_VERSION_10_8;
+        case 9:
+            return INFINIT_OS_X_VERSION_10_9;
+            
+        default:
+            return INFINIT_OS_X_VERSION_UNKNOWN;
+    }
+}
+
 @end
