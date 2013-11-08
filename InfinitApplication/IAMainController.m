@@ -13,7 +13,6 @@
 #import "IACrashReportManager.h"
 #import "IAGap.h"
 #import "IAKeychainManager.h"
-#import "IANoConnectionViewController.h"
 #import "IANotLoggedInViewController.h"
 #import "IAPopoverViewController.h"
 #import "IAUserPrefs.h"
@@ -192,7 +191,7 @@
 - (void)showNotConnectedView
 {
     if (_no_connection_view_controller == nil)
-        _no_connection_view_controller = [[IANoConnectionViewController alloc] init];
+        _no_connection_view_controller = [[IANoConnectionViewController alloc] initWithDelegate:self];
     [self openOrChangeViewController:_no_connection_view_controller];
 }
 
@@ -636,6 +635,13 @@ hadConnectionStateChange:(gap_UserStatus)status
         [IAUserManager resyncUserStatuses];
     else if (status == gap_user_status_offline)
         [IAUserManager setAllUsersOffline];
+}
+
+//- No Connection View Protocol --------------------------------------------------------------------
+
+- (void)noConnectionViewWantsBack:(IANoConnectionViewController*)sender
+{
+    [self showNotifications];
 }
 
 //- Notification List Protocol ---------------------------------------------------------------------

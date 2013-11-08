@@ -20,6 +20,7 @@
 #import "IAGeneralSendController.h"
 #import "InfinitLoginViewController.h"
 #import "IAMeManager.h"
+#import "IANoConnectionViewController.h"
 #import "IANotificationListViewController.h"
 #import "IAOnboardingViewController.h"
 #import "IAReportProblemWindowController.h"
@@ -33,6 +34,7 @@
                                         IAGeneralSendControllerProtocol,
                                         InfinitLoginViewControllerProtocol,
                                         IAMeManagerProtocol,
+                                        IANoConnectionViewProtocol,
                                         IANotificationListViewProtocol,
                                         IAOnboardingProtocol,
                                         IAReportProblemProtocol,
