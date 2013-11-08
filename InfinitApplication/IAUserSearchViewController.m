@@ -305,7 +305,8 @@
 {
     [self.no_results_message setHidden:hidden];
     // WORKAROUND: message rendering behind scroll view on 10.9
-    [self.table_view.enclosingScrollView setHidden:!hidden];
+    if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
+        [self.table_view.enclosingScrollView setHidden:!hidden];
 }
 
 - (void)initialiseSendButton
