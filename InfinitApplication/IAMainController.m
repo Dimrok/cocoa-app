@@ -88,11 +88,17 @@
         if (![self tryAutomaticLogin])
         {
             IALog(@"%@ Autologin failed", self);
-            [_status_bar_icon setHighlighted:YES];
-            [self showLoginView];
+            // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
+            // is miscalculated
+            [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
         }
     }
     return self;
+}
+
+- (void)delayedLoginViewOpen
+{
+    [self showLoginView];
 }
 
 - (BOOL)tryAutomaticLogin
