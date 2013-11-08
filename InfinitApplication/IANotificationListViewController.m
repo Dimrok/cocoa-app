@@ -154,6 +154,16 @@
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
     [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
+    if (_transaction_list.count > 0)
+    {
+        IAUser* top_user = [_transaction_list[0] other_user];
+        if ([_delegate notificationList:self unreadTransactionsForUser:top_user] > 0 ||
+            [_delegate notificationList:self activeTransactionsForUser:top_user] > 0)
+        {
+            self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+            self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+        }
+    }
 }
 
 - (void)loadView
@@ -182,13 +192,6 @@
         [self.table_view reloadData];
         [self resizeContentView];
         [self updateListOfRowsWithProgress];
-        IAUser* top_user = [_transaction_list[0] other_user];
-        if ([_delegate notificationList:self unreadTransactionsForUser:top_user] > 0 ||
-            [_delegate notificationList:self activeTransactionsForUser:top_user] > 0)
-        {
-            self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-            self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
-        }
     }
     [self.table_view.enclosingScrollView setPostsBoundsChangedNotifications:YES];
 }
