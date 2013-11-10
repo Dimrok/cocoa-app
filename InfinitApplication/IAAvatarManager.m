@@ -14,6 +14,10 @@
 #import "IAFunctions.h"
 
 @implementation IAAvatarManager
+{
+@private
+    NSMutableDictionary* _cache;
+}
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -48,14 +52,11 @@
 //- Fetch Avatar -----------------------------------------------------------------------------------
 
 + (NSImage*)getAvatarForUser:(IAUser*)user
-             andLoadIfNeeded:(BOOL)load
 {
-    return [[IAAvatarManager _instance] _getAvatarForUser:user
-                                          andLoadIfNeeded:load];
+    return [[IAAvatarManager _instance] _getAvatarForUser:user];
 }
 
 - (NSImage*)_getAvatarForUser:(IAUser*)user
-              andLoadIfNeeded:(BOOL)load
 {
     if (user.user_id == nil)
     {
@@ -89,8 +90,14 @@
     IAUser* user = [IAUserManager userWithId:user_id];
     NSImage* avatar = [user fetchAvatar];
     if (avatar == nil) // If we don't get an avatar, make one
+    {
+        IALog(@"%@ WARNING: got empty avatar", self);
         avatar = [IAFunctions makeAvatarFor:user.fullname];
-    [_cache setObject:avatar forKey:user.user_id];
+    }
+    else // If we got one, store it
+    {
+        [_cache setObject:avatar forKey:user.user_id];
+    }
     NSDictionary* result = @{@"user": user, @"avatar": avatar};
     [[NSNotificationCenter defaultCenter] postNotificationName:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                         object:self

@@ -14,11 +14,7 @@
 #define IA_AVATAR_MANAGER_AVATAR_FETCHED @"IA_AVATAR_MANAGER_AVATAR_FETCHED"
 
 @interface IAAvatarManager : NSObject
-{
-    NSMutableDictionary* _cache;
-}
 
-+ (NSImage*)getAvatarForUser:(IAUser*)user
-             andLoadIfNeeded:(BOOL)load;
++ (NSImage*)getAvatarForUser:(IAUser*)user;
 
 @end
