@@ -18,6 +18,7 @@
     NSArray* _drag_types;
     BOOL _hovering;
     CGFloat _avatar_diameter;
+    NSImage* _avatar;
 }
 
 @synthesize user = _user;
@@ -39,6 +40,7 @@
                                                selector:@selector(avatarReceived:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
+        _avatar = [IAAvatarManager getAvatarForUser:_user];
         _avatar_diameter = 60.0;
     }
     return self;
@@ -55,6 +57,7 @@
 {
     IAUser* user = [notification.userInfo objectForKey:@"user"];
     if ([user isEqualTo:_user])
+        _avatar = [notification.userInfo objectForKey:@"avatar"];
         [self setNeedsDisplay:YES];
 }
 
@@ -65,8 +68,7 @@
     NSImage* avatar;
     if (_hovering)
     {
-        avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
-                                                                andLoadIfNeeded:YES]
+        avatar = [IAFunctions makeRoundAvatar:_avatar
                                    ofDiameter:_avatar_diameter
                         withBorderOfThickness:2.0
                                      inColour:IA_GREY_COLOUR(255.0)
@@ -74,8 +76,7 @@
     }
     else
     {
-        avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
-                                                                andLoadIfNeeded:YES]
+        avatar = [IAFunctions makeRoundAvatar:_avatar
                                    ofDiameter:_avatar_diameter
                         withBorderOfThickness:2.0
                                      inColour:IA_GREY_COLOUR(208.0)

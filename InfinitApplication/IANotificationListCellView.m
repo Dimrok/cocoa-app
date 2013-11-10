@@ -70,8 +70,7 @@
 
 - (void)setAvatarForUser:(IAUser*)user
 {
-    [self.avatar_view setAvatar:[IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
-                                                                     andLoadIfNeeded:YES]
+    [self.avatar_view setAvatar:[IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user]
                                         ofDiameter:55.0
                              withBorderOfThickness:2.0
                                           inColour:IA_GREY_COLOUR(255.0)

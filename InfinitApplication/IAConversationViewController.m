@@ -79,16 +79,20 @@
     return YES;
 }
 
-- (void)setupPersonView
+- (void)setPersonViewAvatarWithImage:(NSImage*)avatar
 {
-    [self.person_view setDelegate:self];
-    
-    self.avatar_view.image = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
-                                                                            andLoadIfNeeded:YES]
+    self.avatar_view.image = [IAFunctions makeRoundAvatar:avatar
                                                ofDiameter:55.0
                                     withBorderOfThickness:2.0
                                                  inColour:IA_GREY_COLOUR(255.0)
                                         andShadowOfRadius:2.0];
+}
+
+- (void)setupPersonView
+{
+    [self.person_view setDelegate:self];
+    
+    [self setPersonViewAvatarWithImage:[IAAvatarManager getAvatarForUser:_user]];
     
     NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
@@ -222,13 +226,10 @@
 {
     IAUser* user = [notification.userInfo objectForKey:@"user"];
     if (user == _user)
-        self.avatar_view.image = [IAFunctions
-                                  makeRoundAvatar:[IAAvatarManager getAvatarForUser:_user
-                                                                    andLoadIfNeeded:YES]
-                                       ofDiameter:50.0
-                            withBorderOfThickness:2.0
-                                         inColour:IA_GREY_COLOUR(255.0)
-                                andShadowOfRadius:1.0];
+    {
+        NSImage* avatar = [notification.userInfo objectForKey:@"avatar"];
+        [self setPersonViewAvatarWithImage:avatar];
+    }
 }
 
 //- General Functions ------------------------------------------------------------------------------

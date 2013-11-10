@@ -771,8 +771,7 @@ displayStringForRepresentedObject:(id)representedObject
     [cell setDelegate:self];
     [cell setUserFullname:user.fullname];
     [cell setUserFavourite:user.is_favourite];
-    NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user
-                                                                     andLoadIfNeeded:YES]
+    NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user]
                                         ofDiameter:25
                              withBorderOfThickness:0.0
                                           inColour:IA_GREY_COLOUR(255.0)
