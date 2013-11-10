@@ -193,7 +193,7 @@
         [self resizeContentView];
         [self updateListOfRowsWithProgress];
     }
-    [self.table_view.enclosingScrollView setPostsBoundsChangedNotifications:YES];
+    [self.table_view.enclosingScrollView.contentView setPostsBoundsChangedNotifications:YES];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -359,6 +359,9 @@
 
 - (void)updateHeaderAndBackground
 {
+    if (self.table_view.numberOfRows == 0)
+        return;
+
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
     IANotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
                                                         makeIfNecessary:NO];
