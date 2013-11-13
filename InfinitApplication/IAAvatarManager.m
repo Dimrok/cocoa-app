@@ -30,6 +30,10 @@
                                                selector:@selector(receivedAvatarNotification:)
                                                    name:IA_GAP_EVENT_USER_AVATAR_NOTIFICATION
                                                  object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(clearModelCallback)
+                                                   name:IA_GAP_EVENT_KICKED_OUT
+                                                 object:nil];
     }
     return self;
 }
@@ -102,6 +106,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                         object:self
                                                       userInfo:result];
+}
+
+//- Clear Model ------------------------------------------------------------------------------------
+
+- (void)clearModelCallback
+{
+    [_cache removeAllObjects];
 }
 
 @end
