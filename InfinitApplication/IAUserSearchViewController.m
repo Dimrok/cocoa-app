@@ -264,7 +264,7 @@
     {
         NSFont* search_font = [[NSFontManager sharedFontManager]fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
-                                                                        weight:5
+                                                                        weight:3
                                                                           size:12.0];
         NSDictionary* search_attrs = [IAFunctions textStyleWithFont:search_font
                                                      paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
