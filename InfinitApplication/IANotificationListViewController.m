@@ -390,42 +390,51 @@
     
     [[self.table_view rowViewAtRow:row makeIfNecessary:NO] setClicked:YES];
     
+    
     IATransaction* transaction = _transaction_list[row];
     IAUser* user = transaction.other_user;
     
-    NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
+    if (_transaction_list.count == 1)
+    {
+        [_delegate notificationList:self gotClickOnUser:user];
+    }
+    else
+    {
     
-    NSMutableIndexSet* invisible_users = [NSMutableIndexSet indexSetWithIndexesInRange:
+        NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
+        
+        NSMutableIndexSet* invisible_users = [NSMutableIndexSet indexSetWithIndexesInRange:
+                                              NSMakeRange(0, _transaction_list.count)];
+        NSMutableIndexSet* visible_users = [NSMutableIndexSet indexSetWithIndexesInRange:visible_rows];
+        [invisible_users removeIndexes:visible_users];
+        
+        [self.table_view beginUpdates];
+        [_transaction_list removeObjectsAtIndexes:invisible_users];
+        [self.table_view removeRowsAtIndexes:invisible_users
+                               withAnimation:NSTableViewAnimationEffectNone];
+        [self.table_view endUpdates];
+        
+        NSInteger new_row = [_transaction_list indexOfObject:transaction];
+        NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
                                           NSMakeRange(0, _transaction_list.count)];
-    NSMutableIndexSet* visible_users = [NSMutableIndexSet indexSetWithIndexesInRange:visible_rows];
-    [invisible_users removeIndexes:visible_users];
-    
-    [self.table_view beginUpdates];
-    [_transaction_list removeObjectsAtIndexes:invisible_users];
-    [self.table_view removeRowsAtIndexes:invisible_users
-                           withAnimation:NSTableViewAnimationEffectNone];
-    [self.table_view endUpdates];
-    
-    NSInteger new_row = [_transaction_list indexOfObject:transaction];
-    NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
-                                      NSMakeRange(0, _transaction_list.count)];
-    [other_users removeIndex:new_row];
-    
-    self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
-    
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-         context.duration = 0.15;
-         [self.table_view beginUpdates];
-         [self.table_view moveRowAtIndex:new_row toIndex:0];
-         [self.table_view endUpdates];
-         [self.content_height_constraint.animator setConstant:_row_height];
-         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-     }
-                        completionHandler:^
-     {
-         [_delegate notificationList:self gotClickOnUser:user];
-     }];
+        [other_users removeIndex:new_row];
+        
+        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+        
+        [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+         {
+             context.duration = 0.15;
+             [self.table_view beginUpdates];
+             [self.table_view moveRowAtIndex:new_row toIndex:0];
+             [self.table_view endUpdates];
+             [self.content_height_constraint.animator setConstant:_row_height];
+             self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+         }
+                            completionHandler:^
+         {
+             [_delegate notificationList:self gotClickOnUser:user];
+         }];
+    }
 }
 
 //- User Interaction With Table --------------------------------------------------------------------
