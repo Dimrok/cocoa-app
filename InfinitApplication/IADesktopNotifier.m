@@ -82,16 +82,17 @@
                        filename,
                        NSLocalizedString(@"to you", @"to you")];
             break;
-        
-        case TRANSACTION_VIEW_WAITING_ONLINE:
-        case TRANSACTION_VIEW_PREPARING:
-            if (transaction.from_me)
-                return nil;
-            title = NSLocalizedString(@"Accepted!", @"accepted!");
-            message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
-                       NSLocalizedString(@"accepted", @"accepted"),
-                       filename];
-            break;
+
+            // XXX need a state to show when a transfer has been accepted
+//        case TRANSACTION_VIEW_WAITING_ONLINE:
+//        case TRANSACTION_VIEW_PREPARING:
+//            if (!transaction.from_me)
+//                return nil;
+//            title = NSLocalizedString(@"Accepted!", @"accepted!");
+//            message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
+//                       NSLocalizedString(@"accepted", @"accepted"),
+//                       filename];
+//            break;
         
         case TRANSACTION_VIEW_REJECTED:
             if (!transaction.from_me)
