@@ -47,11 +47,11 @@
 {
     self.user_message.stringValue = @"";
     _file_path = nil;
-    self.file_message.stringValue = NSLocalizedString(@"File must be less than 5 MB",
-                                                      @"File must be less than 5 MB");
     [self.window center];
     [self.window makeKeyAndOrderFront:nil];
     [self.window makeFirstResponder:self.user_message];
+    self.file_message.stringValue = NSLocalizedString(@"File must be less than 5 MB",
+                                                      @"File must be less than 5 MB");
 }
 
 - (void)close
