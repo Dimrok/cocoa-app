@@ -715,6 +715,7 @@ static void on_kicked_out()
     IALog(@">>> On kicked out callback");
     // Set not logged in and stop polling
     [[IAGapState instance] kickedOut];
+    [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
 }
 
 static void on_received_avatar(uint32_t const user_id)
@@ -731,7 +732,7 @@ static void on_received_avatar(uint32_t const user_id)
     }
     @catch (NSException* exception)
     {
-        
+        IALog(@"WARNING: on_received_avatar exception: %@", exception.reason);
     }
 }
 
