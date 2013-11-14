@@ -101,6 +101,14 @@
     [super loadView];
     [_delegate onboardingControllerStarted:self];
     [self.view setAlphaValue:1.0];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         [self.content_height_constraint.animator setConstant:106.0];
+     }
+                        completionHandler:^
+     {
+     }];
 }
 
 - (BOOL)closeOnFocusLost

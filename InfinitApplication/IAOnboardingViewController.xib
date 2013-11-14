@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12F37</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4510</string>
-		<string key="IBDocument.AppKitVersion">1187.39</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.SystemVersion">13A598</string>
+		<string key="IBDocument.InterfaceBuilderVersion">4514</string>
+		<string key="IBDocument.AppKitVersion">1265</string>
+		<string key="IBDocument.HIToolboxVersion">695.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">4510</string>
+			<string key="NS.object.0">4514</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -39,7 +39,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSCustomView" id="1005">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">4364</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSCustomView" id="425034871">
@@ -51,6 +51,7 @@
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{277, 8}, {32, 25}}</string>
 								<reference key="NSSuperview" ref="425034871"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="884446428">
@@ -58,7 +59,7 @@
 									<int key="NSCellFlags2">0</int>
 									<string key="NSContents"/>
 									<object class="NSFont" key="NSSupport" id="422347566">
-										<string key="NSName">LucidaGrande</string>
+										<string key="NSName">.LucidaGrandeUI</string>
 										<double key="NSSize">13</double>
 										<int key="NSfFlags">1044</int>
 									</object>
@@ -82,6 +83,7 @@
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{7, 8}, {32, 25}}</string>
 								<reference key="NSSuperview" ref="425034871"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="764827156"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
@@ -118,6 +120,7 @@
 								</set>
 								<string key="NSFrameSize">{317, 39}</string>
 								<reference key="NSSuperview" ref="425034871"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="897064634"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{251, 251}</string>
@@ -141,6 +144,7 @@
 						</array>
 						<string key="NSFrameSize">{317, 39}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="898731828"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">IAFooterView</string>
@@ -154,6 +158,7 @@
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{7, 87}, {18, 18}}</string>
 								<reference key="NSSuperview" ref="111279449"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="393762918"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
@@ -182,6 +187,7 @@
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{141, 81}, {36, 17}}</string>
 								<reference key="NSSuperview" ref="111279449"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="200896959"/>
 								<string key="NSReuseIdentifierKey">_NS:397</string>
 								<string key="NSHuggingPriority">{251, 750}</string>
@@ -217,12 +223,14 @@
 									</object>
 								</object>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 							</object>
 							<object class="NSTextField" id="200896959">
 								<reference key="NSNextResponder" ref="111279449"/>
 								<int key="NSvFlags">268</int>
-								<string key="NSFrame">{{24, 7}, {270, 62}}</string>
+								<string key="NSFrame">{{25, 7}, {268, 62}}</string>
 								<reference key="NSSuperview" ref="111279449"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="425034871"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -247,10 +255,12 @@
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<bool key="NSControlAutosetMaxLayoutWidth">YES</bool>
 								<double key="NSPreferredMaxLayoutWidth">264</double>
+								<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 							</object>
 						</array>
 						<string key="NSFrame">{{0, 39}, {317, 106}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="242464570"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">IAOnboardingMainView</string>
@@ -272,6 +282,7 @@
 								</set>
 								<string key="NSFrameSize">{317, 13}</string>
 								<reference key="NSSuperview" ref="272682697"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="111279449"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{251, 251}</string>
@@ -295,12 +306,15 @@
 						</array>
 						<string key="NSFrame">{{0, 145}, {317, 13}}</string>
 						<reference key="NSSuperview" ref="1005"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="854902730"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSClassName">IAHeaderView</string>
 					</object>
 				</array>
 				<string key="NSFrameSize">{317, 158}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="272682697"/>
 				<double key="NSViewAlphaValue">0.90000000000000002</double>
 				<string key="NSClassName">NSView</string>
@@ -379,6 +393,30 @@
 						<reference key="destination" ref="1005"/>
 					</object>
 					<int key="connectionID">327</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">content_height_constraint</string>
+						<reference key="source" ref="1001"/>
+						<object class="IBNSLayoutConstraint" key="destination" id="979445766">
+							<reference key="firstItem" ref="111279449"/>
+							<int key="firstAttribute">8</int>
+							<int key="relation">0</int>
+							<nil key="secondItem"/>
+							<int key="secondAttribute">0</int>
+							<float key="multiplier">1</float>
+							<object class="IBLayoutConstant" key="constant">
+								<double key="value">106</double>
+							</object>
+							<float key="priority">1000</float>
+							<reference key="containingView" ref="111279449"/>
+							<int key="scoringType">9</int>
+							<float key="scoringTypeFloat">40</float>
+							<int key="contentType">1</int>
+							<bool key="placeholder">NO</bool>
+						</object>
+					</object>
+					<int key="connectionID">387</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -993,6 +1031,7 @@
 								<int key="contentType">3</int>
 								<bool key="placeholder">NO</bool>
 							</object>
+							<reference ref="979445766"/>
 							<reference ref="200896959"/>
 							<reference ref="393762918"/>
 							<reference ref="242464570"/>
@@ -1328,6 +1367,11 @@
 						<reference key="object" ref="729205217"/>
 						<reference key="parent" ref="111279449"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">386</int>
+						<reference key="object" ref="979445766"/>
+						<reference key="parent" ref="111279449"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1383,7 +1427,8 @@
 				<string key="191.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="193.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="194.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<array class="NSMutableArray" key="195.IBNSViewMetadataConstraints">
+				<array key="195.IBNSViewMetadataConstraints">
+					<reference ref="979445766"/>
 					<reference ref="243992518"/>
 					<reference ref="729205217"/>
 					<reference ref="667361701"/>
@@ -1453,14 +1498,159 @@
 				<string key="378.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="380.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="384.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="386.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">385</int>
+			<int key="maxID">387</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">IAFooterView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAFooterView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAHeaderView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAHeaderView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAHoverButton</string>
+					<string key="superclassName">NSButton</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAHoverButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAMainView</string>
+					<string key="superclassName">NSView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAMainView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAOnboardingMainView</string>
+					<string key="superclassName">IAMainView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAOnboardingMainView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAOnboardingViewController</string>
+					<string key="superclassName">IAViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="backClicked:">NSButton</string>
+						<string key="nextClicked:">NSButton</string>
+						<string key="skipClicked:">NSButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="backClicked:">
+							<string key="name">backClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBActionInfo" key="nextClicked:">
+							<string key="name">nextClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBActionInfo" key="skipClicked:">
+							<string key="name">skipClicked:</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="back_button">NSButton</string>
+						<string key="heading">NSTextField</string>
+						<string key="message">NSTextField</string>
+						<string key="next_button">NSButton</string>
+						<string key="skip_button">IAHoverButton</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="back_button">
+							<string key="name">back_button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="heading">
+							<string key="name">heading</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="message">
+							<string key="name">message</string>
+							<string key="candidateClassName">NSTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="next_button">
+							<string key="name">next_button</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="skip_button">
+							<string key="name">skip_button</string>
+							<string key="candidateClassName">IAHoverButton</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAOnboardingViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IAViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="content_height_constraint">NSLayoutConstraint</string>
+						<string key="content_width_constraint">NSLayoutConstraint</string>
+						<string key="footer_view">IAFooterView</string>
+						<string key="header_view">IAHeaderView</string>
+						<string key="main_view">IAMainView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="content_height_constraint">
+							<string key="name">content_height_constraint</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="content_width_constraint">
+							<string key="name">content_width_constraint</string>
+							<string key="candidateClassName">NSLayoutConstraint</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="footer_view">
+							<string key="name">footer_view</string>
+							<string key="candidateClassName">IAFooterView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="header_view">
+							<string key="name">header_view</string>
+							<string key="candidateClassName">IAHeaderView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="main_view">
+							<string key="name">main_view</string>
+							<string key="candidateClassName">IAMainView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/IAViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSLayoutConstraint</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
