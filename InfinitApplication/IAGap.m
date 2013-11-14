@@ -120,8 +120,9 @@ void on_critical_event(char const* str)
         NSString* binary_dir = [NSString pathWithComponents:[exe_path subarrayWithRange:NSMakeRange(0, [exe_path count] - 1)]];
         setenv("INFINIT_BINARY_DIR", binary_dir.UTF8String, 1);
         setenv("ELLE_LOG_LEVEL",
+               "*trophonius*:TRACE,"
+               "*meta*:TRACE,"
                "*surface*:DEBUG,"
-               "*frete*:DEBUG,"
                "reactor.fsm.Machine:DEBUG,"
                "infinit.surface.gap.User:TRACE"
                , 0);
@@ -143,11 +144,11 @@ void on_critical_event(char const* str)
         setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.production.infinit.io", 1);
         setenv("INFINIT_APERTUS_PORT", "9899", 1);
 
-        setenv("INFINIT_META_HOST", "v2.meta.api.production.infinit.io", 1);
+        setenv("INFINIT_META_HOST", "meta.7.0.api.production.infinit.io", 1);
         setenv("INFINIT_META_PORT", "80", 1);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.production.infinit.io", 1);
-        setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
+        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.7.0.api.production.infinit.io", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "80", 1);
 
         setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
 
@@ -168,20 +169,20 @@ void on_critical_event(char const* str)
         setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.development.infinit.io", 1);
 //        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_APERTUS_HOST", "192.168.110.52", 1);
-        setenv("INFINIT_APERTUS_PORT", "9899", 1);
+        setenv("INFINIT_APERTUS_PORT", "80", 1);
 
-        setenv("INFINIT_META_HOST", "v2.meta.api.development.infinit.io", 1);
+        setenv("INFINIT_META_HOST", "meta.7.0.api.production.infinit.io", 1);
 //        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
-//        setenv("INFINIT_META_HOST", "192.168.110.52", 1);
+//        setenv("INFINIT_META_HOST", "192.168.0.143", 1);
         setenv("INFINIT_META_PORT", "80", 1);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "v2.trophonius.api.development.infinit.io", 1);
+        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.7.0.api.production.infinit.io", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
-//        setenv("INFINIT_TROPHONIUS_HOST", "192.168.110.52", 1);
-        setenv("INFINIT_TROPHONIUS_PORT", "23456", 1);
+//        setenv("INFINIT_TROPHONIUS_HOST", "192.168.0.143", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "80", 1);
         
 //        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "fd3652b9b4bc907fdd029eac64d98fa8", 1);
-        
+
         setenv("INFINIT_METRICS_HOST", "v2.metrics.api.development.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
 //        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
