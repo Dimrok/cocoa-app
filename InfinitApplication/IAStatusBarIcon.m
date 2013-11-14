@@ -22,7 +22,6 @@ typedef enum IAStatusBarIconStatus {
     id _delegate;
     NSArray* _drag_types;
     NSImage* _icon[4];
-    NSImageView* _icon_view;
     BOOL _animating;
     BOOL _is_highlighted;
     BOOL _pulse;
@@ -46,8 +45,12 @@ typedef enum IAStatusBarIconStatus {
         _animating = NO;
         [self registerForDraggedTypes:_drag_types];
     }
-    
     return self;
+}
+
+- (void)dealloc
+{
+    [self unregisterDraggedTypes];
 }
 
 - (id)initWithDelegate:(id<IAStatusBarIconProtocol>)delegate statusItem:(NSStatusItem*)status_item

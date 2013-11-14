@@ -11,7 +11,7 @@
 
 @protocol IAStatusBarIconProtocol;
 
-@interface IAStatusBarIcon : NSView
+@interface IAStatusBarIcon : NSView <NSDraggingDestination>
 
 @property (nonatomic, readonly) BOOL isHighlighted;
 
