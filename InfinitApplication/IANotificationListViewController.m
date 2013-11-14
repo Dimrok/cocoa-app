@@ -667,8 +667,9 @@
     [self setUpdatorRunning:NO];
     for (IATransaction* transaction in _transaction_list)
     {
-        if ([_delegate notificationList:self activeTransactionsForUser:transaction.other_user] == 0 &&
-            [_delegate notificationList:self unreadTransactionsForUser:transaction.other_user] == 1)
+        NSUInteger active = [_delegate notificationList:self activeTransactionsForUser:transaction.other_user];
+        NSUInteger unread = [_delegate notificationList:self unreadTransactionsForUser:transaction.other_user];
+        if ((active == 0 && unread == 1) || (active == 1 && unread == 0))
         {
             [_delegate notificationList:self wantsMarkTransactionRead:transaction];
         }
