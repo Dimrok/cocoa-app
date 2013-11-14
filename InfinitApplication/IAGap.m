@@ -714,7 +714,7 @@ static void on_kicked_out()
 {
     IALog(@">>> On kicked out callback");
     // Set not logged in and stop polling
-    [[IAGapState instance] kickedOut];
+    [[IAGapState instance] loggedOut];
     [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
 }
 
