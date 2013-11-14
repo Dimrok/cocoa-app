@@ -88,7 +88,7 @@
     
     NSDictionary* file_properties = [[NSFileManager defaultManager] attributesOfItemAtPath:file_path
                                                                                      error:NULL];
-    if ([file_properties fileSize] < _file_size_limit)
+    if ([file_properties fileSize] <= _file_size_limit)
     {
         _file_path = file_path;
         self.file_message.stringValue = [file_path lastPathComponent];
