@@ -122,6 +122,8 @@
 
 - (void)setDoubleValue:(double)doubleValue
 {
+    if (doubleValue < _double_value)
+        return;
     _double_value = doubleValue;
     [self setNeedsDisplay:YES];
 }
@@ -129,6 +131,7 @@
 - (void)setTotalSize:(NSNumber*)totalSize
 {
     _total_size = totalSize;
+    _double_value = 0.0;
     [self setNeedsDisplay:YES];
 }
 
