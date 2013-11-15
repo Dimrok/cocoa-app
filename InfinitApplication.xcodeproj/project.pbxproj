@@ -40,6 +40,8 @@
 		832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */; };
 		83281BBE17AFFD1D00CAE422 /* IAConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83281BBC17AFFD1D00CAE422 /* IAConversationViewController.m */; };
 		83281BBF17AFFD1D00CAE422 /* IAConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83281BBD17AFFD1D00CAE422 /* IAConversationViewController.xib */; };
+		832E26C718366BD800A82DFF /* libc++.1.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
+		832E26C818366BD800A82DFF /* libc++abi.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
 		8333AB4A17BD1FB200D8B6DE /* icon-note-clicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 8333AB4617BD1FB200D8B6DE /* icon-note-clicked.png */; };
 		8333AB4B17BD1FB200D8B6DE /* icon-note-clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8333AB4717BD1FB200D8B6DE /* icon-note-clicked@2x.png */; };
 		8333AB4C17BD1FB200D8B6DE /* icon-note.png in Resources */ = {isa = PBXBuildFile; fileRef = 8333AB4817BD1FB200D8B6DE /* icon-note.png */; };
@@ -133,6 +135,8 @@
 		839DFC1917D8ED45001D60DD /* icon-back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1717D8ED45001D60DD /* icon-back@2x.png */; };
 		83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8368F2BD17F1890C00135C37 /* libcurl.4.dylib */; };
 		83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */; };
+		83A4F683183681A90038AC65 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
+		83A4F684183681A90038AC65 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
 		83A8097E17C26C890086A80D /* bg-triangle-top-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */; };
 		83A8097F17C26C890086A80D /* bg-triangle-top-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */; };
 		83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097C17C26C890086A80D /* bg-triangle-top-white.png */; };
@@ -389,6 +393,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				832E26C718366BD800A82DFF /* libc++.1.dylib in Copy Infinit Libraries */,
+				832E26C818366BD800A82DFF /* libc++abi.dylib in Copy Infinit Libraries */,
 				83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */,
 				83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */,
 				83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */,
@@ -495,6 +501,8 @@
 		83281BBB17AFFD1D00CAE422 /* IAConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAConversationViewController.h; sourceTree = "<group>"; };
 		83281BBC17AFFD1D00CAE422 /* IAConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationViewController.m; sourceTree = "<group>"; };
 		83281BBD17AFFD1D00CAE422 /* IAConversationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAConversationViewController.xib; sourceTree = "<group>"; };
+		832E26C318366B5200A82DFF /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../Externals/lib/libc++.1.dylib"; sourceTree = "<group>"; };
+		832E26C418366B5200A82DFF /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "../../../Externals/lib/libc++abi.dylib"; sourceTree = "<group>"; };
 		8333AB4617BD1FB200D8B6DE /* icon-note-clicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-note-clicked.png"; sourceTree = "<group>"; };
 		8333AB4717BD1FB200D8B6DE /* icon-note-clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-note-clicked@2x.png"; sourceTree = "<group>"; };
 		8333AB4817BD1FB200D8B6DE /* icon-note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-note.png"; sourceTree = "<group>"; };
@@ -706,6 +714,8 @@
 				83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */,
 				8398835717A6AC96009409B3 /* Security.framework in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
+				83A4F683183681A90038AC65 /* libc++.1.dylib in Frameworks */,
+				83A4F684183681A90038AC65 /* libc++abi.dylib in Frameworks */,
 				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
 				8334C7E117A67D22006028BC /* Gap.framework in Frameworks */,
 			);
@@ -1216,6 +1226,8 @@
 		83CD6FB917A67398004F55D1 /* Infinit Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				832E26C318366B5200A82DFF /* libc++.1.dylib */,
+				832E26C418366B5200A82DFF /* libc++abi.dylib */,
 				83CE1F60182A990F001394B2 /* libtransaction.dylib */,
 				83CE1F49182A98C1001394B2 /* libmetaclient.dylib */,
 				831B757117DDC3FB0082A068 /* libfrete.dylib */,
@@ -1684,7 +1696,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nINFINIT_SOURCE_DIR=\"${HOME}/sandbox/infinit\"\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\n[ -n \"$INFINIT_BUILD_DIR\" ] && (\n    cp -fv \"${INFINIT_BUILD_DIR}/lib/\"*.dylib \"${EXTERNALS_DIR}/lib\"\n)\n\nrealpath()\n{\n    python << EOF\nimport os\nprint(os.path.abspath(\"$1\"))\nEOF\n}\n\nget_external_libraries()\n{\n    otool -L \"${EXTERNALS_DIR}/lib/\"*.dylib \\\n    | grep -E 'elle|/opt|/usr/local' \\\n    | grep -v 'libelle.dylib' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nget_external_libraries_of()\n{\n    otool -L \"${1}\" \\\n    | grep -E 'elle|/opt|/usr/local' \\\n    | grep -v 'libelle.dylib' \\\n    | sort \\\n    | uniq \\\n    | cut -f2 \\\n    | cut -f1 -d' '\n}\n\nwhile true\ndo\n    EXTERNALS_LIBS=`get_external_libraries | tr '\\n' ' '`\n    echo \"Found external libraries: ${EXTERNALS_LIBS}\"\n    for lib in ${EXTERNALS_LIBS}\n    do\n        dest=\"${EXTERNALS_DIR}/lib\"/`basename \"${lib}\"`\n        dest=`realpath \"${dest}\"`\n        rm -f \"${dest}\"\n        cp -fv \"${lib}\" \"${dest}\"\n    done\n    [ \"${EXTERNALS_LIBS}\" = \"`get_external_libraries | tr '\\n' ' '`\" ] && echo \"END OF EXTERNALS\" && break\ndone\n\nfor lib in \"${EXTERNALS_DIR}/lib/\"*.dylib\ndo\n    chmod a+rwx \"${lib}\"\n#    strip -x \"${lib}\"\n    install_name_tool \"${lib}\" -id @rpath/`basename \"${lib}\"`\n    for dep in `get_external_libraries_of \"${lib}\" | tr '\\n' ' '`\n    do\n        echo \"PATCHING ${lib}: change ${dep} to @rpath/`basename ${dep}`\"\n        install_name_tool -change \"${dep}\" \"@rpath/`basename ${dep}`\" \"${lib}\"\n    done\n    echo \"Patched lib ${lib}:\"\n    otool -L \"${lib}\"\ndone\n\necho \"DONE\"\nexit 0";
+			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nset -e -x\n\nINFINIT_SOURCE_DIR=\"${HOME}/sandbox/infinit\"\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\ncopy_and_fix_library_id()\n{\n    cp -fv \"$1\" \"${EXTERNALS_DIR}/lib\"\n    chmod u+w \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n    install_name_tool -id \"@rpath/$(basename $1)\" \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n}\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\nif test -n \"$INFINIT_BUILD_DIR\"\nthen\n    cp -fv \"${INFINIT_BUILD_DIR}/lib/\"*.dylib \"${EXTERNALS_DIR}/lib\"\n    chmod u+w \"${EXTERNALS_DIR}/lib/\"*\n\n    copy_and_fix_library_id \"/usr/lib/libc++abi.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/lib/libc++.1.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_chrono-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_signals-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_system-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_thread-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n\n    for library in \"${EXTERNALS_DIR}\"/lib/*.dylib\n    do\n        install_name_tool -change \"/usr/lib/libc++abi.dylib\" \"@rpath/libc++abi.dylib\" $library\n        install_name_tool -change \"/usr/lib/libc++.1.dylib\" \"@rpath/libc++.1.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_chrono-mt.dylib\" \"@rpath/libboost_chrono-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_signals-mt.dylib\" \"@rpath/libboost_signals-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_system-mt.dylib\" \"@rpath/libboost_system-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_thread-mt.dylib\" \"@rpath/libboost_thread-mt.dylib\" $library\n    done\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
