@@ -45,6 +45,7 @@
     
     // Other
     IADesktopNotifier* _desktop_notifier;
+    InfinitStartupMessageController* _startup_message_controller;
     BOOL _new_credentials;
     BOOL _update_credentials;
     BOOL _logging_in;
@@ -79,18 +80,33 @@
         
         _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
-        _logging_in = NO;
-        _onboarding = NO;
-        _update_credentials = NO;
-        _new_credentials = NO;
-        
-        if (![self tryAutomaticLogin])
+        _startup_message_controller = [[InfinitStartupMessageController alloc] initWithDelegate:self];
+        if ([_startup_message_controller metaStatusGood])
         {
-            IALog(@"%@ Autologin failed", self);
-            // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
-            // is miscalculated
-            [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
+            IALog(@"%@ Meta up", self);
+            _status_bar_icon.isClickable = YES;
+            _logging_in = NO;
+            _onboarding = NO;
+            _update_credentials = NO;
+            _new_credentials = NO;
+            
+            if (![self tryAutomaticLogin])
+            {
+                IALog(@"%@ Autologin failed", self);
+                // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
+                // is miscalculated
+                [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
+                _startup_message_controller = nil;
+            }
         }
+        else
+        {
+            IALog(@"%@ Meta down", self);
+            [_startup_message_controller showStartupMessage];
+            _status_bar_icon.isClickable = NO;
+        }
+        
+        
     }
     return self;
 }
@@ -761,6 +777,13 @@ transactionsProgressForUser:(IAUser*)user
 {
     [_report_problem_controller close];
     _report_problem_controller = nil;
+}
+
+//- Startup Message Controller Protocol ------------------------------------------------------------
+
+- (void)startupMessageControllerWantsQuit:(InfinitStartupMessageController*)sender
+{
+    [self handleQuit];
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------

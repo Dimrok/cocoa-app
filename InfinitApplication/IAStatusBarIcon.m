@@ -29,6 +29,7 @@ typedef enum IAStatusBarIconStatus {
     NSInteger _number_of_items;
 }
 
+@synthesize isClickable = _is_clickable;
 @synthesize isHighlighted = _is_highlighted;
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -43,6 +44,7 @@ typedef enum IAStatusBarIconStatus {
         _connected = gap_user_status_offline;
         _pulse = NO;
         _animating = NO;
+        _is_clickable = YES;
         [self registerForDraggedTypes:_drag_types];
     }
     return self;
@@ -200,7 +202,8 @@ typedef enum IAStatusBarIconStatus {
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
-	[_delegate statusBarIconClicked:self];
+    if (_is_clickable)
+        [_delegate statusBarIconClicked:self];
 }
 
 //- Drag Operations --------------------------------------------------------------------------------

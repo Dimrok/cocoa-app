@@ -137,6 +137,9 @@
 		83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */; };
 		83A4F683183681A90038AC65 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
 		83A4F684183681A90038AC65 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
+		83A4F68918369D600038AC65 /* InfinitStartupMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A4F68718369D600038AC65 /* InfinitStartupMessageController.m */; };
+		83A4F68A18369D600038AC65 /* InfinitStartupMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A4F68818369D600038AC65 /* InfinitStartupMessageController.xib */; };
+		83A4F68C18369FAF0038AC65 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A4F68B18369FAF0038AC65 /* WebKit.framework */; };
 		83A8097E17C26C890086A80D /* bg-triangle-top-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */; };
 		83A8097F17C26C890086A80D /* bg-triangle-top-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */; };
 		83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097C17C26C890086A80D /* bg-triangle-top-white.png */; };
@@ -611,6 +614,10 @@
 		839DFC1617D8ED45001D60DD /* icon-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back.png"; sourceTree = "<group>"; };
 		839DFC1717D8ED45001D60DD /* icon-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back@2x.png"; sourceTree = "<group>"; };
 		83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
+		83A4F68618369D600038AC65 /* InfinitStartupMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStartupMessageController.h; sourceTree = "<group>"; };
+		83A4F68718369D600038AC65 /* InfinitStartupMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStartupMessageController.m; sourceTree = "<group>"; };
+		83A4F68818369D600038AC65 /* InfinitStartupMessageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitStartupMessageController.xib; sourceTree = "<group>"; };
+		83A4F68B18369FAF0038AC65 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey.png"; sourceTree = "<group>"; };
 		83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey@2x.png"; sourceTree = "<group>"; };
 		83A8097C17C26C890086A80D /* bg-triangle-top-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-white.png"; sourceTree = "<group>"; };
@@ -708,6 +715,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83A4F68C18369FAF0038AC65 /* WebKit.framework in Frameworks */,
 				836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */,
 				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				839456C517D213B200BF343E /* CrashReporter.framework in Frameworks */,
@@ -790,6 +798,7 @@
 		8328080917A2B4A60025B6F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83A4F68B18369FAF0038AC65 /* WebKit.framework */,
 				836F867517ECA30300D7202C /* QuartzCore.framework */,
 				83014AC317BB6E2E00ECDE96 /* AddressBook.framework */,
 				8398835617A6AC95009409B3 /* Security.framework */,
@@ -827,6 +836,7 @@
 				8365684417F9BC200021D49D /* Popover View */,
 				837A7F5A17FC070600600ACD /* Report Problem Window */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
+				83A4F68518369CB70038AC65 /* Startup Message Window */,
 				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
 				8398834717A6A580009409B3 /* Utilities */,
 				832808D917A2D66E0025B6F8 /* Window Controller */,
@@ -1112,6 +1122,16 @@
 				838FE0B717DA097C004160DB /* IAHoverButton.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		83A4F68518369CB70038AC65 /* Startup Message Window */ = {
+			isa = PBXGroup;
+			children = (
+				83A4F68618369D600038AC65 /* InfinitStartupMessageController.h */,
+				83A4F68718369D600038AC65 /* InfinitStartupMessageController.m */,
+				83A4F68818369D600038AC65 /* InfinitStartupMessageController.xib */,
+			);
+			name = "Startup Message Window";
 			sourceTree = "<group>";
 		};
 		83B2FD0F17F58F3100893B52 /* Onboarding View */ = {
@@ -1552,6 +1572,7 @@
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
 				837A7F8817FC25E000600ACD /* bg-main-button-disabled.png in Resources */,
 				83ED2FC117E9A50600BB35A0 /* icon-menu-bar-active.png in Resources */,
+				83A4F68A18369D600038AC65 /* InfinitStartupMessageController.xib in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
 				8390D5C117F1F31D00990DCD /* loading-bar.gif in Resources */,
 				8328081B17A2B4A60025B6F8 /* Credits.rtf in Resources */,
@@ -1705,6 +1726,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83A4F68918369D600038AC65 /* InfinitStartupMessageController.m in Sources */,
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,

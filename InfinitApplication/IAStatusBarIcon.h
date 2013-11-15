@@ -13,6 +13,7 @@
 
 @interface IAStatusBarIcon : NSView <NSDraggingDestination>
 
+@property (nonatomic, readwrite) BOOL isClickable;
 @property (nonatomic, readonly) BOOL isHighlighted;
 
 - (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate statusItem:(NSStatusItem*)status_item;
