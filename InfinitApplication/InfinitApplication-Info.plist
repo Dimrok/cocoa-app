@@ -40,10 +40,10 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>SUAutomaticallyUpdate </key>
-	<true/>
 	<key>SUFeedURL</key>
 	<string>http://download.infinit.io/sparkle-cast.xml</string>
+	<key>SUAllowsAutomaticUpdates</key>
+	<false/>
 	<key>SUShowReleaseNotes</key>
 	<true/>
 </dict>
