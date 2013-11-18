@@ -144,10 +144,10 @@ void on_critical_event(char const* str)
         setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.production.infinit.io", 1);
         setenv("INFINIT_APERTUS_PORT", "9899", 1);
 
-        setenv("INFINIT_META_HOST", "meta.7.0.api.production.infinit.io", 1);
+        setenv("INFINIT_META_HOST", "meta.8.0.api.production.infinit.io", 1);
         setenv("INFINIT_META_PORT", "80", 1);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.7.0.api.production.infinit.io", 1);
+        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.8.0.api.production.infinit.io", 1);
         setenv("INFINIT_TROPHONIUS_PORT", "80", 1);
 
         setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
