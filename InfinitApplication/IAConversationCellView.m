@@ -393,6 +393,11 @@
         self.files_icon.image = [IAFunctions imageNamed:@"icon-collapse"];
         [self.files_icon setToolTip:NSLocalizedString(@"Hide file list", @"hide file list")];
         [self.files_icon setEnabled:YES];
+        
+        if (_transaction.is_new || _transaction.is_active || _transaction.needs_action)
+            self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+        else
+            self.table_view.backgroundColor = IA_GREY_COLOUR(250.0);
     }
     else if (element.mode == CONVERSATION_CELL_VIEW_NORMAL)
     {
