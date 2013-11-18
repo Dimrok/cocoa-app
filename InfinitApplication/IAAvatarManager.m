@@ -113,6 +113,7 @@
 - (void)clearModelCallback
 {
     [_cache removeAllObjects];
+    IALog(@"%@ avatars cleared: %@", self, _cache);
 }
 
 @end
