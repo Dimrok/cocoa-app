@@ -99,7 +99,7 @@
                                          attributes:button_style];
 }
 
-- (void)setForgotPasswordRegisterButtonText
+- (void)setLinkText
 {
     NSFont* link_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
@@ -112,6 +112,7 @@
                                 shadow:nil];
     NSString* need_account = NSLocalizedString(@"Need an account?", @"need an account?");
     NSString* forgot_password = NSLocalizedString(@"Forgot password?", @"forgot password?");
+    NSString* problem = NSLocalizedString(@"Problem?", nil);
     
     self.create_account_button.attributedTitle = [[NSAttributedString alloc]
                                                   initWithString:need_account
@@ -119,8 +120,11 @@
     self.forgot_password_button.attributedTitle = [[NSAttributedString alloc]
                                                    initWithString:forgot_password
                                                    attributes:link_attrs];
+    self.problem_button.attributedTitle = [[NSAttributedString alloc] initWithString:problem
+                                                                          attributes:link_attrs];
     [self.create_account_button setNormalTextAttributes:link_attrs];
     [self.forgot_password_button setNormalTextAttributes:link_attrs];
+    [self.problem_button setNormalTextAttributes:link_attrs];
     
     NSFont* link_hover_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                          traits:NSUnboldFontMask
@@ -133,6 +137,7 @@
                                       shadow:nil];
     [self.create_account_button setHoverTextAttributes:link_hover_attrs];
     [self.forgot_password_button setHoverTextAttributes:link_hover_attrs];
+    [self.problem_button setHoverTextAttributes:link_hover_attrs];
 }
 
 - (void)viewChanged
@@ -156,7 +161,7 @@
     self.close_button.hand_cursor = NO;
     [self.close_button setHoverImage:[IAFunctions imageNamed:@"icon-onboarding-close-hover"]];
     [self setLoginButtonText];
-    [self setForgotPasswordRegisterButtonText];
+    [self setLinkText];
     [self configureForMode];
     NSFont* version_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                       traits:NSUnboldFontMask
@@ -184,6 +189,8 @@
             
             self.error_message.stringValue = @"";
             [self.error_message setHidden:YES];
+            [self.problem_button setHidden:YES];
+            [self.version setHidden:YES];
             
             [self.email_address setEnabled:YES];
             [self.password setEnabled:YES];
@@ -195,6 +202,8 @@
             
             [self.email_address setEnabled:YES];
             [self.error_message setHidden:NO];
+            [self.problem_button setHidden:NO];
+            [self.version setHidden:NO];
             [self.password setEnabled:YES];
             [self.login_button setEnabled:YES];
             [self.create_account_button setHidden:NO];
@@ -293,6 +302,14 @@
         [_delegate loginViewWantsClose:self];
     else
         [_delegate loginViewWantsCloseAndQuit:self];
+}
+
+//- Got a Problem ----------------------------------------------------------------------------------
+
+- (IBAction)onProblemClick:(NSButton*)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:support@infinit.io?Subject=Login%20Problem"]];
+    [self closeLoginView];
 }
 
 //- Register and Forgot Password -------------------------------------------------------------------
