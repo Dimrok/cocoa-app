@@ -137,8 +137,8 @@
 		83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */; };
 		83A4F683183681A90038AC65 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
 		83A4F684183681A90038AC65 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
-		83A4F68918369D600038AC65 /* InfinitStartupMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A4F68718369D600038AC65 /* InfinitStartupMessageController.m */; };
-		83A4F68A18369D600038AC65 /* InfinitStartupMessageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A4F68818369D600038AC65 /* InfinitStartupMessageController.xib */; };
+		83A4F68918369D600038AC65 /* InfinitServerTestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A4F68718369D600038AC65 /* InfinitServerTestController.m */; };
+		83A4F68A18369D600038AC65 /* InfinitServerTestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A4F68818369D600038AC65 /* InfinitServerTestController.xib */; };
 		83A4F68C18369FAF0038AC65 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A4F68B18369FAF0038AC65 /* WebKit.framework */; };
 		83A8097E17C26C890086A80D /* bg-triangle-top-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */; };
 		83A8097F17C26C890086A80D /* bg-triangle-top-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */; };
@@ -614,9 +614,9 @@
 		839DFC1617D8ED45001D60DD /* icon-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back.png"; sourceTree = "<group>"; };
 		839DFC1717D8ED45001D60DD /* icon-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back@2x.png"; sourceTree = "<group>"; };
 		83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
-		83A4F68618369D600038AC65 /* InfinitStartupMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStartupMessageController.h; sourceTree = "<group>"; };
-		83A4F68718369D600038AC65 /* InfinitStartupMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStartupMessageController.m; sourceTree = "<group>"; };
-		83A4F68818369D600038AC65 /* InfinitStartupMessageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitStartupMessageController.xib; sourceTree = "<group>"; };
+		83A4F68618369D600038AC65 /* InfinitServerTestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitServerTestController.h; sourceTree = "<group>"; };
+		83A4F68718369D600038AC65 /* InfinitServerTestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitServerTestController.m; sourceTree = "<group>"; };
+		83A4F68818369D600038AC65 /* InfinitServerTestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitServerTestController.xib; sourceTree = "<group>"; };
 		83A4F68B18369FAF0038AC65 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey.png"; sourceTree = "<group>"; };
 		83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey@2x.png"; sourceTree = "<group>"; };
@@ -836,7 +836,7 @@
 				8365684417F9BC200021D49D /* Popover View */,
 				837A7F5A17FC070600600ACD /* Report Problem Window */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
-				83A4F68518369CB70038AC65 /* Startup Message Window */,
+				83A4F68518369CB70038AC65 /* Server Test Controller */,
 				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
 				8398834717A6A580009409B3 /* Utilities */,
 				832808D917A2D66E0025B6F8 /* Window Controller */,
@@ -1124,14 +1124,14 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		83A4F68518369CB70038AC65 /* Startup Message Window */ = {
+		83A4F68518369CB70038AC65 /* Server Test Controller */ = {
 			isa = PBXGroup;
 			children = (
-				83A4F68618369D600038AC65 /* InfinitStartupMessageController.h */,
-				83A4F68718369D600038AC65 /* InfinitStartupMessageController.m */,
-				83A4F68818369D600038AC65 /* InfinitStartupMessageController.xib */,
+				83A4F68618369D600038AC65 /* InfinitServerTestController.h */,
+				83A4F68718369D600038AC65 /* InfinitServerTestController.m */,
+				83A4F68818369D600038AC65 /* InfinitServerTestController.xib */,
 			);
-			name = "Startup Message Window";
+			name = "Server Test Controller";
 			sourceTree = "<group>";
 		};
 		83B2FD0F17F58F3100893B52 /* Onboarding View */ = {
@@ -1337,10 +1337,11 @@
 			buildConfigurationList = 8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplication" */;
 			buildPhases = (
 				83CD6F7E17A65FA7004F55D1 /* ShellScript */,
+				83CD6FF217A67418004F55D1 /* Copy Infinit Libraries */,
+				83D3B6D61837DB450055B861 /* ShellScript */,
 				8328080317A2B4A60025B6F8 /* Sources */,
 				8328080517A2B4A60025B6F8 /* Resources */,
 				83CD701117A6754A004F55D1 /* Copy Frameworks */,
-				83CD6FF217A67418004F55D1 /* Copy Infinit Libraries */,
 				8328080417A2B4A60025B6F8 /* Frameworks */,
 			);
 			buildRules = (
@@ -1572,7 +1573,7 @@
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
 				837A7F8817FC25E000600ACD /* bg-main-button-disabled.png in Resources */,
 				83ED2FC117E9A50600BB35A0 /* icon-menu-bar-active.png in Resources */,
-				83A4F68A18369D600038AC65 /* InfinitStartupMessageController.xib in Resources */,
+				83A4F68A18369D600038AC65 /* InfinitServerTestController.xib in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
 				8390D5C117F1F31D00990DCD /* loading-bar.gif in Resources */,
 				8328081B17A2B4A60025B6F8 /* Credits.rtf in Resources */,
@@ -1719,6 +1720,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nset -e -x\n\nINFINIT_SOURCE_DIR=\"${HOME}/sandbox/infinit\"\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\ncopy_and_fix_library_id()\n{\n    cp -fv \"$1\" \"${EXTERNALS_DIR}/lib\"\n    chmod u+w \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n    install_name_tool -id \"@rpath/$(basename $1)\" \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n}\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\nif test -n \"$INFINIT_BUILD_DIR\"\nthen\n    cp -fv \"${INFINIT_BUILD_DIR}/lib/\"*.dylib \"${EXTERNALS_DIR}/lib\"\n    chmod u+w \"${EXTERNALS_DIR}/lib/\"*\n\n    copy_and_fix_library_id \"/usr/lib/libc++abi.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/lib/libc++.1.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_chrono-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_signals-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_system-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_thread-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n\n    for library in \"${EXTERNALS_DIR}\"/lib/*.dylib\n    do\n        install_name_tool -change \"/usr/lib/libc++abi.dylib\" \"@rpath/libc++abi.dylib\" $library\n        install_name_tool -change \"/usr/lib/libc++.1.dylib\" \"@rpath/libc++.1.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_chrono-mt.dylib\" \"@rpath/libboost_chrono-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_signals-mt.dylib\" \"@rpath/libboost_signals-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_system-mt.dylib\" \"@rpath/libboost_system-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_thread-mt.dylib\" \"@rpath/libboost_thread-mt.dylib\" $library\n    done\nfi\n";
 		};
+		83D3B6D61837DB450055B861 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Christopher Crone (9E27AS8W64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libagent.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_chrono-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_signals-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_system-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_thread-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++.1.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++abi.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrash.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrypto.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcryptography.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurl.4.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurly.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurly_asio.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurly_sched.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libelle.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libetoile.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libfrete.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libgap.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libhole.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libinfinit.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/liblune.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetaclient.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetrics.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libnucleus.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libpapier.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libprotocol.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libreactor.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libssl.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libstation.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtransaction.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtrophonius.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libz.1.2.8.dylib\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1726,7 +1740,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83A4F68918369D600038AC65 /* InfinitStartupMessageController.m in Sources */,
+				83A4F68918369D600038AC65 /* InfinitServerTestController.m in Sources */,
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,
@@ -1863,7 +1877,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1908,7 +1922,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1934,8 +1948,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1947,9 +1962,9 @@
 					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B6CFC3BF-2053-4CF1-BBC2-B2B15D53518B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1958,8 +1973,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1971,9 +1987,9 @@
 					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_CODE_SIGN_FLAGS = "--deep";
+				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B6CFC3BF-2053-4CF1-BBC2-B2B15D53518B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
