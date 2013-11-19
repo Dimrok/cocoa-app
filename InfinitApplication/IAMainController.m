@@ -45,7 +45,7 @@
     
     // Other
     IADesktopNotifier* _desktop_notifier;
-    InfinitStartupMessageController* _startup_message_controller;
+    InfinitServerTestController* _server_test_controller;
     BOOL _new_credentials;
     BOOL _update_credentials;
     BOOL _logging_in;
@@ -80,35 +80,51 @@
         
         _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
-        _startup_message_controller = [[InfinitStartupMessageController alloc] initWithDelegate:self];
-        if ([_startup_message_controller metaStatusGood])
+        _server_test_controller = [[InfinitServerTestController alloc] initWithDelegate:self];
+        
+        InfinitServerStatus meta_status = [_server_test_controller metaStatus];
+        
+        if (meta_status == INFINIT_SERVER_UP)
         {
-            IALog(@"%@ Meta up", self);
             _status_bar_icon.isClickable = YES;
-            _logging_in = NO;
-            _onboarding = NO;
-            _update_credentials = NO;
-            _new_credentials = NO;
+            IALog(@"%@ Meta up", self);
+            [_server_test_controller fetchTrophoniusStatus];
             
-            if (![self tryAutomaticLogin])
-            {
-                IALog(@"%@ Autologin failed", self);
-                // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
-                // is miscalculated
-                [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
-                _startup_message_controller = nil;
-            }
         }
-        else
+        else if (meta_status == INFINIT_SERVER_DOWN_WITH_MESSAGE)
         {
             IALog(@"%@ Meta down", self);
-            [_startup_message_controller showStartupMessage];
+            [_server_test_controller showMetaMessage];
             _status_bar_icon.isClickable = NO;
         }
-        
-        
+        else if (meta_status == INFINIT_SERVER_UNREACHABLE)
+        {
+            // Don't bother checking Trophonius as we probably aren't connected to the internet.
+            // Show the login window to alert the user.
+            IALog(@"%@ Meta unreachable", self);
+            _status_bar_icon.isClickable = YES;
+            [self tryLoginAfterServerCheck];
+        }
     }
     return self;
+}
+
+- (void)tryLoginAfterServerCheck
+{
+    _status_bar_icon.isClickable = YES;
+    _logging_in = NO;
+    _onboarding = NO;
+    _update_credentials = NO;
+    _new_credentials = NO;
+    
+    if (![self tryAutomaticLogin])
+    {
+        IALog(@"%@ Autologin failed", self);
+        // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
+        // is miscalculated
+        [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
+        _server_test_controller = nil;
+    }
 }
 
 - (void)delayedLoginViewOpen
@@ -779,11 +795,33 @@ transactionsProgressForUser:(IAUser*)user
     _report_problem_controller = nil;
 }
 
-//- Startup Message Controller Protocol ------------------------------------------------------------
+//- Server Test Controller Protocol ------------------------------------------------------------
 
-- (void)startupMessageControllerWantsQuit:(InfinitStartupMessageController*)sender
+- (void)serverTestControllerWantsQuit:(InfinitServerTestController*)sender
 {
     [self handleQuit];
+}
+
+- (void)serverTestControllerHasTrophoniusStatus:(InfinitServerTestController*)sender
+                                         status:(InfinitServerStatus)status
+{
+    switch (status)
+    {
+        case INFINIT_SERVER_UP:
+            IALog(@"%@ Trophonius accessible", self);
+            [self tryLoginAfterServerCheck];
+            break;
+
+        case INFINIT_SERVER_UNREACHABLE:
+            IALog(@"%@ Trophonius inaccessible", self);
+            [_server_test_controller showTrophoniusMessage];
+            break;
+            
+        default:
+            IALog(@"%@ Trophonius status unknown", self);
+            [_server_test_controller showTrophoniusMessage];
+            break;
+    }
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------

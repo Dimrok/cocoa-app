@@ -24,7 +24,7 @@
 #import "IANotificationListViewController.h"
 #import "IAOnboardingViewController.h"
 #import "IAReportProblemWindowController.h"
-#import "InfinitStartupMessageController.h"
+#import "InfinitServerTestController.h"
 #import "IAStatusBarIcon.h"
 #import "IAWindowController.h"
 
@@ -39,7 +39,7 @@
                                         IANotificationListViewProtocol,
                                         IAOnboardingProtocol,
                                         IAReportProblemProtocol,
-                                        InfinitStartupMessageControllerProtocol,
+                                        InfinitServerTestControllerProtocol,
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,
