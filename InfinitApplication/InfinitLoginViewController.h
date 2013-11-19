@@ -32,6 +32,7 @@ typedef enum __InfinitLoginViewMode
 @property (nonatomic, readwrite, setter = setLoginViewMode:) InfinitLoginViewMode mode;
 @property (nonatomic, strong) IBOutlet NSTextField* password;
 @property (nonatomic, strong) IBOutlet NSProgressIndicator* spinner;
+@property (nonatomic, strong) IBOutlet NSTextField* version;
 
 - (id)initWithDelegate:(id<InfinitLoginViewControllerProtocol>)delegate
               withMode:(InfinitLoginViewMode)mode;

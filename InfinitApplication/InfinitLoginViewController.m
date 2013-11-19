@@ -9,6 +9,7 @@
 #import "InfinitLoginViewController.h"
 
 #import <Gap/IAGapState.h>
+#import <Gap/version.h>
 
 #define INFINIT_REGISTER_URL "http://infinit.io/register"
 #define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot_password"
@@ -44,6 +45,8 @@
     id<InfinitLoginViewControllerProtocol> _delegate;
     NSDictionary* _error_attrs;
     BOOL _logging_in;
+    
+    NSString* _version_str;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -67,6 +70,9 @@
                                        paragraphStyle:error_para
                                                colour:IA_RGB_COLOUR(222.0, 104.0, 81.0)
                                                shadow:nil];
+        
+        _version_str = [NSString stringWithFormat:@"v%@",
+                        [NSString stringWithUTF8String:INFINIT_VERSION]];
     }
     return self;
 }
@@ -152,6 +158,19 @@
     [self setLoginButtonText];
     [self setForgotPasswordRegisterButtonText];
     [self configureForMode];
+    NSFont* version_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                      traits:NSUnboldFontMask
+                                                                      weight:2
+                                                                        size:10.0];
+    NSMutableParagraphStyle* version_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    version_para.alignment = NSRightTextAlignment;
+    NSDictionary* version_style = [IAFunctions textStyleWithFont:version_font
+                                                  paragraphStyle:version_para
+                                                          colour:IA_GREY_COLOUR(206.0)
+                                                          shadow:nil];
+    
+    self.version.attributedStringValue = [[NSAttributedString alloc] initWithString:_version_str
+                                                                         attributes:version_style];
 }
 
 //- General ----------------------------------------------------------------------------------------
