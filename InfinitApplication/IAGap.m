@@ -159,7 +159,7 @@ void on_critical_event(char const* str)
         
         setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "ca10e9afa1f125fa832f5cbae9b6cbbb", 1);
         
-        setenv("INFINIT_METRICS_HOST", "v2.metrics.api.production.infinit.io", 1);
+        setenv("INFINIT_METRICS_HOST", "v3.metrics.api.production.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
 
 #else
@@ -177,7 +177,7 @@ void on_critical_event(char const* str)
         
 //        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "fd3652b9b4bc907fdd029eac64d98fa8", 1);
 
-        setenv("INFINIT_METRICS_HOST", "v2.metrics.api.development.infinit.io", 1);
+        setenv("INFINIT_METRICS_HOST", "v3.metrics.api.development.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
 //        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_METRICS_PORT", "8080", 1);
