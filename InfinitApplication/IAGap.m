@@ -141,9 +141,6 @@ void on_critical_event(char const* str)
         [[IALogFileManager sharedInstance] removeOldLogFile];
 
 #ifdef BUILD_PRODUCTION
-        setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.production.infinit.io", 1);
-        setenv("INFINIT_APERTUS_PORT", "9899", 1);
-
         setenv("INFINIT_META_HOST", "meta.8.0.api.production.infinit.io", 1);
         setenv("INFINIT_META_PORT", "80", 1);
 
@@ -166,20 +163,17 @@ void on_critical_event(char const* str)
         setenv("INFINIT_METRICS_PORT", "80", 1);
 
 #else
-        setenv("INFINIT_APERTUS_HOST", "v2.apertus.api.development.infinit.io", 1);
-//        setenv("INFINIT_APERTUS_HOST", "127.0.0.1", 1);
-//        setenv("INFINIT_APERTUS_HOST", "192.168.110.52", 1);
-        setenv("INFINIT_APERTUS_PORT", "80", 1);
-
-        setenv("INFINIT_META_HOST", "meta.7.0.api.production.infinit.io", 1);
-//        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_META_HOST", "meta.8.0.api.production.infinit.io", 1);
+//        setenv("INFINIT_META_PORT", "80", 1);
 //        setenv("INFINIT_META_HOST", "192.168.0.143", 1);
-        setenv("INFINIT_META_PORT", "80", 1);
+        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
+        setenv("INFINIT_META_PORT", "8080", 1);
 
-        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.7.0.api.production.infinit.io", 1);
-//        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.8.0.api.production.infinit.io", 1);
+//        setenv("INFINIT_TROPHONIUS_PORT", "80", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "192.168.0.143", 1);
-        setenv("INFINIT_TROPHONIUS_PORT", "80", 1);
+        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
         
 //        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "fd3652b9b4bc907fdd029eac64d98fa8", 1);
 
