@@ -815,11 +815,13 @@ transactionsProgressForUser:(IAUser*)user
         case INFINIT_SERVER_UNREACHABLE:
             IALog(@"%@ Trophonius inaccessible", self);
             [_server_test_controller showTrophoniusMessage];
+            _status_bar_icon.isClickable = NO;
             break;
             
         default:
             IALog(@"%@ Trophonius status unknown", self);
             [_server_test_controller showTrophoniusMessage];
+            _status_bar_icon.isClickable = NO;
             break;
     }
 }
