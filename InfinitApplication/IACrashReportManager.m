@@ -132,7 +132,7 @@
     NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
     NSString* additional_info = @"None";
     
-    if (last_state_log != nil && crash_file_path != nil)
+    if (last_state_log != nil && crash_file_path != nil && user_name != nil)
     {
         gap_send_last_crash_logs(user_name.UTF8String,
                                  crash_file_path.UTF8String,
