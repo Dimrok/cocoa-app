@@ -19,8 +19,6 @@
     NSString* _message;
     NSString* _tropho_poke;
     
-    NSString* _connection_error_message;
-    
     InfinitServerStatus _tropho_status;
     NSInputStream* _tropho_input;
     NSOutputStream* _tropho_output;
@@ -34,7 +32,6 @@
     {
         _delegate = delegate;
         _message = @"";
-        _connection_error_message = NSLocalizedString(@"<p>Unable to connect to Infinit notification servers</p> <p>Please contact <a href=\"mailto:support@infinit.io?Subject=Notification Server Problem\">support@infinit.io</a></p>", nil);
         _tropho_poke = @"ouch";
         _tropho_status = INFINIT_SERVER_STATUS_UNKOWN;
     }
@@ -193,16 +190,13 @@
 
 - (void)showMetaMessage
 {
-    if (_message.length == 0)
-    {
-        _message = NSLocalizedString(@"<p>Unable to connect to Infinit servers</p> <p>Please contact <a href=\"mailto:support@infinit.io?Subject=Server Connection Problem\">support@infinit.io</a></p>", nil);
-    }
+    _message = NSLocalizedString(@"<p>Unable to connect to Infinit Login servers</p> <p>Please contact <a href=\"mailto:support@infinit.io?Subject=Login Server Connection Problem\">support@infinit.io</a></p>", nil);
     [self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)showTrophoniusMessage
 {
-    _message = _connection_error_message;
+    _message = NSLocalizedString(@"<p>Unable to connect to Infinit notification servers</p> <p>Please contact <a href=\"mailto:support@infinit.io?Subject=Notification Server Problem\">support@infinit.io</a></p>", nil);
     [self.window makeKeyAndOrderFront:nil];
 }
 
