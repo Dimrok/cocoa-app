@@ -95,6 +95,8 @@
 
 - (void)fetchTrophoniusStatus
 {
+    [self performSelector:@selector(timeoutTrophoTest) withObject:nil afterDelay:10.0];
+    
     NSString* tropho_url = [[[NSProcessInfo processInfo] environment] objectForKey:@"INFINIT_TROPHONIUS_HOST"];
     NSString* port = [[[NSProcessInfo processInfo] environment] objectForKey:@"INFINIT_TROPHONIUS_PORT"];
     if (tropho_url == nil || port == nil)
@@ -131,8 +133,17 @@
     [_tropho_output write:poke_data.bytes maxLength:poke_data.length];
 }
 
+- (void)timeoutTrophoTest
+{
+    IALog(@"%@ WARNING: tropho test timed out", self);
+    [_delegate serverTestControllerHasTrophoniusStatus:self status:INFINIT_SERVER_UNREACHABLE];
+}
+
 - (void)checkTrophoniusMessage
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(timeoutTrophoTest)
+                                               object:nil];
     uint8_t buffer[1024];
     NSInteger len;
     
@@ -160,6 +171,8 @@
     
     [_tropho_input close];
     [_tropho_output close];
+    _tropho_input = nil;
+    _tropho_output = nil;
 }
 
 - (void)stream:(NSStream*)aStream
