@@ -115,6 +115,9 @@
                                        &read_stream_ref,
                                        &write_stream_ref);
     
+    CFWriteStreamSetProperty(write_stream_ref, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
+    CFReadStreamSetProperty(read_stream_ref, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue);
+    
     _tropho_input = (__bridge NSInputStream*)read_stream_ref;
     _tropho_output = (__bridge NSOutputStream*)write_stream_ref;
     
@@ -136,7 +139,24 @@
 - (void)timeoutTrophoTest
 {
     IALog(@"%@ WARNING: tropho test timed out", self);
+    [self closeTrophoSocket];
     [_delegate serverTestControllerHasTrophoniusStatus:self status:INFINIT_SERVER_UNREACHABLE];
+}
+
+- (void)closeTrophoSocket
+{
+    [_tropho_input removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [_tropho_output removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    
+    [_tropho_input setDelegate:nil];
+    [_tropho_output setDelegate:nil];
+    
+    [_tropho_input close];
+    [_tropho_output close];
+    CFReadStreamClose((__bridge CFReadStreamRef)_tropho_input);
+    CFWriteStreamClose((__bridge CFWriteStreamRef)_tropho_output);
+    _tropho_input = nil;
+    _tropho_output = nil;
 }
 
 - (void)checkTrophoniusMessage
@@ -169,10 +189,7 @@
         }
     }
     
-    [_tropho_input close];
-    [_tropho_output close];
-    _tropho_input = nil;
-    _tropho_output = nil;
+    [self closeTrophoSocket];
 }
 
 - (void)stream:(NSStream*)aStream
