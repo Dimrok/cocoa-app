@@ -70,6 +70,26 @@
         self.user_message.stringValue = [self.user_message.stringValue substringToIndex:_max_chars];
 }
 
+- (BOOL)control:(NSControl*)control
+       textView:(NSTextView*)textView
+doCommandBySelector:(SEL)commandSelector
+{
+    BOOL result = NO;
+    
+    if (commandSelector == @selector(insertNewline:))
+    {
+        [textView insertNewlineIgnoringFieldEditor:self];
+        result = YES;
+    }
+    else if (commandSelector == @selector(insertTab:))
+    {
+        [textView insertTabIgnoringFieldEditor:self];
+        result = YES;
+    }
+    
+    return result;
+}
+
 //- Button Handling --------------------------------------------------------------------------------
 
 - (IBAction)addFileClicked:(NSButton*)sender
