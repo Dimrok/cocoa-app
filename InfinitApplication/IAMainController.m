@@ -272,8 +272,6 @@
 {
     IALog(@"%@ Logged in", self);
     
-    [[IACrashReportManager sharedInstance] sendExistingCrashReports];
-    
     if (_update_credentials && [[IAKeychainManager sharedInstance] credentialsInKeychain:_username])
     {
         [[IAKeychainManager sharedInstance] changeUser:_username password:_password];
@@ -305,6 +303,7 @@
     {
         [self showOnboardingView];
     }
+    [[IACrashReportManager sharedInstance] sendExistingCrashReports];
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
