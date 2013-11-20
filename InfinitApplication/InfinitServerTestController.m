@@ -152,7 +152,7 @@
         return;
     }
     
-    IALog(@"%@ Closing Trophonius server", self);
+    IALog(@"%@ Closing Trophonius socket", self);
 
     [_tropho_input removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [_tropho_output removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
