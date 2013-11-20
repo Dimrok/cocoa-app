@@ -145,6 +145,15 @@
 
 - (void)closeTrophoSocket
 {
+    // Don't try closing more than once
+    if (_tropho_input.streamStatus == NSStreamStatusClosed ||
+        _tropho_output.streamStatus == NSStreamStatusClosed)
+    {
+        return;
+    }
+    
+    IALog(@"%@ Closing Trophonius server", self);
+
     [_tropho_input removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [_tropho_output removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
@@ -178,18 +187,19 @@
 
             if ([response rangeOfString:_tropho_poke].location != NSNotFound)
             {
+                [self closeTrophoSocket];
                 IALog(@"%@ Trophonius responded correctly", self);
                 [_delegate serverTestControllerHasTrophoniusStatus:self status:INFINIT_SERVER_UP];
             }
             else
             {
+                [self closeTrophoSocket];
                 IALog(@"%@ Trophonius responded with incorrect response: %@", self, response);
                 [_delegate serverTestControllerHasTrophoniusStatus:self status:INFINIT_SERVER_STATUS_UNKOWN];
             }
         }
     }
-    
-    [self closeTrophoSocket];
+
 }
 
 - (void)stream:(NSStream*)aStream
