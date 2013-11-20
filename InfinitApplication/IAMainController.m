@@ -251,11 +251,9 @@
                  password:(NSString*)password
 {
     _logging_in = YES;
-    NSString* device_name = @"TODO"; // XXX use NSHost to get device name
     
     [[IAGapState instance] login:username
                     withPassword:password
-                   andDeviceName:device_name
                  performSelector:@selector(loginCallback:)
                         onObject:self];
     if (![self credentialsInChain:username] || _update_credentials)
