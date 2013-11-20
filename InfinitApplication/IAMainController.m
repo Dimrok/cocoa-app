@@ -86,7 +86,7 @@
         
         if (meta_status == INFINIT_SERVER_UP)
         {
-            _status_bar_icon.isClickable = YES;
+            _status_bar_icon.isClickable = NO;
             IALog(@"%@ Meta up", self);
             [_server_test_controller fetchTrophoniusStatus];
             
@@ -810,6 +810,7 @@ transactionsProgressForUser:(IAUser*)user
         case INFINIT_SERVER_UP:
             IALog(@"%@ Trophonius accessible", self);
             [self tryLoginAfterServerCheck];
+            _status_bar_icon.isClickable = YES;
             break;
 
         case INFINIT_SERVER_UNREACHABLE:
