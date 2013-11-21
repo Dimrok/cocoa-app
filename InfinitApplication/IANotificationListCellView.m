@@ -44,8 +44,10 @@
                                                                    traits:NSUnboldFontMask
                                                                    weight:0
                                                                      size:11.5];
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.lineBreakMode = NSLineBreakByTruncatingMiddle;
     NSDictionary* attrs = [IAFunctions textStyleWithFont:file_font
-                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                          paragraphStyle:para
                                                   colour:IA_GREY_COLOUR(153.0)
                                                   shadow:nil];
     self.information.attributedStringValue = [[NSAttributedString alloc] initWithString:message

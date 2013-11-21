@@ -306,6 +306,7 @@
     self.bubble_view.historic = _historic;
     
     NSMutableParagraphStyle* text_align = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    text_align.lineBreakMode = NSLineBreakByTruncatingMiddle;
     if (element.on_left)
         text_align.alignment = NSLeftTextAlignment;
     else
