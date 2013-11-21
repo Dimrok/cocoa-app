@@ -217,6 +217,7 @@
                 IALog(@"%@ ERROR: error in trophonius input stream", self);
             else if (aStream == _tropho_output)
                 IALog(@"%@ ERROR: error in trophonius output stream", self);
+            [self closeTrophoSocket];
             [_delegate serverTestControllerHasTrophoniusStatus:self status:INFINIT_SERVER_UNREACHABLE];
             break;
             
