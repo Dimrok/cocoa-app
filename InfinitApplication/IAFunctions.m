@@ -284,7 +284,10 @@
 {
 	ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
     if (address_book == nil)
+    {
         IALog(@"WARNING: Infinit doesn't have access to Address Book");
+        return nil;
+    }
     
 	NSData* image_data = nil;
     
