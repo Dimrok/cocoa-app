@@ -305,12 +305,19 @@
     _historic = element.historic;
     self.bubble_view.historic = _historic;
     
-    NSMutableParagraphStyle* text_align = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    text_align.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    NSMutableParagraphStyle* file_text_align = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    file_text_align.lineBreakMode = NSLineBreakByTruncatingMiddle;
     if (element.on_left)
-        text_align.alignment = NSLeftTextAlignment;
+        file_text_align.alignment = NSLeftTextAlignment;
     else
-        text_align.alignment = NSRightTextAlignment;
+        file_text_align.alignment = NSRightTextAlignment;
+    
+    NSMutableParagraphStyle* wrap_text_align = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    wrap_text_align.lineBreakMode = NSLineBreakByWordWrapping;
+    if (element.on_left)
+        wrap_text_align.alignment = NSLeftTextAlignment;
+    else
+        wrap_text_align.alignment = NSRightTextAlignment;
     
     if (_transaction.message.length == 0)
         [self.message_button setHidden:YES];
@@ -340,7 +347,7 @@
     {
         NSDictionary* files_name_attrs = [IAFunctions
                                           textStyleWithFont:file_name_font
-                                          paragraphStyle:text_align
+                                          paragraphStyle:file_text_align
                                           colour:IA_GREY_COLOUR(62.0)
                                           shadow:nil];
         NSString* files_str;
@@ -381,7 +388,7 @@
                                                                        weight:0
                                                                          size:11.5];
         NSDictionary* note_attrs = [IAFunctions textStyleWithFont:note_font
-                                                   paragraphStyle:text_align
+                                                   paragraphStyle:wrap_text_align
                                                            colour:IA_GREY_COLOUR(184.0)
                                                            shadow:nil];
         NSAttributedString* note_str = [[NSAttributedString alloc] initWithString:_transaction.message
@@ -419,7 +426,7 @@
                                                                        weight:0
                                                                          size:12.0];
         NSDictionary* info_attrs = [IAFunctions textStyleWithFont:info_font
-                                                   paragraphStyle:text_align
+                                                   paragraphStyle:wrap_text_align
                                                            colour:IA_GREY_COLOUR(204.0)
                                                            shadow:nil];
         
@@ -429,7 +436,7 @@
                                                                           size:12.0];
         NSDictionary* error_attrs = [IAFunctions
                                      textStyleWithFont:error_font
-                                     paragraphStyle:text_align
+                                     paragraphStyle:wrap_text_align
                                      colour:IA_RGB_COLOUR(222.0, 104.0, 81.0)
                                      shadow:nil];
         
