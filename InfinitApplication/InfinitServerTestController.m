@@ -237,7 +237,7 @@
 
 - (void)showTrophoniusMessage
 {
-    _message = NSLocalizedString(@"<p>Unable to connect to Infinit notification servers</p> <p>Please contact <a href=\"mailto:support@infinit.io?Subject=Notification Server Problem\">support@infinit.io</a></p>", nil);
+    _message = NSLocalizedString(@"<p>Problem receiving notifications</p> <p>Please contact <a href=\"mailto:support@infinit.io?Subject=Trophonius Problem\">support@infinit.io</a></p>", nil);
     [self.window makeKeyAndOrderFront:nil];
 }
 
