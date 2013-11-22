@@ -83,9 +83,7 @@
                        NSLocalizedString(@"to you", @"to you")];
             break;
 
-            // XXX need a state to show when a transfer has been accepted
-//        case TRANSACTION_VIEW_WAITING_ONLINE:
-//        case TRANSACTION_VIEW_PREPARING:
+//        case TRANSACTION_VIEW_ACCEPTED:
 //            if (!transaction.from_me)
 //                return nil;
 //            title = NSLocalizedString(@"Accepted!", @"accepted!");
@@ -138,9 +136,13 @@
             break;
             
         default:
+            message = nil;
             break;
     }
     
+    if (title == nil)
+        return nil;
+
     res.title = title;
     res.informativeText = message;
     res.userInfo = @{@"transaction_id": transaction.transaction_id};
