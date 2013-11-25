@@ -118,9 +118,14 @@
             
         case TRANSACTION_VIEW_FAILED:
             title = NSLocalizedString(@"Oh no!", @"oh no!");
-            message = [NSString stringWithFormat:@"%@ %@ %@", filename,
-                       NSLocalizedString(@"Couldn't be sent to", @"couldn't be sent to"),
-                       transaction.other_user.fullname];
+            if (transaction.from_me)
+                message = [NSString stringWithFormat:@"%@ %@ %@", filename,
+                           NSLocalizedString(@"couldn't be sent to", @"couldn't be sent to"),
+                           transaction.other_user.fullname];
+            else
+                message = [NSString stringWithFormat:@"%@ %@ %@", filename,
+                           NSLocalizedString(@"couldn't be received from", @"couldn't be received from"),
+                           transaction.other_user.fullname];
             break;
             
         case TRANSACTION_VIEW_FINISHED:
