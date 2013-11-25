@@ -16,6 +16,8 @@
 		831667D717F3721900C79DD7 /* libcrash.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831667C117F371F700C79DD7 /* libcrash.dylib */; };
 		831AA69F17D0FCC00004AE8D /* IAMeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831AA69E17D0FCC00004AE8D /* IAMeManager.m */; };
 		831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
+		831E22D6183E563800F0623C /* InfinitSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831E22D5183E563800F0623C /* InfinitSearchController.m */; };
+		831E22D9183E565300F0623C /* InfinitSearchPersonResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 831E22D8183E565300F0623C /* InfinitSearchPersonResult.m */; };
 		831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB21D17A8FE1700696604 /* IAAvatarManager.m */; };
 		831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FB22417A90BE900696604 /* IANotificationListViewController.m */; };
 		831FB22717A90BE900696604 /* IANotificationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831FB22517A90BE900696604 /* IANotificationListViewController.xib */; };
@@ -462,6 +464,10 @@
 		831AA69D17D0FCC00004AE8D /* IAMeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMeManager.h; sourceTree = "<group>"; };
 		831AA69E17D0FCC00004AE8D /* IAMeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAMeManager.m; sourceTree = "<group>"; };
 		831B757117DDC3FB0082A068 /* libfrete.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfrete.dylib; path = ../../../Externals/lib/libfrete.dylib; sourceTree = "<group>"; };
+		831E22D4183E563800F0623C /* InfinitSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSearchController.h; sourceTree = "<group>"; };
+		831E22D5183E563800F0623C /* InfinitSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSearchController.m; sourceTree = "<group>"; };
+		831E22D7183E565300F0623C /* InfinitSearchPersonResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSearchPersonResult.h; sourceTree = "<group>"; };
+		831E22D8183E565300F0623C /* InfinitSearchPersonResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSearchPersonResult.m; sourceTree = "<group>"; };
 		831FB21C17A8FE1700696604 /* IAAvatarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAvatarManager.h; sourceTree = "<group>"; };
 		831FB21D17A8FE1700696604 /* IAAvatarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAvatarManager.m; sourceTree = "<group>"; };
 		831FB22317A90BE900696604 /* IANotificationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationListViewController.h; sourceTree = "<group>"; };
@@ -755,6 +761,17 @@
 			name = "Favourites Send View";
 			sourceTree = "<group>";
 		};
+		831E22D3183E561E00F0623C /* Search Controller */ = {
+			isa = PBXGroup;
+			children = (
+				831E22D4183E563800F0623C /* InfinitSearchController.h */,
+				831E22D5183E563800F0623C /* InfinitSearchController.m */,
+				831E22D7183E565300F0623C /* InfinitSearchPersonResult.h */,
+				831E22D8183E565300F0623C /* InfinitSearchPersonResult.m */,
+			);
+			name = "Search Controller";
+			sourceTree = "<group>";
+		};
 		831FB22217A90BB700696604 /* Notification View */ = {
 			isa = PBXGroup;
 			children = (
@@ -835,6 +852,7 @@
 				83B2FD0F17F58F3100893B52 /* Onboarding View */,
 				8365684417F9BC200021D49D /* Popover View */,
 				837A7F5A17FC070600600ACD /* Report Problem Window */,
+				831E22D3183E561E00F0623C /* Search Controller */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
 				83A4F68518369CB70038AC65 /* Server Test Controller */,
 				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
@@ -1761,6 +1779,7 @@
 				831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */,
 				831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */,
 				8333D45D17A976570093942B /* IAViewController.m in Sources */,
+				831E22D6183E563800F0623C /* InfinitSearchController.m in Sources */,
 				83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */,
 				83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.m in Sources */,
 				83C99E0617AB98CE00AFF091 /* IASimpleSendViewController.m in Sources */,
@@ -1786,6 +1805,7 @@
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.m in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.m in Sources */,
+				831E22D9183E565300F0623C /* InfinitSearchPersonResult.m in Sources */,
 				838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */,
 				836DF7EC17FD70DE00B2B809 /* IACentredMessageTextCell.m in Sources */,
 				838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */,
