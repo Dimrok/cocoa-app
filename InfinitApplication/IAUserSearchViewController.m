@@ -14,6 +14,41 @@
 @interface IAUserSearchViewController ()
 @end
 
+//- Search View Element ----------------------------------------------------------------------------
+
+@interface InfinitSearchElement : NSObject
+
+@property (nonatomic, readwrite) NSImage* avatar;
+@property (nonatomic, readwrite) NSString* email;
+@property (nonatomic, readwrite) NSString* fullname;
+@property (nonatomic, readwrite) IAUser* user;
+
+@end
+
+@implementation InfinitSearchElement
+
+@synthesize avatar = _avatar;
+@synthesize email = _email;
+@synthesize fullname = _fullname;
+@synthesize user = _user;
+
+- (id)initWithAvatar:(NSImage*)avatar
+               email:(NSString*)email
+            fullname:(NSString*)fullname
+                user:(IAUser*)user
+{
+    if (self = [super init])
+    {
+        _avatar = avatar;
+        _email = email;
+        _fullname = fullname;
+        _user = user;
+    }
+    return self;
+}
+
+@end
+
 //- Search Box View --------------------------------------------------------------------------------
 
 @implementation IASearchBoxView
@@ -195,6 +230,8 @@
     
     NSImage* _static_image;
     NSImage* _loading_iamge;
+    
+    InfinitSearchController* _search_controller;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -203,14 +240,10 @@
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
-        _row_height = 42.0;
+        _row_height = 55.0;
         _max_rows_shown = 3;
         _delegate = nil;
         _token_count = 0;
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(avatarCallback:)
-                                                   name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                                 object:nil];
         NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         para.alignment = NSCenterTextAlignment;
 
@@ -237,6 +270,8 @@
                                                         attributes:no_result_msg_style];
         _static_image = [IAFunctions imageNamed:@"icon-search"];
         _loading_iamge = [IAFunctions imageNamed:@"loading"];
+        
+        _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
     }
     
     return self;
@@ -289,19 +324,6 @@
     [self initialiseSendButton];
     [self.view setFrameSize:NSMakeSize(NSWidth(self.view.frame),
                                        NSHeight(self.search_box_view.frame) + [self tableHeight])];
-}
-
-//- Avatar Callback --------------------------------------------------------------------------------
-
-- (void)avatarCallback:(NSNotification*)notification
-{
-    IAUser* user = [notification.userInfo objectForKey:@"user"];
-    if (![_search_results containsObject:user])
-        return;
-    
-    [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[_search_results
-                                                                            indexOfObject:user]]
-                               columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -417,9 +439,7 @@
     }
     else // Normal search
     {
-        [[IAGapState instance] searchUsers:search_string
-                           performSelector:@selector(searchResultsCallback:)
-                                  onObject:self];
+        [_search_controller searchString:search_string];
     }
 }
 
@@ -468,43 +488,6 @@
         self.no_results_message.attributedStringValue = _invite_msg_str;
     else
         self.no_results_message.attributedStringValue = _add_file_str;
-    [self updateResultsTable];
-}
-
-- (void)searchResultsCallback:(IAGapOperationResult*)results
-{
-    NSString* search_string;
-    NSArray* tokens = self.search_field.objectValue;
-    if ([tokens.lastObject isKindOfClass:NSString.class])
-        search_string = [self trimTrailingWhitespace:tokens.lastObject];
-    else
-        search_string = @"";
-    
-    if (search_string.length == 0)
-    {
-        [self clearResults];
-        return;
-    }
-    
-    if (!results.success)
-    {
-        IALog(@"%@ WARNING: Searching for users failed with error: %d", self, results.status);
-        _search_results = nil;
-        return;
-    }
-    _search_results = [NSMutableArray arrayWithArray:[results.data sortedArrayUsingSelector:
-                                                      @selector(compare:)]];
-    for (IAUser* user in _search_results)
-    {
-        if ([user isEqual:[[IAGapState instance] self_user]])
-        {
-            [_search_results removeObject:user];
-            break;
-        }
-    }
-    self.search_image.animates = NO;
-    self.search_image.image = _static_image;
-    self.no_results_message.attributedStringValue = _no_result_msg_str;
     [self updateResultsTable];
 }
 
@@ -566,7 +549,8 @@ doCommandBySelector:(SEL)commandSelector
         NSInteger row = self.table_view.selectedRow;
         if (row > -1 && row < _search_results.count)
         {
-            [self addUser:[_search_results objectAtIndex:row]];
+            InfinitSearchElement* element = _search_results[row];
+            [self addUser:element.user];
             [self clearResults];
         }
         
@@ -598,7 +582,8 @@ doCommandBySelector:(SEL)commandSelector
             NSInteger row = self.table_view.selectedRow;
             if (row > -1 && row < _search_results.count)
             {
-                [self addUser:[_search_results objectAtIndex:row]];
+                InfinitSearchElement* element = _search_results[row];
+                [self addUser:element.user];
                 [self clearResults];
             }
         }
@@ -708,6 +693,7 @@ displayStringForRepresentedObject:(id)representedObject
 {
     [self setNoResultsHidden:YES];
     _search_results = nil;
+    [_search_controller clearResults];
     self.search_image.animates = NO;
     self.search_image.image = _static_image;
     [self.search_box_view setNoResults:NO];
@@ -762,17 +748,30 @@ displayStringForRepresentedObject:(id)representedObject
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
 {    
-    IAUser* user = [_search_results objectAtIndex:row];
-    if (user == nil)
+    InfinitSearchElement* element = [_search_results objectAtIndex:row];
+    if (element == nil)
         return nil;
     
-    IASearchResultsCellView* cell = [tableView makeViewWithIdentifier:@"user_search_cell"
-                                                                owner:self];
+    IASearchResultsCellView* cell;
+    if (element.user == nil)
+    {
+        cell = [tableView makeViewWithIdentifier:@"nonuser_search_cell"
+                                           owner:self];
+    }
+    else
+    {
+        cell = [tableView makeViewWithIdentifier:@"infinit_user_search_cell"
+                                           owner:self];
+    }
     [cell setDelegate:self];
-    [cell setUserFullname:user.fullname];
-    [cell setUserFavourite:user.is_favourite];
-    NSImage* avatar = [IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user]
-                                        ofDiameter:25
+    [cell setUserFullname:element.fullname];
+    if (element.user != nil)
+        [cell setUserFavourite:element.user.is_favourite];
+    else
+        [cell setUserEmail:element.email];
+    
+    NSImage* avatar = [IAFunctions makeRoundAvatar:element.avatar
+                                        ofDiameter:30.0
                              withBorderOfThickness:0.0
                                           inColour:IA_GREY_COLOUR(255.0)
                                  andShadowOfRadius:0.0];
@@ -803,7 +802,8 @@ displayStringForRepresentedObject:(id)representedObject
     if (row < 0 || row > _search_results.count - 1)
         return;
     
-    [self addUser:_search_results[row]];
+    InfinitSearchElement* element = _search_results[row];
+    [self addUser:element.user];
     
     [self.view.window makeFirstResponder:self.search_field];
     [self cursorAtEndOfSearchBox];
@@ -833,22 +833,86 @@ displayStringForRepresentedObject:(id)representedObject
     [_delegate searchViewHadSendButtonClick:self];
 }
 
+//- Search Controller Protocol ---------------------------------------------------------------------
+
+- (void)searchControllerGotResults:(InfinitSearchController*)sender
+{
+    NSString* search_string;
+    NSArray* tokens = self.search_field.objectValue;
+    if ([tokens.lastObject isKindOfClass:NSString.class])
+        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+    else
+        search_string = @"";
+    
+    if (search_string.length == 0)
+    {
+        [self clearResults];
+        return;
+    }
+    self.search_image.animates = NO;
+    self.search_image.image = _static_image;
+    self.no_results_message.attributedStringValue = _no_result_msg_str;
+    
+    _search_results = [NSMutableArray array];
+    for (InfinitSearchPersonResult* person in sender.result_list)
+    {
+        if (person.infinit_user != nil) // User is on Infinit
+        {
+            InfinitSearchElement* element = [[InfinitSearchElement alloc]
+                                             initWithAvatar:person.avatar
+                                                      email:nil
+                                                   fullname:person.fullname
+                                                       user:person.infinit_user];
+            [_search_results addObject:element];
+        }
+        else
+        {
+            for (NSString* email in person.emails)
+            {
+                InfinitSearchElement* element = [[InfinitSearchElement alloc]
+                                                 initWithAvatar:person.avatar
+                                                          email:email
+                                                       fullname:person.fullname
+                                                           user:nil];
+                [_search_results addObject:element];
+            }
+        }
+    }
+    [self updateResultsTable];
+}
+
+- (void)searchController:(InfinitSearchController*)sender
+   gotNewAvatarForPerson:(InfinitSearchPersonResult*)person
+{
+    NSInteger index = 0;
+    for (InfinitSearchElement* element in _search_results)
+    {
+        if (element.user == person.infinit_user)
+            break;
+        index++;
+    }
+    [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index]
+                               columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+}
+
 //- Search Result Cell Protocol --------------------------------------------------------------------
 
 - (void)searchResultCellWantsAddFavourite:(IASearchResultsCellView*)sender
 {
     NSUInteger row = [self.table_view rowForView:sender];
-    IAUser* user = [_search_results objectAtIndex:row];
-    [_delegate searchView:self
-        wantsAddFavourite:user];
+    InfinitSearchElement* element = [_search_results objectAtIndex:row];
+    if (element.user == nil)
+        return;
+    [_delegate searchView:self wantsAddFavourite:element.user];
 }
 
 - (void)searchResultCellWantsRemoveFavourite:(IASearchResultsCellView*)sender;
 {
     NSUInteger row = [self.table_view rowForView:sender];
-    IAUser* user = [_search_results objectAtIndex:row];
-    [_delegate searchView:self
-     wantsRemoveFavourite:user];
+    InfinitSearchElement* element = [_search_results objectAtIndex:row];
+    if (element.user == nil)
+        return;
+    [_delegate searchView:self wantsRemoveFavourite:element.user];
 }
 
 @end

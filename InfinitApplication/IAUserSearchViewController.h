@@ -10,6 +10,7 @@
 
 #import "IASearchResultsCellView.h"
 #import "IASimpleSendButton.h"
+#import "InfinitSearchController.h"
 
 @protocol IAUserSearchViewProtocol;
 
@@ -23,7 +24,8 @@
                                                           NSTableViewDelegate,
                                                           NSTextViewDelegate,
                                                           NSTokenFieldDelegate,
-                                                          IASearchResultsCellProtocol>
+                                                          IASearchResultsCellProtocol,
+                                                          InfinitSearchControllerProtocol>
 
 @property (nonatomic, strong) IBOutlet NSScrollView* results_view;
 @property (nonatomic, strong) IBOutlet IASearchBoxView* search_box_view;

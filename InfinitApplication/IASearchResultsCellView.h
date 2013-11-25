@@ -13,13 +13,15 @@
 @interface IASearchResultsCellView : NSTableCellView
 
 @property (nonatomic, strong) IBOutlet NSImageView* result_avatar;
+@property (nonatomic, strong) IBOutlet NSTextField* result_email;
 @property (nonatomic, strong) IBOutlet NSTextField* result_fullname;
 @property (nonatomic, strong) IBOutlet NSButton* result_star;
 
 - (void)setDelegate:(id<IASearchResultsCellProtocol>)delegate;
-- (void)setUserFullname:(NSString*)fullname;
 - (void)setUserAvatar:(NSImage*)image;
+- (void)setUserEmail:(NSString*)email;
 - (void)setUserFavourite:(BOOL)favourite;
+- (void)setUserFullname:(NSString*)fullname;
 
 @end
 
