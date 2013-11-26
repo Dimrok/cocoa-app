@@ -367,16 +367,20 @@
                                         attributes:button_style];
 }
 
-- (void)addUser:(IAUser*)user
+- (void)addElement:(InfinitSearchElement*)element
 {
-    if (user == nil)
+    if (element == nil)
         return;
     NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
     if ([temp.lastObject isKindOfClass:NSString.class])
     {
         [temp removeObject:temp.lastObject];
     }
-    [temp addObject:user];
+    if (element.user != nil)
+        [temp addObject:element.user];
+    else
+        [temp addObject:element.email];
+
     [self.search_field setObjectValue:temp];
     [_delegate searchViewInputsChanged:self];
 }
@@ -550,7 +554,7 @@ doCommandBySelector:(SEL)commandSelector
         if (row > -1 && row < _search_results.count)
         {
             InfinitSearchElement* element = _search_results[row];
-            [self addUser:element.user];
+            [self addElement:element];
             [self clearResults];
         }
         
@@ -583,7 +587,7 @@ doCommandBySelector:(SEL)commandSelector
             if (row > -1 && row < _search_results.count)
             {
                 InfinitSearchElement* element = _search_results[row];
-                [self addUser:element.user];
+                [self addElement:element];
                 [self clearResults];
             }
         }
@@ -803,7 +807,7 @@ displayStringForRepresentedObject:(id)representedObject
         return;
     
     InfinitSearchElement* element = _search_results[row];
-    [self addUser:element.user];
+    [self addElement:element];
     
     [self.view.window makeFirstResponder:self.search_field];
     [self cursorAtEndOfSearchBox];
