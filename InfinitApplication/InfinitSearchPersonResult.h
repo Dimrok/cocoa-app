@@ -22,6 +22,7 @@ typedef enum __InfinitSearchUserSource
 @property (nonatomic, readonly) NSString* fullname;
 @property (nonatomic, readonly) NSMutableArray* emails;
 @property (nonatomic, readonly) IAUser* infinit_user;
+@property (nonatomic, readwrite) NSInteger rank;
 
 - (id)initWithABPerson:(ABPerson*)person
            andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
@@ -29,6 +30,8 @@ typedef enum __InfinitSearchUserSource
         andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 - (id)initWithInfinitPerson:(IAUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
+
+- (void)checkAddressBookUserOnInfinit;
 
 @end
 

@@ -56,6 +56,21 @@
     self.result_email.attributedStringValue = email_str;
 }
 
+- (void)setUserHandle:(NSString*)handle
+{
+    NSFont* handle_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                     traits:NSUnboldFontMask
+                                                                     weight:0
+                                                                       size:11.0];
+    NSDictionary* style = [IAFunctions textStyleWithFont:handle_font
+                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                  colour:IA_GREY_COLOUR(196.0)
+                                                  shadow:nil];
+    NSAttributedString* handle_str = [[NSAttributedString alloc] initWithString:handle
+                                                                     attributes:style];
+    self.result_handle.attributedStringValue = handle_str;
+}
+
 - (void)setUserAvatar:(NSImage*)image
 {
     self.result_avatar.image = image;

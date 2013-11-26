@@ -251,7 +251,7 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _row_height = 55.0;
-        _max_rows_shown = 3;
+        _max_rows_shown = 4;
         _delegate = nil;
         _token_count = 0;
         NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -460,7 +460,7 @@
 
 //- Search Field -----------------------------------------------------------------------------------
 
-- (NSString*)trimTrailingWhitespace:(NSString*)str
+- (NSString*)trimLeadingWhitespace:(NSString*)str
 {
     NSInteger i = 0;
     while (i < str.length &&
@@ -482,7 +482,7 @@
     
     NSString* search_string;
     if ([tokens.lastObject isKindOfClass:NSString.class])
-        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+        search_string = [self trimLeadingWhitespace:tokens.lastObject];
     else
         search_string = @"";
     
@@ -688,6 +688,8 @@ displayStringForRepresentedObject:(id)representedObject
         [self setNoResultsHidden:YES];
         new_height = NSHeight(self.search_box_view.frame) + [self tableHeight];
         [self.search_box_view setNoResults:NO];
+        [self.table_view selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+        [self.table_view scrollRowToVisible:0];
     }
     [_delegate searchView:self
           changedToHeight:new_height];
@@ -736,9 +738,14 @@ displayStringForRepresentedObject:(id)representedObject
     [cell setDelegate:self];
     [cell setUserFullname:element.fullname];
     if (element.user != nil)
+    {
         [cell setUserFavourite:element.user.is_favourite];
+        [cell setUserHandle:element.user.handle];
+    }
     else
+    {
         [cell setUserEmail:element.email];
+    }
     
     NSImage* avatar = [IAFunctions makeRoundAvatar:element.avatar
                                         ofDiameter:30.0
@@ -810,7 +817,7 @@ displayStringForRepresentedObject:(id)representedObject
     NSString* search_string;
     NSArray* tokens = self.search_field.objectValue;
     if ([tokens.lastObject isKindOfClass:NSString.class])
-        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+        search_string = [self trimLeadingWhitespace:tokens.lastObject];
     else
         search_string = @"";
     
@@ -861,7 +868,7 @@ displayStringForRepresentedObject:(id)representedObject
     NSString* search_string;
     NSArray* tokens = self.search_field.objectValue;
     if ([tokens.lastObject isKindOfClass:NSString.class])
-        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+        search_string = [self trimLeadingWhitespace:tokens.lastObject];
     else
         search_string = @"";
     

@@ -23,6 +23,7 @@
 @synthesize emails = _emails;
 @synthesize fullname = _fullname;
 @synthesize infinit_user = _user;
+@synthesize rank = _rank;
 
 //- Addressbook User -------------------------------------------------------------------------------
 
@@ -37,6 +38,7 @@
 {
     if (self = [super init])
     {
+        _rank = 5;
         _delegate = delegate;
         _user = nil;
         ABMultiValue* emails = [person valueForProperty:kABEmailProperty];
@@ -46,12 +48,6 @@
             for (NSInteger i = 0; i < emails.count; i++)
             {
                 NSString* email = [emails valueAtIndex:i];
-                NSMutableDictionary* mail_check = [NSMutableDictionary
-                                                   dictionaryWithDictionary:@{@"email": email}];
-                [[IAGapState instance] getUserIdfromEmail:email
-                                          performSelector:@selector(userIdFromEmailCallback:)
-                                                 onObject:self
-                                                 withData:mail_check];
                 [_emails addObject:email];
             }
         }
@@ -73,6 +69,19 @@
     return self;
 }
 
+- (void)checkAddressBookUserOnInfinit
+{
+    for (NSString* email in _emails)
+    {
+        NSMutableDictionary* mail_check = [NSMutableDictionary
+                                           dictionaryWithDictionary:@{@"email": email}];
+        [[IAGapState instance] getUserIdfromEmail:email
+                                  performSelector:@selector(userIdFromEmailCallback:)
+                                         onObject:self
+                                         withData:mail_check];
+    }
+}
+
 //- Email User -------------------------------------------------------------------------------------
 
 - (id)initWithEmail:(NSString*)email
@@ -80,6 +89,7 @@
 {
     if (self = [super init])
     {
+        _rank = 10;
         _delegate = delegate;
         NSMutableDictionary* mail_check = [NSMutableDictionary
                                            dictionaryWithDictionary:@{@"email": email}];
@@ -102,8 +112,13 @@
 {
     if (self = [super init])
     {
+        _rank = 1;
         _delegate = delegate;
         _user = user;
+        if (_user.is_favourite)
+            _rank += 10;
+        if ([self userIsSwagger])
+            _rank += 5;
         _avatar = [IAAvatarManager getAvatarForUser:_user];
         _fullname = _user.fullname;
         [NSNotificationCenter.defaultCenter addObserver:self
@@ -115,6 +130,17 @@
 }
 
 //- General Functions ------------------------------------------------------------------------------
+
+- (BOOL)userIsSwagger
+{
+    NSArray* swaggers = [[IAGapState instance] swaggers_list];
+    for (NSNumber* user_id in swaggers)
+    {
+        if (user_id.integerValue != 0 && _user.user_id.integerValue == user_id.integerValue)
+            return YES;
+    }
+    return NO;
+}
 
 - (void)userIdFromEmailCallback:(IAGapOperationResult*)result
 {
@@ -129,11 +155,16 @@
     if (user_id.integerValue != 0 &&
         user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
     {
+        _rank += 10;
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(avatarReceivedCallback:)
                                                    name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                                  object:nil];
         _user = [IAUserManager userWithId:user_id];
+        if (_user.is_favourite)
+            _rank += 10;
+        if ([self userIsSwagger])
+            _rank += 5;
         _fullname = _user.fullname;
         NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
         _avatar = infinit_avatar;
@@ -155,17 +186,40 @@
     [_delegate personGotNewAvatar:self];
 }
 
-- (NSComparisonResult)compare:(IAUser*)other
+- (NSComparisonResult)compare:(InfinitSearchPersonResult*)other
 {
-    return [self.fullname compare:other.fullname options:NSCaseInsensitiveSearch];
+    if (self.rank > other.rank)
+        return (NSComparisonResult)NSOrderedAscending;
+    else if (self.rank < other.rank)
+        return (NSComparisonResult)NSOrderedDescending;
+    else // same score so sort alphabetically by name
+        return [self.fullname compare:other.fullname options:NSCaseInsensitiveSearch];
 }
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nidentifiers: %@\n",
+    return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nidentifiers: %@\nrank: %ld",
             self,
             _fullname,
-            _emails];
+            _emails,
+            _rank];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:InfinitSearchPersonResult.class])
+        return NO;
+
+    if (self.infinit_user != nil && [object infinit_user] != nil &&
+        self.infinit_user == [object infinit_user])
+    {
+        return YES;
+    }
+    else if ([self.fullname isEqualToString:[object fullname]])
+    {
+        return YES;
+    }
+    return NO;
 }
 
 @end

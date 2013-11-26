@@ -79,13 +79,13 @@
                                                                comparison:kABPrefixMatchCaseInsensitive]];
         }
     }
-    
-    NSMutableSet* result_set = [NSMutableSet set];
+
+    NSMutableArray* all_results = [NSMutableArray array];
     for (ABSearchElement* search_element in search_elements)
-        [result_set addObjectsFromArray:[_addressbook recordsMatchingSearchElement:search_element]];
+        [all_results addObjectsFromArray:[_addressbook recordsMatchingSearchElement:search_element]];
 
     NSMutableArray* address_book_results = [NSMutableArray array];
-    for (ABPerson* search_result in result_set)
+    for (ABPerson* search_result in all_results)
     {
         // XXX remove me from search results
         if (search_result != _addressbook.me)
@@ -93,12 +93,32 @@
             InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithABPerson:search_result
                                                                                         andDelegate:self];
             if ([address_book_results indexOfObject:person] == NSNotFound)
+            {
                 [address_book_results addObject:person];
+            }
+            else
+            {
+                InfinitSearchPersonResult* existing_person =
+                    [address_book_results objectAtIndex:[address_book_results indexOfObject:person]];
+                existing_person.rank += 1;
+            }
         }
     }
-    [_result_list addObjectsFromArray:[address_book_results
-                                       sortedArrayUsingSelector:@selector(compare:)]];
     
+    NSArray* temp = [NSArray arrayWithArray:address_book_results];
+    
+    for (InfinitSearchPersonResult* person in temp)
+    {
+        NSInteger required_rank = (NSInteger)(search_elements.count / 2) - 5;
+        if (person.rank < required_rank)
+            [address_book_results removeObject:person];
+        else
+            [person checkAddressBookUserOnInfinit];
+    }
+    
+    [_result_list addObjectsFromArray:address_book_results];
+    
+    [self sortResultsOnRank];
     [_delegate searchControllerGotResults:self];
 }
 
@@ -134,7 +154,10 @@
             [self addInfinitUserToList:user];
     }
     if (result_length != _result_list.count)
+    {
+        [self sortResultsOnRank];
         [_delegate searchControllerGotResults:self];
+    }
 }
 
 
@@ -153,7 +176,18 @@
     }
     InfinitSearchPersonResult* new_person = [[InfinitSearchPersonResult alloc]
                                              initWithInfinitPerson:user andDelegate:self];
-    [_result_list insertObject:new_person atIndex:0];
+    NSInteger index = 0;
+    for (InfinitSearchPersonResult* person in _result_list)
+    {
+        if (person.infinit_user != nil)
+            index++;
+        else
+            break;
+    }
+    if (index > _result_list.count)
+        index = 0;
+
+    [_result_list insertObject:new_person atIndex:index];
 }
 
 - (void)searchCurrentResultsForString:(NSString*)search_string
@@ -172,6 +206,12 @@
 - (void)clearResults
 {
     [_result_list removeAllObjects];
+}
+
+- (void)sortResultsOnRank
+{
+    NSArray* temp = [NSArray arrayWithArray:_result_list];
+    _result_list = [NSMutableArray arrayWithArray:[temp sortedArrayUsingSelector:@selector(compare:)]];
 }
 
 - (void)searchString:(NSString*)search_string
@@ -202,8 +242,7 @@
                            performSelector:@selector(infinitSearchResultsCallback:)
                                   onObject:self];
     }
-    _last_search_string = search_string;
-        
+    _last_search_string = search_string;  
 }
 
 //- Result Person Protocol -------------------------------------------------------------------------
@@ -227,20 +266,10 @@
     }
     else
     {
-        NSInteger index = 0;
-        for (InfinitSearchPersonResult* person in _result_list)
-        {
-            if (person.infinit_user != nil)
-                index++;
-            else
-                break;
-        }
-        if (index >= _result_list.count - 1)
-            index = 0;
-
         [_result_list removeObject:sender];
-        [_result_list insertObject:sender atIndex:index];
+        [_result_list insertObject:sender atIndex:0];
     }
+    [self sortResultsOnRank];
     [_delegate searchControllerGotResults:self];
 }
 
