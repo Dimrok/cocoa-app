@@ -151,6 +151,7 @@
     res.title = title;
     res.informativeText = message;
     res.userInfo = @{@"transaction_id": transaction.transaction_id};
+    res.soundName = NSUserNotificationDefaultSoundName;
     
     return res;
 }
