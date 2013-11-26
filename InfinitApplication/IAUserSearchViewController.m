@@ -367,15 +367,27 @@
                                         attributes:button_style];
 }
 
+- (void)addUser:(IAUser*)user
+{
+    if (user == nil)
+        return;
+    NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
+    if ([temp.lastObject isKindOfClass:NSString.class])
+        [temp removeObject:temp.lastObject];
+    
+    [temp addObject:user];
+    [self.search_field setObjectValue:temp];
+    [_delegate searchViewInputsChanged:self];
+}
+
 - (void)addElement:(InfinitSearchElement*)element
 {
     if (element == nil)
         return;
     NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
     if ([temp.lastObject isKindOfClass:NSString.class])
-    {
         [temp removeObject:temp.lastObject];
-    }
+    
     if (element.user != nil)
         [temp addObject:element.user];
     else
