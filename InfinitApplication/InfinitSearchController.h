@@ -26,9 +26,11 @@
 
 @protocol InfinitSearchControllerProtocol <NSObject>
 
+- (void)searchControllerGotEmailResult:(InfinitSearchController*)sender;
+
 - (void)searchControllerGotResults:(InfinitSearchController*)sender;
 
 - (void)searchController:(InfinitSearchController*)sender
-   gotNewAvatarForPerson:(InfinitSearchPersonResult*)person;
+      gotUpdateForPerson:(InfinitSearchPersonResult*)person;
 
 @end

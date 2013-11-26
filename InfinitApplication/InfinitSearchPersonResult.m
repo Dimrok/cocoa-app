@@ -73,28 +73,26 @@
     return self;
 }
 
-- (void)userIdFromEmailCallback:(IAGapOperationResult*)result
+//- Email User -------------------------------------------------------------------------------------
+
+- (id)initWithEmail:(NSString*)email
+        andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate
 {
-    if (!result.success)
+    if (self = [super init])
     {
-        IALog(@"%@ WARNING: problem checking for user id", self);
-        return;
+        _delegate = delegate;
+        NSMutableDictionary* mail_check = [NSMutableDictionary
+                                           dictionaryWithDictionary:@{@"email": email}];
+        [[IAGapState instance] getUserIdfromEmail:email
+                                  performSelector:@selector(userIdFromEmailCallback:)
+                                         onObject:self
+                                         withData:mail_check];
+        _avatar = [IAFunctions makeAvatarFor:email];
+        _emails = [NSMutableArray arrayWithObject:email];
+        _fullname = email;
+        _user = nil;
     }
-    NSDictionary* dict = result.data;
-    NSNumber* user_id = [dict valueForKey:@"user_id"];
-    
-    if (user_id.integerValue != 0)
-    {
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(avatarReceivedCallback:)
-                                                   name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                                 object:nil];
-        _user = [IAUserManager userWithId:user_id];
-        NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
-        // Only replace avatar if we didn't get one from the address book
-        if (_avatar == nil)
-            _avatar = infinit_avatar;
-    }
+    return self;
 }
 
 //- Infinit User -----------------------------------------------------------------------------------
@@ -116,8 +114,33 @@
     return self;
 }
 
-
 //- General Functions ------------------------------------------------------------------------------
+
+- (void)userIdFromEmailCallback:(IAGapOperationResult*)result
+{
+    if (!result.success)
+    {
+        IALog(@"%@ WARNING: problem checking for user id", self);
+        return;
+    }
+    NSDictionary* dict = result.data;
+    NSNumber* user_id = [dict valueForKey:@"user_id"];
+    
+    if (user_id.integerValue != 0 &&
+        user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
+    {
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(avatarReceivedCallback:)
+                                                   name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                                 object:nil];
+        _user = [IAUserManager userWithId:user_id];
+        _fullname = _user.fullname;
+        NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
+        _avatar = infinit_avatar;
+        [_delegate personUpdated:self];
+    }
+    [_delegate personNotOnInfinit:self];
+}
 
 - (void)avatarReceivedCallback:(NSNotification*)notification
 {
@@ -139,7 +162,7 @@
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"<%@> name: %@\nidentifiers: %@\n",
+    return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nidentifiers: %@\n",
             self,
             _fullname,
             _emails];

@@ -47,6 +47,15 @@
     return self;
 }
 
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"<InfinitSearchElement %p> fullname: %@\nuser: %@\nemail: %@",
+            self,
+            _fullname,
+            _user,
+            _email];
+}
+
 @end
 
 //- Search Box View --------------------------------------------------------------------------------
@@ -232,6 +241,7 @@
     NSImage* _loading_iamge;
     
     InfinitSearchController* _search_controller;
+    NSString* _last_search;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -272,6 +282,7 @@
         _loading_iamge = [IAFunctions imageNamed:@"loading"];
         
         _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
+        _last_search = @"";
     }
     
     return self;
@@ -444,67 +455,7 @@
 - (void)doSearchNow:(NSString*)search_string
 {
     [self cancelLastSearchOperation];
-    if ([IAFunctions stringIsValidEmail:search_string]) // Search using using email address
-    {
-        NSMutableDictionary* data = [NSMutableDictionary dictionaryWithObject:search_string
-                                                                       forKey:@"entered_email"];
-        [[IAGapState instance] getUserIdfromEmail:search_string
-                                  performSelector:@selector(searchUserEmailCallback:)
-                                         onObject:self
-                                         withData:data];
-    }
-    else // Normal search
-    {
-        [_search_controller searchString:search_string];
-    }
-}
-
-- (void)searchUserEmailCallback:(IAGapOperationResult*)result
-{
-    NSString* search_string;
-    NSArray* tokens = self.search_field.objectValue;
-    if ([tokens.lastObject isKindOfClass:NSString.class])
-        search_string = [self trimTrailingWhitespace:tokens.lastObject];
-    else
-        search_string = @"";
-    
-    if (search_string.length == 0)
-    {
-        [self clearResults];
-        return;
-    }
-    
-    if (!result.success)
-    {
-        IALog(@"%@ WARNING: Searching for email address failed", self);
-        _search_results = nil;
-        return;
-    }
-    
-    NSDictionary* data = result.data;
-    NSNumber* user_id = [data objectForKey:@"user_id"];
-    if (user_id.unsignedIntValue != 0)
-    {
-        IAUser* user = [IAUserManager userWithId:user_id];
-        if ([user isEqual:[[IAGapState instance] self_user]])
-            _search_results = [NSMutableArray array];
-        else
-            _search_results = [NSMutableArray arrayWithObject:user];
-    }
-    else
-    {
-        _search_results = [NSMutableArray array];
-    }
-    if (self.search_image.animates)
-    {
-        self.search_image.animates = NO;
-        self.search_image.image = _static_image;
-    }
-    if ([_delegate searchViewWantsIfGotFile:self])
-        self.no_results_message.attributedStringValue = _invite_msg_str;
-    else
-        self.no_results_message.attributedStringValue = _add_file_str;
-    [self updateResultsTable];
+    [_search_controller searchString:search_string];
 }
 
 //- Search Field -----------------------------------------------------------------------------------
@@ -537,12 +488,15 @@
     
     if (search_string.length > 0)
     {
+        if (search_string.length < _last_search.length)
+            [self clearResults];
         [self doDelayedSearch:search_string];
         if ([IAFunctions stringIsValidEmail:search_string])
             [_delegate searchViewInputsChanged:self];
     }
     else
     {
+        [_search_controller clearResults];
         [self clearResults];
     }
     
@@ -551,6 +505,7 @@
         [_delegate searchViewInputsChanged:self];
         _token_count = tokens.count;
     }
+    _last_search = search_string;
 }
 
 - (BOOL)control:(NSControl*)control
@@ -709,7 +664,6 @@ displayStringForRepresentedObject:(id)representedObject
 {
     [self setNoResultsHidden:YES];
     _search_results = nil;
-    [_search_controller clearResults];
     self.search_image.animates = NO;
     self.search_image.image = _static_image;
     [self.search_box_view setNoResults:NO];
@@ -763,8 +717,8 @@ displayStringForRepresentedObject:(id)representedObject
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
-{    
-    InfinitSearchElement* element = [_search_results objectAtIndex:row];
+{
+    InfinitSearchElement* element = _search_results[row];
     if (element == nil)
         return nil;
     
@@ -851,6 +805,57 @@ displayStringForRepresentedObject:(id)representedObject
 
 //- Search Controller Protocol ---------------------------------------------------------------------
 
+- (void)searchControllerGotEmailResult:(InfinitSearchController*)sender
+{
+    NSString* search_string;
+    NSArray* tokens = self.search_field.objectValue;
+    if ([tokens.lastObject isKindOfClass:NSString.class])
+        search_string = [self trimTrailingWhitespace:tokens.lastObject];
+    else
+        search_string = @"";
+    
+    if (search_string.length == 0)
+    {
+        [_search_controller clearResults];
+        [self clearResults];
+        return;
+    }
+    
+    _search_results = [NSMutableArray array];
+    
+    for (InfinitSearchPersonResult* person in sender.result_list)
+    {
+        InfinitSearchElement* element;
+        if (person.infinit_user != nil)
+        {
+            element = [[InfinitSearchElement alloc] initWithAvatar:person.avatar
+                                                             email:nil
+                                                          fullname:person.fullname
+                                                              user:person.infinit_user];
+            [_search_results addObject:element];
+            
+        }
+        else
+        {
+            element = [[InfinitSearchElement alloc] initWithAvatar:person.avatar
+                                                             email:person.emails[0]
+                                                          fullname:person.fullname
+                                                              user:nil];
+            if ([_delegate searchViewWantsIfGotFile:self])
+                self.no_results_message.attributedStringValue = _invite_msg_str;
+            else
+                self.no_results_message.attributedStringValue = _add_file_str;
+        }
+    }
+    
+    if (self.search_image.animates)
+    {
+        self.search_image.animates = NO;
+        self.search_image.image = _static_image;
+    }
+    [self updateResultsTable];
+}
+
 - (void)searchControllerGotResults:(InfinitSearchController*)sender
 {
     NSString* search_string;
@@ -862,6 +867,7 @@ displayStringForRepresentedObject:(id)representedObject
     
     if (search_string.length == 0)
     {
+        [_search_controller clearResults];
         [self clearResults];
         return;
     }
@@ -870,6 +876,7 @@ displayStringForRepresentedObject:(id)representedObject
     self.no_results_message.attributedStringValue = _no_result_msg_str;
     
     _search_results = [NSMutableArray array];
+
     for (InfinitSearchPersonResult* person in sender.result_list)
     {
         if (person.infinit_user != nil) // User is on Infinit
@@ -879,9 +886,10 @@ displayStringForRepresentedObject:(id)representedObject
                                                       email:nil
                                                    fullname:person.fullname
                                                        user:person.infinit_user];
-            [_search_results addObject:element];
+            if ([tokens indexOfObject:element.user] == NSNotFound)
+                [_search_results addObject:element];
         }
-        else
+        else // Address book user
         {
             for (NSString* email in person.emails)
             {
@@ -890,7 +898,8 @@ displayStringForRepresentedObject:(id)representedObject
                                                           email:email
                                                        fullname:person.fullname
                                                            user:nil];
-                [_search_results addObject:element];
+                if ([tokens indexOfObject:element.email] == NSNotFound)
+                    [_search_results addObject:element];
             }
         }
     }
@@ -898,7 +907,7 @@ displayStringForRepresentedObject:(id)representedObject
 }
 
 - (void)searchController:(InfinitSearchController*)sender
-   gotNewAvatarForPerson:(InfinitSearchPersonResult*)person
+      gotUpdateForPerson:(InfinitSearchPersonResult*)person
 {
     NSInteger index = 0;
     for (InfinitSearchElement* element in _search_results)

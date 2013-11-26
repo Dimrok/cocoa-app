@@ -92,13 +92,24 @@
         {
             InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithABPerson:search_result
                                                                                         andDelegate:self];
-            [address_book_results addObject:person];
+            if ([address_book_results indexOfObject:person] == NSNotFound)
+                [address_book_results addObject:person];
         }
     }
     [_result_list addObjectsFromArray:[address_book_results
                                        sortedArrayUsingSelector:@selector(compare:)]];
     
     [_delegate searchControllerGotResults:self];
+}
+
+//- Email Search Handling --------------------------------------------------------------------------
+
+- (void)searchForEmailString:(NSString*)email
+{
+    InfinitSearchPersonResult* new_person = [[InfinitSearchPersonResult alloc] initWithEmail:email
+                                                                                 andDelegate:self];
+    [_result_list addObject:new_person];
+    [_delegate searchControllerGotEmailResult:self];
 }
 
 //- Infinit Search Handling ------------------------------------------------------------------------
@@ -111,6 +122,8 @@
         return;
     }
     
+    NSInteger result_length = _result_list.count;
+    
     NSArray* infinit_results = [NSMutableArray arrayWithArray:
                                        [result.data sortedArrayUsingSelector:@selector(compare:)]];
     infinit_results = [[infinit_results reverseObjectEnumerator] allObjects];
@@ -120,7 +133,8 @@
         if (![user isEqual:[[IAGapState instance] self_user]])
             [self addInfinitUserToList:user];
     }
-    [_delegate searchControllerGotResults:self];
+    if (result_length != _result_list.count)
+        [_delegate searchControllerGotResults:self];
 }
 
 
@@ -128,12 +142,13 @@
 
 - (void)addInfinitUserToList:(IAUser*)user
 {
+    BOOL found = NO;
     for (InfinitSearchPersonResult* person in _result_list)
     {
         if (person.infinit_user == user)
         {
-            [_result_list removeObject:person];
-            break;
+            found = YES;
+            return;
         }
     }
     InfinitSearchPersonResult* new_person = [[InfinitSearchPersonResult alloc]
@@ -149,6 +164,7 @@
         if ([person.fullname rangeOfString:search_string options:NSCaseInsensitiveSearch].location == NSNotFound)
             [_result_list removeObject:person];
     }
+    [_delegate searchControllerGotResults:self];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -160,33 +176,74 @@
 
 - (void)searchString:(NSString*)search_string
 {
-    // If we add letters, don't redo the address book search
-    if (search_string.length > 0 || _last_search_string.length > 0 ||
-        [search_string rangeOfString:_last_search_string options:NSCaseInsensitiveSearch].location == NSNotFound)
+    if ([IAFunctions stringIsValidEmail:search_string])
     {
         [_result_list removeAllObjects];
-        if ([self accessToAddressBook])
-        {
-            [self searchAddressBookWithString:search_string];
-        }
-        
+        [self searchForEmailString:search_string];
     }
     else
     {
-        [self searchCurrentResultsForString:search_string];
+        if (search_string.length > _last_search_string.length &&
+            [search_string rangeOfString:@" "].location == NSNotFound &&
+            [search_string rangeOfString:_last_search_string].location != NSNotFound)
+        {
+            [self searchCurrentResultsForString:search_string];
+        }
+        else
+        {
+            [_result_list removeAllObjects];
+            if ([self accessToAddressBook])
+            {
+                [self searchAddressBookWithString:search_string];
+            }
+        }
+        
+        [[IAGapState instance] searchUsers:search_string
+                           performSelector:@selector(infinitSearchResultsCallback:)
+                                  onObject:self];
     }
-    
-    [[IAGapState instance] searchUsers:search_string
-                       performSelector:@selector(infinitSearchResultsCallback:)
-                              onObject:self];
     _last_search_string = search_string;
+        
 }
 
 //- Result Person Protocol -------------------------------------------------------------------------
 
 - (void)personGotNewAvatar:(InfinitSearchPersonResult*)sender
 {
-    [_delegate searchController:self gotNewAvatarForPerson:sender];
+    [_delegate searchController:self gotUpdateForPerson:sender];
 }
+
+- (void)personNotOnInfinit:(InfinitSearchPersonResult*)sender
+{
+    if (_result_list.count == 1)
+        [_delegate searchControllerGotResults:self];
+}
+
+- (void)personUpdated:(InfinitSearchPersonResult*)sender
+{
+    if (_result_list.count == 1)
+    {
+        [_result_list replaceObjectAtIndex:0 withObject:sender];
+    }
+    else
+    {
+        NSInteger index = 0;
+        for (InfinitSearchPersonResult* person in _result_list)
+        {
+            if (person.infinit_user != nil)
+                index++;
+            else
+                break;
+        }
+        if (index >= _result_list.count - 1)
+            index = 0;
+
+        [_result_list removeObject:sender];
+        [_result_list insertObject:sender atIndex:index];
+    }
+    [_delegate searchControllerGotResults:self];
+}
+
+
 
 @end

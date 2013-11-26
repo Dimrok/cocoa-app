@@ -25,6 +25,8 @@ typedef enum __InfinitSearchUserSource
 
 - (id)initWithABPerson:(ABPerson*)person
            andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
+- (id)initWithEmail:(NSString*)email
+        andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 - (id)initWithInfinitPerson:(IAUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 
@@ -34,5 +36,9 @@ typedef enum __InfinitSearchUserSource
 @protocol InfinitSearchPersonResultProtocol <NSObject>
 
 - (void)personGotNewAvatar:(InfinitSearchPersonResult*)sender;
+
+- (void)personNotOnInfinit:(InfinitSearchPersonResult*)sender;
+
+- (void)personUpdated:(InfinitSearchPersonResult*)sender;
 
 @end
