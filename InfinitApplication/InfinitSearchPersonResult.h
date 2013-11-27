@@ -38,6 +38,8 @@ typedef enum __InfinitSearchUserSource
 
 @protocol InfinitSearchPersonResultProtocol <NSObject>
 
+- (void)emailPersonUpdated:(InfinitSearchPersonResult*)sender;
+
 - (void)personGotNewAvatar:(InfinitSearchPersonResult*)sender;
 
 - (void)personNotOnInfinit:(InfinitSearchPersonResult*)sender;

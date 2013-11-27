@@ -247,6 +247,21 @@
 
 //- Result Person Protocol -------------------------------------------------------------------------
 
+- (void)emailPersonUpdated:(InfinitSearchPersonResult*)sender
+{
+    if (_result_list.count == 1)
+    {
+        [_result_list replaceObjectAtIndex:0 withObject:sender];
+    }
+    else
+    {
+        [_result_list removeObject:sender];
+        [_result_list insertObject:sender atIndex:0];
+    }
+    [self sortResultsOnRank];
+    [_delegate searchControllerGotEmailResult:self];
+}
+
 - (void)personGotNewAvatar:(InfinitSearchPersonResult*)sender
 {
     [_delegate searchController:self gotUpdateForPerson:sender];
