@@ -186,7 +186,7 @@
 {
     if (self.window != notification.object)
         return;
-    if ([_current_controller closeOnFocusLost])
+    if ([_current_controller closeOnFocusLost] && !_animating)
         [_delegate windowControllerWantsCloseWindow:self];
 }
 
