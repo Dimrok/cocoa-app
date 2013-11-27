@@ -56,6 +56,7 @@
     NSUserNotification* res = [[NSUserNotification alloc] init];
     NSString* filename;
     NSString* message;
+    NSString* sound;
     NSString* title;
     if (transaction.files_count > 1)
     {
@@ -77,6 +78,7 @@
             if (transaction.from_me)
                 return nil;
             title = NSLocalizedString(@"Incoming!", @"incoming!");
+            sound = @"Ping";
             message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
                        NSLocalizedString(@"wants to send", @"wants to send"),
                        filename,
@@ -96,12 +98,14 @@
             if (!transaction.from_me)
                 return nil;
             title = NSLocalizedString(@"Shenanigans!", @"shenanigans!");
+            sound = @"Basso";
             message = [NSString stringWithFormat:@"%@ %@", transaction.other_user.fullname,
                        NSLocalizedString(@"declined your transfer", @"declined your transfer")];
             break;
             
         case TRANSACTION_VIEW_CANCELLED_OTHER:
             title = NSLocalizedString(@"Nuts!", @"nuts!");
+            sound = @"Basso";
             message = [NSString stringWithFormat:@"%@ %@ %@",
                        NSLocalizedString(@"Your transfer with", @"your transfer with"),
                        transaction.other_user.fullname,
@@ -110,6 +114,7 @@
             
         case TRANSACTION_VIEW_CANCELLED_SELF:
             title = NSLocalizedString(@"Nuts!", @"nuts!");
+            sound = @"Basso";
             message = [NSString stringWithFormat:@"%@ %@ %@",
                        NSLocalizedString(@"Your transfer with", @"your transfer with"),
                        transaction.other_user.fullname,
@@ -118,6 +123,7 @@
             
         case TRANSACTION_VIEW_FAILED:
             title = NSLocalizedString(@"Oh no!", @"oh no!");
+            sound = @"Basso";
             if (transaction.from_me)
                 message = [NSString stringWithFormat:@"%@ %@ %@", filename,
                            NSLocalizedString(@"couldn't be sent to", @"couldn't be sent to"),
@@ -130,6 +136,7 @@
             
         case TRANSACTION_VIEW_FINISHED:
             title = NSLocalizedString(@"Success!", @"success");
+            sound = @"Glass";
             if (transaction.from_me)
                 message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
                            NSLocalizedString(@"received", @"received"),
@@ -150,8 +157,8 @@
 
     res.title = title;
     res.informativeText = message;
+    res.soundName = sound;
     res.userInfo = @{@"transaction_id": transaction.transaction_id};
-    res.soundName = NSUserNotificationDefaultSoundName;
     
     return res;
 }
