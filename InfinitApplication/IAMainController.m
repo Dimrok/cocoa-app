@@ -908,7 +908,9 @@ transactionsProgressForUser:(IAUser*)user
           transactionAdded:(IATransaction*)transaction
 {
     [self markTransactionReadIfNeeded:transaction];
-    [_desktop_notifier desktopNotificationForTransaction:transaction];
+    
+    if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+        [_desktop_notifier desktopNotificationForTransaction:transaction];
     
     if (_current_view_controller == nil)
         return;
@@ -920,7 +922,9 @@ transactionsProgressForUser:(IAUser*)user
         transactionUpdated:(IATransaction*)transaction
 {
     [self markTransactionReadIfNeeded:transaction];
-    [_desktop_notifier desktopNotificationForTransaction:transaction];
+    
+    if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+        [_desktop_notifier desktopNotificationForTransaction:transaction];
     
     if (_current_view_controller == nil)
         return;
