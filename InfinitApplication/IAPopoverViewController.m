@@ -51,6 +51,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 //- General Functions ------------------------------------------------------------------------------
 
 - (void)showHeading:(NSString*)heading
@@ -65,6 +70,7 @@
     [self.popover showRelativeToRect:view.frame ofView:view preferredEdge:NSMinYEdge];
     [self.view layoutSubtreeIfNeeded];
     self.popover.contentSize = self.view.frame.size;
+    [self performSelector:@selector(hidePopover) withObject:Nil afterDelay:3.0];
 }
 
 - (void)hidePopover
