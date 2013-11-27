@@ -133,7 +133,6 @@
         _avatar = infinit_avatar;
         [_delegate emailPersonUpdated:self];
     }
-    [_delegate personNotOnInfinit:self];
 }
 
 //- Infinit User -----------------------------------------------------------------------------------
