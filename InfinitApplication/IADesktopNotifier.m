@@ -29,6 +29,12 @@
     return self;
 }
 
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter*)center
+     shouldPresentNotification:(NSUserNotification*)notification
+{
+    return YES;
+}
+
 //- General Functions ------------------------------------------------------------------------------
 
 - (NSString*)truncateFilename:(NSString*)filename
