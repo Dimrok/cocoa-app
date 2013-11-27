@@ -84,6 +84,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 - (void)dealloc
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification*)notification
@@ -145,7 +146,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 
 - (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender
 {
-    IALog(@"%@ Checking for update verbosely", self);
+    NSLog(@"%@ Checking for update verbosely", self);
 #ifdef BUILD_PRODUCTION
     [[SUUpdater sharedUpdater] checkForUpdates:nil];
 #endif
