@@ -78,7 +78,8 @@
         _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
         _user_manager = [IAUserManager sharedInstanceWithDelegate:self];
         
-        _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
+        if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+            _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
         _server_test_controller = [[InfinitServerTestController alloc] initWithDelegate:self];
         
@@ -175,7 +176,8 @@
 
 - (void)showNotifications
 {
-    [_desktop_notifier clearAllNotifications];
+    if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+        [_desktop_notifier clearAllNotifications];
     _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
     [self openOrChangeViewController:_notification_view_controller];
 }
@@ -238,6 +240,8 @@
 
 - (void)closeNotificationWindow
 {
+    if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+        [_desktop_notifier clearAllNotifications];
     [_window_controller closeWindow];
     [_status_bar_icon setHighlighted:NO];
     _conversation_view_controller = nil;
