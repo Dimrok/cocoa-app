@@ -78,7 +78,7 @@
             if (transaction.from_me)
                 return nil;
             title = NSLocalizedString(@"Incoming!", @"incoming!");
-            sound = @"Ping";
+            sound = @"sound_incoming";
             message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
                        NSLocalizedString(@"wants to send", @"wants to send"),
                        filename,
@@ -98,14 +98,12 @@
             if (!transaction.from_me)
                 return nil;
             title = NSLocalizedString(@"Shenanigans!", @"shenanigans!");
-            sound = @"Basso";
             message = [NSString stringWithFormat:@"%@ %@", transaction.other_user.fullname,
                        NSLocalizedString(@"declined your transfer", @"declined your transfer")];
             break;
             
         case TRANSACTION_VIEW_CANCELLED_OTHER:
             title = NSLocalizedString(@"Nuts!", @"nuts!");
-            sound = @"Basso";
             message = [NSString stringWithFormat:@"%@ %@ %@",
                        NSLocalizedString(@"Your transfer with", @"your transfer with"),
                        transaction.other_user.fullname,
@@ -114,7 +112,6 @@
             
         case TRANSACTION_VIEW_CANCELLED_SELF:
             title = NSLocalizedString(@"Nuts!", @"nuts!");
-            sound = @"Basso";
             message = [NSString stringWithFormat:@"%@ %@ %@",
                        NSLocalizedString(@"Your transfer with", @"your transfer with"),
                        transaction.other_user.fullname,
@@ -123,7 +120,6 @@
             
         case TRANSACTION_VIEW_FAILED:
             title = NSLocalizedString(@"Oh no!", @"oh no!");
-            sound = @"Basso";
             if (transaction.from_me)
                 message = [NSString stringWithFormat:@"%@ %@ %@", filename,
                            NSLocalizedString(@"couldn't be sent to", @"couldn't be sent to"),
@@ -136,7 +132,7 @@
             
         case TRANSACTION_VIEW_FINISHED:
             title = NSLocalizedString(@"Success!", @"success");
-            sound = @"Glass";
+            sound = @"sound_finished";
             if (transaction.from_me)
                 message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
                            NSLocalizedString(@"received", @"received"),
