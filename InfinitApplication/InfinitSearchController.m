@@ -109,7 +109,7 @@
     
     for (InfinitSearchPersonResult* person in temp)
     {
-        NSInteger required_rank = (NSInteger)(search_elements.count / 2) - 5;
+        NSInteger required_rank = (NSInteger)(search_elements.count / 2) + 4;
         if (person.rank < required_rank)
             [address_book_results removeObject:person];
         else
