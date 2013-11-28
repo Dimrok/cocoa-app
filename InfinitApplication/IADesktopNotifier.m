@@ -14,6 +14,9 @@
     id <IADesktopNotifierProtocol> _delegate;
     NSUserNotificationCenter* _notification_centre;
     
+    NSSound* _incoming_sound;
+    NSSound* _finished_sound;
+    
 }
 
 //- Inititalisation --------------------------------------------------------------------------------
@@ -25,6 +28,16 @@
         _delegate = delegate;
         _notification_centre = [NSUserNotificationCenter defaultUserNotificationCenter];
         [_notification_centre setDelegate:self];
+        NSString* incoming_sound_path = [[NSBundle mainBundle] pathForResource:@"sound_incoming"
+                                                                        ofType:@"wav"];
+        _incoming_sound = [[NSSound alloc] initWithContentsOfFile:incoming_sound_path
+                                                      byReference:NO];
+        [_incoming_sound setName:@"sound_incoming"];
+        NSString* finished_sound_path = [[NSBundle mainBundle] pathForResource:@"sound_finished"
+                                                                        ofType:@"wav"];
+        _finished_sound = [[NSSound alloc] initWithContentsOfFile:finished_sound_path
+                                                      byReference:NO];
+        [_finished_sound setName:@"sound_finished"];
     }
     return self;
 }
@@ -84,7 +97,7 @@
             if (transaction.from_me)
                 return nil;
             title = NSLocalizedString(@"Incoming!", @"incoming!");
-            sound = @"sound_incoming";
+            sound = _incoming_sound.name;
             message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
                        NSLocalizedString(@"wants to send", @"wants to send"),
                        filename,
@@ -138,7 +151,7 @@
             
         case TRANSACTION_VIEW_FINISHED:
             title = NSLocalizedString(@"Success!", @"success");
-            sound = @"sound_finished";
+            sound = _finished_sound.name;
             if (transaction.from_me)
                 message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
                            NSLocalizedString(@"received", @"received"),
