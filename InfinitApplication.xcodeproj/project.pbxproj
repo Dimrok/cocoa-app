@@ -144,11 +144,11 @@
 		83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097C17C26C890086A80D /* bg-triangle-top-white.png */; };
 		83A8098117C26C890086A80D /* bg-triangle-top-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097D17C26C890086A80D /* bg-triangle-top-white@2x.png */; };
 		83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */; };
-		83B2B2B018474FAD004F4E38 /* sound_incoming.wav in Resources */ = {isa = PBXBuildFile; fileRef = 83B2B2AE18474FAD004F4E38 /* sound_incoming.wav */; };
-		83B2B2B118474FAD004F4E38 /* sound_finished.wav in Resources */ = {isa = PBXBuildFile; fileRef = 83B2B2AF18474FAD004F4E38 /* sound_finished.wav */; };
 		83B2FD2A17F5950500893B52 /* IAOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B2FD2817F5950500893B52 /* IAOnboardingViewController.m */; };
 		83B2FD2B17F5950500893B52 /* IAOnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B2FD2917F5950500893B52 /* IAOnboardingViewController.xib */; };
 		83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */; };
+		83B771A31847AA180053D8A0 /* sound_finished.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83B771A11847AA180053D8A0 /* sound_finished.aiff */; };
+		83B771A41847AA180053D8A0 /* sound_incoming.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83B771A21847AA180053D8A0 /* sound_incoming.aiff */; };
 		83B8A70E18201F0700AD775F /* icon-main-unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A70C18201F0700AD775F /* icon-main-unread.png */; };
 		83B8A70F18201F0700AD775F /* icon-main-unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A70D18201F0700AD775F /* icon-main-unread@2x.png */; };
 		83B8A728182246E500AD775F /* InfinitLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.m */; };
@@ -623,13 +623,13 @@
 		83A8097D17C26C890086A80D /* bg-triangle-top-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-white@2x.png"; sourceTree = "<group>"; };
 		83A99B2B17AF9474008DE473 /* IASendFileListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASendFileListCellView.h; sourceTree = "<group>"; };
 		83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASendFileListCellView.m; sourceTree = "<group>"; };
-		83B2B2AE18474FAD004F4E38 /* sound_incoming.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_incoming.wav; sourceTree = "<group>"; };
-		83B2B2AF18474FAD004F4E38 /* sound_finished.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_finished.wav; sourceTree = "<group>"; };
 		83B2FD2717F5950500893B52 /* IAOnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAOnboardingViewController.h; sourceTree = "<group>"; };
 		83B2FD2817F5950500893B52 /* IAOnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAOnboardingViewController.m; sourceTree = "<group>"; };
 		83B2FD2917F5950500893B52 /* IAOnboardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAOnboardingViewController.xib; sourceTree = "<group>"; };
 		83B3F5B117B53C1600C19859 /* IANotificationListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationListCellView.h; sourceTree = "<group>"; };
 		83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationListCellView.m; sourceTree = "<group>"; };
+		83B771A11847AA180053D8A0 /* sound_finished.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_finished.aiff; sourceTree = "<group>"; };
+		83B771A21847AA180053D8A0 /* sound_incoming.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_incoming.aiff; sourceTree = "<group>"; };
 		83B8A70C18201F0700AD775F /* icon-main-unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-main-unread.png"; sourceTree = "<group>"; };
 		83B8A70D18201F0700AD775F /* icon-main-unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-main-unread@2x.png"; sourceTree = "<group>"; };
 		83B8A725182246E500AD775F /* InfinitLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginViewController.h; sourceTree = "<group>"; };
@@ -1151,8 +1151,8 @@
 		83B2B2A718465E51004F4E38 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				83B2B2AE18474FAD004F4E38 /* sound_incoming.wav */,
-				83B2B2AF18474FAD004F4E38 /* sound_finished.wav */,
+				83B771A11847AA180053D8A0 /* sound_finished.aiff */,
+				83B771A21847AA180053D8A0 /* sound_incoming.aiff */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1604,6 +1604,7 @@
 				832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */,
 				837A7F9017FC25F200600ACD /* btn-send-files-simple-disabled.png in Resources */,
 				837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */,
+				83B771A31847AA180053D8A0 /* sound_finished.aiff in Resources */,
 				839DFC1917D8ED45001D60DD /* icon-back@2x.png in Resources */,
 				837A7F8217FC225100600ACD /* icon-onboarding-next.png in Resources */,
 				83ED2FC717E9A50600BB35A0 /* icon-menu-bar-inactive.png in Resources */,
@@ -1670,7 +1671,6 @@
 				83D4205817C4CF7F00D4E168 /* icon-status.png in Resources */,
 				83ED2FC617E9A50600BB35A0 /* icon-menu-bar-fire@2x.png in Resources */,
 				83D4205917C4CF7F00D4E168 /* icon-status@2x.png in Resources */,
-				83B2B2B118474FAD004F4E38 /* sound_finished.wav in Resources */,
 				836DF80317FD919C00B2B809 /* btn-accept-decline.png in Resources */,
 				83D4206417C4DC6700D4E168 /* icon-check.png in Resources */,
 				83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */,
@@ -1689,6 +1689,7 @@
 				83929BC017C618CD0009292D /* icon-accept.png in Resources */,
 				839DFC1817D8ED45001D60DD /* icon-back.png in Resources */,
 				83929BC117C618CD0009292D /* icon-accept@2x.png in Resources */,
+				83B771A41847AA180053D8A0 /* sound_incoming.aiff in Resources */,
 				834D47DC17CB442B00EEB16A /* icon-expand-left.png in Resources */,
 				837A7F8017FC225100600ACD /* icon-onboarding-back.png in Resources */,
 				83ECD4CE1827A04F007DDB13 /* icon-main-download.png in Resources */,
@@ -1700,7 +1701,6 @@
 				83EADC2317E204FF00D49D77 /* icon-star-selected@2x.png in Resources */,
 				834D47E717CB446A00EEB16A /* icon-collapse.png in Resources */,
 				834D47E817CB446A00EEB16A /* icon-collapse@2x.png in Resources */,
-				83B2B2B018474FAD004F4E38 /* sound_incoming.wav in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
