@@ -144,8 +144,6 @@
 		83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097C17C26C890086A80D /* bg-triangle-top-white.png */; };
 		83A8098117C26C890086A80D /* bg-triangle-top-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097D17C26C890086A80D /* bg-triangle-top-white@2x.png */; };
 		83A99B2D17AF9474008DE473 /* IASendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */; };
-		83B2B2AA18465E5D004F4E38 /* sound_finished.wav in Resources */ = {isa = PBXBuildFile; fileRef = 83B2B2A818465E5D004F4E38 /* sound_finished.wav */; };
-		83B2B2AB18465E5D004F4E38 /* sound_incoming.wav in Resources */ = {isa = PBXBuildFile; fileRef = 83B2B2A918465E5D004F4E38 /* sound_incoming.wav */; };
 		83B2FD2A17F5950500893B52 /* IAOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B2FD2817F5950500893B52 /* IAOnboardingViewController.m */; };
 		83B2FD2B17F5950500893B52 /* IAOnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B2FD2917F5950500893B52 /* IAOnboardingViewController.xib */; };
 		83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */; };
@@ -623,8 +621,8 @@
 		83A8097D17C26C890086A80D /* bg-triangle-top-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-white@2x.png"; sourceTree = "<group>"; };
 		83A99B2B17AF9474008DE473 /* IASendFileListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASendFileListCellView.h; sourceTree = "<group>"; };
 		83A99B2C17AF9474008DE473 /* IASendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASendFileListCellView.m; sourceTree = "<group>"; };
-		83B2B2A818465E5D004F4E38 /* sound_finished.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_finished.wav; sourceTree = "<group>"; };
-		83B2B2A918465E5D004F4E38 /* sound_incoming.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_incoming.wav; sourceTree = "<group>"; };
+		83B2B2AC18474BA3004F4E38 /* sound_incoming.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound_incoming.caf; sourceTree = "<group>"; };
+		83B2B2AD18474BA3004F4E38 /* sound_finished.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound_finished.caf; sourceTree = "<group>"; };
 		83B2FD2717F5950500893B52 /* IAOnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAOnboardingViewController.h; sourceTree = "<group>"; };
 		83B2FD2817F5950500893B52 /* IAOnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAOnboardingViewController.m; sourceTree = "<group>"; };
 		83B2FD2917F5950500893B52 /* IAOnboardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAOnboardingViewController.xib; sourceTree = "<group>"; };
@@ -1151,8 +1149,8 @@
 		83B2B2A718465E51004F4E38 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				83B2B2A818465E5D004F4E38 /* sound_finished.wav */,
-				83B2B2A918465E5D004F4E38 /* sound_incoming.wav */,
+				83B2B2AC18474BA3004F4E38 /* sound_incoming.caf */,
+				83B2B2AD18474BA3004F4E38 /* sound_finished.caf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1632,7 +1630,6 @@
 				83C99E2717AB9E3600AFF091 /* icon-files.png in Resources */,
 				838C6DFA17FB0E6000BF947C /* IAPopoverViewController.xib in Resources */,
 				83C99E2817AB9E3600AFF091 /* icon-files@2x.png in Resources */,
-				83B2B2AB18465E5D004F4E38 /* sound_incoming.wav in Resources */,
 				83C99E2B17ABA13100AFF091 /* icon-files-hover.png in Resources */,
 				83C99E2C17ABA13100AFF091 /* icon-files-hover@2x.png in Resources */,
 				83F1147817AE542800DCF662 /* icon-search.png in Resources */,
@@ -1698,7 +1695,6 @@
 				834D47DE17CB442B00EEB16A /* icon-expand-right.png in Resources */,
 				834D47DF17CB442B00EEB16A /* icon-expand-right@2x.png in Resources */,
 				83EADC2317E204FF00D49D77 /* icon-star-selected@2x.png in Resources */,
-				83B2B2AA18465E5D004F4E38 /* sound_finished.wav in Resources */,
 				834D47E717CB446A00EEB16A /* icon-collapse.png in Resources */,
 				834D47E817CB446A00EEB16A /* icon-collapse@2x.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
