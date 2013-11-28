@@ -13,9 +13,9 @@
 @private
     id <IADesktopNotifierProtocol> _delegate;
     NSUserNotificationCenter* _notification_centre;
-
-    NSString* _finished_sound;
-    NSString* _incoming_sound;
+    
+    NSSound* _finished_sound;
+    NSSound* _incoming_sound;
 }
 
 //- Inititalisation --------------------------------------------------------------------------------
@@ -27,8 +27,14 @@
         _delegate = delegate;
         _notification_centre = [NSUserNotificationCenter defaultUserNotificationCenter];
         [_notification_centre setDelegate:self];
-        _finished_sound = @"sound_finished";
-        _incoming_sound = @"sound_incoming";
+        NSString* finished_name = @"sound_finished";
+        NSString* incoming_name = @"sound_incoming";
+        NSString* finished_path = [[NSBundle mainBundle] pathForSoundResource:finished_name];
+        NSString* incoming_path = [[NSBundle mainBundle] pathForSoundResource:incoming_name];
+        _finished_sound = [[NSSound alloc] initWithContentsOfFile:finished_path byReference:YES];
+        _finished_sound.name = finished_name;
+        _incoming_sound = [[NSSound alloc] initWithContentsOfFile:incoming_path byReference:YES];
+        _incoming_sound.name = incoming_name;
     }
     return self;
 }
@@ -36,12 +42,6 @@
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter*)center
      shouldPresentNotification:(NSUserNotification*)notification
 {
-    // WORKAROUND: play correct notification sound.
-    if (notification.soundName != nil)
-    {
-        [[NSSound soundNamed:notification.soundName] play];
-        notification.soundName = nil;
-    }
     return YES;
 }
 
@@ -94,7 +94,7 @@
             if (transaction.from_me)
                 return nil;
             title = NSLocalizedString(@"Incoming!", @"incoming!");
-            sound = _incoming_sound;
+            sound = _incoming_sound.name;
             message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
                        NSLocalizedString(@"wants to send", @"wants to send"),
                        filename,
@@ -148,7 +148,7 @@
             
         case TRANSACTION_VIEW_FINISHED:
             title = NSLocalizedString(@"Success!", @"success");
-            sound = _finished_sound;
+            sound = _finished_sound.name;
             if (transaction.from_me)
                 message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
                            NSLocalizedString(@"received", @"received"),
@@ -163,7 +163,7 @@
             message = nil;
             break;
     }
-    
+
     if (title == nil)
         return nil;
 
@@ -171,7 +171,7 @@
     res.informativeText = message;
     res.soundName = sound;
     res.userInfo = @{@"transaction_id": transaction.transaction_id};
-    
+
     return res;
 }
 
@@ -179,7 +179,6 @@
 {
     [_notification_centre removeAllDeliveredNotifications];
 }
-
 
 //- Transaction Handling ---------------------------------------------------------------------------
 
