@@ -15,8 +15,9 @@
 
 typedef enum __IANotLoggedInViewMode
 {
-    LOGGED_OUT = 0,
-    LOGGING_IN = 1,
+    INFINIT_LOGGED_OUT = 0,
+    INFINIT_LOGGING_IN = 1,
+    INFINIT_WAITING_FOR_CONNECTION = 2,
 } IANotLoggedInViewMode;
 
 @protocol IANotLoggedInViewProtocol;
@@ -24,9 +25,16 @@ typedef enum __IANotLoggedInViewMode
 @interface IANotLoggedInViewController : IAViewController
 
 @property (nonatomic, strong) IBOutlet NSTextField* not_logged_message;
-@property (nonatomic, strong) IBOutlet IABottomButton* login_button;
+@property (nonatomic, strong) IBOutlet IABottomButton* bottom_button;
 @property (nonatomic, setter = setMode:) IANotLoggedInViewMode mode;
 
-- (id)initWithMode:(IANotLoggedInViewMode)mode;
+- (id)initWithMode:(IANotLoggedInViewMode)mode
+       andDelegate:(id<IANotLoggedInViewProtocol>)delegate;
+
+@end
+
+@protocol IANotLoggedInViewProtocol <NSObject>
+
+- (void)notLoggedInViewWantsQuit:(IANotLoggedInViewController*)sender;
 
 @end

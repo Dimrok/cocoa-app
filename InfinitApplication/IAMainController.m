@@ -13,7 +13,6 @@
 #import "IACrashReportManager.h"
 #import "IAGap.h"
 #import "IAKeychainManager.h"
-#import "IANotLoggedInViewController.h"
 #import "IAPopoverViewController.h"
 #import "IAUserPrefs.h"
 
@@ -43,9 +42,13 @@
     IATransactionManager* _transaction_manager;
     IAUserManager* _user_manager;
     
+    // Network Checking
+    InfinitServerTestController* _server_test_controller;
+    BOOL _servers_ok;
+    CGFloat _connection_check_cooldown;
+    
     // Other
     IADesktopNotifier* _desktop_notifier;
-    InfinitServerTestController* _server_test_controller;
     BOOL _new_credentials;
     BOOL _update_credentials;
     BOOL _logging_in;
@@ -82,36 +85,53 @@
             _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
         _server_test_controller = [[InfinitServerTestController alloc] initWithDelegate:self];
+        _servers_ok = NO;
+        _connection_check_cooldown = 3.0;
         
-        InfinitServerStatus meta_status = [_server_test_controller metaStatus];
-        
-        if (meta_status == INFINIT_SERVER_UP)
-        {
-            _status_bar_icon.isClickable = NO;
-            IALog(@"%@ Meta up", self);
-            [_server_test_controller fetchTrophoniusStatus];
-            
-        }
-        else if (meta_status == INFINIT_SERVER_DOWN_WITH_MESSAGE)
-        {
-            IALog(@"%@ Meta down", self);
-            [_server_test_controller showMetaMessage];
-            _status_bar_icon.isClickable = NO;
-        }
-        else if (meta_status == INFINIT_SERVER_UNREACHABLE)
-        {
-            // Don't bother checking Trophonius as we probably aren't connected to the internet.
-            // Show the login window to alert the user.
-            IALog(@"%@ Meta unreachable", self);
-            _status_bar_icon.isClickable = YES;
-            [self tryLoginAfterServerCheck];
-        }
+        [self checkServerConnectivity];
     }
     return self;
 }
 
+- (void)dealloc
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
+- (void)checkServerConnectivity
+{
+    InfinitServerStatus meta_status = [_server_test_controller metaStatus];
+    _status_bar_icon.isClickable = NO;
+    
+    if (meta_status == INFINIT_SERVER_UP)
+    {
+        IALog(@"%@ Meta up", self);
+        [_server_test_controller fetchTrophoniusStatus];
+    }
+    else if (meta_status == INFINIT_SERVER_DOWN_WITH_MESSAGE)
+    {
+        IALog(@"%@ Meta down", self);
+        [_server_test_controller showMetaMessage];
+    }
+    else if (meta_status == INFINIT_SERVER_UNREACHABLE)
+    {
+        // Don't bother checking Trophonius as we probably aren't connected to the internet.
+        // Show the login window to alert the user.
+        _status_bar_icon.isClickable = YES;
+        IALog(@"%@ Meta unreachable, retry in %f seconds", self, _connection_check_cooldown);
+        [self performSelector:@selector(checkServerConnectivity)
+                   withObject:nil
+                   afterDelay:_connection_check_cooldown];
+        if (_connection_check_cooldown < 60.0)
+            _connection_check_cooldown = _connection_check_cooldown * 2;
+        if (_connection_check_cooldown > 60.0)
+            _connection_check_cooldown = 60.0;
+    }
+}
+
 - (void)tryLoginAfterServerCheck
 {
+    _servers_ok = YES;
     _status_bar_icon.isClickable = YES;
     _logging_in = NO;
     _onboarding = NO;
@@ -194,15 +214,30 @@
 
 - (void)showNotLoggedInView
 {
-    if (_logging_in)
+    if (!_servers_ok)
     {
         if (_not_logged_view_controller == nil)
         {
-            _not_logged_view_controller = [[IANotLoggedInViewController alloc] initWithMode:LOGGING_IN];
+            _not_logged_view_controller = [[IANotLoggedInViewController alloc]
+                                           initWithMode:INFINIT_WAITING_FOR_CONNECTION
+                                           andDelegate:self];
         }
         else
         {
-            [_not_logged_view_controller setMode:LOGGING_IN];
+            [_not_logged_view_controller setMode:INFINIT_WAITING_FOR_CONNECTION];
+        }
+        [self openOrChangeViewController:_not_logged_view_controller];
+    }
+    else if (_logging_in)
+    {
+        if (_not_logged_view_controller == nil)
+        {
+            _not_logged_view_controller = [[IANotLoggedInViewController alloc]
+                                           initWithMode:INFINIT_LOGGING_IN andDelegate:self];
+        }
+        else
+        {
+            [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
         }
         [self openOrChangeViewController:_not_logged_view_controller];
     }
@@ -255,6 +290,8 @@
                  password:(NSString*)password
 {
     _logging_in = YES;
+    if ([_current_view_controller isKindOfClass:IANotLoggedInViewController.class])
+        [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
     
     [[IAGapState instance] login:username
                     withPassword:password
@@ -762,6 +799,13 @@ transactionsProgressForUser:(IAUser*)user
 - (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender
 {
     [_delegate mainControllerWantsCheckForUpdate:self];
+}
+
+//- Not Logged In Protocol -------------------------------------------------------------------------
+
+- (void)notLoggedInViewWantsQuit:(IANotLoggedInViewController*)sender
+{
+    [self handleQuit];
 }
 
 //- Onboarding Protocol ----------------------------------------------------------------------------

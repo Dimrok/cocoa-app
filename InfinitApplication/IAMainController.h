@@ -22,6 +22,7 @@
 #import "IAMeManager.h"
 #import "IANoConnectionViewController.h"
 #import "IANotificationListViewController.h"
+#import "IANotLoggedInViewController.h"
 #import "IAOnboardingViewController.h"
 #import "IAReportProblemWindowController.h"
 #import "InfinitServerTestController.h"
@@ -37,6 +38,7 @@
                                         IAMeManagerProtocol,
                                         IANoConnectionViewProtocol,
                                         IANotificationListViewProtocol,
+                                        IANotLoggedInViewProtocol,
                                         IAOnboardingProtocol,
                                         IAReportProblemProtocol,
                                         InfinitServerTestControllerProtocol,
