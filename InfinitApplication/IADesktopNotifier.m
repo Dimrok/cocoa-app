@@ -36,6 +36,12 @@
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter*)center
      shouldPresentNotification:(NSUserNotification*)notification
 {
+    // WORKAROUND: play correct notification sound.
+    if (notification.soundName != nil)
+    {
+        [[NSSound soundNamed:notification.soundName] play];
+        notification.soundName = nil;
+    }
     return YES;
 }
 
