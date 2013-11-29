@@ -216,15 +216,15 @@
 - (void)openSendViewForLink:(NSURL*)link
 {
     NSString* scheme = link.scheme;
-    if (![scheme isEqualToString:@"infinit-send"])
+    if (![scheme isEqualToString:@"infinit"])
     {
-        IALog(@"%@ WARNING: Unknown infinit action in link: %@", self, link);
+        IALog(@"%@ WARNING: Unknown scheme in link: %@", self, link);
         return;
     }
-    NSString* host = link.host;
-    if (![host isEqualToString:@"user"])
+    NSString* action = link.host;
+    if (![action isEqualToString:@"send"])
     {
-        IALog(@"%@ WARNING: Unknown host in link: %@", self, link);
+        IALog(@"%@ WARNING: Unknown action in link: %@", self, link);
         return;
     }
     NSMutableArray* components = [NSMutableArray arrayWithArray:[link pathComponents]];
@@ -234,12 +234,18 @@
         if ([component isEqualToString:@"/"])
             [components removeObject:component];
     }
-    if (components.count > 1)
+    if (components.count != 2)
     {
         IALog(@"%@ WARNING: Unknown link type: %@", self, link);
         return;
     }
-    NSString* handle = components[0];
+    NSString* destination = components[0];
+    if (![destination isEqualToString:@"user"])
+    {
+        IALog(@"%@ WARNING: Unknown destination in link: %@", self, link);
+        return;
+    }
+    NSString* handle = components[1];
     NSMutableDictionary* handle_check = [NSMutableDictionary
                                          dictionaryWithDictionary:@{@"handle": handle}];
     [[IAGapState instance] getUserIdfromHandle:handle
