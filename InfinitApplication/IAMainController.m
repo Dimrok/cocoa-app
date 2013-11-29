@@ -215,7 +215,13 @@
 
 - (void)openSendViewForLink:(NSURL*)link
 {
-    NSString* host = [link host];
+    NSString* scheme = link.scheme;
+    if (![scheme isEqualToString:@"infinit-send"])
+    {
+        IALog(@"%@ WARNING: Unknown infinit action in link: %@", self, link);
+        return;
+    }
+    NSString* host = link.host;
     if (![host isEqualToString:@"user"])
     {
         IALog(@"%@ WARNING: Unknown host in link: %@", self, link);
