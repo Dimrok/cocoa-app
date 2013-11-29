@@ -189,7 +189,7 @@
     [self openSendViewForLink:link];
 }
 
-- (void)linkEmailUserCallback:(IAGapOperationResult*)result
+- (void)linkHandleUserCallback:(IAGapOperationResult*)result
 {
     if (!result.success)
     {
@@ -209,7 +209,7 @@
     }
     else if (user_id.integerValue == 0)
     {
-        IALog(@"%@ ERROR: Link user not on Infinit: %@", self, [dict valueForKey:@"email"]);
+        IALog(@"%@ ERROR: Link user not on Infinit: %@", self, [dict valueForKey:@"handle"]);
     }
 }
 
@@ -233,18 +233,13 @@
         IALog(@"%@ WARNING: Unknown link type: %@", self, link);
         return;
     }
-    NSString* email = components[0];
-    if (![IAFunctions stringIsValidEmail:email])
-    {
-        IALog(@"%@ WARNING: Invalid link destination: %@", self, link);
-        return;
-    }
-    NSMutableDictionary* mail_check = [NSMutableDictionary
-                                       dictionaryWithDictionary:@{@"email": email}];
-    [[IAGapState instance] getUserIdfromEmail:email
-                              performSelector:@selector(linkEmailUserCallback:)
-                                     onObject:self
-                                     withData:mail_check];
+    NSString* handle = components[0];
+    NSMutableDictionary* handle_check = [NSMutableDictionary
+                                         dictionaryWithDictionary:@{@"handle": handle}];
+    [[IAGapState instance] getUserIdfromHandle:handle
+                               performSelector:@selector(linkHandleUserCallback:)
+                                      onObject:self
+                                      withData:handle_check];
     _infinit_link = nil;
 }
 
