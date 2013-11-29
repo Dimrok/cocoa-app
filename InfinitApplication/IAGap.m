@@ -470,6 +470,12 @@ return [NSString stringWithUTF8String:str]; \
 {
     return [NSNumber numberWithUnsignedInt:(gap_user_by_email(_state, email.UTF8String))];
 }
+
+- (NSNumber*)user_by_handle:(NSString*)handle
+{
+    return [NSNumber numberWithUnsignedInt:(gap_user_by_handle(_state, handle.UTF8String))];
+}
+
 - (NSArray*)search_users:(NSString*)text
 {
     UInt32* results = gap_search_users(_state, text.UTF8String);
