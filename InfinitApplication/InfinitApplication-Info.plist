@@ -46,5 +46,16 @@
 	<string>http://download.infinit.io/sparkle-cast.xml</string>
 	<key>SUShowReleaseNotes</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>io.infinit.InfinitShare</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>infinit</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

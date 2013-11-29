@@ -49,6 +49,8 @@
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;
 
+- (void)handleInfinitLink:(NSURL*)link;
+
 - (void)handleQuit;
 
 @end

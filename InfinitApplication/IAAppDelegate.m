@@ -21,6 +21,8 @@
     IALogFileManager* _log_manager;
     BOOL _updating;
     NSInvocation* _update_invocation;
+    
+    NSURL* _infinit_url;
 }
 
 //- Sparkle Updater --------------------------------------------------------------------------------
@@ -77,6 +79,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
         // Log manager must be initialised here, before the new log file is written.
         _log_manager = [IALogFileManager sharedInstance];
         _updating = NO;
+        _infinit_url = nil;
     }
     return self;
 }
@@ -90,22 +93,42 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 - (void)applicationWillFinishLaunching:(NSNotification*)notification
 {
     [self setupUpdater];
+    NSAppleEventManager* appleEventManager = [NSAppleEventManager sharedAppleEventManager];
+    [appleEventManager setEventHandler:self
+                           andSelector:@selector(handleQuitEvent:withReplyEvent:)
+                         forEventClass:kCoreEventClass
+                            andEventID:kAEQuitApplication];
+
+    [appleEventManager setEventHandler:self
+                           andSelector:@selector(getURL:withReplyEvent:)
+                         forEventClass:kInternetEventClass
+                            andEventID:kAEGetURL];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     _controller = [[IAMainController alloc] initWithDelegate:self];
     [self checkInLoginItems];
-    NSAppleEventManager* appleEventManager = [NSAppleEventManager sharedAppleEventManager];
-    [appleEventManager setEventHandler:self
-                           andSelector:@selector(handleQuitEvent:withReplyEvent:)
-                         forEventClass:kCoreEventClass
-                            andEventID:kAEQuitApplication];
+    if (_infinit_url != nil) // Infinit was launched with a link
+        [_controller handleInfinitLink:_infinit_url];
 }
 
 - (void)applicationWillResignActive:(NSNotification*)notification
 {
     
+}
+
+//- Infinit URL Handling ---------------------------------------------------------------------------
+
+- (void)getURL:(NSAppleEventDescriptor*)event
+withReplyEvent:(NSAppleEventDescriptor*)reply_event
+{
+    NSURL* infinit_url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject]
+                                               stringValue]];
+    if (_controller == nil) // We haven't created a controller yet as we're being launched by a link
+        _infinit_url = infinit_url;
+    else
+        [_controller handleInfinitLink:infinit_url];
 }
 
 //- Quit Handling ----------------------------------------------------------------------------------

@@ -37,6 +37,9 @@
     IAReportProblemWindowController* _report_problem_controller;
     IAWindowController* _window_controller;
     
+    // Infinit Link Handling
+    NSURL* _infinit_link;
+    
     // Managers
     IAMeManager* _me_manager;
     IATransactionManager* _transaction_manager;
@@ -87,6 +90,8 @@
         _server_test_controller = [[InfinitServerTestController alloc] initWithDelegate:self];
         _servers_ok = NO;
         _connection_check_cooldown = 3.0;
+        
+        _infinit_link = nil;
         
         [self checkServerConnectivity];
     }
@@ -169,6 +174,78 @@
         return YES;
     }
     return NO;
+}
+
+//- Handle Infinit Link ----------------------------------------------------------------------------
+
+- (void)handleInfinitLink:(NSURL*)link
+{
+    // If we're not logged in, store the link and activate it when we are.
+    if (![[IAGapState instance] logged_in])
+    {
+        _infinit_link = link;
+        return;
+    }
+    [self openSendViewForLink:link];
+}
+
+- (void)linkEmailUserCallback:(IAGapOperationResult*)result
+{
+    if (!result.success)
+    {
+        IALog(@"%@ WARNING: problem checking for user id", self);
+        return;
+    }
+    NSDictionary* dict = result.data;
+    NSNumber* user_id = [dict valueForKey:@"user_id"];
+    
+    if (user_id.integerValue != 0 &&
+        user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
+    {
+        IAUser* user = [IAUserManager userWithId:user_id];
+        if (_general_send_controller == nil)
+            _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+        [_general_send_controller openWithFiles:nil forUser:user];
+    }
+    else if (user_id.integerValue == 0)
+    {
+        IALog(@"%@ ERROR: Link user not on Infinit: %@", self, [dict valueForKey:@"email"]);
+    }
+}
+
+- (void)openSendViewForLink:(NSURL*)link
+{
+    NSString* host = [link host];
+    if (![host isEqualToString:@"user"])
+    {
+        IALog(@"%@ WARNING: Unknown host in link: %@", self, link);
+        return;
+    }
+    NSMutableArray* components = [NSMutableArray arrayWithArray:[link pathComponents]];
+    NSArray* temp = [NSArray arrayWithArray:components];
+    for (NSString* component in temp)
+    {
+        if ([component isEqualToString:@"/"])
+            [components removeObject:component];
+    }
+    if (components.count > 1)
+    {
+        IALog(@"%@ WARNING: Unknown link type: %@", self, link);
+        return;
+    }
+    NSString* email = components[0];
+    if (![IAFunctions stringIsValidEmail:email])
+    {
+        IALog(@"%@ WARNING: Invalid link destination: %@", self, link);
+        return;
+    }
+    NSMutableDictionary* mail_check = [NSMutableDictionary
+                                       dictionaryWithDictionary:@{@"email": email}];
+    [[IAGapState instance] getUserIdfromEmail:email
+                              performSelector:@selector(linkEmailUserCallback:)
+                                     onObject:self
+                                     withData:mail_check];
+    _infinit_link = nil;
 }
 
 //- Handle Views -----------------------------------------------------------------------------------
@@ -343,6 +420,10 @@
         [self showOnboardingView];
     }
     [[IACrashReportManager sharedInstance] sendExistingCrashReports];
+    
+    // If we've got an unhandled link, handle it now
+    if (_infinit_link != nil)
+        [self openSendViewForLink:_infinit_link];
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
