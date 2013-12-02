@@ -612,7 +612,10 @@
     else
     {
         if (!_logging_in)
+        {
             [[IAGapState instance] freeGap];
+            IALog(@"%@ gap freed", self);
+        }
         [_delegate terminateApplication:self];
     }
 }
