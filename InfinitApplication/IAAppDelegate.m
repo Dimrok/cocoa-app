@@ -49,8 +49,8 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
   untilInvoking:(NSInvocation*)invocation
 {
     _updating = YES;
-    [_controller handleQuit];
     _update_invocation = invocation;
+    [_controller handleQuit];
     [self performSelector:@selector(updateOnTimeout) withObject:nil afterDelay:10.0];
     return YES;
 }
