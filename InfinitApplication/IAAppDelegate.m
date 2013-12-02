@@ -51,7 +51,14 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
     _updating = YES;
     [_controller handleQuit];
     _update_invocation = invocation;
+    [self performSelector:@selector(updateOnTimeout) withObject:nil afterDelay:10.0];
     return YES;
+}
+
+- (void)updateOnTimeout
+{
+    NSLog(@"%@ Took too long cleaning up, invoking update", self);
+    [_update_invocation invoke];
 }
 
 - (void)updaterWillRelaunchApplication:(SUUpdater*)updater
@@ -151,6 +158,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 
 - (void)delayedTerminate
 {
+    IALog(@"%@ Cleaning up took to long, killing application", self);
     [NSApp terminate:self];
 }
 
@@ -160,6 +168,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 {
     if (_updating)
     {
+        NSLog(@"%@ Invoking update", self);
         [_update_invocation invoke];
         return;
     }
