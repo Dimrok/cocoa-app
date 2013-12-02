@@ -168,12 +168,14 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 {
     if (_updating)
     {
-        NSLog(@"%@ Invoking update", self);
+        NSLog(@"%@ Invoking update: %@", self, _update_invocation);
         [_update_invocation invoke];
-        return;
     }
-    NSLog(@"%@ Terminating application", self);
-    [NSApp terminate:self];
+    else
+    {
+        NSLog(@"%@ Terminating application", self);
+        [NSApp terminate:self];
+    }
 }
 
 - (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender
