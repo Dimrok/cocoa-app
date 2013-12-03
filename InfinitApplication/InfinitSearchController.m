@@ -144,8 +144,6 @@
         return;
     }
     
-    NSInteger result_length = _result_list.count;
-    
     NSArray* infinit_results = [NSMutableArray arrayWithArray:
                                        [result.data sortedArrayUsingSelector:@selector(compare:)]];
     infinit_results = [[infinit_results reverseObjectEnumerator] allObjects];
@@ -155,11 +153,9 @@
         if (![user isEqual:[[IAGapState instance] self_user]])
             [self addInfinitUserToList:user];
     }
-    if (result_length != _result_list.count)
-    {
-        [self sortResultsOnRank];
-        [_delegate searchControllerGotResults:self];
-    }
+
+    [self sortResultsOnRank];
+    [_delegate searchControllerGotResults:self];
 }
 
 
