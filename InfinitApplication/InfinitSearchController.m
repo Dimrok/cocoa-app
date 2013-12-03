@@ -119,7 +119,9 @@
     [_result_list addObjectsFromArray:address_book_results];
     
     [self sortResultsOnRank];
-    [_delegate searchControllerGotResults:self];
+
+    // XXX Wait for all results before showing. This assumes that the server results get in later
+//    [_delegate searchControllerGotResults:self];
 }
 
 //- Email Search Handling --------------------------------------------------------------------------
