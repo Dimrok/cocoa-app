@@ -405,16 +405,6 @@
     {
         [self addCredentialsToKeychain];
     }
-    
-    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"avatar_uploaded"] isEqualToString:@"1"])
-    {
-        NSImage* avatar = [IAFunctions addressBookUserAvatar];
-        if (avatar != nil)
-        {
-            [[IAGapState instance] setAvatar:avatar];
-        }
-        [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"avatar_uploaded"];
-    }
     // XXX We must find a better way to manage fetching of history per user
     [_transaction_manager getHistory];
     [[IAGapState instance] startPolling];
