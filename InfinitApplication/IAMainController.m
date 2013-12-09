@@ -45,11 +45,6 @@
     IATransactionManager* _transaction_manager;
     IAUserManager* _user_manager;
     
-    // Network Checking
-    InfinitServerTestController* _server_test_controller;
-    BOOL _servers_ok;
-    CGFloat _connection_check_cooldown;
-    
     // Other
     IADesktopNotifier* _desktop_notifier;
     BOOL _new_credentials;
@@ -87,13 +82,19 @@
         if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
             _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
-        _server_test_controller = [[InfinitServerTestController alloc] initWithDelegate:self];
-        _servers_ok = NO;
-        _connection_check_cooldown = 3.0;
-        
         _infinit_link = nil;
         
-        [self checkServerConnectivity];
+        if (![self tryAutomaticLogin])
+        {
+            IALog(@"%@ Autologin failed", self);
+            // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
+            // is miscalculated
+            [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
+        }
+        [NSNotificationCenter.defaultCenter addObserver:self
+                                               selector:@selector(kickedOutCallback)
+                                                   name:IA_GAP_EVENT_KICKED_OUT
+                                                 object:nil];
     }
     return self;
 }
@@ -101,57 +102,10 @@
 - (void)dealloc
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
-- (void)checkServerConnectivity
-{
-    InfinitServerStatus meta_status = [_server_test_controller metaStatus];
-    _status_bar_icon.isClickable = NO;
-    
-    if (meta_status == INFINIT_SERVER_UP)
-    {
-        IALog(@"%@ Meta up", self);
-        [_server_test_controller fetchTrophoniusStatus];
-    }
-    else if (meta_status == INFINIT_SERVER_DOWN_WITH_MESSAGE)
-    {
-        IALog(@"%@ Meta down", self);
-        [_server_test_controller showMetaMessage];
-    }
-    else if (meta_status == INFINIT_SERVER_UNREACHABLE)
-    {
-        // Don't bother checking Trophonius as we probably aren't connected to the internet.
-        // Show the login window to alert the user.
-        _status_bar_icon.isClickable = YES;
-        IALog(@"%@ Meta unreachable, retry in %f seconds", self, _connection_check_cooldown);
-        [self performSelector:@selector(checkServerConnectivity)
-                   withObject:nil
-                   afterDelay:_connection_check_cooldown];
-        if (_connection_check_cooldown < 60.0)
-            _connection_check_cooldown = _connection_check_cooldown * 2;
-        if (_connection_check_cooldown > 60.0)
-            _connection_check_cooldown = 60.0;
-    }
-}
-
-- (void)tryLoginAfterServerCheck
-{
-    _servers_ok = YES;
-    _status_bar_icon.isClickable = YES;
-    _logging_in = NO;
-    _onboarding = NO;
-    _update_credentials = NO;
-    _new_credentials = NO;
-    
-    if (![self tryAutomaticLogin])
-    {
-        IALog(@"%@ Autologin failed", self);
-        // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
-        // is miscalculated
-        [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
-        _server_test_controller = nil;
-    }
-}
+//- Check Server Connectivity ----------------------------------------------------------------------
 
 - (void)delayedLoginViewOpen
 {
@@ -298,21 +252,7 @@
 
 - (void)showNotLoggedInView
 {
-    if (!_servers_ok)
-    {
-        if (_not_logged_view_controller == nil)
-        {
-            _not_logged_view_controller = [[IANotLoggedInViewController alloc]
-                                           initWithMode:INFINIT_WAITING_FOR_CONNECTION
-                                           andDelegate:self];
-        }
-        else
-        {
-            [_not_logged_view_controller setMode:INFINIT_WAITING_FOR_CONNECTION];
-        }
-        [self openOrChangeViewController:_not_logged_view_controller];
-    }
-    else if (_logging_in)
+    if (_logging_in)
     {
         if (_not_logged_view_controller == nil)
         {
@@ -405,6 +345,7 @@
     {
         [self addCredentialsToKeychain];
     }
+
     // XXX We must find a better way to manage fetching of history per user
     [_transaction_manager getHistory];
     [[IAGapState instance] startPolling];
@@ -437,17 +378,16 @@
         switch (result.status)
         {
             case gap_network_error:
-                error = [NSString stringWithFormat:@"%@ (%d)",
-                         NSLocalizedString(@"Connection problem, check Internet connection",
-                                           @"no route to internet"),
-                         result.status];
+            case gap_meta_unreachable:
+                error = [NSString stringWithFormat:@"%@",
+                         NSLocalizedString(@"Connection problem, check Internet connection.",
+                                           @"no route to internet")];
                 break;
                 
             case gap_email_password_dont_match:
-                error = [NSString stringWithFormat:@"%@ (%d)",
+                error = [NSString stringWithFormat:@"%@",
                          NSLocalizedString(@"Email or password incorrect",
-                                           @"email or password wrong"),
-                         result.status];
+                                           @"email or password wrong")];
                 break;
                 
             case gap_already_logged_in:
@@ -458,14 +398,26 @@
                 return;
                 
             case gap_deprecated:
-                error = [NSString stringWithFormat:@"%@ (%d)",
-                         NSLocalizedString(@"Please update Infinit", @"please update infinit."),
-                         result.status];
+                error = [NSString stringWithFormat:@"%@",
+                         NSLocalizedString(@"Please update Infinit.", @"please update infinit.")];
                 [_delegate mainControllerWantsCheckForUpdate:self];
                 break;
                 
+            case gap_meta_down_with_message:
+                error = [NSString stringWithFormat:@"%@",
+                         NSLocalizedString(@"Infinit is currently unavailable, try again later.",
+                                           @"infinit is currently unavailable")];
+                // XXX display actual Meta message
+                break;
+            
+            case gap_trophonius_unreachable:
+                error = [NSString stringWithFormat:@"%@",
+                         NSLocalizedString(@"Unable to contact our servers, please contact support.",
+                                           @"unable to contact our servers")];
+                break;
+                
             default:
-                error = [NSString stringWithFormat:@"%@ (%d)",
+                error = [NSString stringWithFormat:@"%@ (%d).",
                          NSLocalizedString(@"Unknown login error", @"unknown login error"),
                          result.status];
                 break;
@@ -921,38 +873,6 @@ transactionsProgressForUser:(IAUser*)user
     _report_problem_controller = nil;
 }
 
-//- Server Test Controller Protocol ------------------------------------------------------------
-
-- (void)serverTestControllerWantsQuit:(InfinitServerTestController*)sender
-{
-    [self handleQuit];
-}
-
-- (void)serverTestControllerHasTrophoniusStatus:(InfinitServerTestController*)sender
-                                         status:(InfinitServerStatus)status
-{
-    switch (status)
-    {
-        case INFINIT_SERVER_UP:
-            IALog(@"%@ Trophonius accessible", self);
-            [self tryLoginAfterServerCheck];
-            _status_bar_icon.isClickable = YES;
-            break;
-
-        case INFINIT_SERVER_UNREACHABLE:
-            IALog(@"%@ Trophonius inaccessible", self);
-            [_server_test_controller showTrophoniusMessage];
-            _status_bar_icon.isClickable = NO;
-            break;
-            
-        default:
-            IALog(@"%@ Trophonius status unknown", self);
-            [_server_test_controller showTrophoniusMessage];
-            _status_bar_icon.isClickable = NO;
-            break;
-    }
-}
-
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
 
 - (void)statusBarIconClicked:(IAStatusBarIcon*)sender
@@ -1106,6 +1026,25 @@ transactionsProgressForUser:(IAUser*)user
 hasCurrentViewController:(IAViewController*)controller
 {
     _current_view_controller = controller;
+}
+
+//- Kicked Out Callback ----------------------------------------------------------------------------
+
+- (void)delayedRetryLogin
+{
+    if (![self tryAutomaticLogin])
+    {
+        IALog(@"%@ Autologin failed", self);
+        // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
+        // is miscalculated
+        [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
+    }
+}
+
+- (void)kickedOutCallback
+{
+    // Try to automatically login after a couple of seconds
+    [self performSelector:@selector(delayedRetryLogin) withObject:nil afterDelay:3.0];
 }
 
 @end
