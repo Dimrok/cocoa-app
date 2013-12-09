@@ -25,7 +25,6 @@
 #import "IANotLoggedInViewController.h"
 #import "IAOnboardingViewController.h"
 #import "IAReportProblemWindowController.h"
-#import "InfinitServerTestController.h"
 #import "IAStatusBarIcon.h"
 #import "IAWindowController.h"
 
@@ -41,7 +40,6 @@
                                         IANotLoggedInViewProtocol,
                                         IAOnboardingProtocol,
                                         IAReportProblemProtocol,
-                                        InfinitServerTestControllerProtocol,
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,
