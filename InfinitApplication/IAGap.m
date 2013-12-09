@@ -43,6 +43,9 @@ void on_critical_event(char const* str)
     exit(1);
 }
 
+static
+void on_trophonius_unavailable();
+
 @interface NotificationForwarder : NSObject
 
 - (id)init:(NSString*)msg withInfo:(NSDictionary*)info;
@@ -211,7 +214,8 @@ void on_critical_event(char const* str)
         (gap_connection_callback(_state, &on_connection_status) != gap_ok) ||
         (gap_critical_callback(_state, &on_critical_event) != gap_ok) ||
         (gap_kicked_out_callback(_state, &on_kicked_out) != gap_ok) ||
-        (gap_avatar_available_callback(_state, &on_received_avatar) != gap_ok))
+        (gap_avatar_available_callback(_state, &on_received_avatar) != gap_ok) ||
+        (gap_trophonius_unavailable_callback(_state, &on_trophonius_unavailable) != gap_ok))
         // XXX add error callback
         //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
     {
@@ -716,6 +720,16 @@ static void on_kicked_out()
     IALog(@">>> On kicked out callback");
     // Set not logged in and stop polling
     [[IAGapState instance] loggedOut];
+    [IAGapState instance].self_id = [NSNumber numberWithInteger:0];
+    [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
+}
+
+static void on_trophonius_unavailable()
+{
+    // This is currently the same as a kick out
+    IALog(@">>> On Trophonius unavailable callback");
+    [[IAGapState instance] loggedOut];
+    [IAGapState instance].self_id = [NSNumber numberWithInteger:0];
     [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
 }
 
