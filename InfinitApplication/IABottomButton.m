@@ -13,6 +13,7 @@
 //- Initialisation ---------------------------------------------------------------------------------
 
 @synthesize enabled = _enabled;
+@synthesize hand_cursor = _hand_cursor;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -20,9 +21,23 @@
     {
         _enabled = NO;
         [self setIgnoresMultiClick:YES];
+        _hand_cursor = YES;
     }
-    
     return self;
+}
+
+//- Hand Cursor ------------------------------------------------------------------------------------
+
+- (void)resetCursorRects
+{
+    if (!_hand_cursor)
+    {
+        [super resetCursorRects];
+        return;
+    }
+    [super resetCursorRects];
+    NSCursor* cursor = [NSCursor pointingHandCursor];
+    [self addCursorRect:self.bounds cursor:cursor];
 }
 
 //- General Functions ------------------------------------------------------------------------------

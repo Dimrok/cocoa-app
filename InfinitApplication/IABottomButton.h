@@ -11,6 +11,7 @@
 @interface IABottomButton : NSButton
 
 @property(nonatomic, readwrite) BOOL enabled;
+@property (nonatomic) BOOL hand_cursor;
 
 - (BOOL)isEnabled;
 
