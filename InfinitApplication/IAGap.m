@@ -712,9 +712,7 @@ static void on_trophonius_unavailable()
 {
     // This is currently the same as a kick out
     IALog(@">>> On Trophonius unavailable callback");
-    [[IAGapState instance] loggedOut];
-    [IAGapState instance].self_id = [NSNumber numberWithInteger:0];
-    [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
+    [IAGap sendNotif:IA_GAP_EVENT_TROPHONIUS_UNAVAILABLE withInfo:nil];
 }
 
 static void on_received_avatar(uint32_t const user_id)
