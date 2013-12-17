@@ -327,7 +327,8 @@
         return nil;
     IANotificationListCellView* cell = [tableView makeViewWithIdentifier:@"notification_cell"
                                                                    owner:self];
-    // Ensure that the cell is not reused as otherwise the round progress is drawn on multiple views.
+    // WORKAROUND: Ensure that the cell is not reused as otherwise the round progress is drawn on
+    // multiple views.
     cell.identifier = nil;
     
     IAUser* user = transaction.other_user;
