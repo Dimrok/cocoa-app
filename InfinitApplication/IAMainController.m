@@ -47,12 +47,18 @@
     
     // Other
     IADesktopNotifier* _desktop_notifier;
+    BOOL _onboarding;
+    NSSound* _sent_sound;
+    
+    // Login
+    BOOL _logging_in;
+    NSString* _password;
     BOOL _new_credentials;
     BOOL _update_credentials;
-    BOOL _logging_in;
-    BOOL _onboarding;
     NSString* _username;
-    NSString* _password;
+    BOOL _autologin_cooling_down;
+    CGFloat _login_retry_cooldown;
+    CGFloat _login_retry_cooldown_max;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -83,6 +89,11 @@
             _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
         
         _infinit_link = nil;
+        _autologin_cooling_down = NO;
+        _login_retry_cooldown = 3.0;
+        _login_retry_cooldown_max = 60.0;
+        
+        _sent_sound = [NSSound soundNamed:@"sound_sent"];
         
         if (![self tryAutomaticLogin])
         {
@@ -114,6 +125,7 @@
 
 - (BOOL)tryAutomaticLogin
 {
+    _autologin_cooling_down = NO;
     NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
     NSString* password = [self getPasswordForUsername:username];
     
@@ -252,7 +264,21 @@
 
 - (void)showNotLoggedInView
 {
-    if (_logging_in)
+    if (_autologin_cooling_down)
+    {
+        if (_not_logged_view_controller == nil)
+        {
+            _not_logged_view_controller = [[IANotLoggedInViewController alloc]
+                                           initWithMode:INFINIT_WAITING_FOR_CONNECTION
+                                           andDelegate:self];
+        }
+        else
+        {
+            [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
+        }
+        [self openOrChangeViewController:_not_logged_view_controller];
+    }
+    else if (_logging_in)
     {
         if (_not_logged_view_controller == nil)
         {
@@ -379,14 +405,28 @@
         {
             case gap_network_error:
             case gap_meta_unreachable:
-                error = [NSString stringWithFormat:@"%@",
-                         NSLocalizedString(@"Connection problem, check Internet connection.",
-                                           @"no route to internet")];
-                break;
+                if (_new_credentials)
+                {
+                    error = [NSString stringWithFormat:@"%@",
+                             NSLocalizedString(@"Connection problem, check Internet connection.",
+                                               @"no route to internet")];
+                    break;
+                }
+                else
+                {
+                    _autologin_cooling_down = YES;
+                    [self performSelector:@selector(tryAutomaticLogin)
+                               withObject:nil
+                               afterDelay:_login_retry_cooldown];
+                    _login_retry_cooldown = _login_retry_cooldown * 2;
+                    if (_login_retry_cooldown > _login_retry_cooldown_max)
+                        _login_retry_cooldown = _login_retry_cooldown_max;
+                    return;
+                }
                 
             case gap_email_password_dont_match:
                 error = [NSString stringWithFormat:@"%@",
-                         NSLocalizedString(@"Email or password incorrect",
+                         NSLocalizedString(@"Email or password incorrect.",
                                            @"email or password wrong")];
                 break;
                 
@@ -411,10 +451,24 @@
                 break;
             
             case gap_trophonius_unreachable:
-                error = [NSString stringWithFormat:@"%@",
-                         NSLocalizedString(@"Unable to contact our servers, please contact support.",
-                                           @"unable to contact our servers")];
-                break;
+                if (_new_credentials)
+                {
+                    error = [NSString stringWithFormat:@"%@",
+                             NSLocalizedString(@"Unable to contact our servers, please contact support.",
+                                               @"unable to contact our servers")];
+                    break;
+                }
+                else
+                {
+                    _autologin_cooling_down = YES;
+                    [self performSelector:@selector(tryAutomaticLogin)
+                               withObject:nil
+                               afterDelay:_login_retry_cooldown];
+                    _login_retry_cooldown = _login_retry_cooldown * 2;
+                    if (_login_retry_cooldown > _login_retry_cooldown_max)
+                        _login_retry_cooldown = _login_retry_cooldown_max;
+                    return;
+                }
                 
             default:
                 error = [NSString stringWithFormat:@"%@ (%d).",
@@ -1002,6 +1056,11 @@ transactionsProgressForUser:(IAUser*)user
     [_popover_controller showHeading:heading
                           andMessage:message
                            belowView:_status_item.view];
+}
+
+- (void)transactionManagerHadFileSent:(IATransactionManager*)sender
+{
+    [_sent_sound play];
 }
 
 //- User Manager Protocol --------------------------------------------------------------------------
