@@ -12,7 +12,6 @@
 #import <Gap/gap.h>
 #import <Gap/IAGapState.h>
 
-#import "IAGapMetrics.h"
 #import "IALogFileManager.h"
 
 //- Callbacks for notifications -----------------------------------------------------
@@ -93,7 +92,6 @@ void on_trophonius_unavailable();
 {
 @private
     gap_State* _state;
-    id<IAGapMetricsProtocol> _metrics_protocol;
 }
 
 - (gap_State*)state
@@ -154,11 +152,6 @@ void on_trophonius_unavailable();
 
         setenv("INFINIT_METRICS_GOOGLE_TID", "UA-31957100-4", 1);
         setenv("INFINIT_METRICS_INVESTORS_GOOGLE_TID", "UA-31957100-2", 1);
-
-        setenv("INFINIT_METRICS_KISSMETRICS_TID", "eb9c8d61d0cded222fd85cbfa0dbcd3884c6d034", 1);
-        setenv("INFINIT_METRICS_KISSMETRICS_USER_TID", "852a52e101e7c25ef806cd7ae8ce706a9c238498", 1);
-        setenv("INFINIT_METRICS_KISSMETRICS_NETWORK_TID", "88e0663996d002fb7a6c5e547cac5cb815c640f0", 1);
-        setenv("INFINIT_METRICS_KISSMETRICS_TRANSACTION_TID", "a36c426570d8f1dc404891a284f033d003bbe9c2", 1);
         
         setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "ca10e9afa1f125fa832f5cbae9b6cbbb", 1);
         
@@ -196,15 +189,6 @@ void on_trophonius_unavailable();
             return nil;
     }
     return self;
-}
-
-- (id<IAGapMetricsProtocol>)getMetricsProxy
-{
-    if (_metrics_protocol == nil)
-    {
-        _metrics_protocol = [[IAGapMetrics alloc] initWithState:_state];
-    }
-    return _metrics_protocol;
 }
 
 - (void)setCallbacks
