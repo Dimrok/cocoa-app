@@ -920,7 +920,10 @@ displayStringForRepresentedObject:(id)representedObject
     for (InfinitSearchElement* element in _search_results)
     {
         if (element.user == person.infinit_user)
+        {
+            element.avatar = person.avatar;
             break;
+        }
         index++;
     }
     [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index]
