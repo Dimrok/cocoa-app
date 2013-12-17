@@ -58,7 +58,6 @@
 		8334C82517A692BD006028BC /* libboost_system-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */; };
 		8334C82617A692BD006028BC /* libboost_thread-mt.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */; };
 		8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EB17A67EB0006028BC /* libcryptography.dylib */; };
-		8334C82B17A692BD006028BC /* libcurly.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7ED17A67EB0006028BC /* libcurly.dylib */; };
 		8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EE17A67EB0006028BC /* libelle.dylib */; };
 		8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; };
 		8334C83217A692BD006028BC /* liblune.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F417A67EB0006028BC /* liblune.dylib */; };
@@ -68,7 +67,6 @@
 		8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F917A67EB0006028BC /* libprotocol.dylib */; };
 		8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FA17A67EB0006028BC /* libreactor.dylib */; };
 		8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */; };
-		8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FD17A67EB0006028BC /* libtrophonius.dylib */; };
 		833C319117CCC85200941C09 /* IADesktopNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 833C319017CCC85200941C09 /* IADesktopNotifier.m */; };
 		834582941822774700899526 /* icon-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 834582901822774700899526 /* icon-gear.png */; };
 		834582951822774700899526 /* icon-gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 834582911822774700899526 /* icon-gear@2x.png */; };
@@ -82,8 +80,6 @@
 		834D47E717CB446A00EEB16A /* icon-collapse.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47E517CB446A00EEB16A /* icon-collapse.png */; };
 		834D47E817CB446A00EEB16A /* icon-collapse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47E617CB446A00EEB16A /* icon-collapse@2x.png */; };
 		834D47EB17CB4EAF00EEB16A /* IAConversationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 834D47EA17CB4EAF00EEB16A /* IAConversationElement.m */; };
-		8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */; };
-		8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */; };
 		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
 		8365685C17F9BC350021D49D /* IAPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365685A17F9BC350021D49D /* IAPopoverViewController.m */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
@@ -153,6 +149,8 @@
 		83B8A70F18201F0700AD775F /* icon-main-unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A70D18201F0700AD775F /* icon-main-unread@2x.png */; };
 		83B8A728182246E500AD775F /* InfinitLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.m */; };
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
+		83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC54E186047EE00EB277E /* sound_sent.aiff */; };
+		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
 		83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83C709851822E22C00F530C4 /* libz.1.2.8.dylib */; };
 		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
 		83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C7599017AA428700BE6CD5 /* IAWindowController.xib */; };
@@ -179,7 +177,6 @@
 		83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */; };
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.m */; };
-		83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */; };
 		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F49182A98C1001394B2 /* libmetaclient.dylib */; };
 		83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F60182A990F001394B2 /* libtransaction.dylib */; };
@@ -397,6 +394,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */,
 				832E26C718366BD800A82DFF /* libc++.1.dylib in Copy Infinit Libraries */,
 				832E26C818366BD800A82DFF /* libc++abi.dylib in Copy Infinit Libraries */,
 				83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */,
@@ -407,15 +405,12 @@
 				83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */,
 				831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */,
 				8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */,
-				8350E91317C3ADA10047A32F /* libcurly_asio.dylib in Copy Infinit Libraries */,
-				8350E91417C3ADA10047A32F /* libcurly_sched.dylib in Copy Infinit Libraries */,
 				8334C82117A692BD006028BC /* libagent.dylib in Copy Infinit Libraries */,
 				8334C82317A692BD006028BC /* libboost_chrono-mt.dylib in Copy Infinit Libraries */,
 				8334C82417A692BD006028BC /* libboost_signals-mt.dylib in Copy Infinit Libraries */,
 				8334C82517A692BD006028BC /* libboost_system-mt.dylib in Copy Infinit Libraries */,
 				8334C82617A692BD006028BC /* libboost_thread-mt.dylib in Copy Infinit Libraries */,
 				8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */,
-				8334C82B17A692BD006028BC /* libcurly.dylib in Copy Infinit Libraries */,
 				8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */,
 				8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */,
 				8334C83217A692BD006028BC /* liblune.dylib in Copy Infinit Libraries */,
@@ -425,7 +420,6 @@
 				8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */,
 				8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */,
 				8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */,
-				8334C83B17A692BD006028BC /* libtrophonius.dylib in Copy Infinit Libraries */,
 			);
 			name = "Copy Infinit Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,7 +514,6 @@
 		8334C7E717A67EB0006028BC /* libboost_system-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_system-mt.dylib"; path = "../../../Externals/lib/libboost_system-mt.dylib"; sourceTree = "<group>"; };
 		8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_thread-mt.dylib"; path = "../../../Externals/lib/libboost_thread-mt.dylib"; sourceTree = "<group>"; };
 		8334C7EB17A67EB0006028BC /* libcryptography.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptography.dylib; path = ../../../Externals/lib/libcryptography.dylib; sourceTree = "<group>"; };
-		8334C7ED17A67EB0006028BC /* libcurly.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly.dylib; path = ../../../Externals/lib/libcurly.dylib; sourceTree = "<group>"; };
 		8334C7EE17A67EB0006028BC /* libelle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libelle.dylib; path = ../../../Externals/lib/libelle.dylib; sourceTree = "<group>"; };
 		8334C7F017A67EB0006028BC /* libgap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgap.dylib; path = ../../../Externals/lib/libgap.dylib; sourceTree = "<group>"; };
 		8334C7F417A67EB0006028BC /* liblune.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblune.dylib; path = ../../../Externals/lib/liblune.dylib; sourceTree = "<group>"; };
@@ -530,7 +523,6 @@
 		8334C7F917A67EB0006028BC /* libprotocol.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotocol.dylib; path = ../../../Externals/lib/libprotocol.dylib; sourceTree = "<group>"; };
 		8334C7FA17A67EB0006028BC /* libreactor.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreactor.dylib; path = ../../../Externals/lib/libreactor.dylib; sourceTree = "<group>"; };
 		8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../Externals/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
-		8334C7FD17A67EB0006028BC /* libtrophonius.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtrophonius.dylib; path = ../../../Externals/lib/libtrophonius.dylib; sourceTree = "<group>"; };
 		833C318F17CCC85200941C09 /* IADesktopNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADesktopNotifier.h; sourceTree = "<group>"; };
 		833C319017CCC85200941C09 /* IADesktopNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADesktopNotifier.m; sourceTree = "<group>"; };
 		834582901822774700899526 /* icon-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-gear.png"; sourceTree = "<group>"; };
@@ -547,8 +539,6 @@
 		834D47E617CB446A00EEB16A /* icon-collapse@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-collapse@2x.png"; sourceTree = "<group>"; };
 		834D47E917CB4EAF00EEB16A /* IAConversationElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAConversationElement.h; sourceTree = "<group>"; };
 		834D47EA17CB4EAF00EEB16A /* IAConversationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationElement.m; sourceTree = "<group>"; };
-		8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_asio.dylib; path = ../../../Externals/lib/libcurly_asio.dylib; sourceTree = "<group>"; };
-		8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurly_sched.dylib; path = ../../../Externals/lib/libcurly_sched.dylib; sourceTree = "<group>"; };
 		8364316717DDC39B00572726 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../Externals/lib/libstation.dylib; sourceTree = "<group>"; };
 		8365685917F9BC350021D49D /* IAPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPopoverViewController.h; sourceTree = "<group>"; };
 		8365685A17F9BC350021D49D /* IAPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPopoverViewController.m; sourceTree = "<group>"; };
@@ -635,6 +625,8 @@
 		83B8A725182246E500AD775F /* InfinitLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginViewController.h; sourceTree = "<group>"; };
 		83B8A726182246E500AD775F /* InfinitLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLoginViewController.m; sourceTree = "<group>"; };
 		83B8A727182246E500AD775F /* InfinitLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitLoginViewController.xib; sourceTree = "<group>"; };
+		83BEC54E186047EE00EB277E /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_sent.aiff; sourceTree = "<group>"; };
+		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
 		83C709851822E22C00F530C4 /* libz.1.2.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.8.dylib; path = ../../../Externals/lib/libz.1.2.8.dylib; sourceTree = "<group>"; };
 		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
 		83C7598F17AA428700BE6CD5 /* IAWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAWindowController.m; sourceTree = "<group>"; };
@@ -667,8 +659,6 @@
 		83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANoConnectionViewController.xib; sourceTree = "<group>"; };
 		83CD6FB317A672E5004F55D1 /* IAGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGap.h; sourceTree = "<group>"; };
 		83CD6FB417A672E5004F55D1 /* IAGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGap.m; sourceTree = "<group>"; };
-		83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGapMetrics.h; sourceTree = "<group>"; };
-		83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAGapMetrics.m; sourceTree = "<group>"; };
 		83CD702617A678C5004F55D1 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = ../Gap/Gap.xcodeproj; sourceTree = "<group>"; };
 		83CE1F49182A98C1001394B2 /* libmetaclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetaclient.dylib; path = ../../../Externals/lib/libmetaclient.dylib; sourceTree = "<group>"; };
 		83CE1F60182A990F001394B2 /* libtransaction.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtransaction.dylib; path = ../../../Externals/lib/libtransaction.dylib; sourceTree = "<group>"; };
@@ -895,6 +885,7 @@
 		8328084017A2B5100025B6F8 /* Common Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83BEC54E186047EE00EB277E /* sound_sent.aiff */,
 				839DFC1617D8ED45001D60DD /* icon-back.png */,
 				839DFC1717D8ED45001D60DD /* icon-back@2x.png */,
 				834582901822774700899526 /* icon-gear.png */,
@@ -1260,8 +1251,6 @@
 			children = (
 				83CD6FB317A672E5004F55D1 /* IAGap.h */,
 				83CD6FB417A672E5004F55D1 /* IAGap.m */,
-				83CD6FB517A672E5004F55D1 /* IAGapMetrics.h */,
-				83CD6FB617A672E5004F55D1 /* IAGapMetrics.m */,
 			);
 			name = Gap;
 			sourceTree = "<group>";
@@ -1284,19 +1273,16 @@
 				8334C7E817A67EB0006028BC /* libboost_thread-mt.dylib */,
 				8334C7EB17A67EB0006028BC /* libcryptography.dylib */,
 				8368F2BD17F1890C00135C37 /* libcurl.4.dylib */,
-				8334C7ED17A67EB0006028BC /* libcurly.dylib */,
-				8350E90A17C3AD8D0047A32F /* libcurly_asio.dylib */,
-				8350E90B17C3AD8D0047A32F /* libcurly_sched.dylib */,
 				8334C7EE17A67EB0006028BC /* libelle.dylib */,
 				8334C7F017A67EB0006028BC /* libgap.dylib */,
 				8334C7F417A67EB0006028BC /* liblune.dylib */,
 				8334C7F517A67EB0006028BC /* libmetrics.dylib */,
+				83BEC56418605A8500EB277E /* libtrophonius-client.dylib */,
 				8334C7F617A67EB0006028BC /* libnucleus.dylib */,
 				8334C7F717A67EB0006028BC /* libpapier.dylib */,
 				8334C7F917A67EB0006028BC /* libprotocol.dylib */,
 				8334C7FA17A67EB0006028BC /* libreactor.dylib */,
 				8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */,
-				8334C7FD17A67EB0006028BC /* libtrophonius.dylib */,
 				83C709851822E22C00F530C4 /* libz.1.2.8.dylib */,
 			);
 			name = "Infinit Libraries";
@@ -1618,6 +1604,7 @@
 				838C6DF517FAD14D00BF947C /* icon-onboarding-close-hover.png in Resources */,
 				83ECD4D01827A04F007DDB13 /* icon-main-upload.png in Resources */,
 				83C99E0B17AB9A1700AFF091 /* bg-header-top-white@2x.png in Resources */,
+				83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */,
 				83EADC2217E204FF00D49D77 /* icon-star-selected.png in Resources */,
 				83B8A70F18201F0700AD775F /* icon-main-unread@2x.png in Resources */,
 				83ECD4CF1827A04F007DDB13 /* icon-main-download@2x.png in Resources */,
@@ -1753,7 +1740,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Christopher Crone (9E27AS8W64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libagent.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_chrono-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_signals-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_system-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_thread-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++.1.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++abi.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrash.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrypto.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcryptography.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurl.4.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurly.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurly_asio.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurly_sched.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libelle.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libfrete.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libgap.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/liblune.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetaclient.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetrics.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libnucleus.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libpapier.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libprotocol.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libreactor.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libssl.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libstation.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtransaction.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtrophonius.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libz.1.2.8.dylib\"\n";
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Christopher Crone (9E27AS8W64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libagent.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_chrono-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_signals-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_system-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_thread-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++.1.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++abi.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrash.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrypto.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcryptography.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurl.4.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libelle.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libfrete.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libgap.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/liblune.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetaclient.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetrics.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libnucleus.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libpapier.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libprotocol.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libreactor.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libssl.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libstation.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtransaction.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtrophonius-client.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libz.1.2.8.dylib\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1774,7 +1761,6 @@
 				832808D217A2C9E40025B6F8 /* IAMainController.m in Sources */,
 				832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.m in Sources */,
 				83CD6FB717A672E5004F55D1 /* IAGap.m in Sources */,
-				83CD6FB817A672E5004F55D1 /* IAGapMetrics.m in Sources */,
 				8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */,
 				8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */,
 				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
