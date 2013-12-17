@@ -28,7 +28,10 @@
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 @property (nonatomic, strong) IBOutlet NSMenuItem* version_item;
 
-- (id)initWithDelegate:(id<IANotificationListViewProtocol>)delegate;
+- (id)initWithDelegate:(id<IANotificationListViewProtocol>)delegate
+   andConnectionStatus:(gap_UserStatus)connection_status;
+
+- (void)setConnected:(gap_UserStatus)connection_status;
 
 @end
 

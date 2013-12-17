@@ -8,6 +8,8 @@
 
 #import "IANotificationListViewController.h"
 
+#import "InfinitNotificationListConnectionCellView.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 #import <Gap/version.h>
@@ -108,11 +110,13 @@
     NSMutableArray* _rows_with_progress;
     NSTimer* _progress_timer;
     BOOL _changing;
+    gap_UserStatus _connection_status;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<IANotificationListViewProtocol>)delegate
+   andConnectionStatus:(gap_UserStatus)connection_status
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
@@ -130,6 +134,7 @@
                                                    name:NSViewBoundsDidChangeNotification
                                                  object:nil];
         _changing = NO;
+        _connection_status = connection_status;
 #ifdef IA_CORE_ANIMATION_ENABLED
         [self.view setWantsLayer:YES];
         [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
@@ -157,7 +162,8 @@
     if (_transaction_list.count > 0)
     {
         IAUser* top_user = [_transaction_list[0] other_user];
-        if ([_delegate notificationList:self unreadTransactionsForUser:top_user] > 0 ||
+        if (_connection_status != gap_user_status_online ||
+            [_delegate notificationList:self unreadTransactionsForUser:top_user] > 0 ||
             [_delegate notificationList:self activeTransactionsForUser:top_user] > 0)
         {
             self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
@@ -294,6 +300,8 @@
 - (CGFloat)tableHeight
 {
     CGFloat total_height = _transaction_list.count * _row_height;
+    if (_connection_status != gap_user_status_online)
+        total_height += _row_height;
     CGFloat max_height = _row_height * _max_rows_shown;
     if (total_height > max_height)
         return max_height;
@@ -309,7 +317,10 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
-    return _transaction_list.count;
+    if (_connection_status == gap_user_status_online)
+        return _transaction_list.count;
+    else
+        return (_transaction_list.count + 1);
 }
 
 - (CGFloat)tableView:(NSTableView*)tableView
@@ -322,10 +333,25 @@
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
 {
-    IATransaction* transaction = [_transaction_list objectAtIndex:row];
+    if (_connection_status != gap_user_status_online && row == 0)
+    {
+        InfinitNotificationListConnectionCellView* cell =
+            [tableView makeViewWithIdentifier:@"connection_notification_cell" owner:self];
+        [cell setHeaderStr:NSLocalizedString(@"No Internet...", @"no internet")];
+        [cell setMessageStr:NSLocalizedString(@"Have you tried turning it off and on again?",
+                                              @"have you tried turning it off and on again")];
+        return cell;
+    }
+    
+    // If we don't have a connection, we add a row to show this
+    NSUInteger table_row = row;
+    if (_connection_status != gap_user_status_online)
+        table_row -= 1;
+    
+    IATransaction* transaction = _transaction_list[table_row];
     if (transaction.transaction_id.unsignedIntValue == gap_null())
         return nil;
-    IANotificationListCellView* cell = [tableView makeViewWithIdentifier:@"notification_cell"
+    IANotificationListCellView* cell = [tableView makeViewWithIdentifier:@"user_notification_cell"
                                                                    owner:self];
     // WORKAROUND: Ensure that the cell is not reused as otherwise the round progress is drawn on
     // multiple views.
@@ -355,6 +381,8 @@
     IANotificationListRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
     if (row_view == nil)
         row_view = [[IANotificationListRowView alloc] initWithFrame:NSZeroRect];
+    if (_connection_status != gap_user_status_online && row == 0)
+        row_view.unread = YES;
     return row_view;
 }
 
@@ -385,14 +413,20 @@
     if (_changing)
         return;
     
+    if (_connection_status != gap_user_status_online && row == 0)
+        return;
+    
     [self setUpdatorRunning:NO];
     
     _changing = YES;
     
     [[self.table_view rowViewAtRow:row makeIfNecessary:NO] setClicked:YES];
     
+    NSUInteger transaction_num = row;
+    if (_connection_status != gap_user_status_online)
+        transaction_num -= 1;
     
-    IATransaction* transaction = _transaction_list[row];
+    IATransaction* transaction = _transaction_list[transaction_num];
     IAUser* user = transaction.other_user;
     
     if (_transaction_list.count == 1)
@@ -405,7 +439,7 @@
         NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
         
         NSMutableIndexSet* invisible_users = [NSMutableIndexSet indexSetWithIndexesInRange:
-                                              NSMakeRange(0, _transaction_list.count)];
+                                              NSMakeRange(0, self.table_view.numberOfRows)];
         NSMutableIndexSet* visible_users = [NSMutableIndexSet indexSetWithIndexesInRange:visible_rows];
         [invisible_users removeIndexes:visible_users];
         
@@ -416,8 +450,10 @@
         [self.table_view endUpdates];
         
         NSInteger new_row = [_transaction_list indexOfObject:transaction];
+        if (_connection_status != gap_user_status_online)
+            new_row += 1;
         NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
-                                          NSMakeRange(0, _transaction_list.count)];
+                                          NSMakeRange(0, self.table_view.numberOfRows)];
         [other_users removeIndex:new_row];
         
         self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
@@ -443,8 +479,16 @@
 - (IBAction)tableViewAction:(NSTableView*)sender
 {
     NSInteger row = [self.table_view clickedRow];
-    if (row < 0 || row > _transaction_list.count - 1)
-        return;
+    if (_connection_status != gap_user_status_online)
+    {
+        if (row < 1 || row > _transaction_list.count)
+            return;
+    }
+    else
+    {
+        if (row < 0 || row > _transaction_list.count - 1)
+            return;
+    }
     [self userRowGotClicked:row];
 }
 
@@ -654,8 +698,16 @@
 - (void)notificationListCellAvatarClicked:(IANotificationListCellView*)sender
 {
     NSInteger row = [self.table_view rowForView:sender];
-    if (row < 0 || row >= _transaction_list.count)
-        return;
+    if (_connection_status != gap_user_status_online)
+    {
+        if (row < 1 || row > _transaction_list.count)
+            return;
+    }
+    else
+    {
+        if (row < 0 || row > _transaction_list.count - 1)
+            return;
+    }
     
     [self userRowGotClicked:row];
 }
@@ -675,6 +727,28 @@
             [_delegate notificationList:self wantsMarkTransactionRead:transaction];
         }
     }
+}
+
+//- Connection Handling ----------------------------------------------------------------------------
+
+- (void)setConnected:(gap_UserStatus)connection_status
+{
+    if (_connection_status == connection_status)
+        return;
+    
+    _connection_status = connection_status;
+    if (_connection_status != gap_user_status_online)
+    {
+        [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                               withAnimation:NSTableViewAnimationSlideDown];
+    }
+    else
+    {
+        [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                               withAnimation:NSTableViewAnimationSlideUp];
+    }
+    [self resizeContentView];
+    [self updateHeaderAndBackground];
 }
 
 @end

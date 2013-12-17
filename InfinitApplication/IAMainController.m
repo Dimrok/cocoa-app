@@ -248,7 +248,9 @@
 {
     if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
         [_desktop_notifier clearAllNotifications];
-    _notification_view_controller = [[IANotificationListViewController alloc] initWithDelegate:self];
+    _notification_view_controller =
+        [[IANotificationListViewController alloc] initWithDelegate:self
+                                                      andConnectionStatus:[_me_manager connection_status]];
     [self openOrChangeViewController:_notification_view_controller];
 }
 
@@ -787,6 +789,10 @@ hadConnectionStateChange:(gap_UserStatus)status
         status == gap_user_status_online)
     {
         [self showNotifications];
+    }
+    if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
+    {
+        [_notification_view_controller setConnected:status];
     }
     if (status == gap_user_status_online)
         [IAUserManager resyncUserStatuses];

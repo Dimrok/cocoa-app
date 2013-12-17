@@ -151,6 +151,8 @@
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
 		83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC54E186047EE00EB277E /* sound_sent.aiff */; };
 		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
+		83BEC56818608C3700EB277E /* loading-connection.gif in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC56718608C3700EB277E /* loading-connection.gif */; };
+		83BEC56E1860909000EB277E /* InfinitNotificationListConnectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BEC56D1860909000EB277E /* InfinitNotificationListConnectionCellView.m */; };
 		83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83C709851822E22C00F530C4 /* libz.1.2.8.dylib */; };
 		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
 		83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C7599017AA428700BE6CD5 /* IAWindowController.xib */; };
@@ -627,6 +629,9 @@
 		83B8A727182246E500AD775F /* InfinitLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitLoginViewController.xib; sourceTree = "<group>"; };
 		83BEC54E186047EE00EB277E /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_sent.aiff; sourceTree = "<group>"; };
 		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
+		83BEC56718608C3700EB277E /* loading-connection.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading-connection.gif"; sourceTree = "<group>"; };
+		83BEC56C1860909000EB277E /* InfinitNotificationListConnectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitNotificationListConnectionCellView.h; sourceTree = "<group>"; };
+		83BEC56D1860909000EB277E /* InfinitNotificationListConnectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitNotificationListConnectionCellView.m; sourceTree = "<group>"; };
 		83C709851822E22C00F530C4 /* libz.1.2.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.8.dylib; path = ../../../Externals/lib/libz.1.2.8.dylib; sourceTree = "<group>"; };
 		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
 		83C7598F17AA428700BE6CD5 /* IAWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAWindowController.m; sourceTree = "<group>"; };
@@ -770,6 +775,8 @@
 				83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */,
 				83D4207317C51E7C00D4E168 /* IANotificationAvatarView.h */,
 				83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */,
+				83BEC56C1860909000EB277E /* InfinitNotificationListConnectionCellView.h */,
+				83BEC56D1860909000EB277E /* InfinitNotificationListConnectionCellView.m */,
 			);
 			name = "Notification View";
 			sourceTree = "<group>";
@@ -1301,6 +1308,7 @@
 		83D4205F17C4DC5800D4E168 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83BEC56718608C3700EB277E /* loading-connection.gif */,
 				83ECD4CA1827A04F007DDB13 /* icon-main-download.png */,
 				83ECD4CB1827A04F007DDB13 /* icon-main-download@2x.png */,
 				83ECD4CC1827A04F007DDB13 /* icon-main-upload.png */,
@@ -1591,6 +1599,7 @@
 				837A7F9017FC25F200600ACD /* btn-send-files-simple-disabled.png in Resources */,
 				837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */,
 				83B771A31847AA180053D8A0 /* sound_finished.aiff in Resources */,
+				83BEC56818608C3700EB277E /* loading-connection.gif in Resources */,
 				839DFC1917D8ED45001D60DD /* icon-back@2x.png in Resources */,
 				837A7F8217FC225100600ACD /* icon-onboarding-next.png in Resources */,
 				83ED2FC717E9A50600BB35A0 /* icon-menu-bar-inactive.png in Resources */,
@@ -1766,6 +1775,7 @@
 				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
 				8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */,
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
+				83BEC56E1860909000EB277E /* InfinitNotificationListConnectionCellView.m in Sources */,
 				831FB21E17A8FE1700696604 /* IAAvatarManager.m in Sources */,
 				831FB22617A90BE900696604 /* IANotificationListViewController.m in Sources */,
 				8333D45D17A976570093942B /* IAViewController.m in Sources */,
