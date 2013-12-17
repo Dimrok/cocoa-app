@@ -176,6 +176,7 @@
     
     self.version.attributedStringValue = [[NSAttributedString alloc] initWithString:_version_str
                                                                          attributes:version_style];
+    self.login_button.hand_cursor = YES;
 }
 
 //- General ----------------------------------------------------------------------------------------
