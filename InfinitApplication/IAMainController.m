@@ -42,6 +42,7 @@
     
     // Managers
     IAMeManager* _me_manager;
+    InfinitStayAwakeManager* _stay_awake_manager;
     IATransactionManager* _transaction_manager;
     IAUserManager* _user_manager;
     
@@ -73,6 +74,8 @@
         [IAGapState setupWithProtocol:state];
         
         [[IACrashReportManager sharedInstance] setupCrashReporter];
+        
+        _stay_awake_manager = [InfinitStayAwakeManager setUpInstanceWithDelegate:self];
         
         _status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:30.0];
         _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_status_item];
@@ -597,6 +600,7 @@
 
 - (void)handleQuit
 {
+    _stay_awake_manager = nil;
     if ([_window_controller windowIsOpen])
     {
         [_status_bar_icon setHidden:YES];
@@ -976,6 +980,13 @@ transactionsProgressForUser:(IAUser*)user
     if (_general_send_controller == nil)
         _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller filesOverStatusBarIcon];
+}
+
+//- Stay Awake Manager Protocol --------------------------------------------------------------------
+
+- (BOOL)stayAwakeManagerWantsActiveTransactions:(InfinitStayAwakeManager*)sender
+{
+    return  [_transaction_manager hasTransferringTransaction];
 }
 
 //- Transaction Manager Protocol -------------------------------------------------------------------

@@ -18,7 +18,6 @@
 #import "IAConversationViewController.h"
 #import "IADesktopNotifier.h"
 #import "IAGeneralSendController.h"
-#import "InfinitLoginViewController.h"
 #import "IAMeManager.h"
 #import "IANoConnectionViewController.h"
 #import "IANotificationListViewController.h"
@@ -27,13 +26,14 @@
 #import "IAReportProblemWindowController.h"
 #import "IAStatusBarIcon.h"
 #import "IAWindowController.h"
+#import "InfinitLoginViewController.h"
+#import "InfinitStayAwakeManager.h"
 
 @protocol IAMainControllerProtocol;
 
 @interface IAMainController : NSObject <IAConversationViewProtocol,
                                         IADesktopNotifierProtocol,
                                         IAGeneralSendControllerProtocol,
-                                        InfinitLoginViewControllerProtocol,
                                         IAMeManagerProtocol,
                                         IANoConnectionViewProtocol,
                                         IANotificationListViewProtocol,
@@ -43,7 +43,9 @@
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,
-                                        IAWindowControllerProtocol>
+                                        IAWindowControllerProtocol,
+                                        InfinitLoginViewControllerProtocol,
+                                        InfinitStayAwakeProtocol>
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;
 

@@ -192,6 +192,8 @@
 		83D4207117C4DE9800D4E168 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206F17C4DE9800D4E168 /* badge.png */; };
 		83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4207017C4DE9800D4E168 /* badge@2x.png */; };
 		83D4207517C51E7C00D4E168 /* IANotificationAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */; };
+		83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.m */; };
+		83E1E1BB1861A48E00F8DDF9 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E1E1BA1861A48E00F8DDF9 /* IOKit.framework */; };
 		83EADC2217E204FF00D49D77 /* icon-star-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EADC2017E204FF00D49D77 /* icon-star-selected.png */; };
 		83EADC2317E204FF00D49D77 /* icon-star-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EADC2117E204FF00D49D77 /* icon-star-selected@2x.png */; };
 		83EADC2E17E205E800D49D77 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EADC2C17E205E800D49D77 /* logo.png */; };
@@ -679,6 +681,9 @@
 		83D4207017C4DE9800D4E168 /* badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "badge@2x.png"; sourceTree = "<group>"; };
 		83D4207317C51E7C00D4E168 /* IANotificationAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationAvatarView.h; sourceTree = "<group>"; };
 		83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationAvatarView.m; sourceTree = "<group>"; };
+		83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStayAwakeManager.h; sourceTree = "<group>"; };
+		83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStayAwakeManager.m; sourceTree = "<group>"; };
+		83E1E1BA1861A48E00F8DDF9 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		83EADC2017E204FF00D49D77 /* icon-star-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star-selected.png"; sourceTree = "<group>"; };
 		83EADC2117E204FF00D49D77 /* icon-star-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star-selected@2x.png"; sourceTree = "<group>"; };
 		83EADC2C17E205E800D49D77 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
@@ -711,6 +716,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83E1E1BB1861A48E00F8DDF9 /* IOKit.framework in Frameworks */,
 				83A4F68C18369FAF0038AC65 /* WebKit.framework in Frameworks */,
 				836F867617ECA30300D7202C /* QuartzCore.framework in Frameworks */,
 				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
@@ -807,6 +813,7 @@
 		8328080917A2B4A60025B6F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83E1E1BA1861A48E00F8DDF9 /* IOKit.framework */,
 				83A4F68B18369FAF0038AC65 /* WebKit.framework */,
 				836F867517ECA30300D7202C /* QuartzCore.framework */,
 				83014AC317BB6E2E00ECDE96 /* AddressBook.framework */,
@@ -1187,6 +1194,8 @@
 				83CD106817D48D9700AA0A19 /* IALogFileManager.m */,
 				83CD107E17D49D7E00AA0A19 /* IACrashReportManager.h */,
 				83CD107F17D49D7E00AA0A19 /* IACrashReportManager.m */,
+				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
+				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1760,6 +1769,7 @@
 			files = (
 				83A4F68918369D600038AC65 /* InfinitServerTestController.m in Sources */,
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
+				83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,
 				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */,
