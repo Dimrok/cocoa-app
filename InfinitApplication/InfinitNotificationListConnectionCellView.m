@@ -43,6 +43,7 @@
                                                                           attributes:_link_attrs];
     [self.problem_button setNormalTextAttributes:_link_attrs];
     [self.problem_button setHoverTextAttributes:_link_hover_attrs];
+    [self.problem_button setToolTip:NSLocalizedString(@"Click to tell us!", @"click to tell us")];
 }
 
 - (void)setHeaderStr:(NSString*)str

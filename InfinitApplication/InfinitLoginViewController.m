@@ -125,6 +125,7 @@
     [self.create_account_button setNormalTextAttributes:link_attrs];
     [self.forgot_password_button setNormalTextAttributes:link_attrs];
     [self.problem_button setNormalTextAttributes:link_attrs];
+    [self.problem_button setToolTip:NSLocalizedString(@"Click to tell us!", @"click to tell us")];
     
     NSFont* link_hover_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                          traits:NSUnboldFontMask
