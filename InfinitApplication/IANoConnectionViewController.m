@@ -65,8 +65,8 @@
                                                   paragraphStyle:style
                                                           colour:IA_GREY_COLOUR(32.0)
                                                           shadow:nil];
-    NSString* message = NSLocalizedString(@"Need Internet connection to send...",
-                                          @"need internet connection to send");
+    NSString* message = NSLocalizedString(@"Need an Internet connection to send...",
+                                          @"need an internet connection to send");
     
     self.no_connection_message.attributedStringValue = [[NSAttributedString alloc]
                                                         initWithString:message
