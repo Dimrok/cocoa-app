@@ -340,6 +340,7 @@
         [cell setHeaderStr:NSLocalizedString(@"No Internet...", @"no internet")];
         [cell setMessageStr:NSLocalizedString(@"Have you tried turning it off and on again?",
                                               @"have you tried turning it off and on again")];
+        [cell setUpCell];
         return cell;
     }
     
