@@ -14,7 +14,7 @@
 
 @interface IAMeManager : NSObject
 
-@property (nonatomic) gap_UserStatus connection_status;
+@property (nonatomic, readwrite) gap_UserStatus connection_status;
 
 - (id)initWithDelegate:(id<IAMeManagerProtocol>)delegate;
 
