@@ -32,7 +32,7 @@
                                                  object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self
                                                selector:@selector(clearModelCallback)
-                                                   name:IA_GAP_EVENT_KICKED_OUT
+                                                   name:IA_GAP_EVENT_CLEAR_MODEL
                                                  object:nil];
     }
     return self;
