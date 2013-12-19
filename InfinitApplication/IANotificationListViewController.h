@@ -74,4 +74,6 @@ transactionsProgressForUser:(IAUser*)user;
 
 - (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender;
 
+- (void)notificationListWantsLogout:(IANotificationListViewController*)sender;
+
 @end

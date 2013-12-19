@@ -133,8 +133,8 @@
                                                selector:@selector(scrollBoundsChanged)
                                                    name:NSViewBoundsDidChangeNotification
                                                  object:nil];
-        _changing = NO;
         _connection_status = connection_status;
+        _changing = NO;
 #ifdef IA_CORE_ANIMATION_ENABLED
         [self.view setWantsLayer:YES];
         [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
@@ -534,6 +534,11 @@
 }
 
 //- Menu Handling ----------------------------------------------------------------------------------
+
+- (IBAction)onLogoutClicked:(NSMenuItem*)sender
+{
+    [_delegate notificationListWantsLogout:self];
+}
 
 - (IBAction)quitClicked:(NSMenuItem*)sender
 {

@@ -253,7 +253,7 @@
         [_desktop_notifier clearAllNotifications];
     _notification_view_controller =
         [[IANotificationListViewController alloc] initWithDelegate:self
-                                                      andConnectionStatus:[_me_manager connection_status]];
+                                               andConnectionStatus:[_me_manager connection_status]];
     [self openOrChangeViewController:_notification_view_controller];
 }
 
@@ -263,6 +263,10 @@
     {
         _login_view_controller = [[InfinitLoginViewController alloc] initWithDelegate:self
                                                                              withMode:LOGIN_VIEW_NOT_LOGGED_IN];
+    }
+    else
+    {
+        [_login_view_controller setLoginViewMode:LOGIN_VIEW_NOT_LOGGED_IN];
     }
     [self openOrChangeViewController:_login_view_controller];
 }
@@ -545,11 +549,21 @@
 - (void)addCredentialsToKeychain
 {
     [[IAUserPrefs sharedInstance] setPref:_username forKey:@"user:email"];
-    OSStatus add_status;
-    add_status = [[IAKeychainManager sharedInstance] addPasswordKeychain:_username
-                                                                password:_password];
-    if (add_status != noErr)
-        IALog(@"%@ Error adding credentials to keychain");
+    if (![self credentialsInChain:_username])
+    {
+        OSStatus add_status;
+        add_status = [[IAKeychainManager sharedInstance] addPasswordKeychain:_username
+                                                                    password:_password];
+        if (add_status != noErr)
+            IALog(@"%@ Error adding credentials to keychain");
+    }
+    else
+    {
+        OSStatus replace_status;
+        replace_status = [[IAKeychainManager sharedInstance] changeUser:_username password:_password];
+        if (replace_status != noErr)
+            IALog(@"%@ Error changing credentials in keychain");
+    }
     _password = @"";
     _password = nil;
 }
@@ -603,6 +617,25 @@
     return result;
 }
 
+- (void)logoutAndShowLoginCallback:(IAGapOperationResult*)result
+{
+    if (result.success)
+    {
+        IALog(@"%@ Logged out", self);
+        [self performSelector:@selector(showLoginView) withObject:nil afterDelay:0.3];
+    }
+    else
+    {
+        IALog(@"%@ WARNING: Logout failed", self);
+    }
+}
+
+- (void)handleLogout
+{
+    [self closeNotificationWindow];
+    [[IAGapState instance] logout:@selector(logoutAndShowLoginCallback:) onObject:self];
+}
+
 - (void)handleQuit
 {
     _stay_awake_manager = nil;
@@ -613,8 +646,7 @@
     }
     if ([[IAGapState instance] logged_in])
     {
-        [[IAGapState instance] logout:@selector(logoutAndQuitCallback:)
-                             onObject:self];
+        [[IAGapState instance] logout:@selector(logoutAndQuitCallback:) onObject:self];
     }
     else
     {
@@ -817,6 +849,11 @@ hadConnectionStateChange:(gap_UserStatus)status
 }
 
 //- Notification List Protocol ---------------------------------------------------------------------
+
+- (void)notificationListWantsLogout:(IANotificationListViewController*)sender
+{
+    [self handleLogout];
+}
 
 - (void)notificationListWantsQuit:(IANotificationListViewController*)sender
 {
@@ -1061,6 +1098,7 @@ transactionsProgressForUser:(IAUser*)user
 {
     if (_current_view_controller == nil)
         return;
+    [_me_manager setConnection_status:gap_user_status_online];
     [self showNotifications];
 }
 
