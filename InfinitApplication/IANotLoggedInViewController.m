@@ -30,6 +30,8 @@
 {
 @private
     id<IANotLoggedInViewProtocol> _delegate;
+    NSDictionary* _link_attrs;
+    NSDictionary* _link_hover_attrs;
     NSDictionary* _message_attrs;
     NSDictionary* _button_style;
 }
@@ -52,7 +54,7 @@
                                                                           weight:0
                                                                             size:12.0];
         _message_attrs = [IAFunctions textStyleWithFont:message_font
-                                         paragraphStyle:style
+                                         paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                  colour:IA_GREY_COLOUR(32.0)
                                                  shadow:nil];
     
@@ -64,6 +66,20 @@
                                         paragraphStyle:style
                                                 colour:[NSColor whiteColor]
                                                 shadow:shadow];
+        
+        NSFont* link_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                       traits:NSUnboldFontMask
+                                                                       weight:0
+                                                                         size:11.0];
+        _link_attrs = [IAFunctions  textStyleWithFont:link_font
+                                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                               colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
+                                               shadow:nil];
+        
+        _link_hover_attrs = [IAFunctions textStyleWithFont:link_font
+                                            paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                    colour:IA_RGB_COLOUR(11.0, 117.0, 162)
+                                                    shadow:nil];
     }
     return self;
 }
@@ -77,6 +93,13 @@
 {
     NSString* message;
     NSString* button_text;
+    NSString* problem = NSLocalizedString(@"Problem?", nil);
+    [self.spinner startAnimation:nil];
+    self.problem_button.attributedTitle = [[NSAttributedString alloc] initWithString:problem
+                                                                          attributes:_link_attrs];
+    [self.problem_button setHoverTextAttributes:_link_hover_attrs];
+    [self.problem_button setNormalTextAttributes:_link_attrs];
+    [self.problem_button setToolTip:NSLocalizedString(@"Click to tell us!", @"click to tell us")];
     if (_mode == INFINIT_LOGGED_OUT)
     {
         button_text = NSLocalizedString(@"LOGIN", @"login");
@@ -85,9 +108,9 @@
     }
     else if (_mode == INFINIT_LOGGING_IN)
     {
-        button_text = NSLocalizedString(@"LOGIN", @"login");
+        button_text = NSLocalizedString(@"QUIT", @"quit");
         message = NSLocalizedString(@"Logging in...", @"logging in");
-        [self.bottom_button setEnabled:NO];
+        [self.bottom_button setEnabled:YES];
     }
     else if (_mode == INFINIT_WAITING_FOR_CONNECTION)
     {
@@ -123,6 +146,11 @@
 {
     if (_mode == INFINIT_WAITING_FOR_CONNECTION)
         [_delegate notLoggedInViewWantsQuit:self];
+}
+
+- (IBAction)onProblemClick:(NSButton*)sender
+{
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:support@infinit.io?Subject=Login%20Connection%20Problem"]];
 }
 
 @end
