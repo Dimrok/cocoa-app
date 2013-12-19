@@ -19,6 +19,9 @@
 static BOOL _callbacks_set = NO;
 
 static
+void clear_model();
+
+static
 void on_user_status(uint32_t const user_id, gap_UserStatus status);
 
 static
@@ -237,6 +240,7 @@ void on_trophonius_unavailable();
 
 - (gap_Status)logout
 {
+    clear_model();
     return gap_logout(_state);
 }
 
@@ -620,6 +624,15 @@ return [NSString stringWithUTF8String:str]; \
 
 
 //- notif callback implementation -----------------------------------------------------------
+
+static void clear_model()
+{
+    IALog(@"Clearing model");
+    [[IAGapState instance] loggedOut];
+    on_connection_status(gap_user_status_offline);
+    [IAGap sendNotif:IA_GAP_EVENT_CLEAR_MODEL withInfo:nil];
+}
+
 static void on_user_status(uint32_t const user_id,
                            gap_UserStatus status)
 {
@@ -703,8 +716,7 @@ static void on_kicked_out()
 {
     IALog(@">>> On kicked out callback");
     // Set not logged in and stop polling
-    [[IAGapState instance] loggedOut];
-    [IAGapState instance].self_id = [NSNumber numberWithInteger:0];
+    clear_model();
     [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
 }
 
