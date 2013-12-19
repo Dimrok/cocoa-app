@@ -279,7 +279,7 @@
         }
         else
         {
-            [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
+            [_not_logged_view_controller setMode:INFINIT_WAITING_FOR_CONNECTION];
         }
         [self openOrChangeViewController:_not_logged_view_controller];
     }
@@ -345,7 +345,7 @@
                  password:(NSString*)password
 {
     _logging_in = YES;
-    if ([_current_view_controller isKindOfClass:IANotLoggedInViewController.class])
+    if (_current_view_controller == _not_logged_view_controller)
         [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
     
     [[IAGapState instance] login:username
@@ -426,6 +426,8 @@
                     _login_retry_cooldown = _login_retry_cooldown * 2;
                     if (_login_retry_cooldown > _login_retry_cooldown_max)
                         _login_retry_cooldown = _login_retry_cooldown_max;
+                    if (_current_view_controller == _not_logged_view_controller)
+                        [_not_logged_view_controller setMode:INFINIT_WAITING_FOR_CONNECTION];
                     return;
                 }
                 
@@ -472,6 +474,8 @@
                     _login_retry_cooldown = _login_retry_cooldown * 2;
                     if (_login_retry_cooldown > _login_retry_cooldown_max)
                         _login_retry_cooldown = _login_retry_cooldown_max;
+                    if (_current_view_controller == _not_logged_view_controller)
+                        [_not_logged_view_controller setMode:INFINIT_WAITING_FOR_CONNECTION];
                     return;
                 }
                 
@@ -502,6 +506,7 @@
         _new_credentials = YES;
         _update_credentials = YES;
         
+
         if (_current_view_controller != _login_view_controller)
             [self showLoginView];
         
