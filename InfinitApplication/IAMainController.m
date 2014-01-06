@@ -356,9 +356,8 @@
                     withPassword:password
                  performSelector:@selector(loginCallback:)
                         onObject:self];
-    if (![self credentialsInChain:username] || _update_credentials)
+    if (_new_credentials)
     {
-        _new_credentials = YES;
         _username = username;
         _password = password;
     }
@@ -380,6 +379,9 @@
     {
         [self addCredentialsToKeychain];
     }
+    
+    if (_username != nil && _username.length > 0)
+        [[IAUserPrefs sharedInstance] setPref:_username forKey:@"user:email"];
 
     // XXX We must find a better way to manage fetching of history per user
     [_transaction_manager getHistory];
@@ -391,6 +393,11 @@
     if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"3"])
     {
         [self showOnboardingView];
+    }
+    else if (_current_view_controller != nil &&
+             _current_view_controller != _notification_view_controller)
+    {
+        [self showNotifications];
     }
     [[IACrashReportManager sharedInstance] sendExistingCrashReports];
     
@@ -548,7 +555,7 @@
 
 - (void)addCredentialsToKeychain
 {
-    [[IAUserPrefs sharedInstance] setPref:_username forKey:@"user:email"];
+    IALog(@"xxx adding credentials");
     if (![self credentialsInChain:_username])
     {
         OSStatus add_status;
@@ -805,6 +812,7 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 {
     if (sender == _login_view_controller)
     {
+        _new_credentials = YES;
         [self loginWithUsername:username password:password];
     }
 }
