@@ -314,6 +314,8 @@
     self.file_count.attributedStringValue =
         [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", _file_list.count]
                                         attributes:_file_count_attrs];
+    self.send_button.toolTip = NSLocalizedString(@"Send", @"send");
+    self.cancel_button.toolTip = NSLocalizedString(@"Cancel", @"cancel");
 }
 
 //- General Functions ------------------------------------------------------------------------------

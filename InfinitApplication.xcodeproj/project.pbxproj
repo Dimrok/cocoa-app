@@ -77,6 +77,8 @@
 		8348156418697870002ACDE0 /* InfinitCombinedSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8348156218697870002ACDE0 /* InfinitCombinedSendViewController.xib */; };
 		8348156A18697C5C002ACDE0 /* InfinitPaddedTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8348156918697C5C002ACDE0 /* InfinitPaddedTextFieldCell.m */; };
 		8348156D18697C94002ACDE0 /* InfinitSendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8348156C18697C94002ACDE0 /* InfinitSendFileListCellView.m */; };
+		83481570187AD45A002ACDE0 /* icon-cancel-send.png in Resources */ = {isa = PBXBuildFile; fileRef = 8348156E187AD45A002ACDE0 /* icon-cancel-send.png */; };
+		83481571187AD45A002ACDE0 /* icon-cancel-send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8348156F187AD45A002ACDE0 /* icon-cancel-send@2x.png */; };
 		834D47DC17CB442B00EEB16A /* icon-expand-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47D817CB442B00EEB16A /* icon-expand-left.png */; };
 		834D47DD17CB442B00EEB16A /* icon-expand-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47D917CB442B00EEB16A /* icon-expand-left@2x.png */; };
 		834D47DE17CB442B00EEB16A /* icon-expand-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D47DA17CB442B00EEB16A /* icon-expand-right.png */; };
@@ -540,6 +542,8 @@
 		8348156918697C5C002ACDE0 /* InfinitPaddedTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPaddedTextFieldCell.m; sourceTree = "<group>"; };
 		8348156B18697C94002ACDE0 /* InfinitSendFileListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendFileListCellView.h; sourceTree = "<group>"; };
 		8348156C18697C94002ACDE0 /* InfinitSendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFileListCellView.m; sourceTree = "<group>"; };
+		8348156E187AD45A002ACDE0 /* icon-cancel-send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cancel-send.png"; sourceTree = "<group>"; };
+		8348156F187AD45A002ACDE0 /* icon-cancel-send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cancel-send@2x.png"; sourceTree = "<group>"; };
 		834D47D817CB442B00EEB16A /* icon-expand-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-expand-left.png"; sourceTree = "<group>"; };
 		834D47D917CB442B00EEB16A /* icon-expand-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-expand-left@2x.png"; sourceTree = "<group>"; };
 		834D47DA17CB442B00EEB16A /* icon-expand-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-expand-right.png"; sourceTree = "<group>"; };
@@ -1211,6 +1215,8 @@
 		83C99E0C17AB9C7B00AFF091 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8348156E187AD45A002ACDE0 /* icon-cancel-send.png */,
+				8348156F187AD45A002ACDE0 /* icon-cancel-send@2x.png */,
 				837A7F8C17FC25F200600ACD /* btn-send-files-simple-disabled.png */,
 				837A7F8D17FC25F200600ACD /* btn-send-files-simple-disabled@2x.png */,
 				837A7F8E17FC25F200600ACD /* btn-send-files-simple.png */,
@@ -1587,6 +1593,7 @@
 				837A7F8B17FC25E000600ACD /* bg-main-button@2x.png in Resources */,
 				83B2FD2B17F5950500893B52 /* IAOnboardingViewController.xib in Resources */,
 				8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */,
+				83481570187AD45A002ACDE0 /* icon-cancel-send.png in Resources */,
 				8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */,
 				832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */,
 				837A7F9017FC25F200600ACD /* btn-send-files-simple-disabled.png in Resources */,
@@ -1618,6 +1625,7 @@
 				83C99E2217AB9DFB00AFF091 /* icon-add-cancel-hover@2x.png in Resources */,
 				83C99E2317AB9DFB00AFF091 /* icon-add-cancel.png in Resources */,
 				83C99E2417AB9DFB00AFF091 /* icon-add-cancel@2x.png in Resources */,
+				83481571187AD45A002ACDE0 /* icon-cancel-send@2x.png in Resources */,
 				83C99E2717AB9E3600AFF091 /* icon-files.png in Resources */,
 				838C6DFA17FB0E6000BF947C /* IAPopoverViewController.xib in Resources */,
 				83C99E2817AB9E3600AFF091 /* icon-files@2x.png in Resources */,
