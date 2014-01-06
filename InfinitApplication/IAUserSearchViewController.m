@@ -261,7 +261,7 @@
                                       fontWithFamily:@"Helvetica"
                                               traits:NSUnboldFontMask
                                               weight:5
-                                                size:12.0];
+                                                size:13.0];
         NSDictionary* no_result_msg_style = [IAFunctions textStyleWithFont:no_result_msg_font
                                                             paragraphStyle:para
                                                                     colour:IA_GREY_COLOUR(32.0)
@@ -305,13 +305,13 @@
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
     [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
     
-    // XXX: Place holder text has been fixed in 10.9
+    // WORKAROUND: Place holder text has been fixed in 10.9
     if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
     {
         NSFont* search_font = [[NSFontManager sharedFontManager]fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
                                                                         weight:3
-                                                                          size:12.0];
+                                                                          size:13.0];
         NSDictionary* search_attrs = [IAFunctions textStyleWithFont:search_font
                                                      paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                              colour:IA_GREY_COLOUR(32.0)
