@@ -56,7 +56,7 @@
 
 - (void)setPref:(NSString*)prefs forKey:(NSString*)key
 {
-	_values[key]=prefs;
+	[_values setValue:prefs forKey:key];
 	[NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(synchronizeDelayed)
                                                object:nil];
