@@ -22,83 +22,6 @@
 @interface IANotificationListViewController ()
 @end
 
-//- Notification List Row View ---------------------------------------------------------------------
-
-@interface IANotificationListRowView : NSTableRowView
-
-@property (nonatomic, readwrite, setter = setUnread:) BOOL unread;
-@property (nonatomic, readwrite, setter = setClicked:) BOOL clicked;
-
-@end
-
-@implementation IANotificationListRowView
-
-@synthesize unread = _unread;
-@synthesize clicked = _clicked;
-
-- (void)setUnread:(BOOL)unread
-{
-    _unread = unread;
-    [self setNeedsDisplay:YES];
-}
-
-- (void)setClicked:(BOOL)clicked
-{
-    _clicked = clicked;
-    [self setNeedsDisplay:YES];
-}
-
-- (BOOL)isFlipped
-{
-    return NO;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    if (self.unread || self.clicked)
-    {
-        // White background
-        NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                           self.bounds.origin.y + 2.0,
-                                           NSWidth(self.bounds),
-                                           NSHeight(self.bounds) - 2.0);
-        NSBezierPath* white_bg = [NSBezierPath bezierPathWithRect:white_bg_frame];
-        [IA_GREY_COLOUR(255.0) set];
-        [white_bg fill];
-    }
-    else
-    {
-        // Grey background
-        NSRect grey_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                          self.bounds.origin.y + 2.0,
-                                          NSWidth(self.bounds),
-                                          NSHeight(self.bounds) - 2.0);
-        NSBezierPath* grey_bg = [NSBezierPath bezierPathWithRect:grey_bg_frame];
-        [IA_GREY_COLOUR(248.0) set];
-        [grey_bg fill];
-    }
-    
-    // White line
-    NSRect white_line_frame = NSMakeRect(self.bounds.origin.x,
-                                         1.0,
-                                         NSWidth(self.bounds),
-                                         1.0);
-    NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_line_frame];
-    [IA_GREY_COLOUR(220.0) set];
-    [white_line fill];
-    
-    // Grey line
-    NSRect grey_line_frame = NSMakeRect(self.bounds.origin.x,
-                                        0.0,
-                                        NSWidth(self.bounds),
-                                        1.0);
-    NSBezierPath* grey_line = [NSBezierPath bezierPathWithRect:grey_line_frame];
-    [IA_GREY_COLOUR(255.0) set];
-    [grey_line fill];
-}
-
-@end;
-
 @implementation IANotificationListViewController
 {
 @private
@@ -368,7 +291,7 @@
             andUnreadNotifications:unread_notifications
                        andProgress:[_delegate notificationList:self transactionsProgressForUser:user]
                        andDelegate:self];
-    IANotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
+    InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
     if (unread_notifications > 0 || active_transfers > 0)
         row_view.unread = YES;
     else
@@ -379,9 +302,9 @@
 - (NSTableRowView*)tableView:(NSTableView*)tableView
                rowViewForRow:(NSInteger)row
 {
-    IANotificationListRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
+    InfinitNotificationListRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
     if (row_view == nil)
-        row_view = [[IANotificationListRowView alloc] initWithFrame:NSZeroRect];
+        row_view = [[InfinitNotificationListRowView alloc] initWithFrame:NSZeroRect andDelegate:self];
     if (_connection_status != gap_user_status_online && row == 0)
         row_view.unread = YES;
     return row_view;
@@ -393,12 +316,17 @@
         return;
 
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
-    IANotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
+    InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
                                                         makeIfNecessary:NO];
     if (row_view.unread)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
         self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+    }
+    else if (row_view.hovered)
+    {
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-hover"];
+        self.table_view.backgroundColor = IA_GREY_COLOUR(248.0);
     }
     else
     {
@@ -754,6 +682,13 @@
                                withAnimation:NSTableViewAnimationSlideUp];
     }
     [self resizeContentView];
+    [self updateHeaderAndBackground];
+}
+
+//- Notification Row Protocol ----------------------------------------------------------------------
+
+- (void)notificationRowHoverChanged:(InfinitNotificationListRowView*)sender
+{
     [self updateHeaderAndBackground];
 }
 

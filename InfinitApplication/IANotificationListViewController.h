@@ -12,10 +12,12 @@
 
 #import "IAViewController.h"
 #import "IANotificationListCellView.h"
+#import "InfinitNotificationListRowView.h"
 
 @protocol IANotificationListViewProtocol;
 
-@interface IANotificationListViewController : IAViewController <IANotificationListCellProtocol>
+@interface IANotificationListViewController : IAViewController <IANotificationListCellProtocol,
+                                                                InfinitNotificationListRowProtocol>
 
 @property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
 @property (nonatomic, strong) IBOutlet NSButton* gear_button;
