@@ -61,7 +61,7 @@ void on_trophonius_unavailable();
     NSDictionary* _info;
 }
 
-- (id)init:(NSString*)msg withInfo:(NSDictionary *)info
+- (id)init:(NSString*)msg withInfo:(NSDictionary*)info
 {
     if (self = [super init])
     {
@@ -80,12 +80,9 @@ void on_trophonius_unavailable();
 
 - (void)_fire
 {
-    IALog(@"Forwarding %@: %@", _msg, _info);
+    IALog(@"Fire %@: %@", _msg, _info);
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:_msg object:nil userInfo:_info];
-
-    NSDistributedNotificationCenter* dc = [NSDistributedNotificationCenter defaultCenter];
-    [dc postNotificationName:_msg object:nil userInfo:_info deliverImmediately:YES];
 }
 
 @end
