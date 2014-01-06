@@ -318,15 +318,15 @@
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
     InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
                                                         makeIfNecessary:NO];
-    if (row_view.unread)
-    {
-        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
-    }
-    else if (row_view.hovered)
+    if (row_view.hovered)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-hover"];
         self.table_view.backgroundColor = IA_GREY_COLOUR(248.0);
+    }
+    else if (row_view.unread)
+    {
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
     }
     else
     {

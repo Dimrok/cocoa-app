@@ -59,17 +59,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    if (self.unread || self.clicked)
-    {
-        // White background
-        NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                           self.bounds.origin.y + 2.0,
-                                           NSWidth(self.bounds),
-                                           NSHeight(self.bounds) - 2.0);
-        [IA_GREY_COLOUR(255.0) set];
-        NSRectFill(white_bg_frame);
-    }
-    else if (self.hovered)
+    if (self.hovered)
     {
         // Blue background
         NSRect blue_bg_frame = NSMakeRect(self.bounds.origin.x,
@@ -78,6 +68,16 @@
                                           NSHeight(self.bounds) - 2.0);
         [IA_RGB_COLOUR(239.0, 252.0, 255.0) set];
         NSRectFill(blue_bg_frame);
+    }
+    else if (self.unread || self.clicked)
+    {
+        // White background
+        NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
+                                           self.bounds.origin.y + 2.0,
+                                           NSWidth(self.bounds),
+                                           NSHeight(self.bounds) - 2.0);
+        [IA_GREY_COLOUR(255.0) set];
+        NSRectFill(white_bg_frame);
     }
     else
     {
