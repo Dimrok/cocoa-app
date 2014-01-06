@@ -79,7 +79,11 @@ typedef enum IAStatusBarIconStatus {
     if (_is_highlighted)
     {
         [[NSColor selectedMenuItemColor] set];
-        [NSBezierPath fillRect:self.bounds];
+        NSRect rect = NSMakeRect(self.frame.origin.x,
+                                 self.frame.origin.y + 1.0,
+                                 NSWidth(self.bounds),
+                                 NSHeight(self.bounds) - 1.0);
+        NSRectFill(rect);
     }
     
     NSImage* icon;
