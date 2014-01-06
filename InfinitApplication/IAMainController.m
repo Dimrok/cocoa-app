@@ -446,6 +446,10 @@
                 error = [NSString stringWithFormat:@"%@",
                          NSLocalizedString(@"Email or password incorrect.",
                                            @"email or password wrong")];
+
+                if ([[[IAUserPrefs sharedInstance] prefsForKey:@"user:email"] isEqualToString:_username])
+                    _update_credentials = YES;
+
                 break;
                 
             case gap_already_logged_in:
@@ -513,10 +517,6 @@
         
         if (password == nil)
             password = @"";
-        
-        _new_credentials = YES;
-        _update_credentials = YES;
-        
 
         if (_current_view_controller != _login_view_controller)
             [self showLoginView];
@@ -555,7 +555,6 @@
 
 - (void)addCredentialsToKeychain
 {
-    IALog(@"xxx adding credentials");
     if (![self credentialsInChain:_username])
     {
         OSStatus add_status;
