@@ -18,7 +18,7 @@
 
 - (BOOL)isOpaque
 {
-    return YES;
+    return NO;
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -63,9 +63,11 @@
                                                                         traits:NSUnboldFontMask
                                                                         weight:0
                                                                           size:12.0];
+    NSMutableParagraphStyle* para_style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para_style.lineBreakMode = NSLineBreakByTruncatingMiddle;
     NSDictionary* file_name_style = [IAFunctions
                                      textStyleWithFont:file_name_font
-                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                     paragraphStyle:para_style
                                      colour:IA_RGB_COLOUR(85.0, 158.0, 201.0)
                                      shadow:nil];
     self.file_icon_and_name.attributedTitle = [[NSAttributedString alloc]
