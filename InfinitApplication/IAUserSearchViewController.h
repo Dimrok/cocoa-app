@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "IASearchResultsCellView.h"
-#import "IASimpleSendButton.h"
+#import "IAHoverButton.h"
 #import "InfinitSearchController.h"
 
 @protocol IAUserSearchViewProtocol;
@@ -33,7 +33,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_field_width;
 @property (nonatomic, strong) IBOutlet NSImageView* search_image;
 @property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
-@property (nonatomic, strong) IBOutlet IASimpleSendButton* send_button;
+@property (nonatomic, strong) IBOutlet IAHoverButton* more_button;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 - (id)init;
@@ -45,8 +45,6 @@
 - (void)cursorAtEndOfSearchBox;
 
 - (NSArray*)recipientList;
-
-- (void)removeSendButton;
 
 - (void)checkInputs;
 
@@ -61,7 +59,7 @@
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
 
-- (void)searchViewHadSendButtonClick:(IAUserSearchViewController*)sender;
+- (void)searchViewHadMoreButtonClick:(IAUserSearchViewController*)sender;
 
 - (void)searchView:(IAUserSearchViewController*)sender
  wantsAddFavourite:(IAUser*)user;

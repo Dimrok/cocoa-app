@@ -1,26 +1,25 @@
 //
-//  IAAdvancedSendViewController.m
+//  InfinitCombinedSendViewController.m
 //  InfinitApplication
 //
-//  Created by Christopher Crone on 8/4/13.
+//  Created by Christopher Crone on 24/12/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IAAdvancedSendViewController.h"
+#import "InfinitCombinedSendViewController.h"
 
-#import "IASendFileListCellView.h"
+#import "InfinitSendFileListCellView.h"
 
-
-@interface IAAdvancedSendViewController ()
+@interface InfinitCombinedSendViewController ()
 
 @end
 
-//- Advanced Search View ---------------------------------------------------------------------------
+//- Combined Search View ---------------------------------------------------------------------------
 
-@interface IAAdvancedSendSearchView : NSView
+@interface InfinitCombinedSendSearchView : NSView
 @end
 
-@implementation IAAdvancedSendSearchView
+@implementation InfinitCombinedSendSearchView
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -50,12 +49,12 @@
 
 @end
 
-//- Advanced Send Main View ------------------------------------------------------------------------
+//- Combined Send Main View ------------------------------------------------------------------------
 
-@interface IAAdvancedSendViewMainView : NSView
+@interface InfinitCombinedSendViewMainView : NSView
 @end
 
-@implementation IAAdvancedSendViewMainView
+@implementation InfinitCombinedSendViewMainView
 
 - (BOOL)isOpaque
 {
@@ -64,33 +63,38 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Dark line
-    NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:
-                               NSMakeRect(self.bounds.origin.x,
-                                          NSHeight(self.bounds) - 1.0,
-                                          NSWidth(self.bounds),
-                                          1.0)];
+    // Grey background
+    [IA_GREY_COLOUR(248.0) set];
+    NSRectFill(self.bounds);
+
+    // Dark line below search
+    NSBezierPath* first_dark_line =
+        [NSBezierPath bezierPathWithRect:NSMakeRect(self.bounds.origin.x,
+                                                    NSHeight(self.bounds) - 1.0,
+                                                    NSWidth(self.bounds),
+                                                    1.0)];
     [IA_GREY_COLOUR(235.0) set];
-    [dark_line fill];
+    [first_dark_line fill];
     
-    // White line
+    // Note field goes here (100 px)
+    
+    // Dark line below note field
+    NSBezierPath* second_dark_line =
+        [NSBezierPath bezierPathWithRect:NSMakeRect(self.bounds.origin.x,
+                                                    NSHeight(self.bounds) - 102.0,
+                                                    NSWidth(self.bounds),
+                                                    1.0)];
+    [IA_GREY_COLOUR(235.0) set];
+    [second_dark_line fill];
+    
+    // White line below note field
     NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:
                                 NSMakeRect(self.bounds.origin.x,
-                                           NSHeight(self.bounds) - 2.0,
+                                           NSHeight(self.bounds) - 103.0,
                                            NSWidth(self.bounds),
                                            1.0)];
     [IA_GREY_COLOUR(255.0) set];
-    
     [white_line fill];
-    
-    // Grey background
-    NSBezierPath* bg = [NSBezierPath bezierPathWithRect:
-                        NSMakeRect(self.bounds.origin.x,
-                                   self.bounds.origin.y,
-                                   NSWidth(self.bounds),
-                                   NSHeight(self.bounds) - 2.0)];
-    [IA_GREY_COLOUR(248.0)set];
-    [bg fill];
 }
 
 - (void)setFrame:(NSRect)frameRect
@@ -114,30 +118,12 @@
 
 @end
 
-//- Footer View ------------------------------------------------------------------------------------
-
-@interface IAAdvancedSendViewFooterView : IAFooterView
-@end
-
-@implementation IAAdvancedSendViewFooterView
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    NSBezierPath* bg = [IAFunctions roundedBottomBezierWithRect:self.bounds
-                                                   cornerRadius:6.0];
-    [IA_GREY_COLOUR(255.0) set];
-    [bg fill];
-}
-
-@end
-
-
 //- File Table Row View ----------------------------------------------------------------------------
 
-@interface IASendFileListRowView : NSTableRowView
+@interface InfinitSendFileListRowView : NSTableRowView
 @end
 
-@implementation IASendFileListRowView
+@implementation InfinitSendFileListRowView
 
 - (BOOL)isOpaque
 {
@@ -151,41 +137,36 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Grey backgrounds
-    NSRect grey_rect = NSMakeRect(self.bounds.origin.x,
-                                  self.bounds.origin.y + 2.0,
-                                  self.bounds.size.width,
-                                  self.bounds.size.height - 2.0);
-    NSBezierPath* grey_path = [NSBezierPath bezierPathWithRect:grey_rect];
+    // Grey background
     [IA_GREY_COLOUR(248.0) set];
-    [grey_path fill];
-    
-    // White line
-    NSRect white_rect = NSMakeRect(self.bounds.origin.x,
-                                   self.bounds.origin.y + 1.0,
-                                   self.bounds.size.width,
-                                   1.0);
-    NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
-    [IA_GREY_COLOUR(255.0) set];
-    [white_line fill];
+    NSRectFill(self.bounds);
     
     // Dark grey line
     NSRect dark_grey_rect = NSMakeRect(self.bounds.origin.x,
+                                   self.bounds.origin.y + 1.0,
+                                   self.bounds.size.width,
+                                   1.0);
+    NSBezierPath* dark_grey_line = [NSBezierPath bezierPathWithRect:dark_grey_rect];
+    [IA_GREY_COLOUR(235.0) set];
+    [dark_grey_line fill];
+    
+    // White line
+    NSRect white_rect = NSMakeRect(self.bounds.origin.x,
                                        self.bounds.origin.y,
                                        self.bounds.size.width,
                                        1.0);
-    NSBezierPath* dark_grey_line = [NSBezierPath bezierPathWithRect:dark_grey_rect];
-    [IA_GREY_COLOUR(220.0) set];
-    [dark_grey_line fill];
+    NSBezierPath* white_line = [NSBezierPath bezierPathWithRect:white_rect];
+    [IA_GREY_COLOUR(255.0) set];
+    [white_line fill];
 }
 
 @end
 
-//- Advanced Send View Controller ------------------------------------------------------------------
+//- Combined Send View Controller ------------------------------------------------------------------
 
-@implementation IAAdvancedSendViewController
+@implementation InfinitCombinedSendViewController
 {
-    id<IAAdvancedSendViewProtocol> _delegate;
+    id<InfinitCombinedSendViewProtocol> _delegate;
     
     IAUserSearchViewController* _user_search_controller;
     NSArray* _file_list;
@@ -194,33 +175,52 @@
     NSInteger _max_rows_shown;
     NSString* _message;
     
+    BOOL _expanded_view;
     NSDictionary* _characters_attrs;
+    NSDictionary* _file_count_attrs;
     NSUInteger _note_limit;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (id)initWithDelegate:(id<IAAdvancedSendViewProtocol>)delegate
+- (id)initWithDelegate:(id<InfinitCombinedSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller
-               focusOn:(IAAdvancedSendViewFocus)focus
+               focusOn:(InfinitCombinedSendViewFocus)focus
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
         _user_search_controller = search_controller;
         [_user_search_controller setDelegate:self];
-        _file_list = [_delegate advancedSendViewWantsFileList:self];
+        _file_list = [_delegate combinedSendViewWantsFileList:self];
         _row_height = 40.0;
         _max_rows_shown = 3;
         _message = @"";
         _note_limit = 100;
+        _expanded_view = NO;
+        NSFont* small_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:11.0];
+        NSMutableParagraphStyle* right_aligned =
+            [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        right_aligned.alignment = NSRightTextAlignment;
+        _characters_attrs = [IAFunctions textStyleWithFont:small_font
+                                            paragraphStyle:right_aligned
+                                                    colour:IA_GREY_COLOUR(217.0)
+                                                    shadow:nil];
+
+        NSShadow* file_count_shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
+                                                         blurRadius:1.0
+                                                             colour:IA_GREY_COLOUR(0.0)];
+        
+        _file_count_attrs = [IAFunctions textStyleWithFont:small_font
+                                            paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                    colour:IA_GREY_COLOUR(255.0)
+                                                    shadow:file_count_shadow];
         [self performSelector:@selector(setFocus:)
                    withObject:[NSNumber numberWithInt:focus]
                    afterDelay:0.2];
-#ifdef IA_CORE_ANIMATION_ENABLED
-        [self.view setWantsLayer:YES];
-        [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
-#endif
     }
     return self;
 }
@@ -230,43 +230,40 @@
     return NO;
 }
 
-- (void)setupHoverButtons
+- (void)setupExpandedView
 {
     NSFont* add_files_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
                                                                         weight:0
                                                                           size:12.0];
+    NSMutableParagraphStyle* centred_style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    centred_style.alignment = NSCenterTextAlignment;
     NSDictionary* normal_attrs = [IAFunctions textStyleWithFont:add_files_font
-                                                 paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                 paragraphStyle:centred_style
                                                          colour:IA_GREY_COLOUR(179.0)
                                                          shadow:nil];
     NSDictionary* hover_attrs = [IAFunctions textStyleWithFont:add_files_font
-                                                paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                paragraphStyle:centred_style
                                                         colour:IA_RGB_COLOUR(11.0, 117.0, 162)
                                                         shadow:nil];
-    
+
+    [self.add_files_button setNormalImage:[IAFunctions imageNamed:@"icon-files"]];
     [self.add_files_button setHoverImage:[IAFunctions imageNamed:@"icon-files-hover"]];
     [self.add_files_button setNormalTextAttributes:normal_attrs];
     [self.add_files_button setHoverTextAttributes:hover_attrs];
     
-    [self.cancel_button setHoverImage:[IAFunctions imageNamed:@"icon-add-cancel-hover"]];
-}
-
-- (void)initialiseSendButton
-{
-    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    style.alignment = NSCenterTextAlignment;
-    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
-                                          blurRadius:1.0
-                                              colour:[NSColor blackColor]];
+    self.add_files_button.hand_cursor = YES;
     
-    NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
-                                                 paragraphStyle:style
-                                                         colour:[NSColor whiteColor]
-                                                         shadow:shadow];
-    self.send_button.attributedTitle = [[NSAttributedString alloc]
-                                        initWithString:NSLocalizedString(@"SEND", @"send")
-                                        attributes:button_style];
+    NSString* add_files_str = [NSString stringWithFormat:@"%@", NSLocalizedString(@"Add files...",
+                                                                                  @"add files...")];
+    self.add_files_button.attributedTitle = [[NSAttributedString alloc] initWithString:add_files_str
+                                                                            attributes:normal_attrs];
+    
+    NSString* characters_str = [NSString stringWithFormat:@"%lu %@", _note_limit,
+                                NSLocalizedString(@"chars left", @"chars left")];
+    self.characters_label.attributedStringValue =
+    [[NSAttributedString alloc] initWithString:characters_str
+                                    attributes:_characters_attrs];
 }
 
 - (void)awakeFromNib
@@ -275,49 +272,16 @@
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
     [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
-
-    [self.note_field setBezeled:YES];
-    
-    
-    [self setupHoverButtons];
-    [self initialiseSendButton];
-    NSFont* characters_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                         traits:NSUnboldFontMask
-                                                                         weight:0
-                                                                           size:11.0];
-    _characters_attrs = [IAFunctions textStyleWithFont:characters_font
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_GREY_COLOUR(217.0)
-                                                shadow:nil];
-    NSString* characters_str = [NSString stringWithFormat:@"(%lu %@)", _note_limit,
-                                NSLocalizedString(@"chars left", @"chars left")];
-    self.characters_label.attributedStringValue = [[NSAttributedString alloc]
-                                                   initWithString:characters_str
-                                                   attributes:_characters_attrs];
-    
-    NSString* add_files_str = [NSString stringWithFormat:@"%@", NSLocalizedString(@"Add files...",
-                                                                                  @"add files...")];
-    NSFont* add_files_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                        traits:NSUnboldFontMask
-                                                                        weight:0
-                                                                          size:12.0];
-    NSDictionary* add_files_attrs = [IAFunctions textStyleWithFont:add_files_font
-                                                    paragraphStyle:[NSParagraphStyle
-                                                                    defaultParagraphStyle]
-                                                            colour:IA_GREY_COLOUR(179.0)
-                                                            shadow:nil];
-    self.add_files_button.attributedTitle = [[NSAttributedString alloc] initWithString:add_files_str
-                                                                            attributes:add_files_attrs];
-    
-    [self setSendButtonState];
 }
 
 - (void)loadView
 {
     [super loadView];
+
+    [self setSendButtonState];
     
     CGFloat y_diff_search = NSHeight(_user_search_controller.view.frame) -
-        NSHeight(self.search_view.frame);
+    NSHeight(self.search_view.frame);
     
     [self.search_view addSubview:_user_search_controller.view];
     
@@ -329,7 +293,9 @@
                                       metrics:nil
                                       views:@{@"search_view": _user_search_controller.view}]];
     
-    [self updateTable];
+    self.file_count.attributedStringValue =
+        [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", _file_list.count]
+                                        attributes:_file_count_attrs];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -344,21 +310,32 @@
 
 - (void)filesUpdated
 {
-    _file_list = [_delegate advancedSendViewWantsFileList:self];
-    [self updateTable];
+    _file_list = [_delegate combinedSendViewWantsFileList:self];
+    NSString* count_str;
+    if (_file_list.count > 99)
+        count_str = @"+";
+    else
+        count_str = [NSString stringWithFormat:@"%lu", _file_list.count];
+    self.file_count.attributedStringValue =
+        [[NSAttributedString alloc] initWithString:count_str attributes:_file_count_attrs];
+    if (_expanded_view)
+    {
+        [self updateTable];
+    }
     [self setSendButtonState];
 }
 
-- (void)setFocus:(NSNumber*)focus
+- (void)setFocus:(InfinitCombinedSendViewFocus)focus
 {
     [self.note_field.cell setPlaceholderString:NSLocalizedString(@"Optional note...",
                                                                  "Optional note...")];
-    switch (focus.intValue) {
-        case ADVANCED_VIEW_USER_SEARCH_FOCUS:
+    switch (focus)
+    {
+        case COMBINED_VIEW_USER_SEARCH_FOCUS:
             [self.view.window makeFirstResponder:_user_search_controller.search_field];
             [_user_search_controller cursorAtEndOfSearchBox];
             break;
-        case ADVANCED_VIEW_NOTE_FOCUS:
+        case COMBINED_VIEW_NOTE_FOCUS:
             [self.view.window makeFirstResponder:self.note_field];
             break;
         default:
@@ -370,8 +347,8 @@
 
 - (BOOL)inputsGood
 {
-    NSMutableArray* recipients = [NSMutableArray arrayWithArray:
-                                  [_user_search_controller recipientList]];
+    NSMutableArray* recipients =
+        [NSMutableArray arrayWithArray:[_user_search_controller recipientList]];
     [_user_search_controller checkInputs];
     if (recipients.count == 0)
         return NO;
@@ -404,7 +381,7 @@
     NSControl* control = aNotification.object;
     if (control != self.note_field)
         return;
-   
+    
     if (self.note_field.stringValue.length > _note_limit)
     {
         self.note_field.stringValue = [self.note_field.stringValue
@@ -416,17 +393,17 @@
     NSString* characters_str;
     if (_note_limit - note_length == 1)
     {
-        characters_str = NSLocalizedString(@"(1 char left)", @"(1 char left)");
+        characters_str = NSLocalizedString(@"1 char left", @"1 char left");
     }
     else
     {
-        characters_str = [NSString stringWithFormat:@"(%lu %@)", (_note_limit - note_length),
+        characters_str = [NSString stringWithFormat:@"%lu %@", (_note_limit - note_length),
                           NSLocalizedString(@"chars left", @"chars left")];
     }
-   
+    
     self.characters_label.attributedStringValue = [[NSAttributedString alloc]
                                                    initWithString:characters_str
-                                                       attributes:_characters_attrs];
+                                                   attributes:_characters_attrs];
 }
 
 - (BOOL)control:(NSControl*)control
@@ -435,7 +412,7 @@ doCommandBySelector:(SEL)commandSelector
 {
     if (control != self.note_field)
         return NO;
-
+    
     if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
     {
         [self.view.window makeFirstResponder:_user_search_controller.search_field];
@@ -453,17 +430,15 @@ doCommandBySelector:(SEL)commandSelector
 
 - (void)updateTable
 {
-    CGFloat y_diff = [self tableHeight] - self.files_view.frame.size.height;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
-         [self.advanced_height_constraint.animator
-          setConstant:(self.advanced_height_constraint.constant + y_diff)];
+         [self.combined_height_constraint.animator setConstant:(145.0 + [self tableHeight])];
      }
                         completionHandler:^
      {
+         [self.table_view reloadData];
      }];
-    [self.table_view reloadData];
 }
 
 - (CGFloat)tableHeight
@@ -494,7 +469,7 @@ doCommandBySelector:(SEL)commandSelector
     NSString* file = [_file_list objectAtIndex:row];
     if (file.length == 0)
         return nil;
-    IASendFileListCellView* cell = [tableView makeViewWithIdentifier:@"file_cell"
+    InfinitSendFileListCellView* cell = [tableView makeViewWithIdentifier:@"file_cell"
                                                                owner:self];
     [cell setupCellWithFilePath:[_file_list objectAtIndex:row]];
     return cell;
@@ -503,9 +478,9 @@ doCommandBySelector:(SEL)commandSelector
 - (NSTableRowView*)tableView:(NSTableView*)tableView
                rowViewForRow:(NSInteger)row
 {
-    IASendFileListRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
+    InfinitSendFileListRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
     if (row_view == nil)
-        row_view = [[IASendFileListRowView alloc] initWithFrame:NSZeroRect];
+        row_view = [[InfinitSendFileListRowView alloc] initWithFrame:NSZeroRect];
     return row_view;
 }
 
@@ -523,7 +498,7 @@ doCommandBySelector:(SEL)commandSelector
      }
                         completionHandler:^
      {
-         [_delegate advancedSendView:self wantsRemoveFileAtIndex:row];
+         [_delegate combinedSendView:self wantsRemoveFileAtIndex:row];
      }];
 }
 
@@ -531,19 +506,19 @@ doCommandBySelector:(SEL)commandSelector
 
 - (IBAction)addFilesClicked:(NSButton*)sender
 {
-    [_delegate advancedSendViewWantsOpenFileDialogBox:self];
+    [_delegate combinedSendViewWantsOpenFileDialogBox:self];
 }
 
 - (IBAction)cancelSendClicked:(NSButton*)sender
 {
-    [_delegate advancedSendViewWantsCancel:self];
+    [_delegate combinedSendViewWantsCancel:self];
 }
 
 - (IBAction)sendButtonClicked:(NSButton*)sender
 {
     if ([self inputsGood])
     {
-        [_delegate advancedSendView:self
+        [_delegate combinedSendView:self
                      wantsSendFiles:_file_list
                             toUsers:_recipient_list
                         withMessage:_message];
@@ -554,7 +529,7 @@ doCommandBySelector:(SEL)commandSelector
 
 - (BOOL)searchViewWantsIfGotFile:(IAUserSearchViewController*)sender
 {
-    if ([[_delegate advancedSendViewWantsFileList:self] count] > 0)
+    if ([[_delegate combinedSendViewWantsFileList:self] count] > 0)
         return YES;
     
     return NO;
@@ -568,7 +543,7 @@ doCommandBySelector:(SEL)commandSelector
      {
          context.duration = 0.15;
          [self.search_height_constraint.animator
-                setConstant:(self.search_height_constraint.constant + y_diff)];
+          setConstant:(self.search_height_constraint.constant + y_diff)];
      }
                         completionHandler:^
      {
@@ -583,22 +558,31 @@ doCommandBySelector:(SEL)commandSelector
     [self.view.window makeFirstResponder:self.note_field];
 }
 
-- (void)searchViewHadSendButtonClick:(IAUserSearchViewController*)sender
+- (void)searchViewHadMoreButtonClick:(IAUserSearchViewController*)sender
 {
-    IALog(@"%@ WARNING: User search view shouldn't have button shown", self);
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+         context.duration = 0.15;
+         [self setupExpandedView];
+         [self.combined_height_constraint.animator setConstant:([self tableHeight] + 145.0)];
+     }
+                        completionHandler:^
+     {
+         _expanded_view = YES;
+     }];
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender
  wantsAddFavourite:(IAUser*)user
 {
-    [_delegate advancedSendView:self
+    [_delegate combinedSendView:self
               wantsAddFavourite:user];
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender
 wantsRemoveFavourite:(IAUser*)user
 {
-    [_delegate advancedSendView:self
+    [_delegate combinedSendView:self
            wantsRemoveFavourite:user];
 }
 
@@ -611,7 +595,7 @@ wantsRemoveFavourite:(IAUser*)user
 {
     if ([self inputsGood])
     {
-        [_delegate advancedSendView:self
+        [_delegate combinedSendView:self
                      wantsSendFiles:_file_list
                             toUsers:_recipient_list
                         withMessage:_message];

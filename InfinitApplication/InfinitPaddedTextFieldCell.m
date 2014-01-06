@@ -1,14 +1,14 @@
 //
-//  IAPaddedTextFieldCell.m
+//  InfinitPaddedTextFieldCell.m
 //  InfinitApplication
 //
-//  Created by Christopher Crone on 9/6/13.
+//  Created by Christopher Crone on 24/12/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IAPaddedTextFieldCell.h"
+#import "InfinitPaddedTextFieldCell.h"
 
-@implementation IAPaddedTextFieldCell
+@implementation InfinitPaddedTextFieldCell
 {
 @private
     CGFloat _padding;
@@ -20,7 +20,7 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
-        _padding = 10.0;
+        _padding = 15.0;
     }
     return self;
 }
@@ -40,18 +40,10 @@
 - (void)drawWithFrame:(NSRect)cellFrame
                inView:(NSView*)controlView
 {
-    NSBezierPath* better_bounds = [NSBezierPath bezierPathWithRoundedRect:cellFrame
-                                                                  xRadius:5.0
-                                                                  yRadius:5.0];
-    [better_bounds addClip];
+    [IA_GREY_COLOUR(255.0) set];
+    NSRectFill(cellFrame);
     [super drawWithFrame:cellFrame
                   inView:controlView];
-    if (self.isBezeled)
-    {
-        [better_bounds setLineWidth:1.0];
-        [IA_GREY_COLOUR(224.0) set];
-        [better_bounds stroke];
-    }
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame
@@ -86,12 +78,6 @@
                   delegate:anObject
                      start:selStart
                     length:selLength];
-}
-
-- (NSRect)_focusRingFrameForFrame:(NSRect)frame
-                        cellFrame:(NSRect)cellFrame
-{
-    return self.controlView.bounds;
 }
 
 @end

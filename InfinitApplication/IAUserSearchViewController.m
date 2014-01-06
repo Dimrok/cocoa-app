@@ -238,7 +238,7 @@
     NSInteger _max_rows_shown;
     
     NSImage* _static_image;
-    NSImage* _loading_iamge;
+    NSImage* _loading_image;
     
     InfinitSearchController* _search_controller;
     NSString* _last_search;
@@ -279,7 +279,7 @@
                                            @"add a file to invite your friend.")
                                                         attributes:no_result_msg_style];
         _static_image = [IAFunctions imageNamed:@"icon-search"];
-        _loading_iamge = [IAFunctions imageNamed:@"loading"];
+        _loading_image = [IAFunctions imageNamed:@"loading"];
         
         _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
         _last_search = @"";
@@ -332,7 +332,7 @@
     [super loadView];
     [self setNoResultsHidden:YES];
     self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
-    [self initialiseSendButton];
+    [self initialisedMoreButton];
     [self.view setFrameSize:NSMakeSize(NSWidth(self.view.frame),
                                        NSHeight(self.search_box_view.frame) + [self tableHeight])];
 }
@@ -361,21 +361,29 @@
         [self.table_view.enclosingScrollView setHidden:!hidden];
 }
 
-- (void)initialiseSendButton
+- (void)initialisedMoreButton
 {
     NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.alignment = NSCenterTextAlignment;
-    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
-                                          blurRadius:1.0
-                                              colour:[NSColor blackColor]];
-    
-    NSDictionary* button_style = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
+    NSFont* more_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:0
+                                                                          size:13.0];
+    NSDictionary* normal_attrs = [IAFunctions textStyleWithFont:more_font
                                                  paragraphStyle:style
-                                                         colour:[NSColor whiteColor]
-                                                         shadow:shadow];
-    self.send_button.attributedTitle = [[NSAttributedString alloc]
-                                        initWithString:NSLocalizedString(@"SEND", @"send")
-                                        attributes:button_style];
+                                                         colour:IA_GREY_COLOUR(179.0)
+                                                         shadow:nil];
+    NSDictionary* hover_attrs = [IAFunctions textStyleWithFont:more_font
+                                                paragraphStyle:style
+                                                        colour:IA_RGB_COLOUR(11.0, 117.0, 162)
+                                                        shadow:nil];
+    
+    self.more_button.attributedTitle = [[NSAttributedString alloc]
+                                        initWithString:NSLocalizedString(@"more", @"more")
+                                        attributes:normal_attrs];
+    [self.more_button setNormalTextAttributes:normal_attrs];
+    [self.more_button setHoverTextAttributes:hover_attrs];
+    self.more_button.hand_cursor = YES;
 }
 
 - (void)addUser:(IAUser*)user
@@ -418,21 +426,6 @@
     return self.search_field.objectValue;
 }
 
-- (void)removeSendButton
-{
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-         context.duration = 0.15;
-         [self.send_button.animator setAlphaValue:0.0];
-     }
-                        completionHandler:^
-     {
-         CGFloat button_width = NSWidth(self.send_button.frame) - 15.0;
-         [self.send_button removeFromSuperview];
-         [self.search_field_width setConstant:(self.search_field_width.constant + button_width)];
-     }];
-}
-
 //- Search Functions -------------------------------------------------------------------------------
 
 - (void)cancelLastSearchOperation
@@ -447,7 +440,7 @@
                afterDelay:0.3];
     if (!self.search_image.animates)
     {
-        self.search_image.image = _loading_iamge;
+        self.search_image.image = _loading_image;
         self.search_image.animates = YES;
     }
 }
@@ -805,9 +798,12 @@ displayStringForRepresentedObject:(id)representedObject
 
 //- Button Handling --------------------------------------------------------------------------------
 
-- (IBAction)sendButtonClicked:(NSButton*)sender
+- (IBAction)moreButtonClicked:(NSButton*)sender
 {
-    [_delegate searchViewHadSendButtonClick:self];
+    CGFloat button_width = NSWidth(self.more_button.frame) - 15.0;
+    [self.more_button removeFromSuperview];
+    [self.search_field_width setConstant:(self.search_field_width.constant + button_width)];
+    [_delegate searchViewHadMoreButtonClick:self];
 }
 
 //- Search Controller Protocol ---------------------------------------------------------------------

@@ -1,30 +1,20 @@
 //
-//  IASendFileListCellView.m
+//  InfinitSendFileListCellView.m
 //  InfinitApplication
 //
-//  Created by Christopher Crone on 8/5/13.
+//  Created by Christopher Crone on 24/12/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IASendFileListCellView.h"
+#import "InfinitSendFileListCellView.h"
 
-@implementation IASendFileListCellView
+@implementation InfinitSendFileListCellView
 {
 @private
     NSString* _file_path;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
-
-- (id)initWithFrame:(NSRect)frame
-{
-    if (self = [super initWithFrame:frame])
-    {
-        // Initialization code here.
-    }
-    
-    return self;
-}
 
 - (BOOL)isOpaque
 {
@@ -57,7 +47,7 @@
     {
         NSDictionary * fattrs = [[NSFileManager defaultManager]
                                  attributesOfItemAtPath:[source stringByAppendingPathComponent:path]
-                                                  error:error];
+                                 error:error];
         size += [[fattrs objectForKey:NSFileSize] unsignedLongLongValue];
     }
     // Return Total Size in Bytes
@@ -74,13 +64,13 @@
                                                                         weight:0
                                                                           size:12.0];
     NSDictionary* file_name_style = [IAFunctions
-                                        textStyleWithFont:file_name_font
-                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                   colour:IA_RGB_COLOUR(85.0, 158.0, 201.0)
-                                                   shadow:nil];
+                                     textStyleWithFont:file_name_font
+                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                     colour:IA_RGB_COLOUR(85.0, 158.0, 201.0)
+                                     shadow:nil];
     self.file_icon_and_name.attributedTitle = [[NSAttributedString alloc]
                                                initWithString:file_name
-                                                   attributes:file_name_style];
+                                               attributes:file_name_style];
     
     BOOL is_directory;
     NSUInteger file_size = 0;
@@ -120,7 +110,7 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:_file_path])
     {
         NSArray* file_url = [NSArray arrayWithObject:[[NSURL fileURLWithPath:_file_path]
-                                                       absoluteURL]];
+                                                      absoluteURL]];
         [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:file_url];
     }
 }

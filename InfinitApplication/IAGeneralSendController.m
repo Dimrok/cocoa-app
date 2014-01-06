@@ -15,11 +15,9 @@
     id<IAGeneralSendControllerProtocol> _delegate;
     
     // Send views
-    IAAdvancedSendViewController* _advanced_send_controller;
     IAFavouritesSendViewController* _favourites_send_controller;
-    IASimpleSendViewController* _simple_send_controller;
-    
-    id _currently_open_controller;
+    InfinitCombinedSendViewController* _combined_send_controller;
+
     IAUserSearchViewController* _user_search_controller;
     NSMutableArray* _files;
     BOOL _send_view_open;
@@ -59,12 +57,8 @@
 
 - (void)openFileDialogForView:(id)sender
 {
-    // XXX Should subclass the send views to use shared protocol
-    if (![sender isKindOfClass:IASimpleSendViewController.class] &&
-        ![sender isKindOfClass:IAAdvancedSendViewController.class])
-    {
+    if (sender != _combined_send_controller)
         return;
-    }
     
     NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
     file_dialog.canChooseFiles = YES;
@@ -89,12 +83,14 @@
 {
     _send_view_open = YES;
     [_favourites_send_controller hideFavourites];
-    if (_simple_send_controller == nil)
-        _simple_send_controller = [[IASimpleSendViewController alloc]
-                                        initWithDelegate:self
-                                     andSearchController:_user_search_controller];
-    [_delegate sendController:self wantsActiveController:_simple_send_controller];
-    _currently_open_controller = _simple_send_controller;
+    if (_combined_send_controller == nil)
+    {
+        _combined_send_controller =
+            [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                                    andSearchController:_user_search_controller
+                                                                focusOn:COMBINED_VIEW_USER_SEARCH_FOCUS];
+    }
+    [_delegate sendController:self wantsActiveController:_combined_send_controller];
 }
 
 - (void)openWithFiles:(NSArray*)files
@@ -108,16 +104,18 @@
         if (![_files containsObject:file])
             [_files addObject:file];
     }
-    if (_currently_open_controller == nil)
+    if (_combined_send_controller == nil)
     {
-        _simple_send_controller = [[IASimpleSendViewController alloc]
-                                   initWithDelegate:self
-                                   andSearchController:_user_search_controller];
-        _currently_open_controller = _simple_send_controller;
+        _combined_send_controller =
+        [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                                andSearchController:_user_search_controller
+                                                            focusOn:COMBINED_VIEW_USER_SEARCH_FOCUS];
     }
     else
-        [_currently_open_controller filesUpdated];
-    [_delegate sendController:self wantsActiveController:_simple_send_controller];
+    {
+        [_combined_send_controller filesUpdated];
+    }
+    [_delegate sendController:self wantsActiveController:_combined_send_controller];
     [_user_search_controller addUser:user];
 }
 
@@ -130,95 +128,32 @@
     }
 }
 
-//- View Switching ---------------------------------------------------------------------------------
+//- Combined Send View Protocol --------------------------------------------------------------------
 
-- (void)openAdvancedViewWithFocus:(IAAdvancedSendViewFocus)focus
-{
-    _send_view_open = YES;
-    if (_advanced_send_controller == nil)
-        _advanced_send_controller = [[IAAdvancedSendViewController alloc]
-                                        initWithDelegate:self
-                                     andSearchController:_user_search_controller
-                                     focusOn:focus];
-    [_delegate sendController:self wantsActiveController:_advanced_send_controller];
-    _currently_open_controller = _advanced_send_controller;
-    _simple_send_controller = nil;
-}
-
-//- Simple Send View Protocol ----------------------------------------------------------------------
-
-- (void)simpleSendViewWantsOpenFileDialogBox:(IASimpleSendViewController*)sender
-{
-    [self openFileDialogForView:sender];
-}
-
-- (void)simpleSendViewWantsAddNote:(IASimpleSendViewController*)sender
-{
-    [self openAdvancedViewWithFocus:ADVANCED_VIEW_NOTE_FOCUS];
-}
-
-- (void)simpleSendViewWantsCancel:(IASimpleSendViewController*)sender
+- (void)combinedSendViewWantsCancel:(InfinitCombinedSendViewController*)sender
 {
     _files = nil;
     [_delegate sendControllerWantsClose:self];
 }
 
-- (NSArray*)simpleSendViewWantsFileList:(IASimpleSendViewController*)sender
+- (NSArray*)combinedSendViewWantsFileList:(InfinitCombinedSendViewController*)sender
 {
     return [NSArray arrayWithArray:_files];
 }
 
-- (void)simpleSendView:(IASimpleSendViewController*)sender
-        wantsSendFiles:(NSArray*)files
-               toUsers:(NSArray*)users
-{
-    [_delegate sendController:self
-               wantsSendFiles:files
-                      toUsers:users
-                  withMessage:@""];
-    [_delegate sendControllerWantsClose:self];
-}
-
-- (void)simpleSendView:(IASimpleSendViewController*)sender
-     wantsAddFavourite:(IAUser*)user
-{
-    [_delegate sendController:self
-            wantsAddFavourite:user];
-}
-
-- (void)simpleSendView:(IASimpleSendViewController*)sender
-  wantsRemoveFavourite:(IAUser*)user
-{
-    [_delegate sendController:self
-         wantsRemoveFavourite:user];
-}
-
-//- Advanced Send View Protocol --------------------------------------------------------------------
-
-- (void)advancedSendViewWantsCancel:(IAAdvancedSendViewController*)sender
-{
-    _files = nil;
-    [_delegate sendControllerWantsClose:self];
-}
-
-- (NSArray*)advancedSendViewWantsFileList:(IAAdvancedSendViewController*)sender
-{
-    return [NSArray arrayWithArray:_files];
-}
-
-- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
   wantsRemoveFileAtIndex:(NSInteger)index
 {
     [_files removeObjectAtIndex:index];
     [sender filesUpdated];
 }
 
-- (void)advancedSendViewWantsOpenFileDialogBox:(IAAdvancedSendViewController*)sender
+- (void)combinedSendViewWantsOpenFileDialogBox:(InfinitCombinedSendViewController*)sender
 {
     [self openFileDialogForView:sender];
 }
 
-- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
           wantsSendFiles:(NSArray*)files
                  toUsers:(NSArray*)users
              withMessage:(NSString*)message
@@ -230,14 +165,14 @@
     [_delegate sendControllerWantsClose:self];
 }
 
-- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
        wantsAddFavourite:(IAUser*)user
 {
     [_delegate sendController:self
             wantsAddFavourite:user];
 }
 
-- (void)advancedSendView:(IAAdvancedSendViewController*)sender
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
     wantsRemoveFavourite:(IAUser*)user
 {
     [_delegate sendController:self

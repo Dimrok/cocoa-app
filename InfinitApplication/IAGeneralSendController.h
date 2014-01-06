@@ -11,15 +11,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "IAAdvancedSendViewController.h"
 #import "IAFavouritesSendViewController.h"
-#import "IASimpleSendViewController.h"
+#import "InfinitCombinedSendViewController.h"
 
 @protocol IAGeneralSendControllerProtocol;
 
-@interface IAGeneralSendController : NSObject <IAAdvancedSendViewProtocol,
-                                               IAFavouritesSendViewProtocol,
-                                               IASimpleSendViewProtocol>
+@interface IAGeneralSendController : NSObject <IAFavouritesSendViewProtocol,
+                                               InfinitCombinedSendViewProtocol>
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
 
