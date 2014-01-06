@@ -193,7 +193,7 @@
         _user_search_controller = search_controller;
         [_user_search_controller setDelegate:self];
         _file_list = [_delegate combinedSendViewWantsFileList:self];
-        _row_height = 40.0;
+        _row_height = 45.0;
         _max_rows_shown = 3;
         _message = @"";
         _note_limit = 100;
@@ -201,7 +201,7 @@
         NSFont* small_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
                                                                         weight:0
-                                                                          size:11.0];
+                                                                          size:10.0];
         NSMutableParagraphStyle* right_aligned =
             [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         right_aligned.alignment = NSRightTextAlignment;
@@ -235,7 +235,7 @@
     NSFont* add_files_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
                                                                         weight:0
-                                                                          size:12.0];
+                                                                          size:13.0];
     NSMutableParagraphStyle* centred_style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     centred_style.alignment = NSCenterTextAlignment;
     NSDictionary* normal_attrs = [IAFunctions textStyleWithFont:add_files_font
@@ -264,6 +264,24 @@
     self.characters_label.attributedStringValue =
     [[NSAttributedString alloc] initWithString:characters_str
                                     attributes:_characters_attrs];
+    
+    if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
+    {
+        NSFont* search_font = [[NSFontManager sharedFontManager]fontWithFamily:@"Helvetica"
+                                                                        traits:NSUnboldFontMask
+                                                                        weight:3
+                                                                          size:13.0];
+        NSDictionary* search_attrs = [IAFunctions textStyleWithFont:search_font
+                                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                             colour:IA_GREY_COLOUR(209.0)
+                                                             shadow:nil];
+        NSString* placeholder_str = NSLocalizedString(@"Optional note...",
+                                                      @"Optional note...");
+        NSAttributedString* search_placeholder = [[NSAttributedString alloc]
+                                                  initWithString:placeholder_str
+                                                  attributes:search_attrs];
+        [self.note_field.cell setPlaceholderAttributedString:search_placeholder];
+    }
 }
 
 - (void)awakeFromNib
@@ -434,6 +452,7 @@ doCommandBySelector:(SEL)commandSelector
      {
          context.duration = 0.15;
          [self.combined_height_constraint.animator setConstant:(145.0 + [self tableHeight])];
+         [self.table_height_constraint.animator setConstant:[self tableHeight]];
      }
                         completionHandler:^
      {
@@ -565,6 +584,7 @@ doCommandBySelector:(SEL)commandSelector
          context.duration = 0.15;
          [self setupExpandedView];
          [self.combined_height_constraint.animator setConstant:([self tableHeight] + 145.0)];
+         [self.table_height_constraint setConstant:[self tableHeight]];
      }
                         completionHandler:^
      {

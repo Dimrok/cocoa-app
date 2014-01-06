@@ -39,6 +39,7 @@ typedef enum __InfinitCombinedSendViewFocus
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_height_constraint;
 @property (nonatomic, strong) IBOutlet NSView* search_view;
 @property (nonatomic, strong) IBOutlet NSButton* send_button;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint* table_height_constraint;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 - (id)initWithDelegate:(id<InfinitCombinedSendViewProtocol>)delegate
