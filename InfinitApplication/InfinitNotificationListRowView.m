@@ -76,7 +76,7 @@
                                           self.bounds.origin.y + 2.0,
                                           NSWidth(self.bounds),
                                           NSHeight(self.bounds) - 2.0);
-        [IA_RGB_COLOUR(241.0, 251.0, 252.0) set];
+        [IA_RGB_COLOUR(239.0, 252.0, 255.0) set];
         NSRectFill(blue_bg_frame);
     }
     else
