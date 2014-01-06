@@ -10,12 +10,10 @@
 
 @interface IAHoverButton : NSButton
 
-@property (nonatomic, strong) NSImage* hoverImage;
 @property (nonatomic) BOOL hand_cursor;
-
-- (void)setHoverImage:(NSImage*)hoverImage;
-
-- (void)setHoverTextAttributes:(NSDictionary*)attrs;
-- (void)setNormalTextAttributes:(NSDictionary*)attrs;
+@property (nonatomic, setter = setHoverTextAttributes:) NSDictionary* hover_attrs;
+@property (nonatomic, strong, setter = setHoverImage:) NSImage* hover_image;
+@property (nonatomic, setter = setNormalTextAttributes:) NSDictionary* normal_attrs;
+@property (nonatomic, strong, setter = setNormalImage:) NSImage* normal_image;
 
 @end

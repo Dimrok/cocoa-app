@@ -12,16 +12,15 @@
 {
 @private
     NSTrackingArea* _tracking_area;
-    NSDictionary* _normal_attrs;
-    NSDictionary* _hover_attrs;
-    NSImage* _normal_image;
-    NSImage* _hover_image;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-@synthesize hoverImage = _hover_image;
 @synthesize hand_cursor = _hand_cursor;
+@synthesize hover_attrs = _hover_attrs;
+@synthesize hover_image = _hover_image;
+@synthesize normal_attrs = _normal_attrs;
+@synthesize normal_image = _normal_image;
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -36,6 +35,7 @@
                                                colour:IA_RGB_COLOUR(11.0, 117.0, 162)
                                                shadow:nil];
         _hand_cursor = YES;
+        _normal_image = nil;
     }
     return self;
 }
@@ -43,7 +43,8 @@
 - (void)awakeFromNib
 {
     [self setFocusRingType:NSFocusRingTypeNone];
-    _normal_image = self.image;
+    if (_normal_image == nil)
+        _normal_image = self.image;
 }
 
 - (void)dealloc
@@ -53,12 +54,11 @@
 
 - (void)resetCursorRects
 {
-    if (!_hand_cursor)
-    {
-        [super resetCursorRects];
-        return;
-    }
     [super resetCursorRects];
+
+    if (!_hand_cursor)
+        return;
+
     NSCursor* cursor = [NSCursor pointingHandCursor];
     [self addCursorRect:self.bounds cursor:cursor];
 }
@@ -85,8 +85,8 @@
 
 - (void)mouseEntered:(NSEvent*)theEvent
 {
-    NSAttributedString* title = self.attributedTitle;
-    self.attributedTitle = [[NSAttributedString alloc] initWithString:title.string
+    NSString* title = self.attributedTitle.string;
+    self.attributedTitle = [[NSAttributedString alloc] initWithString:title
                                                            attributes:_hover_attrs];
     self.image = _hover_image;
     [self setNeedsDisplay:YES];
@@ -94,8 +94,8 @@
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
-    NSAttributedString* title = self.attributedTitle;
-    self.attributedTitle = [[NSAttributedString alloc] initWithString:title.string
+    NSString* title = self.attributedTitle.string;
+    self.attributedTitle = [[NSAttributedString alloc] initWithString:title
                                                            attributes:_normal_attrs];
     self.image = _normal_image;
     [self setNeedsDisplay:YES];
@@ -103,9 +103,14 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
-- (void)setHoverImage:(NSImage*)new_image
+- (void)setNormalImage:(NSImage*)normal_image
 {
-    _hover_image = new_image;
+    _normal_image = normal_image;
+}
+
+- (void)setHoverImage:(NSImage*)hover_image
+{
+    _hover_image = hover_image;
 }
 
 - (void)setNormalTextAttributes:(NSDictionary*)attrs
