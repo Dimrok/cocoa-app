@@ -240,6 +240,7 @@
     self.error_message.attributedStringValue = [[NSAttributedString alloc]
                                                 initWithString:error
                                                 attributes:_error_attrs];
+    [self.error_message setHidden:NO];
     [self.view.window makeFirstResponder:self.email_address];
 }
 
