@@ -347,8 +347,6 @@
 
 - (void)setFocus:(InfinitCombinedSendViewFocus)focus
 {
-    [self.note_field.cell setPlaceholderString:NSLocalizedString(@"Optional note...",
-                                                                 "Optional note...")];
     switch (focus)
     {
         case COMBINED_VIEW_USER_SEARCH_FOCUS:
