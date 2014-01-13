@@ -12,12 +12,14 @@
 
 @interface InfinitNotificationListRowView : NSTableRowView
 
+@property (nonatomic, readwrite) BOOL clickable;
 @property (nonatomic, readwrite, setter = setClicked:) BOOL clicked;
 @property (nonatomic, readwrite, setter = setHovered:) BOOL hovered;
 @property (nonatomic, readwrite, setter = setUnread:) BOOL unread;
 
 - (id)initWithFrame:(NSRect)frameRect
-        andDelegate:(id<InfinitNotificationListRowProtocol>)delegate;
+        withDelegate:(id<InfinitNotificationListRowProtocol>)delegate
+       andClickable:(BOOL)clickable;
 
 @end
 

@@ -15,15 +15,18 @@
     NSTrackingArea* _tracking_area;
 }
 
+@synthesize clickable = _clickable;
 @synthesize clicked = _clicked;
 @synthesize hovered = _hovered;
 @synthesize unread = _unread;
 
 - (id)initWithFrame:(NSRect)frameRect
-        andDelegate:(id<InfinitNotificationListRowProtocol>)delegate
+        withDelegate:(id<InfinitNotificationListRowProtocol>)delegate
+        andClickable:(BOOL)clickable
 {
     if (self = [super initWithFrame:frameRect])
     {
+        _clickable = clickable;
         _delegate = delegate;
     }
     return self;
@@ -36,12 +39,16 @@
 
 - (void)setClicked:(BOOL)clicked
 {
+    if (!_clickable)
+        return;
     _clicked = clicked;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setHovered:(BOOL)hovered
 {
+    if (!_clickable)
+        return;
     _hovered = hovered;
     [self setNeedsDisplay:YES];
 }

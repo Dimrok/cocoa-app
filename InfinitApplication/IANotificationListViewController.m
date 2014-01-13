@@ -309,15 +309,25 @@
 {
     InfinitNotificationListRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
     if (row_view == nil)
-        row_view = [[InfinitNotificationListRowView alloc] initWithFrame:NSZeroRect andDelegate:self];
+    {
+        row_view = [[InfinitNotificationListRowView alloc] initWithFrame:NSZeroRect
+                                                            withDelegate:self
+                                                            andClickable:YES];
+    }
     if (_connection_status != gap_user_status_online && row == 0)
+    {
         row_view.unread = YES;
+        row_view.clickable = NO;
+    }
     return row_view;
 }
 
 - (void)updateHeaderAndBackground
 {
     if (self.table_view.numberOfRows == 0)
+        return;
+    
+    if (_connection_status != gap_user_status_online)
         return;
 
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
