@@ -336,7 +336,7 @@
     if (row_view.hovered)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-hover"];
-        self.table_view.backgroundColor = IA_GREY_COLOUR(248.0);
+        self.table_view.backgroundColor = IA_RGB_COLOUR(236.0, 253.0, 255.0);
     }
     else if (row_view.unread)
     {
