@@ -210,7 +210,7 @@
 												<array class="NSMutableArray" key="NSSubviews"/>
 												<string key="NSFrameSize">{317, 72}</string>
 												<reference key="NSSuperview" ref="675472725"/>
-												<reference key="NSNextKeyView" ref="717741214"/>
+												<reference key="NSNextKeyView" ref="471540599"/>
 												<string key="NSReuseIdentifierKey">_NS:13</string>
 												<string key="NSAntiCompressionPriority">{750, 250}</string>
 												<bool key="NSEnabled">YES</bool>
@@ -327,7 +327,7 @@
 								</array>
 								<string key="NSFrameSize">{317, 72}</string>
 								<reference key="NSSuperview" ref="293821247"/>
-								<reference key="NSNextKeyView" ref="675472725"/>
+								<reference key="NSNextKeyView" ref="717741214"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<string key="NSHuggingPriority">{250, 750}</string>
 								<string key="NSAntiCompressionPriority">{750, 200}</string>
@@ -426,6 +426,24 @@
 					<object class="NSMenuItem" id="317747973">
 						<reference key="NSMenu" ref="64764261"/>
 						<string key="NSTitle">Report a Problem</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="865904368"/>
+						<reference key="NSMixedImage" ref="891855379"/>
+					</object>
+					<object class="NSMenuItem" id="801141841">
+						<reference key="NSMenu" ref="64764261"/>
+						<bool key="NSIsDisabled">YES</bool>
+						<bool key="NSIsSeparator">YES</bool>
+						<string key="NSTitle"/>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="865904368"/>
+						<reference key="NSMixedImage" ref="891855379"/>
+					</object>
+					<object class="NSMenuItem" id="75720324">
+						<reference key="NSMenu" ref="64764261"/>
+						<string key="NSTitle">Start at Login</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="865904368"/>
@@ -686,6 +704,22 @@
 						<reference key="destination" ref="120391481"/>
 					</object>
 					<int key="connectionID">1130</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">auto_start_toggle</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="75720324"/>
+					</object>
+					<int key="connectionID">1133</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onToggleAutoStartClick:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="75720324"/>
+					</object>
+					<int key="connectionID">1134</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1125,6 +1159,8 @@
 							<reference ref="317747973"/>
 							<reference ref="67301100"/>
 							<reference ref="625250334"/>
+							<reference ref="75720324"/>
+							<reference ref="801141841"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -2819,6 +2855,16 @@
 						<reference key="object" ref="625250334"/>
 						<reference key="parent" ref="64764261"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1131</int>
+						<reference key="object" ref="75720324"/>
+						<reference key="parent" ref="64764261"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1132</int>
+						<reference key="object" ref="801141841"/>
+						<reference key="parent" ref="64764261"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -2873,6 +2919,8 @@
 				<string key="1119.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1125.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1128.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1132.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<array class="NSMutableArray" key="132.IBNSViewMetadataConstraints">
 					<reference ref="420261032"/>
 					<reference ref="714571219"/>
@@ -3083,7 +3131,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1130</int>
+			<int key="maxID">1134</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

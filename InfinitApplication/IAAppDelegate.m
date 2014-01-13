@@ -10,7 +10,6 @@
 
 #import <Sparkle/Sparkle.h>
 
-#import "IAAutoStartup.h"
 #import "IALogFileManager.h"
 
 //- Automatic Relaunching --------------------------------------------------------------------------
@@ -66,17 +65,6 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
     NSLog(@"%@ Will relaunch", self);
 }
 
-//- Login Items ------------------------------------------------------------------------------------
-
-// XXX This will later be managed in settings
-- (void)checkInLoginItems
-{
-#ifdef BUILD_PRODUCTION
-    if (![[IAAutoStartup sharedInstance] appInLoginItemList])
-        [[IAAutoStartup sharedInstance] addAppAsLoginItem];
-#endif
-}
-
 //- Initialisation ---------------------------------------------------------------------------------
 
 - (id)init
@@ -115,7 +103,6 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     _controller = [[IAMainController alloc] initWithDelegate:self];
-    [self checkInLoginItems];
     if (_infinit_url != nil) // Infinit was launched with a link
         [_controller handleInfinitLink:_infinit_url];
 }

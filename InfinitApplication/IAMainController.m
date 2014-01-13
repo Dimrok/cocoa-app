@@ -10,6 +10,7 @@
 
 #import <Gap/IAGapState.h>
 
+#import "IAAutoStartup.h"
 #import "IACrashReportManager.h"
 #import "IAGap.h"
 #import "IAKeychainManager.h"
@@ -98,6 +99,11 @@
         
         _sent_sound = [NSSound soundNamed:@"sound_sent"];
         
+        if (![[[IAUserPrefs sharedInstance] prefsForKey:@"first_launch"] isEqualToString:@"0"])
+        {
+            [self firstLaunch];
+        }
+        
         if (![self tryAutomaticLogin])
         {
             IALog(@"%@ Autologin failed", self);
@@ -117,6 +123,14 @@
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [NSNotificationCenter.defaultCenter removeObserver:self];
+}
+
+//- First Launch -----------------------------------------------------------------------------------
+
+- (void)firstLaunch
+{
+    [self addToLoginItems];
+    [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"first_launch"];
 }
 
 //- Check Server Connectivity ----------------------------------------------------------------------
@@ -803,6 +817,29 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
     [IAUserManager removeFavourite:user];
 }
 
+//- Login Items ------------------------------------------------------------------------------------
+
+- (void)addToLoginItems
+{
+#ifdef BUILD_PRODUCTION
+    if (![[IAAutoStartup sharedInstance] appInLoginItemList])
+        [[IAAutoStartup sharedInstance] addAppAsLoginItem];
+#endif
+}
+
+- (BOOL)appInLoginItems
+{
+    return [[IAAutoStartup sharedInstance] appInLoginItemList];
+}
+
+- (void)removeFromLoginItems
+{
+#ifdef BUILD_PRODUCTION
+    if ([[IAAutoStartup sharedInstance] appInLoginItemList])
+        [[IAAutoStartup sharedInstance] removeAppFromLoginItem];
+#endif
+}
+
 //- Login Window Protocol --------------------------------------------------------------------------
 
 - (void)tryLogin:(InfinitLoginViewController*)sender
@@ -945,6 +982,24 @@ transactionsProgressForUser:(IAUser*)user
 - (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender
 {
     [_delegate mainControllerWantsCheckForUpdate:self];
+}
+
+- (BOOL)notificationListWantsAutoStartStatus:(IANotificationListViewController*)sender
+{
+    return [self appInLoginItems];
+}
+
+- (void)notificationList:(IANotificationListViewController*)sender
+            setAutoStart:(BOOL)state
+{
+    if (state)
+    {
+        [self addToLoginItems];
+    }
+    else
+    {
+        [self removeFromLoginItems];
+    }
 }
 
 //- Not Logged In Protocol -------------------------------------------------------------------------

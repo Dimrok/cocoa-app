@@ -56,7 +56,9 @@
                                                                      NULL,
                                                                      NULL);
 		if (item)
+        {
 			CFRelease(item);
+        }
         
     CFRelease(login_items);
 	}
@@ -91,12 +93,14 @@
 		}
 	}
     else
+    {
         return YES; // In case something has gone wrong, don't want application added to list
+    }
     return in_list;
 }
 
 // Remove Infinit from login item list
-- (void)deleteAppFromLoginItem
+- (void)removeAppFromLoginItem
 {
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:_application_path];
     
@@ -115,7 +119,7 @@
 			if (LSSharedFileListItemResolve(item_ref, 0, (CFURLRef*)&url, NULL) == noErr)
             {
 				NSString* url_path = [(__bridge NSURL*)url path];
-				if ([url_path compare:_application_path] == NSOrderedSame)
+				if ([url_path.lastPathComponent hasPrefix:_application_name])
                 {
 					LSSharedFileListItemRemove(login_items, item_ref);
 				}

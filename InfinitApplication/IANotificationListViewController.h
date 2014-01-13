@@ -19,6 +19,7 @@
 @interface IANotificationListViewController : IAViewController <IANotificationListCellProtocol,
                                                                 InfinitNotificationListRowProtocol>
 
+@property (nonatomic, retain) IBOutlet NSMenuItem* auto_start_toggle;
 @property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
 @property (nonatomic, strong) IBOutlet NSButton* gear_button;
 @property (nonatomic, strong) IBOutlet NSMenu* gear_menu;
@@ -77,5 +78,10 @@ transactionsProgressForUser:(IAUser*)user;
 - (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender;
 
 - (void)notificationListWantsLogout:(IANotificationListViewController*)sender;
+
+- (BOOL)notificationListWantsAutoStartStatus:(IANotificationListViewController*)sender;
+
+- (void)notificationList:(IANotificationListViewController*)sender
+            setAutoStart:(BOOL)state;
 
 @end

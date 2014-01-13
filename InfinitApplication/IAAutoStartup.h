@@ -17,6 +17,6 @@
 
 - (BOOL)appInLoginItemList;
 
-- (void)deleteAppFromLoginItem;
+- (void)removeAppFromLoginItem;
 
 @end

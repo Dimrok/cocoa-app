@@ -103,6 +103,11 @@
                              [NSString stringWithUTF8String:INFINIT_VERSION]];
     _version_item.title = version_str;
     
+    if ([_delegate notificationListWantsAutoStartStatus:self])
+        _auto_start_toggle.state = NSOnState;
+    else
+        _auto_start_toggle.state = NSOffState;
+    
     if (_transaction_list.count == 0)
     {
         [self.no_data_message setHidden:NO];
@@ -493,6 +498,20 @@
 - (IBAction)onCheckForUpdateClick:(NSMenuItem*)sender
 {
     [_delegate notificationListWantsCheckForUpdate:self];
+}
+
+- (IBAction)onToggleAutoStartClick:(NSMenuItem*)sender
+{
+    if (sender.state == NSOffState)
+    {
+        sender.state = NSOnState;
+        [_delegate notificationList:self setAutoStart:YES];
+    }
+    else
+    {
+        sender.state = NSOffState;
+        [_delegate notificationList:self setAutoStart:NO];
+    }
 }
 
 //- Transaction Handling ---------------------------------------------------------------------------
