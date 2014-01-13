@@ -27,6 +27,8 @@ typedef enum IAStatusBarIconStatus {
     BOOL _pulse;
     gap_UserStatus _connected;
     NSInteger _number_of_items;
+    NSStatusItem* _status_item;
+    CGFloat _length;
 }
 
 @synthesize isClickable = _is_clickable;
@@ -55,7 +57,8 @@ typedef enum IAStatusBarIconStatus {
     [self unregisterDraggedTypes];
 }
 
-- (id)initWithDelegate:(id<IAStatusBarIconProtocol>)delegate statusItem:(NSStatusItem*)status_item
+- (id)initWithDelegate:(id<IAStatusBarIconProtocol>)delegate
+            statusItem:(NSStatusItem*)status_item
 {
     if (self = [super init])
     {
@@ -65,9 +68,10 @@ typedef enum IAStatusBarIconStatus {
         _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"icon-menu-bar-clicked"];
         _icon[STATUS_BAR_ICON_NO_CONNECTION] = [IAFunctions
                                                 imageNamed:@"icon-menu-bar-inactive"];
-        CGFloat width = [status_item length];
+        _status_item = status_item;
+        _length = _icon[0].size.width + 15.0;
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
-        NSRect rect = NSMakeRect(0.0, 0.0, width, height);
+        NSRect rect = NSMakeRect(0.0, 0.0, _length, height);
         self = [self initWithFrame:rect];
         [self setNeedsDisplay:YES];
     }
@@ -76,6 +80,45 @@ typedef enum IAStatusBarIconStatus {
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    NSAttributedString* notifications_str;
+    _length = _icon[0].size.width + 15.0;
+    if (_number_of_items > 0)
+    {
+        NSDictionary* style;
+        NSFont* font = [NSFont systemFontOfSize:15.0];
+        if (_is_highlighted)
+        {
+            style = [IAFunctions textStyleWithFont:font
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_GREY_COLOUR(255.0)
+                                            shadow:nil];
+        }
+        else if (_connected == gap_user_status_online)
+        {
+            style = [IAFunctions textStyleWithFont:font
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_RGB_COLOUR(221.0, 0.0, 0.0)
+                                            shadow:nil];
+        }
+        else if (_connected != gap_user_status_online)
+        {
+            style = [IAFunctions textStyleWithFont:font
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_GREY_COLOUR(93.0)
+                                            shadow:nil];
+        }
+        NSString* number_str = _number_of_items > 99 ?
+        @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
+        notifications_str = [[NSAttributedString alloc] initWithString:number_str
+                                                           attributes:style];
+        if (_number_of_items > 9)
+            _length += notifications_str.length + 20.0;
+        else
+            _length += notifications_str.length + 10.0;
+    }
+    
+    self.frame = NSMakeRect(0.0, 0.0, _length, [[NSStatusBar systemStatusBar] thickness]);
+    
     if (_is_highlighted)
     {
         [[NSColor selectedMenuItemColor] set];
@@ -95,43 +138,20 @@ typedef enum IAStatusBarIconStatus {
         icon = _icon[STATUS_BAR_ICON_FIRE];
     else
         icon = _icon[STATUS_BAR_ICON_NORMAL];
-    CGFloat x = roundf((NSWidth(self.bounds) - icon.size.width) / 2);
+    CGFloat x;
+    if (_number_of_items == 0)
+        x = roundf((NSWidth(self.bounds) - icon.size.width) / 2);
+    else
+        x = round((NSWidth(self.bounds) - icon.size.width - notifications_str.size.width) / 2.0 - 2.0);
     CGFloat y = roundf((NSHeight(self.bounds) - icon.size.height) / 2);
     [icon drawAtPoint:NSMakePoint(x, y)
              fromRect:self.bounds
             operation:NSCompositeSourceOver
              fraction:1.0];
+    
     if (_number_of_items > 0)
     {
-        NSDictionary* style;
-        if (_is_highlighted)
-        {
-            style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:IA_GREY_COLOUR(255.0)
-                                            shadow:nil];
-        }
-        else if (_connected == gap_user_status_online)
-        {
-            style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:IA_RGB_COLOUR(221.0, 0.0, 0.0)
-                                            shadow:nil];
-        }
-        else if (_connected != gap_user_status_online)
-        {
-            style = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:IA_GREY_COLOUR(93.0)
-                                            shadow:nil];
-        }
-        NSString* number_str = _number_of_items > 9 ?
-                    @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
-        NSAttributedString* notifications_str = [[NSAttributedString alloc]
-                                                            initWithString:number_str
-                                                                attributes:style];
-        [notifications_str drawAtPoint:
-            NSMakePoint(NSWidth(self.bounds) - notifications_str.size.width, 9.0)];
+        [notifications_str drawAtPoint:NSMakePoint(_length - notifications_str.size.width - 5.0, 2.0)];
     }
 }
 

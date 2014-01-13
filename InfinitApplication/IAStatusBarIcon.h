@@ -16,7 +16,8 @@
 @property (nonatomic, readwrite) BOOL isClickable;
 @property (nonatomic, readonly) BOOL isHighlighted;
 
-- (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate statusItem:(NSStatusItem*)status_item;
+- (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate
+            statusItem:(NSStatusItem*)status_item;
 
 - (void)setConnected:(gap_UserStatus)connected;
 
