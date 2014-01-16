@@ -9,12 +9,26 @@
 #import "IAStatusBarIcon.h"
 #import "IAFunctions.h"
 
-typedef enum IAStatusBarIconStatus {
+#import <QuartzCore/QuartzCore.h>
+
+typedef enum __IAStatusBarIconStatus
+{
+    STATUS_BAR_ICON_NONE = -1,
     STATUS_BAR_ICON_NORMAL = 0,
     STATUS_BAR_ICON_FIRE,
     STATUS_BAR_ICON_CLICKED,
     STATUS_BAR_ICON_NO_CONNECTION,
+    STATUS_BAR_ICON_ANIMATED,
+    STATUS_BAR_ICON_FIRE_ANIMATED,
+    STATUS_BAR_ICON_LOGGING_IN,
 } IAStatusBarIconStatus;
+
+typedef enum __InfinitStatusBarIconColour
+{
+    STATUS_BAR_ICON_COLOUR_BLACK = 0,
+    STATUS_BAR_ICON_COLOUR_GREY = 1,
+    STATUS_BAR_ICON_COLOUR_RED = 2,
+} InfinitStatusBarIconColour;
 
 @implementation IAStatusBarIcon
 {
@@ -22,17 +36,22 @@ typedef enum IAStatusBarIconStatus {
     id _delegate;
     NSArray* _drag_types;
     NSImage* _icon[4];
-    BOOL _animating;
+    NSImageView* _icon_view;
     BOOL _is_highlighted;
-    BOOL _pulse;
     gap_UserStatus _connected;
     NSInteger _number_of_items;
     NSStatusItem* _status_item;
     CGFloat _length;
+    
+    IAStatusBarIconStatus _current_mode;
+    NSArray* _black_animated_images;
+    NSArray* _red_animated_images;
 }
 
 @synthesize isClickable = _is_clickable;
 @synthesize isHighlighted = _is_highlighted;
+@synthesize isLoggingIn = _logging_in;
+@synthesize isTransferring = _is_transferring;
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -44,9 +63,9 @@ typedef enum IAStatusBarIconStatus {
                                                 nil];
         _number_of_items = 0;
         _connected = gap_user_status_offline;
-        _pulse = NO;
-        _animating = NO;
         _is_clickable = YES;
+        _is_transferring = NO;
+        _current_mode = STATUS_BAR_ICON_NONE;
         [self registerForDraggedTypes:_drag_types];
     }
     return self;
@@ -63,16 +82,23 @@ typedef enum IAStatusBarIconStatus {
     if (self = [super init])
     {
         _delegate = delegate;
+        [self setUpAnimatedIcons];
         _icon[STATUS_BAR_ICON_NORMAL] = [IAFunctions imageNamed:@"icon-menu-bar-active"];
         _icon[STATUS_BAR_ICON_FIRE] = [IAFunctions imageNamed:@"icon-menu-bar-fire"];
         _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"icon-menu-bar-clicked"];
         _icon[STATUS_BAR_ICON_NO_CONNECTION] = [IAFunctions
                                                 imageNamed:@"icon-menu-bar-inactive"];
+        
+        _icon_view = [[NSImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 19.0, 19.0)];
+        // Must unregister drags from image view so that they are passed to parent view.
+        [_icon_view unregisterDraggedTypes];
+        
         _status_item = status_item;
-        _length = _icon[0].size.width + 15.0;
+        _length = _icon[STATUS_BAR_ICON_NORMAL].size.width + 15.0;
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
         NSRect rect = NSMakeRect(0.0, 0.0, _length, height);
         self = [self initWithFrame:rect];
+        [self addSubview:_icon_view];
         [self setNeedsDisplay:YES];
     }
     return self;
@@ -129,30 +155,134 @@ typedef enum IAStatusBarIconStatus {
         NSRectFill(rect);
     }
     
-    NSImage* icon;
     if (_is_highlighted)
-        icon = _icon[STATUS_BAR_ICON_CLICKED];
+    {
+        _current_mode = STATUS_BAR_ICON_CLICKED;
+        _icon_view.image = _icon[STATUS_BAR_ICON_CLICKED];
+    }
+    else if (_logging_in)
+    {
+        if (_current_mode != STATUS_BAR_ICON_LOGGING_IN)
+        {
+            _current_mode = STATUS_BAR_ICON_LOGGING_IN;
+            _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
+            [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_GREY];
+        }
+        
+    }
     else if (_connected == gap_user_status_offline)
-        icon = _icon[STATUS_BAR_ICON_NO_CONNECTION];
-    else if (_number_of_items > 0 || _pulse)
-        icon = _icon[STATUS_BAR_ICON_FIRE];
+    {
+        _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
+        _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
+    }
+    else if (_is_transferring && _number_of_items > 0)
+    {
+        if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
+        {
+            _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
+            _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
+            [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_RED];
+        }
+    }
+    else if (_is_transferring)
+    {
+        if (_current_mode != STATUS_BAR_ICON_ANIMATED)
+        {
+            _current_mode = STATUS_BAR_ICON_ANIMATED;
+            _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
+            [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_BLACK];
+        }
+    }
     else
-        icon = _icon[STATUS_BAR_ICON_NORMAL];
+    {
+        _current_mode = STATUS_BAR_ICON_NORMAL;
+        _icon_view.animates = NO;
+        _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
+    }
+    
     CGFloat x;
     if (_number_of_items == 0)
-        x = roundf((NSWidth(self.bounds) - icon.size.width) / 2);
+        x = roundf((NSWidth(self.bounds) - NSWidth(_icon_view.frame)) / 2);
     else
-        x = round((NSWidth(self.bounds) - icon.size.width - notifications_str.size.width) / 2.0 - 2.0);
-    CGFloat y = roundf((NSHeight(self.bounds) - icon.size.height) / 2);
-    [icon drawAtPoint:NSMakePoint(x, y)
-             fromRect:self.bounds
-            operation:NSCompositeSourceOver
-             fraction:1.0];
+        x = round((NSWidth(self.bounds) - NSWidth(_icon_view.frame) - notifications_str.size.width) / 2.0 - 2.0);
+    CGFloat y = roundf((NSHeight(self.bounds) - NSHeight(_icon_view.frame)) / 2);
+    [_icon_view setFrameOrigin:NSMakePoint(x, y)];
     
     if (_number_of_items > 0)
     {
         [notifications_str drawAtPoint:NSMakePoint(_length - notifications_str.size.width - 5.0, 2.0)];
     }
+}
+
+
+- (NSArray*)animationArrayWithColour:(InfinitStatusBarIconColour)colour
+{
+    NSString* colour_str;
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    switch (colour)
+    {
+        case STATUS_BAR_ICON_COLOUR_BLACK:
+            colour_str = @"black";
+            break;
+        case STATUS_BAR_ICON_COLOUR_GREY:
+            colour_str = @"black";
+            break;
+        case STATUS_BAR_ICON_COLOUR_RED:
+            colour_str = @"red";
+            break;
+        default:
+            colour_str = @"black";
+            break;
+    }
+    for (int i = 1; i <= 18; i++)
+    {
+        NSString* image_name =
+            [NSString stringWithFormat:@"icon-menu-bar-%@-animated-%d", colour_str, i];
+        [array addObject:[IAFunctions imageNamed:image_name]];
+    }
+    return array;
+}
+
+- (void)setUpAnimatedIcons
+{
+    _black_animated_images = [self animationArrayWithColour:STATUS_BAR_ICON_COLOUR_BLACK];
+    _red_animated_images = [self animationArrayWithColour:STATUS_BAR_ICON_COLOUR_RED];
+}
+
+- (void)showAnimatedImageWithColour:(InfinitStatusBarIconColour)colour
+{
+    NSArray* images;
+    CGFloat alpha = 1.0;
+    switch (colour)
+    {
+        case STATUS_BAR_ICON_COLOUR_BLACK:
+            images = _black_animated_images;
+            break;
+        case STATUS_BAR_ICON_COLOUR_GREY:
+            images = _black_animated_images;
+            alpha = 0.67;
+            break;
+        case STATUS_BAR_ICON_COLOUR_RED:
+            images = _red_animated_images;
+            break;
+
+        default:
+            return;
+    }
+    CAKeyframeAnimation* kfa = [CAKeyframeAnimation animation];
+    kfa.repeatCount = HUGE_VALF;
+    kfa.values = images;
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+    {
+        context.duration = 1.0;
+        _icon_view.alphaValue = alpha;
+        _icon_view.animations = @{@"image": kfa};
+        _icon_view.animator.image = images[images.count - 1];
+    }
+                        completionHandler:^
+     {
+         _icon_view.alphaValue = 1.0;
+     }];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -169,57 +299,22 @@ typedef enum IAStatusBarIconStatus {
     [self setNeedsDisplay:YES];
 }
 
+- (void)setLoggingIn:(BOOL)isLoggingIn
+{
+    _logging_in = isLoggingIn;
+    [self setNeedsDisplay:YES];
+}
+
 - (void)setNumberOfItems:(NSInteger)number_of_items
 {
     _number_of_items = number_of_items;
     [self setNeedsDisplay:YES];
 }
 
-- (void)pulseIcon
+- (void)setTransferring:(BOOL)isTransferring
 {
-    CGFloat half_duration = 0.3;
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* fade_context)
-     {
-         fade_context.duration = half_duration;
-         [self.animator setAlphaValue:0.1];
-     }
-                        completionHandler:^
-     {
-         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* unfade_context)
-          {
-              unfade_context.duration = half_duration;
-              [self.animator setAlphaValue:1.0];
-          }
-                             completionHandler:^
-         {
-             [self setAlphaValue:1.0];
-             if (_pulse)
-                 [self pulseIcon];
-             else
-                 _animating = NO;
-         }];
-     }];
-}
-
-- (void)startPulse
-{
-    if (_pulse || _animating)
-        return;
-    
-    _animating = YES;
-    
-    _pulse = YES;
+    _is_transferring = isTransferring;
     [self setNeedsDisplay:YES];
-    [self pulseIcon];
-}
-
-- (void)stopPulse
-{
-    if (!_pulse)
-        return;
-    
-    [self setNeedsDisplay:YES];
-    _pulse = NO;
 }
 
 //- Click Operations -------------------------------------------------------------------------------

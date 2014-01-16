@@ -14,20 +14,16 @@
 @interface IAStatusBarIcon : NSView <NSDraggingDestination>
 
 @property (nonatomic, readwrite) BOOL isClickable;
-@property (nonatomic, readonly) BOOL isHighlighted;
+@property (nonatomic, readwrite, setter = setHighlighted:) BOOL isHighlighted;
+@property (nonatomic, readwrite, setter = setLoggingIn:) BOOL isLoggingIn;
+@property (nonatomic, readwrite, setter = setTransferring:) BOOL isTransferring;
 
 - (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate
             statusItem:(NSStatusItem*)status_item;
 
 - (void)setConnected:(gap_UserStatus)connected;
 
-- (void)setHighlighted:(BOOL)is_highlighted;
-
 - (void)setNumberOfItems:(NSInteger)number_of_items;
-
-- (void)startPulse;
-
-- (void)stopPulse;
 
 @end
 
