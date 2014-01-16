@@ -106,10 +106,20 @@
     }
     if (_combined_send_controller == nil)
     {
-        _combined_send_controller =
-        [[InfinitCombinedSendViewController alloc] initWithDelegate:self
-                                                andSearchController:_user_search_controller
-                                                           fullview:NO];
+        if (files.count > 0)
+        {
+            _combined_send_controller =
+                [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                                        andSearchController:_user_search_controller
+                                                                   fullview:NO];
+        }
+        else
+        {
+            _combined_send_controller =
+            [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                                    andSearchController:_user_search_controller
+                                                               fullview:YES];
+        }
     }
     else
     {
