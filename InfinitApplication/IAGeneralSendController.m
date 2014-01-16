@@ -88,7 +88,7 @@
         _combined_send_controller =
             [[InfinitCombinedSendViewController alloc] initWithDelegate:self
                                                     andSearchController:_user_search_controller
-                                                                focusOn:COMBINED_VIEW_USER_SEARCH_FOCUS];
+                                                                fullview:YES];
     }
     [_delegate sendController:self wantsActiveController:_combined_send_controller];
 }
@@ -109,7 +109,7 @@
         _combined_send_controller =
         [[InfinitCombinedSendViewController alloc] initWithDelegate:self
                                                 andSearchController:_user_search_controller
-                                                            focusOn:COMBINED_VIEW_USER_SEARCH_FOCUS];
+                                                           fullview:NO];
     }
     else
     {

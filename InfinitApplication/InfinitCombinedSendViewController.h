@@ -12,12 +12,6 @@
 #import "IAHoverButton.h"
 #import "IAUserSearchViewController.h"
 
-typedef enum __InfinitCombinedSendViewFocus
-{
-    COMBINED_VIEW_USER_SEARCH_FOCUS = 0,
-    COMBINED_VIEW_NOTE_FOCUS
-} InfinitCombinedSendViewFocus;
-
 @protocol InfinitCombinedSendViewProtocol;
 
 @interface InfinitCombinedSendViewController : IAViewController <NSTableViewDataSource,
@@ -44,7 +38,7 @@ typedef enum __InfinitCombinedSendViewFocus
 
 - (id)initWithDelegate:(id<InfinitCombinedSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller
-               focusOn:(InfinitCombinedSendViewFocus)focus;
+              fullview:(BOOL)full_view;
 
 - (void)filesUpdated;
 

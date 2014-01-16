@@ -242,6 +242,8 @@
     
     InfinitSearchController* _search_controller;
     NSString* _last_search;
+    
+    BOOL _more_clicked;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -254,6 +256,7 @@
         _max_rows_shown = 4;
         _delegate = nil;
         _token_count = 0;
+        _more_clicked = NO;
         NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         para.alignment = NSCenterTextAlignment;
 
@@ -798,11 +801,23 @@ displayStringForRepresentedObject:(id)representedObject
 
 //- Button Handling --------------------------------------------------------------------------------
 
-- (IBAction)moreButtonClicked:(NSButton*)sender
+- (void)removeMoreButton
 {
     CGFloat button_width = NSWidth(self.more_button.frame) - 15.0;
     [self.more_button removeFromSuperview];
     [self.search_field_width setConstant:(self.search_field_width.constant + button_width)];
+}
+
+- (void)showMoreButton:(BOOL)show
+{
+    if (!show && !_more_clicked)
+        [self removeMoreButton];
+}
+
+- (IBAction)moreButtonClicked:(NSButton*)sender
+{
+    [self removeMoreButton];
+    _more_clicked = YES;
     [_delegate searchViewHadMoreButtonClick:self];
 }
 

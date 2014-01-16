@@ -185,7 +185,7 @@
 
 - (id)initWithDelegate:(id<InfinitCombinedSendViewProtocol>)delegate
    andSearchController:(IAUserSearchViewController*)search_controller
-               focusOn:(InfinitCombinedSendViewFocus)focus
+              fullview:(BOOL)full_view
 {
     if (self = [super initWithNibName:self.className bundle:nil])
     {
@@ -218,9 +218,10 @@
                                             paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                     colour:IA_GREY_COLOUR(255.0)
                                                     shadow:file_count_shadow];
-        [self performSelector:@selector(setFocus:)
-                   withObject:[NSNumber numberWithInt:focus]
-                   afterDelay:0.2];
+        if (full_view)
+            _expanded_view = YES;
+        else
+            _expanded_view = NO;
     }
     return self;
 }
@@ -316,6 +317,15 @@
                                         attributes:_file_count_attrs];
     self.send_button.toolTip = NSLocalizedString(@"Send", @"send");
     self.cancel_button.toolTip = NSLocalizedString(@"Cancel", @"cancel");
+    
+    if (_expanded_view)
+        [self openExpandedView];
+    [self performSelector:@selector(focusOnTextField) withObject:nil afterDelay:0.2];
+}
+
+- (void)focusOnTextField
+{
+    [self.view.window makeFirstResponder:_user_search_controller.search_field];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -343,24 +353,6 @@
         [self updateTable];
     }
     [self setSendButtonState];
-}
-
-- (void)setFocus:(InfinitCombinedSendViewFocus)focus
-{
-    switch (focus)
-    {
-        case COMBINED_VIEW_USER_SEARCH_FOCUS:
-            [self.view.window makeFirstResponder:_user_search_controller.search_field];
-            [_user_search_controller cursorAtEndOfSearchBox];
-            break;
-        case COMBINED_VIEW_NOTE_FOCUS:
-            [self.view.window makeFirstResponder:self.note_field];
-            break;
-        default:
-            [self.view.window makeFirstResponder:_user_search_controller.search_field];
-            [_user_search_controller cursorAtEndOfSearchBox];
-            break;
-    }
 }
 
 - (BOOL)inputsGood
@@ -577,8 +569,9 @@ doCommandBySelector:(SEL)commandSelector
     [self.view.window makeFirstResponder:self.note_field];
 }
 
-- (void)searchViewHadMoreButtonClick:(IAUserSearchViewController*)sender
+- (void)openExpandedView
 {
+    [_user_search_controller showMoreButton:NO];
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
          context.duration = 0.15;
@@ -590,6 +583,11 @@ doCommandBySelector:(SEL)commandSelector
      {
          _expanded_view = YES;
      }];
+}
+
+- (void)searchViewHadMoreButtonClick:(IAUserSearchViewController*)sender
+{
+    [self openExpandedView];
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender

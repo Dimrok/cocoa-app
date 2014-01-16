@@ -48,6 +48,8 @@
 
 - (void)checkInputs;
 
+- (void)showMoreButton:(BOOL)show;
+
 @end
 
 @protocol IAUserSearchViewProtocol <NSObject>
