@@ -363,6 +363,7 @@
                  password:(NSString*)password
 {
     _logging_in = YES;
+    [_status_bar_icon setLoggingIn:YES];
     if (_current_view_controller == _not_logged_view_controller)
         [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
     
@@ -423,6 +424,7 @@
 - (void)loginCallback:(IAGapOperationResult*)result
 {
     _logging_in = NO;
+    [_status_bar_icon setLoggingIn:NO];
     if (result.success)
     {
         [self onSuccessfulLogin];
@@ -681,6 +683,10 @@
 
 - (void)updateStatusBarIcon
 {
+    if ([_transaction_manager hasTransferringTransaction])
+        [_status_bar_icon setTransferring:YES];
+    else
+        [_status_bar_icon setTransferring:NO];
     [_status_bar_icon setNumberOfItems:[_transaction_manager totalUntreatedAndUnreadConversation]];
 }
 
