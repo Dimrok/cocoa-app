@@ -91,7 +91,7 @@
         [IA_RGB_COLOUR(239.0, 252.0, 255.0) set];
         NSRectFill(blue_bg_frame);
     }
-    else if (self.clicked)
+    else if (self.unread)
     {
         // White background
         NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
