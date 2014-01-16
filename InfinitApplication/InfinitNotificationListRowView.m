@@ -37,6 +37,11 @@
     _tracking_area = nil;
 }
 
+- (BOOL)isOpaque
+{
+    return YES;
+}
+
 - (void)setClicked:(BOOL)clicked
 {
     if (!_clickable)
@@ -66,6 +71,16 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    if (self.clicked)
+    {
+        // White background
+        NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
+                                           self.bounds.origin.y + 2.0,
+                                           NSWidth(self.bounds),
+                                           NSHeight(self.bounds) - 2.0);
+        [IA_GREY_COLOUR(255.0) set];
+        NSRectFill(white_bg_frame);
+    }
     if (self.hovered)
     {
         // Blue background
@@ -76,7 +91,7 @@
         [IA_RGB_COLOUR(239.0, 252.0, 255.0) set];
         NSRectFill(blue_bg_frame);
     }
-    else if (self.unread || self.clicked)
+    else if (self.clicked)
     {
         // White background
         NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
