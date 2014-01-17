@@ -184,7 +184,12 @@ typedef enum __InfinitStatusBarIconColour
             [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_RED];
         }
     }
-    else if (_is_transferring)
+    else if (!_is_transferring && _number_of_items > 0)
+    {
+        _current_mode = STATUS_BAR_ICON_FIRE;
+        _icon_view.image = _icon[STATUS_BAR_ICON_FIRE];
+    }
+    else if (_is_transferring && _number_of_items == 0)
     {
         if (_current_mode != STATUS_BAR_ICON_ANIMATED)
         {
