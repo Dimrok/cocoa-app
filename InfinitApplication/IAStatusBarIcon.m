@@ -13,7 +13,6 @@
 
 typedef enum __IAStatusBarIconStatus
 {
-    STATUS_BAR_ICON_NONE = -1,
     STATUS_BAR_ICON_NORMAL = 0,
     STATUS_BAR_ICON_FIRE,
     STATUS_BAR_ICON_CLICKED,
@@ -65,7 +64,7 @@ typedef enum __InfinitStatusBarIconColour
         _connected = gap_user_status_offline;
         _is_clickable = YES;
         _is_transferring = NO;
-        _current_mode = STATUS_BAR_ICON_NONE;
+        _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
         [self registerForDraggedTypes:_drag_types];
     }
     return self;
@@ -89,7 +88,8 @@ typedef enum __InfinitStatusBarIconColour
         _icon[STATUS_BAR_ICON_NO_CONNECTION] = [IAFunctions
                                                 imageNamed:@"icon-menu-bar-inactive"];
         
-        _icon_view = [[NSImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 19.0, 19.0)];
+        _icon_view = [[NSImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 16.0, 16.0)];
+        _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
         // Must unregister drags from image view so that they are passed to parent view.
         [_icon_view unregisterDraggedTypes];
         
@@ -165,6 +165,7 @@ typedef enum __InfinitStatusBarIconColour
         if (_current_mode != STATUS_BAR_ICON_LOGGING_IN)
         {
             _current_mode = STATUS_BAR_ICON_LOGGING_IN;
+            _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
             [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_GREY];
         }
         
@@ -179,6 +180,7 @@ typedef enum __InfinitStatusBarIconColour
         if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
         {
             _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
+            _icon_view.image = _icon[STATUS_BAR_ICON_FIRE];
             [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_RED];
         }
     }
@@ -192,6 +194,7 @@ typedef enum __InfinitStatusBarIconColour
         if (_current_mode != STATUS_BAR_ICON_ANIMATED)
         {
             _current_mode = STATUS_BAR_ICON_ANIMATED;
+            _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
             [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_BLACK];
         }
     }
@@ -206,7 +209,7 @@ typedef enum __InfinitStatusBarIconColour
         x = roundf((NSWidth(self.bounds) - NSWidth(_icon_view.frame)) / 2);
     else
         x = round((NSWidth(self.bounds) - NSWidth(_icon_view.frame) - notifications_str.size.width) / 2.0 - 2.0);
-    CGFloat y = roundf((NSHeight(self.bounds) - NSHeight(_icon_view.frame)) / 2);
+    CGFloat y = roundf((NSHeight(self.bounds) - NSHeight(_icon_view.frame)) / 2.0);
     [_icon_view setFrameOrigin:NSMakePoint(x, y)];
     
     if (_number_of_items > 0)
