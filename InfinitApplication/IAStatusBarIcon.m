@@ -165,7 +165,6 @@ typedef enum __InfinitStatusBarIconColour
         if (_current_mode != STATUS_BAR_ICON_LOGGING_IN)
         {
             _current_mode = STATUS_BAR_ICON_LOGGING_IN;
-            _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
             [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_GREY];
         }
         
@@ -180,7 +179,6 @@ typedef enum __InfinitStatusBarIconColour
         if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
         {
             _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
-            _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
             [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_RED];
         }
     }
@@ -194,14 +192,12 @@ typedef enum __InfinitStatusBarIconColour
         if (_current_mode != STATUS_BAR_ICON_ANIMATED)
         {
             _current_mode = STATUS_BAR_ICON_ANIMATED;
-            _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
             [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_BLACK];
         }
     }
     else
     {
         _current_mode = STATUS_BAR_ICON_NORMAL;
-        _icon_view.animates = NO;
         _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
     }
     
@@ -242,7 +238,7 @@ typedef enum __InfinitStatusBarIconColour
     for (int i = 1; i <= 18; i++)
     {
         NSString* image_name =
-            [NSString stringWithFormat:@"icon-menu-bar-%@-animated-%d", colour_str, i];
+            [NSString stringWithFormat:@"icon-menu-bar-animated-%@-%d", colour_str, i];
         [array addObject:[IAFunctions imageNamed:image_name]];
     }
     return array;
