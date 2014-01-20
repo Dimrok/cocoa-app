@@ -58,6 +58,7 @@ typedef enum __InfinitStatusBarIconColour
 {
     if (self = [super initWithFrame:frame])
     {
+        [self addSubview:_icon_view];
         _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType,
                                                 nil];
         _number_of_items = 0;
@@ -98,8 +99,6 @@ typedef enum __InfinitStatusBarIconColour
         CGFloat height = [[NSStatusBar systemStatusBar] thickness];
         NSRect rect = NSMakeRect(0.0, 0.0, _length, height);
         self = [self initWithFrame:rect];
-        [self addSubview:_icon_view];
-        [self setNeedsDisplay:YES];
     }
     return self;
 }
@@ -334,7 +333,7 @@ typedef enum __InfinitStatusBarIconColour
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
     NSPasteboard* paste_board = sender.draggingPasteboard;
-    if ([paste_board availableTypeFromArray:_drag_types])
+    if ([paste_board availableTypeFromArray:_drag_types] && _is_clickable)
     {
         [_delegate statusBarIconDragEntered:self];
         return NSDragOperationCopy;
