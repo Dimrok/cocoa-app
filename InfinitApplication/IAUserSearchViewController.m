@@ -129,13 +129,6 @@
                                                     owner:self
                                                  userInfo:nil];
     [self addTrackingArea:_tracking_area];
-    
-    NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
-    mouse_loc = [self convertPoint:mouse_loc fromView:nil];
-    if (NSPointInRect(mouse_loc, self.bounds))
-        [self mouseEntered:nil];
-    else
-        [self mouseExited:nil];
 }
 
 - (void)updateTrackingAreas
