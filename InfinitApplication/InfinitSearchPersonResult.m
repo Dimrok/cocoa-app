@@ -164,12 +164,10 @@
 - (BOOL)userIsSwagger
 {
     NSArray* swaggers = [[IAGapState instance] swaggers_list];
-    for (NSNumber* user_id in swaggers)
-    {
-        if (user_id.integerValue != 0 && _user.user_id.integerValue == user_id.integerValue)
-            return YES;
-    }
-    return NO;
+    if ([swaggers containsObject:_user])
+        return YES;
+    else
+        return NO;
 }
 
 - (void)userIdFromEmailCallback:(IAGapOperationResult*)result
