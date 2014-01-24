@@ -60,7 +60,6 @@
     if (self = [super initWithNibName:self.className bundle:nil])
     {
         _delegate = delegate;
-        _favourites = [_delegate favouritesViewWantsFavourites:self];
         _favourite_views = [NSMutableArray array];
         _favourite_size = NSMakeSize(80.0, 75.0); // Add space for name at the bottom
     }
@@ -155,13 +154,36 @@
     
     _window_open = YES;
     
-    _favourites = [_delegate favouritesViewWantsFavourites:self];
-    if (_favourites.count == 0)
+    NSMutableArray* temp_arr =
+        [NSMutableArray arrayWithArray:[_delegate favouritesViewWantsFavourites:self]];
+    // If we don't have favourites, add some swaggers
+    if (temp_arr.count < 5)
+    {
+        NSArray* swaggers = [_delegate favouritesViewWantsSwaggers:self];
+
+        for (IAUser* swagger in swaggers)
+        {
+            if (temp_arr.count < 5 && ![temp_arr containsObject:swagger])
+                [temp_arr addObject:swagger];
+        }
+    }
+    
+    // If we still don't have any favourites, add the Infinit contact
+    if (temp_arr.count < 5)
+    {
+        IAUser* infinit_user = [_delegate favouritesViewWantsInfinitUser:self];
+        if (infinit_user != nil)
+            [temp_arr addObject:infinit_user];
+    }
+    
+    if (temp_arr.count == 0)
         return;
     
     // XXX For now we only handle up to 5 favourites
-    if (_favourites.count > 5)
-        _favourites = [_favourites subarrayWithRange:NSMakeRange(0, 5)];
+    if (temp_arr.count > 5)
+        _favourites = [temp_arr subarrayWithRange:NSMakeRange(0, 5)];
+    else
+        _favourites = [NSArray arrayWithArray:temp_arr];
     
     NSRect frame = NSZeroRect;
     frame.size = self.view.bounds.size;

@@ -30,6 +30,10 @@
 
 - (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender;
 
+- (NSArray*)favouritesViewWantsSwaggers:(IAFavouritesSendViewController*)sender;
+
+- (IAUser*)favouritesViewWantsInfinitUser:(IAFavouritesSendViewController*)sender;
+
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender;
 
 - (void)favouritesView:(IAFavouritesSendViewController*)sender

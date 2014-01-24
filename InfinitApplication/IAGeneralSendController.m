@@ -196,6 +196,16 @@
     return [_delegate sendControllerWantsFavourites:self];
 }
 
+- (NSArray*)favouritesViewWantsSwaggers:(IAFavouritesSendViewController*)sender
+{
+    return [_delegate sendControllerWantsSwaggers:self];
+}
+
+- (IAUser*)favouritesViewWantsInfinitUser:(IAFavouritesSendViewController*)sender
+{
+    return [_delegate sendControllerWantsInfinitUser:self];
+}
+
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender
 {
     return [_delegate sendControllerWantsMidpoint:self];

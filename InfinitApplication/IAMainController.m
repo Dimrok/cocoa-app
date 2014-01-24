@@ -811,6 +811,16 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
     return [IAUserManager favouritesList];
 }
 
+- (NSArray*)sendControllerWantsSwaggers:(IAGeneralSendController*)sender
+{
+    return [IAUserManager swaggerList];
+}
+
+- (IAUser*)sendControllerWantsInfinitUser:(IAGeneralSendController*)sender
+{
+    return [IAUserManager infinitUser];
+}
+
 - (void)sendController:(IAGeneralSendController*)sender
      wantsAddFavourite:(IAUser*)user
 {

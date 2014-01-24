@@ -44,6 +44,10 @@
 
 - (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender;
 
+- (NSArray*)sendControllerWantsSwaggers:(IAGeneralSendController*)sender;
+
+- (IAUser*)sendControllerWantsInfinitUser:(IAGeneralSendController*)sender;
+
 - (void)sendController:(IAGeneralSendController*)sender
      wantsAddFavourite:(IAUser*)user;
 
