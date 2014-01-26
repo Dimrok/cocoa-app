@@ -93,6 +93,11 @@
             self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
         }
     }
+    else if (_connection_status != gap_user_status_online)
+    {
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+    }
 }
 
 - (void)loadView
@@ -108,7 +113,7 @@
     else
         _auto_start_toggle.state = NSOffState;
     
-    if (_transaction_list.count == 0)
+    if (_transaction_list.count == 0 && _connection_status == gap_user_status_online)
     {
         [self.no_data_message setHidden:NO];
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
@@ -125,7 +130,8 @@
         [self.no_data_message setHidden:YES];
         [self.table_view reloadData];
         [self resizeContentView];
-        [self updateListOfRowsWithProgress];
+        if (_transaction_list.count > 0)
+            [self updateListOfRowsWithProgress];
     }
     [self.table_view.enclosingScrollView.contentView setPostsBoundsChangedNotifications:YES];
 }
