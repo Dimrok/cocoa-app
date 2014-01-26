@@ -384,6 +384,8 @@
 {
     IALog(@"%@ Logged in", self);
     
+    [IAUserManager cacheInfinitContact];
+    
     if (_update_credentials && [[IAKeychainManager sharedInstance] credentialsInKeychain:_username])
     {
         [[IAKeychainManager sharedInstance] changeUser:_username password:_password];
