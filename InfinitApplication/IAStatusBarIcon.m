@@ -255,7 +255,6 @@ typedef enum __InfinitStatusBarIconColour
 - (void)showAnimatedImageWithColour:(InfinitStatusBarIconColour)colour
 {
     NSArray* images;
-    CGFloat alpha = 1.0;
     switch (colour)
     {
         case STATUS_BAR_ICON_COLOUR_BLACK:
@@ -263,7 +262,6 @@ typedef enum __InfinitStatusBarIconColour
             break;
         case STATUS_BAR_ICON_COLOUR_GREY:
             images = _black_animated_images;
-            alpha = 0.67;
             break;
         case STATUS_BAR_ICON_COLOUR_RED:
             images = _red_animated_images;
@@ -278,13 +276,11 @@ typedef enum __InfinitStatusBarIconColour
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
         context.duration = 1.0;
-        _icon_view.alphaValue = alpha;
         _icon_view.animations = @{@"image": kfa};
         _icon_view.animator.image = images[images.count - 1];
     }
                         completionHandler:^
      {
-         _icon_view.alphaValue = 1.0;
      }];
 }
 
@@ -293,18 +289,24 @@ typedef enum __InfinitStatusBarIconColour
 - (void)setConnected:(gap_UserStatus)connected
 {
     _connected = connected;
+    _icon_view.alphaValue = 1.0;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setHighlighted:(BOOL)is_highlighted
 {
     _is_highlighted = is_highlighted;
+    _icon_view.alphaValue = 1.0;
     [self setNeedsDisplay:YES];
 }
 
 - (void)setLoggingIn:(BOOL)isLoggingIn
 {
     _logging_in = isLoggingIn;
+    if (_logging_in)
+        _icon_view.alphaValue = 0.67;
+    else
+        _icon_view.alphaValue = 1.0;
     [self setNeedsDisplay:YES];
 }
 
@@ -317,6 +319,7 @@ typedef enum __InfinitStatusBarIconColour
 - (void)setTransferring:(BOOL)isTransferring
 {
     _is_transferring = isTransferring;
+    _icon_view.alphaValue = 1.0;
     [self setNeedsDisplay:YES];
 }
 
