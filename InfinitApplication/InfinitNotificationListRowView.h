@@ -14,6 +14,7 @@
 
 @property (nonatomic, readwrite) BOOL clickable;
 @property (nonatomic, readwrite, setter = setClicked:) BOOL clicked;
+@property (nonatomic, readwrite, setter = setError:) BOOL error;
 @property (nonatomic, readwrite, setter = setHovered:) BOOL hovered;
 @property (nonatomic, readwrite, setter = setUnread:) BOOL unread;
 

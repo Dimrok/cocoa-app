@@ -82,7 +82,12 @@
     // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
     [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
     [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
-    if (_transaction_list.count > 0)
+    if (_connection_status != gap_user_status_online)
+    {
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-problem"];
+        self.table_view.backgroundColor = IA_RGB_COLOUR(253.0, 255.0, 236.0);
+    }
+    else if (_transaction_list.count > 0)
     {
         IAUser* top_user = [_transaction_list[0] other_user];
         if (_connection_status != gap_user_status_online ||
@@ -93,10 +98,10 @@
             self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
         }
     }
-    else if (_connection_status != gap_user_status_online)
+    else
     {
-        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
-        self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-gray"];
+        self.table_view.backgroundColor = IA_GREY_COLOUR(248.0);
     }
 }
 
@@ -271,7 +276,6 @@
     {
         InfinitNotificationListConnectionCellView* cell =
             [tableView makeViewWithIdentifier:@"connection_notification_cell" owner:self];
-        [cell setHeaderStr:NSLocalizedString(@"No Internet...", @"no internet")];
         [cell setMessageStr:NSLocalizedString(@"Have you tried turning it off and on again?",
                                               @"have you tried turning it off and on again")];
         [cell setUpCell];
@@ -307,6 +311,7 @@
         row_view.unread = YES;
     else
         row_view.unread = NO;
+    
     return cell;
 }
 
@@ -324,6 +329,7 @@
     {
         row_view.unread = YES;
         row_view.clickable = NO;
+        row_view.error = YES;
     }
     return row_view;
 }
@@ -332,14 +338,16 @@
 {
     if (self.table_view.numberOfRows == 0)
         return;
-    
-    if (_connection_status != gap_user_status_online)
-        return;
 
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
     InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
                                                         makeIfNecessary:NO];
-    if (row_view.hovered)
+    if (row_view.error)
+    {
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-problem"];
+        self.table_view.backgroundColor = IA_RGB_COLOUR(253.0, 255.0, 236.0);
+    }
+    else if (row_view.hovered)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-hover"];
         self.table_view.backgroundColor = IA_RGB_COLOUR(236.0, 253.0, 255.0);

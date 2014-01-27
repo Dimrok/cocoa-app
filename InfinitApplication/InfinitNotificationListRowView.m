@@ -17,6 +17,7 @@
 
 @synthesize clickable = _clickable;
 @synthesize clicked = _clicked;
+@synthesize error = _error;
 @synthesize hovered = _hovered;
 @synthesize unread = _unread;
 
@@ -50,6 +51,12 @@
     [self setNeedsDisplay:YES];
 }
 
+- (void)setError:(BOOL)error
+{
+    _error = error;
+    [self setNeedsDisplay:YES];
+}
+
 - (void)setHovered:(BOOL)hovered
 {
     if (!_clickable)
@@ -71,46 +78,38 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    NSRect colour_bg_frame = NSMakeRect(self.bounds.origin.x,
+                                        self.bounds.origin.y + 2.0,
+                                        NSWidth(self.bounds),
+                                        NSHeight(self.bounds) - 2.0);
     if (self.clicked)
     {
         // White background
-        NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                           self.bounds.origin.y + 2.0,
-                                           NSWidth(self.bounds),
-                                           NSHeight(self.bounds) - 2.0);
         [IA_GREY_COLOUR(255.0) set];
-        NSRectFill(white_bg_frame);
     }
-    if (self.hovered)
+    else if (self.error)
+    {
+        // Yellow background
+        [IA_RGB_COLOUR(253.0, 255.0, 236.0) set];
+        
+    }
+    else if (self.hovered)
     {
         // Blue background
-        NSRect blue_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                          self.bounds.origin.y + 2.0,
-                                          NSWidth(self.bounds),
-                                          NSHeight(self.bounds) - 2.0);
         [IA_RGB_COLOUR(239.0, 252.0, 255.0) set];
-        NSRectFill(blue_bg_frame);
     }
     else if (self.unread)
     {
         // White background
-        NSRect white_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                           self.bounds.origin.y + 2.0,
-                                           NSWidth(self.bounds),
-                                           NSHeight(self.bounds) - 2.0);
         [IA_GREY_COLOUR(255.0) set];
-        NSRectFill(white_bg_frame);
     }
     else
     {
         // Grey background
-        NSRect grey_bg_frame = NSMakeRect(self.bounds.origin.x,
-                                          self.bounds.origin.y + 2.0,
-                                          NSWidth(self.bounds),
-                                          NSHeight(self.bounds) - 2.0);
         [IA_GREY_COLOUR(248.0) set];
-        NSRectFill(grey_bg_frame);
     }
+    
+    NSRectFill(colour_bg_frame);
     
     // White line
     NSRect white_line_frame = NSMakeRect(self.bounds.origin.x,
