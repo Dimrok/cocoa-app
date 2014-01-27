@@ -187,6 +187,8 @@
 		83A8098117C26C890086A80D /* bg-triangle-top-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097D17C26C890086A80D /* bg-triangle-top-white@2x.png */; };
 		83B2FD2A17F5950500893B52 /* IAOnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B2FD2817F5950500893B52 /* IAOnboardingViewController.m */; };
 		83B2FD2B17F5950500893B52 /* IAOnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B2FD2917F5950500893B52 /* IAOnboardingViewController.xib */; };
+		83B2FFC618969936006C9D77 /* bg-header-top-problem.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B2FFC418969936006C9D77 /* bg-header-top-problem.png */; };
+		83B2FFC718969936006C9D77 /* bg-header-top-problem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B2FFC518969936006C9D77 /* bg-header-top-problem@2x.png */; };
 		83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */; };
 		83B771A31847AA180053D8A0 /* sound_finished.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83B771A11847AA180053D8A0 /* sound_finished.aiff */; };
 		83B771A41847AA180053D8A0 /* sound_incoming.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83B771A21847AA180053D8A0 /* sound_incoming.aiff */; };
@@ -703,6 +705,8 @@
 		83B2FD2717F5950500893B52 /* IAOnboardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAOnboardingViewController.h; sourceTree = "<group>"; };
 		83B2FD2817F5950500893B52 /* IAOnboardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAOnboardingViewController.m; sourceTree = "<group>"; };
 		83B2FD2917F5950500893B52 /* IAOnboardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAOnboardingViewController.xib; sourceTree = "<group>"; };
+		83B2FFC418969936006C9D77 /* bg-header-top-problem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-problem.png"; sourceTree = "<group>"; };
+		83B2FFC518969936006C9D77 /* bg-header-top-problem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-problem@2x.png"; sourceTree = "<group>"; };
 		83B3F5B117B53C1600C19859 /* IANotificationListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationListCellView.h; sourceTree = "<group>"; };
 		83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationListCellView.m; sourceTree = "<group>"; };
 		83B771A11847AA180053D8A0 /* sound_finished.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_finished.aiff; sourceTree = "<group>"; };
@@ -1424,6 +1428,8 @@
 		83D4205F17C4DC5800D4E168 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83B2FFC418969936006C9D77 /* bg-header-top-problem.png */,
+				83B2FFC518969936006C9D77 /* bg-header-top-problem@2x.png */,
 				8348157D187AE007002ACDE0 /* bg-header-top-hover.png */,
 				8348157E187AE007002ACDE0 /* bg-header-top-hover@2x.png */,
 				83BEC56718608C3700EB277E /* loading-connection.gif */,
@@ -1825,6 +1831,7 @@
 				832B5491188970AC0022CC33 /* icon-menu-bar-animated-red-17.png in Resources */,
 				83481580187AE007002ACDE0 /* bg-header-top-hover@2x.png in Resources */,
 				83D4207217C4DE9800D4E168 /* badge@2x.png in Resources */,
+				83B2FFC618969936006C9D77 /* bg-header-top-problem.png in Resources */,
 				83929BB717C60FD60009292D /* icon-reject.png in Resources */,
 				837E6D0C17DA324100FC3141 /* loading.gif in Resources */,
 				83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */,
@@ -1847,6 +1854,7 @@
 				832B546A188970A50022CC33 /* icon-menu-bar-animated-black-14.png in Resources */,
 				832B549B188970C60022CC33 /* icon-menu-bar-active.png in Resources */,
 				834D47DE17CB442B00EEB16A /* icon-expand-right.png in Resources */,
+				83B2FFC718969936006C9D77 /* bg-header-top-problem@2x.png in Resources */,
 				834D47DF17CB442B00EEB16A /* icon-expand-right@2x.png in Resources */,
 				832B549F188970C60022CC33 /* icon-menu-bar-fire.png in Resources */,
 				83EADC2317E204FF00D49D77 /* icon-star-selected@2x.png in Resources */,
