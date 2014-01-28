@@ -559,6 +559,11 @@
 - (void)logoutAndQuitCallback:(IAGapOperationResult*)result
 {
     [self logoutCallback:result];
+    [self performSelector:@selector(delayedClose) withObject:nil afterDelay:0.2];
+}
+
+- (void)delayedClose
+{
     [[IAGapState instance] freeGap];
     [_delegate terminateApplication:self];
 }
@@ -677,7 +682,6 @@
         if (!_logging_in)
         {
             [[IAGapState instance] freeGap];
-            IALog(@"%@ gap freed", self);
         }
         [_delegate terminateApplication:self];
     }
