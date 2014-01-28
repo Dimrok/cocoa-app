@@ -146,7 +146,7 @@ void on_trophonius_unavailable();
         setenv("INFINIT_META_PORT", "80", 1);
 
         setenv("INFINIT_TROPHONIUS_HOST", "trophonius.8.0.api.production.infinit.io", 1);
-        setenv("INFINIT_TROPHONIUS_PORT", "80", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "443", 1);
 
         setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
 
@@ -159,17 +159,17 @@ void on_trophonius_unavailable();
         setenv("INFINIT_METRICS_PORT", "80", 1);
 
 #else
-//        setenv("INFINIT_META_HOST", "meta.8.0.api.production.infinit.io", 1);
-//        setenv("INFINIT_META_PORT", "80", 1);
+        setenv("INFINIT_META_HOST", "development.infinit.io", 1);
+        setenv("INFINIT_META_PORT", "80", 1);
 //        setenv("INFINIT_META_HOST", "192.168.0.143", 1);
-        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
-        setenv("INFINIT_META_PORT", "8080", 1);
+//        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_META_PORT", "8080", 1);
 
-//        setenv("INFINIT_TROPHONIUS_HOST", "trophonius.8.0.api.production.infinit.io", 1);
-//        setenv("INFINIT_TROPHONIUS_PORT", "80", 1);
+        setenv("INFINIT_TROPHONIUS_HOST", "development.infinit.io", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "443", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "192.168.0.143", 1);
-        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
-        setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
+//        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
         
 //        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "fd3652b9b4bc907fdd029eac64d98fa8", 1);
 
