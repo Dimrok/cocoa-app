@@ -9,6 +9,7 @@
 #import "InfinitCombinedSendViewController.h"
 
 #import "InfinitSendFileListCellView.h"
+#import "InfinitMetricsManager.h"
 
 @interface InfinitCombinedSendViewController ()
 
@@ -518,11 +519,13 @@ doCommandBySelector:(SEL)commandSelector
 - (IBAction)addFilesClicked:(NSButton*)sender
 {
     [_delegate combinedSendViewWantsOpenFileDialogBox:self];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
 }
 
 - (IBAction)cancelSendClicked:(NSButton*)sender
 {
     [_delegate combinedSendViewWantsCancel:self];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
 }
 
 - (IBAction)sendButtonClicked:(NSButton*)sender
