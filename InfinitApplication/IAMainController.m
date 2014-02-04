@@ -16,6 +16,7 @@
 #import "IAKeychainManager.h"
 #import "IAPopoverViewController.h"
 #import "IAUserPrefs.h"
+#import "InfinitMetricsManager.h"
 
 @implementation IAMainController
 {
@@ -131,6 +132,12 @@
 {
     [self addToLoginItems];
     [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"first_launch"];
+    // Get Address Book access
+    ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
+    if (address_book == nil)
+        [InfinitMetricsManager sendMetric:INFINIT_METRIC_NO_ADRESSBOOK_ACCESS];
+    else
+        [InfinitMetricsManager sendMetric:INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS];
 }
 
 //- Check Server Connectivity ----------------------------------------------------------------------
@@ -662,6 +669,7 @@
 - (void)handleLogout
 {
     [self closeNotificationWindow];
+    [self updateStatusBarIcon];
     [[IAGapState instance] logout:@selector(logoutAndShowLoginCallback:) onObject:self];
 }
 
