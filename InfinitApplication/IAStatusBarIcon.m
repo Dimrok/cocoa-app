@@ -8,6 +8,7 @@
 
 #import "IAStatusBarIcon.h"
 #import "IAFunctions.h"
+#import "InfinitMetricsManager.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -298,6 +299,9 @@ typedef enum __InfinitStatusBarIconColour
     _is_highlighted = is_highlighted;
     _icon_view.alphaValue = 1.0;
     [self setNeedsDisplay:YES];
+    // Only send metric when the panel is opened
+    if (_is_highlighted)
+        [InfinitMetricsManager sendMetric:INFINIT_METRIC_OPEN_PANEL];
 }
 
 - (void)setLoggingIn:(BOOL)isLoggingIn
@@ -328,7 +332,9 @@ typedef enum __InfinitStatusBarIconColour
 - (void)mouseDown:(NSEvent*)theEvent
 {
     if (_is_clickable)
+    {
         [_delegate statusBarIconClicked:self];
+    }
 }
 
 //- Drag Operations --------------------------------------------------------------------------------
@@ -354,6 +360,8 @@ typedef enum __InfinitStatusBarIconColour
     
     if (files.count > 0)
         [_delegate statusBarIconDragDrop:self withFiles:files];
+    
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_DROP_STATUS_BAR_ICON];
     
     return YES;
 }
