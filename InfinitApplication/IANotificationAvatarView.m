@@ -10,6 +10,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "InfinitMetricsManager.h"
+
 @implementation IANotificationAvatarView
 {
 @private
@@ -230,9 +232,15 @@
             
         case AVATAR_VIEW_ACCEPT_REJECT:
             if (click_location.y > self.frame.size.height / 2.0)
+            {
                 [_delegate avatarHadAcceptClicked:self];
+                [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_ACCEPT];
+            }
             else if (click_location.y < self.frame.size.height / 2.0)
+            {
                 [_delegate avatarHadRejectClicked:self];
+                [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_REJECT];
+            }
             return;
             
         default:
