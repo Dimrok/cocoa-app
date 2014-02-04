@@ -187,6 +187,7 @@
 		83B2FFC618969936006C9D77 /* bg-header-top-problem.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B2FFC418969936006C9D77 /* bg-header-top-problem.png */; };
 		83B2FFC718969936006C9D77 /* bg-header-top-problem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B2FFC518969936006C9D77 /* bg-header-top-problem@2x.png */; };
 		83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */; };
+		83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.m */; };
 		83B771A31847AA180053D8A0 /* sound_finished.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83B771A11847AA180053D8A0 /* sound_finished.aiff */; };
 		83B771A41847AA180053D8A0 /* sound_incoming.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83B771A21847AA180053D8A0 /* sound_incoming.aiff */; };
 		83B8A70E18201F0700AD775F /* icon-main-unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A70C18201F0700AD775F /* icon-main-unread.png */; };
@@ -700,6 +701,8 @@
 		83B2FFC518969936006C9D77 /* bg-header-top-problem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-problem@2x.png"; sourceTree = "<group>"; };
 		83B3F5B117B53C1600C19859 /* IANotificationListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationListCellView.h; sourceTree = "<group>"; };
 		83B3F5B217B53C1600C19859 /* IANotificationListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationListCellView.m; sourceTree = "<group>"; };
+		83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMetricsManager.h; sourceTree = "<group>"; };
+		83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMetricsManager.m; sourceTree = "<group>"; };
 		83B771A11847AA180053D8A0 /* sound_finished.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_finished.aiff; sourceTree = "<group>"; };
 		83B771A21847AA180053D8A0 /* sound_incoming.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_incoming.aiff; sourceTree = "<group>"; };
 		83B8A70C18201F0700AD775F /* icon-main-unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-main-unread.png"; sourceTree = "<group>"; };
@@ -1306,6 +1309,8 @@
 				83CD107F17D49D7E00AA0A19 /* IACrashReportManager.m */,
 				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
 				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.m */,
+				83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */,
+				83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1911,6 +1916,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
+				83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.m in Sources */,
 				83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.m in Sources */,
 				8348156A18697C5C002ACDE0 /* InfinitPaddedTextFieldCell.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
