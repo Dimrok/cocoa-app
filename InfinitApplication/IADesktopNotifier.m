@@ -8,6 +8,8 @@
 
 #import "IADesktopNotifier.h"
 
+#import "InfinitMetricsManager.h"
+
 @implementation IADesktopNotifier
 {
 @private
@@ -206,6 +208,7 @@
         return;
     
     [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_DESKTOP_NOTIFICATION];
 }
 
 @end
