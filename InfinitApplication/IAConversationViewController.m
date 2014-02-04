@@ -12,6 +12,8 @@
 #import "IAConversationCellView.h"
 #import "IAConversationElement.h"
 
+#import "InfinitMetricsManager.h"
+
 @interface IAConversationViewController ()
 
 @end
@@ -568,6 +570,7 @@
                         completionHandler:^
      {
          [_delegate conversationView:self wantsTransferForUser:_user];
+         [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_SEND];
      }];
 }
 
@@ -593,6 +596,7 @@
     [self.table_view endUpdates];
     [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
     [self resizeContentView];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_NOTE];
 }
 
 - (IBAction)acceptButtonClicked:(NSButton*)sender
@@ -601,6 +605,7 @@
     IAConversationElement* element = _element_list[row];
     [_delegate conversationView:self
          wantsAcceptTransaction:element.transaction];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
 }
 
 - (IBAction)cancelButtonClicked:(NSButton*)sender
@@ -609,6 +614,7 @@
     IAConversationElement* element = _element_list[row];
     [_delegate conversationView:self
          wantsCancelTransaction:element.transaction];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_CANCEL];
 }
 
 - (IBAction)rejectButtonClicked:(NSButton*)sender
@@ -617,6 +623,7 @@
     IAConversationElement* element = _element_list[row];
     [_delegate conversationView:self
          wantsRejectTransaction:element.transaction];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_REJECT];
 }
 
 //- Conversation Header View -----------------------------------------------------------------------
