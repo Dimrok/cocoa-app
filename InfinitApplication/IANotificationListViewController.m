@@ -15,6 +15,7 @@
 #import <Gap/version.h>
 
 #import "IAAvatarManager.h"
+#import "InfinitMetricsManager.h"
 
 #define IA_FEEDBACK_LINK "http://feedback.infinit.io"
 #define IA_PROFILE_LINK "http://infinit.io/account"
@@ -487,6 +488,7 @@
                         completionHandler:^
      {
          [_delegate notificationListGotTransferClick:self];
+         [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_SEND];
      }];
 }
 
