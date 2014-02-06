@@ -42,7 +42,7 @@ typedef enum __InfinitStatusBarIconColour
     NSInteger _number_of_items;
     NSStatusItem* _status_item;
     CGFloat _length;
-    
+
     IAStatusBarIconStatus _current_mode;
     NSArray* _black_animated_images;
     NSArray* _red_animated_images;
@@ -166,7 +166,7 @@ typedef enum __InfinitStatusBarIconColour
         {
             _current_mode = STATUS_BAR_ICON_LOGGING_IN;
             _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
-            [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_GREY];
+            [self showAnimatedIconForMode:STATUS_BAR_ICON_LOGGING_IN];
         }
         
     }
@@ -181,7 +181,7 @@ typedef enum __InfinitStatusBarIconColour
         {
             _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
             _icon_view.image = _icon[STATUS_BAR_ICON_FIRE];
-            [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_RED];
+            [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED];
         }
     }
     else if (!_is_transferring && _number_of_items > 0)
@@ -195,7 +195,7 @@ typedef enum __InfinitStatusBarIconColour
         {
             _current_mode = STATUS_BAR_ICON_ANIMATED;
             _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
-            [self showAnimatedImageWithColour:STATUS_BAR_ICON_COLOUR_BLACK];
+            [self showAnimatedIconForMode:STATUS_BAR_ICON_ANIMATED];
         }
     }
     else
@@ -217,7 +217,6 @@ typedef enum __InfinitStatusBarIconColour
         [notifications_str drawAtPoint:NSMakePoint(_length - notifications_str.size.width - 5.0, 2.0)];
     }
 }
-
 
 - (NSArray*)animationArrayWithColour:(InfinitStatusBarIconColour)colour
 {
@@ -253,18 +252,19 @@ typedef enum __InfinitStatusBarIconColour
     _red_animated_images = [self animationArrayWithColour:STATUS_BAR_ICON_COLOUR_RED];
 }
 
-- (void)showAnimatedImageWithColour:(InfinitStatusBarIconColour)colour
+- (void)showAnimatedIconForMode:(IAStatusBarIconStatus)mode
 {
+    IAStatusBarIconStatus start_mode = mode;
     NSArray* images;
-    switch (colour)
+    CGFloat alpha = 1.0;
+    switch (mode)
     {
-        case STATUS_BAR_ICON_COLOUR_BLACK:
+        case STATUS_BAR_ICON_LOGGING_IN:
+            alpha = 0.67;
+        case STATUS_BAR_ICON_ANIMATED:
             images = _black_animated_images;
             break;
-        case STATUS_BAR_ICON_COLOUR_GREY:
-            images = _black_animated_images;
-            break;
-        case STATUS_BAR_ICON_COLOUR_RED:
+        case STATUS_BAR_ICON_FIRE_ANIMATED:
             images = _red_animated_images;
             break;
 
@@ -272,16 +272,20 @@ typedef enum __InfinitStatusBarIconColour
             return;
     }
     CAKeyframeAnimation* kfa = [CAKeyframeAnimation animation];
-    kfa.repeatCount = HUGE_VALF;
     kfa.values = images;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
         context.duration = 1.0;
+        _icon_view.alphaValue = alpha;
         _icon_view.animations = @{@"image": kfa};
         _icon_view.animator.image = images[images.count - 1];
     }
                         completionHandler:^
      {
+         if (start_mode == _current_mode)
+             [self showAnimatedIconForMode:mode];
+         else
+             return;
      }];
 }
 
