@@ -162,13 +162,8 @@ typedef enum __InfinitStatusBarIconColour
     }
     else if (_logging_in)
     {
-        if (_current_mode != STATUS_BAR_ICON_LOGGING_IN)
-        {
-            _current_mode = STATUS_BAR_ICON_LOGGING_IN;
-            _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
-            [self showAnimatedIconForMode:STATUS_BAR_ICON_LOGGING_IN];
-        }
-        
+        _current_mode = STATUS_BAR_ICON_LOGGING_IN;
+        _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
     }
     else if (_connected == gap_user_status_offline)
     {
