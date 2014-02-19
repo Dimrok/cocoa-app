@@ -189,10 +189,10 @@
 }
 
 // Do not confuse MB and MiB. Apple use MB, GB, etc for their file and storage sizes.
-+ (NSString*)fileSizeStringFrom:(NSUInteger)file_size
++ (NSString*)fileSizeStringFrom:(NSNumber*)file_size
 {
     NSString* res;
-    CGFloat size = file_size;
+    CGFloat size = file_size.doubleValue;
     
     if (size < pow(10.0, 3.0))
         res = [NSString stringWithFormat:@"%.0f B", size];

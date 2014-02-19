@@ -46,7 +46,7 @@ typedef enum __INFINIT_OS_X_VERSION
                    inColour:(NSColor*)colour
           andShadowOfRadius:(CGFloat)shadow_radius;
 
-+ (NSString*)fileSizeStringFrom:(NSUInteger)file_size;
++ (NSString*)fileSizeStringFrom:(NSNumber*)file_size;
 
 + (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left;
 
