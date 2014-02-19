@@ -86,9 +86,10 @@
                                                        colour:IA_RGB_COLOUR(150.0, 170.0, 184.0)
                                                        shadow:nil];
     NSUInteger bytes_transferred = floor(_double_value / self.maxValue * _total_size.doubleValue);
-    NSString* file_size_progress = [NSString stringWithFormat:@"%@/%@",
-                                    [IAFunctions fileSizeStringFrom:bytes_transferred],
-                                    [IAFunctions fileSizeStringFrom:_total_size.unsignedIntegerValue]];
+    NSString* file_size_progress =
+        [NSString stringWithFormat:@"%@/%@",
+         [IAFunctions fileSizeStringFrom:[NSNumber numberWithUnsignedInteger:bytes_transferred]],
+         [IAFunctions fileSizeStringFrom:_total_size]];
     NSAttributedString* file_size_str = [[NSAttributedString alloc] initWithString:file_size_progress
                                                                         attributes:data_style];
     NSPoint size_pt = NSMakePoint(self.bounds.origin.x + 8.0, self.bounds.origin.y + 4.0);

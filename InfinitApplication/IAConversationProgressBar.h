@@ -13,6 +13,6 @@
 @property (nonatomic, setter = setDoubleValue:) double doubleValue;
 @property (nonatomic, setter = setTimeRemaining:) NSTimeInterval time_remaining;
 @property (nonatomic, setter = setIndeterminate:) BOOL indeterminate;
-@property (nonatomic) NSNumber* totalSize;
+@property (nonatomic, setter = setTotalSize:) NSNumber* totalSize;
 
 @end
