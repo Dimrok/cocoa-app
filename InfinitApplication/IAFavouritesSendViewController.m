@@ -168,8 +168,8 @@
         }
     }
     
-    // If we still don't have any favourites, add the Infinit contact
-    if (temp_arr.count < 5)
+    // If we still don't have any favourites or swaggers
+    if (temp_arr.count == 0)
     {
         IAUser* infinit_user = [_delegate favouritesViewWantsInfinitUser:self];
         if (infinit_user != nil)
