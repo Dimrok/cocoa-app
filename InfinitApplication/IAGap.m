@@ -107,8 +107,6 @@ void on_trophonius_unavailable();
 
     [info setObject:[IAGapState instance].self_id
              forKey:@"self_id"];
-    [info setObject:[NSNumber numberWithInteger:(NSInteger)getpid()]
-             forKey:@"pid"];
     [[[NotificationForwarder alloc] init:msg
                                 withInfo:info] fire];
 }
