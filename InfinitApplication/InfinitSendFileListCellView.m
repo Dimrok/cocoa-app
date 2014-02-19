@@ -75,17 +75,17 @@
                                                attributes:file_name_style];
     
     BOOL is_directory;
-    NSUInteger file_size = 0;
+    NSNumber* file_size = 0;
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
     {
-        file_size = [self sizeForFolderAtPath:file_path error:nil];
+        file_size = [NSNumber numberWithUnsignedInteger:[self sizeForFolderAtPath:file_path error:nil]];
     }
     else
     {
         NSDictionary* file_properties = [[NSFileManager defaultManager] attributesOfItemAtPath:file_path
                                                                                          error:NULL];
-        file_size = [file_properties fileSize];
+        file_size = [NSNumber numberWithUnsignedInteger:[file_properties fileSize]];
     }
     NSFont* file_size_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
