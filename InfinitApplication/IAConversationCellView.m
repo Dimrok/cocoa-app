@@ -360,8 +360,16 @@
         }
         else
         {
-            self.files_icon.image = [[NSWorkspace sharedWorkspace]
-                                     iconForFileType:[_transaction.files[0] pathExtension]];
+            if (_transaction.is_directory)
+            {
+                self.files_icon.image =
+                    [[NSWorkspace sharedWorkspace] iconForFileType:@"public.directory"];
+            }
+            else
+            {
+                self.files_icon.image =
+                    [[NSWorkspace sharedWorkspace] iconForFileType:[_transaction.files[0] pathExtension]];
+            }
             files_str = _transaction.files[0];
             [self.files_icon setEnabled:YES];
             [self.files_icon setToolTip:@""];
