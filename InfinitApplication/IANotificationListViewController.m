@@ -59,10 +59,6 @@
                                                  object:nil];
         _connection_status = connection_status;
         _changing = NO;
-#ifdef IA_CORE_ANIMATION_ENABLED
-        [self.view setWantsLayer:YES];
-        [self.view setLayerContentsRedrawPolicy:NSViewLayerContentsRedrawOnSetNeedsDisplay];
-#endif
     }
     return self;
 }

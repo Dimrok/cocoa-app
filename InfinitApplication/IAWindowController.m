@@ -45,58 +45,10 @@
 
 //- Content View -----------------------------------------------------------------------------------
 
-// WORKAROUND
-// If you use a borderless window with a layer backed content view, there is no window shadow. To
-// work around this, I leave the content view as a normal view and draw a white outline of the
-// window in it. The views drawn on this can then take advantage of being layer backed as well as
-// have a shadow.
-
 @interface IANotificationContentView : NSView
 @end
 
 @implementation IANotificationContentView
-
-#ifdef IA_CORE_ANIMATION_ENABLED
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [IA_GREY_COLOUR(248.0) set];
-    
-    // Draw top triangle
-    NSSize triangle_size = NSMakeSize(15.0, 8.0);
-    NSRect triangle_rect = NSMakeRect((NSWidth(self.frame) - triangle_size.width) / 2.0,
-                                      self.frame.origin.y + NSHeight(self.frame) - triangle_size.height,
-                                      triangle_size.width,
-                                      triangle_size.height);
-    NSBezierPath* triangle = [NSBezierPath bezierPath];
-    [triangle moveToPoint:triangle_rect.origin];
-    [triangle lineToPoint:NSMakePoint(triangle_rect.origin.x + NSWidth(triangle_rect),
-                                     triangle_rect.origin.y)];
-    [triangle lineToPoint:NSMakePoint(triangle_rect.origin.x + (NSWidth(triangle_rect) / 2.0),
-                                     triangle_rect.origin.y + NSHeight(triangle_rect))];
-    [triangle lineToPoint:triangle_rect.origin];
-    
-    [triangle fill];
-                                     
-    // Draw top rounded rect
-    NSRect top_rect = NSMakeRect(self.frame.origin.x,
-                                 self.frame.origin.y + (NSHeight(self.frame) / 2.0) - triangle_size.height,
-                                 NSWidth(self.frame),
-                                 (NSHeight(self.frame) / 2.0));// - triangle_size.height);
-    NSBezierPath* top_background = [IAFunctions roundedTopBezierWithRect:top_rect
-                                                            cornerRadius:5.0];
-    
-    [top_background fill];
-    
-    // Draw bottom rounded rect
-    NSRect bottom_rect = NSMakeRect(self.frame.origin.x,
-                                    self.frame.origin.y,
-                                    NSWidth(self.frame),
-                                    NSHeight(self.frame) / 2.0);
-    NSBezierPath* bottom_background = [IAFunctions roundedBottomBezierWithRect:bottom_rect
-                                                                  cornerRadius:5.0];
-    [bottom_background fill];
-}
-#endif
 
 @end
 
