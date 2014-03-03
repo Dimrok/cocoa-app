@@ -26,8 +26,7 @@ typedef enum __IAStatusBarIconStatus
 typedef enum __InfinitStatusBarIconColour
 {
     STATUS_BAR_ICON_COLOUR_BLACK = 0,
-    STATUS_BAR_ICON_COLOUR_GREY = 1,
-    STATUS_BAR_ICON_COLOUR_RED = 2,
+    STATUS_BAR_ICON_COLOUR_RED = 1,
 } InfinitStatusBarIconColour;
 
 @implementation IAStatusBarIcon
@@ -222,9 +221,6 @@ typedef enum __InfinitStatusBarIconColour
         case STATUS_BAR_ICON_COLOUR_BLACK:
             colour_str = @"black";
             break;
-        case STATUS_BAR_ICON_COLOUR_GREY:
-            colour_str = @"black";
-            break;
         case STATUS_BAR_ICON_COLOUR_RED:
             colour_str = @"red";
             break;
@@ -251,11 +247,8 @@ typedef enum __InfinitStatusBarIconColour
 {
     IAStatusBarIconStatus start_mode = mode;
     NSArray* images;
-    CGFloat alpha = 1.0;
     switch (mode)
     {
-        case STATUS_BAR_ICON_LOGGING_IN:
-            alpha = 0.67;
         case STATUS_BAR_ICON_ANIMATED:
             images = _black_animated_images;
             break;
@@ -271,7 +264,6 @@ typedef enum __InfinitStatusBarIconColour
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
         context.duration = 1.0;
-        _icon_view.alphaValue = alpha;
         _icon_view.animations = @{@"image": kfa};
         _icon_view.animator.image = images[images.count - 1];
     }
