@@ -8,6 +8,11 @@
 
 #import "IANotLoggedInViewController.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.NotLoggedInViewController");
+
 @interface IANotLoggedInViewController ()
 
 @end
@@ -130,6 +135,12 @@
 - (BOOL)closeOnFocusLost
 {
     return YES;
+}
+
+- (void)loadView
+{
+    ELLE_TRACE("%s: loadview for mode: %d", self.description.UTF8String, _mode);
+    [super loadView];
 }
 
 //- General Functions ------------------------------------------------------------------------------

@@ -14,6 +14,11 @@
 
 #import "InfinitMetricsManager.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.ConversationViewController");
+
 @interface IAConversationViewController ()
 
 @end
@@ -145,6 +150,7 @@
 
 - (void)loadView
 {
+    ELLE_TRACE("%s: loadview for: %s", self.description.UTF8String, _user.fullname.UTF8String);
     [super loadView];
     [self setupPersonView];
     [self generateUserTransactionList];

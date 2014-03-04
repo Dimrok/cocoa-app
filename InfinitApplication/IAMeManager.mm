@@ -8,6 +8,11 @@
 
 #import "IAMeManager.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.MeManager");
+
 @implementation IAMeManager
 {
 @private
@@ -44,11 +49,11 @@
     NSNumber* received_status = [dict valueForKey:@"connection_status"];
     if (received_status == nil)
     {
-        IALog(@"%@ WARNING: problem with receiving connection status", self);
+        ELLE_WARN("%s: problem with receiving connection status", self.description.UTF8String);
         return;
     }
     
-    _connection_status = received_status.intValue;
+    _connection_status = (gap_UserStatus)received_status.intValue;
     [_delegate meManager:self
 hadConnectionStateChange:_connection_status];
 }

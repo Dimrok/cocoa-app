@@ -14,6 +14,11 @@
 #define INFINIT_REGISTER_URL "http://infinit.io/register"
 #define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot_password"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.LoginViewController");
+
 @interface InfinitLoginViewController ()
 @end
 
@@ -176,6 +181,12 @@
     self.login_button.hand_cursor = YES;
 }
 
+- (void)loadView
+{
+    ELLE_TRACE("%s: loadview with mode: %d", self.description.UTF8String, _mode);
+    [super loadView];
+}
+
 //- General ----------------------------------------------------------------------------------------
 
 - (void)configureForMode
@@ -209,7 +220,7 @@
             break;
             
         default:
-            IALog(@"WARNING: unknown login view mode");
+            ELLE_WARN("%s: unknown login view mode", self.description.UTF8String);
             break;
     }
 }

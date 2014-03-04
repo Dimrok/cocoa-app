@@ -11,6 +11,11 @@
 #import "IAAvatarManager.h"
 #import <Gap/IAUserManager.h>
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
+
 @implementation InfinitSearchPersonResult
 {
 @private
@@ -109,7 +114,7 @@
 {
     if (!result.success)
     {
-        IALog(@"%@ WARNING: problem checking for user id", self);
+        ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
         return;
     }
     NSDictionary* dict = result.data;
@@ -174,7 +179,7 @@
 {
     if (!result.success)
     {
-        IALog(@"%@ WARNING: problem checking for user id", self);
+        ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
         return;
     }
     NSDictionary* dict = result.data;

@@ -20,6 +20,11 @@
 #define IA_FEEDBACK_LINK "http://feedback.infinit.io"
 #define IA_PROFILE_LINK "http://infinit.io/account"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
+
 @interface IANotificationListViewController ()
 @end
 
@@ -104,6 +109,7 @@
 
 - (void)loadView
 {
+    ELLE_TRACE("%s: loadview", self.description.UTF8String);
     [super loadView];
     
     NSString* version_str = [NSString stringWithFormat:@"v%@",

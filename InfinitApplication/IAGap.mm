@@ -14,6 +14,11 @@
 
 #import "IALogFileManager.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.Gap");
+
 //- Callbacks for notifications -----------------------------------------------------
 
 static BOOL _callbacks_set = NO;
@@ -80,7 +85,8 @@ void on_trophonius_unavailable();
 
 - (void)_fire
 {
-    IALog(@"Fire %@: %@", _msg, _info);
+    ELLE_DEBUG("%s: fire %s: %s", self.description.UTF8String, _msg.description.UTF8String,
+               _info.description.UTF8String);
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc postNotificationName:_msg object:nil userInfo:_info];
 }
@@ -105,8 +111,6 @@ void on_trophonius_unavailable();
     if (info == nil)
         info = [NSMutableDictionary dictionary];
 
-    [info setObject:[IAGapState instance].self_id
-             forKey:@"self_id"];
     [[[NotificationForwarder alloc] init:msg
                                 withInfo:info] fire];
 }
@@ -120,10 +124,14 @@ void on_trophonius_unavailable();
         setenv("INFINIT_BINARY_DIR", binary_dir.UTF8String, 1);
         setenv("ELLE_LOG_LEVEL",
                "*trophonius*:TRACE,"
+               "*meta*:DEBUG,"
                "*meta*:TRACE,"
-               "*surface*:DEBUG,"
+               "*gap*:DEBUG,"
+               "*surface*:DUMP,"
                "reactor.fsm.Machine:DEBUG,"
-               "infinit.surface.gap.User:TRACE"
+               "infinit.surface.gap.User:DUMP,"
+               "infinit.oracles.trophonius.Client:TRACE,"
+               "OSX*:DUMP"
                , 0);
         setenv("ELLE_LOG_PID", "1", 0);
         setenv("ELLE_LOG_TID", "1", 0);
@@ -141,30 +149,27 @@ void on_trophonius_unavailable();
 
 #ifdef BUILD_PRODUCTION
         setenv("INFINIT_META_HOST", "meta.8.0.api.production.infinit.io", 1);
-        setenv("INFINIT_META_PORT", "80", 1);
+        setenv("INFINIT_META_PORT", "443", 1);
 
         setenv("INFINIT_TROPHONIUS_HOST", "trophonius.8.0.api.production.infinit.io", 1);
         setenv("INFINIT_TROPHONIUS_PORT", "443", 1);
 
         setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
-
-        setenv("INFINIT_METRICS_GOOGLE_TID", "UA-31957100-4", 1);
-        setenv("INFINIT_METRICS_INVESTORS_GOOGLE_TID", "UA-31957100-2", 1);
-        
-        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "ca10e9afa1f125fa832f5cbae9b6cbbb", 1);
         
         setenv("INFINIT_METRICS_HOST", "v3.metrics.api.production.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
 
 #else
+        setenv("ELLE_REAL_ASSERT", "1", 1);
+        
         setenv("INFINIT_META_HOST", "development.infinit.io", 1);
-        setenv("INFINIT_META_PORT", "80", 1);
+        setenv("INFINIT_META_PORT", "443", 1);
 //        setenv("INFINIT_META_HOST", "192.168.0.143", 1);
 //        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_META_PORT", "8080", 1);
 
         setenv("INFINIT_TROPHONIUS_HOST", "development.infinit.io", 1);
-        setenv("INFINIT_TROPHONIUS_PORT", "443", 1);
+        setenv("INFINIT_TROPHONIUS_PORT", "444", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "192.168.0.143", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
@@ -175,13 +180,14 @@ void on_trophonius_unavailable();
         setenv("INFINIT_METRICS_PORT", "80", 1);
 //        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_METRICS_PORT", "8080", 1);
+        
+        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
+        setenv("INFINIT_METRICS_PORT", "8282", 1);
 
         setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
 
         _state = gap_new();
-
-        NSLog(@"METAURL= %s", gap_meta_url(_state));
 
         if (_state == NULL)
             return nil;
@@ -201,7 +207,7 @@ void on_trophonius_unavailable();
         // XXX add error callback
         //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
     {
-        IALog(@"%@ WARNING: Cannot set callbacks", self);
+        ELLE_WARN("%s: cannot set callbacks", self.description.UTF8String);
     }
     else
     {
@@ -217,7 +223,7 @@ void on_trophonius_unavailable();
     gap_Status res = gap_login(_state, email.UTF8String, hash_password.UTF8String);
     if (res == gap_ok)
     {
-        IALog(@"Login successful");
+        ELLE_DEBUG("%s: login successful", self.description.UTF8String);
     }
     return res;
 }
@@ -331,14 +337,14 @@ return [NSString stringWithUTF8String:str]; \
     return res;
 }
 
-- (int)transaction_files_count:(NSNumber*)transaction_id
+- (NSNumber*)transaction_files_count:(NSNumber*)transaction_id
 {
-    return gap_transaction_files_count(_state, transaction_id.unsignedIntValue);
+    return [NSNumber numberWithLongLong:gap_transaction_files_count(_state, transaction_id.unsignedIntValue)];
 }
 
-- (uint64_t)transaction_total_size:(NSNumber*)transaction_id
+- (NSNumber*)transaction_total_size:(NSNumber*)transaction_id
 {
-    return gap_transaction_total_size(_state, transaction_id.unsignedIntValue);
+    return [NSNumber numberWithLongLong:gap_transaction_total_size(_state, transaction_id.unsignedIntValue)];
 }
 
 - (NSTimeInterval)transaction_ctime:(NSNumber*)transaction_id
@@ -516,7 +522,8 @@ return [NSString stringWithUTF8String:str]; \
     for (id file in files)
     {
         cfiles[i++] = [file UTF8String];
-        IALog(@"Sending %@ to %@", file, recipient_id);
+        ELLE_DEBUG("%s: sending %s to %d", self.description.UTF8String, [file UTF8String],
+                   recipient_id.integerValue);
     }
     uint32_t ret = gap_send_files(_state,
                                   recipient_id.unsignedIntValue,
@@ -538,7 +545,8 @@ return [NSString stringWithUTF8String:str]; \
     for (id file in files)
     {
         cfiles[i++] = [file UTF8String];
-        IALog(@"Sending %@ to %@", file, recipient_email);
+        ELLE_DEBUG("%s: sending %s to %s", self.description.UTF8String, [file UTF8String],
+                   recipient_email.UTF8String);
     }
     uint32_t ret = gap_send_files_by_email(_state,
                                            recipient_email.UTF8String,
@@ -622,7 +630,7 @@ return [NSString stringWithUTF8String:str]; \
 
 static void clear_model()
 {
-    IALog(@"Clearing model");
+    ELLE_DUMP("clearing Cocoa models");
     [[IAGapState instance] loggedOut];
     on_connection_status(gap_user_status_offline);
     [IAGap sendNotif:IA_GAP_EVENT_CLEAR_MODEL withInfo:nil];
@@ -632,7 +640,7 @@ static void on_user_status(uint32_t const user_id,
                            gap_UserStatus status)
 {
     assert(user_id != 0);
-    IALog(@">>> on user status notif !");
+    ELLE_DUMP("on_user_status");
     @try
     {
         NSMutableDictionary* info = [NSMutableDictionary dictionary];
@@ -645,12 +653,13 @@ static void on_user_status(uint32_t const user_id,
     }
     @catch (NSException* exception)
     {
-        IALog(@"WARNING: on user status exception: %@", exception);
+        ELLE_WARN("on_user_status exception: %s", exception.reason.UTF8String);
     }
 }
 
 static void on_connection_status(gap_UserStatus status)
 {
+    ELLE_DUMP("on_connection_status: %d", status);
     @try
     {
         NSMutableDictionary* msg = [NSMutableDictionary dictionary];
@@ -660,14 +669,14 @@ static void on_connection_status(gap_UserStatus status)
     }
     @catch (NSException* exception)
     {
-        IALog(@"WARNING: on_connection_status exception: %@", exception.reason);
+        ELLE_WARN("on_connection_status exception: %s", exception.reason.UTF8String);
     }
 }
 
 static void on_transaction(uint32_t const transaction_id, gap_TransactionStatus status)
 {
     assert(transaction_id != gap_null());
-//    IALog(@">>> On transaction notif: %d", transaction_id);
+    ELLE_DUMP("non_transaction: %d", transaction_id);
     @try
     {
         NSMutableDictionary* msg = [NSMutableDictionary dictionary];
@@ -679,13 +688,13 @@ static void on_transaction(uint32_t const transaction_id, gap_TransactionStatus 
     }
     @catch (NSException* exception)
     {
-        IALog(@"WARNING: on_transaction exception: %@", exception.reason);
+        ELLE_WARN("on_transaction exception: %s", exception.reason.UTF8String);
     }
 }
 
 static void on_error_callback(gap_Status errcode, char const* reason, uint32_t const transaction_id)
 {
-    IALog(@">>> On transaction error callback: %d", transaction_id);
+    ELLE_TRACE("on_error_callback: %d", transaction_id);
     @try
     {
         NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
@@ -703,13 +712,13 @@ static void on_error_callback(gap_Status errcode, char const* reason, uint32_t c
     }
     @catch (NSException* exception)
     {
-        IALog(@"WARNING: on_transaction_status exception: %@", exception.reason);
+        ELLE_WARN("on_error_callback exception: %s", exception.reason.UTF8String);
     }
 }
 
 static void on_kicked_out()
 {
-    IALog(@">>> On kicked out callback");
+    ELLE_TRACE("on_kicked_out");
     // Set not logged in and stop polling
     clear_model();
     [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
@@ -718,12 +727,13 @@ static void on_kicked_out()
 static void on_trophonius_unavailable()
 {
     // This is currently the same as a kick out
-    IALog(@">>> On Trophonius unavailable callback");
+    ELLE_DEBUG("on_trophonius_unavailable");
     [IAGap sendNotif:IA_GAP_EVENT_TROPHONIUS_UNAVAILABLE withInfo:nil];
 }
 
 static void on_received_avatar(uint32_t const user_id)
 {
+    ELLE_DUMP("on_received_avatar: %d", user_id);
     @try
     {
         NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
@@ -736,7 +746,7 @@ static void on_received_avatar(uint32_t const user_id)
     }
     @catch (NSException* exception)
     {
-        IALog(@"WARNING: on_received_avatar exception: %@", exception.reason);
+        ELLE_WARN("on_received_avatar exception: %s", exception.reason.UTF8String);
     }
 }
 

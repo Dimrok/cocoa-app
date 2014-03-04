@@ -8,6 +8,11 @@
 
 #import "IAOnboardingViewController.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.OnboardingViewController");
+
 @interface IAOnboardingMainView : IAMainView
 @end
 
@@ -98,6 +103,7 @@
 
 - (void)loadView
 {
+    ELLE_TRACE("%s: loadview", self.description.UTF8String);
     [super loadView];
     [_delegate onboardingControllerStarted:self];
     [self.view setAlphaValue:1.0];

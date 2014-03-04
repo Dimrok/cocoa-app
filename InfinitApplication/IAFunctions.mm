@@ -8,6 +8,11 @@
 
 #import "IAFunctions.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.Functions");
+
 @implementation IAFunctions
 
 + (NSBezierPath*)roundedBottomBezierWithRect:(NSRect)rect
@@ -285,7 +290,7 @@
 	ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
     if (address_book == nil)
     {
-        IALog(@"WARNING: Infinit doesn't have access to Address Book");
+        ELLE_LOG("Infinit doesn't have access to Address Book");
         return nil;
     }
     

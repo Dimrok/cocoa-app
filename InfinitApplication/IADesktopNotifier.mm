@@ -10,6 +10,11 @@
 
 #import "InfinitMetricsManager.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
+
 @implementation IADesktopNotifier
 {
 @private
@@ -190,6 +195,9 @@
     
     if (user_notification == nil)
         return;
+    
+    ELLE_LOG("%s: show desktop notification for transaction (%d) with status: %d",
+             transaction.transaction_id, transaction.status);
     
     [_notification_centre deliverNotification:user_notification];
 }

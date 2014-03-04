@@ -8,6 +8,11 @@
 
 #import "InfinitSearchController.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.SearchController");
+
 @implementation InfinitSearchController
 {
 @private
@@ -38,6 +43,14 @@
 
 - (BOOL)accessToAddressBook
 {
+    if (_addressbook == nil)
+    {
+        ELLE_LOG("%s: no access to addressbook", self.description.UTF8String);
+    }
+    else
+    {
+        ELLE_DEBUG("%s: addressbook accessible", self.description.UTF8String);
+    }
     return _addressbook == nil ? NO : YES;
 }
 
@@ -45,6 +58,9 @@
 {
     if (search_string == nil || search_string.length == 0)
         return;
+    
+    ELLE_DEBUG("%s: search addressbook for: %s", self.description.UTF8String,
+               search_string.UTF8String);
     
     NSMutableArray* strings;
     NSMutableArray* search_elements = [NSMutableArray array];
@@ -140,7 +156,8 @@
 {
     if (!result.success)
     {
-        IALog(@"%@ WARNING: Searching for users failed with error: %d", self, result.status);
+        ELLE_WARN("%s: searching for users failed with error: %d", self.description.UTF8String,
+                  result.status);
         return;
     }
     

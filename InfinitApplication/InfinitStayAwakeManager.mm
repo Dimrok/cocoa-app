@@ -21,6 +21,11 @@
 #import <IOKit/pwr_mgt/IOPMLib.h>
 #import <IOKit/IOMessage.h>
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.StayAwakeManager");
+
 // WORKAROUND: kIOPMACPowerKey is referenced in the public headers but it's not defined
 #ifndef kIOPMACPowerKey
 # define kIOPMACPowerKey "AC Power"
@@ -98,12 +103,12 @@ c_sleep_callback(void* ref_con,
             // Idle sleep about to kick in
             if ([InfinitStayAwakeManager preventSleep])
             {
-                IALog(@"Preventing sleep");
+                ELLE_LOG("preventing computer sleep");
                 IOCancelPowerChange(_root_port, (long)message_argument);
             }
             else
             {
-                IALog(@"Allowing sleep");
+                ELLE_LOG("allowing computer sleep");
                 IOAllowPowerChange(_root_port, (long)message_argument);
             }
             break;
@@ -134,7 +139,7 @@ c_sleep_callback(void* ref_con,
                                           &_notifier_object);
     if (_root_port == 0)
     {
-        IALog(@"%@ ERROR: IORegisterForSystemPower failed", self);
+        ELLE_WARN("%s: IORegisterForSystemPower failed", self.description.UTF8String);
     }
     
     CFRunLoopAddSource(CFRunLoopGetCurrent(),

@@ -11,6 +11,11 @@
 #import "InfinitSendFileListCellView.h"
 #import "InfinitMetricsManager.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
+
 @interface InfinitCombinedSendViewController ()
 
 @end
@@ -320,7 +325,14 @@
     self.cancel_button.toolTip = NSLocalizedString(@"Cancel", @"cancel");
     
     if (_expanded_view)
+    {
+        ELLE_TRACE("%s: loadview expanded view", self.description.UTF8String);
         [self openExpandedView];
+    }
+    else
+    {
+        ELLE_TRACE("%s: loadview compressed view", self.description.UTF8String);
+    }
     [self performSelector:@selector(focusOnTextField) withObject:nil afterDelay:0.2];
 }
 

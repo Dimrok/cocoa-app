@@ -13,6 +13,11 @@
 #import "IALogFileManager.h"
 #import "IAUserPrefs.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.CrashReportManager");
+
 @implementation IACrashReportManager
 
 + (IACrashReportManager*)sharedInstance
@@ -122,7 +127,7 @@
 //    if (error.code != 0)
 //        NSLog(@"%@ WARNING: Writing crash report failed", self);
     
-    NSLog(@"%@ Sending existing crash report", self);
+    ELLE_LOG("%s: sending existing crash report", self.description.UTF8String);
     
     NSString* last_state_log = [[IALogFileManager sharedInstance] lastLogFilePath];
     NSString* crash_file_path = [self getAppleCrashReport];
@@ -160,7 +165,7 @@
 
 - (void)threadedSendUserReportWithMessage:(NSDictionary*)user_report
 {
-    NSLog(@"%@ Sending user report", self);
+    ELLE_LOG("%s: sending user report", self.description.UTF8String);
 
     NSString* user_name = [user_report valueForKey:@"user_name"];
     NSString* message = [user_report valueForKey:@"message"];

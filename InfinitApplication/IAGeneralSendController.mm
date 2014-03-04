@@ -8,6 +8,11 @@
 
 #import "IAGeneralSendController.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.GeneralSendController");
+
 @implementation IAGeneralSendController
 {
 @private
@@ -60,6 +65,9 @@
     if (sender != _combined_send_controller)
         return;
     
+    ELLE_TRACE("%s: open file diaglog for: %s", self.description.UTF8String,
+               [sender description].UTF8String);
+    
     NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
     file_dialog.canChooseFiles = YES;
     file_dialog.canChooseDirectories = YES;
@@ -96,6 +104,8 @@
 - (void)openWithFiles:(NSArray*)files
               forUser:(IAUser*)user
 {
+    ELLE_TRACE("%s: open send view for user: %s", self.description.UTF8String,
+               user.fullname.UTF8String);
     _send_view_open = YES;
     [self cancelOpenFavourites];
     [_favourites_send_controller hideFavourites];
@@ -131,6 +141,7 @@
 
 - (void)showFavourites
 {
+    ELLE_TRACE("%s: show favourites", self.description.UTF8String);
     if (_favourites_send_controller == nil)
     {
         _favourites_send_controller = [[IAFavouritesSendViewController alloc] initWithDelegate:self];

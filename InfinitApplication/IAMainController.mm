@@ -1,5 +1,5 @@
 //
-//  IAMainController.m
+//  IAMainController.mm
 //  InfinitApplication
 //
 //  Created by Christopher Crone on 7/26/13.
@@ -17,6 +17,11 @@
 #import "IAPopoverViewController.h"
 #import "IAUserPrefs.h"
 #import "InfinitMetricsManager.h"
+
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.MainController");
 
 @implementation IAMainController
 {
@@ -75,6 +80,8 @@
         IAGap* state = [[IAGap alloc] init];
         [IAGapState setupWithProtocol:state];
         
+        // NB: Can only use elle logger after state has been initialised. i.e.: After this point.
+        
         [[IACrashReportManager sharedInstance] setupCrashReporter];
         
         _stay_awake_manager = [InfinitStayAwakeManager setUpInstanceWithDelegate:self];
@@ -107,7 +114,7 @@
         
         if (![self tryAutomaticLogin])
         {
-            IALog(@"%@ Autologin failed", self);
+            ELLE_LOG("%s: autologin failed", self.description.UTF8String);
             // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
             // is miscalculated
             [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
@@ -183,7 +190,7 @@
 {
     if (!result.success)
     {
-        IALog(@"%@ WARNING: problem checking for user id", self);
+        ELLE_WARN("%s: problem checking for link user id", self.description.UTF8String);
         return;
     }
     NSDictionary* dict = result.data;
@@ -199,7 +206,8 @@
     }
     else if (user_id.integerValue == 0)
     {
-        IALog(@"%@ ERROR: Link user not on Infinit: %@", self, [dict valueForKey:@"handle"]);
+        ELLE_WARN("%s: link user not on Infinit: %s", self.description.UTF8String,
+                 [[dict valueForKey:@"handle"] description].UTF8String);
     }
 }
 
@@ -208,13 +216,15 @@
     NSString* scheme = link.scheme;
     if (![scheme isEqualToString:@"infinit"])
     {
-        IALog(@"%@ WARNING: Unknown scheme in link: %@", self, link);
+        ELLE_WARN("%s: unknown scheme in link: %s", self.description.UTF8String,
+                 link.description.UTF8String);
         return;
     }
     NSString* action = link.host;
     if (![action isEqualToString:@"send"])
     {
-        IALog(@"%@ WARNING: Unknown action in link: %@", self, link);
+        ELLE_WARN("%s: unknown action in link: %s", self.description.UTF8String,
+                  link.description.UTF8String);
         return;
     }
     NSMutableArray* components = [NSMutableArray arrayWithArray:[link pathComponents]];
@@ -226,13 +236,15 @@
     }
     if (components.count != 2)
     {
-        IALog(@"%@ WARNING: Unknown link type: %@", self, link);
+        ELLE_WARN("%s: unknown link type: %s", self.description.UTF8String,
+                  link.description.UTF8String);
         return;
     }
     NSString* destination = components[0];
     if (![destination isEqualToString:@"user"])
     {
-        IALog(@"%@ WARNING: Unknown destination in link: %@", self, link);
+        ELLE_WARN("%s: unknown destination in link: %s", self.description.UTF8String,
+                  link.description.UTF8String);
         return;
     }
     NSString* handle = components[1];
@@ -389,7 +401,7 @@
 
 - (void)onSuccessfulLogin
 {
-    IALog(@"%@ Logged in", self);
+    ELLE_LOG("%s: completed login", self.description.UTF8String);
     
     [IAUserManager cacheInfinitContact];
     
@@ -440,7 +452,7 @@
     }
     else
     {
-        IALog(@"%@ ERROR: Couldn't login with status: %d", self, result.status);
+        ELLE_ERR("%s: couldn't login with status: %d", self.description.UTF8String, result.status);
         NSString* error;
         switch (result.status)
         {
@@ -558,9 +570,9 @@
 - (void)logoutCallback:(IAGapOperationResult*)result
 {
     if (result.success)
-        IALog(@"%@ Logged out", self);
+        ELLE_LOG("%s: logged out", self.description.UTF8String);
     else
-        IALog(@"%@ WARNING: Logout failed", self);
+        ELLE_WARN("%s: logout failed", self.description.UTF8String);
 }
 
 - (void)logoutAndQuitCallback:(IAGapOperationResult*)result
@@ -591,14 +603,18 @@
         add_status = [[IAKeychainManager sharedInstance] addPasswordKeychain:_username
                                                                     password:_password];
         if (add_status != noErr)
-            IALog(@"%@ Error adding credentials to keychain");
+        {
+            ELLE_ERR("%s: unable to add credentials to keychain", self.description.UTF8String);
+        }
     }
     else
     {
         OSStatus replace_status;
         replace_status = [[IAKeychainManager sharedInstance] changeUser:_username password:_password];
         if (replace_status != noErr)
-            IALog(@"%@ Error changing credentials in keychain");
+        {
+            ELLE_ERR("%s: unable to change credentials in keychain", self.description.UTF8String);
+        }
     }
     _password = @"";
     _password = nil;
@@ -657,12 +673,12 @@
 {
     if (result.success)
     {
-        IALog(@"%@ Logged out", self);
+        ELLE_LOG("%s: logged out", self.description.UTF8String);
         [self performSelector:@selector(showLoginView) withObject:nil afterDelay:0.3];
     }
     else
     {
-        IALog(@"%@ WARNING: Logout failed", self);
+        ELLE_WARN("%s: logout failed", self.description.UTF8String);
     }
 }
 
@@ -1245,7 +1261,7 @@ hasCurrentViewController:(IAViewController*)controller
 {
     if (![self tryAutomaticLogin])
     {
-        IALog(@"%@ Autologin failed", self);
+        ELLE_WARN("%s: autologin failed", self.description.UTF8String);
         // WORKAROUND: Need delay before showing window, otherwise status bar icon midpoint
         // is miscalculated
         [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];

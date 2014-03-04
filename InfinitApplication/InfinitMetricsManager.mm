@@ -10,6 +10,11 @@
 
 #import <Gap/version.h>
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.MetricsManager");
+
 static InfinitMetricsManager* _shared_instance = nil;
 
 @implementation InfinitMetricsManager
@@ -155,6 +160,8 @@ static InfinitMetricsManager* _shared_instance = nil;
 {
     if (!_send_metrics)
         return;
+    
+    ELLE_DEBUG("%s: send metric of type: %d", self.description.UTF8String, metric);
 
     NSDate* now = [NSDate date];
     NSNumber* timestamp = [NSNumber numberWithDouble:now.timeIntervalSince1970];
@@ -185,6 +192,8 @@ static InfinitMetricsManager* _shared_instance = nil;
 - (void)connection:(NSURLConnection*)connection
   didFailWithError:(NSError*)error
 {
+    ELLE_WARN("%s: unable to sent metric: %s", self.description.UTF8String,
+              error.description.UTF8String);
     // Do nothing
 }
 

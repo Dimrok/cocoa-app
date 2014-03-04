@@ -13,6 +13,11 @@
 
 #import "IAFunctions.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.AvatarManager");
+
 @implementation IAAvatarManager
 {
 @private
@@ -64,7 +69,7 @@
 {
     if (user.user_id == nil)
     {
-        IALog(@"%@ WARNING: User id is nil", self);
+        ELLE_WARN("%s: user_id is nil", self.description.UTF8String);
         return nil;
     }
 
@@ -88,14 +93,14 @@
     NSNumber* user_id = [notification.userInfo objectForKey:@"user_id"];
     if (user_id.unsignedIntValue == 0)
     {
-        IALog(@"%@ WARNING: user_id is zero, unable to get avatar", self);
+        ELLE_WARN("%s: user_id is zero, unable to get avatar", self.description.UTF8String);
         return;
     }
     IAUser* user = [IAUserManager userWithId:user_id];
     NSImage* avatar = [user fetchAvatar];
     if (avatar == nil) // If we don't get an avatar, make one
     {
-        IALog(@"%@ WARNING: got empty avatar", self);
+        ELLE_DEBUG("%s: got empty avatar, will generate one", self.description.UTF8String);
         avatar = [IAFunctions makeAvatarFor:user.fullname];
     }
     else // If we got one, store it

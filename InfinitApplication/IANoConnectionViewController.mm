@@ -8,6 +8,11 @@
 
 #import "IANoConnectionViewController.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("OSX.NoConnectionViewController");
+
 @interface IANoConnectionViewController ()
 
 @end
@@ -75,6 +80,7 @@
 
 - (void)loadView
 {
+    ELLE_TRACE("%s: loadview");
     [super loadView];
     [self.view layoutSubtreeIfNeeded];
 }
