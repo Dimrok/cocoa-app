@@ -125,12 +125,10 @@ void on_trophonius_unavailable();
         setenv("ELLE_LOG_LEVEL",
                "*trophonius*:TRACE,"
                "*meta*:DEBUG,"
-               "*meta*:TRACE,"
-               "*gap*:DEBUG,"
-               "*surface*:DUMP,"
+               "*gap*:TRACE,"
+               "*frete*:DEBUG,"
+               "*station*:DEBUG,"
                "reactor.fsm.Machine:DEBUG,"
-               "infinit.surface.gap.User:DUMP,"
-               "infinit.oracles.trophonius.Client:TRACE,"
                "OSX*:DUMP"
                , 0);
         setenv("ELLE_LOG_PID", "1", 0);
@@ -173,16 +171,11 @@ void on_trophonius_unavailable();
 //        setenv("INFINIT_TROPHONIUS_HOST", "192.168.0.143", 1);
 //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
-        
-//        setenv("INFINIT_METRICS_MIXPANEL_TRANSACTION_TID", "fd3652b9b4bc907fdd029eac64d98fa8", 1);
 
         setenv("INFINIT_METRICS_HOST", "v3.metrics.api.development.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
 //        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_METRICS_PORT", "8080", 1);
-        
-        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
-        setenv("INFINIT_METRICS_PORT", "8282", 1);
 
         setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
