@@ -145,7 +145,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 
 - (void)delayedTerminate
 {
-    IALog(@"%@ Cleaning up took to long, killing application", self);
+    NSLog(@"%@ Cleaning up took to long, killing application", self);
     [NSApp terminate:self];
 }
 
