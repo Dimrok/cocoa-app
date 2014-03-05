@@ -37,7 +37,7 @@
     // super would normally draw text at the top of the cell
     NSInteger offset = floor((NSHeight(frame) - (self.font.ascender - self.font.descender)) / 2.0);
     NSRect new_frame = NSMakeRect(frame.origin.x, frame.origin.y, NSWidth(frame), NSHeight(frame));
-    return NSInsetRect(new_frame, 7.0, offset - 2.0);
+    return NSInsetRect(new_frame, 9.0, offset - 3.0);
 }
 
 - (void)editWithFrame:(NSRect)aRect inView:(NSView*)controlView
