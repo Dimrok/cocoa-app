@@ -14,7 +14,7 @@
 
 - (void)awakeFromNib
 {
-    [self setFocusRingType:NSFocusRingTypeNone];
+    self.focusRingType = NSFocusRingTypeNone;
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView
@@ -22,15 +22,14 @@
     NSBezierPath* better_bounds = [NSBezierPath bezierPathWithRoundedRect:cellFrame
                                                                   xRadius:3.0
                                                                   yRadius:3.0];
-    [better_bounds addClip];
+    [better_bounds setClip];
+    [IA_GREY_COLOUR(255.0) set];
+    NSRectFill(cellFrame);
     [super drawWithFrame:cellFrame
                   inView:controlView];
-    if (self.isBezeled)
-    {
-        [better_bounds setLineWidth:2];
-        [IA_GREY_COLOUR(194.0) set];
-        [better_bounds stroke];
-    }
+    [better_bounds setLineWidth:2];
+    [IA_GREY_COLOUR(205.0) set];
+    [better_bounds stroke];
 }
 
 - (NSRect)adjustedFrameToVerticallyCentreText:(NSRect)frame
@@ -38,7 +37,7 @@
     // super would normally draw text at the top of the cell
     NSInteger offset = floor((NSHeight(frame) - (self.font.ascender - self.font.descender)) / 2.0);
     NSRect new_frame = NSMakeRect(frame.origin.x, frame.origin.y, NSWidth(frame), NSHeight(frame));
-    return NSInsetRect(new_frame, 7.0, offset - 4.0);
+    return NSInsetRect(new_frame, 7.0, offset - 2.0);
 }
 
 - (void)editWithFrame:(NSRect)aRect inView:(NSView*)controlView
