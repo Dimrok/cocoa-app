@@ -672,7 +672,7 @@ static void on_connection_status(gap_UserStatus status)
 static void on_transaction(uint32_t const transaction_id, gap_TransactionStatus status)
 {
     assert(transaction_id != gap_null());
-    ELLE_DUMP("non_transaction: %d", transaction_id);
+    ELLE_DUMP("on_transaction: %d", transaction_id);
     @try
     {
         NSMutableDictionary* msg = [NSMutableDictionary dictionary];
