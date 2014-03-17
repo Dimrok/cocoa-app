@@ -626,7 +626,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
         [username isEqualToString:@""] ||
         ![self credentialsInChain:username])
     {
-        return NO;
+        return nil;
     }
     
     void* pwd_ptr = NULL;
