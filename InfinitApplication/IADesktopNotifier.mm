@@ -197,7 +197,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
         return;
     
     ELLE_LOG("%s: show desktop notification for transaction (%d) with status: %d",
-             transaction.transaction_id, transaction.status);
+             self.description.UTF8String, transaction.transaction_id, transaction.status);
     
     [_notification_centre deliverNotification:user_notification];
 }
