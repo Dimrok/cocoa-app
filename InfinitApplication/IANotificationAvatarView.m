@@ -192,6 +192,8 @@
 
 - (void)setTotalProgress:(CGFloat)progress
 {
+    if (progress > 1.0 || progress < 0.0)
+        return;
     _total_progress = progress;
     [self setNeedsDisplay:YES];
 }

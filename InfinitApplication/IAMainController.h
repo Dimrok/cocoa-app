@@ -15,7 +15,7 @@
 #import <Gap/IATransactionManager.h>
 #import <Gap/IAUserManager.h>
 
-#import "IAConversationViewController.h"
+//#import "IAConversationViewController.h"
 #import "IADesktopNotifier.h"
 #import "IAGeneralSendController.h"
 #import "IAMeManager.h"
@@ -26,13 +26,13 @@
 #import "IAReportProblemWindowController.h"
 #import "IAStatusBarIcon.h"
 #import "IAWindowController.h"
+#import "InfinitConversationViewController.h"
 #import "InfinitLoginViewController.h"
 #import "InfinitStayAwakeManager.h"
 
 @protocol IAMainControllerProtocol;
 
-@interface IAMainController : NSObject <IAConversationViewProtocol,
-                                        IADesktopNotifierProtocol,
+@interface IAMainController : NSObject <IADesktopNotifierProtocol,
                                         IAGeneralSendControllerProtocol,
                                         IAMeManagerProtocol,
                                         IANoConnectionViewProtocol,
@@ -44,6 +44,7 @@
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,
                                         IAWindowControllerProtocol,
+                                        InfinitConversationViewProtocol,
                                         InfinitLoginViewControllerProtocol,
                                         InfinitStayAwakeProtocol>
 

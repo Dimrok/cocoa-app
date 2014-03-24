@@ -124,11 +124,8 @@ void on_trophonius_unavailable();
         setenv("INFINIT_BINARY_DIR", binary_dir.UTF8String, 1);
         setenv("ELLE_LOG_LEVEL",
                "*trophonius*:TRACE,"
-               "*meta*:DEBUG,"
-               "*gap*:TRACE,"
-               "*frete*:DEBUG,"
-               "*station*:DEBUG,"
-               "reactor.fsm.Machine:DEBUG,"
+               "*meta*:TRACE,"
+               "surface.gap.TransactionMachine:TRACE,"
                "OSX*:DUMP"
                , 0);
         setenv("ELLE_LOG_PID", "1", 0);
@@ -165,8 +162,8 @@ void on_trophonius_unavailable();
         setenv("INFINIT_META_HOST", "development.infinit.io", 1);
         setenv("INFINIT_META_PORT", "443", 1);
 //        setenv("INFINIT_META_HOST", "192.168.0.143", 1);
-//        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_META_PROTOCOL", "http", 1);
+//        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
 //        setenv("INFINIT_META_PORT", "8080", 1);
 
         setenv("INFINIT_TROPHONIUS_HOST", "development.infinit.io", 1);

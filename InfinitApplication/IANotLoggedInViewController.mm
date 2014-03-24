@@ -155,8 +155,7 @@ ELLE_LOG_COMPONENT("OSX.NotLoggedInViewController");
 
 - (IBAction)bottomButtonClicked:(IABottomButton*)sender
 {
-    if (_mode == INFINIT_WAITING_FOR_CONNECTION)
-        [_delegate notLoggedInViewWantsQuit:self];
+    [_delegate notLoggedInViewWantsQuit:self];
 }
 
 - (IBAction)onProblemClick:(NSButton*)sender

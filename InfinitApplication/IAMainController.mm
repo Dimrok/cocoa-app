@@ -33,7 +33,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     
     // View controllers
     IAViewController* _current_view_controller;
-    IAConversationViewController* _conversation_view_controller;
+    InfinitConversationViewController* _conversation_view_controller;
     IAGeneralSendController* _general_send_controller;
     InfinitLoginViewController* _login_view_controller;
     IANoConnectionViewController* _no_connection_view_controller;
@@ -275,9 +275,12 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (void)showConversationViewForUser:(IAUser*)user
 {
-    _conversation_view_controller = [[IAConversationViewController alloc] initWithDelegate:self
-                                                                                  andUser:user];
-    [self openOrChangeViewController:_conversation_view_controller];
+  NSArray* user_transactions = [_transaction_manager transactionsForUser:user];
+  _conversation_view_controller =
+  [[InfinitConversationViewController alloc] initWithDelegate:self
+                                                      forUser:user
+                                             withTransactions:user_transactions];
+  [self openOrChangeViewController:_conversation_view_controller];
 }
 
 - (void)showNotifications
@@ -734,59 +737,41 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 //- Conversation View Protocol ---------------------------------------------------------------------
 
-- (NSArray*)conversationView:(IAConversationViewController*)sender
-    wantsTransactionsForUser:(IAUser*)user
-{
-    return [_transaction_manager transactionsForUser:user];
-}
-
-- (void)conversationView:(IAConversationViewController*)sender
+- (void)conversationView:(InfinitConversationViewController*)sender
 wantsMarkTransactionsReadForUser:(IAUser*)user
 {
-    [_transaction_manager markTransactionsReadForUser:user];
+  [_transaction_manager markTransactionsReadForUser:user];
 }
 
-- (void)conversationView:(IAConversationViewController*)sender
+- (void)conversationView:(InfinitConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user
 {
-    if (_general_send_controller == nil)
-        _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-    [_general_send_controller openWithFiles:nil forUser:user];
+  if (_general_send_controller == nil)
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  [_general_send_controller openWithFiles:nil forUser:user];
 }
 
-- (void)conversationViewWantsBack:(IAConversationViewController*)sender
+- (void)conversationViewWantsBack:(InfinitConversationViewController*)sender
 {
-    [self showNotifications];
+  [self showNotifications];
 }
 
-- (void)conversationView:(IAConversationViewController*)sender
+- (void)conversationView:(InfinitConversationViewController*)sender
   wantsAcceptTransaction:(IATransaction*)transaction
 {
-    [_transaction_manager acceptTransaction:transaction];
+  [_transaction_manager acceptTransaction:transaction];
 }
 
-- (void)conversationView:(IAConversationViewController*)sender
+- (void)conversationView:(InfinitConversationViewController*)sender
   wantsCancelTransaction:(IATransaction*)transaction
 {
-    [_transaction_manager cancelTransaction:transaction];
+  [_transaction_manager cancelTransaction:transaction];
 }
 
-- (void)conversationView:(IAConversationViewController*)sender
+- (void)conversationView:(InfinitConversationViewController*)sender
   wantsRejectTransaction:(IATransaction*)transaction
 {
-    [_transaction_manager rejectTransaction:transaction];
-}
-
-- (void)conversationView:(IAConversationViewController*)sender
-       wantsAddFavourite:(IAUser*)user
-{
-    [IAUserManager addFavourite:user];
-}
-
-- (void)conversationView:(IAConversationViewController*)sender
-    wantsRemoveFavourite:(IAUser*)user
-{
-    [IAUserManager removeFavourite:user];
+  [_transaction_manager rejectTransaction:transaction];
 }
 
 //- Desktop Notifier Protocol ----------------------------------------------------------------------
@@ -1150,7 +1135,7 @@ transactionsProgressForUser:(IAUser*)user
 
 - (BOOL)conversationViewOpen
 {
-    if ([_current_view_controller isKindOfClass:IAConversationViewController.class])
+    if ([_current_view_controller isKindOfClass:InfinitConversationViewController.class])
         return YES;
     return NO;
 }
@@ -1167,7 +1152,7 @@ transactionsProgressForUser:(IAUser*)user
     }
     else if ([self conversationViewOpen])
     {
-        if ([transaction.other_user isEqual:[(IAConversationViewController*)_current_view_controller user]])
+        if ([transaction.other_user isEqual:[(InfinitConversationViewController*)_current_view_controller user]])
         {
             [_transaction_manager markTransactionAsRead:transaction];
         }

@@ -18,7 +18,7 @@
 #import "InfinitMetricsManager.h"
 
 #define IA_FEEDBACK_LINK "http://feedback.infinit.io"
-#define IA_PROFILE_LINK "http://infinit.io/account"
+#define IA_PROFILE_LINK "https://infinit.io/account"
 
 #undef check
 #import <elle/log.hh>

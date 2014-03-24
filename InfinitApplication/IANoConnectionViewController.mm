@@ -80,7 +80,7 @@ ELLE_LOG_COMPONENT("OSX.NoConnectionViewController");
 
 - (void)loadView
 {
-    ELLE_TRACE("%s: loadview");
+    ELLE_TRACE("%s: loadview", self.description.UTF8String);
     [super loadView];
     [self.view layoutSubtreeIfNeeded];
 }

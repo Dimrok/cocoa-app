@@ -104,8 +104,15 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 - (void)openWithFiles:(NSArray*)files
               forUser:(IAUser*)user
 {
-    ELLE_TRACE("%s: open send view for user: %s", self.description.UTF8String,
-               user.fullname.UTF8String);
+    if (user != nil)
+    {
+        ELLE_TRACE("%s: open send view for user: %s", self.description.UTF8String,
+                   user.fullname.UTF8String);
+    }
+    else
+    {
+        ELLE_TRACE("%s: open send view for no user", self.description.UTF8String);
+    }
     _send_view_open = YES;
     [self cancelOpenFavourites];
     [_favourites_send_controller hideFavourites];

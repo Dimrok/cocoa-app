@@ -298,7 +298,7 @@ typedef enum __InfinitStatusBarIconColour
 - (void)setLoggingIn:(BOOL)isLoggingIn
 {
     _logging_in = isLoggingIn;
-    if (_logging_in)
+    if (_logging_in && !_is_highlighted)
         _icon_view.alphaValue = 0.67;
     else
         _icon_view.alphaValue = 1.0;

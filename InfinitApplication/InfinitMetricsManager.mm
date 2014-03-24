@@ -165,10 +165,14 @@ static InfinitMetricsManager* _shared_instance = nil;
 
     NSDate* now = [NSDate date];
     NSNumber* timestamp = [NSNumber numberWithDouble:now.timeIntervalSince1970];
-    NSDictionary* metric_dict = @{@"event": [self _eventName:metric],
-                                  @"method": [self _eventMethod:metric],
-                                  @"user": [self _userId],
-                                  @"timestamp": timestamp};
+    NSMutableDictionary* metric_dict =
+    [NSMutableDictionary dictionaryWithDictionary:@{@"event": [self _eventName:metric],
+                                                    @"method": [self _eventMethod:metric],
+                                                    @"timestamp": timestamp}];
+    if ([self _userId] != nil)
+        [metric_dict setObject:[self _userId] forKey:@"user"];
+    else
+        [metric_dict setObject:@"unknown" forKey:@"user"];
     NSData* json_data = [NSJSONSerialization dataWithJSONObject:metric_dict options:0 error:nil];
     NSMutableURLRequest* request =
         [[NSMutableURLRequest alloc] initWithURL:_metrics_url

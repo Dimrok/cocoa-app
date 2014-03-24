@@ -24,63 +24,68 @@
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
-    if (self = [super initWithCoder:aDecoder])
-    {
-        _normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
-                                                shadow:nil];
-        _hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
-                                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                               colour:IA_RGB_COLOUR(11.0, 117.0, 162)
-                                               shadow:nil];
-        _hand_cursor = YES;
-        _normal_image = nil;
-    }
-    return self;
+  if (self = [super initWithCoder:aDecoder])
+  {
+    _normal_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
+                                            shadow:nil];
+    _hover_attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:11.0]
+                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                           colour:IA_RGB_COLOUR(11.0, 117.0, 162)
+                                           shadow:nil];
+    _hand_cursor = YES;
+    _normal_image = nil;
+  }
+  return self;
 }
 
 - (void)awakeFromNib
 {
-    [self setFocusRingType:NSFocusRingTypeNone];
-    if (_normal_image == nil)
-        _normal_image = self.image;
+  [self setFocusRingType:NSFocusRingTypeNone];
+  if (_normal_image == nil)
+    _normal_image = self.image;
 }
 
 - (void)dealloc
 {
-    _tracking_area = nil;
+  _tracking_area = nil;
 }
 
 - (void)resetCursorRects
 {
-    [super resetCursorRects];
+  [super resetCursorRects];
 
-    if (!_hand_cursor)
-        return;
+  if (!_hand_cursor)
+    return;
 
-    NSCursor* cursor = [NSCursor pointingHandCursor];
-    [self addCursorRect:self.bounds cursor:cursor];
+  NSCursor* cursor = [NSCursor pointingHandCursor];
+  [self addCursorRect:self.bounds cursor:cursor];
 }
 
-- (void)ensureTrackingArea
+- (void)createTrackingArea
 {
-    _tracking_area = [[NSTrackingArea alloc] initWithRect:NSZeroRect
-                                                  options:(NSTrackingInVisibleRect |
-                                                           NSTrackingActiveAlways |
-                                                           NSTrackingMouseEnteredAndExited)
-                                                    owner:self
-                                                 userInfo:nil];
+  _tracking_area = [[NSTrackingArea alloc] initWithRect:self.bounds
+                                                options:(NSTrackingMouseEnteredAndExited |
+                                                         NSTrackingActiveAlways)
+                                                  owner:self
+                                               userInfo:nil];
+  
+  [self addTrackingArea:_tracking_area];
+  
+  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
+  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
+  if (NSPointInRect(mouse_loc, self.bounds))
+    [self mouseEntered:nil];
+  else
+    [self mouseExited:nil];
 }
 
 - (void)updateTrackingAreas
 {
-    [super updateTrackingAreas];
-    [self ensureTrackingArea];
-    if (![[self trackingAreas] containsObject:_tracking_area])
-    {
-        [self addTrackingArea:_tracking_area];
-    }
+  [self removeTrackingArea:_tracking_area];
+  [self createTrackingArea];
+  [super updateTrackingAreas];
 }
 
 - (void)mouseEntered:(NSEvent*)theEvent
@@ -105,22 +110,22 @@
 
 - (void)setNormalImage:(NSImage*)normal_image
 {
-    _normal_image = normal_image;
+  _normal_image = normal_image;
 }
 
 - (void)setHoverImage:(NSImage*)hover_image
 {
-    _hover_image = hover_image;
+  _hover_image = hover_image;
 }
 
 - (void)setNormalTextAttributes:(NSDictionary*)attrs
 {
-    _normal_attrs = attrs;
+  _normal_attrs = attrs;
 }
 
 - (void)setHoverTextAttributes:(NSDictionary*)attrs
 {
-    _hover_attrs = attrs;
+  _hover_attrs = attrs;
 }
 
 @end

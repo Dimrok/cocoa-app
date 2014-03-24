@@ -14,6 +14,7 @@
 {
     NSUInteger _count;
     NSImage* _badge;
+    NSDictionary* _num_attrs;
 }
 
 - (id)initWithFrame:(NSRect)frameRect
@@ -21,6 +22,14 @@
     if (self = [super initWithFrame:frameRect])
     {
         _badge = [IAFunctions imageNamed:@"badge"];
+        NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                  traits:NSUnboldFontMask
+                                                                  weight:5
+                                                                    size:12.0];
+      _num_attrs = [IAFunctions textStyleWithFont:font
+                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                           colour:IA_GREY_COLOUR(255.0)
+                                           shadow:nil];
     }
     return self;
 }
@@ -38,26 +47,20 @@
                   fromRect:NSZeroRect
                  operation:NSCompositeSourceOver
                   fraction:1.0];
-        NSDictionary* num_attrs = [IAFunctions
-                                   textStyleWithFont:[NSFont boldSystemFontOfSize:11.0]
-                                      paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                              colour:IA_GREY_COLOUR(255.0)
-                                              shadow:nil];
         NSAttributedString* num_str;
         if (_count < 10)
         {
             num_str = [[NSAttributedString alloc]
                        initWithString:[[NSNumber numberWithUnsignedInteger:_count] stringValue]
-                                                      attributes:num_attrs];
+                                                      attributes:_num_attrs];
         }
         else
         {
             num_str = [[NSAttributedString alloc] initWithString:@"+"
-                                                      attributes:num_attrs];
+                                                      attributes:_num_attrs];
         }
         [num_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - num_str.size.width) / 2.0,
-                                         (NSHeight(self.bounds) - num_str.size.height) / 2.0
-                                            + 2.0)];
+                                         (NSHeight(self.bounds) - num_str.size.height) / 2.0 + 1.0)];
     }
 }
 
