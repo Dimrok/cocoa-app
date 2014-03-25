@@ -151,6 +151,8 @@ static InfinitMetricsManager* _shared_instance = nil;
 
 - (NSString*)_userId
 {
+    if (![[IAGapState instance] logged_in])
+      return nil;
     return [IAGapState instance].self_user.real_id;
 }
 
