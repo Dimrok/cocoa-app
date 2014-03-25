@@ -158,7 +158,8 @@ void on_trophonius_unavailable();
 
 #else
         setenv("ELLE_REAL_ASSERT", "1", 1);
-        
+        setenv("INFINIT_DEVELOPMENT", "1", 1);
+      
         setenv("INFINIT_META_PROTOCOL", "https", 1);
         setenv("INFINIT_META_HOST", "development.infinit.io", 1);
         setenv("INFINIT_META_PORT", "443", 1);
