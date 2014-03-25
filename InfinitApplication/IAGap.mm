@@ -154,6 +154,7 @@ void on_trophonius_unavailable();
         
         setenv("INFINIT_METRICS_HOST", "v3.metrics.api.production.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
+        setenv("INFINIT_PRODUCTION", "1", 1);
 
 #else
         setenv("ELLE_REAL_ASSERT", "1", 1);
