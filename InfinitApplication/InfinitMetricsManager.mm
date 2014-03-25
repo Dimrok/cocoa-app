@@ -31,19 +31,26 @@ static InfinitMetricsManager* _shared_instance = nil;
 {
     if (self = [super init])
     {
-        NSString* metrics_host = [[NSString alloc] initWithUTF8String:getenv("INFINIT_METRICS_HOST")];
-        NSString* metrics_port = [[NSString alloc] initWithUTF8String:getenv("INFINIT_METRICS_PORT")];
-        if (metrics_host.length > 0 || metrics_port.length > 0)
+        @try
         {
-            _send_metrics = YES;
-            NSString* metrics_url =
+            NSString* metrics_host = [[NSString alloc] initWithUTF8String:getenv("INFINIT_METRICS_HOST")];
+            NSString* metrics_port = [[NSString alloc] initWithUTF8String:getenv("INFINIT_METRICS_PORT")];
+            if (metrics_host.length > 0 && metrics_port.length > 0)
+            {
+                _send_metrics = YES;
+                NSString* metrics_url =
                 [[NSString alloc] initWithFormat:@"http://%@:%@/ui", metrics_host, metrics_port];
-            _metrics_url = [[NSURL alloc] initWithString:metrics_url];
-            NSString* user_agent = [[NSString alloc] initWithFormat:@"Infinit/%s (OS X)", INFINIT_VERSION];
-            _http_headers = @{@"User-Agent": user_agent,
-                              @"Content-Type": @"application/json"};
+                _metrics_url = [[NSURL alloc] initWithString:metrics_url];
+                NSString* user_agent = [[NSString alloc] initWithFormat:@"Infinit/%s (OS X)", INFINIT_VERSION];
+                _http_headers = @{@"User-Agent": user_agent,
+                                  @"Content-Type": @"application/json"};
+            }
+            else
+            {
+                _send_metrics = NO;
+            }
         }
-        else
+        @catch (NSException *exception)
         {
             _send_metrics = NO;
         }
