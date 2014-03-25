@@ -11,6 +11,7 @@
 #import "InfinitConversationElement.h"
 #import "IAHoverButton.h"
 #import "InfinitConversationProgressBar.h"
+#import "InfinitFileListScrollView.h"
 
 @class InfinitConversationBubbleView;
 @protocol InfinitConversationCellViewProtocol;
@@ -33,7 +34,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* bubble_height;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* table_height;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* message_height;
-@property (nonatomic, strong) IBOutlet NSTableView* file_list;
+@property (nonatomic, strong) IBOutlet InfinitFileListScrollView* table_container;
 @property (nonatomic, strong) IBOutlet NSTextField* message;
 @property (nonatomic, strong) IBOutlet InfinitConversationBubbleView* bubble_view;
 @property (nonatomic, strong) IBOutlet InfinitConversationProgressBar* progress;

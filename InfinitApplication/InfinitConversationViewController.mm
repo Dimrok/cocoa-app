@@ -8,6 +8,7 @@
 
 #import "InfinitConversationViewController.h"
 
+#import "IAAvatarManager.h"
 #import "InfinitConversationElement.h"
 #import "InfinitConversationCellView.h"
 #import "InfinitMetricsManager.h"
@@ -61,6 +62,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     _user = user;
     _max_table_height = 320.0;
     _rows_with_progress = [[NSMutableArray alloc] init];
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(avatarReceivedCallback:)
+                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                             object:nil];
   }
   return self;
 }
@@ -214,7 +219,22 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (CGFloat)tableHeight
 {
-  return _max_table_height;
+  if (_elements.count >= 4)
+  {
+    return _max_table_height;
+  }
+  else
+  {
+    CGFloat height = 0.0;
+    for (InfinitConversationElement* element in _elements)
+    {
+      height += [InfinitConversationCellView heightOfCellForElement:element];
+    }
+    if (height < _max_table_height)
+      return height;
+    else
+      return _max_table_height;
+  }
 }
 
 - (CGFloat)tableView:(NSTableView*)table_view
@@ -248,6 +268,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   
   cell = [self.table_view makeViewWithIdentifier:identifier_str owner:self];
   [cell setupCellForElement:element withDelegate:self];
+  // WORKAROUND: Ensure that we don't reuse cells.
+  cell.identifier = nil;
   return cell;
 }
 
@@ -362,17 +384,17 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)conversationCellViewWantsShowFiles:(InfinitConversationCellView*)sender
 {
-  [sender showFiles];
   NSInteger row = [self.table_view rowForView:sender];
   [_elements[row] setShowing_files:YES];
+  [sender showFiles];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
 }
 
 - (void)conversationCellViewWantsHideFiles:(InfinitConversationCellView*)sender
 {
-  [sender hideFiles];
   NSInteger row = [self.table_view rowForView:sender];
   [_elements[row] setShowing_files:NO];
+  [sender hideFiles];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
 }
 
@@ -427,11 +449,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   element.important = YES; // We want to keep it the same colour that it was before updating
   [self.table_view beginUpdates];
   [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-                         withAnimation:NSTableViewAnimationEffectFade];
+                         withAnimation:NSTableViewAnimationEffectNone];
   [_elements removeObjectAtIndex:count];
   [_elements insertObject:element atIndex:count];
   [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-                         withAnimation:NSTableViewAnimationEffectFade];
+                         withAnimation:NSTableViewAnimationEffectNone];
   [self.table_view endUpdates];
   [self resizeContentView];
   
@@ -450,6 +472,24 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     return;
   
   [self configurePersonView];
+}
+
+//- Avatar Callbacks -------------------------------------------------------------------------------
+
+- (void)avatarReceivedCallback:(NSNotification*)notification
+{
+  IAUser* user = [notification.userInfo objectForKey:@"user"];
+  NSMutableIndexSet* indexes = [[NSMutableIndexSet alloc] init];
+  for (NSInteger index = 0; index < _elements.count; index++)
+  {
+    InfinitConversationElement* element = _elements[index];
+    if (!element.spacer &&
+        (element.transaction.sender == user || element.transaction.recipient == user))
+    {
+      [indexes addIndex:index];
+    }
+  }
+  [self.table_view reloadDataForRowIndexes:indexes columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 //- Change View Handling ---------------------------------------------------------------------------

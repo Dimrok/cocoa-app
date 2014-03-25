@@ -106,7 +106,7 @@
   if (self.doubleValue > 0)
   {
     [IA_RGB_COLOUR(0, 214, 242) set];
-    NSRect bar = NSMakeRect(self.bounds.origin.x, 4.0,
+    NSRect bar = NSMakeRect(self.bounds.origin.x, 5.0,
                             (NSWidth(self.bounds) / self.maxValue * self.doubleValue), 2.0);
     NSRectFill(bar);
   }

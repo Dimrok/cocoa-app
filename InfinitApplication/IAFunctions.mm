@@ -56,7 +56,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     [res lineToPoint:NSMakePoint(x + corner_radius, y + height)];
     [res appendBezierPathWithArcWithCenter:NSMakePoint(x + corner_radius, y + height - corner_radius)
                                     radius:corner_radius
-                                startAngle:270.0
+                                startAngle:90.0
                                   endAngle:180.0];
     [res lineToPoint:NSMakePoint(x, y)];
     return res;

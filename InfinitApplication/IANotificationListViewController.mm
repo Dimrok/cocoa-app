@@ -422,6 +422,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
          {
              context.duration = 0.15;
+             [self.content_height_constraint.animator setConstant:44.0];
              [self.table_view beginUpdates];
              [self.table_view moveRowAtIndex:new_row toIndex:0];
              [self.table_view endUpdates];

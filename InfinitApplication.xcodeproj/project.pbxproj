@@ -25,6 +25,7 @@
 		831FB22717A90BE900696604 /* IANotificationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831FB22517A90BE900696604 /* IANotificationListViewController.xib */; };
 		831FB23617A9370400696604 /* bg-header-top-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 831FB23417A9370400696604 /* bg-header-top-gray.png */; };
 		831FB23717A9370400696604 /* bg-header-top-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 831FB23517A9370400696604 /* bg-header-top-gray@2x.png */; };
+		8321BE7A18E0D33600237252 /* InfinitConversationFileCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */; };
 		8327439317F0A19D008B4CA4 /* IAConversationProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8327439217F0A19D008B4CA4 /* IAConversationProgressBar.m */; };
 		8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328080A17A2B4A60025B6F8 /* Cocoa.framework */; };
 		8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8328081317A2B4A60025B6F8 /* InfoPlist.strings */; };
@@ -156,6 +157,7 @@
 		837A7F9117FC25F200600ACD /* btn-send-files-simple-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837A7F8D17FC25F200600ACD /* btn-send-files-simple-disabled@2x.png */; };
 		837A7F9217FC25F200600ACD /* btn-send-files-simple.png in Resources */ = {isa = PBXBuildFile; fileRef = 837A7F8E17FC25F200600ACD /* btn-send-files-simple.png */; };
 		837A7F9317FC25F200600ACD /* btn-send-files-simple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837A7F8F17FC25F200600ACD /* btn-send-files-simple@2x.png */; };
+		837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */; };
 		837E6D0C17DA324100FC3141 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 837E6D0B17DA324100FC3141 /* loading.gif */; };
 		838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7317D73261009083D4 /* IASimpleSendButton.m */; };
 		838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7A17D73734009083D4 /* IABottomButton.m */; };
@@ -550,6 +552,8 @@
 		831FB22517A90BE900696604 /* IANotificationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANotificationListViewController.xib; sourceTree = "<group>"; };
 		831FB23417A9370400696604 /* bg-header-top-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-gray.png"; sourceTree = "<group>"; };
 		831FB23517A9370400696604 /* bg-header-top-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-gray@2x.png"; sourceTree = "<group>"; };
+		8321BE7818E0D33600237252 /* InfinitConversationFileCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationFileCellView.h; sourceTree = "<group>"; };
+		8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationFileCellView.m; sourceTree = "<group>"; };
 		8327439117F0A19D008B4CA4 /* IAConversationProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAConversationProgressBar.h; sourceTree = "<group>"; };
 		8327439217F0A19D008B4CA4 /* IAConversationProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAConversationProgressBar.m; sourceTree = "<group>"; };
 		8328080717A2B4A60025B6F8 /* InfinitApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinitApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -711,6 +715,8 @@
 		837A7F8D17FC25F200600ACD /* btn-send-files-simple-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple-disabled@2x.png"; sourceTree = "<group>"; };
 		837A7F8E17FC25F200600ACD /* btn-send-files-simple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple.png"; sourceTree = "<group>"; };
 		837A7F8F17FC25F200600ACD /* btn-send-files-simple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-send-files-simple@2x.png"; sourceTree = "<group>"; };
+		837DE2C518E10DBB003A63A8 /* InfinitFileListScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileListScrollView.h; sourceTree = "<group>"; };
+		837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileListScrollView.m; sourceTree = "<group>"; };
 		837E6D0B17DA324100FC3141 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		838AAC7217D73261009083D4 /* IASimpleSendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASimpleSendButton.h; sourceTree = "<group>"; };
 		838AAC7317D73261009083D4 /* IASimpleSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASimpleSendButton.m; sourceTree = "<group>"; };
@@ -1226,6 +1232,10 @@
 				836A679318D790D600A15677 /* InfinitConversationElement.m */,
 				839DDCF018D8C7D50021B826 /* InfinitConversationProgressBar.h */,
 				839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.m */,
+				8321BE7818E0D33600237252 /* InfinitConversationFileCellView.h */,
+				8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */,
+				837DE2C518E10DBB003A63A8 /* InfinitFileListScrollView.h */,
+				837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */,
 			);
 			name = "New Conversation View";
 			sourceTree = "<group>";
@@ -2136,6 +2146,7 @@
 				833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */,
 				83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.mm in Sources */,
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
+				837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */,
 				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
 				83281BBE17AFFD1D00CAE422 /* IAConversationViewController.mm in Sources */,
 				83B3F5B317B53C1600C19859 /* IANotificationListCellView.m in Sources */,
@@ -2161,6 +2172,7 @@
 				836DF7EC17FD70DE00B2B809 /* IACentredMessageTextCell.m in Sources */,
 				83B9744518842F540089E0E0 /* InfinitSendFileListCellView.m in Sources */,
 				833B59D418D774C400A43339 /* InfinitConversationCellView.mm in Sources */,
+				8321BE7A18E0D33600237252 /* InfinitConversationFileCellView.m in Sources */,
 				8348156318697870002ACDE0 /* InfinitCombinedSendViewController.mm in Sources */,
 				838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */,
 			);

@@ -7,6 +7,7 @@
 //
 
 #import "InfinitConversationCellView.h"
+#import "InfinitConversationFileCellView.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -25,6 +26,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 @property (nonatomic, readwrite) BOOL clickable;
 @property (nonatomic, readwrite) CGFloat hover;
 @property (nonatomic, readwrite) id<InfinitConversationBubbleViewProtocol> delegate;
+@property (nonatomic, readwrite) BOOL showing_list;
 
 @end
 
@@ -36,8 +38,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  NSBezierPath* outter_ring =
-    [NSBezierPath bezierPathWithRoundedRect:self.bounds xRadius:5.0 yRadius:5.0];
+  NSBezierPath* outter_ring;
+  if (_showing_list)
+  {
+    outter_ring = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:5.0];
+  }
+  else
+  {
+    outter_ring = [NSBezierPath bezierPathWithRoundedRect:self.bounds xRadius:5.0 yRadius:5.0];
+  }
   if (self.important)
   {
     [IA_GREY_COLOUR(255) set];
@@ -161,26 +170,14 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   NSTrackingArea* _tracking_area;
   BOOL _hovered;
   BOOL _showing_files;
+  NSTableView* _files_table;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-- (id)initWithFrame:(NSRect)frame
-{
-  if (self = [super initWithFrame:frame])
-  {
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(avatarReceivedCallback:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                             object:nil];
-  }
-  return self;
-}
-
 - (void)dealloc
 {
   _tracking_area = nil;
-  [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 //- Properties -------------------------------------------------------------------------------------
@@ -208,7 +205,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 + (CGFloat)heightOfFilesTable:(NSInteger)no_files
 {
-  return no_files * 18.0;
+  return no_files * 35.0;
 }
 
 + (CGFloat)heightOfCellForElement:(InfinitConversationElement*)element
@@ -328,6 +325,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   {
     case TRANSACTION_VIEW_ACCEPTED:
       [self setTransactionStatusButtonToCancel];
+      self.information.hidden = YES;
       break;
     case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
       [self setTransactionStatusButtonToCancel];
@@ -417,6 +415,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.file_list_icon.image = [IAFunctions imageNamed:@"conversation-icon-hide-files"];
   NSInteger file_count = _element.transaction.files_count;
   CGFloat bubble_height = self.bubble_height.constant;
+  self.bubble_view.showing_list = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      self.bubble_height.constant = bubble_height;
@@ -426,7 +425,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
      self.table_height.constant = [InfinitConversationCellView heightOfFilesTable:file_count];
      self.bubble_height.constant = bubble_height;
    }];
-  [self.file_list reloadData];
+  [_files_table reloadData];
 }
 
 - (void)hideFiles
@@ -434,6 +433,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.file_list_icon.image = [IAFunctions imageNamed:@"conversation-icon-show-files"];
   
   CGFloat bubble_height = self.bubble_height.constant;
+  self.bubble_view.showing_list = NO;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      self.bubble_height.constant = bubble_height;
@@ -477,6 +477,26 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     self.file_name.stringValue = [NSString stringWithFormat:@"%ld %@", transaction.files_count, file_str];
     self.file_icon.image = [[NSWorkspace sharedWorkspace] iconForFileType:@"public.directory"];
     self.file_list_icon.hidden = NO;
+    NSRect table_frame = NSMakeRect(0.0, 0.0,
+                                    NSWidth(self.table_container.frame),
+                                    NSHeight(self.table_container.frame));
+    _files_table = [[NSTableView alloc] initWithFrame:table_frame];
+    NSTableColumn* col = [[NSTableColumn alloc] initWithIdentifier:@"Col1"];
+    col.width = NSWidth(self.table_container.frame);
+    [_files_table addTableColumn:col];
+    _files_table.delegate = self;
+    _files_table.dataSource = self;
+    _files_table.headerView = nil;
+    _files_table.backgroundColor = IA_GREY_COLOUR(248.0);
+    _files_table.allowsColumnReordering = NO;
+    _files_table.allowsColumnResizing = NO;
+    _files_table.allowsEmptySelection = YES;
+    _files_table.intercellSpacing = NSMakeSize(0.0, 0.0);
+    [_files_table reloadData];
+    self.table_container.verticalScrollElasticity = NSScrollElasticityNone;
+    self.table_container.documentView = _files_table;
+    self.table_container.hasVerticalScroller = NO;
+    self.table_container.hasHorizontalScroller = NO;
   }
   if (transaction.message.length > 0)
   {
@@ -494,28 +514,49 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   }
   NSImage* avatar_image = [IAAvatarManager getAvatarForUser:transaction.sender];
   [self updateAvatarWithImage:avatar_image];
-  [self cellSetUpForMode:TRANSACTION_VIEW_PREPARING];
-//  [self cellSetUpForMode:transaction.view_mode];
+  if (_element.showing_files)
+      [self showFiles];
+  [self cellSetUpForMode:transaction.view_mode];
 }
 
 //- File Table Handling ----------------------------------------------------------------------------
+
+- (BOOL)selectionShouldChangeInTableView:(NSTableView*)tableView
+{
+  return NO;
+}
+
+- (CGFloat)tableView:(NSTableView*)table_view
+         heightOfRow:(NSInteger)row
+{
+  return 35.0;
+}
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
   return _element.transaction.files_count;
 }
 
-- (id)tableView:(NSTableView*)tableView
-objectValueForTableColumn:(NSTableColumn*)tableColumn
-            row:(NSInteger)row
+- (NSView*)tableView:(NSTableView*)tableView
+  viewForTableColumn:(NSTableColumn*)tableColumn
+                 row:(NSInteger)row
 {
-  return _element.transaction.files[row];
+  NSRect rect = NSMakeRect(0.0, 0.0,
+                           NSWidth(self.table_container.frame),
+                           35.0);
+  InfinitConversationFileCellView* cell =
+    [[InfinitConversationFileCellView alloc] initWithFrame:rect];
+  [cell setFileName:_element.transaction.files[row]];
+  return cell;
 }
 
-- (CGFloat)tableView:(NSTableView*)tableView
-         heightOfRow:(NSInteger)row
+- (NSTableRowView*)tableView:(NSTableView*)tableView
+               rowViewForRow:(NSInteger)row
 {
-  return 18.0;
+  NSTableRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
+  if (row_view == nil)
+    row_view = [[NSTableRowView alloc] initWithFrame:NSZeroRect];
+  return row_view;
 }
 
 //- Update Progress --------------------------------------------------------------------------------
