@@ -18,26 +18,38 @@
 }
 
 - (id)initWithFrame:(NSRect)frame
+             onLeft:(BOOL)on_left
 {
   if (self = [super initWithFrame:frame])
   {
     NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                               traits:NSUnboldFontMask
                                                               weight:0
-                                                                size:12.0];
+                                                                size:11.5];
     NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     para.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    _file_name = [[NSTextField alloc] initWithFrame:NSZeroRect];
+    _file_icon = [[NSImageView alloc] initWithFrame:NSZeroRect];
+    if (on_left)
+    {
+      _file_name.frame = NSMakeRect(45.0, 9.0, 195.0, 15.0);
+      _file_icon.frame = NSMakeRect(22.0, 9.0, 16.0, 16.0);
+    }
+    else
+    {
+      para.alignment = NSRightTextAlignment;
+      _file_name.frame = NSMakeRect(18.0, 9.0, 195.0, 15.0);
+      _file_icon.frame = NSMakeRect(220.0, 9.0, 16.0, 16.0);
+    }
     _attrs = [IAFunctions textStyleWithFont:font
-                             paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                             paragraphStyle:para
                                      colour:IA_GREY_COLOUR(193.0)
                                      shadow:nil];
-    _file_name = [[NSTextField alloc] initWithFrame:NSZeroRect];
     [_file_name.cell setBordered:NO];
     [_file_name.cell setDrawsBackground:NO];
+    [_file_name.cell setLineBreakMode:NSLineBreakByTruncatingMiddle];
+    [_file_name.cell setTruncatesLastVisibleLine:YES];
     [self addSubview:_file_name];
-    _file_name.frame = NSMakeRect(35.0, 10.0, 210.0, 15.0);
-    _file_icon = [[NSImageView alloc] initWithFrame:NSZeroRect];
-    _file_icon.frame = NSMakeRect(15.0, 9.0, 16.0, 16.0);
     [self addSubview:_file_icon];
   }
   return self;

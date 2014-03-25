@@ -10,7 +10,8 @@
 
 @interface InfinitConversationFileCellView : NSTableCellView
 
-- (id)initWithFrame:(NSRect)frame;
+- (id)initWithFrame:(NSRect)frame
+             onLeft:(BOOL)on_left;
 
 - (void)setFileName:(NSString*)name;
 

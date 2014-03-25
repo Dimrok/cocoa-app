@@ -187,7 +187,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   if (message.length == 0)
     return 0.0;
   NSTextStorage* text_storage = [[NSTextStorage alloc] initWithString:message];
-  NSSize text_area = NSMakeSize(220.0, FLT_MAX);
+  NSSize text_area = NSMakeSize(200.0, FLT_MAX);
   NSTextContainer* text_container = [[NSTextContainer alloc] initWithContainerSize:text_area];
   NSLayoutManager* layout_manager = [[NSLayoutManager alloc] init];
   [layout_manager addTextContainer:text_container];
@@ -211,8 +211,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 + (CGFloat)heightOfCellForElement:(InfinitConversationElement*)element
 {
   if (element.spacer)
-    return 20.0;
-  CGFloat height = 94.0; // Size without message and file table.
+    return 10.0;
+  CGFloat height = 86.0; // Size without message and file table.
   height += [InfinitConversationCellView heightOfMessage:element.transaction.message];
   if (element.showing_files)
     height += [InfinitConversationCellView heightOfFilesTable:element.transaction.files_count];
@@ -544,8 +544,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   NSRect rect = NSMakeRect(0.0, 0.0,
                            NSWidth(self.table_container.frame),
                            35.0);
-  InfinitConversationFileCellView* cell =
-    [[InfinitConversationFileCellView alloc] initWithFrame:rect];
+  InfinitConversationFileCellView* cell;
+  cell = [[InfinitConversationFileCellView alloc] initWithFrame:rect onLeft:_element.on_left];
   [cell setFileName:_element.transaction.files[row]];
   return cell;
 }

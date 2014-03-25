@@ -118,9 +118,14 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   CGFloat width = [self.person_view.fullname.attributedStringValue size].width;
   self.person_view.fullname_width.constant = width;
   if (_user.status == gap_user_status_online)
-    self.person_view.online_status.hidden = NO;
+  {
+    self.person_view.online_status.image = [IAFunctions imageNamed:@"icon-status-online"];
+  }
   else
-    self.person_view.online_status.hidden = YES;
+  {
+    self.person_view.online_status.image = [IAFunctions imageNamed:@"conversation-icon-status-offline"];
+  }
+  self.person_view.online_status.hidden = NO;
 }
 
 - (void)awakeFromNib
@@ -444,8 +449,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (count >= _elements.count)
     return;
   
+  bool showing_files = [_elements[count] showing_files];
+  
   InfinitConversationElement* element =
     [[InfinitConversationElement alloc] initWithTransaction:transaction];
+  element.showing_files = showing_files;
   element.important = YES; // We want to keep it the same colour that it was before updating
   [self.table_view beginUpdates];
   [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
