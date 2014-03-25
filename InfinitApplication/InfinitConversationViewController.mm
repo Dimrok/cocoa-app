@@ -77,7 +77,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (BOOL)closeOnFocusLost
 {
-  return NO;
+  return YES;
 }
 
 - (NSArray*)sortTransactionList:(NSArray*)list
