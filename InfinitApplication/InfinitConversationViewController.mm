@@ -454,7 +454,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   InfinitConversationElement* element =
     [[InfinitConversationElement alloc] initWithTransaction:transaction];
   element.showing_files = showing_files;
-  element.important = YES; // We want to keep it the same colour that it was before updating
+  if (transaction.is_done)
+    element.important = NO;
+  else
+    element.important = YES; // We want to keep it the same colour that it was before updating
   [self.table_view beginUpdates];
   [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
                          withAnimation:NSTableViewAnimationEffectNone];

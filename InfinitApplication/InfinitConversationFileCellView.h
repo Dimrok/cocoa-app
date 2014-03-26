@@ -10,6 +10,9 @@
 
 @interface InfinitConversationFileCellView : NSTableCellView
 
+@property (nonatomic, readwrite) BOOL clickable;
+@property (nonatomic, readonly) NSTextField* file_name;
+
 - (id)initWithFrame:(NSRect)frame
              onLeft:(BOOL)on_left;
 

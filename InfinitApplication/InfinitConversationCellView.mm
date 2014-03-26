@@ -295,6 +295,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.accept_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-accept-hover"];
   self.reject_button.hand_cursor = YES;
   self.reject_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
+  [self.accept_button setToolTip:NSLocalizedString(@"Accept", nil)];
+  [self.reject_button setToolTip:NSLocalizedString(@"Decline", nil)];
 }
 
 - (void)setTransactionStatusButtonToStaticImage:(NSString*)image_name
@@ -317,6 +319,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.transaction_status_button.hand_cursor = YES;
   self.transaction_status_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
   self.transaction_status_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
+  [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancel", nil)];
 }
 
 - (void)cellSetUpForMode:(IATransactionViewMode)view_mode
@@ -334,18 +337,22 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       break;
     case TRANSACTION_VIEW_CANCELLED_OTHER:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
+      [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
       self.information.hidden = YES;
       break;
     case TRANSACTION_VIEW_CANCELLED_SELF:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
+      [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
       self.information.hidden = YES;
       break;
     case TRANSACTION_VIEW_FAILED:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-error"];
+      [self.transaction_status_button setToolTip:NSLocalizedString(@"Failed", nil)];
       self.information.hidden = YES;
       break;
     case TRANSACTION_VIEW_FINISHED:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-finished"];
+      [self.transaction_status_button setToolTip:NSLocalizedString(@"Finished", nil)];
       self.information.hidden = YES;
       break;
     case TRANSACTION_VIEW_PAUSE_AUTO:
@@ -366,6 +373,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       break;
     case TRANSACTION_VIEW_REJECTED:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
+      [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
       self.information.hidden = YES;
       break;
     case TRANSACTION_VIEW_RUNNING:
@@ -457,7 +465,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.time_indicator.stringValue = [IAFunctions relativeDateOf:transaction.last_edit_timestamp];
   if (transaction.files_count == 1)
   {
-    self.bubble_view.clickable = NO;
+    if (!transaction.from_me && transaction.is_done)
+      self.bubble_view.clickable = YES;
+    else
+      self.bubble_view.clickable = NO;
     self.file_name.stringValue = transaction.files[0];
     if (transaction.is_directory)
     {
@@ -497,6 +508,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     self.table_container.documentView = _files_table;
     self.table_container.hasVerticalScroller = NO;
     self.table_container.hasHorizontalScroller = NO;
+    [_files_table setAction:@selector(fileTableClicked:)];
   }
   if (transaction.message.length > 0)
   {
@@ -546,6 +558,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
                            35.0);
   InfinitConversationFileCellView* cell;
   cell = [[InfinitConversationFileCellView alloc] initWithFrame:rect onLeft:_element.on_left];
+  if (!_element.transaction.from_me && _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+    cell.clickable = YES;
+  else
+    cell.clickable = NO;
   [cell setFileName:_element.transaction.files[row]];
   return cell;
 }
@@ -557,6 +573,21 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   if (row_view == nil)
     row_view = [[NSTableRowView alloc] initWithFrame:NSZeroRect];
   return row_view;
+}
+
+- (void)fileTableClicked:(NSTableView*)sender
+{
+  if (_files_table == sender)
+  {
+    if (!_element.transaction.from_me && _element.transaction.files_count > 1 &&
+        _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+    {
+      InfinitConversationFileCellView* cell = [_files_table viewAtColumn:0
+                                                                     row:_files_table.clickedRow
+                                                         makeIfNecessary:NO];
+      [self showFileInFinder:cell.file_name.stringValue];
+    }
+  }
 }
 
 //- Update Progress --------------------------------------------------------------------------------
@@ -584,9 +615,37 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 //- Bubble View Protocol ---------------------------------------------------------------------------
 
+- (BOOL)pathExists:(NSString*)path
+{
+  if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+    return YES;
+  return NO;
+}
+
+- (void)showFileInFinder:(NSString*)filename
+{
+  NSString* download_dir = [NSHomeDirectory() stringByAppendingPathComponent:@"Downloads"];
+  NSMutableArray* file_urls = [NSMutableArray array];
+  NSString* file_path = [download_dir stringByAppendingPathComponent:filename];
+  if ([self pathExists:file_path])
+  {
+    [file_urls addObject:[[NSURL fileURLWithPath:file_path] absoluteURL]];
+  }
+  if (file_urls.count > 0)
+  {
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:file_urls];
+  }
+}
+
 - (void)bubbleViewGotClick:(InfinitConversationBubbleView*)sender
 {
-  if (_showing_files)
+  if (!_element.transaction.from_me &&
+      _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED &&
+      _element.transaction.files_count == 1)
+  {
+    [self showFileInFinder:_element.transaction.files[0]];
+  }
+  else if (_showing_files) // Multiple files
   {
     [_delegate conversationCellViewWantsHideFiles:self];
   }
