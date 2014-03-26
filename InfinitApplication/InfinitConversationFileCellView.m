@@ -11,7 +11,8 @@
 @implementation InfinitConversationFileCellView
 {
 @private
-  NSDictionary* _attrs;
+  NSDictionary* _attrs_normal;
+  NSDictionary* _attrs_hover;
   NSImageView* _file_icon;
   NSTrackingArea* _tracking_area;
   BOOL _hover;
@@ -43,10 +44,14 @@
       _file_name.frame = NSMakeRect(18.0, 9.0, 195.0, 15.0);
       _file_icon.frame = NSMakeRect(220.0, 9.0, 16.0, 16.0);
     }
-    _attrs = [IAFunctions textStyleWithFont:font
-                             paragraphStyle:para
-                                     colour:IA_GREY_COLOUR(193.0)
-                                     shadow:nil];
+    _attrs_normal = [IAFunctions textStyleWithFont:font
+                                    paragraphStyle:para
+                                            colour:IA_GREY_COLOUR(193.0)
+                                            shadow:nil];
+    _attrs_hover = [IAFunctions textStyleWithFont:font
+                                   paragraphStyle:para
+                                           colour:IA_RGB_COLOUR(102.0, 174.0, 211.0)
+                                           shadow:nil];
     [_file_name.cell setBordered:NO];
     [_file_name.cell setDrawsBackground:NO];
     [_file_name.cell setLineBreakMode:NSLineBreakByTruncatingMiddle];
@@ -105,6 +110,8 @@
     return;
   
   _hover = YES;
+  _file_name.attributedStringValue =
+    [[NSAttributedString alloc] initWithString:_file_name.stringValue attributes:_attrs_hover];
   [self setNeedsDisplay:YES];
 }
 
@@ -114,6 +121,8 @@
     return;
   
   _hover = NO;
+  _file_name.attributedStringValue =
+    [[NSAttributedString alloc] initWithString:_file_name.stringValue attributes:_attrs_normal];
   [self setNeedsDisplay:YES];
 }
 
@@ -122,13 +131,10 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
   if (_hover)
-  {
-    [IA_RGB_COLOUR(236.0, 253.0, 255.0) set];
-  }
-  else
-  {
     [IA_GREY_COLOUR(255.0) set];
-  }
+  else
+    [IA_GREY_COLOUR(248.0) set];
+
   NSRectFill(self.bounds);
   NSRect line_rect = NSMakeRect(0.0, NSHeight(self.bounds) - 2.0, NSWidth(self.bounds), 1.0);
   NSBezierPath* line = [NSBezierPath bezierPathWithRect:line_rect];
@@ -142,7 +148,7 @@
 - (void)setFileName:(NSString*)name
 {
   _file_name.attributedStringValue =
-    [[NSAttributedString alloc] initWithString:name attributes:_attrs];
+    [[NSAttributedString alloc] initWithString:name attributes:_attrs_normal];
   _file_icon.image =
     [[NSWorkspace sharedWorkspace] iconForFileType:[_file_name.stringValue pathExtension]];
   [self setNeedsDisplay:YES];
