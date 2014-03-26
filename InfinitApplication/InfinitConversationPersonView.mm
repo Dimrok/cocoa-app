@@ -53,6 +53,12 @@
 
 //- Mouse Handling ---------------------------------------------------------------------------------
 
+- (void)resetCursorRects
+{
+  [super resetCursorRects];
+  NSCursor* cursor = [NSCursor pointingHandCursor];
+  [self addCursorRect:self.bounds cursor:cursor];
+}
 
 - (void)ensureTrackingArea
 {
