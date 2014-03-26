@@ -645,13 +645,17 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   {
     [self showFileInFinder:_element.transaction.files[0]];
   }
-  else if (_showing_files) // Multiple files
+  else if (_element.transaction.files_count > 1 && _showing_files) // Multiple files
   {
     [_delegate conversationCellViewWantsHideFiles:self];
   }
-  else
+  else if (_element.transaction.files_count > 1)
   {
     [_delegate conversationCellViewWantsShowFiles:self];
+  }
+  else
+  {
+    return;
   }
   _showing_files = !_showing_files;
 }
