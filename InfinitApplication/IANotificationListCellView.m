@@ -131,22 +131,6 @@
     }
 }
 
-- (void)setAvatarMode:(IATransactionViewMode)view_mode
-           whenFromMe:(BOOL)from_me
-{
-    switch (view_mode)
-    {            
-        case TRANSACTION_VIEW_WAITING_ACCEPT:
-            if (!from_me)
-                [self.avatar_view setViewMode:AVATAR_VIEW_ACCEPT_REJECT];
-            break;
-            
-        default:
-            [self.avatar_view setViewMode:AVATAR_VIEW_NORMAL];
-            break;
-    }
-}
-
 - (void)setupCellWithTransaction:(IATransaction*)transaction
          withRunningTransactions:(NSUInteger)running_transactions
           andUnreadNotifications:(NSUInteger)unread_notifications
@@ -196,7 +180,6 @@
         
         self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
         [self.status_indicator setHidden:NO];
-        self.avatar_view.mode = AVATAR_VIEW_NORMAL;
     }
     // XXX Unread transaction is not latest. Should handle this better.
     else if (running_transactions == 0 && unread_notifications == 1 &&
@@ -208,7 +191,6 @@
         [self setInformationField:message];
         self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
         [self.status_indicator setHidden:NO];
-        self.avatar_view.mode = AVATAR_VIEW_NORMAL;
     }
     else
     {
@@ -222,8 +204,6 @@
                                        NSLocalizedString(@"files", @"files")]];
         }
         [self setStatusIndicatorForTransaction:transaction];
-        [self setAvatarMode:transaction.view_mode
-                 whenFromMe:transaction.from_me];
     }
     
     [self setLastActionTime:transaction.last_edit_timestamp];
