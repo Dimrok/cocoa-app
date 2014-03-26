@@ -136,13 +136,13 @@
     [IA_GREY_COLOUR(248.0) set];
 
   NSRectFill(self.bounds);
-  NSRect line_rect = NSMakeRect(0.0, NSHeight(self.bounds) - 2.0, NSWidth(self.bounds), 1.0);
-  NSBezierPath* line = [NSBezierPath bezierPathWithRect:line_rect];
-  [IA_GREY_COLOUR(255.0) set];
-  [line fill];
   NSBezierPath* border = [NSBezierPath bezierPathWithRect:self.bounds];
   [IA_GREY_COLOUR(220.0) set];
   [border stroke];
+  NSRect line_rect = NSMakeRect(1.0, NSHeight(self.bounds) - 1.0, NSWidth(self.bounds) - 2.0, 1.0);
+  NSBezierPath* line = [NSBezierPath bezierPathWithRect:line_rect];
+  [IA_GREY_COLOUR(255.0) set];
+  [line fill];
 }
 
 - (void)setFileName:(NSString*)name
