@@ -10,8 +10,8 @@
 
 @implementation InfinitFileListScrollView
 
--(void)scrollWheel:(NSEvent*)theEvent {
-
+- (void)scrollWheel:(NSEvent*)theEvent
+{
   [[self nextResponder] scrollWheel:theEvent];
 }
 
