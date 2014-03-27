@@ -27,9 +27,9 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        _badge_angle_size = 45.0;
+        _badge_angle_size = 40.0;
         _total_progress = 0.0;
-        _start_angle = 45.0 - (_badge_angle_size / 2.0);
+        _start_angle = 47.0 - (_badge_angle_size / 2.0);
     }
     
     return self;
@@ -52,7 +52,7 @@
                fromRect:NSZeroRect
               operation:NSCompositeSourceOver
                fraction:1.0];
-    
+  
     if (_total_progress > 0.0)
     {
         NSPoint centre = NSMakePoint(NSWidth(self.frame) / 2.0, NSHeight(self.frame) / 2.0);
