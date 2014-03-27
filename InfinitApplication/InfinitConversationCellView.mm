@@ -200,6 +200,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   BOOL _hovered;
   BOOL _showing_files;
   NSTableView* _files_table;
+  NSDictionary* _file_name_attrs;
+  NSDictionary* _file_name_hover_attrs;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -536,6 +538,23 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       self.file_icon.image =
         [[NSWorkspace sharedWorkspace] iconForFileType:[transaction.files[0] pathExtension]];
     }
+    
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSLeftTextAlignment;
+    
+    NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica-Light"
+                                                              traits:NSUnboldFontMask
+                                                              weight:1
+                                                                size:12.0];
+    
+    _file_name_attrs = [IAFunctions textStyleWithFont:font
+                                       paragraphStyle:para
+                                               colour:IA_GREY_COLOUR(60.0)
+                                               shadow:nil];
+    _file_name_hover_attrs = [IAFunctions textStyleWithFont:font
+                                             paragraphStyle:para
+                                                     colour:IA_RGB_COLOUR(102.0, 174.0, 211.0)
+                                                     shadow:nil];
     self.file_list_icon.hidden = YES;
   }
   else
@@ -719,8 +738,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)bubbleViewGotHover:(InfinitConversationBubbleView*)sender
 {
-  if (_element.transaction.files_count == 1)
-    return;
+  IATransaction* transaction = _element.transaction;
+  if (transaction.files_count == 1 &&
+      !transaction.from_me && transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+  {
+    NSAttributedString* hover_string =
+      [[NSAttributedString alloc] initWithString:self.file_name.stringValue
+                                      attributes:_file_name_hover_attrs];
+    self.file_name.attributedStringValue = hover_string;
+  }
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.10;
@@ -734,8 +760,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)bubbleViewGotUnHover:(InfinitConversationBubbleView*)sender
 {
-  if (_element.transaction.files_count == 1)
-    return;
+  IATransaction* transaction = _element.transaction;
+  if (transaction.files_count == 1 &&
+      !transaction.from_me && transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+  {
+    NSAttributedString* unhover_string =
+    [[NSAttributedString alloc] initWithString:self.file_name.stringValue
+                                    attributes:_file_name_attrs];
+    self.file_name.attributedStringValue = unhover_string;
+  }
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.10;
