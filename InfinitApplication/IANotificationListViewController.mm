@@ -345,18 +345,18 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 
     NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
     InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
-                                                        makeIfNecessary:NO];
+                                                             makeIfNecessary:NO];
     if (row_view.error)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-problem"];
         self.table_view.backgroundColor = IA_RGB_COLOUR(253.0, 255.0, 236.0);
     }
-    else if (row_view.hovered)
+    else if (row_view.hovered && !_changing)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-hover"];
         self.table_view.backgroundColor = IA_RGB_COLOUR(236.0, 253.0, 255.0);
     }
-    else if (row_view.unread)
+    else if (row_view.unread || _changing)
     {
         self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
         self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
@@ -383,6 +383,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
     _changing = YES;
     
     [[self.table_view rowViewAtRow:row makeIfNecessary:NO] setClicked:YES];
+    self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
     
     NSUInteger transaction_num = row;
     if (_connection_status != gap_user_status_online)
@@ -390,7 +391,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
     
     IATransaction* transaction = _transaction_list[transaction_num];
     IAUser* user = transaction.other_user;
-    
+  
     if (_transaction_list.count == 1)
     {
         [_delegate notificationList:self gotClickOnUser:user];
@@ -419,7 +420,6 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
         [other_users removeIndex:new_row];
         
         self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
-        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
       
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
          {
