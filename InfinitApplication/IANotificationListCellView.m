@@ -175,7 +175,7 @@
                        @"%ld %@", running_transactions,
                                   NSLocalizedString(@"running transfers", @"running transfers")];
         }
-        else if(running_transactions == 0)
+        else if (running_transactions == 0)
         {
             message = [NSString stringWithFormat:
                        @"%ld %@", unread_notifications,
