@@ -109,6 +109,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   InfinitConversationElement* spacer_element =
     [[InfinitConversationElement alloc] initWithTransaction:nil];
   [element_list addObject:spacer_element];
+  [element_list insertObject:spacer_element atIndex:0];
   return element_list;
 }
 
