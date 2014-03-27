@@ -18,6 +18,35 @@
 
 ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
+// WORKAROUND: Because 10.7 can't do maths
+//- Message View -----------------------------------------------------------------------------------
+
+@interface InfinitConversationMessageField : NSTextField
+@end
+
+@implementation InfinitConversationMessageField
+
+- (NSSize)intrinsicContentSize
+{
+  if (![self.cell wraps])
+    return [super intrinsicContentSize];
+  
+  NSRect frame = self.frame;
+  
+  CGFloat width = frame.size.width;
+  
+  // Make the frame very high, while keeping the width
+  frame.size.height = CGFLOAT_MAX;
+  
+  // Calculate new height within the frame
+  // with practically infinite height.
+  CGFloat height = [self.cell cellSizeForBounds: frame].height;
+  
+  return NSMakeSize(width, height);
+}
+
+@end
+
 //- Bubble View ------------------------------------------------------------------------------------
 
 @interface InfinitConversationBubbleView : NSView
@@ -287,13 +316,16 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
                          withBorderOfThickness:0.0
                                       inColour:IA_GREY_COLOUR(208.0)
                              andShadowOfRadius:0.0];
+  [self.avatar setNeedsDisplay:YES];
 }
 
 - (void)configureAcceptRejectButtons
 {
   self.accept_button.hand_cursor = YES;
+  self.accept_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-accept"];
   self.accept_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-accept-hover"];
   self.reject_button.hand_cursor = YES;
+  self.reject_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
   self.reject_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
   [self.accept_button setToolTip:NSLocalizedString(@"Accept", nil)];
   [self.reject_button setToolTip:NSLocalizedString(@"Decline", nil)];
@@ -308,6 +340,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.transaction_status_button.hand_cursor = NO;
   self.transaction_status_button.normal_image = [IAFunctions imageNamed:image_name];
   self.transaction_status_button.hover_image = [IAFunctions imageNamed:image_name];
+  self.transaction_status_button.image = [IAFunctions imageNamed:image_name];
 }
 
 - (void)setTransactionStatusButtonToCancel
@@ -318,7 +351,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.transaction_status_button.hidden = NO;
   self.transaction_status_button.hand_cursor = YES;
   self.transaction_status_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
-  self.transaction_status_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
+  self.transaction_status_button.hover_image =
+    [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
   [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancel", nil)];
 }
 
@@ -429,6 +463,22 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
                 self.description.UTF8String, _element.transaction.view_mode);
       break;
   }
+  if (_element.transaction.files_count == 1)
+  {
+    if (!_element.transaction.from_me &&
+        _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+    {
+      self.bubble_view.clickable = YES;
+    }
+    else
+    {
+      self.bubble_view.clickable = NO;
+    }
+  }
+  else
+  {
+    self.bubble_view.clickable = YES;
+  }
 }
 
 - (void)showFiles
@@ -476,10 +526,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.table_height.constant = 0.0;
   if (transaction.files_count == 1)
   {
-    if (!transaction.from_me && transaction.view_mode == TRANSACTION_VIEW_FINISHED)
-      self.bubble_view.clickable = YES;
-    else
-      self.bubble_view.clickable = NO;
     self.file_name.stringValue = transaction.files[0];
     if (transaction.is_directory)
     {
@@ -494,7 +540,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   }
   else
   {
-    self.bubble_view.clickable = YES;
     NSString* file_str = NSLocalizedString(@"files", nil);
     self.file_name.stringValue = [NSString stringWithFormat:@"%ld %@", transaction.files_count, file_str];
     self.file_icon.image = [[NSWorkspace sharedWorkspace] iconForFileType:@"public.directory"];
@@ -514,6 +559,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     _files_table.allowsColumnResizing = NO;
     _files_table.allowsEmptySelection = YES;
     _files_table.intercellSpacing = NSMakeSize(0.0, 0.0);
+    [_files_table.enclosingScrollView setFocusRingType:NSFocusRingTypeNone];
     [_files_table reloadData];
     self.table_container.verticalScrollElasticity = NSScrollElasticityNone;
     self.table_container.documentView = _files_table;
