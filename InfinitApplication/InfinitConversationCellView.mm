@@ -322,9 +322,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancel", nil)];
 }
 
-- (void)cellSetUpForMode:(IATransactionViewMode)view_mode
+- (void)onTransactionModeChange
 {
-  switch (view_mode)
+  self.bubble_view.important = _element.important;
+  self.time_indicator.stringValue =
+    [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
+  switch (_element.transaction.view_mode)
   {
     case TRANSACTION_VIEW_ACCEPTED:
       [self setTransactionStatusButtonToCancel];
@@ -344,6 +347,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
       [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
       self.information.hidden = YES;
+      break;
+    case TRANSACTION_VIEW_CLOUD_BUFFERED:
+      if (_element.transaction.from_me)
+      {
+        [self setTransactionStatusButtonToStaticImage:@"conversation-icon-bufferised"];
+        [self.transaction_status_button setToolTip:NSLocalizedString(@"Uploaded", nil)];
+        self.information.stringValue = NSLocalizedString(@"Uploaded. Waiting to be downloaded...", nil);
+        self.information.hidden = NO;
+      }
       break;
     case TRANSACTION_VIEW_FAILED:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-error"];
@@ -413,7 +425,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       break;
 
     default:
-      ELLE_WARN("%s: unknown transaction view mode: %s", self.description.UTF8String, view_mode);
+      ELLE_WARN("%s: unknown transaction view mode: %s",
+                self.description.UTF8String, _element.transaction.view_mode);
       break;
   }
 }
@@ -458,14 +471,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 {
   _element = element;
   _delegate = delegate;
-  self.bubble_view.important = element.important;
   self.bubble_view.delegate = self;
   IATransaction* transaction = element.transaction;
   self.table_height.constant = 0.0;
-  self.time_indicator.stringValue = [IAFunctions relativeDateOf:transaction.last_edit_timestamp];
   if (transaction.files_count == 1)
   {
-    if (!transaction.from_me && transaction.is_done)
+    if (!transaction.from_me && transaction.view_mode == TRANSACTION_VIEW_FINISHED)
       self.bubble_view.clickable = YES;
     else
       self.bubble_view.clickable = NO;
@@ -528,7 +539,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   [self updateAvatarWithImage:avatar_image];
   if (_element.showing_files)
       [self showFiles];
-  [self cellSetUpForMode:transaction.view_mode];
+  [self onTransactionModeChange];
 }
 
 //- File Table Handling ----------------------------------------------------------------------------

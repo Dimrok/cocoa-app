@@ -144,6 +144,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self.table_view reloadData];
   [self resizeContentView];
   [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
+  [self updateListOfRowsWithProgress];
 }
 
 //- View Functions ---------------------------------------------------------------------------------
@@ -449,30 +450,37 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (count >= _elements.count)
     return;
   
-  bool showing_files = [_elements[count] showing_files];
+  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:count makeIfNecessary:NO];
+  if (cell == nil)
+    return;
   
-  InfinitConversationElement* element =
-    [[InfinitConversationElement alloc] initWithTransaction:transaction];
-  element.showing_files = showing_files;
-  if (transaction.is_done)
-    element.important = NO;
-  else
-    element.important = YES; // We want to keep it the same colour that it was before updating
-  [self.table_view beginUpdates];
-  [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-                         withAnimation:NSTableViewAnimationEffectNone];
-  [_elements removeObjectAtIndex:count];
-  [_elements insertObject:element atIndex:count];
-  [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-                         withAnimation:NSTableViewAnimationEffectNone];
-  [self.table_view endUpdates];
-  [self resizeContentView];
+  [cell onTransactionModeChange];
+  
+//  bool showing_files = [_elements[count] showing_files];
+//  
+//  InfinitConversationElement* element =
+//    [[InfinitConversationElement alloc] initWithTransaction:transaction];
+//  element.showing_files = showing_files;
+//  if (transaction.is_done)
+//    element.important = NO;
+//  else
+//    element.important = YES; // We want to keep it the same colour that it was before updating
+//  [self.table_view beginUpdates];
+//  [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
+//                         withAnimation:NSTableViewAnimationEffectNone];
+//  [_elements removeObjectAtIndex:count];
+//  [_elements insertObject:element atIndex:count];
+//  [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
+//                         withAnimation:NSTableViewAnimationEffectNone];
+//  [self.table_view endUpdates];
+//  [self resizeContentView];
+  
+  [self updateListOfRowsWithProgress];
   
   if (count == _elements.count - 2)
     [self.table_view scrollRowToVisible:(_elements.count - 1)];
   else
     [self.table_view scrollRowToVisible:count];
-  [self updateListOfRowsWithProgress];
 }
 
 //- User Callbacks ---------------------------------------------------------------------------------
@@ -490,17 +498,18 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 - (void)avatarReceivedCallback:(NSNotification*)notification
 {
   IAUser* user = [notification.userInfo objectForKey:@"user"];
-  NSMutableIndexSet* indexes = [[NSMutableIndexSet alloc] init];
+  NSImage* image = [notification.userInfo objectForKey:@"avatar"];
   for (NSInteger index = 0; index < _elements.count; index++)
   {
     InfinitConversationElement* element = _elements[index];
-    if (!element.spacer &&
-        (element.transaction.sender == user || element.transaction.recipient == user))
+    if (!element.spacer && element.transaction.sender == user)
     {
-      [indexes addIndex:index];
+      InfinitConversationCellView* cell =
+        [self.table_view viewAtColumn:0 row:index makeIfNecessary:NO];
+      if (cell != nil)
+        [cell updateAvatarWithImage:image];
     }
   }
-  [self.table_view reloadDataForRowIndexes:indexes columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 //- Change View Handling ---------------------------------------------------------------------------

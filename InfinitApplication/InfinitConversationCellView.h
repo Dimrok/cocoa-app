@@ -48,6 +48,10 @@
 - (void)showFiles;
 - (void)hideFiles;
 
+- (void)onTransactionModeChange;
+
+- (void)updateAvatarWithImage:(NSImage*)avatar_image;
+
 - (void)updateProgress;
 
 @end
