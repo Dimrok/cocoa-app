@@ -325,7 +325,7 @@
                                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="conversation-icon-quote-right" id="atd-9j-qQK"/>
                                                                     </imageView>
                                                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jk4-sb-vsF" customClass="InfinitConversationMessageField">
-                                                                        <rect key="frame" x="16" y="-11" width="200" height="17"/>
+                                                                        <rect key="frame" x="15" y="-11" width="200" height="17"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="17" id="S4j-ce-PwD"/>

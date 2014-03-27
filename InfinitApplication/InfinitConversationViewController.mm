@@ -73,6 +73,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 - (void)dealloc
 {
   [NSNotificationCenter.defaultCenter removeObserver:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (BOOL)closeOnFocusLost
@@ -151,7 +152,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)resizeContentView
 {
-  if (self.content_height_constraint.constant == NSHeight(self.person_view.frame) + _max_table_height)
+  if (self.content_height_constraint.constant == NSHeight(self.person_view.frame) + [self tableHeight])
     return;
   
   CGFloat new_height = NSHeight(self.person_view.frame) + [self tableHeight];
@@ -225,7 +226,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (CGFloat)tableHeight
 {
-  if (_elements.count >= 4)
+  if (_elements.count * 86.0 >= _max_table_height)
   {
     return _max_table_height;
   }
