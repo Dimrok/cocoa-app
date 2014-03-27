@@ -71,6 +71,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 - (void)dealloc
 {
     [NSNotificationCenter.defaultCenter removeObserver:self];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (BOOL)closeOnFocusLost
@@ -418,7 +419,8 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
         [other_users removeIndex:new_row];
         
         self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
-        
+        self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
+      
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
          {
              context.duration = 0.15;
@@ -427,7 +429,6 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
              [self.table_view moveRowAtIndex:new_row toIndex:0];
              [self.table_view endUpdates];
              [self.content_height_constraint.animator setConstant:_row_height];
-             self.header_image.image = [IAFunctions imageNamed:@"bg-header-top-white"];
          }
                             completionHandler:^
          {
