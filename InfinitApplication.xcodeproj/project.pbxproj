@@ -2110,7 +2110,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nset -e -x\n\nINFINIT_SOURCE_DIR=\"${HOME}/sandbox/infinit\"\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\ncopy_and_fix_library_id()\n{\n    cp -fv \"$1\" \"${EXTERNALS_DIR}/lib\"\n    chmod u+w \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n    install_name_tool -id \"@rpath/$(basename $1)\" \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n}\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\nif test -n \"$INFINIT_BUILD_DIR\"\nthen\n    copy_and_fix_library_id \"/usr/lib/libc++abi.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/lib/libc++.1.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_chrono-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_date_time-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n  copy_and_fix_library_id \"/usr/local/lib/libboost_filesystem-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_signals-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_system-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_thread-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n\n    for library in \"${EXTERNALS_DIR}\"/lib/*.dylib\n    do\n        install_name_tool -change \"/usr/lib/libc++abi.dylib\" \"@rpath/libc++abi.dylib\" $library\n        install_name_tool -change \"/usr/lib/libc++.1.dylib\" \"@rpath/libc++.1.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_chrono-mt.dylib\" \"@rpath/libboost_chrono-mt.dylib\" $library\n    install_name_tool -change \"/usr/local/lib/libboost_date_time-mt.dylib\" \"@rpath/libboost_date_time-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_filesystem-mt.dylib\" \"@rpath/libboost_filesystem-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_signals-mt.dylib\" \"@rpath/libboost_signals-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_system-mt.dylib\" \"@rpath/libboost_system-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_thread-mt.dylib\" \"@rpath/libboost_thread-mt.dylib\" $library\n    done\nfi\n";
+			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nset -e -x\n\nINFINIT_SOURCE_DIR=$SRCROOT/../../../..\nINFINIT_BUILD_DIR=\"${INFINIT_SOURCE_DIR}/_build/macosx64\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\ncopy_and_fix_library_id()\n{\n    cp -fv \"$1\" \"${EXTERNALS_DIR}/lib\"\n    chmod u+w \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n    install_name_tool -id \"@rpath/$(basename $1)\" \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n}\n\necho \"INFINIT_BUILD_DIR = ${INFINIT_BUILD_DIR}\"\nif test -n \"$INFINIT_BUILD_DIR\"\nthen\n    copy_and_fix_library_id \"/usr/lib/libc++abi.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/lib/libc++.1.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_chrono-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_date_time-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n  copy_and_fix_library_id \"/usr/local/lib/libboost_filesystem-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_signals-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_system-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n    copy_and_fix_library_id \"/usr/local/lib/libboost_thread-mt.dylib\" \"${EXTERNALS_DIR}/lib\"\n\n    for library in \"${EXTERNALS_DIR}\"/lib/*.dylib\n    do\n        install_name_tool -change \"/usr/lib/libc++abi.dylib\" \"@rpath/libc++abi.dylib\" $library\n        install_name_tool -change \"/usr/lib/libc++.1.dylib\" \"@rpath/libc++.1.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_chrono-mt.dylib\" \"@rpath/libboost_chrono-mt.dylib\" $library\n    install_name_tool -change \"/usr/local/lib/libboost_date_time-mt.dylib\" \"@rpath/libboost_date_time-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_filesystem-mt.dylib\" \"@rpath/libboost_filesystem-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_signals-mt.dylib\" \"@rpath/libboost_signals-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_system-mt.dylib\" \"@rpath/libboost_system-mt.dylib\" $library\n        install_name_tool -change \"/usr/local/lib/libboost_thread-mt.dylib\" \"@rpath/libboost_thread-mt.dylib\" $library\n    done\nfi\n";
 		};
 		83D3B6D61837DB450055B861 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2366,14 +2366,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
+					"$(SRCROOT)/../../Externals/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "B6CFC3BF-2053-4CF1-BBC2-B2B15D53518B";
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "$HOME/sandbox/infinit/elle/elle/src /usr/local/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../elle/elle/src /usr/local/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2398,13 +2398,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
+					"$(SRCROOT)/../../Externals/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "B6CFC3BF-2053-4CF1-BBC2-B2B15D53518B";
-				USER_HEADER_SEARCH_PATHS = "$HOME/sandbox/infinit/elle/elle/src /usr/local/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../elle/elle/src /usr/local/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
