@@ -90,6 +90,13 @@
 {
     switch (transaction.view_mode)
     {
+        case TRANSACTION_VIEW_WAITING_ACCEPT:
+            if (!transaction.from_me)
+            {
+                self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
+                self.status_indicator.hidden = NO;
+            }
+          break;
         case TRANSACTION_VIEW_RUNNING:
             if (transaction.from_me)
                 self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-upload"];
