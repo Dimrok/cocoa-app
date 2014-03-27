@@ -541,6 +541,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     
     NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     para.alignment = NSLeftTextAlignment;
+    para.lineBreakMode = NSLineBreakByTruncatingMiddle;
     
     NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica-Light"
                                                               traits:NSUnboldFontMask
