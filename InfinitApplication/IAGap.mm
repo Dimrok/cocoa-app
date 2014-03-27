@@ -143,6 +143,8 @@ void on_trophonius_unavailable();
         [[IALogFileManager sharedInstance] removeOldLogFile];
 
 #ifdef BUILD_PRODUCTION
+        setenv("INFINIT_PRODUCTION", "1", 1);
+
         setenv("INFINIT_META_PROTOCOL", "https", 1);
         setenv("INFINIT_META_HOST", "meta.8.0.api.production.infinit.io", 1);
         setenv("INFINIT_META_PORT", "443", 1);
@@ -154,7 +156,6 @@ void on_trophonius_unavailable();
         
         setenv("INFINIT_METRICS_HOST", "v3.metrics.api.production.infinit.io", 1);
         setenv("INFINIT_METRICS_PORT", "80", 1);
-        setenv("INFINIT_PRODUCTION", "1", 1);
 
 #else
         setenv("ELLE_REAL_ASSERT", "1", 1);
