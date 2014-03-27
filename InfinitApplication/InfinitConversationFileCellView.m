@@ -56,6 +56,8 @@
     [_file_name.cell setDrawsBackground:NO];
     [_file_name.cell setLineBreakMode:NSLineBreakByTruncatingMiddle];
     [_file_name.cell setTruncatesLastVisibleLine:YES];
+    [_file_name.cell setFocusRingType:NSFocusRingTypeNone];
+    [_file_name.cell setEditable:NO];
     [self addSubview:_file_name];
     [self addSubview:_file_icon];
     _hover = NO;
