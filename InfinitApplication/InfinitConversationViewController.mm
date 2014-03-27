@@ -397,6 +397,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [sender showFiles];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
   [self resizeContentView];
+  if (row == _elements.count - 2)
+  {
+    [self performSelector:@selector(scrollAfterRowAdd)
+               withObject:nil
+               afterDelay:0.2];
+  }
 }
 
 - (void)conversationCellViewWantsHideFiles:(InfinitConversationCellView*)sender
