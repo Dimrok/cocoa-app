@@ -394,6 +394,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_elements[row] setShowing_files:YES];
   [sender showFiles];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
+  [self resizeContentView];
 }
 
 - (void)conversationCellViewWantsHideFiles:(InfinitConversationCellView*)sender
@@ -402,6 +403,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_elements[row] setShowing_files:NO];
   [sender hideFiles];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
+  [self resizeContentView];
 }
 
 //- Transaction Callbacks --------------------------------------------------------------------------
@@ -455,25 +457,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     return;
   
   [cell onTransactionModeChange];
-  
-//  bool showing_files = [_elements[count] showing_files];
-//  
-//  InfinitConversationElement* element =
-//    [[InfinitConversationElement alloc] initWithTransaction:transaction];
-//  element.showing_files = showing_files;
-//  if (transaction.is_done)
-//    element.important = NO;
-//  else
-//    element.important = YES; // We want to keep it the same colour that it was before updating
-//  [self.table_view beginUpdates];
-//  [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-//                         withAnimation:NSTableViewAnimationEffectNone];
-//  [_elements removeObjectAtIndex:count];
-//  [_elements insertObject:element atIndex:count];
-//  [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:count]
-//                         withAnimation:NSTableViewAnimationEffectNone];
-//  [self.table_view endUpdates];
-//  [self resizeContentView];
   
   [self updateListOfRowsWithProgress];
   
