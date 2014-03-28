@@ -422,13 +422,13 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     if (_username != nil && _username.length > 0)
         [[IAUserPrefs sharedInstance] setPref:_username forKey:@"user:email"];
 
-    // XXX We must find a better way to manage fetching of history per user
-    [_transaction_manager getHistory];
-    [[IAGapState instance] startPolling];
     [self updateStatusBarIcon];
     
     _login_view_controller = nil;
-    
+  
+    // XXX We must find a better way to manage fetching of history per user
+    [_transaction_manager getHistory];
+  
     if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"3"])
     {
         [self showOnboardingView];
@@ -439,7 +439,9 @@ ELLE_LOG_COMPONENT("OSX.MainController");
         [self showNotifications];
     }
     [[IACrashReportManager sharedInstance] sendExistingCrashReports];
-    
+  
+    [[IAGapState instance] startPolling];
+  
     // If we've got an unhandled link, handle it now
     if (_infinit_link != nil)
         [self openSendViewForLink:_infinit_link];
@@ -1042,12 +1044,17 @@ transactionsProgressForUser:(IAUser*)user
 
 //- Onboarding Protocol ----------------------------------------------------------------------------
 
+- (void)doneOnboarding
+{
+  _onboarding = NO;
+  [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
+}
+
 - (void)onboardingControllerDone:(IAOnboardingViewController*)sender
 {
-    _onboarding = NO;
-    [self closeNotificationWindow];
-    _onboard_controller = nil;
-    [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
+  [self doneOnboarding];
+  [self closeNotificationWindow];
+  _onboard_controller = nil;
 }
 
 - (void)onboardingControllerStarted:(IAOnboardingViewController*)sender
@@ -1098,8 +1105,13 @@ transactionsProgressForUser:(IAUser*)user
 - (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files
 {
-    if (![[IAGapState instance] logged_in] || _onboarding)
+    if (![[IAGapState instance] logged_in])
         return;
+  
+    if (_onboarding)
+    {
+      [self doneOnboarding];
+    }
     
     if (_general_send_controller == nil)
         _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
@@ -1109,9 +1121,12 @@ transactionsProgressForUser:(IAUser*)user
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
 {
     if (![[IAGapState instance] logged_in] ||
-        [_me_manager connection_status] != gap_user_status_online)
+        [_me_manager connection_status] != gap_user_status_online ||
+        _onboarding)
+    {
         return;
-    
+    }
+  
     if (_general_send_controller == nil)
         _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller filesOverStatusBarIcon];
