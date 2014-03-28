@@ -227,7 +227,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (CGFloat)tableHeight
 {
-  if (_elements.count * 86.0 >= _max_table_height)
+  if ((_elements.count - 2) * 86.0 >= _max_table_height)
   {
     return _max_table_height;
   }
