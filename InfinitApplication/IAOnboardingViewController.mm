@@ -57,8 +57,8 @@ ELLE_LOG_COMPONENT("OSX.OnboardingViewController");
         _page = 0;
         
         _headings = [NSMutableArray array];
-        [_headings addObject:NSLocalizedString(@"Drag and Drop",
-                                               @"Drag and Drop")];
+        [_headings addObject:NSLocalizedString(@"Drag and Drop on the Icon",
+                                               @"Drag and Drop on the Icon")];
         [_headings addObject:NSLocalizedString(@"Search and Send",
                                                @"Search and Send")];
         [_headings addObject:NSLocalizedString(@"Receive File",
