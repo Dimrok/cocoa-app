@@ -81,7 +81,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView autoresizesSubviews="NO" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="86" rowSizeStyle="automatic" viewBased="YES" id="1Lg-g7-nsw">
-                                        <rect key="frame" x="0.0" y="0.0" width="317" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="317" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -380,7 +380,7 @@
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             </progressIndicator>
                                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uY0-cm-xjI">
-                                                                <rect key="frame" x="277" y="11" width="27" height="27"/>
+                                                                <rect key="frame" x="280" y="11" width="27" height="27"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="5sq-vS-wlf"/>
                                                             </imageView>
