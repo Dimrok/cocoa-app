@@ -12,7 +12,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import <Gap/version.h>
+#import <version.hh>
 
 #import "IAAvatarManager.h"
 #import "InfinitMetricsManager.h"
@@ -292,7 +292,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
         table_row -= 1;
     
     IATransaction* transaction = _transaction_list[table_row];
-    if (transaction.transaction_id.unsignedIntValue == gap_null())
+    if (transaction.transaction_id.unsignedIntValue == 0)
         return nil;
     IANotificationListCellView* cell = [tableView makeViewWithIdentifier:@"user_notification_cell"
                                                                    owner:self];
