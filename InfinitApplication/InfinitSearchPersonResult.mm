@@ -19,7 +19,7 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 @implementation InfinitSearchPersonResult
 {
 @private
-    id<InfinitSearchPersonResultProtocol> _delegate;
+  id<InfinitSearchPersonResultProtocol> _delegate;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -34,57 +34,48 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 
 - (void)dealloc
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [NSNotificationCenter.defaultCenter removeObserver:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 - (id)initWithABPerson:(ABPerson*)person
            andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 {
-    if (self = [super init])
+  if (self = [super init])
+  {
+    _rank = 5;
+    _delegate = delegate;
+    _user = nil;
+    ABMultiValue* emails = [person valueForProperty:kABEmailProperty];
+    _emails = [NSMutableArray array];
+    if (emails.count > 0)
     {
-        _rank = 5;
-        _delegate = delegate;
-        _user = nil;
-        ABMultiValue* emails = [person valueForProperty:kABEmailProperty];
-        _emails = [NSMutableArray array];
-        if (emails.count > 0)
+      for (NSInteger i = 0; i < emails.count; i++)
+      {
+        NSString* email = [emails valueAtIndex:i];
+        // Remove Facebook mails.
+        if ([email rangeOfString:@"@facebook.com"].location == NSNotFound)
         {
-            for (NSInteger i = 0; i < emails.count; i++)
-            {
-                NSString* email = [emails valueAtIndex:i];
-                [_emails addObject:email];
-            }
+          [_emails addObject:email];
         }
-        NSString* first_name = [person valueForProperty:kABFirstNameProperty];
-        NSString* last_name = [person valueForProperty:kABLastNameProperty];
-        if (first_name.length > 0 &&  last_name > 0)
-            _fullname = [[NSString alloc] initWithFormat:@"%@ %@", first_name, last_name];
-        else if (first_name > 0)
-            _fullname = [[NSString alloc] initWithFormat:@"%@", first_name];
-        else if (last_name > 0)
-            _fullname = [[NSString alloc] initWithFormat:@"%@", last_name];
-        else
-            _fullname = @"Unknown";
-        
-        _avatar = [[NSImage alloc] initWithData:person.imageData];
-        if (_avatar == nil)
-            _avatar = [IAFunctions makeAvatarFor:_fullname];
+      }
     }
-    return self;
-}
-
-- (void)checkAddressBookUserOnInfinit
-{
-    for (NSString* email in _emails)
-    {
-        NSMutableDictionary* mail_check = [NSMutableDictionary
-                                           dictionaryWithDictionary:@{@"email": email}];
-        [[IAGapState instance] getUserIdfromEmail:email
-                                  performSelector:@selector(userIdFromEmailCallback:)
-                                         onObject:self
-                                         withData:mail_check];
-    }
+    NSString* first_name = [person valueForProperty:kABFirstNameProperty];
+    NSString* last_name = [person valueForProperty:kABLastNameProperty];
+    if (first_name.length > 0 &&  last_name > 0)
+      _fullname = [[NSString alloc] initWithFormat:@"%@ %@", first_name, last_name];
+    else if (first_name > 0)
+      _fullname = [[NSString alloc] initWithFormat:@"%@", first_name];
+    else if (last_name > 0)
+      _fullname = [[NSString alloc] initWithFormat:@"%@", last_name];
+    else
+      _fullname = @"Unknown";
+    
+    _avatar = [[NSImage alloc] initWithData:person.imageData];
+    if (_avatar == nil)
+      _avatar = [IAFunctions makeAvatarFor:_fullname];
+  }
+  return self;
 }
 
 //- Email User -------------------------------------------------------------------------------------
@@ -92,52 +83,70 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 - (id)initWithEmail:(NSString*)email
         andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate
 {
-    if (self = [super init])
-    {
-        _rank = 10;
-        _delegate = delegate;
-        NSMutableDictionary* mail_check = [NSMutableDictionary
-                                           dictionaryWithDictionary:@{@"email": email}];
-        [[IAGapState instance] getUserIdfromEmail:email
-                                  performSelector:@selector(emailUserIdFromEmailCallback:)
-                                         onObject:self
-                                         withData:mail_check];
-        _avatar = [IAFunctions makeAvatarFor:email];
-        _emails = [NSMutableArray arrayWithObject:email];
-        _fullname = email;
-        _user = nil;
-    }
-    return self;
+  if (self = [super init])
+  {
+    _rank = 10;
+    _delegate = delegate;
+    NSMutableDictionary* mail_check =
+      [NSMutableDictionary dictionaryWithDictionary:@{@"email": email}];
+    [[IAGapState instance] getUserIdfromEmail:email
+                              performSelector:@selector(emailUserIdFromEmailCallback:)
+                                     onObject:self
+                                     withData:mail_check];
+    _avatar = [IAFunctions makeAvatarFor:email];
+    _emails = [NSMutableArray arrayWithObject:email];
+    _fullname = email;
+    _user = nil;
+  }
+  return self;
+}
+
+- (void)email:(NSString*)email
+isInfinitUser:(IAUser*)user
+{
+  _rank += 10;
+  [NSNotificationCenter.defaultCenter addObserver:self
+                                         selector:@selector(avatarReceivedCallback:)
+                                             name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                           object:nil];
+  _user = user;
+  if (_user.is_favourite)
+    _rank += 10;
+  if ([self userIsSwagger])
+    _rank += 5;
+  _fullname = _user.fullname;
+  NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
+  _avatar = infinit_avatar;
 }
 
 - (void)emailUserIdFromEmailCallback:(IAGapOperationResult*)result
 {
-    if (!result.success)
-    {
-        ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
-        return;
-    }
-    NSDictionary* dict = result.data;
-    NSNumber* user_id = [dict valueForKey:@"user_id"];
-    
-    if (user_id.integerValue != 0 &&
-        user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
-    {
-        _rank += 10;
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(avatarReceivedCallback:)
-                                                   name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                                 object:nil];
-        _user = [IAUserManager userWithId:user_id];
-        if (_user.is_favourite)
-            _rank += 10;
-        if ([self userIsSwagger])
-            _rank += 5;
-        _fullname = _user.fullname;
-        NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
-        _avatar = infinit_avatar;
-        [_delegate emailPersonUpdated:self];
-    }
+  if (!result.success)
+  {
+    ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
+    return;
+  }
+  NSDictionary* dict = result.data;
+  NSNumber* user_id = [dict valueForKey:@"user_id"];
+  
+  if (user_id.integerValue != 0 &&
+      user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
+  {
+    _rank += 10;
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(avatarReceivedCallback:)
+                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                             object:nil];
+    _user = [IAUserManager userWithId:user_id];
+    if (_user.is_favourite)
+      _rank += 10;
+    if ([self userIsSwagger])
+      _rank += 5;
+    _fullname = _user.fullname;
+    NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
+    _avatar = infinit_avatar;
+    [_delegate emailPersonUpdated:self];
+  }
 }
 
 //- Infinit User -----------------------------------------------------------------------------------
@@ -145,114 +154,114 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 - (id)initWithInfinitPerson:(IAUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 {
-    if (self = [super init])
-    {
-        _rank = 1;
-        _delegate = delegate;
-        _user = user;
-        if (_user.is_favourite)
-            _rank += 10;
-        if ([self userIsSwagger])
-            _rank += 5;
-        _avatar = [IAAvatarManager getAvatarForUser:_user];
-        _fullname = _user.fullname;
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(avatarReceivedCallback:)
-                                                   name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                                 object:nil];
-    }
-    return self;
+  if (self = [super init])
+  {
+    _rank = 1;
+    _delegate = delegate;
+    _user = user;
+    if (_user.is_favourite)
+      _rank += 10;
+    if ([self userIsSwagger])
+      _rank += 5;
+    _avatar = [IAAvatarManager getAvatarForUser:_user];
+    _fullname = _user.fullname;
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(avatarReceivedCallback:)
+                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                             object:nil];
+  }
+  return self;
 }
 
 //- General Functions ------------------------------------------------------------------------------
 
 - (BOOL)userIsSwagger
 {
-    NSArray* swaggers = [[IAGapState instance] swaggers_list];
-    if ([swaggers containsObject:_user])
-        return YES;
-    else
-        return NO;
+  NSArray* swaggers = [[IAGapState instance] swaggers_list];
+  if ([swaggers containsObject:_user])
+    return YES;
+  else
+    return NO;
 }
 
 - (void)userIdFromEmailCallback:(IAGapOperationResult*)result
 {
-    if (!result.success)
-    {
-        ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
-        return;
-    }
-    NSDictionary* dict = result.data;
-    NSNumber* user_id = [dict valueForKey:@"user_id"];
-    
-    if (user_id.integerValue != 0 &&
-        user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
-    {
-        _rank += 10;
-        [NSNotificationCenter.defaultCenter addObserver:self
-                                               selector:@selector(avatarReceivedCallback:)
-                                                   name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                                 object:nil];
-        _user = [IAUserManager userWithId:user_id];
-        if (_user.is_favourite)
-            _rank += 10;
-        if ([self userIsSwagger])
-            _rank += 5;
-        _fullname = _user.fullname;
-        NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
-        _avatar = infinit_avatar;
-        [_delegate personUpdated:self];
-    }
-    [_delegate personNotOnInfinit:self];
+  if (!result.success)
+  {
+    ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
+    return;
+  }
+  NSDictionary* dict = result.data;
+  NSNumber* user_id = [dict valueForKey:@"user_id"];
+  
+  if (user_id.integerValue != 0 &&
+      user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
+  {
+    _rank += 10;
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(avatarReceivedCallback:)
+                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                             object:nil];
+    _user = [IAUserManager userWithId:user_id];
+    if (_user.is_favourite)
+      _rank += 10;
+    if ([self userIsSwagger])
+      _rank += 5;
+    _fullname = _user.fullname;
+    NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
+    _avatar = infinit_avatar;
+    [_delegate personUpdated:self];
+  }
+  [_delegate personNotOnInfinit:self];
 }
 
 - (void)avatarReceivedCallback:(NSNotification*)notification
 {
-    if (_user == nil)
-        return;
-
-    IAUser* user = [notification.userInfo objectForKey:@"user"];
-    if (user != _user)
-        return;
-    
-    _avatar = [notification.userInfo objectForKey:@"avatar"];
-    [_delegate personGotNewAvatar:self];
+  if (_user == nil)
+    return;
+  
+  IAUser* user = [notification.userInfo objectForKey:@"user"];
+  if (user != _user)
+    return;
+  
+  _avatar = [notification.userInfo objectForKey:@"avatar"];
+  [_delegate personGotNewAvatar:self];
 }
 
 - (NSComparisonResult)compare:(InfinitSearchPersonResult*)other
 {
-    if (self.rank > other.rank)
-        return (NSComparisonResult)NSOrderedAscending;
-    else if (self.rank < other.rank)
-        return (NSComparisonResult)NSOrderedDescending;
-    else // same score so sort alphabetically by name
-        return [self.fullname compare:other.fullname options:NSCaseInsensitiveSearch];
+  if (self.rank > other.rank)
+    return (NSComparisonResult)NSOrderedAscending;
+  else if (self.rank < other.rank)
+    return (NSComparisonResult)NSOrderedDescending;
+  else // same score so sort alphabetically by name
+    return [self.fullname compare:other.fullname options:NSCaseInsensitiveSearch];
 }
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nidentifiers: %@\nrank: %ld",
-            self,
-            _fullname,
-            _emails,
-            _rank];
+  return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nidentifiers: %@\nrank: %ld",
+          self,
+          _fullname,
+          _emails,
+          _rank];
 }
 
 - (BOOL)isEqual:(id)object
 {
-    if (![object isKindOfClass:InfinitSearchPersonResult.class])
-        return NO;
-
-    if (self.infinit_user != nil && [object infinit_user] != nil &&
-        self.infinit_user == [object infinit_user])
-    {
-        return YES;
-    }
-    else if ([self.fullname isEqualToString:[object fullname]])
-    {
-        return YES;
-    }
+  if (![object isKindOfClass:InfinitSearchPersonResult.class])
     return NO;
+  
+  if (self.infinit_user != nil && [object infinit_user] != nil &&
+      self.infinit_user == [object infinit_user])
+  {
+    return YES;
+  }
+  else if ([self.fullname isEqualToString:[object fullname]])
+  {
+    return YES;
+  }
+  return NO;
 }
 
 @end

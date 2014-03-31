@@ -461,6 +461,26 @@ return [NSString stringWithUTF8String:str]; \
     return [NSNumber numberWithUnsignedInt:(gap_user_by_email(_state, email.UTF8String))];
 }
 
+- (NSDictionary*)users_by_emails:(NSArray*)emails
+{
+  NSMutableDictionary* res = [NSMutableDictionary dictionary];
+  if (emails.count == 0)
+    return res;
+  std::vector<std::string> emails_;
+  for (NSString* email in emails)
+  {
+    std::string email_(email.UTF8String);
+    emails_.push_back(email_);
+  }
+  std::unordered_map<std::string, uint32_t> user_map = gap_users_by_emails(_state, emails_);
+  for (std::pair<std::string, uint32_t> pair: user_map)
+  {
+    [res setObject:[NSNumber numberWithUnsignedInt:pair.second]
+            forKey:[NSString stringWithUTF8String:pair.first.c_str()]];
+  }
+  return res;
+}
+
 - (NSNumber*)user_by_handle:(NSString*)handle
 {
     return [NSNumber numberWithUnsignedInt:(gap_user_by_handle(_state, handle.UTF8String))];

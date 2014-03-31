@@ -31,7 +31,8 @@ typedef enum __InfinitSearchUserSource
 - (id)initWithInfinitPerson:(IAUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 
-- (void)checkAddressBookUserOnInfinit;
+- (void)email:(NSString*)email
+isInfinitUser:(IAUser*)user;
 
 @end
 
