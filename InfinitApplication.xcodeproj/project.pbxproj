@@ -2265,7 +2265,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "B6CFC3BF-2053-4CF1-BBC2-B2B15D53518B";
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../elle/elle/src /usr/local/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 /usr/local/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2296,7 +2296,7 @@
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "B6CFC3BF-2053-4CF1-BBC2-B2B15D53518B";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../elle/elle/src /usr/local/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 /usr/local/include";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
