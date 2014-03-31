@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <Gap/IAGapProtocol.h>
 
+struct gap_State;
+typedef struct gap_State gap_State;
+
 @interface IAGap : NSObject <IAGapProtocol>
 
 - (gap_State*)state;

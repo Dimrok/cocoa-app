@@ -6,10 +6,11 @@
 //  Copyright (c) 2013 infinit. All rights reserved.
 //
 
+#include <surface/gap/gap.hh>
+
 #import "IAGap.h"
 
 #import <Gap/IAGapProtocol.h>
-#import <Gap/gap.h>
 #import <Gap/IAGapState.h>
 
 #import "IALogFileManager.h"

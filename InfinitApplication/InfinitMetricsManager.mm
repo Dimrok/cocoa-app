@@ -8,7 +8,7 @@
 
 #import "InfinitMetricsManager.h"
 
-#import <Gap/version.h>
+#import <version.hh>
 
 #undef check
 #import <elle/log.hh>

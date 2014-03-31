@@ -6,15 +6,17 @@
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
+#undef check
+#import <elle/log.hh>
+
+#import <surface/gap/gap.hh>
+
 #import "IACrashReportManager.h"
 
 #import <CrashReporter/CrashReporter.h>
 
 #import "IALogFileManager.h"
 #import "IAUserPrefs.h"
-
-#undef check
-#import <elle/log.hh>
 
 ELLE_LOG_COMPONENT("OSX.CrashReportManager");
 

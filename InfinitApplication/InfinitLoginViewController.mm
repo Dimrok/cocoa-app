@@ -9,7 +9,7 @@
 #import "InfinitLoginViewController.h"
 
 #import <Gap/IAGapState.h>
-#import <Gap/version.h>
+#import <version.hh>
 
 #define INFINIT_REGISTER_URL "http://infinit.io/register"
 #define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot_password"
