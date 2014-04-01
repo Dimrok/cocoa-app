@@ -486,14 +486,15 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSArray*)search_users:(NSString*)text
 {
-    UInt32* results = gap_search_users(_state, text.UTF8String);
-    if (results == NULL)
-        return nil;
-    NSMutableArray* array = [NSMutableArray array];
-    for (UInt32* ptr = results; *ptr != 0; ++ptr)
-        [array addObject:[NSNumber numberWithUnsignedInt:*ptr]];
-    gap_search_users_free(results);
-    return array;
+  NSMutableArray* res = [NSMutableArray array];
+  if (text.length == 0)
+    return res;
+
+  std::vector<uint32_t> results = gap_users_search(_state, text.UTF8String);
+  for (auto const& user_id: results)
+    [res addObject:[NSNumber numberWithUnsignedInt:user_id]];
+  
+  return res;
 }
 
 - (NSArray*)swaggers
