@@ -168,14 +168,6 @@
         }
     }
     
-    // If we still don't have any favourites or swaggers
-    if (temp_arr.count == 0)
-    {
-        IAUser* infinit_user = [_delegate favouritesViewWantsInfinitUser:self];
-        if (infinit_user != nil)
-            [temp_arr addObject:infinit_user];
-    }
-    
     if (temp_arr.count == 0)
         return;
     

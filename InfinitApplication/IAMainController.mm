@@ -406,8 +406,6 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 {
     ELLE_LOG("%s: completed login", self.description.UTF8String);
     
-    [IAUserManager cacheInfinitContact];
-    
     if (_update_credentials && [[IAKeychainManager sharedInstance] credentialsInKeychain:_username])
     {
         [[IAKeychainManager sharedInstance] changeUser:_username password:_password];
@@ -831,11 +829,6 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 - (NSArray*)sendControllerWantsSwaggers:(IAGeneralSendController*)sender
 {
     return [IAUserManager swaggerList];
-}
-
-- (IAUser*)sendControllerWantsInfinitUser:(IAGeneralSendController*)sender
-{
-    return [IAUserManager infinitUser];
 }
 
 - (void)sendController:(IAGeneralSendController*)sender

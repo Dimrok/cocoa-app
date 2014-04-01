@@ -219,11 +219,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
     return [_delegate sendControllerWantsSwaggers:self];
 }
 
-- (IAUser*)favouritesViewWantsInfinitUser:(IAFavouritesSendViewController*)sender
-{
-    return [_delegate sendControllerWantsInfinitUser:self];
-}
-
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender
 {
     return [_delegate sendControllerWantsMidpoint:self];
