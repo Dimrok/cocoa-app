@@ -84,6 +84,9 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 - (BOOL)closeOnFocusLost
 {
+  if (_logging_in)
+    return YES;
+  else
     return NO;
 }
 
