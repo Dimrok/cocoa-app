@@ -156,6 +156,9 @@ void on_trophonius_unavailable();
         setenv("INFINIT_TROPHONIUS_PORT", "443", 1);
 
         setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
+      
+        setenv("INFINIT_METRICS_HOST", "v3.metrics.api.production.infinit.io", 1);
+        setenv("INFINIT_METRICS_PORT", "80", 1);
 #else
         production = false;
 
