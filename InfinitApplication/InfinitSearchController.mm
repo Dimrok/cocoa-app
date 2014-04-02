@@ -21,6 +21,9 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   ABAddressBook* _addressbook;
   
   NSString* _last_search_string;
+  // We do two searches on the Infinit server but aren't sure which will return first so if you're
+  // back first, set the boolean. If you're second, inform the delegate we have results.
+  BOOL _other_search_done;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -35,6 +38,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     _addressbook = [ABAddressBook addressBook];
     _result_list = [NSMutableArray array];
     _last_search_string = @"";
+    _other_search_done = NO;
   }
   return self;
 }
@@ -115,7 +119,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
       else
       {
         InfinitSearchPersonResult* existing_person =
-        [address_book_results objectAtIndex:[address_book_results indexOfObject:person]];
+          [address_book_results objectAtIndex:[address_book_results indexOfObject:person]];
         existing_person.rank += 1;
       }
     }
@@ -140,10 +144,6 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   [self searchEmails:emails];
   
   [_result_list addObjectsFromArray:address_book_results];
-  
-// XXX Wait for all results before showing. This assumes that the server results get in later
-//   [self sortResultsOnRank];
-//   [_delegate searchControllerGotResults:self];
 }
 
 //- Email Search Handling --------------------------------------------------------------------------
@@ -183,9 +183,15 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     [self updatePersonWithEmail:email andInfinitUser:[result.data objectForKey:email]];
   }
   
-  
-  [self sortResultsOnRank];
-  [_delegate searchControllerGotResults:self];
+  if (_other_search_done)
+  {
+    [self sortResultsOnRank];
+    [_delegate searchControllerGotResults:self];
+  }
+  else
+  {
+    _other_search_done = YES;
+  }
 }
 
 - (void)searchForEmailString:(NSString*)email
@@ -217,8 +223,15 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
       [self addInfinitUserToList:user];
   }
   
-  [self sortResultsOnRank];
-  [_delegate searchControllerGotResults:self];
+  if (_other_search_done)
+  {
+    [self sortResultsOnRank];
+    [_delegate searchControllerGotResults:self];
+  }
+  else
+  {
+    _other_search_done = YES;
+  }
 }
 
 
@@ -259,7 +272,10 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     if ([person.fullname rangeOfString:search_string options:NSCaseInsensitiveSearch].location == NSNotFound)
       [_result_list removeObject:person];
   }
-  [_delegate searchControllerGotResults:self];
+  if (_other_search_done)
+    [_delegate searchControllerGotResults:self];
+  else
+    _other_search_done = YES;
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -277,6 +293,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (void)searchString:(NSString*)search_string
 {
+  _other_search_done = NO;
   if ([IAFunctions stringIsValidEmail:search_string])
   {
     [_result_list removeAllObjects];
@@ -296,6 +313,10 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
       if ([self accessToAddressBook])
       {
         [self searchAddressBookWithString:search_string];
+      }
+      else
+      {
+        _other_search_done = YES;
       }
     }
 

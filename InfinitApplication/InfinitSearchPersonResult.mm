@@ -156,7 +156,7 @@ isInfinitUser:(IAUser*)user
 {
   if (self = [super init])
   {
-    _rank = 1;
+    _rank = 3;
     _delegate = delegate;
     _user = user;
     if (_user.is_favourite)
