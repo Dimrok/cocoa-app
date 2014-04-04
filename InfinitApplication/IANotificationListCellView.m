@@ -24,13 +24,6 @@
     return NO;
 }
 
-- (void)resetCursorRects
-{
-    [super resetCursorRects];
-    NSCursor* cursor = [NSCursor pointingHandCursor];
-    [self addCursorRect:self.bounds cursor:cursor];
-}
-
 - (void)setUserFullName:(NSString*)fullname
 {
     NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
@@ -77,13 +70,18 @@
                                                         attributes:attrs];
 }
 
-- (void)setAvatarForUser:(IAUser*)user
+- (void)setAvatarFromAvatarManagerForUser:(IAUser*)user
 {
-    [self.avatar_view setAvatar:[IAFunctions makeRoundAvatar:[IAAvatarManager getAvatarForUser:user]
-                                        ofDiameter:55.0
-                             withBorderOfThickness:2.0
-                                          inColour:IA_GREY_COLOUR(255.0)
-                                 andShadowOfRadius:2.0]];
+    [self loadAvatarImage:[IAAvatarManager getAvatarForUser:user]];
+}
+
+- (void)loadAvatarImage:(NSImage*)image
+{
+    [self.avatar_view setAvatar:[IAFunctions makeRoundAvatar:image
+                                                  ofDiameter:55.0
+                                       withBorderOfThickness:2.0
+                                                    inColour:IA_GREY_COLOUR(255.0)
+                                           andShadowOfRadius:2.0]];
 }
 
 - (void)setStatusIndicatorForTransaction:(IATransaction*)transaction
@@ -158,7 +156,7 @@
         _user = transaction.sender;
 
     [self setUserFullName:_user.fullname];
-    [self setAvatarForUser:_user];
+    [self setAvatarFromAvatarManagerForUser:_user];
     if (_user.status == gap_user_status_online)
         [self.user_online setHidden:NO];
     else

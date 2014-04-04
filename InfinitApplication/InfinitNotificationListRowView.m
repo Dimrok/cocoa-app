@@ -167,4 +167,11 @@
     [_delegate notificationRowHoverChanged:self];
 }
 
+- (void)resetCursorRects
+{
+    [super resetCursorRects];
+    NSCursor* cursor = [NSCursor pointingHandCursor];
+    [self addCursorRect:self.bounds cursor:cursor];
+}
+
 @end;

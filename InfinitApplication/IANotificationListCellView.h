@@ -33,6 +33,8 @@
 
 - (void)setTotalTransactionProgress:(CGFloat)progress;
 
+- (void)loadAvatarImage:(NSImage*)image;
+
 @end
 
 @protocol IANotificationListCellProtocol <NSObject>
