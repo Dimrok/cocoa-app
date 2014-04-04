@@ -37,7 +37,7 @@
 
 @end
 
-@protocol InfinitConversationViewProtocol <NSObject>
+@protocol InfinitConversationViewProtocol <IAViewProtocol>
 
 - (void)conversationView:(InfinitConversationViewController*)sender
 wantsMarkTransactionsReadForUser:(IAUser*)user;

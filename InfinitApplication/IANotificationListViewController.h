@@ -13,6 +13,7 @@
 #import "IAViewController.h"
 #import "IANotificationListCellView.h"
 #import "InfinitNotificationListRowView.h"
+#import "InfinitOnboardingController.h"
 
 @protocol IANotificationListViewProtocol;
 
@@ -38,7 +39,7 @@
 
 @end
 
-@protocol IANotificationListViewProtocol <NSObject>
+@protocol IANotificationListViewProtocol <IAViewProtocol>
 
 - (void)notificationListGotTransferClick:(IANotificationListViewController*)sender;
 - (void)notificationListWantsQuit:(IANotificationListViewController*)sender;

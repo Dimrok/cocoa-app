@@ -22,12 +22,14 @@
 #import "IANoConnectionViewController.h"
 #import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
-#import "IAOnboardingViewController.h"
 #import "IAReportProblemWindowController.h"
 #import "IAStatusBarIcon.h"
+#import "IAViewController.h"
 #import "IAWindowController.h"
+#import "InfinitClippyViewController.h"
 #import "InfinitConversationViewController.h"
 #import "InfinitLoginViewController.h"
+#import "InfinitOnboardingController.h"
 #import "InfinitStayAwakeManager.h"
 
 @protocol IAMainControllerProtocol;
@@ -38,13 +40,15 @@
                                         IANoConnectionViewProtocol,
                                         IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
-                                        IAOnboardingProtocol,
                                         IAReportProblemProtocol,
                                         IAStatusBarIconProtocol,
                                         IATransactionManagerProtocol,
                                         IAUserManagerProtocol,
+                                        IAViewProtocol,
                                         IAWindowControllerProtocol,
+                                        InfinitClippyProtocol,
                                         InfinitConversationViewProtocol,
+                                        InfinitOnboardingProtocol,
                                         InfinitLoginViewControllerProtocol,
                                         InfinitStayAwakeProtocol>
 

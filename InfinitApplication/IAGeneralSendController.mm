@@ -128,7 +128,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
             _combined_send_controller =
                 [[InfinitCombinedSendViewController alloc] initWithDelegate:self
                                                         andSearchController:_user_search_controller
-                                                                   fullview:NO];
+                                                                   fullview:YES];
         }
         else
         {
@@ -237,6 +237,23 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
     [_favourites_send_controller hideFavourites];
     _favourites_send_controller = nil;
+}
+
+//- Onboarding Protocol ----------------------------------------------------------------------------
+
+- (InfinitOnboardingState)onboardingState:(IAViewController*)sender
+{
+  return [_delegate onboardingState:sender];
+}
+
+- (BOOL)onboardingSend:(IAViewController*)sender
+{
+  return [_delegate onboardingSend:sender];
+}
+
+- (void)setOnboardingState:(InfinitOnboardingState)state
+{
+  [_delegate setOnboardingState:state];
 }
 
 @end

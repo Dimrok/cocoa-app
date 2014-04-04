@@ -14,6 +14,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "InfinitOnboardingController.h"
+
 @interface IAFooterView : NSView
 @end
 
@@ -22,6 +24,8 @@
 
 @interface IAMainView : NSView
 @end
+
+@protocol IAViewProtocol;
 
 @interface IAViewController : NSViewController
 
@@ -39,5 +43,16 @@
 - (void)transactionAdded:(IATransaction*)transaction;
 - (void)transactionUpdated:(IATransaction*)transaction;
 - (void)userUpdated:(IAUser*)user;
+
+@end
+
+
+@protocol IAViewProtocol <NSObject>
+
+- (InfinitOnboardingState)onboardingState:(IAViewController*)sender;
+
+- (BOOL)onboardingSend:(IAViewController*)sender;
+
+- (void)setOnboardingState:(InfinitOnboardingState)state;
 
 @end

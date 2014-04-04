@@ -17,6 +17,7 @@
 @protocol IAGeneralSendControllerProtocol;
 
 @interface IAGeneralSendController : NSObject <IAFavouritesSendViewProtocol,
+                                               IAViewProtocol,
                                                InfinitCombinedSendViewProtocol>
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
@@ -28,7 +29,7 @@
 
 @end
 
-@protocol IAGeneralSendControllerProtocol <NSObject>
+@protocol IAGeneralSendControllerProtocol <IAViewProtocol>
 
 - (void)sendController:(IAGeneralSendController*)sender
  wantsActiveController:(IAViewController*)controller;

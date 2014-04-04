@@ -45,7 +45,7 @@
 @end
 
 
-@protocol InfinitCombinedSendViewProtocol <NSObject>
+@protocol InfinitCombinedSendViewProtocol <IAViewProtocol>
 
 - (NSArray*)combinedSendViewWantsFileList:(InfinitCombinedSendViewController*)sender;
 
