@@ -284,6 +284,40 @@
 		83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */; };
 		83F1148D17AE709F00DCF662 /* icon-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148917AE709F00DCF662 /* icon-star.png */; };
 		83F1148E17AE709F00DCF662 /* icon-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148A17AE709F00DCF662 /* icon-star@2x.png */; };
+		83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */; };
+		83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCE718EC61AF0051F010 /* INPopoverController.m */; };
+		83F5FCF018EC61AF0051F010 /* INPopoverParentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCEA18EC61AF0051F010 /* INPopoverParentWindow.m */; };
+		83F5FCF118EC61AF0051F010 /* INPopoverWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCEC18EC61AF0051F010 /* INPopoverWindow.m */; };
+		83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCEE18EC61AF0051F010 /* INPopoverWindowFrame.m */; };
+		83F5FCF718EC62460051F010 /* InfinitTooltipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCF518EC62460051F010 /* InfinitTooltipViewController.m */; };
+		83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FCF618EC62460051F010 /* InfinitTooltipViewController.xib */; };
+		83F5FCFB18EC99870051F010 /* InfinitOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */; };
+		83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCFE18ECB8DB0051F010 /* InfinitClippyViewController.m */; };
+		83F5FD0118ECB8DB0051F010 /* InfinitClippyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FCFF18ECB8DB0051F010 /* InfinitClippyViewController.xib */; };
+		83F5FD1C18EDEC5E0051F010 /* arrow-tooltip-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0318EDEC5E0051F010 /* arrow-tooltip-onboarding.png */; };
+		83F5FD1D18EDEC5E0051F010 /* arrow-tooltip-onboarding@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0418EDEC5E0051F010 /* arrow-tooltip-onboarding@2x.png */; };
+		83F5FD1E18EDEC5E0051F010 /* btn-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0518EDEC5E0051F010 /* btn-onboarding.png */; };
+		83F5FD1F18EDEC5E0051F010 /* btn-onboarding@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0618EDEC5E0051F010 /* btn-onboarding@2x.png */; };
+		83F5FD2018EDEC5E0051F010 /* clippy_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0818EDEC5E0051F010 /* clippy_1.png */; };
+		83F5FD2118EDEC5E0051F010 /* clippy_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0918EDEC5E0051F010 /* clippy_10.png */; };
+		83F5FD2218EDEC5E0051F010 /* clippy_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0A18EDEC5E0051F010 /* clippy_10@2x.png */; };
+		83F5FD2318EDEC5E0051F010 /* clippy_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0B18EDEC5E0051F010 /* clippy_1@2x.png */; };
+		83F5FD2418EDEC5E0051F010 /* clippy_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0C18EDEC5E0051F010 /* clippy_2.png */; };
+		83F5FD2518EDEC5E0051F010 /* clippy_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0D18EDEC5E0051F010 /* clippy_2@2x.png */; };
+		83F5FD2618EDEC5E0051F010 /* clippy_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0E18EDEC5E0051F010 /* clippy_3.png */; };
+		83F5FD2718EDEC5E0051F010 /* clippy_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD0F18EDEC5E0051F010 /* clippy_3@2x.png */; };
+		83F5FD2818EDEC5E0051F010 /* clippy_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1018EDEC5E0051F010 /* clippy_4.png */; };
+		83F5FD2918EDEC5E0051F010 /* clippy_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1118EDEC5E0051F010 /* clippy_4@2x.png */; };
+		83F5FD2A18EDEC5E0051F010 /* clippy_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1218EDEC5E0051F010 /* clippy_5.png */; };
+		83F5FD2B18EDEC5E0051F010 /* clippy_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1318EDEC5E0051F010 /* clippy_5@2x.png */; };
+		83F5FD2C18EDEC5E0051F010 /* clippy_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1418EDEC5E0051F010 /* clippy_6.png */; };
+		83F5FD2D18EDEC5E0051F010 /* clippy_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1518EDEC5E0051F010 /* clippy_6@2x.png */; };
+		83F5FD2E18EDEC5E0051F010 /* clippy_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1618EDEC5E0051F010 /* clippy_7.png */; };
+		83F5FD2F18EDEC5E0051F010 /* clippy_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1718EDEC5E0051F010 /* clippy_7@2x.png */; };
+		83F5FD3018EDEC5E0051F010 /* clippy_8.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1818EDEC5E0051F010 /* clippy_8.png */; };
+		83F5FD3118EDEC5E0051F010 /* clippy_8@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1918EDEC5E0051F010 /* clippy_8@2x.png */; };
+		83F5FD3218EDEC5E0051F010 /* clippy_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1A18EDEC5E0051F010 /* clippy_9.png */; };
+		83F5FD3318EDEC5E0051F010 /* clippy_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FD1B18EDEC5E0051F010 /* clippy_9@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -841,6 +875,49 @@
 		83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAUserSearchViewController.xib; sourceTree = "<group>"; };
 		83F1148917AE709F00DCF662 /* icon-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star.png"; sourceTree = "<group>"; };
 		83F1148A17AE709F00DCF662 /* icon-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-star@2x.png"; sourceTree = "<group>"; };
+		83F5FCD118EB3E2E0051F010 /* InfinitSizedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSizedTextField.h; sourceTree = "<group>"; };
+		83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSizedTextField.m; sourceTree = "<group>"; };
+		83F5FCE618EC61AF0051F010 /* INPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPopoverController.h; sourceTree = "<group>"; };
+		83F5FCE718EC61AF0051F010 /* INPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INPopoverController.m; sourceTree = "<group>"; };
+		83F5FCE818EC61AF0051F010 /* INPopoverControllerDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPopoverControllerDefines.h; sourceTree = "<group>"; };
+		83F5FCE918EC61AF0051F010 /* INPopoverParentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPopoverParentWindow.h; sourceTree = "<group>"; };
+		83F5FCEA18EC61AF0051F010 /* INPopoverParentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INPopoverParentWindow.m; sourceTree = "<group>"; };
+		83F5FCEB18EC61AF0051F010 /* INPopoverWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPopoverWindow.h; sourceTree = "<group>"; };
+		83F5FCEC18EC61AF0051F010 /* INPopoverWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INPopoverWindow.m; sourceTree = "<group>"; };
+		83F5FCED18EC61AF0051F010 /* INPopoverWindowFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPopoverWindowFrame.h; sourceTree = "<group>"; };
+		83F5FCEE18EC61AF0051F010 /* INPopoverWindowFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INPopoverWindowFrame.m; sourceTree = "<group>"; };
+		83F5FCF418EC62460051F010 /* InfinitTooltipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTooltipViewController.h; sourceTree = "<group>"; };
+		83F5FCF518EC62460051F010 /* InfinitTooltipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTooltipViewController.m; sourceTree = "<group>"; };
+		83F5FCF618EC62460051F010 /* InfinitTooltipViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitTooltipViewController.xib; sourceTree = "<group>"; };
+		83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOnboardingController.h; sourceTree = "<group>"; };
+		83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOnboardingController.m; sourceTree = "<group>"; };
+		83F5FCFD18ECB8DB0051F010 /* InfinitClippyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitClippyViewController.h; sourceTree = "<group>"; };
+		83F5FCFE18ECB8DB0051F010 /* InfinitClippyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitClippyViewController.m; sourceTree = "<group>"; };
+		83F5FCFF18ECB8DB0051F010 /* InfinitClippyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitClippyViewController.xib; sourceTree = "<group>"; };
+		83F5FD0318EDEC5E0051F010 /* arrow-tooltip-onboarding.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-tooltip-onboarding.png"; path = "../../../../fist-resources/slices/view_onboarding/arrow-tooltip-onboarding.png"; sourceTree = "<group>"; };
+		83F5FD0418EDEC5E0051F010 /* arrow-tooltip-onboarding@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-tooltip-onboarding@2x.png"; path = "../../../../fist-resources/slices/view_onboarding/arrow-tooltip-onboarding@2x.png"; sourceTree = "<group>"; };
+		83F5FD0518EDEC5E0051F010 /* btn-onboarding.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-onboarding.png"; path = "../../../../fist-resources/slices/view_onboarding/btn-onboarding.png"; sourceTree = "<group>"; };
+		83F5FD0618EDEC5E0051F010 /* btn-onboarding@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-onboarding@2x.png"; path = "../../../../fist-resources/slices/view_onboarding/btn-onboarding@2x.png"; sourceTree = "<group>"; };
+		83F5FD0818EDEC5E0051F010 /* clippy_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_1.png; sourceTree = "<group>"; };
+		83F5FD0918EDEC5E0051F010 /* clippy_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_10.png; sourceTree = "<group>"; };
+		83F5FD0A18EDEC5E0051F010 /* clippy_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_10@2x.png"; sourceTree = "<group>"; };
+		83F5FD0B18EDEC5E0051F010 /* clippy_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_1@2x.png"; sourceTree = "<group>"; };
+		83F5FD0C18EDEC5E0051F010 /* clippy_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_2.png; sourceTree = "<group>"; };
+		83F5FD0D18EDEC5E0051F010 /* clippy_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_2@2x.png"; sourceTree = "<group>"; };
+		83F5FD0E18EDEC5E0051F010 /* clippy_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_3.png; sourceTree = "<group>"; };
+		83F5FD0F18EDEC5E0051F010 /* clippy_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_3@2x.png"; sourceTree = "<group>"; };
+		83F5FD1018EDEC5E0051F010 /* clippy_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_4.png; sourceTree = "<group>"; };
+		83F5FD1118EDEC5E0051F010 /* clippy_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_4@2x.png"; sourceTree = "<group>"; };
+		83F5FD1218EDEC5E0051F010 /* clippy_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_5.png; sourceTree = "<group>"; };
+		83F5FD1318EDEC5E0051F010 /* clippy_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_5@2x.png"; sourceTree = "<group>"; };
+		83F5FD1418EDEC5E0051F010 /* clippy_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_6.png; sourceTree = "<group>"; };
+		83F5FD1518EDEC5E0051F010 /* clippy_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_6@2x.png"; sourceTree = "<group>"; };
+		83F5FD1618EDEC5E0051F010 /* clippy_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_7.png; sourceTree = "<group>"; };
+		83F5FD1718EDEC5E0051F010 /* clippy_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_7@2x.png"; sourceTree = "<group>"; };
+		83F5FD1818EDEC5E0051F010 /* clippy_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_8.png; sourceTree = "<group>"; };
+		83F5FD1918EDEC5E0051F010 /* clippy_8@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_8@2x.png"; sourceTree = "<group>"; };
+		83F5FD1A18EDEC5E0051F010 /* clippy_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clippy_9.png; sourceTree = "<group>"; };
+		83F5FD1B18EDEC5E0051F010 /* clippy_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clippy_9@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -971,7 +1048,9 @@
 		8328081017A2B4A60025B6F8 /* InfinitApplication */ = {
 			isa = PBXGroup;
 			children = (
+				83F5FCD418EC61690051F010 /* Third Party */,
 				8328084017A2B5100025B6F8 /* Common Resources */,
+				83F5FCFC18ECB8B40051F010 /* Clippy View */,
 				833B59B518D75D2300A43339 /* Conversation View */,
 				833C318A17CCC81100941C09 /* Desktop Notifier */,
 				83CD6FB217A672C7004F55D1 /* Gap */,
@@ -987,6 +1066,7 @@
 				831E22D3183E561E00F0623C /* Search Controller */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
 				832808C417A2BBA10025B6F8 /* Status Bar Icon */,
+				83F5FCF318EC62220051F010 /* Tooltip */,
 				8398834717A6A580009409B3 /* Utilities */,
 				832808D917A2D66E0025B6F8 /* Window Controller */,
 				8328081C17A2B4A60025B6F8 /* IAAppDelegate.h */,
@@ -1296,6 +1376,8 @@
 				8398836517A6FA73009409B3 /* IADefine.h */,
 				838FE0B617DA097C004160DB /* IAHoverButton.h */,
 				838FE0B717DA097C004160DB /* IAHoverButton.m */,
+				83F5FCD118EB3E2E0051F010 /* InfinitSizedTextField.h */,
+				83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1399,6 +1481,8 @@
 				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */,
 				83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */,
 				83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */,
+				83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */,
+				83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1548,6 +1632,91 @@
 				838AAC7317D73261009083D4 /* IASimpleSendButton.m */,
 			);
 			name = "Search Results";
+			sourceTree = "<group>";
+		};
+		83F5FCD418EC61690051F010 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				83F5FCD518EC61750051F010 /* INPopover */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		83F5FCD518EC61750051F010 /* INPopover */ = {
+			isa = PBXGroup;
+			children = (
+				83F5FCE618EC61AF0051F010 /* INPopoverController.h */,
+				83F5FCE718EC61AF0051F010 /* INPopoverController.m */,
+				83F5FCE818EC61AF0051F010 /* INPopoverControllerDefines.h */,
+				83F5FCE918EC61AF0051F010 /* INPopoverParentWindow.h */,
+				83F5FCEA18EC61AF0051F010 /* INPopoverParentWindow.m */,
+				83F5FCEB18EC61AF0051F010 /* INPopoverWindow.h */,
+				83F5FCEC18EC61AF0051F010 /* INPopoverWindow.m */,
+				83F5FCED18EC61AF0051F010 /* INPopoverWindowFrame.h */,
+				83F5FCEE18EC61AF0051F010 /* INPopoverWindowFrame.m */,
+			);
+			name = INPopover;
+			sourceTree = "<group>";
+		};
+		83F5FCF318EC62220051F010 /* Tooltip */ = {
+			isa = PBXGroup;
+			children = (
+				83F5FCF418EC62460051F010 /* InfinitTooltipViewController.h */,
+				83F5FCF518EC62460051F010 /* InfinitTooltipViewController.m */,
+				83F5FCF618EC62460051F010 /* InfinitTooltipViewController.xib */,
+			);
+			name = Tooltip;
+			sourceTree = "<group>";
+		};
+		83F5FCFC18ECB8B40051F010 /* Clippy View */ = {
+			isa = PBXGroup;
+			children = (
+				83F5FD0218EDEC3B0051F010 /* Resources */,
+				83F5FCFD18ECB8DB0051F010 /* InfinitClippyViewController.h */,
+				83F5FCFE18ECB8DB0051F010 /* InfinitClippyViewController.m */,
+				83F5FCFF18ECB8DB0051F010 /* InfinitClippyViewController.xib */,
+			);
+			name = "Clippy View";
+			sourceTree = "<group>";
+		};
+		83F5FD0218EDEC3B0051F010 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83F5FD0318EDEC5E0051F010 /* arrow-tooltip-onboarding.png */,
+				83F5FD0418EDEC5E0051F010 /* arrow-tooltip-onboarding@2x.png */,
+				83F5FD0518EDEC5E0051F010 /* btn-onboarding.png */,
+				83F5FD0618EDEC5E0051F010 /* btn-onboarding@2x.png */,
+				83F5FD0718EDEC5E0051F010 /* clippy */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		83F5FD0718EDEC5E0051F010 /* clippy */ = {
+			isa = PBXGroup;
+			children = (
+				83F5FD0818EDEC5E0051F010 /* clippy_1.png */,
+				83F5FD0918EDEC5E0051F010 /* clippy_10.png */,
+				83F5FD0A18EDEC5E0051F010 /* clippy_10@2x.png */,
+				83F5FD0B18EDEC5E0051F010 /* clippy_1@2x.png */,
+				83F5FD0C18EDEC5E0051F010 /* clippy_2.png */,
+				83F5FD0D18EDEC5E0051F010 /* clippy_2@2x.png */,
+				83F5FD0E18EDEC5E0051F010 /* clippy_3.png */,
+				83F5FD0F18EDEC5E0051F010 /* clippy_3@2x.png */,
+				83F5FD1018EDEC5E0051F010 /* clippy_4.png */,
+				83F5FD1118EDEC5E0051F010 /* clippy_4@2x.png */,
+				83F5FD1218EDEC5E0051F010 /* clippy_5.png */,
+				83F5FD1318EDEC5E0051F010 /* clippy_5@2x.png */,
+				83F5FD1418EDEC5E0051F010 /* clippy_6.png */,
+				83F5FD1518EDEC5E0051F010 /* clippy_6@2x.png */,
+				83F5FD1618EDEC5E0051F010 /* clippy_7.png */,
+				83F5FD1718EDEC5E0051F010 /* clippy_7@2x.png */,
+				83F5FD1818EDEC5E0051F010 /* clippy_8.png */,
+				83F5FD1918EDEC5E0051F010 /* clippy_8@2x.png */,
+				83F5FD1A18EDEC5E0051F010 /* clippy_9.png */,
+				83F5FD1B18EDEC5E0051F010 /* clippy_9@2x.png */,
+			);
+			name = clippy;
+			path = "../../../../fist-resources/slices/view_onboarding/clippy";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1799,6 +1968,7 @@
 				832B548A188970AC0022CC33 /* icon-menu-bar-animated-red-10.png in Resources */,
 				837A7F8B17FC25E000600ACD /* bg-main-button@2x.png in Resources */,
 				839249E118D8AAA900EE72C7 /* conversation-icon-error@2x.png in Resources */,
+				83F5FD2A18EDEC5E0051F010 /* clippy_5.png in Resources */,
 				83B2FD2B17F5950500893B52 /* IAOnboardingViewController.xib in Resources */,
 				8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */,
 				83481570187AD45A002ACDE0 /* icon-cancel-send.png in Resources */,
@@ -1820,18 +1990,27 @@
 				832B5462188970A50022CC33 /* icon-menu-bar-animated-black-6.png in Resources */,
 				836ABEF718E4B1310013D721 /* conversation-icon-status-offline@2x.png in Resources */,
 				832B5487188970AC0022CC33 /* icon-menu-bar-animated-red-7.png in Resources */,
+				83F5FD2F18EDEC5E0051F010 /* clippy_7@2x.png in Resources */,
+				83F5FD2718EDEC5E0051F010 /* clippy_3@2x.png in Resources */,
 				832B546C188970A50022CC33 /* icon-menu-bar-animated-black-16.png in Resources */,
+				83F5FD2B18EDEC5E0051F010 /* clippy_5@2x.png in Resources */,
 				839249D818D8AAA900EE72C7 /* conversation-icon-back.png in Resources */,
 				839249E518D8AAA900EE72C7 /* conversation-icon-hide-files@2x.png in Resources */,
 				832B5489188970AC0022CC33 /* icon-menu-bar-animated-red-9.png in Resources */,
+				83F5FD1E18EDEC5E0051F010 /* btn-onboarding.png in Resources */,
+				83F5FD2618EDEC5E0051F010 /* clippy_3.png in Resources */,
 				831FB23717A9370400696604 /* bg-header-top-gray@2x.png in Resources */,
 				839249F618D8AAA900EE72C7 /* conversation-icon-retry.png in Resources */,
+				83F5FD3318EDEC5E0051F010 /* clippy_9@2x.png in Resources */,
 				832B5468188970A50022CC33 /* icon-menu-bar-animated-black-12.png in Resources */,
 				839249D618D8AAA900EE72C7 /* conversation-icon-accept.png in Resources */,
 				83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */,
 				839249E318D8AAA900EE72C7 /* conversation-icon-finished@2x.png in Resources */,
+				83F5FD2018EDEC5E0051F010 /* clippy_1.png in Resources */,
+				83F5FD2418EDEC5E0051F010 /* clippy_2.png in Resources */,
 				83C99E0A17AB9A1700AFF091 /* bg-header-top-white.png in Resources */,
 				839249DF18D8AAA900EE72C7 /* conversation-icon-check@2x.png in Resources */,
+				83F5FD2518EDEC5E0051F010 /* clippy_2@2x.png in Resources */,
 				838C6DF517FAD14D00BF947C /* icon-onboarding-close-hover.png in Resources */,
 				83ECD4D01827A04F007DDB13 /* icon-main-upload.png in Resources */,
 				83C99E0B17AB9A1700AFF091 /* bg-header-top-white@2x.png in Resources */,
@@ -1861,6 +2040,7 @@
 				839249E218D8AAA900EE72C7 /* conversation-icon-finished.png in Resources */,
 				83C99E2117AB9DFB00AFF091 /* icon-add-cancel-hover.png in Resources */,
 				839DDD0A18DA67F50021B826 /* badge@2x.png in Resources */,
+				83F5FD2D18EDEC5E0051F010 /* clippy_6@2x.png in Resources */,
 				839249E418D8AAA900EE72C7 /* conversation-icon-hide-files.png in Resources */,
 				839249E618D8AAA900EE72C7 /* conversation-icon-main-download.png in Resources */,
 				83C99E2217AB9DFB00AFF091 /* icon-add-cancel-hover@2x.png in Resources */,
@@ -1868,6 +2048,8 @@
 				837DE2E218E2121A003A63A8 /* icon-status-online.png in Resources */,
 				83C99E2417AB9DFB00AFF091 /* icon-add-cancel@2x.png in Resources */,
 				83481571187AD45A002ACDE0 /* icon-cancel-send@2x.png in Resources */,
+				83F5FD2E18EDEC5E0051F010 /* clippy_7.png in Resources */,
+				83F5FD1D18EDEC5E0051F010 /* arrow-tooltip-onboarding@2x.png in Resources */,
 				839249F018D8AAA900EE72C7 /* conversation-icon-reject.png in Resources */,
 				839249D518D8AAA900EE72C7 /* conversation-icon-accept-hover@2x.png in Resources */,
 				83C99E2717AB9E3600AFF091 /* icon-files.png in Resources */,
@@ -1897,21 +2079,27 @@
 				832B545D188970A50022CC33 /* icon-menu-bar-animated-black-1.png in Resources */,
 				832B5485188970AC0022CC33 /* icon-menu-bar-animated-red-5.png in Resources */,
 				837DE2EB18E2181A003A63A8 /* conversation-icon-quote-right@2x.png in Resources */,
+				83F5FD2818EDEC5E0051F010 /* clippy_4.png in Resources */,
 				832B548E188970AC0022CC33 /* icon-menu-bar-animated-red-14.png in Resources */,
 				8348156418697870002ACDE0 /* InfinitCombinedSendViewController.xib in Resources */,
+				83F5FD0118ECB8DB0051F010 /* InfinitClippyViewController.xib in Resources */,
 				832B549E188970C60022CC33 /* icon-menu-bar-clicked@2x.png in Resources */,
 				832B5463188970A50022CC33 /* icon-menu-bar-animated-black-7.png in Resources */,
 				83F1148D17AE709F00DCF662 /* icon-star.png in Resources */,
 				832B54A1188970C60022CC33 /* icon-menu-bar-inactive.png in Resources */,
+				83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */,
 				839249DA18D8AAA900EE72C7 /* conversation-icon-bufferised.png in Resources */,
 				83F1148E17AE709F00DCF662 /* icon-star@2x.png in Resources */,
 				839249E818D8AAA900EE72C7 /* conversation-icon-main-upload.png in Resources */,
+				83F5FD3118EDEC5E0051F010 /* clippy_8@2x.png in Resources */,
 				837A7F9217FC25F200600ACD /* btn-send-files-simple.png in Resources */,
+				83F5FD2918EDEC5E0051F010 /* clippy_4@2x.png in Resources */,
 				834582961822774700899526 /* icon-transfer.png in Resources */,
 				839249DD18D8AAA900EE72C7 /* conversation-icon-canceled@2x.png in Resources */,
 				839249D918D8AAA900EE72C7 /* conversation-icon-back@2x.png in Resources */,
 				832B548F188970AC0022CC33 /* icon-menu-bar-animated-red-15.png in Resources */,
 				839249F518D8AAA900EE72C7 /* conversation-icon-retry-hover@2x.png in Resources */,
+				83F5FD2218EDEC5E0051F010 /* clippy_10@2x.png in Resources */,
 				834582971822774700899526 /* icon-transfer@2x.png in Resources */,
 				83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */,
 				837A7F8A17FC25E000600ACD /* bg-main-button.png in Resources */,
@@ -1929,6 +2117,8 @@
 				83A8097E17C26C890086A80D /* bg-triangle-top-grey.png in Resources */,
 				83A8097F17C26C890086A80D /* bg-triangle-top-grey@2x.png in Resources */,
 				832B5465188970A50022CC33 /* icon-menu-bar-animated-black-9.png in Resources */,
+				83F5FD2318EDEC5E0051F010 /* clippy_1@2x.png in Resources */,
+				83F5FD1C18EDEC5E0051F010 /* arrow-tooltip-onboarding.png in Resources */,
 				8348157F187AE007002ACDE0 /* bg-header-top-hover.png in Resources */,
 				83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */,
 				83A8098117C26C890086A80D /* bg-triangle-top-white@2x.png in Resources */,
@@ -1937,20 +2127,25 @@
 				832B545E188970A50022CC33 /* icon-menu-bar-animated-black-2.png in Resources */,
 				83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */,
 				83D4206617C4DC6700D4E168 /* icon-error.png in Resources */,
+				83F5FD3018EDEC5E0051F010 /* clippy_8.png in Resources */,
 				83B8A70E18201F0700AD775F /* icon-main-unread.png in Resources */,
+				83F5FD2C18EDEC5E0051F010 /* clippy_6.png in Resources */,
 				839249EF18D8AAA900EE72C7 /* conversation-icon-reject-hover@2x.png in Resources */,
 				839249D418D8AAA900EE72C7 /* conversation-icon-accept-hover.png in Resources */,
 				83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */,
 				832B5491188970AC0022CC33 /* icon-menu-bar-animated-red-17.png in Resources */,
+				83F5FD1F18EDEC5E0051F010 /* btn-onboarding@2x.png in Resources */,
 				83481580187AE007002ACDE0 /* bg-header-top-hover@2x.png in Resources */,
 				83B2FFC618969936006C9D77 /* bg-header-top-problem.png in Resources */,
 				83929BB717C60FD60009292D /* icon-reject.png in Resources */,
 				837E6D0C17DA324100FC3141 /* loading.gif in Resources */,
 				83929BB817C60FD60009292D /* icon-reject@2x.png in Resources */,
+				83F5FD2118EDEC5E0051F010 /* clippy_10.png in Resources */,
 				834582951822774700899526 /* icon-gear@2x.png in Resources */,
 				838C6DF617FAD14D00BF947C /* icon-onboarding-close-hover@2x.png in Resources */,
 				83929BC017C618CD0009292D /* icon-accept.png in Resources */,
 				839DFC1817D8ED45001D60DD /* icon-back.png in Resources */,
+				83F5FD3218EDEC5E0051F010 /* clippy_9.png in Resources */,
 				832B546E188970A50022CC33 /* icon-menu-bar-animated-black-18.png in Resources */,
 				83929BC117C618CD0009292D /* icon-accept@2x.png in Resources */,
 				833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */,
@@ -2047,11 +2242,15 @@
 				8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */,
 				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
 				8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */,
+				83F5FCF118EC61AF0051F010 /* INPopoverWindow.m in Sources */,
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
 				83BEC56E1860909000EB277E /* InfinitNotificationListConnectionCellView.m in Sources */,
 				831FB21E17A8FE1700696604 /* IAAvatarManager.mm in Sources */,
 				836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */,
 				831FB22617A90BE900696604 /* IANotificationListViewController.mm in Sources */,
+				83F5FCF018EC61AF0051F010 /* INPopoverParentWindow.m in Sources */,
+				83F5FCFB18EC99870051F010 /* InfinitOnboardingController.m in Sources */,
+				83F5FCF718EC62460051F010 /* InfinitTooltipViewController.m in Sources */,
 				83E77FA718D7774500B09D87 /* InfinitConversationPersonView.mm in Sources */,
 				8333D45D17A976570093942B /* IAViewController.m in Sources */,
 				831E22D6183E563800F0623C /* InfinitSearchController.mm in Sources */,
@@ -2074,11 +2273,15 @@
 				831AA69F17D0FCC00004AE8D /* IAMeManager.mm in Sources */,
 				8365685C17F9BC350021D49D /* IAPopoverViewController.m in Sources */,
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
+				83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */,
+				83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */,
 				831E22D9183E565300F0623C /* InfinitSearchPersonResult.mm in Sources */,
+				83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */,
 				838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */,
 				83B9744518842F540089E0E0 /* InfinitSendFileListCellView.m in Sources */,
+				83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */,
 				833B59D418D774C400A43339 /* InfinitConversationCellView.mm in Sources */,
 				8321BE7A18E0D33600237252 /* InfinitConversationFileCellView.m in Sources */,
 				8348156318697870002ACDE0 /* InfinitCombinedSendViewController.mm in Sources */,
