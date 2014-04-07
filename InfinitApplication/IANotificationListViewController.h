@@ -15,6 +15,8 @@
 #import "InfinitNotificationListRowView.h"
 #import "InfinitOnboardingController.h"
 
+#import <surface/gap/enums.hh>
+
 @protocol IANotificationListViewProtocol;
 
 @interface IANotificationListViewController : IAViewController <IANotificationListCellProtocol,
