@@ -9,6 +9,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <surface/gap/enums.hh>
+
 @protocol IAStatusBarIconProtocol;
 
 @interface IAStatusBarIcon : NSView <NSDraggingDestination>
