@@ -365,21 +365,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
   switch (_element.transaction.view_mode)
   {
-    case TRANSACTION_VIEW_ACCEPTED:
-      [self setTransactionStatusButtonToCancel];
-      self.information.hidden = YES;
-      break;
     case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
       [self setTransactionStatusButtonToCancel];
       self.information.stringValue = NSLocalizedString(@"Waiting for user to be online...", nil);
       self.information.hidden = NO;
       break;
-    case TRANSACTION_VIEW_CANCELLED_OTHER:
-      [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
-      [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
-      self.information.hidden = YES;
-      break;
-    case TRANSACTION_VIEW_CANCELLED_SELF:
+    case TRANSACTION_VIEW_CANCELLED:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
       [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
       self.information.hidden = YES;
@@ -401,14 +392,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case TRANSACTION_VIEW_FINISHED:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-finished"];
       [self.transaction_status_button setToolTip:NSLocalizedString(@"Finished", nil)];
-      self.information.hidden = YES;
-      break;
-    case TRANSACTION_VIEW_PAUSE_AUTO:
-      [self setTransactionStatusButtonToCancel];
-      self.information.hidden = YES;
-      break;
-    case TRANSACTION_VIEW_PAUSE_USER:
-      [self setTransactionStatusButtonToCancel];
       self.information.hidden = YES;
       break;
     case TRANSACTION_VIEW_PENDING_SEND:
@@ -447,16 +430,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
         self.information.stringValue =
           [IAFunctions fileSizeStringFrom:_element.transaction.total_size];
       }
-      self.information.hidden = NO;
-      break;
-    case TRANSACTION_VIEW_WAITING_ONLINE:
-      [self setTransactionStatusButtonToCancel];
-      self.information.stringValue = NSLocalizedString(@"Waiting for user to be online...", nil);
-      self.information.hidden = NO;
-      break;
-    case TRANSACTION_VIEW_WAITING_REGISTER:
-      [self setTransactionStatusButtonToCancel];
-      self.information.stringValue = NSLocalizedString(@"Waiting for user to register...", nil);
       self.information.hidden = NO;
       break;
 

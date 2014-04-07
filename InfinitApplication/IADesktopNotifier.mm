@@ -107,15 +107,6 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
                        filename,
                        NSLocalizedString(@"to you", @"to you")];
             break;
-
-//        case TRANSACTION_VIEW_ACCEPTED:
-//            if (!transaction.from_me)
-//                return nil;
-//            title = NSLocalizedString(@"Accepted!", @"accepted!");
-//            message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
-//                       NSLocalizedString(@"accepted", @"accepted"),
-//                       filename];
-//            break;
         
         case TRANSACTION_VIEW_REJECTED:
             if (!transaction.from_me)
@@ -125,15 +116,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
                        NSLocalizedString(@"declined your transfer", @"declined your transfer")];
             break;
             
-        case TRANSACTION_VIEW_CANCELLED_OTHER:
-            title = NSLocalizedString(@"Nuts!", @"nuts!");
-            message = [NSString stringWithFormat:@"%@ %@ %@",
-                       NSLocalizedString(@"Your transfer with", @"your transfer with"),
-                       transaction.other_user.fullname,
-                       NSLocalizedString(@"was cancelled", @"was cancelled")];
-            break;
-            
-        case TRANSACTION_VIEW_CANCELLED_SELF:
+        case TRANSACTION_VIEW_CANCELLED:
             title = NSLocalizedString(@"Nuts!", @"nuts!");
             message = [NSString stringWithFormat:@"%@ %@ %@",
                        NSLocalizedString(@"Your transfer with", @"your transfer with"),
