@@ -387,7 +387,8 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
   NSString* message = NSLocalizedString(@"Type a contact's name or email", nil);
   [_tooltip showPopoverForView:_user_search_controller.search_image
             withArrowDirection:INPopoverArrowDirectionRight
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)delayedFilesNoDestinationOnboard
@@ -397,7 +398,8 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
   NSString* message = NSLocalizedString(@"Type a contact's name or email", nil);
   [_tooltip showPopoverForView:_user_search_controller.search_image
             withArrowDirection:INPopoverArrowDirectionRight
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)delayedNoFilesDestinationOnboard
@@ -407,7 +409,8 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
   NSString* message = NSLocalizedString(@"Click to add a file", nil);
   [_tooltip showPopoverForView:self.add_files_button
             withArrowDirection:INPopoverArrowDirectionRight
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)delayedFilesDestinationOnboard
@@ -417,7 +420,8 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
   NSString* message = NSLocalizedString(@"Click to send!", nil);
   [_tooltip showPopoverForView:self.send_button
             withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)focusOnTextField
@@ -669,12 +673,13 @@ doCommandBySelector:(SEL)commandSelector
 {
   if ([self inputsGood])
   {
-    [_delegate combinedSendView:self
-                 wantsSendFiles:_file_list
-                        toUsers:_recipient_list
-                    withMessage:_message];
+    NSArray* transaction_ids = [_delegate combinedSendView:self
+                                            wantsSendFiles:_file_list
+                                                   toUsers:_recipient_list
+                                               withMessage:_message];
     if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
     {
+      [_delegate combinedSendView:self wantsSetOnboardingSendTransactionId:transaction_ids[0]];
       [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILE_SENDING];
     }
   }

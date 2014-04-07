@@ -80,6 +80,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (BOOL)closeOnFocusLost
 {
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE];
+  }
   return YES;
 }
 
@@ -149,42 +153,56 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self resizeContentView];
   [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
   [self updateListOfRowsWithProgress];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
-      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
+  if ([[_delegate receiveOnboardingTransaction:self] other_user] == _user)
   {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
-    [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:1.0];
+    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
+        [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
+        [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
+      [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:1.0];
+    }
   }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
+  else if ([[_delegate sendOnboardingTransaction:self] other_user] == _user)
   {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
-    [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:1.0];
+    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
+      [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:1.0];
+    }
   }
 }
 
 - (void)delayedStartOnboarding
 {
+  NSInteger row = [self _rowForTransaction:[_delegate receiveOnboardingTransaction:self]];
+  if (row == -1)
+    return;
+
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  InfinitConversationCellView* cell =
-    [self.table_view viewAtColumn:0 row:(self.table_view.numberOfRows - 2) makeIfNecessary:NO];
+  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
   NSString* message = NSLocalizedString(@"Click here to accept", nil);
   [_tooltip showPopoverForView:cell.accept_button
             withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)delayedStatusOnboarding
 {
+  NSInteger row = [self _rowForTransaction:[_delegate sendOnboardingTransaction:self]];
+  if (row == -1)
+    return;
+
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  InfinitConversationCellView* cell =
-  [self.table_view viewAtColumn:0 row:(self.table_view.numberOfRows - 2) makeIfNecessary:NO];
+  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
   NSString* message = NSLocalizedString(@"Status of transaction", nil);
   [_tooltip showPopoverForView:cell.transaction_status_button
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message];
+            withArrowDirection:INPopoverArrowDirectionRight
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 //- View Functions ---------------------------------------------------------------------------------
@@ -345,12 +363,17 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
+  }
   [self backToNotificationView];
 }
 
 - (IBAction)transferButtonClicked:(NSButton*)sender
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE)
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
+      [_delegate onboardingSend:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
   }
@@ -367,13 +390,33 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
    }];
 }
 
-- (void)delayedOnboardingDoneWithMessage:(NSString*)message
+- (NSInteger)_rowForTransaction:(IATransaction*)transaction
 {
-  InfinitConversationCellView* cell =
-    [self.table_view viewAtColumn:0 row:(self.table_view.numberOfRows - 2) makeIfNecessary:NO];
+  NSInteger row = 0;
+  for (InfinitConversationElement* element in _elements)
+  {
+    if (element.transaction.transaction_id.unsignedIntValue == transaction.transaction_id.unsignedIntValue)
+      break;
+    row++;
+  }
+  if (row == _elements.count)
+    return -1;
+  else
+    return row;
+}
+
+- (void)delayedReceiveOnboardingDoneWithMessage:(NSString*)message
+{
+  NSUInteger row =
+    [self _rowForTransaction:[_delegate receiveOnboardingTransaction:self]];
+  if (row == -1)
+    return;
+
+  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
   [_tooltip showPopoverForView:cell.file_icon
             withArrowDirection:INPopoverArrowDirectionRight
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (IBAction)conversationCellViewWantsAccept:(NSButton*)sender
@@ -383,12 +426,13 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_delegate conversationView:self
        wantsAcceptTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
+      [_delegate receiveOnboardingTransaction:self] == element.transaction)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
     [_tooltip close];
-    NSString* message = NSLocalizedString(@"File will be in Downloads folder", nil);
-    [self performSelector:@selector(delayedOnboardingDoneWithMessage:)
+    NSString* message = NSLocalizedString(@"The file will be in your Downloads folder", nil);
+    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
                withObject:message
                afterDelay:1.0];
   }
@@ -439,12 +483,13 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_delegate conversationView:self
        wantsRejectTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_REJECT];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
+      [_delegate receiveOnboardingTransaction:self] == element.transaction)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
     [_tooltip close];
     NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
-    [self performSelector:@selector(delayedOnboardingDoneWithMessage:)
+    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
                withObject:message
                afterDelay:1.0];
   }
@@ -580,13 +625,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [self setUpdatorRunning:NO];
   [_delegate conversationView:self wantsMarkTransactionsReadForUser:_user];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE)
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
   {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE];
-  }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENDING)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_DONE];
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
   }
 }
 

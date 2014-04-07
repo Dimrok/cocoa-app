@@ -34,7 +34,6 @@
     _popover_controller.arrowSize = _arrow_size;
     _popover_controller.closesWhenPopoverResignsKey = NO;
     _popover_controller.closesWhenApplicationBecomesInactive = YES;
-    _popover_controller.animationType = INPopoverAnimationTypePop;
   }
   return self;
 }
@@ -47,11 +46,16 @@
 - (void)showPopoverForView:(NSView*)view
         withArrowDirection:(INPopoverArrowDirection)direction
                withMessage:(NSString*)message
+          withPopAnimation:(BOOL)pop
 {
+  if (pop)
+    _popover_controller.animationType = INPopoverAnimationTypePop;
+  else
+    _popover_controller.animationType = INPopoverAnimationTypeFadeInOut;
   _message.stringValue = message;
   [self.view layoutSubtreeIfNeeded];
   _popover_controller.contentSize = NSMakeSize(_message.intrinsicContentSize.width + _arrow_size.width + 2.0,
-                                               _message.intrinsicContentSize.height + 6.0);
+                                               _message.intrinsicContentSize.height + 8.0);
   [_popover_controller presentPopoverFromRect:view.bounds
                                        inView:view
                       preferredArrowDirection:direction

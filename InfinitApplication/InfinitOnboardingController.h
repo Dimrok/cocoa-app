@@ -10,21 +10,21 @@
 
 typedef enum __InfinitOnboardingState
 {
-  INFINIT_ONBOARDING_RECEIVE_NOTIFICATION,
-  INFINIT_ONBOARDING_RECEIVE_NO_ACTION, // for main controller
-  INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON,
-  INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW,
-  INFINIT_ONBOARDING_RECEIVE_ACTION_DONE,
-  INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE,
-  INFINIT_ONBOARDING_RECEIVE_DONE, // for main controller
-  INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION,
-  INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION,
-  INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION,
-  INFINIT_ONBOARDING_SEND_FILES_DESTINATION,
-  INFINIT_ONBOARDING_SEND_FILE_SENDING, // for main controller
-  INFINIT_ONBOARDING_SEND_FILE_SENT, // for main controller
-  INFINIT_ONBOARDING_SEND_CANCELLED, // for main controller
-  INFINIT_ONBOARDING_DONE, // for main controller
+  INFINIT_ONBOARDING_RECEIVE_NOTIFICATION, // start of onboarding: desktop notification receieved
+  INFINIT_ONBOARDING_RECEIVE_NO_ACTION, // if the user doesn't respond to the notification
+  INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON, // user clicks on infinit icon with transaction waiting
+  INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW, // user goes into conversation view
+  INFINIT_ONBOARDING_RECEIVE_ACTION_DONE, // use has chosen to accept/decline
+  INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE, // finished in conversation view
+  INFINIT_ONBOARDING_RECEIVE_DONE, // receive onboarding complete
+  INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION, // file dragged onto icon
+  INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION, // user clicked through infinit icon to send view
+  INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION, // user clicked through conversation view to send view
+  INFINIT_ONBOARDING_SEND_FILES_DESTINATION, // ready to send
+  INFINIT_ONBOARDING_SEND_FILE_SENDING, // send clicked
+  INFINIT_ONBOARDING_SEND_FILE_SENT, // send completed
+  INFINIT_ONBOARDING_SEND_CANCELLED, // user cancelled send
+  INFINIT_ONBOARDING_DONE, // onboarding complete
 } InfinitOnboardingState;
 
 @protocol InfinitOnboardingProtocol;
@@ -32,8 +32,12 @@ typedef enum __InfinitOnboardingState
 @interface InfinitOnboardingController : NSObject
 
 @property (nonatomic, readwrite) InfinitOnboardingState state;
+@property (nonatomic, readonly) IATransaction* receive_transaction;
+@property (nonatomic, readwrite) IATransaction* send_transaction;
+@property (nonatomic, readonly) BOOL receive_onboarding_done;
 
-- (id)initWithDeleage:(id<InfinitOnboardingProtocol>)delegate;
+- (id)initWithDeleage:(id<InfinitOnboardingProtocol>)delegate
+       andReceiveTransaction:(IATransaction*)transaction;
 
 - (BOOL)inSendOnboarding;
 

@@ -524,6 +524,14 @@ return [NSString stringWithUTF8String:str]; \
     return array;
 }
 
+- (NSNumber*)get_onboarding_transaction_with_file_path:(NSString*)file_path
+                                          and_run_time:(NSNumber*)seconds;
+{
+  UInt32 transaction_id =
+    gap_onboarding_receive_transaction(_state, file_path.UTF8String, seconds.unsignedIntValue);
+  return [NSNumber numberWithUnsignedInt:transaction_id];
+}
+
 - (gap_TransactionStatus)transaction_status:(NSNumber*)transaction_id
 {
     return gap_transaction_status(_state, transaction_id.unsignedIntValue);

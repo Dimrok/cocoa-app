@@ -692,6 +692,10 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (void)handleQuit
 {
+  if (_onboard_controller != nil && _onboard_controller.receive_onboarding_done)
+  {
+    [self doneOnboarding];
+  }
   _stay_awake_manager = nil;
   if ([_window_controller windowIsOpen])
   {
@@ -739,14 +743,26 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 {
   // XXX We need to check if it's a file that's been sent by someone or if we need to do the fake
   // transfer.
-  _onboard_controller = [[InfinitOnboardingController alloc] initWithDeleage:self];
-  [self performSelector:@selector(waitForUserToClickNotification) withObject:nil afterDelay:0.0];
+  IATransaction* fake_transaction = [_transaction_manager makeOnboardingTransaction];
+  _onboard_controller = [[InfinitOnboardingController alloc] initWithDeleage:self
+                                                       andReceiveTransaction:fake_transaction];
+  [self performSelector:@selector(waitForUserToClickNotification) withObject:nil afterDelay:10.0];
 }
 
 - (void)waitForUserToClickNotification
 {
   // The user didn't react to the desktop notification so follow track for didn't do anything.
   _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_NO_ACTION;
+}
+
+- (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
+{
+  return _onboard_controller.receive_transaction;
+}
+
+- (IATransaction*)sendOnboardingTransaction:(InfinitConversationViewController*)sender
+{
+  return _onboard_controller.send_transaction;
 }
 
 //- Conversation View Protocol ---------------------------------------------------------------------
@@ -831,14 +847,14 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
   return [self statusBarIconMiddle];
 }
 
-- (void)sendController:(IAGeneralSendController*)sender
-        wantsSendFiles:(NSArray*)files
-               toUsers:(NSArray*)users
-           withMessage:(NSString*)message
+- (NSArray*)sendController:(IAGeneralSendController*)sender
+            wantsSendFiles:(NSArray*)files
+                   toUsers:(NSArray*)users
+               withMessage:(NSString*)message
 {
-  [_transaction_manager sendFiles:files
-                          toUsers:users
-                      withMessage:message];
+  return [_transaction_manager sendFiles:files
+                                 toUsers:users
+                             withMessage:message];
 }
 
 - (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender
@@ -861,6 +877,15 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
   wantsRemoveFavourite:(IAUser*)user
 {
   [IAUserManager removeFavourite:user];
+}
+
+- (void)sendController:(IAGeneralSendController*)sender
+wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
+{
+  if (_onboard_controller == nil)
+    return;
+  
+  _onboard_controller.send_transaction = [_transaction_manager transactionWithId:transaction_id];
 }
 
 //- Login Items ------------------------------------------------------------------------------------
@@ -1061,12 +1086,11 @@ transactionsProgressForUser:(IAUser*)user
 {
   if (_clippy_view_controller.mode == INFINIT_CLIPPY_TRANSFER_PENDING)
   {
-    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_DONE;
-    [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:5.0];
+    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON;
   }
   else if (_clippy_view_controller.mode == INFINIT_CLIPPY_DRAG_AND_DROP)
   {
-    _onboard_controller.state = INFINIT_ONBOARDING_DONE;
+    _onboard_controller.state = INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION;
   }
   [self closeNotificationWindow];
 }
@@ -1080,14 +1104,12 @@ transactionsProgressForUser:(IAUser*)user
 
 - (void)doneOnboarding
 {
-  // XXX
-  //  [[IAUserPrefs sharedInstance] setPref:@"3" forKey:@"onboarded"];
+  [[IAUserPrefs sharedInstance] setPref:@"4" forKey:@"onboarded"];
 }
 
 - (void)onboardingStateChanged:(InfinitOnboardingController*)sender
                        toState:(InfinitOnboardingState)state
 {
-  // XXX This will be used for the states where clippy is shown
   switch (state)
   {
     case INFINIT_ONBOARDING_RECEIVE_NO_ACTION:
@@ -1109,7 +1131,8 @@ transactionsProgressForUser:(IAUser*)user
 
 - (void)delayShowClippyDragAndDrop
 {
-  [self showClippyViewWithMode:INFINIT_CLIPPY_DRAG_AND_DROP];
+  if (_current_view_controller == nil)
+    [self showClippyViewWithMode:INFINIT_CLIPPY_DRAG_AND_DROP];
 }
 
 //- Report Problem Protocol ------------------------------------------------------------------------
@@ -1265,6 +1288,13 @@ transactionsProgressForUser:(IAUser*)user
   
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
     [_desktop_notifier desktopNotificationForTransaction:transaction];
+  
+  if (_onboard_controller.state == INFINIT_ONBOARDING_SEND_FILE_SENDING &&
+      _onboard_controller.send_transaction == transaction &&
+      transaction.is_done)
+  {
+    _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILE_SENT;
+  }
   
   if (_current_view_controller == nil)
     return;

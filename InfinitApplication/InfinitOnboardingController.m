@@ -15,12 +15,18 @@
 }
 
 @synthesize state = _state;
+@synthesize receive_transaction = _receive_transaction;
+@synthesize send_transaction = _send_transaction;
+@synthesize receive_onboarding_done = _receive_onboarding_done;
 
 - (id)initWithDeleage:(id<InfinitOnboardingProtocol>)delegate
+andReceiveTransaction:(IATransaction*)transaction
 {
   if (self = [super init])
   {
     _delegate = delegate;
+    _receive_transaction = transaction;
+    _receive_onboarding_done = NO;
   }
   return self;
 }
@@ -34,7 +40,8 @@
 - (void)setState:(InfinitOnboardingState)state
 {
   _state = state;
-  NSLog(@"xxx set state: %@", [self print:state]);
+  if (state == INFINIT_ONBOARDING_RECEIVE_DONE)
+    _receive_onboarding_done = YES;
   [_delegate onboardingStateChanged:self toState:_state];
 }
 

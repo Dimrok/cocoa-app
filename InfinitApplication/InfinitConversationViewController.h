@@ -56,5 +56,8 @@ wantsMarkTransactionsReadForUser:(IAUser*)user;
 - (void)conversationView:(InfinitConversationViewController*)sender
   wantsRejectTransaction:(IATransaction*)transaction;
 
+- (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
+- (IATransaction*)sendOnboardingTransaction:(InfinitConversationViewController*)sender;
+
 
 @end

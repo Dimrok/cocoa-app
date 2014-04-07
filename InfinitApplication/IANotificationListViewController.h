@@ -85,4 +85,7 @@ transactionsProgressForUser:(IAUser*)user;
 - (void)notificationList:(IANotificationListViewController*)sender
             setAutoStart:(BOOL)state;
 
+- (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
+- (IATransaction*)sendOnboardingTransaction:(IAViewController*)sender;
+
 @end

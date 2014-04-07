@@ -170,7 +170,8 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   NSString* message = NSLocalizedString(@"Click on the contact to accept the file", nil);
   [_tooltip showPopoverForView:row_view
             withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)delayedStartSendOnboarding
@@ -180,7 +181,8 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   NSString* message = NSLocalizedString(@"Click on the icon to send a file", nil);
   [_tooltip showPopoverForView:self.transfer_button
             withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)delayedFileSentOnboarding
@@ -191,7 +193,8 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   NSString* message = NSLocalizedString(@"Click on the contact to see your history", nil);
   [_tooltip showPopoverForView:row_view
             withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message];
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
@@ -432,15 +435,6 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   if (_connection_status != gap_user_status_online && row == 0)
     return;
   
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
-  }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
-  {
-    
-  }
-  
   [self setUpdatorRunning:NO];
   
   _changing = YES;
@@ -454,6 +448,12 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   
   IATransaction* transaction = _transaction_list[transaction_num];
   IAUser* user = transaction.other_user;
+  
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON &&
+      [[_delegate receiveOnboardingTransaction:self] other_user] == user)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
+  }
   
   if (_transaction_list.count == 1)
   {

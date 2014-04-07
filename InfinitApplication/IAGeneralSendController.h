@@ -38,10 +38,10 @@
 
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender;
 
-- (void)sendController:(IAGeneralSendController*)sender
-        wantsSendFiles:(NSArray*)files
-               toUsers:(NSArray*)users
-           withMessage:(NSString*)message;
+- (NSArray*)sendController:(IAGeneralSendController*)sender
+            wantsSendFiles:(NSArray*)files
+                   toUsers:(NSArray*)users
+               withMessage:(NSString*)message;
 
 - (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender;
 
@@ -52,5 +52,8 @@
 
 - (void)sendController:(IAGeneralSendController*)sender
   wantsRemoveFavourite:(IAUser*)user;
+
+- (void)sendController:(IAGeneralSendController*)sender
+wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
 @end

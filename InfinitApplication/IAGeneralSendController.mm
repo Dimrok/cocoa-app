@@ -181,16 +181,16 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
     [self openFileDialogForView:sender];
 }
 
-- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
-          wantsSendFiles:(NSArray*)files
-                 toUsers:(NSArray*)users
+- (NSArray*)combinedSendView:(InfinitCombinedSendViewController*)sender
+              wantsSendFiles:(NSArray*)files
+                     toUsers:(NSArray*)users
              withMessage:(NSString*)message
 {
-    [_delegate sendController:self
-               wantsSendFiles:files
-                      toUsers:users
-                  withMessage:message];
-    [_delegate sendControllerWantsClose:self];
+  [_delegate sendControllerWantsClose:self];
+  return [_delegate sendController:self
+                    wantsSendFiles:files
+                            toUsers:users
+                        withMessage:message];
 }
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
@@ -205,6 +205,12 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
     [_delegate sendController:self
          wantsRemoveFavourite:user];
+}
+
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
+wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
+{
+  [_delegate sendController:self wantsSetOnboardingSendTransactionId:transaction_id];
 }
 
 //- Favourites Send View Protocol ------------------------------------------------------------------

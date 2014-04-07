@@ -56,15 +56,18 @@
 
 - (void)combinedSendViewWantsOpenFileDialogBox:(InfinitCombinedSendViewController*)sender;
 
-- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
-          wantsSendFiles:(NSArray*)files
-                 toUsers:(NSArray*)users
-             withMessage:(NSString*)message;
+- (NSArray*)combinedSendView:(InfinitCombinedSendViewController*)sender
+              wantsSendFiles:(NSArray*)files
+                     toUsers:(NSArray*)users
+                 withMessage:(NSString*)message;
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
        wantsAddFavourite:(IAUser*)user;
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
     wantsRemoveFavourite:(IAUser*)user;
+
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
+wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
 @end
