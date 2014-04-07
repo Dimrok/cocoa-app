@@ -33,7 +33,6 @@ andReceiveTransaction:(IATransaction*)transaction
 
 - (InfinitOnboardingState)state
 {
-  NSLog(@"xxx fetch state: %@", [self print:_state]);
   return _state;
 }
 
