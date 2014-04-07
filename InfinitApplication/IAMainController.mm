@@ -20,6 +20,7 @@
 
 #undef check
 #import <elle/log.hh>
+#import <surface/gap/enums.hh>
 
 ELLE_LOG_COMPONENT("OSX.MainController");
 
@@ -290,8 +291,8 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
     [_desktop_notifier clearAllNotifications];
   _notification_view_controller =
-  [[IANotificationListViewController alloc] initWithDelegate:self
-                                         andConnectionStatus:[_me_manager connection_status]];
+    [[IANotificationListViewController alloc] initWithDelegate:self
+                                           andConnectionStatus:_me_manager.connection_status];
   [self openOrChangeViewController:_notification_view_controller];
 }
 
@@ -501,6 +502,11 @@ ELLE_LOG_COMPONENT("OSX.MainController");
         error = [NSString stringWithFormat:@"%@",
                  NSLocalizedString(@"Please update Infinit.", @"please update infinit.")];
         [_delegate mainControllerWantsCheckForUpdate:self];
+        break;
+        
+      case gap_email_not_confirmed:
+        error = [NSString stringWithFormat:@"%@",
+                 NSLocalizedString(@"Check your email to confirm your email address.", nil)];
         break;
         
       case gap_meta_down_with_message:
@@ -744,6 +750,8 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   // XXX We need to check if it's a file that's been sent by someone or if we need to do the fake
   // transfer.
   IATransaction* fake_transaction = [_transaction_manager makeOnboardingTransaction];
+  if (fake_transaction == nil)
+    return;
   _onboard_controller = [[InfinitOnboardingController alloc] initWithDeleage:self
                                                        andReceiveTransaction:fake_transaction];
   [self performSelector:@selector(waitForUserToClickNotification) withObject:nil afterDelay:10.0];
