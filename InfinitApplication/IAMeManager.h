@@ -10,6 +10,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <surface/gap/enums.hh>
+
 @protocol IAMeManagerProtocol;
 
 @interface IAMeManager : NSObject
