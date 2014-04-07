@@ -265,6 +265,7 @@
 		83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206317C4DC6700D4E168 /* icon-error@2x.png */; };
 		83D4206E17C4DDC000D4E168 /* IAAvatarBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */; };
 		83D4207517C51E7C00D4E168 /* IANotificationAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */; };
+		83DD1B1418F1AB2400F5AEEE /* libarchive.13.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */; };
 		83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */; };
 		83E1E1BB1861A48E00F8DDF9 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E1E1BA1861A48E00F8DDF9 /* IOKit.framework */; };
 		83E77FA718D7774500B09D87 /* InfinitConversationPersonView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83E77FA618D7774500B09D87 /* InfinitConversationPersonView.mm */; };
@@ -498,6 +499,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				83DD1B1418F1AB2400F5AEEE /* libarchive.13.dylib in Copy Infinit Libraries */,
 				83088F0118C7606C000DA0DB /* libboost_date_time-mt.dylib in Copy Infinit Libraries */,
 				8379844A18C4928B0083E284 /* libaws.dylib in Copy Infinit Libraries */,
 				83B97495188928980089E0E0 /* libboost_filesystem-mt.dylib in Copy Infinit Libraries */,
@@ -853,6 +855,7 @@
 		83D4206D17C4DDC000D4E168 /* IAAvatarBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAvatarBadgeView.m; sourceTree = "<group>"; };
 		83D4207317C51E7C00D4E168 /* IANotificationAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotificationAvatarView.h; sourceTree = "<group>"; };
 		83D4207417C51E7C00D4E168 /* IANotificationAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IANotificationAvatarView.m; sourceTree = "<group>"; };
+		83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libarchive.13.dylib; path = ../../../Externals/lib/libarchive.13.dylib; sourceTree = "<group>"; };
 		83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStayAwakeManager.h; sourceTree = "<group>"; };
 		83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitStayAwakeManager.mm; sourceTree = "<group>"; };
 		83E1E1BA1861A48E00F8DDF9 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -1552,6 +1555,7 @@
 		83CD6FB917A67398004F55D1 /* Infinit Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */,
 				8379844918C4928B0083E284 /* libaws.dylib */,
 				83B97494188928980089E0E0 /* libboost_filesystem-mt.dylib */,
 				83088EFF18C7600C000DA0DB /* libboost_date_time-mt.dylib */,
@@ -2216,7 +2220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Christopher Crone (9E27AS8W64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libaws.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_chrono-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_date_time-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_filesystem-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_signals-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_system-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_thread-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++.1.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++abi.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrash.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrypto.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcryptography.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurl.4.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libelle.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libfrete.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libgap.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetaclient.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetrics.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libpapier.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libprotocol.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libreactor.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libssl.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libstation.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtransaction.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtrophonius-client.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libz.1.2.8.dylib\"\n";
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Christopher Crone (9E27AS8W64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libarchive.13.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libaws.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_chrono-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_date_time-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_filesystem-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_signals-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_system-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_thread-mt.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++.1.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++abi.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrash.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrypto.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcryptography.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurl.4.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libelle.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libfrete.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libgap.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetaclient.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetrics.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libpapier.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libprotocol.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libreactor.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libssl.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libstation.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtransaction.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtrophonius-client.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libz.1.2.8.dylib\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2462,6 +2466,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../Externals/lib",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -2494,6 +2499,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../Externals/lib",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "";
