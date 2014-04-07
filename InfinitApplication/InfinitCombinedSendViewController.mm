@@ -484,7 +484,6 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
     if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
     {
       [_tooltip close];
-      NSLog(@"xxx should be here");
       [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
       [self performSelector:@selector(delayedNoFilesDestinationOnboard)
                  withObject:nil
