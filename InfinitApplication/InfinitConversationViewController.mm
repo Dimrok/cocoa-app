@@ -160,7 +160,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
         [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
     {
       [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
-      [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:1.0];
+      [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:0.5];
     }
   }
   else if ([[_delegate sendOnboardingTransaction:self] other_user] == _user)
@@ -168,7 +168,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
     {
       [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
-      [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:1.0];
+      [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:0.5];
     }
   }
 }
@@ -434,7 +434,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     NSString* message = NSLocalizedString(@"The file will be in your Downloads folder", nil);
     [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
                withObject:message
-               afterDelay:1.0];
+               afterDelay:0.5];
   }
 }
 
@@ -486,7 +486,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
     [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
                withObject:message
-               afterDelay:1.0];
+               afterDelay:0.5];
   }
 }
 
