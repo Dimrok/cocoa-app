@@ -149,16 +149,16 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
       [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
   {
-    [self performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
   }
   else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
   {
-    [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:0.5];
   }
   else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENDING ||
            [_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
   {
-    [self performSelector:@selector(delayedFileSentOnboarding) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(delayedFileSentOnboarding) withObject:nil afterDelay:0.5];
   }
 }
 
