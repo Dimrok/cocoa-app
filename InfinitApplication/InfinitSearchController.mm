@@ -8,6 +8,8 @@
 
 #import "InfinitSearchController.h"
 
+#import <Gap/IAUserManager.h>
+
 #undef check
 #import <elle/log.hh>
 
@@ -21,9 +23,15 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   ABAddressBook* _addressbook;
   
   NSString* _last_search_string;
-  // We do two searches on the Infinit server but aren't sure which will return first so if you're
-  // back first, set the boolean. If you're second, inform the delegate we have results.
-  BOOL _other_search_done;
+  NSMutableArray* _address_book_results; // Results from the address book.
+  NSMutableArray* _infinit_name_results; // Results from handle and fullname matches in the Infinit database.
+  NSMutableArray* _infinit_email_results; // Results from batch email searches using the address book.
+  InfinitSearchPersonResult* _single_email_result; // Result from a search done with a single email address.
+  // When we're doing a clean search, we're not sure if we're going to get the email results back
+  // first or the fullname/handle results. In order to avoid the results drastically changing, we're
+  // going to wait for both. In the dirty case (i.e.: text added, so address book results only get
+  // less), we only need to wait for the fullname/handle results from Meta.
+  BOOL _first_results_in;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -38,7 +46,10 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     _addressbook = [ABAddressBook addressBook];
     _result_list = [NSMutableArray array];
     _last_search_string = @"";
-    _other_search_done = NO;
+    _address_book_results = [NSMutableArray array];
+    _infinit_name_results = [NSMutableArray array];
+    _single_email_result = nil;
+    _first_results_in = NO;
   }
   return self;
 }
@@ -71,7 +82,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   
   if ([search_string rangeOfString:@" "].location != NSNotFound)
   {
-    // Break up search string
+    // Break up search string on spaces for first/last name.
     strings = [NSMutableArray arrayWithArray:[search_string componentsSeparatedByString:@" "]];
   }
   else
@@ -102,38 +113,47 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   
   NSMutableArray* all_results = [NSMutableArray array];
   for (ABSearchElement* search_element in search_elements)
+  {
     [all_results addObjectsFromArray:[_addressbook recordsMatchingSearchElement:search_element]];
+  }
   
-  NSMutableArray* address_book_results = [NSMutableArray array];
+  NSMutableArray* filtered_results = [NSMutableArray array];
   for (ABPerson* search_result in all_results)
   {
-    // XXX remove me from search results
+    // Remove me from search results.
     if (search_result != _addressbook.me)
     {
-      InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithABPerson:search_result
-                                                                                  andDelegate:self];
-      if ([address_book_results indexOfObject:person] == NSNotFound)
+      InfinitSearchPersonResult* person =
+        [[InfinitSearchPersonResult alloc] initWithABPerson:search_result
+                                                andDelegate:self];
+      // We only care about people who have email addresses as we're going to use these to search
+      // for them or to invite them.
+      if (person.emails.count > 0)
       {
-        [address_book_results addObject:person];
-      }
-      else
-      {
-        InfinitSearchPersonResult* existing_person =
-          [address_book_results objectAtIndex:[address_book_results indexOfObject:person]];
-        existing_person.rank += 1;
+        if ([filtered_results indexOfObject:person] == NSNotFound)
+        {
+          [filtered_results addObject:person];
+        }
+        else
+        {
+          InfinitSearchPersonResult* existing_person =
+            [filtered_results objectAtIndex:[filtered_results indexOfObject:person]];
+          existing_person.rank += address_book_subsequent_match_rank;
+        }
       }
     }
   }
   
-  NSArray* temp = [NSArray arrayWithArray:address_book_results];
+  NSArray* temp = [NSArray arrayWithArray:filtered_results];
   NSMutableArray* emails = [NSMutableArray array];
   
   for (InfinitSearchPersonResult* person in temp)
   {
-    NSInteger required_rank = (NSInteger)(search_elements.count / 2) + 4;
+    NSInteger required_rank = address_book_match_rank +
+      ((NSInteger)(search_elements.count -1) * address_book_subsequent_match_rank);
     if (person.rank < required_rank)
     {
-      [address_book_results removeObject:person];
+      [filtered_results removeObject:person];
     }
     else
     {
@@ -143,7 +163,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   
   [self searchEmails:emails];
   
-  [_result_list addObjectsFromArray:address_book_results];
+  _address_book_results = filtered_results;
 }
 
 //- Email Search Handling --------------------------------------------------------------------------
@@ -155,20 +175,6 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
                                    onObject:self];
 }
 
-- (void)updatePersonWithEmail:(NSString*)email
-               andInfinitUser:(IAUser*)user
-{
-  for (InfinitSearchPersonResult* person in _result_list)
-  {
-    if ([person.emails containsObject:email])
-    {
-      [person email:email isInfinitUser:user];
-    }
-  }
-  [self sortResultsOnRank];
-  [_delegate searchControllerGotResults:self];
-}
-
 - (void)searchUsersByEmailsCallback:(IAGapOperationResult*)result
 {
   if (!result.success)
@@ -177,27 +183,49 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
               result.status);
     return;
   }
-  
+
   for (NSString* email in result.data)
   {
     [self updatePersonWithEmail:email andInfinitUser:[result.data objectForKey:email]];
   }
   
-  if (_other_search_done)
+  [self sortAndAggregateResults];
+}
+
+- (void)updatePersonWithEmail:(NSString*)email
+               andInfinitUser:(IAUser*)user
+{
+  for (InfinitSearchPersonResult* person in _address_book_results)
   {
-    [self sortResultsOnRank];
-    [_delegate searchControllerGotResults:self];
-  }
-  else
-  {
-    _other_search_done = YES;
+    if ([person.emails containsObject:email])
+    {
+      [person email:email isInfinitUser:user];
+    }
   }
 }
 
 - (void)searchForEmailString:(NSString*)email
 {
-  InfinitSearchPersonResult* new_person = [[InfinitSearchPersonResult alloc] initWithEmail:email
-                                                                               andDelegate:self];
+  NSMutableDictionary* mail_check =
+    [NSMutableDictionary dictionaryWithDictionary:@{@"email": email}];
+  [[IAGapState instance] getUserIdfromEmail:email
+                            performSelector:@selector(singleEmailSearchCallback:)
+                                   onObject:self
+                                   withData:mail_check];
+}
+
+- (void)singleEmailSearchCallback:(IAGapOperationResult*)result
+{
+  if (!result.success)
+  {
+    ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
+    return;
+  }
+  NSDictionary* dict = result.data;
+  NSNumber* user_id = [dict valueForKey:@"user_id"];
+  IAUser* user = [IAUserManager userWithId:user_id];
+  InfinitSearchPersonResult* new_person =
+    [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
   [_result_list addObject:new_person];
   [_delegate searchControllerGotEmailResult:self];
 }
@@ -213,76 +241,56 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     return;
   }
   
-  NSArray* infinit_results = [NSMutableArray arrayWithArray:
-                              [result.data sortedArrayUsingSelector:@selector(compare:)]];
-  infinit_results = [[infinit_results reverseObjectEnumerator] allObjects];
+  NSArray* infinit_results = result.data;
   for (IAUser* user in infinit_results)
   {
-    // XXX don't include self in search results
+    // Don't include me inside the list.
     if (![user isEqual:[[IAGapState instance] self_user]])
-      [self addInfinitUserToList:user];
+    {
+      InfinitSearchPersonResult* new_person =
+        [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
+      [_infinit_name_results addObject:new_person];
+    }
   }
   
-  if (_other_search_done)
-  {
-    [self sortResultsOnRank];
-    [_delegate searchControllerGotResults:self];
-  }
-  else
-  {
-    _other_search_done = YES;
-  }
+  [self sortAndAggregateResults];
 }
 
 
 //- Aggregation ------------------------------------------------------------------------------------
 
-- (void)addInfinitUserToList:(IAUser*)user
+- (BOOL)userInResults:(InfinitSearchPersonResult*)person
 {
-  BOOL found = NO;
-  for (InfinitSearchPersonResult* person in _result_list)
+  for (InfinitSearchPersonResult* other_person in _result_list)
   {
-    if (person.infinit_user == user)
+    if (person.infinit_user == other_person.infinit_user)
+      return YES;
+  }
+  return NO;
+}
+
+- (void)sortAndAggregateResults
+{
+  // Aggregate results.
+  @synchronized(_result_list)
+  {
+    [_result_list removeAllObjects];
+    for (InfinitSearchPersonResult* person in _address_book_results)
     {
-      found = YES;
-      return;
+      [_result_list addObject:person];
     }
-  }
-  InfinitSearchPersonResult* new_person =
-    [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
-  NSInteger index = 0;
-  for (InfinitSearchPersonResult* person in _result_list)
-  {
-    if (person.infinit_user != nil)
-      index++;
+    for (InfinitSearchPersonResult* person in _infinit_name_results)
+    {
+      if ([self userInResults:person] == NO)
+        [_result_list addObject:person];
+    }
+    [self sortResultsOnRank];
+    // Wait for us to have both sets of server results before alerting the delegate.
+    if (_first_results_in)
+      [_delegate searchControllerGotResults:self];
     else
-      break;
+      _first_results_in = YES;
   }
-  if (index > _result_list.count)
-    index = 0;
-  
-  [_result_list insertObject:new_person atIndex:index];
-}
-
-- (void)searchCurrentResultsForString:(NSString*)search_string
-{
-  NSArray* temp = [NSArray arrayWithArray:_result_list];
-  for (InfinitSearchPersonResult* person in temp)
-  {
-    if ([person.fullname rangeOfString:search_string options:NSCaseInsensitiveSearch].location == NSNotFound)
-      [_result_list removeObject:person];
-  }
-  if (_other_search_done)
-    [_delegate searchControllerGotResults:self];
-  else
-    _other_search_done = YES;
-}
-
-//- General Functions ------------------------------------------------------------------------------
-
-- (void)clearResults
-{
-  [_result_list removeAllObjects];
 }
 
 - (void)sortResultsOnRank
@@ -291,35 +299,64 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   _result_list = [NSMutableArray arrayWithArray:[temp sortedArrayUsingSelector:@selector(compare:)]];
 }
 
+- (void)searchCurrentResultsForString:(NSString*)search_string
+{
+  NSArray* temp = [NSArray arrayWithArray:_address_book_results];
+  for (InfinitSearchPersonResult* person in temp)
+  {
+    if ([person.fullname rangeOfString:search_string options:NSCaseInsensitiveSearch].location == NSNotFound)
+      [_address_book_results removeObject:person];
+  }
+}
+
+//- General Functions ------------------------------------------------------------------------------
+
+- (void)clearResults
+{
+  _first_results_in = NO;
+  [_result_list removeAllObjects];
+  [_address_book_results removeAllObjects];
+  [_infinit_name_results removeAllObjects];
+  _single_email_result = nil;
+}
+
 - (void)searchString:(NSString*)search_string
 {
-  _other_search_done = NO;
+  // If the string is of the form of an email, we will only search for a single email result.
   if ([IAFunctions stringIsValidEmail:search_string])
   {
+    _first_results_in = YES;
     [_result_list removeAllObjects];
     [self searchForEmailString:search_string];
   }
   else
   {
-    if (search_string.length > _last_search_string.length &&
-        [search_string rangeOfString:@" "].location == NSNotFound &&
-        [search_string rangeOfString:_last_search_string].location != NSNotFound)
+    // If the last search string is a substring of the current, then the address book results are
+    // going to be less than before. This means we don't need to batch search the emails, only clear
+    // out no longer relevant results.
+    if ([search_string rangeOfString:_last_search_string].location != NSNotFound)
     {
+      _first_results_in = YES; // We've got the email results already.
       [self searchCurrentResultsForString:search_string];
     }
+    // Otherwise we're doing a full search.
     else
     {
-      [_result_list removeAllObjects];
+      [self clearResults];
       if ([self accessToAddressBook])
       {
         [self searchAddressBookWithString:search_string];
       }
+      // In the case we don't have access to the address book, we're only going to get one set of
+      // results; those from the handle/fullname search.
       else
       {
-        _other_search_done = YES;
+        _first_results_in = YES;
       }
     }
-
+    
+    // In both the cases above, however, we need to do an Infinit fullname/handle search. Meta only
+    // returns some of the search results and so we may need to fetch more.
     [[IAGapState instance] searchUsers:search_string
                        performSelector:@selector(infinitSearchResultsCallback:)
                               onObject:self];
@@ -329,47 +366,9 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 //- Result Person Protocol -------------------------------------------------------------------------
 
-- (void)emailPersonUpdated:(InfinitSearchPersonResult*)sender
-{
-  if (_result_list.count == 1)
-  {
-    [_result_list replaceObjectAtIndex:0 withObject:sender];
-  }
-  else
-  {
-    [_result_list removeObject:sender];
-    [_result_list insertObject:sender atIndex:0];
-  }
-  [self sortResultsOnRank];
-  [_delegate searchControllerGotEmailResult:self];
-}
-
 - (void)personGotNewAvatar:(InfinitSearchPersonResult*)sender
 {
   [_delegate searchController:self gotUpdateForPerson:sender];
 }
-
-- (void)personNotOnInfinit:(InfinitSearchPersonResult*)sender
-{
-  if (_result_list.count == 1)
-    [_delegate searchControllerGotResults:self];
-}
-
-- (void)personUpdated:(InfinitSearchPersonResult*)sender
-{
-  if (_result_list.count == 1)
-  {
-    [_result_list replaceObjectAtIndex:0 withObject:sender];
-  }
-  else
-  {
-    [_result_list removeObject:sender];
-    [_result_list insertObject:sender atIndex:0];
-  }
-  [self sortResultsOnRank];
-  [_delegate searchControllerGotResults:self];
-}
-
-
 
 @end

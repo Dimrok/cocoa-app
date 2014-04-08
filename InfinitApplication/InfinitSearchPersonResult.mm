@@ -43,7 +43,7 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 {
   if (self = [super init])
   {
-    _rank = 5;
+    _rank = address_book_match_rank;
     _delegate = delegate;
     _user = nil;
     ABMultiValue* emails = [person valueForProperty:kABEmailProperty];
@@ -80,73 +80,22 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 
 //- Email User -------------------------------------------------------------------------------------
 
-- (id)initWithEmail:(NSString*)email
-        andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate
-{
-  if (self = [super init])
-  {
-    _rank = 10;
-    _delegate = delegate;
-    NSMutableDictionary* mail_check =
-      [NSMutableDictionary dictionaryWithDictionary:@{@"email": email}];
-    [[IAGapState instance] getUserIdfromEmail:email
-                              performSelector:@selector(emailUserIdFromEmailCallback:)
-                                     onObject:self
-                                     withData:mail_check];
-    _avatar = [IAFunctions makeAvatarFor:email];
-    _emails = [NSMutableArray arrayWithObject:email];
-    _fullname = email;
-    _user = nil;
-  }
-  return self;
-}
-
 - (void)email:(NSString*)email
 isInfinitUser:(IAUser*)user
 {
-  _rank += 10;
+  _rank += infinit_match_rank;
   [NSNotificationCenter.defaultCenter addObserver:self
                                          selector:@selector(avatarReceivedCallback:)
                                              name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                            object:nil];
   _user = user;
   if (_user.is_favourite)
-    _rank += 10;
+    _rank += infinit_favourite_rank;
   if ([self userIsSwagger])
-    _rank += 5;
+    _rank += infinit_swagger_rank;
   _fullname = _user.fullname;
   NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
   _avatar = infinit_avatar;
-}
-
-- (void)emailUserIdFromEmailCallback:(IAGapOperationResult*)result
-{
-  if (!result.success)
-  {
-    ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
-    return;
-  }
-  NSDictionary* dict = result.data;
-  NSNumber* user_id = [dict valueForKey:@"user_id"];
-  
-  if (user_id.integerValue != 0 &&
-      user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
-  {
-    _rank += 10;
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(avatarReceivedCallback:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                             object:nil];
-    _user = [IAUserManager userWithId:user_id];
-    if (_user.is_favourite)
-      _rank += 10;
-    if ([self userIsSwagger])
-      _rank += 5;
-    _fullname = _user.fullname;
-    NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
-    _avatar = infinit_avatar;
-    [_delegate emailPersonUpdated:self];
-  }
 }
 
 //- Infinit User -----------------------------------------------------------------------------------
@@ -156,13 +105,13 @@ isInfinitUser:(IAUser*)user
 {
   if (self = [super init])
   {
-    _rank = 3;
+    _rank = infinit_match_rank;
     _delegate = delegate;
     _user = user;
     if (_user.is_favourite)
-      _rank += 10;
+      _rank += infinit_favourite_rank;
     if ([self userIsSwagger])
-      _rank += 5;
+      _rank += infinit_swagger_rank;
     _avatar = [IAAvatarManager getAvatarForUser:_user];
     _fullname = _user.fullname;
     [NSNotificationCenter.defaultCenter addObserver:self
@@ -182,37 +131,6 @@ isInfinitUser:(IAUser*)user
     return YES;
   else
     return NO;
-}
-
-- (void)userIdFromEmailCallback:(IAGapOperationResult*)result
-{
-  if (!result.success)
-  {
-    ELLE_WARN("%s: problem checking for user id", self.description.UTF8String);
-    return;
-  }
-  NSDictionary* dict = result.data;
-  NSNumber* user_id = [dict valueForKey:@"user_id"];
-  
-  if (user_id.integerValue != 0 &&
-      user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
-  {
-    _rank += 10;
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(avatarReceivedCallback:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                             object:nil];
-    _user = [IAUserManager userWithId:user_id];
-    if (_user.is_favourite)
-      _rank += 10;
-    if ([self userIsSwagger])
-      _rank += 5;
-    _fullname = _user.fullname;
-    NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
-    _avatar = infinit_avatar;
-    [_delegate personUpdated:self];
-  }
-  [_delegate personNotOnInfinit:self];
 }
 
 - (void)avatarReceivedCallback:(NSNotification*)notification

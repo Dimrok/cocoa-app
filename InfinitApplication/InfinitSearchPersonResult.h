@@ -14,6 +14,12 @@ typedef enum __InfinitSearchUserSource
     INFINIT_SEARCH_USER = 1,
 } InfinitSearchUserSource;
 
+static NSInteger address_book_match_rank = 5;
+static NSInteger address_book_subsequent_match_rank = 1;
+static NSInteger infinit_match_rank = 3;
+static NSInteger infinit_swagger_rank = 6;
+static NSInteger infinit_favourite_rank = 10;
+
 @protocol InfinitSearchPersonResultProtocol;
 
 @interface InfinitSearchPersonResult : NSObject
@@ -26,8 +32,6 @@ typedef enum __InfinitSearchUserSource
 
 - (id)initWithABPerson:(ABPerson*)person
            andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
-- (id)initWithEmail:(NSString*)email
-        andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 - (id)initWithInfinitPerson:(IAUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 
@@ -39,12 +43,6 @@ isInfinitUser:(IAUser*)user;
 
 @protocol InfinitSearchPersonResultProtocol <NSObject>
 
-- (void)emailPersonUpdated:(InfinitSearchPersonResult*)sender;
-
 - (void)personGotNewAvatar:(InfinitSearchPersonResult*)sender;
-
-- (void)personNotOnInfinit:(InfinitSearchPersonResult*)sender;
-
-- (void)personUpdated:(InfinitSearchPersonResult*)sender;
 
 @end
