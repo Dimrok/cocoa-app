@@ -146,8 +146,13 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
       [self updateListOfRowsWithProgress];
   }
   [self.table_view.enclosingScrollView.contentView setPostsBoundsChangedNotifications:YES];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON];
+    [self performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
+  }
+  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
+           [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
   {
     [self performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
   }

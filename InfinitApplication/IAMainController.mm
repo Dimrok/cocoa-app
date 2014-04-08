@@ -760,7 +760,8 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 - (void)waitForUserToClickNotification
 {
   // The user didn't react to the desktop notification so follow track for didn't do anything.
-  _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_NO_ACTION;
+  if (_current_view_controller == nil)
+    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_NO_ACTION;
 }
 
 - (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
