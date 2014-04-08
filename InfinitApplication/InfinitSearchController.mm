@@ -147,10 +147,10 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   NSArray* temp = [NSArray arrayWithArray:filtered_results];
   NSMutableArray* emails = [NSMutableArray array];
   
+  NSInteger required_rank = address_book_match_rank - 1 +
+    ((NSInteger)(search_elements.count / 2) * address_book_subsequent_match_rank);
   for (InfinitSearchPersonResult* person in temp)
   {
-    NSInteger required_rank = address_book_match_rank +
-      ((NSInteger)(search_elements.count -1) * address_book_subsequent_match_rank);
     if (person.rank < required_rank)
     {
       [filtered_results removeObject:person];
@@ -326,6 +326,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   if ([IAFunctions stringIsValidEmail:search_string])
   {
     _first_results_in = YES;
+    _single_email_result = nil;
     [_result_list removeAllObjects];
     [self searchForEmailString:search_string];
   }
@@ -342,7 +343,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     // Otherwise we're doing a full search.
     else
     {
-      [self clearResults];
+      [_address_book_results removeAllObjects];
       if ([self accessToAddressBook])
       {
         [self searchAddressBookWithString:search_string];
@@ -357,6 +358,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     
     // In both the cases above, however, we need to do an Infinit fullname/handle search. Meta only
     // returns some of the search results and so we may need to fetch more.
+    [_infinit_name_results removeAllObjects];
     [[IAGapState instance] searchUsers:search_string
                        performSelector:@selector(infinitSearchResultsCallback:)
                               onObject:self];
