@@ -8,11 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "InfinitSizedTextField.h"
+
 @protocol InfinitConversationPersonViewProtocol;
 
 @interface InfinitConversationPersonView : NSView
 
-@property (nonatomic, strong) IBOutlet NSTextField* fullname;
+@property (nonatomic, strong) IBOutlet InfinitSizedTextField* fullname;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* fullname_width;
 @property (nonatomic, strong) IBOutlet NSImageView* online_status;
 
