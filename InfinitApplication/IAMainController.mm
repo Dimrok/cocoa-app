@@ -1206,7 +1206,8 @@ transactionsProgressForUser:(IAUser*)user
   if (![[IAGapState instance] logged_in])
     return;
   
-  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_DONE)
+  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_DONE ||
+      _onboard_controller.state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
   {
     _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION;
     [self closeNotificationWindow];
