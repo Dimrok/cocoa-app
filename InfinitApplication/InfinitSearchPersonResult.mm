@@ -240,9 +240,10 @@ isInfinitUser:(IAUser*)user
 
 - (NSString*)description
 {
-  return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nidentifiers: %@\nrank: %ld",
+  return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nuser: %@\nemails: %@\nrank: %ld",
           self,
           _fullname,
+          _user,
           _emails,
           _rank];
 }
