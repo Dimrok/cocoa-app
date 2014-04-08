@@ -157,8 +157,8 @@ void on_trophonius_unavailable();
 
         setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
       
-        setenv("INFINIT_METRICS_HOST", "v3.metrics.api.production.infinit.io", 1);
-        setenv("INFINIT_METRICS_PORT", "80", 1);
+//        setenv("INFINIT_METRICS_INFINIT_HOST", "v3.metrics.api.production.infinit.io", 1);
+//        setenv("INFINIT_METRICS_INFINIT_PORT", "80", 1);
 #else
         production = false;
 
@@ -178,8 +178,9 @@ void on_trophonius_unavailable();
 
 //        setenv("INFINIT_METRICS_HOST", "v3.metrics.api.development.infinit.io", 1);
 //        setenv("INFINIT_METRICS_PORT", "80", 1);
-//        setenv("INFINIT_METRICS_HOST", "127.0.0.1", 1);
-//        setenv("INFINIT_METRICS_PORT", "8080", 1);
+//        setenv("INFINIT_METRICS_INFINIT", "1", 1);
+//        setenv("INFINIT_METRICS_INFINIT_HOST", "127.0.0.1", 1);
+//        setenv("INFINIT_METRICS_INFINIT_PORT", "8282", 1);
 
         setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
