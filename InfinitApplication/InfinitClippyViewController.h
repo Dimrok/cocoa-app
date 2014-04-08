@@ -24,6 +24,7 @@ typedef enum __InfinitClippyMode
 
 @property (nonatomic, strong) IBOutlet NSButton* done_button;
 @property (nonatomic, strong) IBOutlet NSImageView* clippy_image;
+@property (nonatomic, strong) IBOutlet NSImageView* arrow_image;
 @property (nonatomic, strong) IBOutlet NSTextField* line_1;
 @property (nonatomic, strong) IBOutlet NSTextField* line_2;
 @property (nonatomic, strong) IBOutlet NSTextField* line_3;

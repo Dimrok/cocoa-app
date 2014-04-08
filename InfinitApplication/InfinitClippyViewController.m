@@ -13,6 +13,8 @@
 @interface InfinitClippyViewController ()
 @end
 
+//- Clippy Main View -------------------------------------------------------------------------------
+
 @interface InfinitClippyView : IAMainView <NSDraggingDestination>
 
 - (void)setDelegate:(id<InfinitClippyViewProtocol>)delegate;
@@ -251,6 +253,11 @@
   [self.clippy_view setDelegate:self];
   _animating = YES;
   [self animateClippy];
+  [self.line_1 unregisterDraggedTypes];
+  [self.line_2 unregisterDraggedTypes];
+  [self.line_3 unregisterDraggedTypes];
+  [self.clippy_image unregisterDraggedTypes];
+  [self.arrow_image unregisterDraggedTypes];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
