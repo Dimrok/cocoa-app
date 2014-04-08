@@ -1224,7 +1224,7 @@ transactionsProgressForUser:(IAUser*)user
 {
   if (![[IAGapState instance] logged_in] ||
       [_me_manager connection_status] != gap_user_status_online ||
-      _onboard_controller.state != INFINIT_ONBOARDING_DONE)
+      [self onboardingState:nil] != INFINIT_ONBOARDING_DONE)
   {
     return;
   }
