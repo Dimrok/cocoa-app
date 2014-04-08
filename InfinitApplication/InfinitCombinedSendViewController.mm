@@ -339,45 +339,29 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
   }
   [self performSelector:@selector(focusOnTextField) withObject:nil afterDelay:0.2];
   
-  if (![[[IAUserPrefs sharedInstance] prefsForKey:@"accessed_addressbook"] isEqualToString:@"1"])
-  {
-    [self firstAddressbookAccess];
-  }
-  
   switch ([_delegate onboardingState:self])
   {
     case INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION:
       [self performSelector:@selector(delayedNoFilesNoDestinationOnboard)
                  withObject:nil
-                 afterDelay:1.0];
+                 afterDelay:0.5];
       break;
       
     case INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION:
       [self performSelector:@selector(delayedFilesNoDestinationOnboard)
                  withObject:nil
-                 afterDelay:1.0];
+                 afterDelay:0.5];
       break;
     
     case INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION:
       [self performSelector:@selector(delayedNoFilesDestinationOnboard)
                  withObject:nil
-                 afterDelay:1.0];
+                 afterDelay:0.5];
       break;
       
     default:
       break;
   }
-}
-
-- (void)firstAddressbookAccess
-{
-  [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"accessed_addressbook"];
-  // Get Address Book access
-  ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
-  if (address_book == nil)
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_NO_ADRESSBOOK_ACCESS];
-  else
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS];
 }
 
 - (void)delayedNoFilesNoDestinationOnboard
@@ -459,13 +443,13 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
     [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION];
     [self performSelector:@selector(delayedFilesNoDestinationOnboard)
                withObject:nil
-               afterDelay:1.0];
+               afterDelay:0.5];
   }
   else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
   {
     [_tooltip close];
     [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_DESTINATION];
-    [self performSelector:@selector(delayedFilesDestinationOnboard) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(delayedFilesDestinationOnboard) withObject:nil afterDelay:0.5];
   }
   [self setSendButtonState];
 }
@@ -487,7 +471,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
       [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
       [self performSelector:@selector(delayedNoFilesDestinationOnboard)
                  withObject:nil
-                 afterDelay:1.0];
+                 afterDelay:0.5];
     }
     else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
     {
@@ -495,7 +479,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
       [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_DESTINATION];
       [self performSelector:@selector(delayedFilesDestinationOnboard)
                  withObject:nil
-                 afterDelay:1.0];
+                 afterDelay:0.5];
     }
   }
 
