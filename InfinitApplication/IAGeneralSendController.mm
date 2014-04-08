@@ -8,6 +8,9 @@
 
 #import "IAGeneralSendController.h"
 
+#import "IAUserPrefs.h"
+#import "InfinitMetricsManager.h"
+
 #undef check
 #import <elle/log.hh>
 
@@ -16,195 +19,210 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 @implementation IAGeneralSendController
 {
 @private
-    // Delegate
-    id<IAGeneralSendControllerProtocol> _delegate;
-    
-    // Send views
-    IAFavouritesSendViewController* _favourites_send_controller;
-    InfinitCombinedSendViewController* _combined_send_controller;
-
-    IAUserSearchViewController* _user_search_controller;
-    NSMutableArray* _files;
-    BOOL _send_view_open;
+  // Delegate
+  id<IAGeneralSendControllerProtocol> _delegate;
+  
+  // Send views
+  IAFavouritesSendViewController* _favourites_send_controller;
+  InfinitCombinedSendViewController* _combined_send_controller;
+  
+  IAUserSearchViewController* _user_search_controller;
+  NSMutableArray* _files;
+  BOOL _send_view_open;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate
 {
-    if (self = [super init])
+  if (self = [super init])
+  {
+    _delegate = delegate;
+    _files = [NSMutableArray array];
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"accessed_addressbook"] isEqualToString:@"1"])
     {
-        _delegate = delegate;
-        _files = [NSMutableArray array];
-        _user_search_controller = [[IAUserSearchViewController alloc] init];
-        _send_view_open = NO;
+      [self firstAddressbookAccess];
     }
-    return self;
+    _user_search_controller = [[IAUserSearchViewController alloc] init];
+    _send_view_open = NO;
+  }
+  return self;
+}
+
+- (void)firstAddressbookAccess
+{
+  [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"accessed_addressbook"];
+  // Get Address Book access
+  ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
+  if (address_book == nil)
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_NO_ADRESSBOOK_ACCESS];
+  else
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS];
 }
 
 //- General Functions ------------------------------------------------------------------------------
 
 - (void)filesOverStatusBarIcon
 {
-    if (!_send_view_open)
-    {
-        [self cancelOpenFavourites];
-        [self performSelector:@selector(showFavourites)
-                   withObject:nil
-                   afterDelay:0.5];
-    }
+  if (!_send_view_open)
+  {
+    [self cancelOpenFavourites];
+    [self performSelector:@selector(showFavourites)
+               withObject:nil
+               afterDelay:0.5];
+  }
 }
 
 - (void)cancelOpenFavourites
 {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)openFileDialogForView:(id)sender
 {
-    if (sender != _combined_send_controller)
-        return;
-    
-    ELLE_TRACE("%s: open file diaglog for: %s", self.description.UTF8String,
-               [sender description].UTF8String);
-    
-    NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
-    file_dialog.canChooseFiles = YES;
-    file_dialog.canChooseDirectories = YES;
-    file_dialog.allowsMultipleSelection = YES;
-    
-    if ([file_dialog runModal] == NSOKButton)
+  if (sender != _combined_send_controller)
+    return;
+  
+  ELLE_TRACE("%s: open file diaglog for: %s", self.description.UTF8String,
+             [sender description].UTF8String);
+  
+  NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
+  file_dialog.canChooseFiles = YES;
+  file_dialog.canChooseDirectories = YES;
+  file_dialog.allowsMultipleSelection = YES;
+  
+  if ([file_dialog runModal] == NSOKButton)
+  {
+    NSArray* dialog_files = [file_dialog URLs];
+    for (NSURL* file_url in dialog_files)
     {
-        NSArray* dialog_files = [file_dialog URLs];
-        for (NSURL* file_url in dialog_files)
-        {
-            if (![_files containsObject:[file_url path]])
-                [_files addObject:[file_url path]];
-        }
+      if (![_files containsObject:[file_url path]])
+        [_files addObject:[file_url path]];
     }
-    [sender filesUpdated];
+  }
+  [sender filesUpdated];
 }
 
 //- Open Functions ---------------------------------------------------------------------------------
 
 - (void)openWithNoFile
 {
-    _send_view_open = YES;
-    [_favourites_send_controller hideFavourites];
-    if (_combined_send_controller == nil)
-    {
-        _combined_send_controller =
-            [[InfinitCombinedSendViewController alloc] initWithDelegate:self
-                                                    andSearchController:_user_search_controller
-                                                                fullview:YES];
-    }
-    [_delegate sendController:self wantsActiveController:_combined_send_controller];
+  _send_view_open = YES;
+  [_favourites_send_controller hideFavourites];
+  if (_combined_send_controller == nil)
+  {
+    _combined_send_controller =
+    [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                            andSearchController:_user_search_controller
+                                                       fullview:YES];
+  }
+  [_delegate sendController:self wantsActiveController:_combined_send_controller];
 }
 
 - (void)openWithFiles:(NSArray*)files
               forUser:(IAUser*)user
 {
-    if (user != nil)
+  if (user != nil)
+  {
+    ELLE_TRACE("%s: open send view for user: %s", self.description.UTF8String,
+               user.fullname.UTF8String);
+  }
+  else
+  {
+    ELLE_TRACE("%s: open send view for no user", self.description.UTF8String);
+  }
+  _send_view_open = YES;
+  [self cancelOpenFavourites];
+  [_favourites_send_controller hideFavourites];
+  for (NSString* file in files)
+  {
+    if (![_files containsObject:file])
+      [_files addObject:file];
+  }
+  if (_combined_send_controller == nil)
+  {
+    if (files.count > 0)
     {
-        ELLE_TRACE("%s: open send view for user: %s", self.description.UTF8String,
-                   user.fullname.UTF8String);
+      _combined_send_controller =
+      [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                              andSearchController:_user_search_controller
+                                                         fullview:YES];
     }
     else
     {
-        ELLE_TRACE("%s: open send view for no user", self.description.UTF8String);
+      _combined_send_controller =
+      [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                              andSearchController:_user_search_controller
+                                                         fullview:YES];
     }
-    _send_view_open = YES;
-    [self cancelOpenFavourites];
-    [_favourites_send_controller hideFavourites];
-    for (NSString* file in files)
-    {
-        if (![_files containsObject:file])
-            [_files addObject:file];
-    }
-    if (_combined_send_controller == nil)
-    {
-        if (files.count > 0)
-        {
-            _combined_send_controller =
-                [[InfinitCombinedSendViewController alloc] initWithDelegate:self
-                                                        andSearchController:_user_search_controller
-                                                                   fullview:YES];
-        }
-        else
-        {
-            _combined_send_controller =
-            [[InfinitCombinedSendViewController alloc] initWithDelegate:self
-                                                    andSearchController:_user_search_controller
-                                                               fullview:YES];
-        }
-    }
-    else
-    {
-        [_combined_send_controller filesUpdated];
-    }
-    [_delegate sendController:self wantsActiveController:_combined_send_controller];
-    [_user_search_controller addUser:user];
+  }
+  else
+  {
+    [_combined_send_controller filesUpdated];
+  }
+  [_delegate sendController:self wantsActiveController:_combined_send_controller];
+  [_user_search_controller addUser:user];
 }
 
 - (void)showFavourites
 {
-    ELLE_TRACE("%s: show favourites", self.description.UTF8String);
-    if (_favourites_send_controller == nil)
-    {
-        _favourites_send_controller = [[IAFavouritesSendViewController alloc] initWithDelegate:self];
-        [_favourites_send_controller showFavourites];
-    }
+  ELLE_TRACE("%s: show favourites", self.description.UTF8String);
+  if (_favourites_send_controller == nil)
+  {
+    _favourites_send_controller = [[IAFavouritesSendViewController alloc] initWithDelegate:self];
+    [_favourites_send_controller showFavourites];
+  }
 }
 
 //- Combined Send View Protocol --------------------------------------------------------------------
 
 - (void)combinedSendViewWantsCancel:(InfinitCombinedSendViewController*)sender
 {
-    _files = nil;
-    [_delegate sendControllerWantsClose:self];
+  _files = nil;
+  [_delegate sendControllerWantsClose:self];
 }
 
 - (NSArray*)combinedSendViewWantsFileList:(InfinitCombinedSendViewController*)sender
 {
-    return [NSArray arrayWithArray:_files];
+  return [NSArray arrayWithArray:_files];
 }
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
   wantsRemoveFileAtIndex:(NSInteger)index
 {
-    [_files removeObjectAtIndex:index];
-    [sender filesUpdated];
+  [_files removeObjectAtIndex:index];
+  [sender filesUpdated];
 }
 
 - (void)combinedSendViewWantsOpenFileDialogBox:(InfinitCombinedSendViewController*)sender
 {
-    [self openFileDialogForView:sender];
+  [self openFileDialogForView:sender];
 }
 
 - (NSArray*)combinedSendView:(InfinitCombinedSendViewController*)sender
               wantsSendFiles:(NSArray*)files
                      toUsers:(NSArray*)users
-             withMessage:(NSString*)message
+                 withMessage:(NSString*)message
 {
   [_delegate sendControllerWantsClose:self];
   return [_delegate sendController:self
                     wantsSendFiles:files
-                            toUsers:users
-                        withMessage:message];
+                           toUsers:users
+                       withMessage:message];
 }
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
        wantsAddFavourite:(IAUser*)user
 {
-    [_delegate sendController:self
-            wantsAddFavourite:user];
+  [_delegate sendController:self
+          wantsAddFavourite:user];
 }
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
     wantsRemoveFavourite:(IAUser*)user
 {
-    [_delegate sendController:self
-         wantsRemoveFavourite:user];
+  [_delegate sendController:self
+       wantsRemoveFavourite:user];
 }
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
@@ -217,32 +235,32 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 
 - (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender
 {
-    return [_delegate sendControllerWantsFavourites:self];
+  return [_delegate sendControllerWantsFavourites:self];
 }
 
 - (NSArray*)favouritesViewWantsSwaggers:(IAFavouritesSendViewController*)sender
 {
-    return [_delegate sendControllerWantsSwaggers:self];
+  return [_delegate sendControllerWantsSwaggers:self];
 }
 
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender
 {
-    return [_delegate sendControllerWantsMidpoint:self];
+  return [_delegate sendControllerWantsMidpoint:self];
 }
 
 - (void)favouritesView:(IAFavouritesSendViewController*)sender
          gotDropOnUser:(IAUser*)user
              withFiles:(NSArray*)files
 {
-    [_favourites_send_controller hideFavourites];
-    _favourites_send_controller = nil;
-    [self openWithFiles:files forUser:user];
+  [_favourites_send_controller hideFavourites];
+  _favourites_send_controller = nil;
+  [self openWithFiles:files forUser:user];
 }
 
 - (void)favouritesViewWantsClose:(IAFavouritesSendViewController*)sender
 {
-    [_favourites_send_controller hideFavourites];
-    _favourites_send_controller = nil;
+  [_favourites_send_controller hideFavourites];
+  _favourites_send_controller = nil;
 }
 
 //- Onboarding Protocol ----------------------------------------------------------------------------
