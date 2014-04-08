@@ -223,10 +223,13 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   }
   NSDictionary* dict = result.data;
   NSNumber* user_id = [dict valueForKey:@"user_id"];
-  IAUser* user = [IAUserManager userWithId:user_id];
-  InfinitSearchPersonResult* new_person =
-    [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
-  [_result_list addObject:new_person];
+  if (user_id.unsignedIntegerValue != 0)
+  {
+    IAUser* user = [IAUserManager userWithId:user_id];
+    InfinitSearchPersonResult* new_person =
+      [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
+    [_result_list addObject:new_person];
+  }
   [_delegate searchControllerGotEmailResult:self];
 }
 
