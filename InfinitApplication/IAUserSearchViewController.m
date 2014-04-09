@@ -842,6 +842,8 @@ displayStringForRepresentedObject:(id)representedObject
   else
     search_string = @"";
   
+  [self searchLoading:NO];
+  
   if (search_string.length == 0)
   {
     [_search_controller clearResults];
@@ -875,8 +877,6 @@ displayStringForRepresentedObject:(id)representedObject
         self.no_results_message.attributedStringValue = _add_file_str;
     }
   }
-  
-  [self searchLoading:NO];
   [self updateResultsTable];
 }
 
@@ -889,13 +889,14 @@ displayStringForRepresentedObject:(id)representedObject
   else
     search_string = @"";
   
+  [self searchLoading:NO];
+  
   if (search_string.length == 0)
   {
     [_search_controller clearResults];
     [self clearResults];
     return;
   }
-  [self searchLoading:NO];
   self.no_results_message.attributedStringValue = _no_result_msg_str;
   
   _search_results = [NSMutableArray array];
