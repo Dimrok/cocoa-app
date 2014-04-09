@@ -32,6 +32,7 @@
 @property (nonatomic, strong) IBOutlet NSTokenField* search_field;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_field_width;
 @property (nonatomic, strong) IBOutlet NSImageView* search_image;
+@property (nonatomic, strong) IBOutlet NSProgressIndicator* search_spinner;
 @property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
 @property (nonatomic, strong) IBOutlet IAHoverButton* more_button;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
