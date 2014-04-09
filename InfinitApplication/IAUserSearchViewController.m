@@ -394,6 +394,8 @@
   [temp addObject:user];
   [self.search_field setObjectValue:temp];
   [_delegate searchViewInputsChanged:self];
+  // WORKAROUND: Don't want token highlighted on drag and drop.
+  [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0.2];
 }
 
 - (void)addElement:(InfinitSearchElement*)element
