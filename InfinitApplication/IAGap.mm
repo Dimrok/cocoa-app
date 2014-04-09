@@ -164,8 +164,6 @@ void on_trophonius_unavailable();
 #else
     production = false;
     
-    setenv("INFINIT_CLOUD_BUFFERING", "1", 1);
-    
     setenv("ELLE_REAL_ASSERT", "1", 1);
     
     setenv("INFINIT_META_PROTOCOL", "https", 1);
