@@ -23,7 +23,6 @@ typedef enum __InfinitOnboardingState
   INFINIT_ONBOARDING_SEND_FILES_DESTINATION, // ready to send
   INFINIT_ONBOARDING_SEND_FILE_SENDING, // send clicked
   INFINIT_ONBOARDING_SEND_FILE_SENT, // send completed
-  INFINIT_ONBOARDING_SEND_CANCELLED, // user cancelled send
   INFINIT_ONBOARDING_DONE, // onboarding complete
 } InfinitOnboardingState;
 
