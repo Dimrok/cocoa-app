@@ -515,7 +515,8 @@ doCommandBySelector:(SEL)commandSelector
       InfinitSearchElement* element = _search_results[row];
       [self addElement:element];
       [self clearResults];
-      [self cursorAtEndOfSearchBox];
+      // WORKAROUND: can only move the cursor once the token is in place so put a delay of 0.
+      [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0];
     }
     
     [_delegate searchViewInputsChanged:self];
