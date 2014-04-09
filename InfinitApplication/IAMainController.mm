@@ -249,7 +249,10 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (void)openOrChangeViewController:(IAViewController*)view_controller
 {
-  [_status_bar_icon setHighlighted:YES];
+  if (view_controller.class != InfinitClippyViewController.class)
+    [_status_bar_icon setHighlighted:YES];
+  else
+    [_status_bar_icon setHighlighted:NO];
   if ([_window_controller windowIsOpen])
   {
     if (_current_view_controller.class == InfinitClippyViewController.class)
