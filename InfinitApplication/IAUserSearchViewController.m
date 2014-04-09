@@ -415,7 +415,9 @@
 
 - (void)cursorAtEndOfSearchBox
 {
-  [self.search_field.currentEditor moveToEndOfLine:nil];
+  // WORKAROUND: Because NSTokenField doesn't do moveToEndOfLine
+  NSUInteger text_len = self.search_field.currentEditor.string.length;
+  [self.search_field.currentEditor setSelectedRange:(NSRange){text_len, 0}];
 }
 
 - (NSArray*)recipientList
@@ -513,6 +515,7 @@ doCommandBySelector:(SEL)commandSelector
       InfinitSearchElement* element = _search_results[row];
       [self addElement:element];
       [self clearResults];
+      [self cursorAtEndOfSearchBox];
     }
     
     [_delegate searchViewInputsChanged:self];
