@@ -198,7 +198,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
   InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-  NSString* message = NSLocalizedString(@"Status of transaction", nil);
+  NSString* message = NSLocalizedString(@"Hover here for the status", nil);
   [_tooltip showPopoverForView:cell.transaction_status_button
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
@@ -363,7 +363,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE)
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
+      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
+      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
   }
@@ -372,8 +374,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (IBAction)transferButtonClicked:(NSButton*)sender
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
-      [_delegate onboardingSend:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
+      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
+      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
   }
@@ -431,7 +434,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
     [_tooltip close];
-    NSString* message = NSLocalizedString(@"The file will be in your Downloads folder", nil);
+    NSString* message = NSLocalizedString(@"Click here when it's done to open the file",
+                                          nil);
     [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
                withObject:message
                afterDelay:0.5];
