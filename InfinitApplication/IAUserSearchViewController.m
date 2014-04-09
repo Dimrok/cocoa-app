@@ -662,7 +662,6 @@ displayStringForRepresentedObject:(id)representedObject
   [self.search_box_view setNoResults:NO];
   [_delegate searchView:self
         changedToHeight:NSHeight(self.search_box_view.frame)];
-  self.
 }
 
 - (void)updateResultsTable
