@@ -56,10 +56,11 @@
 {
   [super resetCursorRects];
 
-  if (!_hand_cursor)
-    return;
-
-  NSCursor* cursor = [NSCursor pointingHandCursor];
+  NSCursor* cursor;
+  if (_hand_cursor)
+   cursor = [NSCursor pointingHandCursor];
+  else
+    cursor = [NSCursor arrowCursor];
   [self addCursorRect:self.bounds cursor:cursor];
 }
 
