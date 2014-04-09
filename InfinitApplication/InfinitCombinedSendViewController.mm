@@ -368,7 +368,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 {
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Type a contact's name or email", nil);
+  NSString* message = NSLocalizedString(@"Search by name or invite by email", nil);
   [_tooltip showPopoverForView:_user_search_controller.search_image
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
@@ -379,7 +379,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 {
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Type a contact's name or email", nil);
+  NSString* message = NSLocalizedString(@"Search by name or invite by email", nil);
   [_tooltip showPopoverForView:_user_search_controller.search_image
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
@@ -390,7 +390,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 {
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Click to add a file", nil);
+  NSString* message = NSLocalizedString(@"Click here to add a file", nil);
   [_tooltip showPopoverForView:self.add_files_button
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
@@ -401,7 +401,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 {
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Click to send!", nil);
+  NSString* message = NSLocalizedString(@"Click here to send!", nil);
   [_tooltip showPopoverForView:self.send_button
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
