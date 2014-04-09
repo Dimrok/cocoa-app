@@ -131,7 +131,7 @@
   return NO;
 }
 
-- (void)setDoneButton
+- (void)setDoneButtonEnabled:(BOOL)enabled
 {
   NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   style.alignment = NSCenterTextAlignment;
@@ -143,10 +143,20 @@
                                                paragraphStyle:style
                                                        colour:[NSColor whiteColor]
                                                        shadow:shadow];
-  self.done_button.attributedTitle =
-    [[NSAttributedString alloc] initWithString:NSLocalizedString(@"GOT IT", nil)
-                                    attributes:button_style];
-  self.done_button.enabled = YES;
+  NSString* button_text;
+  if (enabled)
+  {
+    self.done_button.enabled = YES;
+    button_text = NSLocalizedString(@"GOT IT", nil);
+  }
+  else
+  {
+    [self.done_button.cell setImageDimsWhenDisabled:NO];
+    self.done_button.enabled = NO;
+    button_text = @"";
+  }
+  self.done_button.attributedTitle = [[NSAttributedString alloc] initWithString:button_text
+                                                                     attributes:button_style];
 }
 
 - (void)animateClippy
@@ -183,6 +193,7 @@
                                                                   attributes:_bold_attrs];
   _line_3.attributedStringValue = [[NSAttributedString alloc] initWithString:line_3_str
                                                                   attributes:_attrs];
+  [self setDoneButtonEnabled:NO];
 }
 
 - (void)configureDragAndDrop
@@ -207,6 +218,7 @@
        self.view.window.alphaValue = 1.0;
      }];
   }
+  [self setDoneButtonEnabled:YES];
 }
 
 - (void)configureHigher
@@ -228,12 +240,11 @@
    {
      self.view.window.alphaValue = 0.6;
    }];
-  
+  [self setDoneButtonEnabled:NO];
 }
 
 - (void)awakeFromNib
 {
-  [self setDoneButton];
   switch (_mode)
   {
     case INFINIT_CLIPPY_TRANSFER_PENDING:
