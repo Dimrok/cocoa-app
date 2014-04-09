@@ -36,7 +36,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   {
     _delegate = delegate;
     _files = [NSMutableArray array];
-    _user_search_controller = [[IAUserSearchViewController alloc] init];
     _send_view_open = NO;
   }
   return self;
@@ -93,10 +92,12 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   [_favourites_send_controller hideFavourites];
   if (_combined_send_controller == nil)
   {
+    if (_user_search_controller == nil)
+      _user_search_controller = [[IAUserSearchViewController alloc] init];
     _combined_send_controller =
-    [[InfinitCombinedSendViewController alloc] initWithDelegate:self
-                                            andSearchController:_user_search_controller
-                                                       fullview:YES];
+      [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                              andSearchController:_user_search_controller
+                                                         fullview:YES];
   }
   [_delegate sendController:self wantsActiveController:_combined_send_controller];
 }
@@ -123,19 +124,21 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   }
   if (_combined_send_controller == nil)
   {
+    if (_user_search_controller == nil)
+      _user_search_controller = [[IAUserSearchViewController alloc] init];
     if (files.count > 0)
     {
       _combined_send_controller =
-      [[InfinitCombinedSendViewController alloc] initWithDelegate:self
-                                              andSearchController:_user_search_controller
-                                                         fullview:YES];
+        [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                                andSearchController:_user_search_controller
+                                                           fullview:YES];
     }
     else
     {
       _combined_send_controller =
-      [[InfinitCombinedSendViewController alloc] initWithDelegate:self
-                                              andSearchController:_user_search_controller
-                                                         fullview:YES];
+        [[InfinitCombinedSendViewController alloc] initWithDelegate:self
+                                                andSearchController:_user_search_controller
+                                                           fullview:YES];
     }
   }
   else
