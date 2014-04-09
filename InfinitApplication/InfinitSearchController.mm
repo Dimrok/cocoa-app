@@ -8,6 +8,9 @@
 
 #import "InfinitSearchController.h"
 
+#import "IAUserPrefs.h"
+#import "InfinitMetricsManager.h"
+
 #import <Gap/IAUserManager.h>
 
 #undef check
@@ -43,13 +46,16 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   if (self == [super init])
   {
     _delegate = delegate;
-    _addressbook = [ABAddressBook addressBook];
     _result_list = [NSMutableArray array];
     _last_search_string = @"";
     _address_book_results = [NSMutableArray array];
     _infinit_name_results = [NSMutableArray array];
     _single_email_result = nil;
     _first_results_in = NO;
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"accessed_addressbook"] isEqualToString:@"1"])
+    {
+      [self performSelector:@selector(firstAddressbookAccess) withObject:nil afterDelay:0.5];
+    }
   }
   return self;
 }
@@ -58,6 +64,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (BOOL)accessToAddressBook
 {
+  _addressbook = [ABAddressBook addressBook];
   if (_addressbook == nil)
   {
     ELLE_LOG("%s: no access to addressbook", self.description.UTF8String);
@@ -67,6 +74,16 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     ELLE_DEBUG("%s: addressbook accessible", self.description.UTF8String);
   }
   return _addressbook == nil ? NO : YES;
+}
+
+- (void)firstAddressbookAccess
+{
+  [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"accessed_addressbook"];
+  // Get Address Book access
+  if ([ABAddressBook sharedAddressBook] == nil)
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_NO_ADRESSBOOK_ACCESS];
+  else
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS];
 }
 
 - (void)searchAddressBookWithString:(NSString*)search_string

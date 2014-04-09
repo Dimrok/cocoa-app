@@ -8,9 +8,6 @@
 
 #import "IAGeneralSendController.h"
 
-#import "IAUserPrefs.h"
-#import "InfinitMetricsManager.h"
-
 #undef check
 #import <elle/log.hh>
 
@@ -39,25 +36,10 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   {
     _delegate = delegate;
     _files = [NSMutableArray array];
-    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"accessed_addressbook"] isEqualToString:@"1"])
-    {
-      [self firstAddressbookAccess];
-    }
     _user_search_controller = [[IAUserSearchViewController alloc] init];
     _send_view_open = NO;
   }
   return self;
-}
-
-- (void)firstAddressbookAccess
-{
-  [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"accessed_addressbook"];
-  // Get Address Book access
-  ABAddressBook* address_book = [ABAddressBook sharedAddressBook];
-  if (address_book == nil)
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_NO_ADRESSBOOK_ACCESS];
-  else
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS];
 }
 
 //- General Functions ------------------------------------------------------------------------------
