@@ -232,7 +232,6 @@
   NSInteger _max_rows_shown;
   
   NSImage* _static_image;
-  NSImage* _loading_image;
   
   InfinitSearchController* _search_controller;
   NSString* _last_search;
@@ -276,7 +275,6 @@
                                        @"add a file to invite your friend.")
                                                     attributes:no_result_msg_style];
     _static_image = [IAFunctions imageNamed:@"icon-search"];
-    _loading_image = [IAFunctions imageNamed:@"loading"];
     
     _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
     _last_search = @"";
@@ -301,6 +299,10 @@
   // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
   [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
   [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
+  self.search_image.animates = NO;
+  self.search_image.image = _static_image;
+  self.search_spinner.hidden = YES;
+  [self.search_spinner setIndeterminate:YES];
   
   // WORKAROUND: Place holder text has been fixed in 10.9
   if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
@@ -429,6 +431,16 @@
 
 //- Search Functions -------------------------------------------------------------------------------
 
+- (void)searchLoading:(BOOL)loading
+{
+  self.search_image.hidden = loading;
+  self.search_spinner.hidden = !loading;
+  if (loading)
+    [self.search_spinner startAnimation:nil];
+  else
+    [self.search_spinner stopAnimation:nil];
+}
+
 - (void)cancelLastSearchOperation
 {
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -439,11 +451,7 @@
   [self performSelector:@selector(doSearchNow:)
              withObject:search_string
              afterDelay:0.3];
-  if (!self.search_image.animates)
-  {
-    self.search_image.image = _loading_image;
-    self.search_image.animates = YES;
-  }
+  [self searchLoading:YES];
 }
 
 - (void)doSearchNow:(NSString*)search_string
@@ -661,10 +669,9 @@ displayStringForRepresentedObject:(id)representedObject
 
 - (void)clearResults
 {
+  [self searchLoading:NO];
   [self setNoResultsHidden:YES];
   _search_results = nil;
-  self.search_image.animates = NO;
-  self.search_image.image = _static_image;
   [self.search_box_view setNoResults:NO];
   [_delegate searchView:self
         changedToHeight:NSHeight(self.search_box_view.frame)];
@@ -869,11 +876,7 @@ displayStringForRepresentedObject:(id)representedObject
     }
   }
   
-  if (self.search_image.animates)
-  {
-    self.search_image.animates = NO;
-    self.search_image.image = _static_image;
-  }
+  [self searchLoading:NO];
   [self updateResultsTable];
 }
 
@@ -892,8 +895,7 @@ displayStringForRepresentedObject:(id)representedObject
     [self clearResults];
     return;
   }
-  self.search_image.animates = NO;
-  self.search_image.image = _static_image;
+  [self searchLoading:NO];
   self.no_results_message.attributedStringValue = _no_result_msg_str;
   
   _search_results = [NSMutableArray array];
