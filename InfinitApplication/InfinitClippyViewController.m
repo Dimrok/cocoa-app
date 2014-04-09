@@ -151,18 +151,24 @@
 
 - (void)animateClippy
 {
+  if (!_animating)
+    return;
   CAKeyframeAnimation* kfa = [CAKeyframeAnimation animation];
   kfa.values = _clippy_images;
+  kfa.autoreverses = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
-     context.duration = 1.0;
+     context.duration = 1.1;
      _clippy_image.animations = @{@"image": kfa};
      _clippy_image.animator.image = _clippy_images[_clippy_images.count - 1];
+     _clippy_image.animator.image = _clippy_images[0];
    }
                       completionHandler:^
    {
      if (_animating)
-       [self animateClippy];
+     {
+       [self performSelector:@selector(animateClippy) withObject:nil afterDelay:1.0];
+     }
    }];
 }
 
