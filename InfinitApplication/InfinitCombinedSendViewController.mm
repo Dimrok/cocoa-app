@@ -646,7 +646,7 @@ doCommandBySelector:(SEL)commandSelector
 {
   if ([_delegate onboardingSend:self])
   {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_CANCELLED];
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
   }
   [_delegate combinedSendViewWantsCancel:self];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
