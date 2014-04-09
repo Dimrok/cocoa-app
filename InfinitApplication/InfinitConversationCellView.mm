@@ -105,9 +105,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 - (void)resetCursorRects
 {
   [super resetCursorRects];
-  if (!self.clickable)
-    return;
-  NSCursor* cursor = [NSCursor pointingHandCursor];
+  NSCursor* cursor;
+  if (self.clickable)
+    cursor = [NSCursor pointingHandCursor];
+  else
+    cursor = [NSCursor arrowCursor];
   [self addCursorRect:self.bounds cursor:cursor];
 }
 
@@ -338,6 +340,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.accept_button.hidden = YES;
   self.reject_button.hidden = YES;
   self.progress.hidden = YES;
+  [self.transaction_status_button.cell setImageDimsWhenDisabled:NO];
+  self.transaction_status_button.enabled = NO;
   self.transaction_status_button.hidden = NO;
   self.transaction_status_button.hand_cursor = NO;
   self.transaction_status_button.normal_image = [IAFunctions imageNamed:image_name];
@@ -350,6 +354,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.accept_button.hidden = YES;
   self.reject_button.hidden = YES;
   self.progress.hidden = YES;
+  self.transaction_status_button.enabled = YES;
   self.transaction_status_button.hidden = NO;
   self.transaction_status_button.hand_cursor = YES;
   self.transaction_status_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
