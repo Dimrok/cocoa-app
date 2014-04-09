@@ -169,10 +169,14 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 
 - (void)delayedStartReceiveOnboarding
 {
+  NSInteger row = ([_transaction_list indexOfObject:[_delegate receiveOnboardingTransaction:self]]);
+  if (row == NSNotFound)
+    return;
+    
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:0 makeIfNecessary:NO];
-  NSString* message = NSLocalizedString(@"Click on the contact to accept the file", nil);
+  InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
+  NSString* message = NSLocalizedString(@"Click here to accept the file", nil);
   [_tooltip showPopoverForView:row_view
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
@@ -183,7 +187,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 {
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Click on the icon to send a file", nil);
+  NSString* message = NSLocalizedString(@"Click here to send a file", nil);
   [_tooltip showPopoverForView:self.transfer_button
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
@@ -192,10 +196,13 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 
 - (void)delayedFileSentOnboarding
 {
+  NSInteger row = ([_transaction_list indexOfObject:[_delegate sendOnboardingTransaction:self]]);
+  if (row == NSNotFound)
+    return;
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:0 makeIfNecessary:NO];
-  NSString* message = NSLocalizedString(@"Click on the contact to see your history", nil);
+  InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
+  NSString* message = NSLocalizedString(@"Click here to see your history with this person", nil);
   [_tooltip showPopoverForView:row_view
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
