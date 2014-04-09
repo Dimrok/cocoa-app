@@ -372,6 +372,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   {
     case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
       [self setTransactionStatusButtonToCancel];
+      [self.progress setIndeterminate:NO];
+      self.progress.doubleValue = _element.transaction.progress;
+      self.progress.hidden = NO;
       self.information.stringValue = NSLocalizedString(@"Waiting for user to be online...", nil);
       self.information.hidden = NO;
       break;
@@ -414,8 +417,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       break;
     case TRANSACTION_VIEW_RUNNING:
       [self setTransactionStatusButtonToCancel];
-      self.progress.hidden = NO;
       [self.progress setIndeterminate:NO];
+      self.progress.hidden = NO;
       self.progress.doubleValue = _element.transaction.progress;
       self.information.stringValue = [self dataTransferredForTransaction:_element.transaction];
       self.information.hidden = NO;
