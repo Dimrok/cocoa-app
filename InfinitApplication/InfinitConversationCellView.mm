@@ -710,6 +710,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   }
   if (file_urls.count > 0)
   {
+    [_delegate conversationCellBubbleViewGotClicked:self];
     [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:file_urls];
   }
 }

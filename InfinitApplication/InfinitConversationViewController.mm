@@ -527,6 +527,16 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self resizeContentView];
 }
 
+- (void)conversationCellBubbleViewGotClicked:(InfinitConversationCellView*)sender
+{
+  NSInteger row = [self.table_view rowForView:sender];
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
+      [_delegate receiveOnboardingTransaction:self] == [_elements[row] transaction])
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD];
+  }
+}
+
 //- Transaction Callbacks --------------------------------------------------------------------------
 
 - (void)scrollAfterRowAdd

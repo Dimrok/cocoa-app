@@ -61,6 +61,7 @@
 
 - (void)conversationCellViewWantsShowFiles:(InfinitConversationCellView*)sender;
 - (void)conversationCellViewWantsHideFiles:(InfinitConversationCellView*)sender;
+- (void)conversationCellBubbleViewGotClicked:(InfinitConversationCellView*)sender;
 
 @end
 
