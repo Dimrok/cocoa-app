@@ -588,7 +588,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (cell == nil)
     return;
   
-  [cell onTransactionModeChange];
+  [cell onTransactionModeChangeIsNew:YES];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:count]];
   
   [self updateListOfRowsWithProgress];
