@@ -14,7 +14,8 @@ typedef enum __InfinitOnboardingState
   INFINIT_ONBOARDING_RECEIVE_NO_ACTION, // if the user doesn't respond to the notification
   INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON, // user clicks on infinit icon with transaction waiting
   INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW, // user goes into conversation view
-  INFINIT_ONBOARDING_RECEIVE_ACTION_DONE, // use has chosen to accept/decline
+  INFINIT_ONBOARDING_RECEIVE_ACTION_DONE, // user has chosen to accept/decline
+  INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD, // user clicked to show in finder
   INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE, // finished in conversation view
   INFINIT_ONBOARDING_RECEIVE_DONE, // receive onboarding complete
   INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION, // file dragged onto icon
