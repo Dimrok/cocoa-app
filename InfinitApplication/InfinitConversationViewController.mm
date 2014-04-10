@@ -514,7 +514,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   {
     [self performSelector:@selector(scrollAfterRowAdd)
                withObject:nil
-               afterDelay:0.15];
+               afterDelay:0.2];
   }
 }
 
