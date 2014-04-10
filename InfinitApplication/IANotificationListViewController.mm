@@ -131,7 +131,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
        context.duration = 0.15;
-       [self.content_height_constraint.animator setConstant:50.0];
+       [self.content_height_constraint.animator setConstant:[self tableHeight]];
      }
                         completionHandler:^
      {
@@ -314,6 +314,8 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   CGFloat total_height = _transaction_list.count * _row_height;
   if (_connection_status != gap_user_status_online)
     total_height += _row_height;
+  else if (_connection_status == gap_user_status_online && _transaction_list.count == 0)
+    total_height += 50.0;
   CGFloat max_height = _row_height * _max_rows_shown;
   if (total_height > max_height)
     return max_height;
@@ -408,10 +410,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 }
 
 - (void)updateHeaderAndBackground
-{
-  if (self.table_view.numberOfRows == 0)
-    return;
-  
+{  
   NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
   InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
                                                            makeIfNecessary:NO];
@@ -812,6 +811,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
                            withAnimation:NSTableViewAnimationSlideUp];
   }
   [self resizeContentView];
+  [self.main_view layoutSubtreeIfNeeded];
   [self updateHeaderAndBackground];
 }
 
