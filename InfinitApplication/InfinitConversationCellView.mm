@@ -405,8 +405,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case TRANSACTION_VIEW_CLOUD_BUFFERED:
       if (_element.transaction.from_me)
       {
-        [self setTransactionStatusButtonToStaticImage:@"conversation-icon-bufferised"];
-        [self.transaction_status_button setToolTip:NSLocalizedString(@"Uploaded", nil)];
+        [self setTransactionStatusButtonToCancel];
         self.information.stringValue = NSLocalizedString(@"Uploaded. Waiting to be downloaded...", nil);
         self.information.hidden = NO;
       }
