@@ -49,7 +49,7 @@
 - (void)showFiles;
 - (void)hideFiles;
 
-- (void)onTransactionModeChange;
+- (void)onTransactionModeChangeIsNew:(BOOL)is_new;
 
 - (void)updateAvatarWithImage:(NSImage*)avatar_image;
 

@@ -382,11 +382,21 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancel", nil)];
 }
 
-- (void)onTransactionModeChange
+- (void)onTransactionModeChangeIsNew:(BOOL)is_new
 {
   self.bubble_view.important = _element.important;
   self.time_indicator.stringValue =
     [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
+  
+  // If progress hasn't run until the end.
+  if ((_element.transaction.view_mode == TRANSACTION_VIEW_FINISHED ||
+      _element.transaction.view_mode == TRANSACTION_VIEW_CLOUD_BUFFERED) &&
+      is_new && _progress.doubleValue < 1.0)
+  {
+    [self updateProgress];
+    return;
+  }
+
   switch (_element.transaction.view_mode)
   {
     case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
@@ -604,7 +614,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   [self updateAvatarWithImage:avatar_image];
   if (_element.showing_files)
       [self showFiles];
-  [self onTransactionModeChange];
+  [self onTransactionModeChangeIsNew:NO];
 }
 
 //- File Table Handling ----------------------------------------------------------------------------
@@ -686,6 +696,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
    }
                       completionHandler:^
    {
+     [self onTransactionModeChangeIsNew:NO];
    }];
 }
 
