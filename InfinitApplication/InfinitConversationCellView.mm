@@ -241,6 +241,23 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   return no_files * 35.0;
 }
 
++ (BOOL)hasInformationField:(InfinitConversationElement*)element
+{
+  switch (element.transaction.view_mode)
+  {
+    case TRANSACTION_VIEW_PENDING_SEND:
+    case TRANSACTION_VIEW_WAITING_ACCEPT:
+    case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
+    case TRANSACTION_VIEW_CLOUD_BUFFERED:
+    case TRANSACTION_VIEW_PREPARING:
+    case TRANSACTION_VIEW_RUNNING:
+      return YES;
+      
+    default:
+      return NO;
+  }
+}
+
 + (CGFloat)heightOfCellForElement:(InfinitConversationElement*)element
 {
   if (element.spacer)
@@ -249,6 +266,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   height += [InfinitConversationCellView heightOfMessage:element.transaction.message];
   if (element.showing_files)
     height += [InfinitConversationCellView heightOfFilesTable:element.transaction.files_count];
+  if ([InfinitConversationCellView hasInformationField:element])
+    height += 10;
   return height;
 }
 
