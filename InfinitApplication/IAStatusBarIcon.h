@@ -16,6 +16,7 @@
 @interface IAStatusBarIcon : NSView <NSDraggingDestination>
 
 @property (nonatomic, readwrite) BOOL isClickable;
+@property (nonatomic, readwrite, setter = setFire:) BOOL isFire;
 @property (nonatomic, readwrite, setter = setHighlighted:) BOOL isHighlighted;
 @property (nonatomic, readwrite, setter = setLoggingIn:) BOOL isLoggingIn;
 @property (nonatomic, readwrite, setter = setTransferring:) BOOL isTransferring;
