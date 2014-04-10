@@ -1107,11 +1107,6 @@ transactionsProgressForUser:(IAUser*)user
   [self closeNotificationWindow];
 }
 
-- (void)delayedStartSendOnboarding
-{
-  [self showClippyViewWithMode:INFINIT_CLIPPY_DRAG_AND_DROP];
-}
-
 //- Onboarding Protocol ----------------------------------------------------------------------------
 
 - (void)doneOnboarding
@@ -1126,6 +1121,11 @@ transactionsProgressForUser:(IAUser*)user
   {
     case INFINIT_ONBOARDING_RECEIVE_NO_ACTION:
       [self showClippyViewWithMode:INFINIT_CLIPPY_TRANSFER_PENDING];
+      return;
+      
+    case INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD:
+      _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_DONE;
+      [self performSelector:@selector(delayShowClippyDragAndDrop) withObject:nil afterDelay:145.0];
       return;
       
     case INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE:
