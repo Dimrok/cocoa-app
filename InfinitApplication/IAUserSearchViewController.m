@@ -396,6 +396,7 @@
   [temp addObject:user];
   [self.search_field setObjectValue:temp];
   [_delegate searchViewInputsChanged:self];
+  _token_count = [self.search_field.objectValue count];
   // WORKAROUND: Don't want token highlighted on drag and drop.
   [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0.2];
 }
