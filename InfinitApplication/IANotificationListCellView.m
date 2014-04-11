@@ -101,12 +101,6 @@
       self.status_indicator.hidden = NO;
       break;
       
-    case TRANSACTION_VIEW_REJECTED:
-    case TRANSACTION_VIEW_CANCELLED:
-      self.status_indicator.image = [IAFunctions imageNamed:@"conversation-icon-canceled"];
-      self.status_indicator.hidden = NO;
-      break;
-      
     case TRANSACTION_VIEW_FAILED:
       self.status_indicator.image = [IAFunctions imageNamed:@"icon-error"];
       self.status_indicator.hidden = NO;
@@ -114,11 +108,6 @@
       
     case TRANSACTION_VIEW_CLOUD_BUFFERED:
       self.status_indicator.image = [IAFunctions imageNamed:@"conversation-icon-bufferised"];
-      self.status_indicator.hidden = NO;
-      break;
-      
-    case TRANSACTION_VIEW_FINISHED:
-      self.status_indicator.image = [IAFunctions imageNamed:@"icon-check"];
       self.status_indicator.hidden = NO;
       break;
       
