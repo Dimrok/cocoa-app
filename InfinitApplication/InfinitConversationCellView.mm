@@ -384,10 +384,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)onTransactionModeChangeIsNew:(BOOL)is_new
 {
-  self.bubble_view.important = _element.important;
-  self.time_indicator.stringValue =
-    [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
-  
   // If progress hasn't run until the end.
   if ((_element.transaction.view_mode == TRANSACTION_VIEW_FINISHED ||
       _element.transaction.view_mode == TRANSACTION_VIEW_CLOUD_BUFFERED) &&
@@ -396,6 +392,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     [self updateProgress];
     return;
   }
+  
+  self.bubble_view.important = _element.important;
+  self.time_indicator.stringValue =
+  [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
 
   switch (_element.transaction.view_mode)
   {
