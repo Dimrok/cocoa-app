@@ -59,10 +59,40 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 
 //- Combined Send Main View ------------------------------------------------------------------------
 
-@interface InfinitCombinedSendViewMainView : NSView
+@interface InfinitCombinedSendViewMainView : NSView <NSDraggingDestination>
+
+@property (nonatomic, readwrite) id<InfinitCombinedSendViewMainViewProtocol> delegate;
+
+@end
+
+@protocol InfinitCombinedSendViewMainViewProtocol <NSObject>
+
+- (void)view:(InfinitCombinedSendViewMainView*)sender gotFilesDropped:(NSArray*)files;
+
 @end
 
 @implementation InfinitCombinedSendViewMainView
+{
+@private
+  NSArray* _drag_types;
+}
+
+@synthesize delegate = _delegate;
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+  if (self = [super initWithFrame:frameRect])
+  {
+    _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
+    [self registerForDraggedTypes:_drag_types];
+  }
+  return self;
+}
+
+- (void)dealloc
+{
+  [self unregisterDraggedTypes];
+}
 
 - (BOOL)isOpaque
 {
@@ -122,6 +152,32 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 - (NSSize)intrinsicContentSize
 {
   return self.bounds.size;
+}
+
+//- Drag Operations --------------------------------------------------------------------------------
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
+{
+  NSPasteboard* paste_board = sender.draggingPasteboard;
+  if ([paste_board availableTypeFromArray:_drag_types])
+  {
+    return NSDragOperationCopy;
+  }
+  return NSDragOperationNone;
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
+{
+  NSPasteboard* paste_board = sender.draggingPasteboard;
+  if (![paste_board availableTypeFromArray:_drag_types])
+    return NO;
+  
+  NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
+  
+  if (files.count > 0)
+    [_delegate view:self gotFilesDropped:files];
+  
+  return YES;
 }
 
 @end
@@ -301,6 +357,8 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
   // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
   [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
   [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
+  [self.note_field unregisterDraggedTypes];
+  self.combined_view.delegate = self;
 }
 
 - (void)loadView
@@ -760,6 +818,13 @@ wantsRemoveFavourite:(IAUser*)user
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   if ([_delegate onboardingSend:self])
     [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
+}
+
+//- Drop Protocol ----------------------------------------------------------------------------------
+
+- (void)view:(InfinitCombinedSendViewMainView*)sender gotFilesDropped:(NSArray*)files
+{
+  [_delegate combinedSendView:self hadFilesDropped:files];
 }
 
 @end

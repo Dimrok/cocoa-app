@@ -12,15 +12,19 @@
 #import "IAHoverButton.h"
 #import "IAUserSearchViewController.h"
 
+@class InfinitCombinedSendViewMainView;
+
 @protocol InfinitCombinedSendViewProtocol;
+@protocol InfinitCombinedSendViewMainViewProtocol;
 
 @interface InfinitCombinedSendViewController : IAViewController <NSTableViewDataSource,
                                                                  NSTableViewDelegate,
                                                                  NSTextViewDelegate,
-                                                                 IAUserSearchViewProtocol>
+                                                                 IAUserSearchViewProtocol,
+                                                                 InfinitCombinedSendViewMainViewProtocol>
 
 @property (nonatomic, strong) IBOutlet IAHoverButton* add_files_button;
-@property (nonatomic, strong) IBOutlet NSView* combined_view;
+@property (nonatomic, strong) IBOutlet InfinitCombinedSendViewMainView* combined_view;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* combined_height_constraint;
 @property (nonatomic, strong) IBOutlet NSButton* cancel_button;
 @property (nonatomic, strong) IBOutlet NSTextField* characters_label;
@@ -69,5 +73,8 @@
 
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
 wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
+
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
+         hadFilesDropped:(NSArray*)files;
 
 @end

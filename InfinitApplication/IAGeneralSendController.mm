@@ -248,6 +248,18 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   _favourites_send_controller = nil;
 }
 
+- (void)combinedSendView:(InfinitCombinedSendViewController*)sender
+         hadFilesDropped:(NSArray*)files
+{
+  for (NSString* file in files)
+  {
+    NSURL* file_url = [NSURL fileURLWithPath:file];
+    if (![_files containsObject:[file_url path]])
+      [_files addObject:[file_url path]];
+  }
+  [sender filesUpdated];
+}
+
 //- Onboarding Protocol ----------------------------------------------------------------------------
 
 - (InfinitOnboardingState)onboardingState:(IAViewController*)sender
