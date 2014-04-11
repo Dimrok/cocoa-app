@@ -14,9 +14,9 @@
 #import "IACrashReportManager.h"
 #import "IAGap.h"
 #import "IAKeychainManager.h"
-#import "IAPopoverViewController.h"
 #import "IAUserPrefs.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitTooltipViewController.h"
 
 #undef check
 #import <elle/log.hh>
@@ -41,10 +41,10 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   IANoConnectionViewController* _no_connection_view_controller;
   IANotificationListViewController* _notification_view_controller;
   IANotLoggedInViewController* _not_logged_view_controller;
-  IAPopoverViewController* _popover_controller;
   InfinitOnboardingController* _onboard_controller;
   IAReportProblemWindowController* _report_problem_controller;
   IAWindowController* _window_controller;
+  InfinitTooltipViewController* _tooltip_controller;
   
   // Infinit Link Handling
   NSURL* _infinit_link;
@@ -171,7 +171,29 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     _infinit_link = link;
     return;
   }
-  [self openSendViewForLink:link];
+
+  NSString* scheme = link.scheme;
+  if (![scheme isEqualToString:@"infinit"])
+  {
+    ELLE_WARN("%s: unknown scheme in link: %s", self.description.UTF8String,
+              link.description.UTF8String);
+    return;
+  }
+  NSString* action = link.host;
+  if ([action isEqualToString:@"send"])
+  {
+    [self openSendViewForLink:link];
+  }
+  else if ([action isEqualToString:@"launch"])
+  {
+    [self showNotifications];
+  }
+  else
+  {
+    ELLE_WARN("%s: unknown action in link: %s", self.description.UTF8String,
+              link.description.UTF8String);
+    return;
+  }
 }
 
 - (void)linkHandleUserCallback:(IAGapOperationResult*)result
@@ -201,20 +223,6 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (void)openSendViewForLink:(NSURL*)link
 {
-  NSString* scheme = link.scheme;
-  if (![scheme isEqualToString:@"infinit"])
-  {
-    ELLE_WARN("%s: unknown scheme in link: %s", self.description.UTF8String,
-              link.description.UTF8String);
-    return;
-  }
-  NSString* action = link.host;
-  if (![action isEqualToString:@"send"])
-  {
-    ELLE_WARN("%s: unknown action in link: %s", self.description.UTF8String,
-              link.description.UTF8String);
-    return;
-  }
   NSMutableArray* components = [NSMutableArray arrayWithArray:[link pathComponents]];
   NSArray* temp = [NSArray arrayWithArray:components];
   for (NSString* component in temp)
@@ -444,7 +452,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   
   // If we've got an unhandled link, handle it now
   if (_infinit_link != nil)
-    [self openSendViewForLink:_infinit_link];
+    [self handleInfinitLink:_infinit_link];
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
@@ -1181,10 +1189,10 @@ transactionsProgressForUser:(IAUser*)user
     [self showNotifications];
   }
   
-  if (_popover_controller != nil)
+  if (_tooltip_controller != nil)
   {
-    [_popover_controller hidePopover];
-    _popover_controller = nil;
+    [_tooltip_controller close];
+    _tooltip_controller = nil;
   }
   
   if ([_window_controller windowIsOpen])
@@ -1331,14 +1339,23 @@ transactionsProgressForUser:(IAUser*)user
 }
 
 - (void)transactionManager:(IATransactionManager*)sender
-   needsShowInvitedHeading:(NSString*)heading
-                andMessage:(NSString*)message
+   wantsShowInvitedMessage:(NSString*)message
 {
-  if (_popover_controller == nil)
-    _popover_controller = [[IAPopoverViewController alloc] init];
-  [_popover_controller showHeading:heading
-                        andMessage:message
-                         belowView:_status_item.view];
+  if (_tooltip_controller == nil)
+    _tooltip_controller = [[InfinitTooltipViewController alloc] init];
+  [_tooltip_controller showPopoverForView:_status_bar_icon
+                       withArrowDirection:INPopoverArrowDirectionUp
+                              withMessage:message
+                         withPopAnimation:YES];
+  [self performSelector:@selector(delayedTooltipClose) withObject:nil afterDelay:5.0];
+}
+
+- (void)delayedTooltipClose
+{
+  if (_tooltip_controller == nil)
+    return;
+  [_tooltip_controller close];
+  _tooltip_controller = nil;
 }
 
 - (void)transactionManagerHadFileSent:(IATransactionManager*)sender
