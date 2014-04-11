@@ -7,6 +7,7 @@
 //
 
 #include <surface/gap/gap.hh>
+#include <surface/gap/enums.hh>
 
 #import "IAGap.h"
 
