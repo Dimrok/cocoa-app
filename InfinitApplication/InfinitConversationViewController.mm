@@ -467,6 +467,16 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (![self transactionCancellable:element.transaction.view_mode])
     return;
   
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
+      [_delegate receiveOnboardingTransaction:self] == element.transaction)
+  {
+    [_tooltip close];
+    NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
+    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
+               withObject:message
+               afterDelay:0.5];
+  }
+  
   [_delegate conversationView:self
        wantsCancelTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_CANCEL];
