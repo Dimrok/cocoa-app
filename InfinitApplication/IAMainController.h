@@ -15,7 +15,6 @@
 #import <Gap/IATransactionManager.h>
 #import <Gap/IAUserManager.h>
 
-//#import "IAConversationViewController.h"
 #import "IADesktopNotifier.h"
 #import "IAGeneralSendController.h"
 #import "IAMeManager.h"
