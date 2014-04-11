@@ -854,29 +854,22 @@ displayStringForRepresentedObject:(id)representedObject
   
   _search_results = [NSMutableArray array];
   
-  for (InfinitSearchPersonResult* person in sender.result_list)
+  if (sender.result_list.count == 0)
   {
-    InfinitSearchElement* element;
-    if (person.infinit_user != nil)
-    {
-      element = [[InfinitSearchElement alloc] initWithAvatar:person.avatar
-                                                       email:nil
-                                                    fullname:person.fullname
-                                                        user:person.infinit_user];
-      [_search_results addObject:element];
-      
-    }
+    if ([_delegate searchViewWantsIfGotFile:self])
+      self.no_results_message.attributedStringValue = _invite_msg_str;
     else
-    {
-      element = [[InfinitSearchElement alloc] initWithAvatar:person.avatar
-                                                       email:person.emails[0]
-                                                    fullname:person.fullname
-                                                        user:nil];
-      if ([_delegate searchViewWantsIfGotFile:self])
-        self.no_results_message.attributedStringValue = _invite_msg_str;
-      else
-        self.no_results_message.attributedStringValue = _add_file_str;
-    }
+      self.no_results_message.attributedStringValue = _add_file_str;
+  }
+  else
+  {
+    InfinitSearchPersonResult* person = sender.result_list[0];
+    InfinitSearchElement* element =
+      [[InfinitSearchElement alloc] initWithAvatar:person.avatar
+                                             email:nil
+                                          fullname:person.fullname
+                                              user:person.infinit_user];
+    _search_results = [NSMutableArray arrayWithObject:element];
   }
   [self updateResultsTable];
 }
