@@ -357,13 +357,13 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     // out no longer relevant results.
     if ([search_string rangeOfString:_last_search_string].location != NSNotFound)
     {
-      _first_results_in = YES; // We've got the email results already.
+      _first_results_in = YES; // We've got the address book and email results already.
       [self searchCurrentResultsForString:search_string];
     }
     // Otherwise we're doing a full search.
     else
     {
-      [_address_book_results removeAllObjects];
+      [self clearResults];
       if ([self accessToAddressBook])
       {
         [self searchAddressBookWithString:search_string];
