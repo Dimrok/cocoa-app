@@ -213,6 +213,9 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 
 - (void)avatarCallback:(NSNotification*)notification
 {
+  if (_changing)
+    return;
+
   IAUser* user = [notification.userInfo objectForKey:@"user"];
   for (IATransaction* transaction in _transaction_list)
   {
@@ -472,35 +475,19 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   }
   else
   {
-    
-    NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
-    
-    NSMutableIndexSet* invisible_users = [NSMutableIndexSet indexSetWithIndexesInRange:
-                                          NSMakeRange(0, self.table_view.numberOfRows)];
-    NSMutableIndexSet* visible_users = [NSMutableIndexSet indexSetWithIndexesInRange:visible_rows];
-    [invisible_users removeIndexes:visible_users];
-    
-    [self.table_view beginUpdates];
-    [_transaction_list removeObjectsAtIndexes:invisible_users];
-    [self.table_view removeRowsAtIndexes:invisible_users
-                           withAnimation:NSTableViewAnimationEffectNone];
-    [self.table_view endUpdates];
-    
-    NSInteger new_row = [_transaction_list indexOfObject:transaction];
-    if (_connection_status != gap_user_status_online)
-      new_row += 1;
-    NSMutableIndexSet* other_users = [NSMutableIndexSet indexSetWithIndexesInRange:
-                                      NSMakeRange(0, self.table_view.numberOfRows)];
-    [other_users removeIndex:new_row];
+    NSMutableIndexSet* other_rows =
+      [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.table_view.numberOfRows)];
+    [other_rows removeIndex:row];
     
     self.table_view.backgroundColor = IA_GREY_COLOUR(255.0);
-    
+
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
        context.duration = 0.15;
        [self.content_height_constraint.animator setConstant:44.0];
        [self.table_view beginUpdates];
-       [self.table_view moveRowAtIndex:new_row toIndex:0];
+       [self.table_view removeRowsAtIndexes:other_rows
+                              withAnimation:NSTableViewAnimationSlideRight];
        [self.table_view endUpdates];
        [self.content_height_constraint.animator setConstant:_row_height];
      }
