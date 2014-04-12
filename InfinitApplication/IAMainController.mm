@@ -1237,8 +1237,7 @@ transactionsProgressForUser:(IAUser*)user
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
 {
   if (![[IAGapState instance] logged_in] ||
-      [_me_manager connection_status] != gap_user_status_online ||
-      [self onboardingState:nil] != INFINIT_ONBOARDING_DONE)
+      [_me_manager connection_status] != gap_user_status_online)
   {
     return;
   }
