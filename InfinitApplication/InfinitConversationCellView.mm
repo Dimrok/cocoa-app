@@ -395,7 +395,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   
   self.bubble_view.important = _element.important;
   self.time_indicator.stringValue =
-  [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
+    [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
 
   switch (_element.transaction.view_mode)
   {
@@ -448,6 +448,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       [self.progress setIndeterminate:NO];
       self.progress.hidden = NO;
       self.progress.doubleValue = _element.transaction.progress;
+      self.time_indicator.stringValue =
+        [IAFunctions timeRemainingFrom:_element.transaction.time_remaining];
       self.information.stringValue = [self dataTransferredForTransaction:_element.transaction];
       self.information.hidden = NO;
       break;
@@ -696,7 +698,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
    }
                       completionHandler:^
    {
-     [self onTransactionModeChangeIsNew:NO];
+     if (_element.transaction.progress == 1.0)
+       [self onTransactionModeChangeIsNew:NO];
    }];
 }
 
