@@ -95,19 +95,27 @@
 
     case TRANSACTION_VIEW_RUNNING:
       if (transaction.from_me)
+      {
         self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-upload"];
+        self.status_indicator.toolTip = @"Uploading";
+      }
       else
+      {
         self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-download"];
+        self.status_indicator.toolTip = @"Downloading";
+      }
       self.status_indicator.hidden = NO;
       break;
       
     case TRANSACTION_VIEW_FAILED:
       self.status_indicator.image = [IAFunctions imageNamed:@"icon-error"];
+      self.status_indicator.toolTip = @"Failed";
       self.status_indicator.hidden = NO;
       break;
       
     case TRANSACTION_VIEW_CLOUD_BUFFERED:
       self.status_indicator.image = [IAFunctions imageNamed:@"conversation-icon-bufferised"];
+      self.status_indicator.toolTip = @"Uploaded";
       self.status_indicator.hidden = NO;
       break;
       
@@ -147,6 +155,7 @@
                      andProgress:(CGFloat)progress
                      andDelegate:(id<IANotificationListCellProtocol>)delegate
 {
+  self.status_indicator.toolTip = @"";
   _delegate = delegate;
   if (transaction.from_me)
     _user = transaction.recipient;
