@@ -169,7 +169,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   res.title = title;
   res.informativeText = message;
   res.soundName = sound;
-  res.userInfo = @{@"transaction_id": transaction.transaction_id};
+  res.userInfo = @{@"transaction_id": transaction.transaction_id,
+                   @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
   
   return res;
 }
@@ -201,6 +202,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 {
   NSDictionary* dict = notification.userInfo;
   NSNumber* transaction_id;
+  if ([[dict objectForKey:@"pid"] intValue] != [[NSProcessInfo processInfo] processIdentifier])
+    return;
   if ([[dict objectForKey:@"transaction_id"] isKindOfClass:NSNumber.class])
     transaction_id = [dict objectForKey:@"transaction_id"];
   

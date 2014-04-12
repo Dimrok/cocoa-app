@@ -87,6 +87,9 @@ void on_trophonius_unavailable();
 
 - (void)_fire
 {
+  // Check that the notification was sent from this instance of Infinit.
+  if ([[NSProcessInfo processInfo] processIdentifier] != [[_info valueForKey:@"pid"] intValue])
+    return;
   ELLE_DEBUG("%s: fire %s: %s", self.description.UTF8String, _msg.description.UTF8String,
              _info.description.UTF8String);
   NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
@@ -112,6 +115,9 @@ void on_trophonius_unavailable();
 {
   if (info == nil)
     info = [NSMutableDictionary dictionary];
+  
+  NSNumber* pid = [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]];
+  [info setObject:pid forKey:@"pid"];
   
   [[[NotificationForwarder alloc] init:msg
                               withInfo:info] fire];
