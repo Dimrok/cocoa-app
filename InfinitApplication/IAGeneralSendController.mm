@@ -239,6 +239,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 {
   [_favourites_send_controller hideFavourites];
   _favourites_send_controller = nil;
+  [_delegate sendControllerGotDropOnFavourite:self];
   [self openWithFiles:files forUser:user];
 }
 

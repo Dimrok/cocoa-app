@@ -56,4 +56,6 @@
 - (void)sendController:(IAGeneralSendController*)sender
 wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
+- (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender;
+
 @end

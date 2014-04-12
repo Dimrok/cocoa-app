@@ -910,6 +910,12 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   _onboard_controller.send_transaction = [_transaction_manager transactionWithId:transaction_id];
 }
 
+- (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender
+{
+  if ([_onboard_controller inSendOnboarding])
+    _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILES_DESTINATION;
+}
+
 //- Login Items ------------------------------------------------------------------------------------
 
 - (void)addToLoginItems
