@@ -94,8 +94,6 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"accept";
     case INFINIT_METRIC_CONVERSATION_CANCEL:
       return @"cancel";
-    case INFINIT_METRIC_CONVERSATION_NOTE:
-      return @"note";
     case INFINIT_METRIC_CONVERSATION_REJECT:
       return @"reject";
     case INFINIT_METRIC_CONVERSATION_SEND:
@@ -106,10 +104,6 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"add files";
     case INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS:
       return @"addressbook";
-    case INFINIT_METRIC_MAIN_ACCEPT:
-      return @"accept";
-    case INFINIT_METRIC_MAIN_REJECT:
-      return @"reject";
     case INFINIT_METRIC_MAIN_SEND:
       return @"send";
     case INFINIT_METRIC_NO_ADRESSBOOK_ACCESS:
@@ -134,8 +128,6 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"conversation view";
     case INFINIT_METRIC_CONVERSATION_CANCEL:
       return @"conversation view";
-    case INFINIT_METRIC_CONVERSATION_NOTE:
-      return @"conversation view";
     case INFINIT_METRIC_CONVERSATION_REJECT:
       return @"conversation view";
     case INFINIT_METRIC_CONVERSATION_SEND:
@@ -146,10 +138,6 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"status icon drop";
     case INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS:
       return @"accessible";
-    case INFINIT_METRIC_MAIN_ACCEPT:
-      return @"main view";
-    case INFINIT_METRIC_MAIN_REJECT:
-      return @"main view";
     case INFINIT_METRIC_MAIN_SEND:
       return @"main view";
     case INFINIT_METRIC_NO_ADRESSBOOK_ACCESS:
