@@ -417,6 +417,12 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
                  afterDelay:0.5];
       break;
       
+    case INFINIT_ONBOARDING_SEND_FILES_DESTINATION:
+      [self performSelector:@selector(delayedFilesDestinationOnboard)
+                 withObject:nil
+                 afterDelay:0.5];
+      break;
+      
     default:
       break;
   }
