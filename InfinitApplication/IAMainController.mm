@@ -1243,7 +1243,8 @@ transactionsProgressForUser:(IAUser*)user
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
 {
   if (![[IAGapState instance] logged_in] ||
-      [_me_manager connection_status] != gap_user_status_online)
+      [_me_manager connection_status] != gap_user_status_online ||
+      _current_view_controller.class == InfinitCombinedSendViewController.class)
   {
     return;
   }
