@@ -124,6 +124,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self.person_view setDelegate:self];
   self.person_view.fullname.stringValue = _user.fullname;
   CGFloat width = [self.person_view.fullname.attributedStringValue size].width;
+  if (width > 250)
+    width = 250;
   self.person_view.fullname_width.constant = width;
   if (_user.status == gap_user_status_online)
   {
