@@ -385,7 +385,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
                      andProgress:[_delegate notificationList:self transactionsProgressForUser:user]
                      andDelegate:self];
   InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
-  if (unread_notifications > 0 || active_transfers > 0)
+  if (unread_notifications > 0)
     row_view.unread = YES;
   else
     row_view.unread = NO;
