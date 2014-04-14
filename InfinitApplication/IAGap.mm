@@ -133,9 +133,12 @@ void on_trophonius_unavailable();
     setenv("ELLE_LOG_LEVEL",
            "*trophonius*:TRACE,"
            "*meta*:TRACE,"
+           "surface.gap.*.State:TRACE,"
+           "surface.gap.*.Transition:TRACE,"
            "surface.gap*:DEBUG,"
            "reactor.fsm:DEBUG,"
            "frete.Frete:DEBUG,"
+           "station.Station:DEBUG,"
            "OSX*:DUMP"
            , 0);
     setenv("ELLE_LOG_PID", "1", 0);
