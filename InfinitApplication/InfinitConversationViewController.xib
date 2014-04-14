@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="back_button" destination="QGf-HZ-tw7" id="Z1f-5T-9mc"/>
                 <outlet property="content_height_constraint" destination="hKA-dY-TeD" id="5ic-lg-s3C"/>
+                <outlet property="main_view" destination="FC3-aQ-VEa" id="XsL-2y-IZP"/>
                 <outlet property="person_view" destination="w33-Co-5BQ" id="hYz-Aj-zNS"/>
                 <outlet property="scroll_view" destination="hJZ-lK-iMm" id="OgT-mI-lJ8"/>
                 <outlet property="table_view" destination="1Lg-g7-nsw" id="0K2-c3-gS9"/>
