@@ -65,8 +65,7 @@
 
 - (void)close
 {
-  if (self.showing)
-    [_popover_controller closePopover:self];
+  [_popover_controller closePopover:self];
 }
 
 //- Popover Protocol -------------------------------------------------------------------------------
