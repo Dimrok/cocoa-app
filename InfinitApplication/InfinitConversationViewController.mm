@@ -8,6 +8,8 @@
 
 #import "InfinitConversationViewController.h"
 
+#import <surface/gap/enums.hh>
+
 #import "IAAvatarManager.h"
 #import "InfinitConversationElement.h"
 #import "InfinitConversationCellView.h"
