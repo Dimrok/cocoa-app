@@ -121,7 +121,6 @@
 		8348157F187AE007002ACDE0 /* bg-header-top-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 8348157D187AE007002ACDE0 /* bg-header-top-hover.png */; };
 		83481580187AE007002ACDE0 /* bg-header-top-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8348157E187AE007002ACDE0 /* bg-header-top-hover@2x.png */; };
 		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
-		8365685C17F9BC350021D49D /* IAPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365685A17F9BC350021D49D /* IAPopoverViewController.m */; };
 		836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 836A679318D790D600A15677 /* InfinitConversationElement.m */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836ABEF618E4B1310013D721 /* conversation-icon-status-offline.png in Resources */ = {isa = PBXBuildFile; fileRef = 836ABEF418E4B1310013D721 /* conversation-icon-status-offline.png */; };
@@ -151,7 +150,6 @@
 		838C6DF617FAD14D00BF947C /* icon-onboarding-close-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF217FAD14D00BF947C /* icon-onboarding-close-hover@2x.png */; };
 		838C6DF717FAD14D00BF947C /* icon-onboarding-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF317FAD14D00BF947C /* icon-onboarding-close.png */; };
 		838C6DF817FAD14D00BF947C /* icon-onboarding-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF417FAD14D00BF947C /* icon-onboarding-close@2x.png */; };
-		838C6DFA17FB0E6000BF947C /* IAPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 838C6DF917FB0E6000BF947C /* IAPopoverViewController.xib */; };
 		838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0B717DA097C004160DB /* IAHoverButton.m */; };
 		8392497218D7B49400EE72C7 /* CrashReporter.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
 		8392497318D7B6D900EE72C7 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
@@ -683,8 +681,6 @@
 		8348157D187AE007002ACDE0 /* bg-header-top-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-hover.png"; sourceTree = "<group>"; };
 		8348157E187AE007002ACDE0 /* bg-header-top-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-header-top-hover@2x.png"; sourceTree = "<group>"; };
 		8364316717DDC39B00572726 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../Externals/lib/libstation.dylib; sourceTree = "<group>"; };
-		8365685917F9BC350021D49D /* IAPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPopoverViewController.h; sourceTree = "<group>"; };
-		8365685A17F9BC350021D49D /* IAPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPopoverViewController.m; sourceTree = "<group>"; };
 		8368F2BD17F1890C00135C37 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		836A679218D790D600A15677 /* InfinitConversationElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationElement.h; sourceTree = "<group>"; };
 		836A679318D790D600A15677 /* InfinitConversationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationElement.m; sourceTree = "<group>"; };
@@ -722,7 +718,6 @@
 		838C6DF217FAD14D00BF947C /* icon-onboarding-close-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-onboarding-close-hover@2x.png"; sourceTree = "<group>"; };
 		838C6DF317FAD14D00BF947C /* icon-onboarding-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-onboarding-close.png"; sourceTree = "<group>"; };
 		838C6DF417FAD14D00BF947C /* icon-onboarding-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-onboarding-close@2x.png"; sourceTree = "<group>"; };
-		838C6DF917FB0E6000BF947C /* IAPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAPopoverViewController.xib; sourceTree = "<group>"; };
 		838FE0B617DA097C004160DB /* IAHoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAHoverButton.h; sourceTree = "<group>"; };
 		838FE0B717DA097C004160DB /* IAHoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAHoverButton.m; sourceTree = "<group>"; };
 		8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrashReporter.xcodeproj; path = ../plcrashreporter/CrashReporter.xcodeproj; sourceTree = "<group>"; };
@@ -1052,7 +1047,6 @@
 				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
 				831FB22217A90BB700696604 /* Notification View */,
-				8365684417F9BC200021D49D /* Popover View */,
 				837A7F5A17FC070600600ACD /* Report Problem Window */,
 				831E22D3183E561E00F0623C /* Search Controller */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
@@ -1254,16 +1248,6 @@
 				83B9744418842F540089E0E0 /* InfinitSendFileListCellView.m */,
 			);
 			name = "Combined Send View";
-			sourceTree = "<group>";
-		};
-		8365684417F9BC200021D49D /* Popover View */ = {
-			isa = PBXGroup;
-			children = (
-				8365685917F9BC350021D49D /* IAPopoverViewController.h */,
-				8365685A17F9BC350021D49D /* IAPopoverViewController.m */,
-				838C6DF917FB0E6000BF947C /* IAPopoverViewController.xib */,
-			);
-			name = "Popover View";
 			sourceTree = "<group>";
 		};
 		837A7F5A17FC070600600ACD /* Report Problem Window */ = {
@@ -2022,7 +2006,6 @@
 				839249F018D8AAA900EE72C7 /* conversation-icon-reject.png in Resources */,
 				839249D518D8AAA900EE72C7 /* conversation-icon-accept-hover@2x.png in Resources */,
 				83C99E2717AB9E3600AFF091 /* icon-files.png in Resources */,
-				838C6DFA17FB0E6000BF947C /* IAPopoverViewController.xib in Resources */,
 				832B548D188970AC0022CC33 /* icon-menu-bar-animated-red-13.png in Resources */,
 				83C99E2817AB9E3600AFF091 /* icon-files@2x.png in Resources */,
 				83C99E2B17ABA13100AFF091 /* icon-files-hover.png in Resources */,
@@ -2237,7 +2220,6 @@
 				83D4207517C51E7C00D4E168 /* IANotificationAvatarView.m in Sources */,
 				833C319117CCC85200941C09 /* IADesktopNotifier.mm in Sources */,
 				831AA69F17D0FCC00004AE8D /* IAMeManager.mm in Sources */,
-				8365685C17F9BC350021D49D /* IAPopoverViewController.m in Sources */,
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */,
