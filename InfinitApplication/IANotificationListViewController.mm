@@ -377,15 +377,17 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   IAUser* user = transaction.other_user;
   
   NSUInteger unread_notifications = [_delegate notificationList:self unreadTransactionsForUser:user];
+  NSUInteger need_action = [_delegate notificationList:self needActionTransactionsForUser:user];
+  NSUInteger not_done_transfers = [_delegate notificationList:self notDoneTransactionsForUser:user];
   NSUInteger active_transfers = [_delegate notificationList:self activeTransactionsForUser:user];
   
   [cell setupCellWithTransaction:transaction
          withRunningTransactions:active_transfers
-          andUnreadNotifications:unread_notifications
+          andNotDoneTransactions:not_done_transfers
                      andProgress:[_delegate notificationList:self transactionsProgressForUser:user]
                      andDelegate:self];
   InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
-  if (unread_notifications > 0 || transaction.view_mode == TRANSACTION_VIEW_WAITING_ACCEPT)
+  if (unread_notifications > 0 || need_action > 0)
     row_view.unread = YES;
   else
     row_view.unread = NO;
@@ -677,7 +679,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 {
   for (IATransaction* existing_transaction in _transaction_list)
   {
-    if ([existing_transaction.transaction_id isEqualToNumber:transaction.transaction_id])
+    if (existing_transaction.other_user == transaction.other_user)
     {
       NSUInteger row = [_transaction_list indexOfObject:existing_transaction];
       [self.table_view beginUpdates];

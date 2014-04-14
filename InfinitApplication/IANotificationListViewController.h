@@ -56,6 +56,12 @@
 wantsMarkTransactionRead:(IATransaction*)transaction;
 
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
+ needActionTransactionsForUser:(IAUser*)user;
+
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
+    notDoneTransactionsForUser:(IAUser*)user;
+
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
      activeTransactionsForUser:(IAUser*)user;
 
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender

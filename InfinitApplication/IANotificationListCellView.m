@@ -8,6 +8,8 @@
 
 #import "IANotificationListCellView.h"
 
+#import <surface/gap/enums.hh>
+
 #import "IAAvatarManager.h"
 #import "IAAvatarBadgeView.h"
 
@@ -151,7 +153,7 @@
 
 - (void)setupCellWithTransaction:(IATransaction*)transaction
          withRunningTransactions:(NSUInteger)running_transactions
-          andUnreadNotifications:(NSUInteger)unread_notifications
+          andNotDoneTransactions:(NSUInteger)not_done_transactions
                      andProgress:(CGFloat)progress
                      andDelegate:(id<IANotificationListCellProtocol>)delegate
 {
@@ -171,28 +173,25 @@
   
   [self.status_indicator setHidden:YES];
   
-  if (unread_notifications + running_transactions > 1)
+  if (not_done_transactions > 1)
   {
     NSString* message;
-    if (unread_notifications == 0)
+    if (not_done_transactions == 0)
     {
-      message = [NSString stringWithFormat:
-                 @"%ld %@", running_transactions,
-                 NSLocalizedString(@"running transfers", @"running transfers")];
+      message = [NSString stringWithFormat:@"%ld %@", running_transactions,
+                 NSLocalizedString(@"running transfers", nil)];
     }
     else if (running_transactions == 0)
     {
-      message = [NSString stringWithFormat:
-                 @"%ld %@", unread_notifications,
-                 NSLocalizedString(@"unread notifications", @"unread notifications")];
+      message = [NSString stringWithFormat:@"%ld %@", not_done_transactions - running_transactions,
+                 NSLocalizedString(@"pending transfers", nil)];
     }
     else
     {
-      message = [NSString stringWithFormat:
-                 @"%ld %@ %ld %@", unread_notifications,
-                 NSLocalizedString(@"unread and", @"unread and"),
+      message = [NSString stringWithFormat:@"%ld %@ %ld %@", not_done_transactions - running_transactions,
+                 NSLocalizedString(@"pending and", nil),
                  running_transactions,
-                 NSLocalizedString(@"running", @"running")];
+                 NSLocalizedString(@"running", nil)];
     }
     
     [self setInformationField:message];
@@ -201,12 +200,11 @@
     [self.status_indicator setHidden:NO];
   }
   // XXX Unread transaction is not latest. Should handle this better.
-  else if (running_transactions == 0 && unread_notifications == 1 &&
+  else if (running_transactions == 0 && not_done_transactions == 1 &&
            !transaction.is_new && !transaction.needs_action)
   {
     
-    NSString* message = NSLocalizedString(@"1 unread notification",
-                                          @"1 unread notification");
+    NSString* message = NSLocalizedString(@"1 pending transfer", nil);
     [self setInformationField:message];
     self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
     [self.status_indicator setHidden:NO];
@@ -228,7 +226,7 @@
   [self setLastActionTime:transaction.last_edit_timestamp];
   
   // Configure avatar view
-  [self setBadgeCount:running_transactions];
+  [self setBadgeCount:not_done_transactions];
   [self.avatar_view setTotalProgress:progress];
   [self.avatar_view setDelegate:self];
 }

@@ -740,7 +740,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     [_status_bar_icon setTransferring:YES];
   else
     [_status_bar_icon setTransferring:NO];
-  [_status_bar_icon setNumberOfItems:[_transaction_manager totalActiveTransactions]];
+  [_status_bar_icon setNumberOfItems:[_transaction_manager totalNotDoneTransactions]];
   [_status_bar_icon setFire:[_transaction_manager haveUnreadConversations]];
 }
 
@@ -1028,15 +1028,27 @@ wantsMarkTransactionRead:(IATransaction*)transaction
 }
 
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
-     activeTransactionsForUser:(IAUser*)user
+    notDoneTransactionsForUser:(IAUser*)user
 {
-  return [_transaction_manager activeTransactionsForUser:user];
+  return [_transaction_manager notDoneTransactionsForUser:user];
+}
+
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
+ needActionTransactionsForUser:(IAUser*)user
+{
+  return [_transaction_manager needActionTransactionsForUser:user];
 }
 
 - (NSUInteger)notificationList:(IANotificationListViewController*)sender
      unreadTransactionsForUser:(IAUser*)user
 {
   return [_transaction_manager unreadAndNeedingActionTransactionsForUser:user];
+}
+
+- (NSUInteger)notificationList:(IANotificationListViewController*)sender
+     activeTransactionsForUser:(IAUser*)user
+{
+  return [_transaction_manager activeTransactionsForUser:user];
 }
 
 - (BOOL)notificationList:(IANotificationListViewController*)sender
@@ -1159,7 +1171,7 @@ transactionsProgressForUser:(IAUser*)user
 
 - (void)delayShowClippyDragAndDrop
 {
-  if (_current_view_controller == nil)
+  if (_current_view_controller == nil && [self onboardingState:nil] != INFINIT_ONBOARDING_DONE)
     [self showClippyViewWithMode:INFINIT_CLIPPY_DRAG_AND_DROP];
 }
 
@@ -1281,7 +1293,7 @@ transactionsProgressForUser:(IAUser*)user
 {
   if ([self notificationViewOpen])
   {
-    if ([_transaction_manager activeTransactionsForUser:transaction.other_user] == 0 &&
+    if ([_transaction_manager notDoneTransactionsForUser:transaction.other_user] == 0 &&
         [_transaction_manager unreadAndNeedingActionTransactionsForUser:transaction.other_user] == 1)
     {
       [_transaction_manager markTransactionAsRead:transaction];

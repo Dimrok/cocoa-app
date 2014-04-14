@@ -25,7 +25,7 @@
 
 - (void)setupCellWithTransaction:(IATransaction*)transaction
          withRunningTransactions:(NSUInteger)running_transactions
-          andUnreadNotifications:(NSUInteger)unread_notifications
+          andNotDoneTransactions:(NSUInteger)not_done_transactions
                      andProgress:(CGFloat)progress
                      andDelegate:(id<IANotificationListCellProtocol>)delegate;
 
