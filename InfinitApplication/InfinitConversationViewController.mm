@@ -129,15 +129,20 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (width > 250)
     width = 250;
   self.person_view.fullname_width.constant = width;
-  if (_user.status == gap_user_status_online)
+  if (_user.is_ghost)
+  {
+    self.person_view.online_status.hidden = YES;
+  }
+  else if (_user.status == gap_user_status_online)
   {
     self.person_view.online_status.image = [IAFunctions imageNamed:@"icon-status-online"];
+    self.person_view.online_status.hidden = NO;
   }
   else
   {
     self.person_view.online_status.image = [IAFunctions imageNamed:@"conversation-icon-status-offline"];
+    self.person_view.online_status.hidden = NO;
   }
-  self.person_view.online_status.hidden = NO;
 }
 
 - (void)awakeFromNib
