@@ -14,9 +14,13 @@
 
 #import "IAViewController.h"
 
-@protocol IAWindowControllerProtocol;
+@class IANotificationWindow;
 
-@interface IAWindowController : NSWindowController <NSWindowDelegate>
+@protocol IAWindowControllerProtocol;
+@protocol IANotificationWindowProtocol;
+
+@interface IAWindowController : NSWindowController <NSWindowDelegate,
+                                                    IANotificationWindowProtocol>
 
 @property (atomic, readwrite) BOOL windowIsOpen;
 
