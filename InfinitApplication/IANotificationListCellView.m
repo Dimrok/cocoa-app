@@ -91,8 +91,15 @@
   switch (transaction.view_mode)
   {
     case TRANSACTION_VIEW_WAITING_ACCEPT:
-      self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
-      self.status_indicator.hidden = NO;
+      if (!transaction.from_me)
+      {
+        self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
+        self.status_indicator.hidden = NO;
+      }
+      else
+      {
+        self.status_indicator.hidden = YES;
+      }
       break;
 
     case TRANSACTION_VIEW_RUNNING:
@@ -200,7 +207,7 @@
     [self.status_indicator setHidden:NO];
   }
   // XXX Unread transaction is not latest. Should handle this better.
-  else if (running_transactions == 0 && not_done_transactions == 1 &&
+  else if (running_transactions == 0 &&
            !transaction.is_new && !transaction.needs_action)
   {
     
