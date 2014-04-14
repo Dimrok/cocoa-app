@@ -206,16 +206,6 @@
     self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
     [self.status_indicator setHidden:NO];
   }
-  // XXX Unread transaction is not latest. Should handle this better.
-  else if (running_transactions == 0 &&
-           !transaction.is_new && !transaction.needs_action)
-  {
-    
-    NSString* message = NSLocalizedString(@"1 pending transfer", nil);
-    [self setInformationField:message];
-    self.status_indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
-    [self.status_indicator setHidden:NO];
-  }
   else
   {
     if (transaction.files_count == 1)
