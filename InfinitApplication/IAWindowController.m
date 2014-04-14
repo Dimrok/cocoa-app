@@ -52,12 +52,9 @@
   return YES;
 }
 
-- (void)keyDown:(NSEvent*)theEvent
+- (void)cancelOperation:(id)sender
 {
-  if (theEvent.keyCode == 53) // ESC
-  {
-    [_keyboard_delegate notificationWindowGotEscapePressed:self];
-  }
+  [_keyboard_delegate notificationWindowGotEscapePressed:self];
 }
 
 @end
