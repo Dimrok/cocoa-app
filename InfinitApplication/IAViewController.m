@@ -108,7 +108,6 @@
 - (void)viewChanged
 {
   // Called just before view is shown
-  
 }
 
 - (void)aboutToChangeView
