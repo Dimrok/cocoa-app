@@ -18,21 +18,21 @@
 
 - (void)setFrame:(NSRect)frameRect
 {
-    [super setFrame:frameRect];
-    [self invalidateIntrinsicContentSize];
-    [self setNeedsDisplay:YES];
+  [super setFrame:frameRect];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
 }
 
 - (void)setFrameSize:(NSSize)newSize
 {
-    [super setFrameSize:newSize];
-    [self invalidateIntrinsicContentSize];
-    [self setNeedsDisplay:YES];
+  [super setFrameSize:newSize];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
 }
 
 - (NSSize)intrinsicContentSize
 {
-    return self.bounds.size;
+  return self.bounds.size;
 }
 
 @end
@@ -43,21 +43,21 @@
 
 - (void)setFrame:(NSRect)frameRect
 {
-    [super setFrame:frameRect];
-    [self invalidateIntrinsicContentSize];
-    [self setNeedsDisplay:YES];
+  [super setFrame:frameRect];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
 }
 
 - (void)setFrameSize:(NSSize)newSize
 {
-    [super setFrameSize:newSize];
-    [self invalidateIntrinsicContentSize];
-    [self setNeedsDisplay:YES];
+  [super setFrameSize:newSize];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
 }
 
 - (NSSize)intrinsicContentSize
 {
-    return self.bounds.size;
+  return self.bounds.size;
 }
 
 @end
@@ -68,26 +68,26 @@
 
 - (BOOL)isOpaque
 {
-    return YES;
+  return YES;
 }
 
 - (void)setFrame:(NSRect)frameRect
 {
-    [super setFrame:frameRect];
-    [self invalidateIntrinsicContentSize];
-    [self setNeedsDisplay:YES];
+  [super setFrame:frameRect];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
 }
 
 - (void)setFrameSize:(NSSize)newSize
 {
-    [super setFrameSize:newSize];
-    [self invalidateIntrinsicContentSize];
-    [self setNeedsDisplay:YES];
+  [super setFrameSize:newSize];
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsDisplay:YES];
 }
 
 - (NSSize)intrinsicContentSize
 {
-    return self.bounds.size;
+  return self.bounds.size;
 }
 
 @end
@@ -102,37 +102,38 @@
 
 - (BOOL)closeOnFocusLost
 {
-    return NO;
+  return NO;
 }
 
 - (void)viewChanged
 {
-    // Called just before view is shown
+  // Called just before view is shown
+  
 }
 
 - (void)aboutToChangeView
 {
-    // Called just before view is changed so that tidy up can occur, overload as needed
+  // Called just before view is changed so that tidy up can occur, overload as needed
 }
 
 //- Transaction and User Update Handling -----------------------------------------------------------
 
 - (void)transactionAdded:(IATransaction*)transaction
 {
-    // Do nothing by default, overload if needed
-    return;
+  // Do nothing by default, overload if needed
+  return;
 }
 
 - (void)transactionUpdated:(IATransaction*)transaction
 {
-    // Do nothing by default, overload if needed
-    return;
+  // Do nothing by default, overload if needed
+  return;
 }
 
 - (void)userUpdated:(IAUser*)user
 {
-    // Do nothing by default, overload if needed
-    return;
+  // Do nothing by default, overload if needed
+  return;
 }
 
 @end
