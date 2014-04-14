@@ -154,11 +154,21 @@ typedef enum __InfinitStatusBarIconColour
   
   if (_is_highlighted)
   {
+    NSRect rect;
     [[NSColor selectedMenuItemColor] set];
-    NSRect rect = NSMakeRect(self.frame.origin.x,
-                             self.frame.origin.y + 1.0,
-                             NSWidth(self.bounds),
-                             NSHeight(self.bounds) - 1.0);
+    NSLog(@"xxx backingScaleFactor: %f", [[NSScreen mainScreen] backingScaleFactor]);
+    // WORKAROUND: Highlighting of icon on non-retina screens is broken
+    if ([[NSScreen mainScreen] backingScaleFactor] == 1.0)
+    {
+      rect = NSMakeRect(self.frame.origin.x,
+                        self.frame.origin.y + 1.0,
+                        NSWidth(self.bounds),
+                        NSHeight(self.bounds) - 1.0);
+    }
+    else
+    {
+      rect = self.frame;
+    }
     NSRectFill(rect);
   }
   
