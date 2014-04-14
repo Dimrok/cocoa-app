@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13D38" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D38" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitConversationViewController">
@@ -48,7 +48,7 @@
                                     <rect key="frame" x="140" y="17" width="36" height="17"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="32" id="cwe-Lr-WtW"/>
+                                        <constraint firstAttribute="width" constant="32" id="hT5-zt-4rr"/>
                                     </constraints>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" focusRingType="none" alignment="center" title="User" id="mk3-og-OxA">
                                         <font key="font" size="13" name="Helvetica"/>
@@ -69,7 +69,7 @@
                             </constraints>
                             <connections>
                                 <outlet property="fullname" destination="hze-F6-Rxd" id="Sw6-pW-kKZ"/>
-                                <outlet property="fullname_width" destination="cwe-Lr-WtW" id="go7-P1-AXp"/>
+                                <outlet property="fullname_width" destination="hT5-zt-4rr" id="Zze-AH-773"/>
                                 <outlet property="online_status" destination="pzG-tP-8vj" id="sbw-AM-2pl"/>
                             </connections>
                         </customView>
@@ -81,7 +81,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView autoresizesSubviews="NO" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="86" rowSizeStyle="automatic" viewBased="YES" id="1Lg-g7-nsw">
-                                        <rect key="frame" x="0.0" y="0.0" width="317" height="1"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="317" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
