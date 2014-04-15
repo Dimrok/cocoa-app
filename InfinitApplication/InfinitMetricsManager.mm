@@ -42,7 +42,8 @@ static InfinitMetricsManager* _shared_instance = nil;
         {
           _send_metrics = YES;
           NSString* metrics_url =
-          [[NSString alloc] initWithFormat:@"http://%@:%@/ui", metrics_host, metrics_port];
+            [[NSString alloc] initWithFormat:@"http://%@:%@/ui", metrics_host, metrics_port];
+          ELLE_LOG("%s: will send metrics to: %s", self.description.UTF8String, metrics_url.UTF8String);
           _metrics_url = [[NSURL alloc] initWithString:metrics_url];
           NSString* user_agent = [[NSString alloc] initWithFormat:@"Infinit/%s (OS X)", INFINIT_VERSION];
           _http_headers = @{@"User-Agent": user_agent,
