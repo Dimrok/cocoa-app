@@ -183,7 +183,7 @@
   if (not_done_transactions > 1)
   {
     NSString* message;
-    if (not_done_transactions == 0)
+    if (not_done_transactions - running_transactions == 0)
     {
       message = [NSString stringWithFormat:@"%ld %@", running_transactions,
                  NSLocalizedString(@"running transfers", nil)];
