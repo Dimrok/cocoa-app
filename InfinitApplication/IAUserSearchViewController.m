@@ -263,16 +263,13 @@
                                                                 colour:IA_GREY_COLOUR(32.0)
                                                                 shadow:nil];
     _no_result_msg_str = [[NSAttributedString alloc] initWithString:
-                          NSLocalizedString(@"No results. Send to an email instead!",
-                                            @"no results. send to an email instead!")
+                          NSLocalizedString(@"No results. Send to an email instead.", nil)
                                                          attributes:no_result_msg_style];
     _invite_msg_str = [[NSAttributedString alloc] initWithString:
-                       NSLocalizedString(@"Click send to invite your friend!",
-                                         @"Click send to invite your friend!")
+                       NSLocalizedString(@"Click the envelope to send the file.", nil)
                                                       attributes:no_result_msg_style];
     _add_file_str = [[NSAttributedString alloc] initWithString:
-                     NSLocalizedString(@"Add a file to invite your friend.",
-                                       @"add a file to invite your friend.")
+                     NSLocalizedString(@"Don't forget to add a file.", nil)
                                                     attributes:no_result_msg_style];
     _static_image = [IAFunctions imageNamed:@"icon-search"];
     
