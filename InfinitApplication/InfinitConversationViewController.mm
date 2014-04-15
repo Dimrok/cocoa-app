@@ -51,6 +51,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   NSTimer* _progress_timer;
   NSMutableArray* _rows_with_progress;
   InfinitTooltipViewController* _tooltip;
+  BOOL _changing;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -66,6 +67,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     _user = user;
     _max_table_height = 320.0;
     _rows_with_progress = [[NSMutableArray alloc] init];
+    _changing = NO;
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarReceivedCallback:)
                                                name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -276,6 +278,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)updateProgress
 {
+  if (_changing)
+    return;
+
   for (NSNumber* row in _rows_with_progress)
   {
     if (row.integerValue < _elements.count)
@@ -566,6 +571,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)transactionAdded:(IATransaction*)transaction
 {
+  if (_changing)
+    return;
+
   if (![transaction.other_user isEqual:_user])
     return;
   
@@ -589,6 +597,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)transactionUpdated:(IATransaction*)transaction
 {
+  if (_changing)
+    return;
+
   if (![transaction.other_user isEqual:_user])
     return;
   
@@ -651,6 +662,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)aboutToChangeView
 {
+  _changing = YES;
   [_tooltip close];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [self setUpdatorRunning:NO];
