@@ -591,7 +591,6 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     ELLE_LOG("%s: logged out", self.description.UTF8String);
   else
     ELLE_WARN("%s: logout failed", self.description.UTF8String);
-  [_status_bar_icon setNumberOfItems:0];
 }
 
 - (void)logoutAndQuitCallback:(IAGapOperationResult*)result
@@ -692,6 +691,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 {
   if (result.success)
   {
+    [_status_bar_icon setNumberOfItems:0];
     ELLE_LOG("%s: logged out", self.description.UTF8String);
     [self performSelector:@selector(showLoginView) withObject:nil afterDelay:0.3];
   }
