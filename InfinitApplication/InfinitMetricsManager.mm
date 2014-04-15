@@ -64,6 +64,8 @@ static InfinitMetricsManager* _shared_instance = nil;
       _send_metrics = NO;
     }
   }
+  if (!_send_metrics)
+    ELLE_LOG("%s: will not send metrics", self.description.UTF8String);
   return self;
 }
 
