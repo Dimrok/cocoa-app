@@ -127,6 +127,7 @@
   [super setIndeterminate:flag];
   if (self.isIndeterminate)
   {
+    _doubleValue = 0.0;
     _ball_view = nil;
     _ball_view = [[InfinitConversationBallAnimation alloc] initWithFrame:self.bounds];
     [self addSubview:_ball_view];
