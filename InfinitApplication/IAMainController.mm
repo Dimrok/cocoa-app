@@ -517,7 +517,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
         
       case gap_email_not_confirmed:
         error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"Check your email to confirm your account.", nil)];
+                 NSLocalizedString(@"You need to confirm your email, check your inbox.", nil)];
         break;
         
       case gap_meta_down_with_message:
