@@ -627,6 +627,9 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 
 - (void)transactionAdded:(IATransaction*)transaction
 {
+  if (_changing)
+    return;
+
   if ([_transaction_list containsObject:transaction])
     return;
   
@@ -677,6 +680,8 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 
 - (void)transactionUpdated:(IATransaction*)transaction
 {
+  if (_changing)
+    return;
   for (IATransaction* existing_transaction in _transaction_list)
   {
     if (existing_transaction.other_user == transaction.other_user)
