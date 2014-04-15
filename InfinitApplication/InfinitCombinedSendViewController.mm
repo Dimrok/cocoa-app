@@ -432,7 +432,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 {
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Search by name or invite by email", nil);
+  NSString* message = NSLocalizedString(@"Search by name or send to an email address", nil);
   [_tooltip showPopoverForView:_user_search_controller.search_image
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
@@ -443,7 +443,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
 {
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Search by name or invite by email", nil);
+  NSString* message = NSLocalizedString(@"Search by name or send to an email address", nil);
   [_tooltip showPopoverForView:_user_search_controller.search_image
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
