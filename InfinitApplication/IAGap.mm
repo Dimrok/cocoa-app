@@ -160,39 +160,26 @@ void on_trophonius_unavailable();
 #ifdef BUILD_PRODUCTION
     production = true;
     
-    setenv("INFINIT_META_PROTOCOL", "https", 1);
-    setenv("INFINIT_META_HOST", "meta.8.0.api.production.infinit.io", 1);
-    setenv("INFINIT_META_PORT", "443", 1);
-    
-    setenv("INFINIT_TROPHONIUS_HOST", "trophonius.8.0.api.production.infinit.io", 1);
-    setenv("INFINIT_TROPHONIUS_PORT", "443", 1);
+    setenv("INFINIT_METRICS_INFINIT", "1", 1);
+    setenv("INFINIT_METRICS_INFINIT_HOST", "metrics.9.0.api.production.infinit.io", 1);
+    setenv("INFINIT_METRICS_INFINIT_PORT", "80", 1);
     
     setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 1);
-    
-    //        setenv("INFINIT_METRICS_INFINIT_HOST", "v3.metrics.api.production.infinit.io", 1);
-    //        setenv("INFINIT_METRICS_INFINIT_PORT", "80", 1);
 #else
     production = false;
     
     setenv("ELLE_REAL_ASSERT", "1", 1);
-    
-    setenv("INFINIT_META_PROTOCOL", "https", 1);
-    setenv("INFINIT_META_HOST", "development.infinit.io", 1);
-    setenv("INFINIT_META_PORT", "443", 1);
-    //        setenv("INFINIT_META_PROTOCOL", "http", 1);
-    //        setenv("INFINIT_META_HOST", "127.0.0.1", 1);
-    //        setenv("INFINIT_META_PORT", "8080", 1);
-    
-    setenv("INFINIT_TROPHONIUS_HOST", "development.infinit.io", 1);
-    setenv("INFINIT_TROPHONIUS_PORT", "444", 1);
-    //        setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
-    //        setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
-    
-    //        setenv("INFINIT_METRICS_HOST", "v3.metrics.api.development.infinit.io", 1);
-    //        setenv("INFINIT_METRICS_PORT", "80", 1);
-    //        setenv("INFINIT_METRICS_INFINIT", "1", 1);
-    //        setenv("INFINIT_METRICS_INFINIT_HOST", "127.0.0.1", 1);
-    //        setenv("INFINIT_METRICS_INFINIT_PORT", "8282", 1);
+
+//    setenv("INFINIT_META_PROTOCOL", "http", 1);
+//    setenv("INFINIT_META_HOST", "127.0.0.1", 1);
+//    setenv("INFINIT_META_PORT", "8080", 1);
+
+//    setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
+//    setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
+
+//    setenv("INFINIT_METRICS_INFINIT", "1", 1);
+//    setenv("INFINIT_METRICS_INFINIT_HOST", "127.0.0.1", 1);
+//    setenv("INFINIT_METRICS_INFINIT_PORT", "8282", 1);
     
     setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
@@ -277,11 +264,6 @@ void on_trophonius_unavailable();
     return [self login:email password:hash_password];
   }
   return res;
-}
-
-- (NSString*)meta_url
-{
-  return [NSString stringWithUTF8String:gap_meta_url(_state)];
 }
 
 - (gap_Status)pull_notifications:(int)count
@@ -661,6 +643,32 @@ return [NSString stringWithUTF8String:str]; \
 - (gap_Status)unfavorite:(NSNumber*)user_id
 {
   return gap_unfavorite(_state, user_id.unsignedIntValue);
+}
+
+- (gap_Status)send_last_crash_logs:(NSString*)user_name
+                   crash_file_path:(NSString*)crash_file_path
+                    last_state_log:(NSString*)last_state_log
+                    os_description:(NSString*)os_description
+                   additional_info:(NSString*)additional_info
+{
+  return gap_send_last_crash_logs(_state,
+                                  user_name.UTF8String,
+                                  crash_file_path.UTF8String,
+                                  last_state_log.UTF8String,
+                                  os_description.UTF8String,
+                                  additional_info.UTF8String);
+}
+
+- (gap_Status)send_user_report:(NSString*)user_name
+                       message:(NSString*)message
+                     file_path:(NSString*)file_path
+                os_description:(NSString*)os_description
+{
+  return gap_send_user_report(_state,
+                              user_name.UTF8String,
+                              message.UTF8String,
+                              file_path.UTF8String,
+                              os_description.UTF8String);
 }
 
 @end
