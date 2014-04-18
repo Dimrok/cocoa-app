@@ -46,8 +46,6 @@ typedef enum __InfinitStatusBarIconColour
   NSArray* _black_animated_images;
   NSArray* _red_animated_images;
 }
-
-@synthesize isClickable = _is_clickable;
 @synthesize isFire = _is_fire;
 @synthesize isHighlighted = _is_highlighted;
 @synthesize isLoggingIn = _logging_in;
@@ -64,7 +62,6 @@ typedef enum __InfinitStatusBarIconColour
                    nil];
     _number_of_items = 0;
     _connected = gap_user_status_offline;
-    _is_clickable = YES;
     _is_transferring = NO;
     _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
     [self registerForDraggedTypes:_drag_types];
@@ -345,10 +342,7 @@ typedef enum __InfinitStatusBarIconColour
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
-  if (_is_clickable)
-  {
-    [_delegate statusBarIconClicked:self];
-  }
+  [_delegate statusBarIconClicked:self];
 }
 
 //- Drag Operations --------------------------------------------------------------------------------
@@ -356,7 +350,7 @@ typedef enum __InfinitStatusBarIconColour
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
   NSPasteboard* paste_board = sender.draggingPasteboard;
-  if ([paste_board availableTypeFromArray:_drag_types] && _is_clickable)
+  if ([paste_board availableTypeFromArray:_drag_types])
   {
     [_delegate statusBarIconDragEntered:self];
     return NSDragOperationCopy;
