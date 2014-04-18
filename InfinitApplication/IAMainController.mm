@@ -760,8 +760,6 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (void)startOnboarding
 {
-  // XXX We need to check if it's a file that's been sent by someone or if we need to do the fake
-  // transfer.
   IATransaction* fake_transaction = [_transaction_manager makeOnboardingTransaction];
   if (fake_transaction == nil)
     return;
