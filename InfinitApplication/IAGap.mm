@@ -55,6 +55,12 @@ void on_critical_event(char const* str)
 static
 void on_trophonius_unavailable();
 
+static
+void on_deleted_favorite(uint32_t const user_id);
+
+static
+void on_deleted_swagger(uint32_t const user_id);
+
 @interface NotificationForwarder : NSObject
 
 - (id)init:(NSString*)msg withInfo:(NSDictionary*)info;
@@ -201,7 +207,9 @@ void on_trophonius_unavailable();
       (gap_critical_callback(_state, &on_critical_event) != gap_ok) ||
       (gap_kicked_out_callback(_state, &on_kicked_out) != gap_ok) ||
       (gap_avatar_available_callback(_state, &on_received_avatar) != gap_ok) ||
-      (gap_trophonius_unavailable_callback(_state, &on_trophonius_unavailable) != gap_ok))
+      (gap_trophonius_unavailable_callback(_state, &on_trophonius_unavailable) != gap_ok) ||
+      (gap_deleted_favorite_callback(_state, &on_deleted_favorite) != gap_ok) ||
+      (gap_deleted_swagger_callback(_state, &on_deleted_swagger) != gap_ok))
     // XXX add error callback
     //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
   {
@@ -434,6 +442,16 @@ return [NSString stringWithUTF8String:str]; \
 - (NSString*)user_handle:(NSNumber*)user_id
 {
   RETURN_CSTRING(gap_user_handle(_state, user_id.unsignedIntValue));
+}
+
+- (BOOL)user_ghost:(NSNumber*)user_id
+{
+  return gap_user_ghost(_state, user_id.unsignedIntValue);
+}
+
+- (BOOL)user_deleted:(NSNumber*)user_id
+{
+  return gap_user_deleted(_state, user_id.unsignedIntValue);
 }
 
 - (NSString*)user_realid:(NSNumber*)user_id
@@ -795,6 +813,42 @@ static void on_received_avatar(uint32_t const user_id)
   @catch (NSException* exception)
   {
     ELLE_WARN("on_received_avatar exception: %s", exception.reason.UTF8String);
+  }
+}
+
+static void on_deleted_favorite(uint32_t const user_id)
+{
+  ELLE_TRACE("on_deleted_favorite: %d", user_id);
+  @try
+  {
+    NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
+    if (user_id != 0)
+    {
+      [msg setValue:[NSNumber numberWithUnsignedInt:user_id] forKey:@"user_id"];
+    }
+    [IAGap sendNotif:IA_GAP_EVENT_FAVORITE_DELETED withInfo:msg];
+  }
+  @catch (NSException* exception)
+  {
+    ELLE_WARN("on_deleted_favorite exception: %s", exception.reason.UTF8String);
+  }
+}
+
+static void on_deleted_swagger(uint32_t const user_id)
+{
+  ELLE_TRACE("on_deleted_swagger: %d", user_id);
+  @try
+  {
+    NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
+    if (user_id != 0)
+    {
+      [msg setValue:[NSNumber numberWithUnsignedInt:user_id] forKey:@"user_id"];
+    }
+    [IAGap sendNotif:IA_GAP_EVENT_SWAGGER_DELETED withInfo:msg];
+  }
+  @catch (NSException* exception)
+  {
+    ELLE_WARN("on_deleted_swagger exception: %s", exception.reason.UTF8String);
   }
 }
 
