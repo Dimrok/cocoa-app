@@ -43,6 +43,8 @@
 
 - (void)addUser:(IAUser*)user;
 
+- (void)removeUser:(IAUser*)user;
+
 - (void)cursorAtEndOfSearchBox;
 
 - (NSArray*)recipientList;

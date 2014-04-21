@@ -398,6 +398,15 @@
   [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0.2];
 }
 
+- (void)removeUser:(IAUser*)user
+{
+  NSMutableArray* recipients = [NSMutableArray arrayWithArray:self.search_field.objectValue];
+  if ([recipients containsObject:user])
+    [recipients removeObject:user];
+  self.search_field.objectValue = recipients;
+  [_delegate searchViewInputsChanged:self];
+}
+
 - (void)addElement:(InfinitSearchElement*)element
 {
   if (element == nil)
@@ -743,7 +752,7 @@ displayStringForRepresentedObject:(id)representedObject
   [cell setUserFullname:element.fullname];
   if (element.user != nil)
   {
-    [cell setUserFavourite:element.user.is_favourite];
+    [cell setUserFavourite:element.user.favourite];
     [cell setUserHandle:element.user.handle];
   }
   else
