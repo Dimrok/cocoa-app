@@ -550,9 +550,8 @@ ELLE_LOG_COMPONENT("OSX.MainController");
         }
         
       default:
-        error = [NSString stringWithFormat:@"%@ (%d).",
-                 NSLocalizedString(@"Unknown login error", @"unknown login error"),
-                 result.status];
+        error = [NSString stringWithFormat:@"%@.",
+                 NSLocalizedString(@"Unknown login error", @"unknown login error")];
         break;
     }
     
