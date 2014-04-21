@@ -89,7 +89,7 @@ isInfinitUser:(IAUser*)user
                                              name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                            object:nil];
   _user = user;
-  if (_user.is_favourite)
+  if (_user.favourite)
     _rank += infinit_favourite_rank;
   if ([self userIsSwagger])
     _rank += infinit_swagger_rank;
@@ -108,7 +108,7 @@ isInfinitUser:(IAUser*)user
     _rank = infinit_match_rank;
     _delegate = delegate;
     _user = user;
-    if (_user.is_favourite)
+    if (_user.favourite)
       _rank += infinit_favourite_rank;
     if ([self userIsSwagger])
       _rank += infinit_swagger_rank;
