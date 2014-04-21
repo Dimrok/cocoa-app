@@ -1389,6 +1389,15 @@ transactionsProgressForUser:(IAUser*)user
   [_current_view_controller userUpdated:user];
 }
 
+- (void)userManager:(IAUserManager*)sender
+     hadUserDeleted:(IAUser*)user
+{
+  [_transaction_manager updateTransactionsForUser:user];
+  if (_current_view_controller == nil)
+    return;
+  [_current_view_controller userDeleted:user];
+}
+
 //- View Controller Protocol -----------------------------------------------------------------------
 
 - (InfinitOnboardingState)onboardingState:(IAViewController*)sender
