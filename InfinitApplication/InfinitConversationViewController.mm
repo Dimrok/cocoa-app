@@ -131,7 +131,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (width > 250)
     width = 250;
   self.person_view.fullname_width.constant = width;
-  if (_user.is_ghost)
+  if (_user.ghost || _user.deleted)
   {
     self.person_view.online_status.hidden = YES;
   }
@@ -153,6 +153,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
   [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
   [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
+  if (_user.deleted)
+  {
+    self.transfer_button.enabled = NO;
+    [self.transfer_button setToolTip:NSLocalizedString(@"User no longer on Infinit", nil)];
+  }
+  else
+  {
+    self.transfer_button.enabled = YES;
+  }
 }
 
 - (void)loadView
@@ -637,6 +646,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     return;
   
   [self configurePersonView];
+}
+
+- (void)userDeleted:(IAUser*)user
+{
+  if (![user isEqual:_user])
+    return;
+  [self configurePersonView];
+  self.transfer_button.enabled = NO;
+  [self.transfer_button setToolTip:NSLocalizedString(@"User no longer on Infinit", nil)];
 }
 
 //- Avatar Callbacks -------------------------------------------------------------------------------
