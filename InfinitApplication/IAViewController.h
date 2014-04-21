@@ -43,6 +43,7 @@
 - (void)transactionAdded:(IATransaction*)transaction;
 - (void)transactionUpdated:(IATransaction*)transaction;
 - (void)userUpdated:(IAUser*)user;
+- (void)userDeleted:(IAUser*)user;
 
 @end
 

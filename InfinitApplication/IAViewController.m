@@ -135,4 +135,10 @@
   return;
 }
 
+- (void)userDeleted:(IAUser*)user
+{
+  // Do nothing by default, overload if needed
+  return;
+}
+
 @end
