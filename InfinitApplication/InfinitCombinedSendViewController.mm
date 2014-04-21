@@ -833,4 +833,12 @@ wantsRemoveFavourite:(IAUser*)user
   [_delegate combinedSendView:self hadFilesDropped:files];
 }
 
+//- User Deleted -----------------------------------------------------------------------------------
+
+- (void)userDeleted:(IAUser*)user
+{
+  [_user_search_controller removeUser:user];
+  _recipient_list = [_user_search_controller recipientList];
+}
+
 @end
