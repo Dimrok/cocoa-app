@@ -257,7 +257,12 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   else
     [_rows_with_progress removeAllObjects];
   
-  NSUInteger row = 0;
+  NSUInteger row;
+  if (_connection_status == gap_user_status_online)
+    row = 0;
+  else
+    row = 1;
+
   for (IATransaction* transaction in _transaction_list)
   {
     if ([_delegate notificationList:self
@@ -415,7 +420,9 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
 }
 
 - (void)updateHeaderAndBackground
-{  
+{
+  if (self.table_view.numberOfRows == 0)
+    return;
   NSRange visible_rows = [self.table_view rowsInRect:self.table_view.visibleRect];
   InfinitNotificationListRowView* row_view = [self.table_view rowViewAtRow:visible_rows.location
                                                            makeIfNecessary:NO];
@@ -806,6 +813,7 @@ ELLE_LOG_COMPONENT("OSX.NotificationListViewController");
   }
   [self resizeContentView];
   [self.main_view layoutSubtreeIfNeeded];
+  [self updateListOfRowsWithProgress];
   [self updateHeaderAndBackground];
 }
 
