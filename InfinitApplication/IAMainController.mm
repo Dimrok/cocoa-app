@@ -727,10 +727,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   }
   else
   {
-    if (!_logging_in)
-    {
-      [[IAGapState instance] freeGap];
-    }
+    [[IAGapState instance] freeGap];
     [_delegate terminateApplication:self];
   }
 }
