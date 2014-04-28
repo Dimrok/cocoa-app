@@ -124,6 +124,7 @@
 
 - (void)setIndeterminate:(BOOL)flag
 {
+  [super stopAnimation:nil];
   [super setIndeterminate:flag];
   if (self.isIndeterminate)
   {
