@@ -720,9 +720,21 @@ doCommandBySelector:(SEL)commandSelector
 {
   if ([self inputsGood])
   {
+    NSMutableArray* destinations = [NSMutableArray array];
+    for (id element in _recipient_list)
+    {
+      if ([element isKindOfClass:InfinitSearchElement.class])
+      {
+        [destinations addObject:[element user]];
+      }
+      else if ([element isKindOfClass:NSString.class])
+      {
+        [destinations addObject:element];
+      }
+    }
     NSArray* transaction_ids = [_delegate combinedSendView:self
                                             wantsSendFiles:_file_list
-                                                   toUsers:_recipient_list
+                                                   toUsers:destinations
                                                withMessage:_message];
     if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
     {
@@ -763,6 +775,7 @@ doCommandBySelector:(SEL)commandSelector
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
   [self.view.window makeFirstResponder:self.note_field];
+  [[self.note_field currentEditor] moveToEndOfLine:nil];
 }
 
 - (void)openExpandedView

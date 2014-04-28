@@ -334,6 +334,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 - (void)clearResults
 {
   _first_results_in = NO;
+  _last_search_string = @"";
   [_result_list removeAllObjects];
   [_address_book_results removeAllObjects];
   [_infinit_name_results removeAllObjects];

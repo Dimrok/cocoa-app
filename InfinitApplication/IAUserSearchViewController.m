@@ -10,20 +10,12 @@
 
 #import "IAUserSearchViewController.h"
 #import "IAAvatarManager.h"
+#import "InfinitTokenAttachmentCell.h"
 
 @interface IAUserSearchViewController ()
 @end
 
 //- Search View Element ----------------------------------------------------------------------------
-
-@interface InfinitSearchElement : NSObject
-
-@property (nonatomic, readwrite) NSImage* avatar;
-@property (nonatomic, readwrite) NSString* email;
-@property (nonatomic, readwrite) NSString* fullname;
-@property (nonatomic, readwrite) IAUser* user;
-
-@end
 
 @implementation InfinitSearchElement
 
@@ -45,6 +37,18 @@
     _user = user;
   }
   return self;
+}
+
+- (BOOL)isEqual:(id)object
+{
+  if ([object isKindOfClass:InfinitSearchElement.class])
+  {
+    if ([_user isEqual:[object user]])
+      return YES;
+    else if (_email.length > 0 && [_email isEqualToString:[object email]])
+      return YES;
+  }
+  return NO;
 }
 
 - (NSString*)description
@@ -312,11 +316,12 @@
                                                  paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                          colour:IA_GREY_COLOUR(32.0)
                                                          shadow:nil];
+    
     NSString* placeholder_str = NSLocalizedString(@"Enter a name or email...",
                                                   @"Enter a name or email...");
-    NSAttributedString* search_placeholder = [[NSAttributedString alloc]
-                                              initWithString:placeholder_str
-                                              attributes:search_attrs];
+    NSAttributedString* search_placeholder =
+      [[NSAttributedString alloc] initWithString:placeholder_str
+                                      attributes:search_attrs];
     [self.search_field.cell setPlaceholderAttributedString:search_placeholder];
   }
   
@@ -390,7 +395,13 @@
   if ([temp.lastObject isKindOfClass:NSString.class])
     [temp removeObject:temp.lastObject];
   
-  [temp addObject:user];
+  InfinitSearchElement* element =
+    [[InfinitSearchElement alloc] initWithAvatar:[IAAvatarManager getAvatarForUser:user]
+                                           email:nil
+                                        fullname:user.fullname
+                                            user:user];
+  
+  [temp addObject:element];
   [self.search_field setObjectValue:temp];
   [_delegate searchViewInputsChanged:self];
   _token_count = [self.search_field.objectValue count];
@@ -401,8 +412,15 @@
 - (void)removeUser:(IAUser*)user
 {
   NSMutableArray* recipients = [NSMutableArray arrayWithArray:self.search_field.objectValue];
-  if ([recipients containsObject:user])
-    [recipients removeObject:user];
+  for (InfinitSearchElement* element in recipients)
+  {
+    if ([element.user isEqualTo:user])
+    {
+      [recipients removeObject:element];
+      break;
+    }
+  }
+
   self.search_field.objectValue = recipients;
   [_delegate searchViewInputsChanged:self];
 }
@@ -414,11 +432,8 @@
   NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
   if ([temp.lastObject isKindOfClass:NSString.class])
     [temp removeObject:temp.lastObject];
-  
-  if (element.user != nil)
-    [temp addObject:element.user];
-  else
-    [temp addObject:element.email];
+
+  [temp addObject:element];
   
   [self.search_field setObjectValue:temp];
   [_delegate searchViewInputsChanged:self];
@@ -427,8 +442,7 @@
 - (void)cursorAtEndOfSearchBox
 {
   // WORKAROUND: Because NSTokenField doesn't do moveToEndOfLine
-  NSUInteger text_len = self.search_field.currentEditor.string.length;
-  [self.search_field.currentEditor setSelectedRange:(NSRange){text_len, 0}];
+  [[self.search_field currentEditor] moveToEndOfLine:nil];
 }
 
 - (NSArray*)recipientList
@@ -523,7 +537,7 @@ doCommandBySelector:(SEL)commandSelector
 {
   if (control != self.search_field)
     return NO;
-  
+
   if (commandSelector == @selector(insertNewline:))
   {
     NSInteger row = self.table_view.selectedRow;
@@ -572,6 +586,7 @@ doCommandBySelector:(SEL)commandSelector
     else
     {
       [_delegate searchViewWantsLoseFocus:self];
+      
     }
     return YES;
   }
@@ -584,20 +599,6 @@ hasMenuForRepresentedObject:(id)representedObject
   return NO;
 }
 
-- (NSTokenStyle)tokenField:(NSTokenField*)tokenField
- styleForRepresentedObject:(id)representedObject
-{
-  if ([representedObject isKindOfClass:[IAUser class]])
-    return NSRoundedTokenStyle;
-  if ([representedObject isKindOfClass:[NSString class]] &&
-      [IAFunctions stringIsValidEmail:representedObject])
-  {
-    return NSRoundedTokenStyle;
-  }
-  
-  return NSPlainTextTokenStyle;
-}
-
 - (NSArray*)tokenField:(NSTokenField*)tokenField
       shouldAddObjects:(NSArray*)tokens
                atIndex:(NSUInteger)index
@@ -605,7 +606,7 @@ hasMenuForRepresentedObject:(id)representedObject
   // XXX Limit number of people that can be added to 10 for now. Should tell the user.
   if (index > 9)
     return [NSArray array];
-  NSMutableArray* allowed_tokens = [NSMutableArray arrayWithArray:tokens];
+  NSMutableSet* allowed_tokens = [NSMutableSet setWithArray:tokens];
   for (id new_token in allowed_tokens)
   {
     NSInteger count = 0;
@@ -619,45 +620,47 @@ hasMenuForRepresentedObject:(id)representedObject
   }
   for (id object in allowed_tokens)
   {
-    if (![object isKindOfClass:[IAUser class]] &&
+    if (![object isKindOfClass:[InfinitSearchElement class]] &&
         !([object isKindOfClass:[NSString class]] && [IAFunctions stringIsValidEmail:object]))
     {
       [allowed_tokens removeObject:object];
     }
   }
-  return allowed_tokens;
+  return allowed_tokens.allObjects;
 }
 
 - (NSString*)tokenField:(NSTokenField*)tokenField
 editingStringForRepresentedObject:(id)representedObject
 {
-  if ([representedObject class] == IAUser.class)
+  if ([representedObject isKindOfClass:InfinitSearchElement.class])
+  {
     return [representedObject fullname];
-  else if ([representedObject class] == NSString.class)
+  }
+  else if ([representedObject isKindOfClass:NSString.class])
+  {
     return representedObject;
+  }
   else
+  {
     return nil;
-}
-
-- (id)tokenField:(NSTokenField*)tokenField
-representedObjectForEditingString:(NSString*)editingString
-{
-  return editingString;
+  }
 }
 
 - (NSString*)tokenField:(NSTokenField*)tokenField
 displayStringForRepresentedObject:(id)representedObject
 {
-  if ([representedObject isKindOfClass:NSString.class] &&
-      [IAFunctions stringIsValidEmail:representedObject])
+  if ([representedObject isKindOfClass:InfinitSearchElement.class])
+  {
+    return [representedObject fullname];
+  }
+  else if ([representedObject isKindOfClass:NSString.class])
   {
     return representedObject;
   }
-  else if ([representedObject isKindOfClass:IAUser.class])
+  else
   {
-    return [(IAUser*)representedObject fullname];
+    return nil;
   }
-  return nil;
 }
 
 - (NSArray*)tokenField:(NSTokenField*)tokenField
@@ -672,6 +675,19 @@ displayStringForRepresentedObject:(id)representedObject
   return res;
 }
 
+- (BOOL)tokenField:(NSTokenField*)tokenField
+writeRepresentedObjects:(NSArray*)objects
+      toPasteboard:(NSPasteboard*)pboard
+{
+  return NO;
+}
+
+- (id)tokenField:(NSTokenField*)tokenField
+representedObjectForEditingString:(NSString*)editingString
+{
+  return nil;
+}
+
 //- Table Drawing Functions ------------------------------------------------------------------------
 
 - (void)clearResults
@@ -682,6 +698,10 @@ displayStringForRepresentedObject:(id)representedObject
   [self.search_box_view setNoResults:NO];
   [_delegate searchView:self
         changedToHeight:NSHeight(self.search_box_view.frame)];
+
+  // WORKAROUND: Centre placeholder text when field is empty.
+  if ([self.search_field.objectValue count] == 0)
+    [self.view.window makeFirstResponder:self.search_field];
 }
 
 - (void)updateResultsTable
@@ -903,26 +923,26 @@ displayStringForRepresentedObject:(id)representedObject
   
   for (InfinitSearchPersonResult* person in sender.result_list)
   {
-    if (person.infinit_user != nil) // User is on Infinit
+    if (person.infinit_user != nil)
     {
-      InfinitSearchElement* element = [[InfinitSearchElement alloc]
-                                       initWithAvatar:person.avatar
-                                       email:nil
-                                       fullname:person.fullname
-                                       user:person.infinit_user];
-      if ([tokens indexOfObject:element.user] == NSNotFound)
+      InfinitSearchElement* element =
+        [[InfinitSearchElement alloc] initWithAvatar:person.avatar
+                                               email:nil
+                                            fullname:person.fullname
+                                                user:person.infinit_user];
+      if ([tokens indexOfObject:element] == NSNotFound)
         [_search_results addObject:element];
     }
     else // Address book user
     {
       for (NSString* email in person.emails)
       {
-        InfinitSearchElement* element = [[InfinitSearchElement alloc]
-                                         initWithAvatar:person.avatar
-                                         email:email
-                                         fullname:person.fullname
-                                         user:nil];
-        if ([tokens indexOfObject:element.email] == NSNotFound)
+        InfinitSearchElement* element =
+          [[InfinitSearchElement alloc] initWithAvatar:person.avatar
+                                                 email:email
+                                              fullname:person.fullname
+                                                  user:nil];
+        if ([tokens indexOfObject:element] == NSNotFound)
           [_search_results addObject:element];
       }
     }
@@ -965,6 +985,29 @@ displayStringForRepresentedObject:(id)representedObject
   if (element.user == nil)
     return;
   [_delegate searchView:self wantsRemoveFavourite:element.user];
+}
+
+//- Pretty Tokens for Gaetan -----------------------------------------------------------------------
+
+- (NSTextAttachmentCell*)tokenField:(OEXTokenField*)tokenField
+ attachmentCellForRepresentedObject:(id)representedObject
+{
+  NSImage* avatar;
+  NSString* name;
+  if ([representedObject isKindOfClass:InfinitSearchElement.class])
+  {
+    avatar = [representedObject avatar];
+    name = [representedObject fullname];
+  }
+  else
+  {
+    avatar = [IAFunctions imageNamed:@"photo"];
+    name = representedObject;
+  }
+  InfinitTokenAttachmentCell* cell = [InfinitTokenAttachmentCell new];
+  cell.stringValue = name;
+  cell.avatar = avatar;
+  return cell;
 }
 
 @end

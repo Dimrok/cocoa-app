@@ -12,6 +12,8 @@
 #import "IAHoverButton.h"
 #import "InfinitSearchController.h"
 
+#import "OEXTokenField.h"
+
 @protocol IAUserSearchViewProtocol;
 
 @interface IASearchBoxView : NSView
@@ -23,7 +25,7 @@
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
                                                           NSTableViewDelegate,
                                                           NSTextViewDelegate,
-                                                          NSTokenFieldDelegate,
+                                                          OEXTokenFieldDelegate,
                                                           IASearchResultsCellProtocol,
                                                           InfinitSearchControllerProtocol>
 
@@ -75,5 +77,19 @@
 - (void)searchViewInputsChanged:(IAUserSearchViewController*)sender;
 
 - (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender;
+
+@end
+
+@interface InfinitSearchElement : NSObject
+
+@property (nonatomic, readwrite) NSImage* avatar;
+@property (nonatomic, readwrite) NSString* email;
+@property (nonatomic, readwrite) NSString* fullname;
+@property (nonatomic, readwrite) IAUser* user;
+
+- (id)initWithAvatar:(NSImage*)avatar
+               email:(NSString*)email
+            fullname:(NSString*)fullname
+                user:(IAUser*)user;
 
 @end
