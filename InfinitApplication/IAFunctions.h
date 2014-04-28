@@ -27,6 +27,9 @@ typedef enum __INFINIT_OS_X_VERSION
 + (NSBezierPath*)roundedTopBezierWithRect:(NSRect)rect
                              cornerRadius:(CGFloat)corner_radius;
 
++ (NSBezierPath*)roundedLeftSideBezierWithRect:(NSRect)rect
+                                  cornerRadius:(CGFloat)corner_radius;
+
 + (NSImage*)imageNamed:(NSString*)imageName;
 
 + (BOOL)stringIsValidEmail:(NSString*)str;

@@ -62,6 +62,30 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   return res;
 }
 
++ (NSBezierPath*)roundedLeftSideBezierWithRect:(NSRect)rect
+                                  cornerRadius:(CGFloat)corner_radius
+{
+  NSBezierPath* res = [NSBezierPath bezierPath];
+  CGFloat x = rect.origin.x;
+  CGFloat y = rect.origin.y;
+  CGFloat width = NSWidth(rect);
+  CGFloat height = NSHeight(rect);
+  [res moveToPoint:NSMakePoint(x + corner_radius, y)];
+  [res lineToPoint:NSMakePoint(x + width, y)];
+  [res lineToPoint:NSMakePoint(x + width, y + height)];
+  [res lineToPoint:NSMakePoint(x + corner_radius, y + height)];
+  [res appendBezierPathWithArcWithCenter:NSMakePoint(x + corner_radius, y + height - corner_radius)
+                                  radius:corner_radius
+                              startAngle:90.0
+                                endAngle:180.0];
+  [res lineToPoint:NSMakePoint(x, y + corner_radius)];
+  [res appendBezierPathWithArcWithCenter:NSMakePoint(x + corner_radius, y + corner_radius)
+                                  radius:corner_radius
+                              startAngle:180.0
+                                endAngle:270.0];
+  return res;
+}
+
 + (NSBundle*)bundle
 {
 	static NSBundle* bundle=nil;
