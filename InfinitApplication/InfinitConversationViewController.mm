@@ -126,7 +126,16 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 - (void)configurePersonView
 {
   [self.person_view setDelegate:self];
-  self.person_view.fullname.stringValue = _user.fullname;
+  if (_user.deleted)
+  {
+    NSString* deleted_str = NSLocalizedString(@"deleted", nil);
+    self.person_view.fullname.stringValue =
+      [NSString stringWithFormat:@"%@ (%@)", _user.fullname, deleted_str];
+  }
+  else
+  {
+    self.person_view.fullname.stringValue = _user.fullname;
+  }
   CGFloat width = [self.person_view.fullname.attributedStringValue size].width;
   if (width > 250)
     width = 250;
@@ -139,11 +148,13 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   {
     self.person_view.online_status.image = [IAFunctions imageNamed:@"icon-status-online"];
     self.person_view.online_status.hidden = NO;
+    self.person_view.online_status.toolTip = NSLocalizedString(@"Online", nil);
   }
   else
   {
     self.person_view.online_status.image = [IAFunctions imageNamed:@"conversation-icon-status-offline"];
     self.person_view.online_status.hidden = NO;
+    self.person_view.online_status.toolTip = NSLocalizedString(@"Offline", nil);
   }
 }
 
