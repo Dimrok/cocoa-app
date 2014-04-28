@@ -144,6 +144,8 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (BOOL)tryAutomaticLogin
 {
+  if ([_delegate applicationUpdating])
+    return NO;
   _autologin_cooling_down = NO;
   NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
   NSString* password = [self getPasswordForUsername:username];
@@ -731,6 +733,14 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     }
     [_delegate terminateApplication:self];
   }
+}
+
+- (BOOL)canUpdate
+{
+  if (![_transaction_manager hasTransferringTransaction] && _current_view_controller == nil)
+    return YES;
+  else
+    return NO;
 }
 
 - (void)updateStatusBarIcon

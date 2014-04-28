@@ -57,6 +57,8 @@
 
 - (void)handleQuit;
 
+- (BOOL)canUpdate;
+
 @end
 
 @protocol IAMainControllerProtocol <NSObject>
@@ -64,5 +66,7 @@
 - (void)terminateApplication:(IAMainController*)sender;
 
 - (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender;
+
+- (BOOL)applicationUpdating;
 
 @end
