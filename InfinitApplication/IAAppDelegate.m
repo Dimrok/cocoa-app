@@ -67,7 +67,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 
 - (void)delayedTryUpdate:(NSInvocation*)invocation
 {
-  if (_controller != nil && [_controller canUpdate])
+  if ([_controller canUpdate])
   {
     _updating = YES;
     _update_invocation = invocation;
@@ -86,6 +86,7 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 {
   if (_controller == nil)
   {
+     _updating = YES;
     [invocation invoke];
     return;
   }
@@ -176,10 +177,10 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 - (IBAction)cleanQuit:(id)sender
 {
   [_controller handleQuit];
-  // If there's a problem quiting after 10 sec, terminate
+  // If there's a problem quiting after 15 sec, terminate
   [self performSelector:@selector(delayedTerminate)
              withObject:nil
-             afterDelay:10.0];
+             afterDelay:15.0];
 }
 
 - (void)delayedTerminate
