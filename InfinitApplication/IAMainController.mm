@@ -721,15 +721,9 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     [_status_bar_icon setHidden:YES];
     [self closeNotificationWindow];
   }
-  if ([[IAGapState instance] logged_in])
-  {
-    [[IAGapState instance] logout:@selector(logoutAndQuitCallback:) onObject:self];
-  }
-  else
-  {
-    [[IAGapState instance] freeGap];
-    [_delegate terminateApplication:self];
-  }
+
+  [[IAGapState instance] freeGap];
+  [_delegate terminateApplication:self];
 }
 
 - (BOOL)canUpdate
