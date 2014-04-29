@@ -50,14 +50,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
   _updating = YES;
   _update_invocation = invocation;
   [_controller handleQuit];
-  [self performSelector:@selector(updateOnTimeout) withObject:nil afterDelay:15.0];
   return YES;
-}
-
-- (void)updateOnTimeout
-{
-  NSLog(@"%@ Took too long cleaning up, invoking update", self);
-  [_update_invocation invoke];
 }
 
 - (void)updaterWillRelaunchApplication:(SUUpdater*)updater
@@ -67,12 +60,9 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 
 - (void)delayedTryUpdate:(NSInvocation*)invocation
 {
-  if ([_controller canUpdate])
+  if (_controller == nil || [_controller canUpdate])
   {
-    _updating = YES;
-    _update_invocation = invocation;
-    [_controller handleQuit];
-    [self performSelector:@selector(updateOnTimeout) withObject:nil afterDelay:15.0];
+    [invocation invoke];
   }
   else
   {
@@ -84,18 +74,9 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 willInstallUpdateOnQuit:(SUAppcastItem*)update
 immediateInstallationInvocation:(NSInvocation*)invocation
 {
-  if (_controller == nil)
+  if (_controller == nil || [_controller canUpdate])
   {
-     _updating = YES;
     [invocation invoke];
-    return;
-  }
-  if ([_controller canUpdate])
-  {
-    _updating = YES;
-    _update_invocation = invocation;
-    [_controller handleQuit];
-    [self performSelector:@selector(updateOnTimeout) withObject:nil afterDelay:15.0];
   }
   else
   {
@@ -140,8 +121,6 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
-  if (_updating)
-    return;
   _controller = [[IAMainController alloc] initWithDelegate:self];
   if (_infinit_url != nil) // Infinit was launched with a link
     [_controller handleInfinitLink:_infinit_url];
@@ -198,6 +177,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
     NSLog(@"%@ Invoking update: %@", self, _update_invocation);
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [_update_invocation invoke];
+    NSLog(@"%@ Update invoked", self);
   }
   else
   {
