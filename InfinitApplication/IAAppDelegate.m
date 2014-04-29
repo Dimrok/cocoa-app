@@ -28,12 +28,12 @@
 
 - (void)setupUpdater
 {
-//#ifdef BUILD_PRODUCTION
+#ifdef BUILD_PRODUCTION
   [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
   [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
   [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
   [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
-//#endif
+#endif
 }
 
 // Overloaded so that we check for updates on the first launch
@@ -189,9 +189,9 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 - (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender
 {
   NSLog(@"%@ Checking for update verbosely", self);
-//#ifdef BUILD_PRODUCTION
+#ifdef BUILD_PRODUCTION
   [[SUUpdater sharedUpdater] checkForUpdates:nil];
-//#endif
+#endif
 }
 
 - (BOOL)applicationUpdating
