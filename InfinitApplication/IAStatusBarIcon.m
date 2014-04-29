@@ -168,48 +168,29 @@ typedef enum __InfinitStatusBarIconColour
     NSRectFill(rect);
   }
   
-  if (_is_highlighted)
+  switch (_current_mode)
   {
-    _current_mode = STATUS_BAR_ICON_CLICKED;
-    _icon_view.image = _icon[STATUS_BAR_ICON_CLICKED];
-  }
-  else if (_logging_in)
-  {
-    _current_mode = STATUS_BAR_ICON_LOGGING_IN;
-    _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
-  }
-  else if (_connected == gap_user_status_offline)
-  {
-    _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
-    _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
-  }
-  else if (_is_transferring && _is_fire)
-  {
-    if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
-    {
-      _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
+    case STATUS_BAR_ICON_CLICKED:
+      _icon_view.image = _icon[STATUS_BAR_ICON_CLICKED];
+      break;
+    case STATUS_BAR_ICON_LOGGING_IN:
+      _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
+      break;
+    case STATUS_BAR_ICON_NO_CONNECTION:
+      _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
+      break;
+    case STATUS_BAR_ICON_FIRE_ANIMATED:
+      // Don't set icon here as the animation changes the icon.
+      break;
+    case STATUS_BAR_ICON_ANIMATED:
+      // Don't set icon here as the animation changes the icon.
+      break;
+    case STATUS_BAR_ICON_FIRE:
       _icon_view.image = _icon[STATUS_BAR_ICON_FIRE];
-      [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED];
-    }
-  }
-  else if (!_is_transferring && _is_fire)
-  {
-    _current_mode = STATUS_BAR_ICON_FIRE;
-    _icon_view.image = _icon[STATUS_BAR_ICON_FIRE];
-  }
-  else if (_is_transferring && !_is_fire)
-  {
-    if (_current_mode != STATUS_BAR_ICON_ANIMATED)
-    {
-      _current_mode = STATUS_BAR_ICON_ANIMATED;
+      break;
+    case STATUS_BAR_ICON_NORMAL:
       _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
-      [self showAnimatedIconForMode:STATUS_BAR_ICON_ANIMATED];
-    }
-  }
-  else
-  {
-    _current_mode = STATUS_BAR_ICON_NORMAL;
-    _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
+      break;
   }
   
   CGFloat x;
@@ -292,24 +273,70 @@ typedef enum __InfinitStatusBarIconColour
 
 //- General Functions ------------------------------------------------------------------------------
 
+- (void)determineCurrentMode
+{
+  @synchronized(self)
+  {
+    BOOL last_mode = _current_mode;
+    if (_is_highlighted)
+    {
+      _current_mode = STATUS_BAR_ICON_CLICKED;
+    }
+    else if (_logging_in)
+    {
+      _current_mode = STATUS_BAR_ICON_LOGGING_IN;
+    }
+    else if (_connected == gap_user_status_offline)
+    {
+      _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
+    }
+    else if (_is_transferring && _is_fire)
+    {
+      if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
+      {
+        _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
+        [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED];
+      }
+    }
+    else if (!_is_transferring && _is_fire)
+    {
+      _current_mode = STATUS_BAR_ICON_FIRE;
+    }
+    else if (_is_transferring && !_is_fire)
+    {
+      if (_current_mode != STATUS_BAR_ICON_ANIMATED)
+      {
+        _current_mode = STATUS_BAR_ICON_ANIMATED;
+        [self showAnimatedIconForMode:STATUS_BAR_ICON_ANIMATED];
+      }
+    }
+    else
+    {
+      _current_mode = STATUS_BAR_ICON_NORMAL;
+    }
+    if (last_mode != _current_mode)
+      [self setNeedsDisplay:YES];
+  }
+}
+
 - (void)setConnected:(gap_UserStatus)connected
 {
   _connected = connected;
   _icon_view.alphaValue = 1.0;
-  [self setNeedsDisplay:YES];
+  [self determineCurrentMode];
 }
 
 - (void)setFire:(BOOL)fire
 {
   _is_fire = fire;
-  [self setNeedsDisplay:YES];
+  [self determineCurrentMode];
 }
 
 - (void)setHighlighted:(BOOL)is_highlighted
 {
   _is_highlighted = is_highlighted;
   _icon_view.alphaValue = 1.0;
-  [self setNeedsDisplay:YES];
+  [self determineCurrentMode];
   // Only send metric when the panel is opened
   if (_is_highlighted)
     [InfinitMetricsManager sendMetric:INFINIT_METRIC_OPEN_PANEL];
@@ -322,7 +349,7 @@ typedef enum __InfinitStatusBarIconColour
     _icon_view.alphaValue = 0.67;
   else
     _icon_view.alphaValue = 1.0;
-  [self setNeedsDisplay:YES];
+  [self determineCurrentMode];
 }
 
 - (void)setNumberOfItems:(NSInteger)number_of_items
@@ -335,7 +362,7 @@ typedef enum __InfinitStatusBarIconColour
 {
   _is_transferring = isTransferring;
   _icon_view.alphaValue = 1.0;
-  [self setNeedsDisplay:YES];
+  [self determineCurrentMode];
 }
 
 //- Click Operations -------------------------------------------------------------------------------
