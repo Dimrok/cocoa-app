@@ -62,6 +62,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 {
   if (_controller == nil || [_controller canUpdate])
   {
+    _updating = YES;
     [invocation invoke];
   }
   else
@@ -76,6 +77,7 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 {
   if (_controller == nil || [_controller canUpdate])
   {
+    _updating = YES;
     [invocation invoke];
   }
   else
