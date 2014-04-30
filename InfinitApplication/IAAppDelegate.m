@@ -49,7 +49,10 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 {
   _updating = YES;
   _update_invocation = invocation;
-  [_controller handleQuit];
+  if (_controller != nil)
+    [_controller handleQuit];
+  else
+    [self terminateApplication:nil];
   return YES;
 }
 
@@ -67,7 +70,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
   }
   else
   {
-    [self performSelector:@selector(delayedTryUpdate:) withObject:invocation afterDelay:(10 * 60)];
+    [self performSelector:@selector(delayedTryUpdate:) withObject:invocation afterDelay:(60 * 5)];
   }
 }
 
@@ -82,7 +85,7 @@ immediateInstallationInvocation:(NSInvocation*)invocation
   }
   else
   {
-    [self performSelector:@selector(delayedTryUpdate:) withObject:invocation afterDelay:(10 * 60)];
+    [self performSelector:@selector(delayedTryUpdate:) withObject:invocation afterDelay:(60 * 5)];
   }
 }
 
