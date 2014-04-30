@@ -725,7 +725,10 @@ doCommandBySelector:(SEL)commandSelector
     {
       if ([element isKindOfClass:InfinitSearchElement.class])
       {
-        [destinations addObject:[element user]];
+        if ([element user] == nil)
+          [destinations addObject:[element email]];
+        else
+          [destinations addObject:[element user]];
       }
       else if ([element isKindOfClass:NSString.class])
       {
