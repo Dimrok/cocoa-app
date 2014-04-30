@@ -728,7 +728,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (BOOL)canUpdate
 {
-  if (![_transaction_manager hasTransferringTransaction] && _current_view_controller == nil)
+  if (!_logging_in && ![_transaction_manager hasTransferringTransaction] && _current_view_controller == nil)
     return YES;
   else
     return NO;
