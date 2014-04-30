@@ -720,30 +720,7 @@ doCommandBySelector:(SEL)commandSelector
 {
   if ([self inputsGood])
   {
-    NSMutableArray* destinations = [NSMutableArray array];
-    for (id element in _recipient_list)
-    {
-      if ([element isKindOfClass:InfinitSearchElement.class])
-      {
-        if ([element user] == nil)
-          [destinations addObject:[element email]];
-        else
-          [destinations addObject:[element user]];
-      }
-      else if ([element isKindOfClass:NSString.class])
-      {
-        [destinations addObject:element];
-      }
-    }
-    NSArray* transaction_ids = [_delegate combinedSendView:self
-                                            wantsSendFiles:_file_list
-                                                   toUsers:destinations
-                                               withMessage:_message];
-    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
-    {
-      [_delegate combinedSendView:self wantsSetOnboardingSendTransactionId:transaction_ids[0]];
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILE_SENDING];
-    }
+    [self doSend];
   }
 }
 
@@ -825,10 +802,35 @@ wantsRemoveFavourite:(IAUser*)user
 {
   if ([self inputsGood])
   {
-    [_delegate combinedSendView:self
-                 wantsSendFiles:_file_list
-                        toUsers:_recipient_list
-                    withMessage:_message];
+    [self doSend];
+  }
+}
+
+- (void)doSend
+{
+  NSMutableArray* destinations = [NSMutableArray array];
+  for (id element in _recipient_list)
+  {
+    if ([element isKindOfClass:InfinitSearchElement.class])
+    {
+      if ([element user] == nil)
+        [destinations addObject:[element email]];
+      else
+        [destinations addObject:[element user]];
+    }
+    else if ([element isKindOfClass:NSString.class])
+    {
+      [destinations addObject:element];
+    }
+  }
+  NSArray* transaction_ids = [_delegate combinedSendView:self
+                                          wantsSendFiles:_file_list
+                                                 toUsers:destinations
+                                             withMessage:_message];
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
+  {
+    [_delegate combinedSendView:self wantsSetOnboardingSendTransactionId:transaction_ids[0]];
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILE_SENDING];
   }
 }
 
