@@ -51,6 +51,11 @@ typedef enum __InfinitStatusBarIconColour
 @synthesize isLoggingIn = _logging_in;
 @synthesize isTransferring = _is_transferring;
 
+static NSDictionary* _red_style;
+static NSDictionary* _black_style;
+static NSDictionary* _white_style;
+static NSDictionary* _grey_style;
+
 //- Initialisation ---------------------------------------------------------------------------------
 
 - (id)initWithFrame:(NSRect)frame
@@ -65,6 +70,7 @@ typedef enum __InfinitStatusBarIconColour
     _is_transferring = NO;
     _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
     [self registerForDraggedTypes:_drag_types];
+    [self setWantsLayer:YES];
   }
   return self;
 }
@@ -97,6 +103,27 @@ typedef enum __InfinitStatusBarIconColour
     CGFloat height = [[NSStatusBar systemStatusBar] thickness];
     NSRect rect = NSMakeRect(0.0, 0.0, _length, height);
     self = [self initWithFrame:rect];
+
+    if (_red_style == nil)
+    {
+      NSFont* font = [NSFont systemFontOfSize:15.0];
+      _white_style = [IAFunctions textStyleWithFont:font
+                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                             colour:IA_GREY_COLOUR(255.0)
+                                             shadow:nil];
+      _red_style = [IAFunctions textStyleWithFont:font
+                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                           colour:IA_RGB_COLOUR(221.0, 0.0, 0.0)
+                                           shadow:nil];
+      _black_style = [IAFunctions textStyleWithFont:font
+                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                             colour:IA_GREY_COLOUR(32.0)
+                                             shadow:nil];
+      _grey_style = [IAFunctions textStyleWithFont:font
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_GREY_COLOUR(93.0)
+                                            shadow:nil];
+    }
   }
   return self;
 }
@@ -104,50 +131,30 @@ typedef enum __InfinitStatusBarIconColour
 - (void)drawRect:(NSRect)dirtyRect
 {
   NSAttributedString* notifications_str;
-  _length = _icon[0].size.width + 15.0;
   if (_number_of_items > 0)
   {
     NSDictionary* style;
-    NSFont* font = [NSFont systemFontOfSize:15.0];
     if (_is_highlighted)
     {
-      style = [IAFunctions textStyleWithFont:font
-                              paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                      colour:IA_GREY_COLOUR(255.0)
-                                      shadow:nil];
+      style = _white_style;
     }
     else if (_connected == gap_user_status_online && _is_fire)
     {
-      style = [IAFunctions textStyleWithFont:font
-                              paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                      colour:IA_RGB_COLOUR(221.0, 0.0, 0.0)
-                                      shadow:nil];
+      style = _red_style;
     }
     else if (_connected == gap_user_status_online && !_is_fire)
     {
-      style = [IAFunctions textStyleWithFont:font
-                              paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                      colour:IA_GREY_COLOUR(32.0)
-                                      shadow:nil];
+      style = _black_style;
     }
     else if (_connected != gap_user_status_online)
     {
-      style = [IAFunctions textStyleWithFont:font
-                              paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                      colour:IA_GREY_COLOUR(93.0)
-                                      shadow:nil];
+      style = _grey_style;
     }
-    NSString* number_str = _number_of_items > 99 ?
-    @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
+    NSString* number_str =
+      _number_of_items > 99 ? @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
     notifications_str = [[NSAttributedString alloc] initWithString:number_str
                                                         attributes:style];
-    if (_number_of_items > 9)
-      _length += notifications_str.length + 20.0;
-    else
-      _length += notifications_str.length + 10.0;
   }
-  
-  self.frame = NSMakeRect(0.0, 0.0, _length, [[NSStatusBar systemStatusBar] thickness]);
   
   if (_is_highlighted)
   {
@@ -267,7 +274,9 @@ typedef enum __InfinitStatusBarIconColour
      if (start_mode == _current_mode)
        [self showAnimatedIconForMode:mode];
      else
+     {
        return;
+     }
    }];
 }
 
@@ -355,6 +364,19 @@ typedef enum __InfinitStatusBarIconColour
 - (void)setNumberOfItems:(NSInteger)number_of_items
 {
   _number_of_items = number_of_items;
+  _length = _icon[STATUS_BAR_ICON_NORMAL].size.width + 15.0;
+  if (number_of_items > 0)
+  {
+    NSString* number_str = _number_of_items > 99 ?
+    @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
+    NSAttributedString* notifications_str = [[NSAttributedString alloc] initWithString:number_str
+                                                                            attributes:_black_style];
+    if (_number_of_items > 9)
+      _length += notifications_str.length + 20.0;
+    else
+      _length += notifications_str.length + 10.0;
+  }
+  self.frame = NSMakeRect(0.0, 0.0, _length, [[NSStatusBar systemStatusBar] thickness]);
   [self setNeedsDisplay:YES];
 }
 
