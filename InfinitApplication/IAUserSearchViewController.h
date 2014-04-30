@@ -31,7 +31,7 @@
 
 @property (nonatomic, strong) IBOutlet NSScrollView* results_view;
 @property (nonatomic, strong) IBOutlet IASearchBoxView* search_box_view;
-@property (nonatomic, strong) IBOutlet NSTokenField* search_field;
+@property (nonatomic, strong) IBOutlet OEXTokenField* search_field;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_field_width;
 @property (nonatomic, strong) IBOutlet NSImageView* search_image;
 @property (nonatomic, strong) IBOutlet NSProgressIndicator* search_spinner;
