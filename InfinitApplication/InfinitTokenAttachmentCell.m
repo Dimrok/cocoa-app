@@ -25,12 +25,12 @@ static NSDictionary* _sel_attrs;
                                                                        size:13.0];
       _norm_attrs = [IAFunctions textStyleWithFont:token_font
                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:IA_GREY_COLOUR(32.0)
+                                            colour:IA_RGB_COLOUR(72.0, 86.0, 92.0)
                                             shadow:nil];
       
       _sel_attrs = [IAFunctions textStyleWithFont:token_font
                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                           colour:IA_GREY_COLOUR(255.0)
+                                           colour:IA_RGB_COLOUR(59.0, 76.0, 83.0)
                                            shadow:nil];
     }
   }
@@ -58,18 +58,27 @@ static NSDictionary* _sel_attrs;
   bg.lineWidth = 1.0;
   if (self.tokenDrawingMode == OEXTokenDrawingModeSelected)
   {
-    [IA_RGB_COLOUR(197.0, 209.0, 213.0) set];
+    [IA_RGB_COLOUR(222.0, 234.0, 238.0) set];
     [bg fill];
-    [IA_RGB_COLOUR(191.0, 204.0, 209.0) set];
+    [IA_RGB_COLOUR(185.0, 197.0, 202.0) set];
     [bg stroke];
     self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
                                                                  attributes:_sel_attrs];
+  }
+  else if (self.tokenDrawingMode == OEXTokenDrawingModeHighlighted)
+  {
+    [IA_RGB_COLOUR(231.0, 239.0, 241.0) set];
+    [bg fill];
+    [IA_RGB_COLOUR(188.0, 202.0, 208.0) set];
+    [bg stroke];
+    self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
+                                                                 attributes:_norm_attrs];
   }
   else
   {
     [IA_RGB_COLOUR(239.0, 245.0, 247.0) set];
     [bg fill];
-    [IA_RGB_COLOUR(191.0, 204.0, 209.0) set];
+    [IA_RGB_COLOUR(202.0, 216.0, 221.0) set];
     [bg stroke];
     self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
                                                                  attributes:_norm_attrs];
