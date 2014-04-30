@@ -429,6 +429,8 @@
 {
   if (element == nil)
     return;
+  if ([self.search_field.objectValue count] > 9)
+    return;
   NSMutableArray* temp = [NSMutableArray arrayWithArray:self.search_field.objectValue];
   if ([temp.lastObject isKindOfClass:NSString.class])
     [temp removeObject:temp.lastObject];
@@ -631,7 +633,7 @@ hasMenuForRepresentedObject:(id)representedObject
   if (index > 9)
     return [NSArray array];
   NSMutableSet* allowed_tokens = [NSMutableSet setWithArray:tokens];
-  for (id new_token in allowed_tokens)
+  for (id new_token in tokens)
   {
     NSInteger count = 0;
     for (id token in self.search_field.objectValue)
@@ -654,7 +656,7 @@ hasMenuForRepresentedObject:(id)representedObject
 }
 
 - (NSString*)tokenField:(NSTokenField*)tokenField
-editingStringForRepresentedObject:(id)representedObject
+displayStringForRepresentedObject:(id)representedObject
 {
   if ([representedObject isKindOfClass:InfinitSearchElement.class])
   {
@@ -670,21 +672,13 @@ editingStringForRepresentedObject:(id)representedObject
   }
 }
 
-- (NSString*)tokenField:(NSTokenField*)tokenField
-displayStringForRepresentedObject:(id)representedObject
+- (NSTokenStyle)tokenField:(NSTokenField*)tokenField
+ styleForRepresentedObject:(id)representedObject
 {
-  if ([representedObject isKindOfClass:InfinitSearchElement.class])
-  {
-    return [representedObject fullname];
-  }
-  else if ([representedObject isKindOfClass:NSString.class])
-  {
-    return representedObject;
-  }
+  if ([representedObject isKindOfClass:NSString.class] && ![IAFunctions stringIsValidEmail:representedObject])
+    return NSPlainTextTokenStyle;
   else
-  {
-    return nil;
-  }
+    return NSDefaultTokenStyle;
 }
 
 - (NSArray*)tokenField:(NSTokenField*)tokenField
@@ -704,12 +698,6 @@ writeRepresentedObjects:(NSArray*)objects
       toPasteboard:(NSPasteboard*)pboard
 {
   return NO;
-}
-
-- (id)tokenField:(NSTokenField*)tokenField
-representedObjectForEditingString:(NSString*)editingString
-{
-  return nil;
 }
 
 //- Table Drawing Functions ------------------------------------------------------------------------
