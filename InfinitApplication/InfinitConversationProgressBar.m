@@ -81,6 +81,15 @@
 
 //- Initialisation ---------------------------------------------------------------------------------
 
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+  if (self = [super initWithCoder:aDecoder])
+  {
+    [self setWantsLayer:YES];
+  }
+  return self;
+}
+
 - (BOOL)isFlipped
 {
   return NO;
@@ -124,7 +133,6 @@
 
 - (void)setIndeterminate:(BOOL)flag
 {
-  [super stopAnimation:nil];
   [super setIndeterminate:flag];
   if (self.isIndeterminate)
   {
