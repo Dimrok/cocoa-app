@@ -494,13 +494,8 @@
   return [str substringFromIndex:i];
 }
 
-- (void)controlTextDidChange:(NSNotification*)aNotification
+- (NSString*)currentSearchString
 {
-  NSControl* control = aNotification.object;
-  if (control != self.search_field)
-    return;
-  
-  [self cancelLastSearchOperation];
   NSArray* tokens = self.search_field.objectValue;
   
   NSString* search_string;
@@ -508,6 +503,18 @@
     search_string = [self trimLeadingWhitespace:tokens.lastObject];
   else
     search_string = @"";
+  return search_string;
+}
+
+- (void)controlTextDidChange:(NSNotification*)aNotification
+{
+  NSControl* control = aNotification.object;
+  if (control != self.search_field)
+    return;
+  
+  [self cancelLastSearchOperation];
+  
+  NSString* search_string = [self currentSearchString];
   
   if (search_string.length > 0)
   {
@@ -522,7 +529,8 @@
     [_search_controller clearResults];
     [self clearResults];
   }
-  
+
+  NSArray* tokens = self.search_field.objectValue;
   if (tokens.count < _token_count || tokens.count == 0)
   {
     [_delegate searchViewInputsChanged:self];
@@ -548,6 +556,22 @@ doCommandBySelector:(SEL)commandSelector
       [self clearResults];
       // WORKAROUND: can only move the cursor once the token is in place so put a delay of 0.
       [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0];
+    }
+    else if (_search_results.count == 0)
+    {
+      NSString* search_string = [self currentSearchString];
+      if ([IAFunctions stringIsValidEmail:search_string])
+      {
+        InfinitSearchElement* element =
+          [[InfinitSearchElement alloc] initWithAvatar:[IAFunctions makeAvatarFor:@"@"]
+                                                 email:search_string
+                                              fullname:search_string
+                                                  user:nil];
+        [self addElement:element];
+        [self clearResults];
+        // WORKAROUND: can only move the cursor once the token is in place so put a delay of 0.
+        [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0];
+      }
     }
     
     [_delegate searchViewInputsChanged:self];
@@ -1001,7 +1025,10 @@ representedObjectForEditingString:(NSString*)editingString
   }
   else
   {
-    avatar = [IAFunctions imageNamed:@"photo"];
+    if ([IAFunctions stringIsValidEmail:representedObject])
+      avatar = [IAFunctions makeAvatarFor:@"@"];
+    else
+      avatar = [IAFunctions makeAvatarFor:representedObject];
     name = representedObject;
   }
   InfinitTokenAttachmentCell* cell = [InfinitTokenAttachmentCell new];

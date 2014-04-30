@@ -99,7 +99,6 @@
 		8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F917A67EB0006028BC /* libprotocol.dylib */; };
 		8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FA17A67EB0006028BC /* libreactor.dylib */; };
 		8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */; };
-		8337671519074DD20073A621 /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8337671419074DD20073A621 /* photo.png */; };
 		8337672A19087E8C0073A621 /* libboost_chrono.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337671A19087DFC0073A621 /* libboost_chrono.dylib */; };
 		8337672B19087E8C0073A621 /* libboost_date_time.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337671B19087DFC0073A621 /* libboost_date_time.dylib */; };
 		8337672C19087E8C0073A621 /* libboost_signals.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337671E19087DFC0073A621 /* libboost_signals.dylib */; };
@@ -657,7 +656,6 @@
 		8334C7F917A67EB0006028BC /* libprotocol.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotocol.dylib; path = ../../../Externals/lib/libprotocol.dylib; sourceTree = "<group>"; };
 		8334C7FA17A67EB0006028BC /* libreactor.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreactor.dylib; path = ../../../Externals/lib/libreactor.dylib; sourceTree = "<group>"; };
 		8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../Externals/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
-		8337671419074DD20073A621 /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
 		8337671A19087DFC0073A621 /* libboost_chrono.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_chrono.dylib; path = ../../../Externals/lib/libboost_chrono.dylib; sourceTree = "<group>"; };
 		8337671B19087DFC0073A621 /* libboost_date_time.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_date_time.dylib; path = ../../../Externals/lib/libboost_date_time.dylib; sourceTree = "<group>"; };
 		8337671E19087DFC0073A621 /* libboost_signals.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_signals.dylib; path = ../../../Externals/lib/libboost_signals.dylib; sourceTree = "<group>"; };
@@ -1220,14 +1218,6 @@
 			name = "Not Logged In View";
 			sourceTree = "<group>";
 		};
-		833766FF19074DBF0073A621 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				8337671419074DD20073A621 /* photo.png */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		8337672F19088A540073A621 /* OEXTokenField */ = {
 			isa = PBXGroup;
 			children = (
@@ -1617,7 +1607,6 @@
 		83F1148117AE5FDB00DCF662 /* Search Results */ = {
 			isa = PBXGroup;
 			children = (
-				833766FF19074DBF0073A621 /* Resources */,
 				836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */,
 				836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */,
 				83F1148217AE63E700DCF662 /* IAUserSearchViewController.h */,
@@ -1963,7 +1952,6 @@
 			files = (
 				83FDB6FA18F334AC004512D8 /* Infinit - Episode 1.mp4 in Resources */,
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
-				8337671519074DD20073A621 /* photo.png in Resources */,
 				839249F718D8AAA900EE72C7 /* conversation-icon-retry@2x.png in Resources */,
 				837A7F8817FC25E000600ACD /* bg-main-button-disabled.png in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
