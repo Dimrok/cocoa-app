@@ -422,7 +422,7 @@ return [NSString stringWithUTF8String:str]; \
   void* c_data;
   size_t size;
   gap_Status status = gap_avatar(_state, user_id.unsignedIntValue, &c_data, &size);
-  if (status == gap_ok)
+  if (status == gap_ok && size > 0)
   {
     NSData* avatar_data = [[NSData alloc] initWithBytes:c_data length:size];
     NSImage* avatar = [[NSImage alloc] initWithData:avatar_data];
