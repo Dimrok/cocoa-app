@@ -464,6 +464,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   if (result.success)
   {
     [self onSuccessfulLogin];
+    [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   }
   else
   {
@@ -516,19 +517,19 @@ ELLE_LOG_COMPONENT("OSX.MainController");
                  NSLocalizedString(@"Please update Infinit.", @"please update infinit.")];
         [_delegate mainControllerWantsCheckForUpdate:self];
         break;
-        
+
       case gap_email_not_confirmed:
         error = [NSString stringWithFormat:@"%@",
                  NSLocalizedString(@"You need to confirm your email, check your inbox.", nil)];
         break;
-        
+
       case gap_meta_down_with_message:
         error = [NSString stringWithFormat:@"%@",
                  NSLocalizedString(@"Infinit is currently unavailable, try again later.",
                                    @"infinit is currently unavailable")];
         // XXX display actual Meta message
         break;
-        
+
       case gap_trophonius_unreachable:
         if (_new_credentials)
         {

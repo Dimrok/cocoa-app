@@ -32,7 +32,6 @@
   [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
   [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
   [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
-  [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 #endif
 }
 
@@ -195,7 +194,14 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 {
   NSLog(@"%@ Checking for update verbosely", self);
 #ifdef BUILD_PRODUCTION
-  [[SUUpdater sharedUpdater] checkForUpdates:nil];
+  [[SUUpdater sharedUpdater] checkForUpdates:self];
+#endif
+}
+
+- (void)mainControllerWantsBackgroundUpdateChecks:(IAMainController*)sender
+{
+#ifdef BUILD_PRODUCTION
+  [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 #endif
 }
 

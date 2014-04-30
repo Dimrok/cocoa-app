@@ -67,6 +67,8 @@
 
 - (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender;
 
+- (void)mainControllerWantsBackgroundUpdateChecks:(IAMainController*)sender;
+
 - (BOOL)applicationUpdating;
 
 @end
