@@ -716,11 +716,10 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     [self doneOnboarding];
   }
   _stay_awake_manager = nil;
-  if ([_window_controller windowIsOpen])
-  {
-    [_status_bar_icon setHidden:YES];
-    [self closeNotificationWindow];
-  }
+
+  [_status_bar_icon setHighlighted:NO];
+  [_status_bar_icon setHidden:YES];
+  [_window_controller closeWindowWithAnimation:NO];
 
   [[IAGapState instance] freeGap];
   [_delegate terminateApplication:self];
@@ -729,9 +728,15 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 - (BOOL)canUpdate
 {
   if (!_logging_in && ![_transaction_manager hasTransferringTransaction] && _current_view_controller == nil)
+  {
+    ELLE_LOG("%s: can update", self.description.UTF8String);
     return YES;
+  }
   else
+  {
+    ELLE_LOG("%s: preventing update", self.description.UTF8String);
     return NO;
+  }
 }
 
 - (void)updateStatusBarIcon
