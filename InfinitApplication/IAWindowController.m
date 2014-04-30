@@ -100,9 +100,19 @@
 }
 
 //- Window Handling --------------------------------------------------------------------------------
-
 - (void)closeWindow
 {
+  [self closeWindowWithAnimation:YES];
+}
+
+- (void)closeWindowWithAnimation:(BOOL)animate
+{
+  if (!animate)
+  {
+    [self.window close];
+    return;
+  }
+
   if (!_window_is_open || _animating)
     return;
   
@@ -127,6 +137,7 @@
      [_delegate windowController:self
         hasCurrentViewController:nil];
      _animating = NO;
+     _current_controller = nil;
    }];
 }
 
