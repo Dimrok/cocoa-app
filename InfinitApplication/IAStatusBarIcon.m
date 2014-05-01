@@ -12,8 +12,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import <limits>
-
 typedef enum __IAStatusBarIconStatus
 {
   STATUS_BAR_ICON_NORMAL = 0,
@@ -59,8 +57,6 @@ static NSDictionary* _red_style;
 static NSDictionary* _black_style;
 static NSDictionary* _white_style;
 static NSDictionary* _grey_style;
-
-const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>::min();
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -283,7 +279,7 @@ const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>:
      if (start_mode == _current_mode)
        [self showAnimatedIconForMode:mode withDuration:duration];
      else
-       return;
+       [self setNeedsDisplay:YES];
    }];
 }
 
@@ -296,20 +292,14 @@ const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>:
     IAStatusBarIconStatus last_mode = _current_mode;
     if (_is_highlighted)
     {
-      if (_animating)
-        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_CLICKED;
     }
     else if (_logging_in)
     {
-      if (_animating)
-        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_LOGGING_IN;
     }
     else if (_connected == gap_user_status_offline)
     {
-      if (_animating)
-        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
     }
     else if (_is_transferring && _is_fire)
@@ -322,8 +312,6 @@ const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>:
     }
     else if (!_is_transferring && _is_fire)
     {
-      if (_animating)
-        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_FIRE;
     }
     else if (_is_transferring && !_is_fire)
@@ -336,11 +324,9 @@ const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>:
     }
     else
     {
-      if (_animating)
-        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_NORMAL;
     }
-    if (last_mode != _current_mode)
+    if (last_mode != _current_mode && !_animating)
       [self setNeedsDisplay:YES];
   }
 }
