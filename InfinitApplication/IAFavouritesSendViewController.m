@@ -163,7 +163,7 @@
     
     for (IAUser* swagger in swaggers)
     {
-      if (!swagger.deleted && temp_arr.count < 5 && ![temp_arr containsObject:swagger])
+      if (!swagger.deleted && !swagger.ghost && temp_arr.count < 5 && ![temp_arr containsObject:swagger])
         [temp_arr addObject:swagger];
     }
   }
