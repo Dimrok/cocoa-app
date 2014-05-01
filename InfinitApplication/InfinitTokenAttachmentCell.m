@@ -84,10 +84,22 @@ static NSDictionary* _sel_attrs;
                                                                  attributes:_norm_attrs];
   }
   [IA_GREY_COLOUR(255.0) set];
-  NSBezierPath* top_line = [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + 3.0,
-                                                                       1.0,
-                                                                       token_rect.size.width - 6.0,
-                                                                       1.0)];
+  NSBezierPath* top_line;
+  // WORKAROUND Retina has an extra pixel under the avatar
+  if ([[NSScreen mainScreen] backingScaleFactor] == 2.0)
+  {
+    top_line = [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + 3.0,
+                                                           0.5,
+                                                           token_rect.size.width - 4.0,
+                                                           1.0)];
+  }
+  else
+  {
+    top_line = [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + 3.0,
+                                                           1.0,
+                                                           token_rect.size.width - 4.0,
+                                                           1.0)];
+  }
   [top_line fill];
   
   NSRect text_rect = {
@@ -99,13 +111,13 @@ static NSDictionary* _sel_attrs;
   
   NSRect avatar_rect;
   // WORKAROUND Retina has an extra pixel under the avatar
-  if ([[NSScreen mainScreen] backingScaleFactor] > 1.0)
+  if ([[NSScreen mainScreen] backingScaleFactor] == 2.0)
   {
-    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 1.0, 22.0, 22.0);
+    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 0.5, 23.0, 23.0);
   }
   else
   {
-    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 0.0, 23.0, 23.0);
+    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 1.0, 22.0, 22.0);
   }
   
   NSBezierPath* clip = [IAFunctions roundedLeftSideBezierWithRect:avatar_rect cornerRadius:2.0];
