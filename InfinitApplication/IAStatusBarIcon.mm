@@ -12,6 +12,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import <limits>
+
 typedef enum __IAStatusBarIconStatus
 {
   STATUS_BAR_ICON_NORMAL = 0,
@@ -45,6 +47,8 @@ typedef enum __InfinitStatusBarIconColour
   IAStatusBarIconStatus _current_mode;
   NSArray* _black_animated_images;
   NSArray* _red_animated_images;
+
+  BOOL _animating;
 }
 @synthesize isFire = _is_fire;
 @synthesize isHighlighted = _is_highlighted;
@@ -55,6 +59,8 @@ static NSDictionary* _red_style;
 static NSDictionary* _black_style;
 static NSDictionary* _white_style;
 static NSDictionary* _grey_style;
+
+const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>::min();
 
 //- Initialisation ---------------------------------------------------------------------------------
 
@@ -246,8 +252,10 @@ static NSDictionary* _grey_style;
 }
 
 - (void)showAnimatedIconForMode:(IAStatusBarIconStatus)mode
+                   withDuration:(NSTimeInterval)duration
 {
   IAStatusBarIconStatus start_mode = mode;
+  _animating = YES;
   NSArray* images;
   switch (mode)
   {
@@ -265,18 +273,17 @@ static NSDictionary* _grey_style;
   kfa.values = images;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
-     context.duration = 1.0;
+     context.duration = duration;
      _icon_view.animations = @{@"image": kfa};
      _icon_view.animator.image = images[images.count - 1];
    }
                       completionHandler:^
    {
+     _animating = NO;
      if (start_mode == _current_mode)
-       [self showAnimatedIconForMode:mode];
+       [self showAnimatedIconForMode:mode withDuration:duration];
      else
-     {
        return;
-     }
    }];
 }
 
@@ -286,17 +293,23 @@ static NSDictionary* _grey_style;
 {
   @synchronized(self)
   {
-    BOOL last_mode = _current_mode;
+    IAStatusBarIconStatus last_mode = _current_mode;
     if (_is_highlighted)
     {
+      if (_animating)
+        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_CLICKED;
     }
     else if (_logging_in)
     {
+      if (_animating)
+        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_LOGGING_IN;
     }
     else if (_connected == gap_user_status_offline)
     {
+      if (_animating)
+        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
     }
     else if (_is_transferring && _is_fire)
@@ -304,11 +317,13 @@ static NSDictionary* _grey_style;
       if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
       {
         _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
-        [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED];
+        [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED withDuration:1.0];
       }
     }
     else if (!_is_transferring && _is_fire)
     {
+      if (_animating)
+        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_FIRE;
     }
     else if (_is_transferring && !_is_fire)
@@ -316,11 +331,13 @@ static NSDictionary* _grey_style;
       if (_current_mode != STATUS_BAR_ICON_ANIMATED)
       {
         _current_mode = STATUS_BAR_ICON_ANIMATED;
-        [self showAnimatedIconForMode:STATUS_BAR_ICON_ANIMATED];
+        [self showAnimatedIconForMode:STATUS_BAR_ICON_ANIMATED withDuration:1.0];
       }
     }
     else
     {
+      if (_animating)
+        [self showAnimatedIconForMode:last_mode withDuration:kMinimumTimeInterval];
       _current_mode = STATUS_BAR_ICON_NORMAL;
     }
     if (last_mode != _current_mode)
