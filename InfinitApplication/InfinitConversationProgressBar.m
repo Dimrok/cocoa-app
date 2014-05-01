@@ -136,9 +136,6 @@
 - (void)setIndeterminate:(BOOL)flag
 {
   [super setIndeterminate:flag];
-  // WORKAROUND Stop the animation to avoid spin locks on 10.7/10.8.
-  if (_animating)
-    [[NSAnimationContext currentContext] setDuration:0.0];
   if (self.isIndeterminate)
   {
     _doubleValue = 0.0;
