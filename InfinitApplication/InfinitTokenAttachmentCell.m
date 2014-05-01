@@ -22,7 +22,7 @@ static NSDictionary* _sel_attrs;
       NSFont* token_font = [[NSFontManager sharedFontManager]fontWithFamily:@"Helvetica"
                                                                      traits:NSUnboldFontMask
                                                                      weight:3
-                                                                       size:13.0];
+                                                                       size:12.5];
       _norm_attrs = [IAFunctions textStyleWithFont:token_font
                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                             colour:IA_RGB_COLOUR(72.0, 86.0, 92.0)
@@ -67,7 +67,7 @@ static NSDictionary* _sel_attrs;
   }
   else if (self.tokenDrawingMode == OEXTokenDrawingModeHighlighted)
   {
-    [IA_RGB_COLOUR(231.0, 239.0, 241.0) set];
+    [IA_RGB_COLOUR(235, 242, 244) set];
     [bg fill];
     [IA_RGB_COLOUR(188.0, 202.0, 208.0) set];
     [bg stroke];
@@ -97,10 +97,16 @@ static NSDictionary* _sel_attrs;
   [self.attributedStringValue drawInRect:text_rect];
   [NSGraphicsContext saveGraphicsState];
   
-  NSRect avatar_rect = {
-    .origin = NSMakePoint(token_rect.origin.x + 0.0, token_rect.origin.y + 1.0),
-    .size = NSMakeSize(22.0, 22.0)
-  };
+  NSRect avatar_rect;
+  // WORKAROUND Retina has an extra pixel under the avatar
+  if ([[NSScreen mainScreen] backingScaleFactor] > 1.0)
+  {
+    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 1.0, 22.0, 22.0);
+  }
+  else
+  {
+    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 0.0, 23.0, 23.0);
+  }
   
   NSBezierPath* clip = [IAFunctions roundedLeftSideBezierWithRect:avatar_rect cornerRadius:2.0];
   [clip addClip];
