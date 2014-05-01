@@ -321,7 +321,7 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
   
   self.add_files_button.hand_cursor = YES;
   
-  NSString* add_files_str = [NSString stringWithFormat:@"%@", NSLocalizedString(@"Add files...",
+  NSString* add_files_str = [NSString stringWithFormat:@"%@", NSLocalizedString(@"  Add files...",
                                                                                 @"add files...")];
   self.add_files_button.attributedTitle = [[NSAttributedString alloc] initWithString:add_files_str
                                                                           attributes:normal_attrs];
@@ -338,10 +338,11 @@ ELLE_LOG_COMPONENT("OSX.CombinedSendViewController");
                                                                     traits:NSUnboldFontMask
                                                                     weight:3
                                                                       size:13.0];
-    NSDictionary* search_attrs = [IAFunctions textStyleWithFont:search_font
-                                                 paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                         colour:IA_GREY_COLOUR(209.0)
-                                                         shadow:nil];
+    NSDictionary* search_attrs =
+      [IAFunctions textStyleWithFont:search_font
+                      paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                              colour:IA_GREY_COLOUR(209.0)
+                              shadow:nil];
     NSString* placeholder_str = NSLocalizedString(@"Optional note...",
                                                   @"Optional note...");
     NSAttributedString* search_placeholder = [[NSAttributedString alloc]
