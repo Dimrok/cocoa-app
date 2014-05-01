@@ -290,6 +290,9 @@ static NSDictionary* _grey_style;
   @synchronized(self)
   {
     IAStatusBarIconStatus last_mode = _current_mode;
+    // WORKAROUND Stop the animation to avoid spin locks on 10.7/10.8.
+    if (_animating)
+      [[NSAnimationContext currentContext] setDuration:0.0];
     if (_is_highlighted)
     {
       _current_mode = STATUS_BAR_ICON_CLICKED;
@@ -326,7 +329,7 @@ static NSDictionary* _grey_style;
     {
       _current_mode = STATUS_BAR_ICON_NORMAL;
     }
-    if (last_mode != _current_mode && !_animating)
+    if (last_mode != _current_mode)
       [self setNeedsDisplay:YES];
   }
 }
