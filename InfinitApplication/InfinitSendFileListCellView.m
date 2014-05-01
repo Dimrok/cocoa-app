@@ -58,7 +58,7 @@
 - (void)setupCellWithFilePath:(NSString*)file_path
 {
     _file_path = file_path;
-    NSString* file_name = [file_path lastPathComponent];
+    NSString* file_name = [NSString stringWithFormat:@"  %@", [file_path lastPathComponent]];
     NSFont* file_name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
                                                                         weight:0
