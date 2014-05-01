@@ -77,6 +77,7 @@
 @private
   InfinitConversationBallAnimation* _ball_view;
   BOOL _visible;
+  BOOL _animating;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -86,6 +87,7 @@
   if (self = [super initWithCoder:aDecoder])
   {
     [self setWantsLayer:YES];
+    _animating = NO;
   }
   return self;
 }
@@ -134,6 +136,9 @@
 - (void)setIndeterminate:(BOOL)flag
 {
   [super setIndeterminate:flag];
+  // WORKAROUND Stop the animation to avoid spin locks on 10.7/10.8.
+  if (_animating)
+    [[NSAnimationContext currentContext] setDuration:0.0];
   if (self.isIndeterminate)
   {
     _doubleValue = 0.0;
@@ -153,6 +158,7 @@
 
 - (void)runBallAnimation
 {
+  _animating = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 3.0;
@@ -160,6 +166,7 @@
    }
                       completionHandler:^
    {
+     _animating = NO;
      _ball_view.pos_multiplier = 0.0;
      if (self.isIndeterminate && _visible)
      {
