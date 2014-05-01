@@ -64,7 +64,7 @@
                             </connections>
                         </button>
                         <progressIndicator canDrawConcurrently="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="1243">
-                            <rect key="frame" x="14" y="17" width="16" height="16"/>
+                            <rect key="frame" x="14" y="16" width="16" height="16"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         </progressIndicator>
                     </subviews>
