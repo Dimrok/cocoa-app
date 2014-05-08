@@ -9,6 +9,7 @@
 #import "IAStatusBarIcon.h"
 #import "IAFunctions.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitTooltipViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -47,6 +48,9 @@ typedef enum __InfinitStatusBarIconColour
   NSArray* _red_animated_images;
 
   BOOL _animating;
+
+  NSTrackingArea* _tracking_area;
+  InfinitTooltipViewController* _tooltip;
 }
 @synthesize isFire = _is_fire;
 @synthesize isHighlighted = _is_highlighted;
@@ -79,7 +83,34 @@ static NSDictionary* _grey_style;
 
 - (void)dealloc
 {
+  _tracking_area = nil;
   [self unregisterDraggedTypes];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
+- (void)updateTrackingAreas
+{
+  [self removeTrackingArea:_tracking_area];
+  [self createTrackingArea];
+  [super updateTrackingAreas];
+}
+
+- (void)createTrackingArea
+{
+  _tracking_area = [[NSTrackingArea alloc] initWithRect:self.bounds
+                                                options:(NSTrackingMouseEnteredAndExited |
+                                                         NSTrackingActiveAlways)
+                                                  owner:self
+                                               userInfo:nil];
+
+  [self addTrackingArea:_tracking_area];
+
+  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
+  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
+  if (NSPointInRect(mouse_loc, self.bounds))
+    [self mouseEntered:nil];
+  else
+    [self mouseExited:nil];
 }
 
 - (id)initWithDelegate:(id<IAStatusBarIconProtocol>)delegate
@@ -126,6 +157,7 @@ static NSDictionary* _grey_style;
                                             colour:IA_GREY_COLOUR(93.0)
                                             shadow:nil];
     }
+    _tooltip = [[InfinitTooltipViewController alloc] init];
   }
   return self;
 }
@@ -349,6 +381,7 @@ static NSDictionary* _grey_style;
 
 - (void)setHighlighted:(BOOL)is_highlighted
 {
+  [_tooltip close];
   _is_highlighted = is_highlighted;
   _icon_view.alphaValue = 1.0;
   [self determineCurrentMode];
@@ -398,6 +431,38 @@ static NSDictionary* _grey_style;
 - (void)mouseDown:(NSEvent*)theEvent
 {
   [_delegate statusBarIconClicked:self];
+}
+
+- (void)delayedShowPopeverWithMessage:(NSString*)message
+{
+  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
+  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
+  if (NSPointInRect(mouse_loc, self.bounds) && !_is_highlighted)
+  {
+    [_tooltip showPopoverForView:self
+              withArrowDirection:INPopoverArrowDirectionUp
+                     withMessage:message
+                withPopAnimation:NO];
+  }
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+  if (_is_highlighted)
+    return;
+  NSString* message;
+  if (_connected == gap_user_status_online)
+    message = NSLocalizedString(@"Online, send something!", nil);
+  else
+    message = NSLocalizedString(@"Offline!", nil);
+  [self performSelector:@selector(delayedShowPopeverWithMessage:)
+             withObject:message
+             afterDelay:1.0];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+  [_tooltip close];
 }
 
 //- Drag Operations --------------------------------------------------------------------------------
