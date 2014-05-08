@@ -76,7 +76,6 @@
 {
 @private
   InfinitConversationBallAnimation* _ball_view;
-  BOOL _visible;
   BOOL _animating;
 }
 
@@ -97,18 +96,6 @@
   return NO;
 }
 
-- (void)discardCursorRects
-{
-  _visible = NO;
-  [super discardCursorRects];
-}
-
-- (void)resetCursorRects
-{
-  _visible = YES;
-  [super resetCursorRects];
-}
-
 
 //- Drawing ----------------------------------------------------------------------------------------
 
@@ -118,7 +105,7 @@
   {
     [IA_RGB_COLOUR(0, 214, 242) set];
     NSRect bar = NSMakeRect(self.bounds.origin.x, 5.0,
-                            (NSWidth(self.bounds) / self.maxValue * self.doubleValue), 2.0);
+                            (NSWidth(self.bounds) / self.maxValue * _doubleValue), 2.0);
     NSRectFill(bar);
   }
 }
@@ -135,8 +122,7 @@
 
 - (void)setIndeterminate:(BOOL)flag
 {
-  [super setIndeterminate:flag];
-  if (self.isIndeterminate)
+  if (flag)
   {
     _doubleValue = 0.0;
     _ball_view = nil;
@@ -151,6 +137,7 @@
     _ball_view = nil;
     [self setNeedsDisplay:YES];
   }
+  [super setIndeterminate:flag];
 }
 
 - (void)runBallAnimation
@@ -165,7 +152,7 @@
    {
      _animating = NO;
      _ball_view.pos_multiplier = 0.0;
-     if (self.isIndeterminate && _visible)
+     if (self.isIndeterminate)
      {
        [self runBallAnimation];
      }
