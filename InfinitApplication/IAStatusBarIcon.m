@@ -368,8 +368,17 @@ static NSDictionary* _grey_style;
 
 - (void)setConnected:(gap_UserStatus)connected
 {
+  [_tooltip close];
   _connected = connected;
   _icon_view.alphaValue = 1.0;
+  NSString* message;
+  if (_connected == gap_user_status_online)
+    message = NSLocalizedString(@"Online, send something!", nil);
+  else
+    message = NSLocalizedString(@"Offline!", nil);
+  [self performSelector:@selector(delayedShowPopeverWithMessage:)
+             withObject:message
+             afterDelay:0.5];
   [self determineCurrentMode];
 }
 
