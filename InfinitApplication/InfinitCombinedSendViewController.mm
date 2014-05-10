@@ -761,7 +761,6 @@ doCommandBySelector:(SEL)commandSelector
 
 - (void)openExpandedView
 {
-  [_user_search_controller showMoreButton:NO];
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
@@ -773,11 +772,6 @@ doCommandBySelector:(SEL)commandSelector
    {
      _expanded_view = YES;
    }];
-}
-
-- (void)searchViewHadMoreButtonClick:(IAUserSearchViewController*)sender
-{
-  [self openExpandedView];
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender
@@ -799,7 +793,7 @@ wantsRemoveFavourite:(IAUser*)user
   [self setSendButtonState];
 }
 
-- (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender
+- (void)searchViewGotWantsSend:(IAUserSearchViewController*)sender
 {
   if ([self inputsGood])
   {
@@ -833,6 +827,11 @@ wantsRemoveFavourite:(IAUser*)user
     [_delegate combinedSendView:self wantsSetOnboardingSendTransactionId:transaction_ids[0]];
     [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILE_SENDING];
   }
+}
+
+- (NSArray*)searchViewWantsFriendsByLastInteraction:(IAUserSearchViewController*)sender
+{
+  return [_delegate combinedSendViewWantsFriendsByLastInteraction:self];
 }
 
 //- View Handling ----------------------------------------------------------------------------------

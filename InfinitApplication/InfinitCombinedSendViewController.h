@@ -77,4 +77,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 - (void)combinedSendView:(InfinitCombinedSendViewController*)sender
          hadFilesDropped:(NSArray*)files;
 
+- (NSArray*)combinedSendViewWantsFriendsByLastInteraction:(InfinitCombinedSendViewController*)sender;
+
 @end

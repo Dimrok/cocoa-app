@@ -58,4 +58,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
 - (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender;
 
+- (NSArray*)sendControllerWantsFriendsByLastInteraction:(IAGeneralSendController*)sender;
+
 @end

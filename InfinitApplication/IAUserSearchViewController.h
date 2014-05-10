@@ -17,9 +17,7 @@
 @protocol IAUserSearchViewProtocol;
 
 @interface IASearchBoxView : NSView
-
-@property (readwrite, nonatomic, setter = setNoResults:) BOOL no_results;
-
+@property (nonatomic, readwrite, setter = setNoResults:) BOOL no_results;
 @end
 
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
@@ -36,7 +34,6 @@
 @property (nonatomic, strong) IBOutlet NSImageView* search_image;
 @property (nonatomic, strong) IBOutlet NSProgressIndicator* search_spinner;
 @property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
-@property (nonatomic, strong) IBOutlet IAHoverButton* more_button;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 - (id)init;
@@ -53,8 +50,6 @@
 
 - (void)checkInputs;
 
-- (void)showMoreButton:(BOOL)show;
-
 @end
 
 @protocol IAUserSearchViewProtocol <NSObject>
@@ -66,8 +61,6 @@
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
 
-- (void)searchViewHadMoreButtonClick:(IAUserSearchViewController*)sender;
-
 - (void)searchView:(IAUserSearchViewController*)sender
  wantsAddFavourite:(IAUser*)user;
 
@@ -76,7 +69,9 @@
 
 - (void)searchViewInputsChanged:(IAUserSearchViewController*)sender;
 
-- (void)searchViewGotEnterPress:(IAUserSearchViewController*)sender;
+- (void)searchViewGotWantsSend:(IAUserSearchViewController*)sender;
+
+- (NSArray*)searchViewWantsFriendsByLastInteraction:(IAUserSearchViewController*)sender;
 
 @end
 
@@ -86,6 +81,8 @@
 @property (nonatomic, readwrite) NSString* email;
 @property (nonatomic, readwrite) NSString* fullname;
 @property (nonatomic, readwrite) IAUser* user;
+@property (nonatomic, readwrite) BOOL hover;
+@property (nonatomic, readwrite) BOOL selected;
 
 - (id)initWithAvatar:(NSImage*)avatar
                email:(NSString*)email

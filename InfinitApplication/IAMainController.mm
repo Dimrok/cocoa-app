@@ -149,7 +149,6 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   _autologin_cooling_down = NO;
   NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
   NSString* password = [self getPasswordForUsername:username];
-  
   if (username.length > 0 && password.length > 0)
   {
     _logging_in = YES;
@@ -918,6 +917,26 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 {
   if ([_onboard_controller inSendOnboarding])
     _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILES_DESTINATION;
+}
+
+- (NSArray*)sendControllerWantsFriendsByLastInteraction:(IAGeneralSendController*)sender
+{
+  NSMutableArray* res = [NSMutableArray array];
+  for (IATransaction* transaction in [_transaction_manager latestTransactionPerUser])
+  {
+    [res addObject:transaction.other_user];
+  }
+  for (IAUser* user in [IAUserManager favouritesList])
+  {
+    if (![res containsObject:user])
+      [res addObject:user];
+  }
+  for (IAUser* user in [IAUserManager swaggerList])
+  {
+    if (![res containsObject:user])
+      [res addObject:user];
+  }
+  return res;
 }
 
 //- Login Items ------------------------------------------------------------------------------------

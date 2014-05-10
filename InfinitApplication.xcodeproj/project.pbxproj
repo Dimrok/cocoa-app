@@ -225,6 +225,8 @@
 		83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.mm */; };
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
 		83B9744518842F540089E0E0 /* InfinitSendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B9744418842F540089E0E0 /* InfinitSendFileListCellView.m */; };
+		83B9BFC1191C338400B34659 /* icon-contact-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B9BFBF191C338400B34659 /* icon-contact-checked.png */; };
+		83B9BFC2191C338400B34659 /* icon-contact-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B9BFC0191C338400B34659 /* icon-contact-checked@2x.png */; };
 		83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC54E186047EE00EB277E /* sound_sent.aiff */; };
 		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
 		83BEC56818608C3700EB277E /* loading-connection.gif in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC56718608C3700EB277E /* loading-connection.gif */; };
@@ -808,6 +810,8 @@
 		83B8A726182246E500AD775F /* InfinitLoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitLoginViewController.mm; sourceTree = "<group>"; };
 		83B8A727182246E500AD775F /* InfinitLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitLoginViewController.xib; sourceTree = "<group>"; };
 		83B9744418842F540089E0E0 /* InfinitSendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFileListCellView.m; sourceTree = "<group>"; };
+		83B9BFBF191C338400B34659 /* icon-contact-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-contact-checked.png"; path = "../../../../fist-resources/slices/view_send/icon-contact-checked.png"; sourceTree = "<group>"; };
+		83B9BFC0191C338400B34659 /* icon-contact-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-contact-checked@2x.png"; path = "../../../../fist-resources/slices/view_send/icon-contact-checked@2x.png"; sourceTree = "<group>"; };
 		83BEC54E186047EE00EB277E /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_sent.aiff; sourceTree = "<group>"; };
 		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
 		83BEC56718608C3700EB277E /* loading-connection.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading-connection.gif"; sourceTree = "<group>"; };
@@ -1450,6 +1454,15 @@
 			name = "Red Animated Icon";
 			sourceTree = "<group>";
 		};
+		83B9BFBE191C337300B34659 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83B9BFBF191C338400B34659 /* icon-contact-checked.png */,
+				83B9BFC0191C338400B34659 /* icon-contact-checked@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		83C124B517A7CE9800BE1252 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1607,6 +1620,7 @@
 		83F1148117AE5FDB00DCF662 /* Search Results */ = {
 			isa = PBXGroup;
 			children = (
+				83B9BFBE191C337300B34659 /* Resources */,
 				836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */,
 				836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */,
 				83F1148217AE63E700DCF662 /* IAUserSearchViewController.h */,
@@ -2116,11 +2130,13 @@
 				83D4206617C4DC6700D4E168 /* icon-error.png in Resources */,
 				83F5FD3018EDEC5E0051F010 /* clippy_8.png in Resources */,
 				83B8A70E18201F0700AD775F /* icon-main-unread.png in Resources */,
+				83B9BFC1191C338400B34659 /* icon-contact-checked.png in Resources */,
 				83F5FD2C18EDEC5E0051F010 /* clippy_6.png in Resources */,
 				839249EF18D8AAA900EE72C7 /* conversation-icon-reject-hover@2x.png in Resources */,
 				839249D418D8AAA900EE72C7 /* conversation-icon-accept-hover.png in Resources */,
 				83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */,
 				832B5491188970AC0022CC33 /* icon-menu-bar-animated-red-17.png in Resources */,
+				83B9BFC2191C338400B34659 /* icon-contact-checked@2x.png in Resources */,
 				83F5FD1F18EDEC5E0051F010 /* btn-onboarding@2x.png in Resources */,
 				83481580187AE007002ACDE0 /* bg-header-top-hover@2x.png in Resources */,
 				83B2FFC618969936006C9D77 /* bg-header-top-problem.png in Resources */,

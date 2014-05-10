@@ -216,6 +216,11 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   [_delegate sendController:self wantsSetOnboardingSendTransactionId:transaction_id];
 }
 
+- (NSArray*)combinedSendViewWantsFriendsByLastInteraction:(InfinitCombinedSendViewController*)sender
+{
+  return [_delegate sendControllerWantsFriendsByLastInteraction:self];
+}
+
 //- Favourites Send View Protocol ------------------------------------------------------------------
 
 - (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender
