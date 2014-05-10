@@ -73,8 +73,6 @@ static CGFloat const kOEXTokenAttachmentTokenMargin = 3;
     }
   
     [self drawTokenWithFrame:cellFrame inView:controlView];
-    [controlView setNeedsDisplay:YES];
-    [controlView.superview setNeedsDisplay:YES];
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
