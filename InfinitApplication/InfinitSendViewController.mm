@@ -252,7 +252,6 @@
                                    options:0
                                    metrics:nil
                                    views:@{@"files_view": _files_controller.view}]];
-  _search_controller.open = YES;
 }
 
 - (void)loadView
@@ -291,7 +290,7 @@
   self.file_count.attributedStringValue =
     [[NSAttributedString alloc] initWithString:count_str attributes:_file_count_attrs];
   [self setSendButtonState];
-  if (!_files_controller.open)
+  if (!_files_controller.open && files.count > 0)
     [_files_controller showFiles];
 }
 
@@ -367,47 +366,16 @@
 
 - (void)noteViewWantsLoseFocus:(InfinitSendNoteViewController*)sender
 {
-  [self noteViewWantsHide:nil];
+  if (self.user_link_view.mode == INFINIT_LINK_MODE)
+    return;
+  [self.view.window makeFirstResponder:_search_controller.search_field];
+  [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
 }
 
-- (void)noteViewWantsShow:(InfinitSendNoteViewController*)sender
+- (void)noteView:(InfinitSendNoteViewController*)sender
+     wantsHeight:(CGFloat)height
 {
-  _note_controller.open = YES;
-  _search_controller.open = NO;
-  if (self.user_link_view.mode == INFINIT_USER_MODE)
-    _last_search_height = self.search_constraint.constant;
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-   {
-     context.duration = 0.075;
-   }
-                      completionHandler:^
-   {
-     [self.note_constraint.animator setConstant:_note_controller.height];
-     if (self.user_link_view.mode == INFINIT_USER_MODE)
-       [self.search_constraint.animator setConstant:NSHeight(_search_controller.search_box_view.frame)];
-     [self.view.window makeFirstResponder:_note_controller.note_field];
-     [[_note_controller.note_field currentEditor] moveToEndOfLine:nil];
-   }];
-}
-
-- (void)noteViewWantsHide:(InfinitSendNoteViewController*)sender
-{
-  _note_controller.open = NO;
-  _search_controller.open = YES;
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-   {
-     context.duration = 0.075;
-   }
-                      completionHandler:^
-   {
-     [self.note_constraint.animator setConstant:_note_controller.height];
-     if (self.user_link_view.mode == INFINIT_USER_MODE)
-     {
-       [self.search_constraint.animator setConstant:_last_search_height];
-       [self.view.window makeFirstResponder:_search_controller.search_field];
-       [[_search_controller.search_field currentEditor] moveToEndOfLine:nil];
-     }
-   }];
+  [self.note_constraint setConstant:height];
 }
 
 //- Files Protocol ---------------------------------------------------------------------------------
@@ -459,13 +427,8 @@ wantsChangeHeight:(CGFloat)height
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
-  [self noteViewWantsShow:nil];
-}
-
-- (void)searchViewGotFocus:(IAUserSearchViewController*)sender
-{
-  if (_note_controller.open)
-    [self noteViewWantsHide:nil];
+  [self.view.window makeFirstResponder:_note_controller.note_field];
+  [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
 }
 
 - (void)searchView:(IAUserSearchViewController*)sender
@@ -501,16 +464,14 @@ wantsRemoveFavourite:(IAUser*)user
 - (void)gotUserClick:(InfinitSendUserLinkView*)sender
 {
   [self.user_link_view setMode:INFINIT_USER_MODE];
-  _note_controller.link_mode = NO;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
    {
    }
                       completionHandler:^
    {
-     if (_search_controller.open)
-       [self.search_constraint.animator setConstant:_last_search_height];
-     else
-       [self.search_constraint.animator setConstant:NSHeight(_search_controller.search_box_view.frame)];
+     [self.search_constraint.animator setConstant:_last_search_height];
+     [self.view.window makeFirstResponder:_search_controller.search_field];
+     [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
    }];
 }
 
@@ -523,7 +484,8 @@ wantsRemoveFavourite:(IAUser*)user
                       completionHandler:^
   {
     [self.search_constraint.animator setConstant:0.0];
-    _note_controller.link_mode = YES;
+    [self.view.window makeFirstResponder:_note_controller.note_field];
+    [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
   }];
 }
 

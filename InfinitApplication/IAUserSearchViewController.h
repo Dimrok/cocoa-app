@@ -14,29 +14,18 @@
 
 #import "OEXTokenField.h"
 
-//- Search Field -----------------------------------------------------------------------------------
-
-// Need to detect when we become first responder through a click.
-@interface InfinitSearchField : OEXTokenField
-@end
-
-@protocol InfinitSearchFieldProtocol <OEXTokenFieldDelegate>
-- (void)gotClickedIn:(InfinitSearchField*)sender;
-@end
-
 //- Controller -------------------------------------------------------------------------------------
 
 @protocol IAUserSearchViewProtocol;
 
 @interface IASearchBoxView : NSView
 @property (nonatomic, readwrite, setter = setNoResults:) BOOL no_results;
-@property (nonatomic, readwrite) BOOL open;
 @end
 
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
                                                           NSTableViewDelegate,
                                                           NSTextViewDelegate,
-                                                          InfinitSearchFieldProtocol,
+                                                          OEXTokenFieldDelegate,
                                                           IASearchResultsCellProtocol,
                                                           InfinitSearchControllerProtocol>
 
@@ -47,7 +36,6 @@
 @property (nonatomic, strong) IBOutlet NSProgressIndicator* search_spinner;
 @property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
-@property (nonatomic, readwrite) BOOL open;
 
 - (id)init;
 
@@ -73,7 +61,6 @@
 - (BOOL)searchViewWantsIfGotFile:(IAUserSearchViewController*)sender;
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
-- (void)searchViewGotFocus:(IAUserSearchViewController*)sender;
 
 - (void)searchView:(IAUserSearchViewController*)sender
  wantsAddFavourite:(IAUser*)user;

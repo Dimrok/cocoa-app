@@ -8,46 +8,27 @@
 
 #import <Cocoa/Cocoa.h>
 
-//- Header View ------------------------------------------------------------------------------------
+//- Note Field -------------------------------------------------------------------------------------
 
-@protocol InfinitSendNoteHeaderViewProtocol;
+@protocol InfinitSendNoteProtocol;
 
-@interface InfinitSendNoteHeaderView : NSView
-@property (nonatomic, strong) IBOutlet NSImageView* show_note;
-@property (nonatomic, strong) IBOutlet NSImageView* note_icon;
-@property (nonatomic, strong) IBOutlet NSTextField* message;
-@property (nonatomic, readwrite) BOOL open;
-@property (nonatomic, readwrite) BOOL link_mode;
-- (void)setDelegate:(id<InfinitSendNoteHeaderViewProtocol>)delegate;
+@interface InfinitSendNoteField : NSTextField
 @end
 
-//- View -------------------------------------------------------------------------------------------
-
-@protocol InfinitSendNoteHeaderViewProtocol <NSObject>
-- (void)noteHeaderGotClick:(InfinitSendNoteHeaderView*)sender;
-@end
-
-
-@interface InfinitSendNoteView : NSView
-@property (nonatomic, readwrite) BOOL open;
-@property (nonatomic) IBOutlet InfinitSendNoteHeaderView* header_view;
-@property (nonatomic) IBOutlet NSTextField* note_field;
-
+@protocol InfinitSendNoteProtocol <NSTextFieldDelegate>
+- (void)gotFocus:(InfinitSendNoteField*)sender;
+- (void)changedHeightBy:(CGFloat)diff;
 @end
 
 //- Controller -------------------------------------------------------------------------------------
 
 @protocol InfinitSendNoteViewProtocol;
 
-@interface InfinitSendNoteViewController : NSViewController <NSTextViewDelegate,
-                                                             InfinitSendNoteHeaderViewProtocol>
+@interface InfinitSendNoteViewController : NSViewController <InfinitSendNoteProtocol>
 
-@property (nonatomic, strong) IBOutlet InfinitSendNoteHeaderView* header_view;
 @property (nonatomic, strong) IBOutlet NSTextField* note_field;
 @property (nonatomic, strong) IBOutlet NSTextField* characters_label;
-@property (nonatomic, readwrite) BOOL open;
-@property (nonatomic, readwrite) BOOL link_mode;
-@property (nonatomic, readonly) CGFloat height;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint* note_height;
 
 - (id)initWithDelegate:(id<InfinitSendNoteViewProtocol>)delegate;
 
@@ -57,9 +38,9 @@
 
 @protocol InfinitSendNoteViewProtocol <NSObject>
 
-- (void)noteViewWantsShow:(InfinitSendNoteViewController*)sender;
-- (void)noteViewWantsHide:(InfinitSendNoteViewController*)sender;
-
 - (void)noteViewWantsLoseFocus:(InfinitSendNoteViewController*)sender;
+
+- (void)noteView:(InfinitSendNoteViewController*)sender
+     wantsHeight:(CGFloat)height;
 
 @end

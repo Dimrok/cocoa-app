@@ -47,6 +47,10 @@
 //- Header View ------------------------------------------------------------------------------------
 
 @implementation InfinitSendFilesHeaderView
+{
+@private
+  NSTrackingArea* _tracking_area;
+}
 
 - (BOOL)isOpaque
 {
@@ -88,6 +92,56 @@
     self.show_files.image = [IAFunctions imageNamed:@"send-icon-hide-files"];
   else
     self.show_files.image = [IAFunctions imageNamed:@"send-icon-show-files"];
+}
+
+- (void)setGot_files:(BOOL)got_files
+{
+  _got_files = got_files;
+  if (!_got_files)
+  {
+    self.show_files.hidden = YES;
+    return;
+  }
+  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
+  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
+  if (NSPointInRect(mouse_loc, self.bounds))
+    [self mouseEntered:nil];
+}
+
+- (void)createTrackingArea
+{
+  _tracking_area = [[NSTrackingArea alloc] initWithRect:self.bounds
+                                                options:(NSTrackingMouseEnteredAndExited |
+                                                         NSTrackingActiveAlways)
+                                                  owner:self
+                                               userInfo:nil];
+
+  [self addTrackingArea:_tracking_area];
+
+  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
+  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
+  if (NSPointInRect(mouse_loc, self.bounds))
+    [self mouseEntered:nil];
+  else
+    [self mouseExited:nil];
+}
+
+- (void)updateTrackingAreas
+{
+  [self removeTrackingArea:_tracking_area];
+  [self createTrackingArea];
+  [super updateTrackingAreas];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+  self.show_files.hidden = YES;
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+  if (_got_files)
+    self.show_files.hidden = NO;
 }
 
 @end
@@ -197,13 +251,16 @@
   {
     info_str = NSLocalizedString(@"  Add files...", nil);
     self.header_view.show_files.hidden = YES;
+    [self hideFiles];
+    self.header_view.open = NO;
+    self.header_view.got_files = NO;
   }
   else if (_file_list.count == 1)
   {
     info_str = [NSString stringWithFormat:@"  1 %@ (%@)",
                 NSLocalizedString(@"file", nil),
                 [IAFunctions fileSizeStringFrom:[self totalFileSize]]];
-    self.header_view.show_files.hidden = NO;
+    self.header_view.got_files = YES;
   }
   else
   {
@@ -211,7 +268,7 @@
                 _file_list.count,
                 NSLocalizedString(@"files", nil),
                 [IAFunctions fileSizeStringFrom:[self totalFileSize]]];
-    self.header_view.show_files.hidden = NO;
+    self.header_view.got_files = YES;
   }
   self.header_view.information.attributedTitle =
     [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
@@ -283,16 +340,17 @@
   [self.table_view reloadData];
   _open = YES;
   ((InfinitSendFilesView*)self.view).open = _open;
-  [_delegate fileList:self wantsChangeHeight:self.view.intrinsicContentSize.height];
-  [self.view invalidateIntrinsicContentSize];
+  CGFloat height = NSHeight(self.header_view.frame) + [self tableHeight];
+  [_delegate fileList:self wantsChangeHeight:height];
 }
 
 - (void)hideFiles
 {
+  if (!_open)
+    return;
   _open = NO;
   ((InfinitSendFilesView*)self.view).open = _open;
-  [_delegate fileList:self wantsChangeHeight:self.view.intrinsicContentSize.height];
-  [self.view invalidateIntrinsicContentSize];
+  [_delegate fileList:self wantsChangeHeight:NSHeight(self.header_view.frame)];
 }
 
 - (IBAction)informationClicked:(NSButton*)sender

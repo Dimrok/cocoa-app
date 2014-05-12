@@ -23,7 +23,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ubC-ay-f4n">
-                            <rect key="frame" x="16" y="11" width="224" height="20"/>
+                            <rect key="frame" x="16" y="11" width="234" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="square" title="Button" bezelStyle="shadowlessSquare" image="send-icon-files" imagePosition="left" alignment="left" imageScaling="proportionallyDown" inset="2" id="uJM-VD-yNd">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -34,9 +34,9 @@
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xvg-6q-5uj">
-                            <rect key="frame" x="260" y="11" width="20" height="20"/>
+                            <rect key="frame" x="283" y="11" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KoD-pO-lYG">
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-add-file" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KoD-pO-lYG">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -45,7 +45,7 @@
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DUI-BG-YfF">
-                            <rect key="frame" x="282" y="11" width="20" height="20"/>
+                            <rect key="frame" x="254" y="11" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="send-icon-show-files" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="r1i-DU-B2d">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -158,7 +158,7 @@
                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="X30-il-phS">
-                        <rect key="frame" x="0.0" y="71" width="0.0" height="16"/>
+                        <rect key="frame" x="0.0" y="84" width="0.0" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="eF4-g9-Fqd">
@@ -181,6 +181,7 @@
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="icon-add-file" width="16" height="16"/>
         <image name="send-icon-delete" width="14" height="14"/>
         <image name="send-icon-files" width="14" height="14"/>
         <image name="send-icon-show-files" width="14" height="9"/>

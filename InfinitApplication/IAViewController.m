@@ -29,6 +29,12 @@
   NSRectFill(self.bounds);
 }
 
+- (NSString*)description
+{
+  return [NSString stringWithFormat:@"%@ (%f, %f) (%f x %f)", super.description,
+          self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height];
+}
+
 @end
 
 //- Footer View ------------------------------------------------------------------------------------

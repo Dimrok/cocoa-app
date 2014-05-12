@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet NSButton* add_files;
 @property (nonatomic, strong) IBOutlet NSButton* show_files;
 @property (nonatomic, readwrite) BOOL open;
+@property (nonatomic, readwrite) BOOL got_files;
 @end
 
 //- Controller -------------------------------------------------------------------------------------

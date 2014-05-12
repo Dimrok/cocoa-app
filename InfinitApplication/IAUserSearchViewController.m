@@ -12,19 +12,6 @@
 #import "IAAvatarManager.h"
 #import "InfinitTokenAttachmentCell.h"
 
-@implementation InfinitSearchField
-
-- (BOOL)becomeFirstResponder
-{
-  if ([[NSApp currentEvent] type] == NSLeftMouseDown)
-  {
-    [(id<InfinitSearchFieldProtocol>)_delegate gotClickedIn:self];
-  }
-  return [super becomeFirstResponder];
-}
-
-@end
-
 //- Search View Element ----------------------------------------------------------------------------
 
 @implementation InfinitSearchElement
@@ -80,14 +67,10 @@
 {
   [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(20.0, 0.0,
-                                                                   NSWidth(self.bounds) - 40.0,
-                                                                   1.0)];
-  if (_open)
-  {
-    [IA_GREY_COLOUR(229) set];
-    [line fill];
-  }
+  NSBezierPath* line =
+    [NSBezierPath bezierPathWithRect:NSMakeRect(20.0, 0.0, NSWidth(self.bounds) - 40.0, 1.0)];
+  [IA_GREY_COLOUR(229) set];
+  [line fill];
 }
 
 - (void)setNoResults:(BOOL)no_results
@@ -235,13 +218,6 @@
 }
 
 //- General Functions ------------------------------------------------------------------------------
-
-- (void)setOpen:(BOOL)open
-{
-  _open = open;
-  self.search_box_view.open = open;
-  [self.search_box_view setNeedsDisplay:YES];
-}
 
 - (void)checkInputs
 {
@@ -395,11 +371,6 @@
 }
 
 //- Search Field -----------------------------------------------------------------------------------
-
-- (void)gotClickedIn:(InfinitSearchField*)sender
-{
-  [_delegate searchViewGotFocus:self];
-}
 
 - (NSString*)trimLeadingWhitespace:(NSString*)str
 {
