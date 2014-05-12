@@ -19,10 +19,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField focusRingType="none" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="InfinitSendNoteField">
-                    <rect key="frame" x="45" y="11" width="236" height="18"/>
+                    <rect key="frame" x="35" y="11" width="246" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="236" id="xmr-Lg-fRE"/>
+                        <constraint firstAttribute="width" constant="246" id="xmr-Lg-fRE"/>
                     </constraints>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" drawsBackground="YES" id="c6a-77-PBl">
                         <font key="font" size="12" name="Helvetica"/>
@@ -49,13 +49,12 @@
                 </imageView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="G5o-bC-fko" secondAttribute="trailing" constant="18" id="8qn-eK-QnO"/>
                 <constraint firstItem="G5o-bC-fko" firstAttribute="leading" secondItem="X6z-c8-QKQ" secondAttribute="trailing" constant="5" id="DQn-UG-JvX"/>
                 <constraint firstItem="X6z-c8-QKQ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="13" id="Dsz-9x-YlY"/>
-                <constraint firstItem="X6z-c8-QKQ" firstAttribute="leading" secondItem="pBM-kj-4ef" secondAttribute="trailing" constant="15" id="KPy-fr-BBV"/>
                 <constraint firstAttribute="bottom" secondItem="X6z-c8-QKQ" secondAttribute="bottom" constant="11" id="KTy-hl-0KF"/>
                 <constraint firstItem="pBM-kj-4ef" firstAttribute="centerY" secondItem="X6z-c8-QKQ" secondAttribute="centerY" id="XQI-es-Qcb"/>
-                <constraint firstItem="X6z-c8-QKQ" firstAttribute="leading" secondItem="pBM-kj-4ef" secondAttribute="trailing" constant="15" id="oC8-QP-giD"/>
+                <constraint firstItem="pBM-kj-4ef" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="16" id="eUa-Qg-aqL"/>
+                <constraint firstItem="X6z-c8-QKQ" firstAttribute="leading" secondItem="pBM-kj-4ef" secondAttribute="trailing" constant="5" id="oC8-QP-giD"/>
             </constraints>
         </customView>
     </objects>
