@@ -93,9 +93,9 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B5R-sQ-W17">
-                                                        <rect key="frame" x="288" y="16" width="14" height="14"/>
+                                                        <rect key="frame" x="285" y="18" width="14" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="send-icon-delete" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="MLL-SM-w0T">
+                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="send-icon-delete" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="MLL-SM-w0T">
                                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -103,8 +103,8 @@
                                                             <action selector="removeFileClicked:" target="-2" id="XGv-lR-Ljv"/>
                                                         </connections>
                                                     </button>
-                                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KEN-py-SXs">
-                                                        <rect key="frame" x="224" y="14" width="57" height="17"/>
+                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KEN-py-SXs">
+                                                        <rect key="frame" x="220" y="14" width="57" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="53" id="NE5-1F-fyQ"/>
@@ -135,9 +135,9 @@
                                                 <constraints>
                                                     <constraint firstItem="KEN-py-SXs" firstAttribute="centerY" secondItem="QUo-Vj-3Xh" secondAttribute="centerY" id="0ay-PT-Kzz"/>
                                                     <constraint firstItem="peD-Bm-cAn" firstAttribute="leading" secondItem="QUo-Vj-3Xh" secondAttribute="leading" constant="14" id="8kK-Xu-h4N"/>
-                                                    <constraint firstAttribute="trailing" secondItem="KEN-py-SXs" secondAttribute="trailing" constant="35" id="C9a-RS-JFK"/>
-                                                    <constraint firstAttribute="trailing" secondItem="B5R-sQ-W17" secondAttribute="trailing" constant="12" id="NXQ-qV-mXe"/>
-                                                    <constraint firstItem="B5R-sQ-W17" firstAttribute="top" secondItem="QUo-Vj-3Xh" secondAttribute="top" constant="15" id="YbR-Bp-1bw"/>
+                                                    <constraint firstAttribute="trailing" secondItem="KEN-py-SXs" secondAttribute="trailing" constant="42" id="C9a-RS-JFK"/>
+                                                    <constraint firstAttribute="trailing" secondItem="B5R-sQ-W17" secondAttribute="trailing" constant="18" id="NXQ-qV-mXe"/>
+                                                    <constraint firstItem="B5R-sQ-W17" firstAttribute="top" secondItem="QUo-Vj-3Xh" secondAttribute="top" constant="14" id="YbR-Bp-1bw"/>
                                                     <constraint firstItem="KEN-py-SXs" firstAttribute="baseline" secondItem="peD-Bm-cAn" secondAttribute="baseline" id="tcM-Y0-tlJ"/>
                                                 </constraints>
                                                 <connections>
