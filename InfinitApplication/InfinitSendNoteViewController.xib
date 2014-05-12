@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="317" height="42"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField focusRingType="none" ambiguous="YES" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="InfinitSendNoteField">
+                <textField focusRingType="none" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="InfinitSendNoteField">
                     <rect key="frame" x="45" y="11" width="236" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <constraints>
@@ -34,7 +34,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G5o-bC-fko">
-                    <rect key="frame" x="284" y="15" width="23" height="13"/>
+                    <rect key="frame" x="278" y="14" width="23" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="100" id="vht-Q4-WMb">
                         <font key="font" metaFont="system" size="10"/>
@@ -42,13 +42,14 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pBM-kj-4ef">
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pBM-kj-4ef">
                     <rect key="frame" x="16" y="13" width="14" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon-note" id="ppf-kE-zVi"/>
                 </imageView>
             </subviews>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="G5o-bC-fko" secondAttribute="trailing" constant="18" id="8qn-eK-QnO"/>
                 <constraint firstItem="G5o-bC-fko" firstAttribute="leading" secondItem="X6z-c8-QKQ" secondAttribute="trailing" constant="5" id="DQn-UG-JvX"/>
                 <constraint firstItem="X6z-c8-QKQ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="13" id="Dsz-9x-YlY"/>
                 <constraint firstItem="X6z-c8-QKQ" firstAttribute="leading" secondItem="pBM-kj-4ef" secondAttribute="trailing" constant="15" id="KPy-fr-BBV"/>
