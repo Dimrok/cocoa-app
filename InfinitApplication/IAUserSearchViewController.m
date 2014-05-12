@@ -12,7 +12,17 @@
 #import "IAAvatarManager.h"
 #import "InfinitTokenAttachmentCell.h"
 
-@interface IAUserSearchViewController ()
+@implementation InfinitSearchField
+
+- (BOOL)becomeFirstResponder
+{
+  if ([[NSApp currentEvent] type] == NSLeftMouseDown)
+  {
+    [(id<InfinitSearchFieldProtocol>)_delegate gotClickedIn:self];
+  }
+  return [super becomeFirstResponder];
+}
+
 @end
 
 //- Search View Element ----------------------------------------------------------------------------
@@ -68,14 +78,16 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  // White background
-  [IA_GREY_COLOUR(255.0) set];
+  [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  NSBezierPath* line =
-    [NSBezierPath bezierPathWithRect:NSMakeRect(20.0, 0.0,
-                                                NSWidth(self.bounds) - 40.0, 1.0)];
-  [IA_GREY_COLOUR(229) set];
-  [line fill];
+  NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(20.0, 0.0,
+                                                                   NSWidth(self.bounds) - 40.0,
+                                                                   1.0)];
+  if (_open)
+  {
+    [IA_GREY_COLOUR(229) set];
+    [line fill];
+  }
 }
 
 - (void)setNoResults:(BOOL)no_results
@@ -87,25 +99,6 @@
 - (NSSize)intrinsicContentSize
 {
   return self.bounds.size;
-}
-
-@end
-
-//- Search Table Row View --------------------------------------------------------------------------
-
-@interface IASearchResultsTableRowView : NSTableRowView
-@end
-
-@implementation IASearchResultsTableRowView
-
-- (BOOL)isOpaque
-{
-  return YES;
-}
-
-- (BOOL)isFlipped
-{
-  return NO;
 }
 
 @end
@@ -144,7 +137,7 @@
   {
     _hover_row = 0;
     _row_height = 45.0;
-    _max_rows_shown = 4;
+    _max_rows_shown = 3;
     _delegate = nil;
     _token_count = 0;
     NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -210,21 +203,21 @@
     NSFont* search_font = [[NSFontManager sharedFontManager]fontWithFamily:@"Helvetica"
                                                                     traits:NSUnboldFontMask
                                                                     weight:3
-                                                                      size:13.0];
+                                                                      size:12.0];
 
     NSDictionary* search_attrs =
       [IAFunctions textStyleWithFont:search_font
                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                              colour:IA_GREY_COLOUR(32.0)
+                              colour:IA_GREY_COLOUR(190)
                               shadow:nil];
     
-    NSString* placeholder_str = NSLocalizedString(@"Enter a name or email...",
-                                                  @"Enter a name or email...");
+    NSString* placeholder_str = NSLocalizedString(@"Search or select a user", nil);
     NSAttributedString* search_placeholder =
       [[NSAttributedString alloc] initWithString:placeholder_str attributes:search_attrs];
     [self.search_field.cell setPlaceholderAttributedString:search_placeholder];
   }
   self.no_results_message.attributedStringValue = _no_result_msg_str;
+  self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
 }
 
 - (void)loadView
@@ -237,12 +230,18 @@
   }
   [self updateResultsTable];
   [self setNoResultsHidden:YES];
-  self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
   [self.view setFrameSize:NSMakeSize(NSWidth(self.view.frame),
                                      NSHeight(self.search_box_view.frame) + [self tableHeight])];
 }
 
 //- General Functions ------------------------------------------------------------------------------
+
+- (void)setOpen:(BOOL)open
+{
+  _open = open;
+  self.search_box_view.open = open;
+  [self.search_box_view setNeedsDisplay:YES];
+}
 
 - (void)checkInputs
 {
@@ -329,8 +328,6 @@
   
   [self.search_field setObjectValue:temp];
   [_delegate searchViewInputsChanged:self];
-  NSView* clip_view = self.search_field.subviews[0];
-  [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 26.0)];
 }
 
 - (void)removeElement:(InfinitSearchElement*)element
@@ -399,6 +396,11 @@
 
 //- Search Field -----------------------------------------------------------------------------------
 
+- (void)gotClickedIn:(InfinitSearchField*)sender
+{
+  [_delegate searchViewGotFocus:self];
+}
+
 - (NSString*)trimLeadingWhitespace:(NSString*)str
 {
   NSInteger i = 0;
@@ -459,14 +461,6 @@
   _last_search = search_string;
 }
 
-- (BOOL)isCommandEnterEvent:(NSEvent*)event
-{
-  NSUInteger flags = (event.modifierFlags & NSDeviceIndependentModifierFlagsMask);
-  BOOL is_command = (flags & NSCommandKeyMask) == NSCommandKeyMask;
-  BOOL is_enter = (event.keyCode == 0x24); // VK_RETURN
-  return (is_command && is_enter);
-}
-
 - (BOOL)control:(NSControl*)control
        textView:(NSTextView*)textView
 doCommandBySelector:(SEL)commandSelector
@@ -474,15 +468,7 @@ doCommandBySelector:(SEL)commandSelector
   if (control != self.search_field)
     return NO;
 
-  if (commandSelector == @selector(noop:))
-  {
-    if ([self isCommandEnterEvent:[NSApp currentEvent]])
-    {
-      [_delegate searchViewGotWantsSend:self];
-      return YES;
-    }
-  }
-  else if (commandSelector == @selector(deleteBackward:))
+  if (commandSelector == @selector(deleteBackward:))
   {
     NSRange range = self.search_field.currentEditor.selectedRange;
     if (range.location == 0 || range.location > [self.search_field.objectValue count])
@@ -527,6 +513,9 @@ doCommandBySelector:(SEL)commandSelector
       }
     }
     [_delegate searchViewInputsChanged:self];
+    // WORKAROUND for clipping of tokens when selected with the keyboard
+    NSView* clip_view = self.search_field.subviews[0];
+    [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 26.0)];
     return YES;
   }
   else if (commandSelector == @selector(moveDown:))
@@ -541,21 +530,7 @@ doCommandBySelector:(SEL)commandSelector
   }
   else if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
   {
-    if (_search_results.count > 0)
-    {
-      NSInteger row = _hover_row;
-      if (row > -1 && row < _search_results.count)
-      {
-        InfinitSearchElement* element = _search_results[row];
-        [self addElement:element];
-        [self clearResults];
-      }
-    }
-    else
-    {
-      [_delegate searchViewWantsLoseFocus:self];
-      
-    }
+    [_delegate searchViewWantsLoseFocus:self];
     return YES;
   }
   return NO;
@@ -775,9 +750,9 @@ writeRepresentedObjects:(NSArray*)objects
 - (NSTableRowView*)tableView:(NSTableView*)tableView
                rowViewForRow:(NSInteger)row
 {
-  IASearchResultsTableRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
+  NSTableRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
   if (row_view == nil)
-    row_view = [[IASearchResultsTableRowView alloc] initWithFrame:NSZeroRect];
+    row_view = [[NSTableRowView alloc] initWithFrame:NSZeroRect];
   return row_view;
 }
 
@@ -877,9 +852,6 @@ writeRepresentedObjects:(NSArray*)objects
     new_pos = _search_results.count - 1;
   else if (new_pos > _search_results.count - 1)
     new_pos = 0;
-//  if (row != -1)
-//    [self setHover:NO forRow:row];
-//  [self setHover:YES forRow:new_pos];
   _hover_row = new_pos;
   [self scrollRowToCentre:new_pos withAnimation:YES];
 }

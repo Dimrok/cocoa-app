@@ -9,6 +9,25 @@
 #import "IAViewController.h"
 
 @interface IAViewController ()
+@end
+
+//- Plain White Opaque View ------------------------------------------------------------------------
+
+@interface InfinitWhiteView : NSView
+@end
+
+@implementation InfinitWhiteView
+
+- (BOOL)isOpaque
+{
+  return YES;
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+  [IA_GREY_COLOUR(255) set];
+  NSRectFill(self.bounds);
+}
 
 @end
 
