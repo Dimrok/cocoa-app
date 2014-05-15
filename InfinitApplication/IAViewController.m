@@ -35,24 +35,20 @@
           self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height];
 }
 
+- (NSSize)intrinsicContentSize
+{
+  return self.bounds.size;
+}
+
 @end
 
 //- Footer View ------------------------------------------------------------------------------------
 
 @implementation IAFooterView
 
-- (void)setFrame:(NSRect)frameRect
+- (BOOL)wantsUpdateLayer
 {
-  [super setFrame:frameRect];
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsDisplay:YES];
-}
-
-- (void)setFrameSize:(NSSize)newSize
-{
-  [super setFrameSize:newSize];
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsDisplay:YES];
+  return NO;
 }
 
 - (NSSize)intrinsicContentSize
@@ -66,18 +62,9 @@
 
 @implementation IAHeaderView
 
-- (void)setFrame:(NSRect)frameRect
+- (BOOL)wantsUpdateLayer
 {
-  [super setFrame:frameRect];
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsDisplay:YES];
-}
-
-- (void)setFrameSize:(NSSize)newSize
-{
-  [super setFrameSize:newSize];
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsDisplay:YES];
+  return NO;
 }
 
 - (NSSize)intrinsicContentSize
@@ -96,18 +83,15 @@
   return YES;
 }
 
-- (void)setFrame:(NSRect)frameRect
+- (void)drawRect:(NSRect)dirtyRect
 {
-  [super setFrame:frameRect];
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsDisplay:YES];
+  [IA_GREY_COLOUR(255) set];
+  NSRectFill(self.bounds);
 }
 
-- (void)setFrameSize:(NSSize)newSize
+- (BOOL)wantsUpdateLayer
 {
-  [super setFrameSize:newSize];
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsDisplay:YES];
+  return NO;
 }
 
 - (NSSize)intrinsicContentSize
