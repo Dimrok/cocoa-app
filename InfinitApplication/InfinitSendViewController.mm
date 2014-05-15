@@ -31,7 +31,7 @@
   para.alignment = NSCenterTextAlignment;
   _norm_attrs = [IAFunctions textStyleWithFont:font
                                 paragraphStyle:para
-                                        colour:IA_GREY_COLOUR(32.0)
+                                        colour:IA_RGB_COLOUR(81, 82, 73)
                                         shadow:nil];
   _high_attrs = [IAFunctions textStyleWithFont:font
                                 paragraphStyle:para
