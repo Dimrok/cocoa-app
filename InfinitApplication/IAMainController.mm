@@ -748,7 +748,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     [_status_bar_icon setTransferring:YES];
   else
     [_status_bar_icon setTransferring:NO];
-  [_status_bar_icon setNumberOfItems:[_transaction_manager totalNotDoneTransactions]];
+  [_status_bar_icon setNumberOfItems:[_transaction_manager transactionsNeedingAccept]];
   [_status_bar_icon setFire:[_transaction_manager haveUnreadConversations]];
 }
 
