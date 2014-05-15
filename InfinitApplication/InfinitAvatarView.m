@@ -40,8 +40,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  NSRect avatar_frame = NSMakeRect((NSWidth(self.bounds) - _avatar.size.width) / 2.0,
-                                   (NSHeight(self.bounds) - _avatar.size.height) / 2.0,
+  NSRect avatar_frame = NSMakeRect(floor((NSWidth(self.bounds) - _avatar.size.width) / 2.0),
+                                   floor((NSHeight(self.bounds) - _avatar.size.height) / 2.0),
                                    _avatar.size.width,
                                    _avatar.size.height);
   [_avatar drawInRect:avatar_frame
@@ -51,8 +51,9 @@
 
   if (_progress > 0.0)
   {
-    NSPoint centre = NSMakePoint(NSWidth(self.frame) / 2.0, NSHeight(self.frame) / 2.0);
-    CGFloat radius = _avatar.size.width / 2.0;
+    NSPoint centre = NSMakePoint(floor(NSWidth(self.frame) / 2.0),
+                                 floor(NSHeight(self.frame) / 2.0));
+    CGFloat radius = floor(_avatar.size.width / 2.0) + 1.0;
 
     NSBezierPath* progress = [NSBezierPath bezierPath];
     CGFloat new_angle = _start_angle - _progress * (360.0 - _badge_angle_size);
@@ -75,7 +76,7 @@
   [self setNeedsDisplay:YES];
 }
 
-- (void)progress:(CGFloat)progress
+- (void)setProgress:(CGFloat)progress
 {
   if (progress > 1.0 || progress < 0.0)
     return;
