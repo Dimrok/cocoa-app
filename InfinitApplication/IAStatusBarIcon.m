@@ -51,6 +51,8 @@ typedef enum __InfinitStatusBarIconColour
 
   NSTrackingArea* _tracking_area;
   InfinitTooltipViewController* _tooltip;
+
+  NSAttributedString* _notifications_str;
 }
 @synthesize isFire = _is_fire;
 @synthesize isHighlighted = _is_highlighted;
@@ -164,32 +166,6 @@ static NSDictionary* _grey_style;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  NSAttributedString* notifications_str;
-  if (_number_of_items > 0)
-  {
-    NSDictionary* style;
-    if (_is_highlighted)
-    {
-      style = _white_style;
-    }
-    else if (_connected == gap_user_status_online && _is_fire)
-    {
-      style = _red_style;
-    }
-    else if (_connected == gap_user_status_online && !_is_fire)
-    {
-      style = _black_style;
-    }
-    else if (_connected != gap_user_status_online)
-    {
-      style = _grey_style;
-    }
-    NSString* number_str =
-      _number_of_items > 99 ? @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
-    notifications_str = [[NSAttributedString alloc] initWithString:number_str
-                                                        attributes:style];
-  }
-  
   if (_is_highlighted)
   {
     NSRect rect;
@@ -238,13 +214,13 @@ static NSDictionary* _grey_style;
   if (_number_of_items == 0)
     x = roundf((NSWidth(self.bounds) - NSWidth(_icon_view.frame)) / 2);
   else
-    x = round((NSWidth(self.bounds) - NSWidth(_icon_view.frame) - notifications_str.size.width) / 2.0 - 2.0);
+    x = round((NSWidth(self.bounds) - NSWidth(_icon_view.frame) - _notifications_str.size.width) / 2.0 - 2.0);
   CGFloat y = roundf((NSHeight(self.bounds) - NSHeight(_icon_view.frame)) / 2.0);
   [_icon_view setFrameOrigin:NSMakePoint(x, y)];
   
   if (_number_of_items > 0)
   {
-    [notifications_str drawAtPoint:NSMakePoint(_length - notifications_str.size.width - 5.0, 2.0)];
+    [_notifications_str drawAtPoint:NSMakePoint(_length - _notifications_str.size.width - 5.0, 2.0)];
   }
 }
 
@@ -361,6 +337,7 @@ static NSDictionary* _grey_style;
     {
       _current_mode = STATUS_BAR_ICON_NORMAL;
     }
+    [self setNotificationString];
     if (last_mode != _current_mode)
       [self setNeedsDisplay:YES];
   }
@@ -409,21 +386,40 @@ static NSDictionary* _grey_style;
   [self determineCurrentMode];
 }
 
+- (void)setNotificationString
+{
+  NSDictionary* style;
+  if (_is_highlighted)
+  {
+    style = _white_style;
+  }
+  else if (_connected == gap_user_status_online && _is_fire)
+  {
+    style = _red_style;
+  }
+  else if (_connected == gap_user_status_online && !_is_fire)
+  {
+    style = _black_style;
+  }
+  else if (_connected != gap_user_status_online)
+  {
+    style = _grey_style;
+  }
+  NSString* number_str =
+  _number_of_items > 99 ? @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
+  _notifications_str = [[NSAttributedString alloc] initWithString:number_str
+                                                       attributes:style];
+}
+
 - (void)setNumberOfItems:(NSInteger)number_of_items
 {
   _number_of_items = number_of_items;
   _length = _icon[STATUS_BAR_ICON_NORMAL].size.width + 15.0;
-  if (number_of_items > 0)
-  {
-    NSString* number_str = _number_of_items > 99 ?
-    @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
-    NSAttributedString* notifications_str = [[NSAttributedString alloc] initWithString:number_str
-                                                                            attributes:_black_style];
-    if (_number_of_items > 9)
-      _length += notifications_str.length + 20.0;
-    else
-      _length += notifications_str.length + 10.0;
-  }
+  [self setNotificationString];
+  if (_number_of_items > 9)
+    _length += _notifications_str.length + 20.0;
+  else if (_number_of_items > 0)
+    _length += _notifications_str.length + 10.0;
   self.frame = NSMakeRect(0.0, 0.0, _length, [[NSStatusBar systemStatusBar] thickness]);
   [self setNeedsDisplay:YES];
 }
