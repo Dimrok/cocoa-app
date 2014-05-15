@@ -149,6 +149,7 @@ static NSImage* check_mark = nil;
     self.result_star.image = [IAFunctions imageNamed:@"icon-star-selected"];
     [self.result_star setToolTip:NSLocalizedString(@"Remove user as favourite",
                                                    @"remove user as favourite")];
+    self.result_star.hidden = NO;
   }
   else
   {
