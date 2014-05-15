@@ -90,11 +90,11 @@
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="zNB-B4-JuB"/>
                                                     </imageView>
                                                     <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ESE-Xm-Hac" customClass="InfinitAvatarView">
-                                                        <rect key="frame" x="9" y="9" width="54" height="54"/>
+                                                        <rect key="frame" x="8" y="8" width="56" height="56"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </customView>
                                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PsZ-OJ-733" customClass="InfinitAvatarBadgeView">
-                                                        <rect key="frame" x="44" y="44" width="18" height="18"/>
+                                                        <rect key="frame" x="45" y="45" width="18" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </customView>
                                                 </subviews>

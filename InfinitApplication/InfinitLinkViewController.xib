@@ -72,7 +72,7 @@
                                                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SfX-9g-Ypy" customClass="IAHoverButton">
                                                         <rect key="frame" x="279" y="40" width="22" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pjj-s2-h3j">
+                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-share" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pjj-s2-h3j">
                                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -83,7 +83,7 @@
                                                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZG1-iK-S4L" customClass="IAHoverButton">
                                                         <rect key="frame" x="279" y="11" width="22" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="23u-pc-Yqu">
+                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-clipboard" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="23u-pc-Yqu">
                                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -149,6 +149,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="icon-clipboard" width="16" height="19"/>
+        <image name="icon-share" width="17" height="15"/>
     </resources>
 </document>
