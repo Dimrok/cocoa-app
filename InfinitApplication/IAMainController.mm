@@ -39,11 +39,11 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   IAGeneralSendController* _general_send_controller;
   InfinitLoginViewController* _login_view_controller;
   IANoConnectionViewController* _no_connection_view_controller;
-  IANotificationListViewController* _notification_view_controller;
   IANotLoggedInViewController* _not_logged_view_controller;
   InfinitOnboardingController* _onboard_controller;
   IAReportProblemWindowController* _report_problem_controller;
   IAWindowController* _window_controller;
+  InfinitMainViewController* _main_view_controller;
   InfinitTooltipViewController* _tooltip_controller;
   
   // Infinit Link Handling
@@ -302,10 +302,13 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 {
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
     [_desktop_notifier clearAllNotifications];
-  _notification_view_controller =
-    [[IANotificationListViewController alloc] initWithDelegate:self
-                                           andConnectionStatus:_me_manager.connection_status];
-  [self openOrChangeViewController:_notification_view_controller];
+  NSArray* transaction_list = [_transaction_manager latestTransactionPerUser];
+  InfinitLinkTransaction* test = [[InfinitLinkTransaction alloc] init];
+  NSArray* link_list = [NSArray arrayWithObject:test];
+  _main_view_controller =
+    [[InfinitMainViewController alloc] initWithDelegate:self andTransactionList:transaction_list
+                                            andLinkList:link_list];
+  [self openOrChangeViewController:_main_view_controller];
 }
 
 - (void)showLoginView
@@ -383,7 +386,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   [_window_controller closeWindow];
   [_status_bar_icon setHighlighted:NO];
   _conversation_view_controller = nil;
-  _notification_view_controller = nil;
+  _main_view_controller = nil;
   _general_send_controller = nil;
 }
 
@@ -441,7 +444,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     [self startOnboarding];
   }
   else if (_current_view_controller != nil &&
-           _current_view_controller != _notification_view_controller)
+           _current_view_controller != _main_view_controller)
   {
     [self showNotifications];
   }
@@ -986,6 +989,103 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   [self handleQuit];
 }
 
+//- Main View Protocol -----------------------------------------------------------------------------
+
+- (NSArray*)latestTransactionsByUser:(InfinitMainViewController*)sender
+{
+  return [_transaction_manager latestTransactionPerUser];
+}
+
+- (NSUInteger)runningTransactionsForUser:(IAUser*)user
+{
+  return [_transaction_manager activeTransactionsForUser:user];
+}
+
+- (NSUInteger)notDoneTransactionsForUser:(IAUser*)user
+{
+  return [_transaction_manager notDoneTransactionsForUser:user];
+}
+
+- (NSUInteger)unreadTransactionsForUser:(IAUser*)user
+{
+  return  [_transaction_manager unreadAndNeedingActionTransactionsForUser:user];
+}
+
+- (CGFloat)totalProgressForUser:(IAUser*)user
+{
+  return [_transaction_manager transactionsProgressForUser:user];
+}
+
+- (BOOL)transferringTransactionsForUser:(IAUser*)user
+{
+  return [_transaction_manager transferringTransactionsForUser:user];
+}
+
+- (void)userGotClicked:(IAUser*)user
+{
+  [self showConversationViewForUser:user];
+}
+
+- (void)reportAProblem:(InfinitMainViewController*)sender
+{
+  [self closeNotificationWindow];
+  if (_report_problem_controller == nil)
+    _report_problem_controller = [[IAReportProblemWindowController alloc] initWithDelegate:self];
+
+  [_report_problem_controller show];
+}
+
+- (void)checkForUpdate:(InfinitMainViewController*)sender
+{
+  [_delegate mainControllerWantsCheckForUpdate:self];
+}
+
+- (BOOL)autostart:(InfinitMainViewController*)sender
+{
+  return [self appInLoginItems];
+}
+
+- (void)setAutoStart:(BOOL)state
+{
+  if (state)
+  {
+    [self addToLoginItems];
+  }
+  else
+  {
+    [self removeFromLoginItems];
+  }
+}
+
+- (void)logout:(InfinitMainViewController*)sender
+{
+  [self handleLogout];
+}
+
+- (void)quit:(InfinitMainViewController*)sender
+{
+  [self handleQuit];
+}
+
+- (void)markTransactionRead:(IATransaction*)transaction
+{
+  [_transaction_manager markTransactionAsRead:transaction];
+}
+
+- (void)sendGotClicked:(InfinitMainViewController*)sender
+{
+  if (_general_send_controller == nil)
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  [_general_send_controller openWithNoFileForLink:NO];
+}
+
+- (void)makeLinkGotClicked:(InfinitMainViewController*)sender
+{
+  if (_general_send_controller == nil)
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  [_general_send_controller openWithNoFileForLink:YES];
+}
+
 //- Me Manager Protocol ----------------------------------------------------------------------------
 
 - (void)meManager:(IAMeManager*)sender
@@ -996,10 +1096,6 @@ hadConnectionStateChange:(gap_UserStatus)status
       status == gap_user_status_online)
   {
     [self showNotifications];
-  }
-  if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
-  {
-    [_notification_view_controller setConnected:status];
   }
   if (status == gap_user_status_online)
     [IAUserManager resyncUserStatuses];
@@ -1012,128 +1108,6 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)noConnectionViewWantsBack:(IANoConnectionViewController*)sender
 {
   [self showNotifications];
-}
-
-//- Notification List Protocol ---------------------------------------------------------------------
-
-- (void)notificationListWantsLogout:(IANotificationListViewController*)sender
-{
-  [self handleLogout];
-}
-
-- (void)notificationListWantsQuit:(IANotificationListViewController*)sender
-{
-  [self handleQuit];
-}
-
-- (void)notificationList:(IANotificationListViewController*)sender
-wantsMarkTransactionRead:(IATransaction*)transaction
-{
-  [_transaction_manager markTransactionAsRead:transaction];
-}
-
-- (void)notificationListGotTransferClick:(IANotificationListViewController*)sender
-{
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-  [_general_send_controller openWithNoFile];
-}
-
-- (NSArray*)notificationListWantsLastTransactions:(IANotificationListViewController*)sender
-{
-  return [_transaction_manager latestTransactionPerUser];
-}
-
-- (void)notificationList:(IANotificationListViewController*)sender
-          gotClickOnUser:(IAUser*)user
-{
-  [self showConversationViewForUser:user];
-}
-
-- (NSUInteger)notificationList:(IANotificationListViewController*)sender
-    notDoneTransactionsForUser:(IAUser*)user
-{
-  return [_transaction_manager notDoneTransactionsForUser:user];
-}
-
-- (NSUInteger)notificationList:(IANotificationListViewController*)sender
- needActionTransactionsForUser:(IAUser*)user
-{
-  return [_transaction_manager needActionTransactionsForUser:user];
-}
-
-- (NSUInteger)notificationList:(IANotificationListViewController*)sender
-     unreadTransactionsForUser:(IAUser*)user
-{
-  return [_transaction_manager unreadAndNeedingActionTransactionsForUser:user];
-}
-
-- (NSUInteger)notificationList:(IANotificationListViewController*)sender
-     activeTransactionsForUser:(IAUser*)user
-{
-  return [_transaction_manager activeTransactionsForUser:user];
-}
-
-- (BOOL)notificationList:(IANotificationListViewController*)sender
-transferringTransactionsForUser:(IAUser*)user
-{
-  return [_transaction_manager transferringTransactionsForUser:user];
-}
-
-- (CGFloat)notificationList:(IANotificationListViewController*)sender
-transactionsProgressForUser:(IAUser*)user
-{
-  return [_transaction_manager transactionsProgressForUser:user];
-}
-
-- (void)notificationList:(IANotificationListViewController*)sender
-       acceptTransaction:(IATransaction*)transaction
-{
-  [_transaction_manager acceptTransaction:transaction];
-}
-
-- (void)notificationList:(IANotificationListViewController*)sender
-       cancelTransaction:(IATransaction*)transaction
-{
-  [_transaction_manager cancelTransaction:transaction];
-}
-
-- (void)notificationList:(IANotificationListViewController*)sender
-       rejectTransaction:(IATransaction*)transaction
-{
-  [_transaction_manager rejectTransaction:transaction];
-}
-
-- (void)notificationListWantsReportProblem:(IANotificationListViewController*)sender
-{
-  [self closeNotificationWindow];
-  if (_report_problem_controller == nil)
-    _report_problem_controller = [[IAReportProblemWindowController alloc] initWithDelegate:self];
-  
-  [_report_problem_controller show];
-}
-
-- (void)notificationListWantsCheckForUpdate:(IANotificationListViewController*)sender
-{
-  [_delegate mainControllerWantsCheckForUpdate:self];
-}
-
-- (BOOL)notificationListWantsAutoStartStatus:(IANotificationListViewController*)sender
-{
-  return [self appInLoginItems];
-}
-
-- (void)notificationList:(IANotificationListViewController*)sender
-            setAutoStart:(BOOL)state
-{
-  if (state)
-  {
-    [self addToLoginItems];
-  }
-  else
-  {
-    [self removeFromLoginItems];
-  }
 }
 
 //- Not Logged In Protocol -------------------------------------------------------------------------
@@ -1300,7 +1274,7 @@ transactionsProgressForUser:(IAUser*)user
 
 - (BOOL)notificationViewOpen
 {
-  if ([_current_view_controller isKindOfClass:IANotificationListViewController.class])
+  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
     return YES;
   return NO;
 }

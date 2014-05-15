@@ -19,7 +19,6 @@
 #import "IAGeneralSendController.h"
 #import "IAMeManager.h"
 #import "IANoConnectionViewController.h"
-#import "IANotificationListViewController.h"
 #import "IANotLoggedInViewController.h"
 #import "IAReportProblemWindowController.h"
 #import "IAStatusBarIcon.h"
@@ -28,6 +27,7 @@
 #import "InfinitClippyViewController.h"
 #import "InfinitConversationViewController.h"
 #import "InfinitLoginViewController.h"
+#import "InfinitMainViewController.h"
 #import "InfinitOnboardingController.h"
 #import "InfinitStayAwakeManager.h"
 
@@ -37,7 +37,6 @@
                                         IAGeneralSendControllerProtocol,
                                         IAMeManagerProtocol,
                                         IANoConnectionViewProtocol,
-                                        IANotificationListViewProtocol,
                                         IANotLoggedInViewProtocol,
                                         IAReportProblemProtocol,
                                         IAStatusBarIconProtocol,
@@ -47,8 +46,9 @@
                                         IAWindowControllerProtocol,
                                         InfinitClippyProtocol,
                                         InfinitConversationViewProtocol,
-                                        InfinitOnboardingProtocol,
                                         InfinitLoginViewControllerProtocol,
+                                        InfinitMainViewProtocol,
+                                        InfinitOnboardingProtocol,
                                         InfinitStayAwakeProtocol>
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;

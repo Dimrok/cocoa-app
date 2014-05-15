@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D61" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment defaultVersion="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="InfinitMainViewController">
+            <connections>
+                <outlet property="auto_start_toggle" destination="LfE-SS-Ok7" id="KR6-LX-dAM"/>
+                <outlet property="content_height_constraint" destination="osY-0t-Ay4" id="GfO-yM-ngE"/>
+                <outlet property="footer_view" destination="hwd-fU-mZe" id="GND-Fw-9hc"/>
+                <outlet property="gear_button" destination="eY6-mc-4s8" id="3Ev-qV-5a0"/>
+                <outlet property="gear_menu" destination="TZg-Rw-nQG" id="0vs-Rx-7yR"/>
+                <outlet property="header_view" destination="2Lk-Xw-tFF" id="ZoV-1C-jcY"/>
+                <outlet property="main_view" destination="hEP-bi-K5F" id="gRG-m6-rm5"/>
+                <outlet property="send_button" destination="tU3-mI-zza" id="DrD-bH-Fn8"/>
+                <outlet property="version_item" destination="rgi-jQ-wyG" id="qUO-Dl-nyB"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="view_selector" destination="WKb-S2-bgh" id="ZoX-ao-Agc"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <customView focusRingType="none" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="161"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Lk-Xw-tFF" customClass="IAHeaderView">
+                    <rect key="frame" x="0.0" y="111" width="317" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqD-Yl-7nC">
+                            <rect key="frame" x="0.0" y="42" width="317" height="8"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="bg-triangle-top-white" id="lK7-VY-bBu"/>
+                        </imageView>
+                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WKb-S2-bgh" customClass="InfinitMainTransactionLinkView">
+                            <rect key="frame" x="0.0" y="0.0" width="317" height="42"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HMZ-IT-48i">
+                                    <rect key="frame" x="30" y="14" width="102" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="PEOPLE" id="mfZ-Ne-OcR">
+                                        <font key="font" size="11" name="Helvetica"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilo-sL-unO">
+                                    <rect key="frame" x="191" y="14" width="102" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="LINKS" id="zM1-7y-zE4">
+                                        <font key="font" size="11" name="Helvetica"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <connections>
+                                <outlet property="link_text" destination="ilo-sL-unO" id="m5S-g2-0j1"/>
+                                <outlet property="transaction_text" destination="HMZ-IT-48i" id="UqA-m8-8Vr"/>
+                            </connections>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="6hC-Cs-WCC"/>
+                    </constraints>
+                </customView>
+                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEP-bi-K5F" customClass="IAMainView">
+                    <rect key="frame" x="0.0" y="39" width="317" height="72"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="72" id="osY-0t-Ay4"/>
+                    </constraints>
+                </customView>
+                <customView autoresizesSubviews="NO" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hwd-fU-mZe" customClass="IAFooterView">
+                    <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fLR-71-rem">
+                            <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bg-main-button" id="dFa-F3-jwp"/>
+                        </imageView>
+                        <button toolTip="Settings" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eY6-mc-4s8">
+                            <rect key="frame" x="13" y="9" width="18" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-gear" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="tTx-df-wS6">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="gearButtonClicked:" target="-2" id="y0o-Zs-eZb"/>
+                            </connections>
+                        </button>
+                        <button toolTip="Send a file" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tU3-mI-zza">
+                            <rect key="frame" x="279" y="9" width="27" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-transfer" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Q8q-BS-2Ph">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="sendButtonClicked:" target="-2" id="GiT-em-pUl"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="39" id="jfH-bZ-Vr5"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="2Lk-Xw-tFF" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="4b8-8e-OQ0"/>
+                <constraint firstAttribute="bottom" secondItem="hwd-fU-mZe" secondAttribute="bottom" id="5ME-iE-JxS"/>
+                <constraint firstItem="hwd-fU-mZe" firstAttribute="top" secondItem="hEP-bi-K5F" secondAttribute="bottom" id="iS3-Uq-uux"/>
+                <constraint firstItem="hEP-bi-K5F" firstAttribute="top" secondItem="2Lk-Xw-tFF" secondAttribute="bottom" id="sp2-yh-7db"/>
+            </constraints>
+        </customView>
+        <menu autoenablesItems="NO" id="TZg-Rw-nQG">
+            <items>
+                <menuItem title="Profile" id="DeA-sL-3AJ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onProfileClick:" target="-2" id="vnO-LK-OSC"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Send Feedback" id="uiZ-nN-xDe">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onFeedbackClick:" target="-2" id="oCx-1U-v3b"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Report a Problem" id="IG7-5h-WAf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onReportProblemClick:" target="-2" id="ntO-FA-pf7"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="nSC-qx-BhU"/>
+                <menuItem title="Start at Login" id="LfE-SS-Ok7">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onToggleAutoStartClick:" target="-2" id="P3P-xe-Dtz"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="gll-KM-KUC"/>
+                <menuItem title="Check for Update" id="htG-zl-Pil">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onCheckForUpdateClick:" target="-2" id="Spu-d5-gcZ"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Version" enabled="NO" id="rgi-jQ-wyG">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Logout" id="8wH-mr-EYZ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="logoutClicked:" target="-2" id="XgC-F3-yNr"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Quit Infinit" id="ulq-5t-cer">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quitClicked:" target="-2" id="OeO-vc-fcg"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
+    </objects>
+    <resources>
+        <image name="bg-main-button" width="317" height="39"/>
+        <image name="bg-triangle-top-white" width="15" height="8"/>
+        <image name="icon-gear" width="18" height="18"/>
+        <image name="icon-transfer" width="27" height="18"/>
+    </resources>
+</document>
