@@ -273,18 +273,6 @@ void on_deleted_swagger(uint32_t const user_id);
   return res;
 }
 
-- (gap_Status)pull_notifications:(int)count
-                          offset:(int)offset
-{
-  gap_Status ret = gap_pull_notifications(_state, count, offset);
-  return ret;
-}
-
-- (gap_Status)notifications_read
-{
-  return gap_notifications_read(_state);
-}
-
 #define RETURN_CSTRING(expr) \
 do { \
 char const* str = expr; \
