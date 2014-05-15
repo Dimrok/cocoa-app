@@ -10,6 +10,7 @@
 
 #import "InfinitTransactionViewController.h"
 #import "InfinitLinkViewController.h"
+#import "InfinitMainCounterView.h"
 
 //- User Link View ---------------------------------------------------------------------------------
 
@@ -24,14 +25,16 @@ typedef enum _InfinitTransactionLinkMode
 @interface InfinitMainTransactionLinkView : NSView
 @property (nonatomic, strong) IBOutlet NSTextField* transaction_text;
 @property (nonatomic, strong) IBOutlet NSTextField* link_text;
+@property (nonatomic, strong) IBOutlet InfinitMainCounterView* transaction_counter;
+@property (nonatomic, strong) IBOutlet InfinitMainCounterView* link_counter;
 @property (nonatomic, readwrite) InfinitTransactionLinkMode mode;
 @property (nonatomic, readwrite) CGFloat animate_mode;
 
 - (void)setDelegate:(id<InfinitMainTransactionLinkProtocol>)delegate;
 - (void)setupView;
 
-- (void)setLinkCount:(NSNumber*)count;
-- (void)setTransactionCount:(NSNumber*)count;
+- (void)setLinkCount:(NSUInteger)count;
+- (void)setTransactionCount:(NSUInteger)count;
 
 @end
 

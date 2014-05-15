@@ -34,6 +34,7 @@
 		83019CCD192546A600423FCA /* cat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83019CCB192546A600423FCA /* cat@2x.png */; };
 		83019CD01925470900423FCA /* folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 83019CCE1925470900423FCA /* folder.png */; };
 		83019CD11925470900423FCA /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83019CCF1925470900423FCA /* folder@2x.png */; };
+		83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83019CD31925629800423FCA /* InfinitMainCounterView.m */; };
 		83059E01191E94C7008DA14A /* send-icon-hide-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 83059DFF191E94C7008DA14A /* send-icon-hide-files.png */; };
 		83059E02191E94C7008DA14A /* send-icon-hide-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83059E00191E94C7008DA14A /* send-icon-hide-files@2x.png */; };
 		83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */; };
@@ -626,6 +627,8 @@
 		83019CCB192546A600423FCA /* cat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cat@2x.png"; path = "../../../../fist-resources/slices/mimetypes/cat@2x.png"; sourceTree = "<group>"; };
 		83019CCE1925470900423FCA /* folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = folder.png; path = "../../../../fist-resources/slices/mimetypes/folder.png"; sourceTree = "<group>"; };
 		83019CCF1925470900423FCA /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "folder@2x.png"; path = "../../../../fist-resources/slices/mimetypes/folder@2x.png"; sourceTree = "<group>"; };
+		83019CD21925629800423FCA /* InfinitMainCounterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMainCounterView.h; sourceTree = "<group>"; };
+		83019CD31925629800423FCA /* InfinitMainCounterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMainCounterView.m; sourceTree = "<group>"; };
 		83059DFF191E94C7008DA14A /* send-icon-hide-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon-hide-files.png"; path = "../../../../fist-resources/slices/view_send/send-icon-hide-files.png"; sourceTree = "<group>"; };
 		83059E00191E94C7008DA14A /* send-icon-hide-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon-hide-files@2x.png"; path = "../../../../fist-resources/slices/view_send/send-icon-hide-files@2x.png"; sourceTree = "<group>"; };
 		83059E05191EA2C0008DA14A /* InfinitSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendViewController.h; sourceTree = "<group>"; };
@@ -1104,6 +1107,8 @@
 				834F13841922618200BF36A4 /* InfinitMainViewController.h */,
 				834F13851922618200BF36A4 /* InfinitMainViewController.m */,
 				834F13861922618200BF36A4 /* InfinitMainViewController.xib */,
+				83019CD21925629800423FCA /* InfinitMainCounterView.h */,
+				83019CD31925629800423FCA /* InfinitMainCounterView.m */,
 				834F137519224FB300BF36A4 /* Links View */,
 				834F136519216D7900BF36A4 /* Transactions View */,
 				831FB22317A90BE900696604 /* IANotificationListViewController.h */,
@@ -2476,6 +2481,7 @@
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
 				83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */,
 				83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */,
+				83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,
 				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */,

@@ -22,6 +22,8 @@
 
 @property (nonatomic, readwrite) BOOL changing;
 
+- (NSUInteger)linksRunning;
+
 - (CGFloat)height;
 
 @end

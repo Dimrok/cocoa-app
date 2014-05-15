@@ -40,26 +40,36 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HMZ-IT-48i">
-                                    <rect key="frame" x="30" y="15" width="102" height="16"/>
+                                    <rect key="frame" x="40" y="16" width="53" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="PEOPLE" id="mfZ-Ne-OcR">
-                                        <font key="font" size="11" name="Helvetica"/>
+                                        <font key="font" size="12" name="Helvetica"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilo-sL-unO">
-                                    <rect key="frame" x="191" y="15" width="102" height="16"/>
+                                    <rect key="frame" x="227" y="16" width="40" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="LINKS" id="zM1-7y-zE4">
-                                        <font key="font" size="11" name="Helvetica"/>
+                                        <font key="font" size="12" name="Helvetica"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nvG-SI-aAY" customClass="InfinitMainCounterView">
+                                    <rect key="frame" x="95" y="19" width="13" height="13"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                </customView>
+                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6R-8M-I4K" customClass="InfinitMainCounterView">
+                                    <rect key="frame" x="268" y="19" width="13" height="13"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                </customView>
                             </subviews>
                             <connections>
+                                <outlet property="link_counter" destination="A6R-8M-I4K" id="yew-Gd-dUX"/>
                                 <outlet property="link_text" destination="ilo-sL-unO" id="m5S-g2-0j1"/>
+                                <outlet property="transaction_counter" destination="nvG-SI-aAY" id="8Ls-PP-GH9"/>
                                 <outlet property="transaction_text" destination="HMZ-IT-48i" id="UqA-m8-8Vr"/>
                             </connections>
                         </customView>

@@ -22,12 +22,18 @@
 - (id)initWithDelegate:(id<InfinitTransactionViewProtocol>)delegate
     andTransactionList:(NSArray*)transaction_list;
 
+- (void)updateModelWithList:(NSArray*)list;
+
 - (void)transactionAdded:(IATransaction*)transaction;
 - (void)transactionUpdated:(IATransaction*)transaction;
 
 - (void)userUpdated:(IAUser*)user;
 
 - (CGFloat)height;
+
+- (NSUInteger)unreadRows;
+
+- (void)markTransactionsRead;
 
 @end
 
@@ -43,5 +49,7 @@
 - (BOOL)transferringTransactionsForUser:(IAUser*)user;
 
 - (void)userGotClicked:(IAUser*)user;
+
+- (void)markTransactionRead:(IATransaction*)transaction;
 
 @end

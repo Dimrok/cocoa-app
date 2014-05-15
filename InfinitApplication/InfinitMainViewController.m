@@ -23,9 +23,6 @@
   id<InfinitMainTransactionLinkProtocol> _delegate;
   NSTrackingArea* _tracking_area;
 
-  NSNumber* _transaction_count;
-  NSNumber* _link_count;
-
   NSAttributedString* _link_norm_str;
   NSAttributedString* _link_high_str;
   NSAttributedString* _transaction_norm_str;
@@ -39,7 +36,7 @@
   para.alignment = NSCenterTextAlignment;
   NSDictionary* norm_attrs = [IAFunctions textStyleWithFont:font
                                              paragraphStyle:para
-                                                     colour:IA_GREY_COLOUR(32.0)
+                                                     colour:IA_RGB_COLOUR(81, 82, 73)
                                                      shadow:nil];
   NSDictionary* high_attrs = [IAFunctions textStyleWithFont:font
                                              paragraphStyle:para
@@ -58,6 +55,8 @@
 
   self.transaction_text.attributedStringValue = _transaction_high_str;
   self.link_text.attributedStringValue = _link_norm_str;
+  self.transaction_counter.highlighted = YES;
+  self.link_counter.highlighted = NO;
 }
 
 - (void)setDelegate:(id<InfinitMainTransactionLinkProtocol>)delegate
@@ -65,18 +64,14 @@
   _delegate = delegate;
 }
 
-- (void)setLinkCount:(NSNumber*)count
+- (void)setLinkCount:(NSUInteger)count
 {
-  if (count.unsignedIntegerValue == _link_count.unsignedIntegerValue)
-    return;
-  [self setNeedsDisplay:YES];
+  self.link_counter.count = count;
 }
 
-- (void)setTransactionCount:(NSNumber*)count
+- (void)setTransactionCount:(NSUInteger)count
 {
-  if (count.unsignedIntegerValue == _transaction_count.unsignedIntegerValue)
-    return;
-  [self setNeedsDisplay:YES];
+  self.transaction_counter.count = count;
 }
 
 - (BOOL)isOpaque
@@ -105,12 +100,16 @@
   {
     self.transaction_text.attributedStringValue = _transaction_high_str;
     self.link_text.attributedStringValue = _link_norm_str;
+    self.link_counter.highlighted = NO;
+    self.transaction_counter.highlighted = YES;
     val = 0.0;
   }
   else
   {
     self.transaction_text.attributedStringValue = _transaction_norm_str;
     self.link_text.attributedStringValue = _link_high_str;
+    self.link_counter.highlighted = YES;
+    self.transaction_counter.highlighted = NO;
     val = 1.0;
   }
 
@@ -280,6 +279,8 @@
   [super loadView];
   [self.view_selector setDelegate:self];
   [self.view_selector setupView];
+  [self.view_selector setLinkCount:_link_controller.linksRunning];
+  [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
 }
 
 //- IAViewController -------------------------------------------------------------------------------
@@ -293,6 +294,7 @@
 {
   if (_current_controller == _transaction_controller)
     _transaction_controller.changing = YES;
+  [_transaction_controller markTransactionsRead];
 }
 
 - (void)transactionAdded:(IATransaction*)transaction
@@ -300,6 +302,7 @@
   if (_current_controller != _transaction_controller)
     return;
   [_transaction_controller transactionAdded:transaction];
+  [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
 }
 
 - (void)transactionUpdated:(IATransaction*)transaction
@@ -307,6 +310,7 @@
   if (_current_controller != _transaction_controller)
     return;
   [_transaction_controller transactionUpdated:transaction];
+  [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
 }
 
 - (void)userUpdated:(IAUser*)user
@@ -375,6 +379,11 @@
   }];
 }
 
+- (void)markTransactionRead:(IATransaction*)transaction
+{
+  [_delegate markTransactionRead:transaction];
+}
+
 //- Transaction Link Protocol ----------------------------------------------------------------------
 
 - (void)gotUserClick:(InfinitMainTransactionLinkView*)sender
@@ -385,13 +394,16 @@
   if (self.main_view.wantsLayer == NO)
     self.main_view.wantsLayer = YES;
 
+  [_transaction_controller updateModelWithList:[_delegate latestTransactionsByUser:self]];
+
   [self.view_selector setMode:INFINIT_MAIN_VIEW_TRANSACTION_MODE];
   _link_controller.changing = YES;
   self.main_view.animations = @{@"subviews": [self transitionFromLeft:NO]};
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
-     [self.main_view.animator replaceSubview:_current_controller.view with:_transaction_controller.view];
+     [self.main_view.animator replaceSubview:_current_controller.view
+                                        with:_transaction_controller.view];
      _current_controller = _transaction_controller;
    }
                       completionHandler:^
@@ -419,26 +431,6 @@
        _transaction_controller.changing = NO;
      }
    }];
-
-//  _link_controller.changing = YES;
-//  [self.view_selector setMode:INFINIT_MAIN_VIEW_TRANSACTION_MODE];
-//  [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-//   {
-//     [self.content_height_constraint.animator setConstant:0.0];
-//   }
-//                      completionHandler:^
-//   {
-//     [self.main_view replaceSubview:_current_controller.view with:_transaction_controller.view];
-//     _current_controller = _transaction_controller;
-//     NSArray* constraints =
-//       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
-//                                               options:0
-//                                               metrics:nil
-//                                                 views:@{@"view": _current_controller.view}];
-//     [self.main_view addConstraints:constraints];
-//     _transaction_controller.changing = NO;
-//     [self.content_height_constraint.animator setConstant:_transaction_controller.height];
-//   }];
 }
 
 - (void)gotLinkClick:(InfinitMainTransactionLinkView*)sender
@@ -449,6 +441,7 @@
   if (self.main_view.wantsLayer == NO)
     self.main_view.wantsLayer = YES;
 
+  [_transaction_controller markTransactionsRead];
   [self.view_selector setMode:INFINIT_MAIN_VIEW_LINK_MODE];
   _transaction_controller.changing = YES;
   self.main_view.animations = @{@"subviews": [self transitionFromLeft:YES]};
@@ -483,26 +476,6 @@
       _link_controller.changing = NO;
     }
   }];
-
-//  _transaction_controller.changing = YES;
-//  [self.view_selector setMode:INFINIT_MAIN_VIEW_LINK_MODE];
-//  [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-//   {
-//     [self.content_height_constraint.animator setConstant:0.0];
-//   }
-//                      completionHandler:^
-//   {
-//     [self.main_view replaceSubview:_current_controller.view with:_link_controller.view];
-//     _current_controller = _link_controller;
-//     NSArray* constraints =
-//       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
-//                                               options:0
-//                                               metrics:nil
-//                                                 views:@{@"view": _current_controller.view}];
-//     [self.main_view addConstraints:constraints];
-//     _link_controller.changing = NO;
-//     [self.content_height_constraint.animator setConstant:_link_controller.height];
-//   }];
 }
 
 //- Button Handling --------------------------------------------------------------------------------

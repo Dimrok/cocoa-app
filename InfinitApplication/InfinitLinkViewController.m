@@ -152,6 +152,17 @@
 
 //- View Handling ----------------------------------------------------------------------------------
 
+- (NSUInteger)linksRunning
+{
+  NSUInteger res = 0;
+  for (InfinitLinkTransaction* transaction in _list)
+  {
+    if (transaction.status == gap_transaction_transferring)
+      res++;
+  }
+  return res;
+}
+
 - (CGFloat)height
 {
   CGFloat height = self.table_view.numberOfRows * _row_height;

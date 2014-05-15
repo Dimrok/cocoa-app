@@ -70,6 +70,12 @@
   [self updateListOfRowsWithProgress];
 }
 
+- (void)updateModelWithList:(NSArray*)list
+{
+  _list = [NSMutableArray arrayWithArray:list];
+  [self.table_view reloadData];
+}
+
 //- Progress Handling ------------------------------------------------------------------------------
 
 - (void)setUpdatorRunning:(BOOL)is_running
@@ -136,6 +142,17 @@
 }
 
 //- Table Handling ---------------------------------------------------------------------------------
+
+- (NSUInteger)unreadRows
+{
+  NSUInteger res = 0;
+  for (IATransaction* transaction in _list)
+  {
+    if ([_delegate unreadTransactionsForUser:transaction.other_user] > 0)
+      res++;
+  }
+  return res;
+}
 
 - (BOOL)tableView:(NSTableView*)tableView
   shouldSelectRow:(NSInteger)row
@@ -327,6 +344,19 @@
 - (void)resizeView
 {
   [_delegate transactionsViewResizeToHeight:self.height];
+}
+
+- (void)markTransactionsRead
+{
+  for (IATransaction* transaction in _list)
+  {
+    NSUInteger active = [_delegate runningTransactionsForUser:transaction.other_user];
+    NSUInteger unread = [_delegate unreadTransactionsForUser:transaction.other_user];
+    if ((active == 0 && unread == 1) || (active == 1 && unread == 0))
+    {
+      [_delegate markTransactionRead:transaction];
+    }
+  }
 }
 
 @end
