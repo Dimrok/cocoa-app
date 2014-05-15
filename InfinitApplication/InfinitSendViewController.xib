@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitSendViewController">
             <connections>
+                <outlet property="drop_view" destination="feD-Dd-K1b" id="XXm-93-WO6"/>
                 <outlet property="file_count" destination="hlN-aV-CPg" id="Mke-wb-1YY"/>
                 <outlet property="files_constraint" destination="f4z-F8-7gq" id="HPI-F3-7x0"/>
                 <outlet property="files_view" destination="c1o-0q-VeA" id="Ppe-Pd-Y9b"/>
@@ -67,7 +68,7 @@
                         </customView>
                     </subviews>
                 </customView>
-                <customView autoresizesSubviews="NO" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="feD-Dd-K1b" customClass="IAMainView">
+                <customView autoresizesSubviews="NO" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="feD-Dd-K1b" customClass="InfinitSendDropView">
                     <rect key="frame" x="0.0" y="39" width="317" height="130"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>

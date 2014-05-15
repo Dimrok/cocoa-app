@@ -24,7 +24,7 @@
   NSDictionary* _high_attrs;
 }
 
-- (void)setupView
+- (void)setupViewForMode:(InfinitUserLinkMode)mode
 {
   NSFont* font = [NSFont fontWithName:@"Montserrat" size:11.0];
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -39,10 +39,22 @@
                                         shadow:nil];
   _link_str = NSLocalizedString(@"GET A LINK", nil);
   _user_str = NSLocalizedString(@"SEND TO USER", nil);
-  self.user_text.attributedStringValue =
-    [[NSAttributedString alloc] initWithString:_user_str attributes:_high_attrs];
-  self.link_text.attributedStringValue =
-    [[NSAttributedString alloc] initWithString:_link_str attributes:_norm_attrs];
+  if (mode == INFINIT_USER_MODE)
+  {
+    _mode = mode;
+    self.user_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:_user_str attributes:_high_attrs];
+    self.link_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:_link_str attributes:_norm_attrs];
+  }
+  else
+  {
+    _mode = mode;
+    self.user_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:_user_str attributes:_norm_attrs];
+    self.link_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:_link_str attributes:_high_attrs];
+  }
 }
 
 - (void)setDelegate:(id<InfinitSendUserLinkProtocol>)delegate
@@ -68,6 +80,12 @@
 
 - (void)setMode:(InfinitUserLinkMode)mode
 {
+  [self setMode:mode withAnimation:YES];
+}
+
+- (void)setMode:(InfinitUserLinkMode)mode
+  withAnimation:(BOOL)animate
+{
   if (_mode == mode)
     return;
   _mode = mode;
@@ -91,8 +109,7 @@
 
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
   {
-    context.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    context.duration = 0.2;
    [self.animator setAnimate_mode:val];
   }
                      completionHandler:^
@@ -185,6 +202,67 @@
 
 @end
 
+//- View -------------------------------------------------------------------------------------------
+
+@implementation InfinitSendDropView
+{
+  NSArray* _drag_types;
+}
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+  if (self = [super initWithFrame:frameRect])
+  {
+    _drag_types = [NSArray arrayWithObject:NSFilenamesPboardType];
+    [self registerForDraggedTypes:_drag_types];
+  }
+  return self;
+}
+
+- (BOOL)isOpaque
+{
+  return YES;
+}
+
+- (NSSize)intrinsicContentSize
+{
+  return self.bounds.size;
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+  [IA_GREY_COLOUR(255) set];
+  NSRectFill(self.bounds);
+}
+
+//- Drag Operations --------------------------------------------------------------------------------
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
+{
+  NSPasteboard* paste_board = sender.draggingPasteboard;
+  if ([paste_board availableTypeFromArray:_drag_types])
+  {
+    return NSDragOperationCopy;
+  }
+  return NSDragOperationNone;
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
+{
+  NSPasteboard* paste_board = sender.draggingPasteboard;
+  if (![paste_board availableTypeFromArray:_drag_types])
+    return NO;
+
+  NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
+
+  if (files.count > 0)
+    [_delegate gotDroppedFiles:files];
+
+  return YES;
+}
+
+@end
+
 //- Controller -------------------------------------------------------------------------------------
 
 @interface InfinitSendViewController ()
@@ -204,13 +282,17 @@
   NSArray* _recipient_list;
   NSString* _note;
   CGFloat _last_search_height;
+
+  BOOL _for_link;
 }
 
 - (id)initWithDelegate:(id<InfinitSendViewProtocol>)delegate
-  withSearchController:(IAUserSearchViewController*)search_controller;
+  withSearchController:(IAUserSearchViewController*)search_controller
+               forLink:(BOOL)for_link;
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
+    _for_link = for_link;
     _delegate = delegate;
     NSShadow* file_count_shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
                                                      blurRadius:1.0
@@ -234,6 +316,7 @@
 
 - (void)awakeFromNib
 {
+  self.drop_view.delegate = self;
   [self.search_view addSubview:_search_controller.view];
   [self.search_view addConstraints:[NSLayoutConstraint
                                     constraintsWithVisualFormat:@"V:|[search_view]|"
@@ -258,16 +341,43 @@
 {
   [_files_controller updateWithFiles:[_delegate sendViewWantsFileList:self]];
   [super loadView];
-  [self setSendButtonState];
   [self.user_link_view setDelegate:self];
-  [self.user_link_view setupView];
-  [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
+  NSInteger file_count = [_delegate sendViewWantsFileList:self].count;
+  if (file_count > 0)
+  {
+    NSString* count_str;
+    if (file_count > 99)
+      count_str = @"+";
+    else
+      count_str = [NSString stringWithFormat:@"%lu", file_count];
+    self.file_count.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:count_str attributes:_file_count_attrs];
+  }
+  [self setSendButtonState];
+  if (_for_link)
+  {
+    [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
+    _note_controller.link_mode = YES;
+    [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
+    self.search_constraint.constant = 0.0;
+  }
+  else
+  {
+    [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
+    [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
+  }
 }
 
 - (void)delayedCursorInSearch
 {
   [self.view.window makeFirstResponder:_search_controller.search_field];
   [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
+}
+
+- (void)delayedCursorInNote
+{
+  [self.view.window makeFirstResponder:_note_controller.note_field];
+  [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
 }
 
 - (void)setSendButtonState
@@ -391,10 +501,11 @@ wantsChangeHeight:(CGFloat)height
 {
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
+     context.duration = 0.15;
+     [self.files_constraint.animator setConstant:height];
    }
                       completionHandler:^
    {
-     [self.files_constraint.animator setConstant:height];
    }];
 }
 
@@ -411,10 +522,11 @@ wantsChangeHeight:(CGFloat)height
   _last_search_height = height;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
   {
+    context.duration = 0.15;
+    [self.search_constraint.animator setConstant:height];
   }
                       completionHandler:^
   {
-    [self.search_constraint.animator setConstant:height];
   }];
 }
 
@@ -464,12 +576,14 @@ wantsRemoveFavourite:(IAUser*)user
 - (void)gotUserClick:(InfinitSendUserLinkView*)sender
 {
   [self.user_link_view setMode:INFINIT_USER_MODE];
+  _note_controller.link_mode = NO;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
    {
+     context.duration = 0.15;
+     [self.search_constraint.animator setConstant:_last_search_height];
    }
                       completionHandler:^
    {
-     [self.search_constraint.animator setConstant:_last_search_height];
      [self.view.window makeFirstResponder:_search_controller.search_field];
      [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
    }];
@@ -478,15 +592,25 @@ wantsRemoveFavourite:(IAUser*)user
 - (void)gotLinkClick:(InfinitSendUserLinkView*)sender
 {
   [self.user_link_view setMode:INFINIT_LINK_MODE];
+  _note_controller.link_mode = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
   {
+    context.duration = 0.15;
+    [self.search_constraint.animator setConstant:0.0];
   }
                       completionHandler:^
   {
-    [self.search_constraint.animator setConstant:0.0];
     [self.view.window makeFirstResponder:_note_controller.note_field];
     [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
   }];
+}
+
+//- Drop View Protocol -----------------------------------------------------------------------------
+
+
+- (void)gotDroppedFiles:(NSArray*)files
+{
+  [_delegate sendView:self hadFilesDropped:files];
 }
 
 @end

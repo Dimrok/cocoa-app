@@ -86,7 +86,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 
 //- Open Functions ---------------------------------------------------------------------------------
 
-- (void)openWithNoFile
+- (void)openWithNoFileForLink:(BOOL)for_link
 {
   _send_view_open = YES;
   [_favourites_send_controller hideFavourites];
@@ -96,7 +96,8 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
       _user_search_controller = [[IAUserSearchViewController alloc] init];
     _send_controller =
       [[InfinitSendViewController alloc] initWithDelegate:self
-                                     withSearchController:_user_search_controller];
+                                     withSearchController:_user_search_controller
+                                                  forLink:for_link];
   }
   [_delegate sendController:self wantsActiveController:_send_controller];
 }
@@ -126,7 +127,8 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
     if (_user_search_controller == nil)
       _user_search_controller = [[IAUserSearchViewController alloc] init];
     _send_controller = [[InfinitSendViewController alloc] initWithDelegate:self
-                                                      withSearchController:_user_search_controller];
+                                                      withSearchController:_user_search_controller
+                                                                   forLink:NO];
   }
   else
   {

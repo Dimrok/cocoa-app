@@ -29,7 +29,7 @@ typedef enum _InfinitUserLinkMode
 @property (nonatomic, readwrite) CGFloat animate_mode;
 
 - (void)setDelegate:(id<InfinitSendUserLinkProtocol>)delegate;
-- (void)setupView;
+- (void)setupViewForMode:(InfinitUserLinkMode)mode;
 
 @end
 
@@ -38,16 +38,30 @@ typedef enum _InfinitUserLinkMode
 - (void)gotLinkClick:(InfinitSendUserLinkView*)sender;
 @end
 
+//- View -------------------------------------------------------------------------------------------
+
+@protocol InfinitSendDropViewProtocol;
+
+@interface InfinitSendDropView : NSView <NSDraggingDestination>
+@property (nonatomic, readwrite) id<InfinitSendDropViewProtocol> delegate;
+@end
+
+@protocol InfinitSendDropViewProtocol <NSObject>
+- (void)gotDroppedFiles:(NSArray*)files;
+@end
+
 //- Controller -------------------------------------------------------------------------------------
 
 @protocol InfinitSendViewProtocol;
 
 @interface InfinitSendViewController : IAViewController <IAUserSearchViewProtocol,
+                                                         InfinitSendDropViewProtocol,
                                                          InfinitSendNoteViewProtocol,
                                                          InfinitSendFilesViewProtocol,
                                                          InfinitSendUserLinkProtocol>
 
 @property (nonatomic, strong) IBOutlet InfinitSendUserLinkView* user_link_view;
+@property (nonatomic, strong) IBOutlet InfinitSendDropView* drop_view;
 @property (nonatomic, strong) IBOutlet NSView* search_view;
 @property (nonatomic, strong) IBOutlet NSView* note_view;
 @property (nonatomic, strong) IBOutlet NSView* files_view;
@@ -58,7 +72,8 @@ typedef enum _InfinitUserLinkMode
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* files_constraint;
 
 - (id)initWithDelegate:(id<InfinitSendViewProtocol>)delegate
-  withSearchController:(IAUserSearchViewController*)search_controller;
+  withSearchController:(IAUserSearchViewController*)search_controller
+               forLink:(BOOL)for_link;
 
 - (void)filesUpdated;
 
