@@ -358,13 +358,13 @@
   {
     [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
     _note_controller.link_mode = YES;
-    [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
     self.search_constraint.constant = 0.0;
+    [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
   }
   else
   {
     [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
-    [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
+    [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
   }
 }
 
