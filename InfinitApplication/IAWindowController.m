@@ -66,6 +66,11 @@
 
 @implementation IANotificationContentView
 
+- (BOOL)wantsUpdateLayer
+{
+  return NO;
+}
+
 @end
 
 //- Window Controller ------------------------------------------------------------------------------
