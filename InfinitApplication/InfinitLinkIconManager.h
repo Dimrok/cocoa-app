@@ -10,4 +10,6 @@
 
 @interface InfinitLinkIconManager : NSObject
 
++ (NSImage*)iconForFilename:(NSString*)filename;
+
 @end
