@@ -148,6 +148,10 @@
     
     _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
     _last_search = @"";
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(avatarCallback:)
+                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                             object:nil];
   }
   
   return self;
@@ -161,6 +165,7 @@
 - (void)dealloc
 {
   [NSNotificationCenter.defaultCenter removeObserver:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)awakeFromNib
@@ -1013,6 +1018,32 @@ writeRepresentedObjects:(NSArray*)objects
   cell.stringValue = name;
   cell.avatar = avatar;
   return cell;
+}
+
+//- Avatar Callback --------------------------------------------------------------------------------
+
+- (void)avatarCallback:(NSNotification*)notification
+{
+  IAUser* user = [notification.userInfo objectForKey:@"user"];
+  NSInteger row = 0;
+  for (InfinitSearchElement* element in _search_results)
+  {
+    if ([element.user isEqual:user])
+    {
+      NSImage* image = [notification.userInfo objectForKey:@"avatar"];
+      IASearchResultsCellView* cell =
+        [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+      if (image == nil || cell == nil)
+        return;
+      element.avatar = image;
+      [cell setUserAvatar:[IAFunctions makeRoundAvatar:image
+                                            ofDiameter:30.0
+                                 withBorderOfThickness:0.0
+                                              inColour:IA_GREY_COLOUR(255.0)
+                                     andShadowOfRadius:0.0]];
+    }
+    row++;
+  }
 }
 
 @end
