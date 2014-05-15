@@ -8,6 +8,8 @@
 
 #import "InfinitLinkCellView.h"
 
+#import "InfinitLinkIconManager.h"
+
 @implementation InfinitLinkCellView
 {
 @private
@@ -87,6 +89,11 @@
 
 - (void)setupButtons
 {
+  self.link.normal_image = [IAFunctions imageNamed:@"icon-share"];
+  self.link.hover_image = [IAFunctions imageNamed:@"icon-share-hover"];
+
+  self.clipboard.normal_image = [IAFunctions imageNamed:@"icon-clipboard"];
+  self.clipboard.hover_image = [IAFunctions imageNamed:@"icon-clipboard-hover"];
 }
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
@@ -94,7 +101,7 @@
   _transaction_link = link;
   [self setupButtons];
   self.click_count.count = link.click_count;
-  self.icon_view.icon = link.icon;
+  self.icon_view.icon = [InfinitLinkIconManager iconForFilename:link.name];
   self.name.stringValue = link.name;
   if (link.status == gap_transaction_transferring)
   {
@@ -112,8 +119,8 @@
 
 - (void)setProgress:(CGFloat)progress
 {
-  NSString* upload_str = [NSString stringWithFormat:@"%@... (%.1f %%)",
-                          NSLocalizedString(@"Uploading", nil), progress];
+  NSString* upload_str = [NSString stringWithFormat:@"%@... (%.0f %%)",
+                          NSLocalizedString(@"Uploading", nil), 100 * progress];
   self.information.stringValue = upload_str;
   [self.progress_indicator.animator setDoubleValue:progress];
 }
