@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="317" height="42"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField focusRingType="none" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="InfinitSendNoteField">
+                <textField focusRingType="none" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="InfinitSendNoteField">
                     <rect key="frame" x="35" y="11" width="246" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <constraints>

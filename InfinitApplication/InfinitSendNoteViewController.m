@@ -59,6 +59,7 @@
 //- View -------------------------------------------------------------------------------------------
 
 @interface InfinitSendNoteView : NSView
+@property (nonatomic, readwrite) BOOL link_mode;
 @end
 
 @implementation InfinitSendNoteView
@@ -67,10 +68,19 @@
 {
   [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, NSHeight(self.bounds) - 1.0,
-                                                                   NSWidth(self.bounds), 1.0)];
-  [IA_GREY_COLOUR(230) set];
-  [line fill];
+  if (!_link_mode)
+  {
+    NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, NSHeight(self.bounds) - 1.0,
+                                                                     NSWidth(self.bounds), 1.0)];
+    [IA_GREY_COLOUR(230) set];
+    [line fill];
+  }
+}
+
+- (void)setLink_mode:(BOOL)link_mode
+{
+  _link_mode = link_mode;
+  [self setNeedsDisplay:YES];
 }
 
 - (NSSize)intrinsicContentSize
@@ -89,7 +99,8 @@
 {
   id<InfinitSendNoteViewProtocol> _delegate;
   NSUInteger _note_limit;
-  NSDictionary* _characters_attrs;
+  NSDictionary* _norm_characters_attrs;
+  NSDictionary* _done_characters_attrs;
 }
 
 - (id)initWithDelegate:(id<InfinitSendNoteViewProtocol>)delegate
@@ -105,10 +116,15 @@
     NSMutableParagraphStyle* right_aligned =
     [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     right_aligned.alignment = NSRightTextAlignment;
-    _characters_attrs = [IAFunctions textStyleWithFont:small_font
-                                        paragraphStyle:right_aligned
-                                                colour:IA_GREY_COLOUR(205)
-                                                shadow:nil];
+    _norm_characters_attrs = [IAFunctions textStyleWithFont:small_font
+                                             paragraphStyle:right_aligned
+                                                     colour:IA_GREY_COLOUR(205)
+                                                     shadow:nil];
+
+    _done_characters_attrs = [IAFunctions textStyleWithFont:small_font
+                                             paragraphStyle:right_aligned
+                                                     colour:IA_RGB_COLOUR(255, 0, 0)
+                                                     shadow:nil];
   }
   return self;
 }
@@ -128,8 +144,14 @@
                                                                  attributes:attrs];
   [self.note_field.cell setPlaceholderAttributedString:add_note];
   self.characters_label.attributedStringValue =
-    [[NSAttributedString alloc]initWithString:@"100" attributes:_characters_attrs];
+    [[NSAttributedString alloc]initWithString:@"100" attributes:_norm_characters_attrs];
   self.characters_label.hidden = YES;
+}
+
+- (void)setLink_mode:(BOOL)link_mode
+{
+  _link_mode = link_mode;
+  ((InfinitSendNoteView*)self.view).link_mode = link_mode;
 }
 
 //- Note Handling ----------------------------------------------------------------------------------
@@ -153,9 +175,18 @@
 
   NSInteger chars_left = _note_limit - self.note_field.stringValue.length;
 
-  self.characters_label.attributedStringValue =
-  [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", chars_left]
-                                  attributes:_characters_attrs];
+  if (chars_left > 0)
+  {
+    self.characters_label.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", chars_left]
+                                      attributes:_norm_characters_attrs];
+  }
+  else
+  {
+    self.characters_label.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", chars_left]
+                                      attributes:_done_characters_attrs];
+  }
 }
 
 - (BOOL)control:(NSControl*)control

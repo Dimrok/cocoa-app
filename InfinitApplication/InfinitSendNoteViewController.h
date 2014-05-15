@@ -28,7 +28,7 @@
 
 @property (nonatomic, strong) IBOutlet NSTextField* note_field;
 @property (nonatomic, strong) IBOutlet NSTextField* characters_label;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* note_height;
+@property (nonatomic, readwrite) BOOL link_mode;
 
 - (id)initWithDelegate:(id<InfinitSendNoteViewProtocol>)delegate;
 
