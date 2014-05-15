@@ -48,13 +48,17 @@ static NSDictionary* _sel_attrs;
   return NSMakePoint(0.0, -10.0);
 }
 
-- (void)drawTokenWithFrame:(NSRect)rect inView:(NSView *)controlView
+- (void)drawTokenWithFrame:(NSRect)rect
+                    inView:(NSView*)controlView
 {
   NSRect token_rect = {
     .origin = NSMakePoint(rect.origin.x + 5.0, rect.origin.y),
     .size = NSMakeSize(rect.size.width - 10.0, rect.size.height)
   };
-  NSBezierPath* bg = [NSBezierPath bezierPathWithRoundedRect:token_rect xRadius:3.0 yRadius:3.0];
+  CGFloat corner_radius = 10.0;
+  NSBezierPath* bg = [NSBezierPath bezierPathWithRoundedRect:token_rect
+                                                     xRadius:corner_radius
+                                                     yRadius:corner_radius];
   bg.lineWidth = 1.0;
   if (self.tokenDrawingMode == OEXTokenDrawingModeSelected)
   {
@@ -88,17 +92,19 @@ static NSDictionary* _sel_attrs;
   // WORKAROUND Retina has an extra pixel under the avatar
   if ([[NSScreen mainScreen] backingScaleFactor] == 2.0)
   {
-    top_line = [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + 3.0,
-                                                           0.5,
-                                                           token_rect.size.width - 4.0,
-                                                           1.0)];
+    top_line =
+      [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + corner_radius,
+                                                  0.5,
+                                                  token_rect.size.width - (2 * corner_radius) + 4.0,
+                                                  1.0)];
   }
   else
   {
-    top_line = [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + 3.0,
-                                                           1.0,
-                                                           token_rect.size.width - 4.0,
-                                                           1.0)];
+    top_line =
+      [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + corner_radius,
+                                                  1.0,
+                                                  token_rect.size.width - (2 * corner_radius) + 4.0,
+                                                  1.0)];
   }
   [top_line fill];
   
@@ -113,14 +119,15 @@ static NSDictionary* _sel_attrs;
   // WORKAROUND Retina has an extra pixel under the avatar
   if ([[NSScreen mainScreen] backingScaleFactor] == 2.0)
   {
-    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 0.5, 23.0, 23.0);
+    avatar_rect = NSMakeRect(token_rect.origin.x - 1.0, token_rect.origin.y, 24.0, 24.0);
   }
   else
   {
-    avatar_rect = NSMakeRect(token_rect.origin.x + 0.0, token_rect.origin.y + 1.0, 22.0, 22.0);
+    avatar_rect = NSMakeRect(token_rect.origin.x - 1.0, token_rect.origin.y, 24.0, 24.0);
   }
   
-  NSBezierPath* clip = [IAFunctions roundedLeftSideBezierWithRect:avatar_rect cornerRadius:2.0];
+  NSBezierPath* clip = [IAFunctions roundedLeftSideBezierWithRect:avatar_rect
+                                                     cornerRadius:corner_radius];
   [clip addClip];
   
 	[self.avatar drawInRect:avatar_rect
