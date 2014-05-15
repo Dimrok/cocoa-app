@@ -122,6 +122,7 @@
 
 - (void)setIndeterminate:(BOOL)flag
 {
+  [[NSAnimationContext currentContext] setDuration:0.0];
   if (flag)
   {
     _doubleValue = 0.0;
