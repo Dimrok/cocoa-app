@@ -75,11 +75,13 @@
 - (void)setUpdatorRunning:(BOOL)is_running
 {
 	if (is_running && _progress_timer == nil)
+  {
 		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                        target:self
                                                      selector:@selector(updateProgress)
                                                      userInfo:nil
                                                       repeats:YES];
+  }
 	else if (!is_running && _progress_timer != nil)
 	{
 		[_progress_timer invalidate];
