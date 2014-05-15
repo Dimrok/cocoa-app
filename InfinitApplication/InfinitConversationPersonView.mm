@@ -43,12 +43,13 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  [IA_GREY_COLOUR(255.0) set];
-  NSRectFill(self.bounds);
-  
-  NSRect grey_line = NSMakeRect(0.0, 1.0, NSWidth(self.bounds), 1.0);
-  [IA_GREY_COLOUR(223) set];
-  NSRectFill(grey_line);
+  NSBezierPath* bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:6.0];
+  [IA_GREY_COLOUR(255) set];
+  [bg fill];
+  NSBezierPath* dark_line =
+    [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 2.0)];
+  [IA_RGB_COLOUR(0, 195, 192) set];
+  [dark_line fill];
 }
 
 //- Mouse Handling ---------------------------------------------------------------------------------

@@ -65,7 +65,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     _delegate = delegate;
     _elements = [NSMutableArray arrayWithArray:[self sortTransactionList:transactions]];
     _user = user;
-    _max_table_height = 320.0;
+    _max_table_height = 290.0;
     _rows_with_progress = [[NSMutableArray alloc] init];
     _changing = NO;
     [NSNotificationCenter.defaultCenter addObserver:self
@@ -126,15 +126,24 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 - (void)configurePersonView
 {
   [self.person_view setDelegate:self];
+  NSFont* font = [NSFont fontWithName:@"Montserrat" size:12.0];
+  NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+  para.alignment = NSCenterTextAlignment;
+  NSDictionary* attrs = [IAFunctions textStyleWithFont:font
+                                        paragraphStyle:para
+                                                colour:IA_RGB_COLOUR(0, 195, 192)
+                                                shadow:nil];
   if (_user.deleted)
   {
-    NSString* deleted_str = NSLocalizedString(@"deleted", nil);
-    self.person_view.fullname.stringValue =
-      [NSString stringWithFormat:@"%@ (%@)", _user.fullname, deleted_str];
+    NSString* deleted_str = [NSString stringWithFormat:@"%@ (%@)",
+                             _user.fullname, NSLocalizedString(@"deleted", nil)];
+    self.person_view.fullname.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:deleted_str attributes:attrs];
   }
   else
   {
-    self.person_view.fullname.stringValue = _user.fullname;
+    self.person_view.fullname.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:_user.fullname attributes:attrs];
   }
   CGFloat width = [self.person_view.fullname.attributedStringValue size].width;
   if (width > 250)
@@ -240,10 +249,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)resizeContentView
 {
-  if (self.content_height_constraint.constant == NSHeight(self.person_view.frame) + [self tableHeight])
+  if (self.content_height_constraint.constant == [self tableHeight])
     return;
   
-  CGFloat new_height = NSHeight(self.person_view.frame) + [self tableHeight];
+  CGFloat new_height = [self tableHeight];
   
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
@@ -387,7 +396,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
-     [self.content_height_constraint.animator setConstant:NSHeight(self.person_view.frame)];
+     [self.content_height_constraint.animator setConstant:0.0];
    }
                       completionHandler:^
    {
@@ -417,7 +426,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
-     [self.content_height_constraint.animator setConstant:44.0];
+     [self.content_height_constraint.animator setConstant:0.0];
      [self.table_view removeFromSuperview];
    }
                       completionHandler:^
