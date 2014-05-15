@@ -51,6 +51,8 @@ typedef enum __INFINIT_OS_X_VERSION
 
 + (NSString*)fileSizeStringFrom:(NSNumber*)file_size;
 
++ (NSString*)numberInUnits:(NSNumber*)num;
+
 + (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left;
 
 + (NSImage*)addressBookUserAvatar;
@@ -62,5 +64,9 @@ typedef enum __INFINIT_OS_X_VERSION
 + (NSString*)osVersionString;
 
 + (INFINIT_OS_X_VERSION)osxVersion;
+
++ (NSString*)printFrame:(NSRect)rect;
+
++ (NSString*)printPoint:(NSPoint)point;
 
 @end

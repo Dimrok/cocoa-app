@@ -241,6 +241,23 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   return res;
 }
 
++ (NSString*)numberInUnits:(NSNumber*)num
+{
+  NSString* res;
+  CGFloat real_num = num.doubleValue;
+
+  if (real_num < pow(10.0, 3.0))
+    res = [NSString stringWithFormat:@"%.0f", real_num];
+  else if (real_num < pow(10.0, 6.0))
+    res = [NSString stringWithFormat:@"%.1f K", real_num / pow(10.0, 3.0)];
+  else if (real_num < pow(10.0, 9.0))
+    res = [NSString stringWithFormat:@"%.2f M", real_num / pow(10.0, 6.0)];
+  else
+    res = [NSString stringWithFormat:@"%.3f G", real_num / pow(10.0, 9.0)];
+
+  return res;
+}
+
 + (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left
 {
   NSString* res;
@@ -471,6 +488,17 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     default:
       return INFINIT_OS_X_VERSION_UNKNOWN;
   }
+}
+
++ (NSString*)printFrame:(NSRect)rect
+{
+  return [NSString stringWithFormat:@"frame: (%f, %f) (%f x %f)", rect.origin.x, rect.origin.y,
+          rect.size.width, rect.size.height];
+}
+
++ (NSString*)printPoint:(NSPoint)point
+{
+  return [NSString stringWithFormat:@"point: (%f, %f)", point.x, point.y];
 }
 
 @end
