@@ -13,7 +13,8 @@
 @protocol InfinitLinkViewProtocol;
 
 @interface InfinitLinkViewController : NSViewController <NSTableViewDataSource,
-                                                         NSTableViewDelegate>
+                                                         NSTableViewDelegate,
+                                                         InfinitLinkCellProtocol>
 
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
@@ -29,5 +30,7 @@
 @end
 
 @protocol InfinitLinkViewProtocol <NSObject>
+
+- (void)linkGotCopiedToPasteBoard:(InfinitLinkTransaction*)link;
 
 @end

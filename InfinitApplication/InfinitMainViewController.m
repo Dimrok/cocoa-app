@@ -322,6 +322,11 @@
 
 //- Link View Protocol -----------------------------------------------------------------------------
 
+- (void)linkGotCopiedToPasteBoard:(InfinitLinkTransaction*)link
+{
+  [_delegate linkGotCopiedToPasteBoard:link];
+}
+
 
 //- Peer Transaction Protocol ----------------------------------------------------------------------
 

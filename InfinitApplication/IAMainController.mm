@@ -1086,6 +1086,19 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   [_general_send_controller openWithNoFileForLink:YES];
 }
 
+- (void)linkGotCopiedToPasteBoard:(InfinitLinkTransaction*)link
+{
+  [self closeNotificationWindow];
+  if (_tooltip_controller == nil)
+    _tooltip_controller = [[InfinitTooltipViewController alloc] init];
+  NSString* message = NSLocalizedString(@"Link copied to clipboard!", nil);
+  [_tooltip_controller showPopoverForView:_status_bar_icon
+                       withArrowDirection:INPopoverArrowDirectionUp
+                              withMessage:message
+                         withPopAnimation:YES];
+  [self performSelector:@selector(delayedTooltipClose) withObject:nil afterDelay:5.0];
+}
+
 //- Me Manager Protocol ----------------------------------------------------------------------------
 
 - (void)meManager:(IAMeManager*)sender

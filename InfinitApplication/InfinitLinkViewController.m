@@ -146,7 +146,7 @@
     return [self.table_view makeViewWithIdentifier:@"no_link_cell" owner:self];
 
   InfinitLinkCellView* cell = [self.table_view makeViewWithIdentifier:@"link_cell" owner:self];
-  [cell setupCellWithLink:_list[row]];
+  [cell setupCellWithLink:_list[row] andDelegate:self];
   return cell;
 }
 
@@ -179,6 +179,14 @@
     [_progress_timer invalidate];
   else
     [self updateListOfRowsWithProgress];
+}
+
+//- Cell Protocol ----------------------------------------------------------------------------------
+
+- (void)linkCell:(InfinitLinkCellView*)sender
+gotCopyToClipboardForLink:(InfinitLinkTransaction*)link
+{
+  [_delegate linkGotCopiedToPasteBoard:link];
 }
 
 @end

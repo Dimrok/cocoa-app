@@ -13,6 +13,7 @@
 @implementation InfinitLinkCellView
 {
 @private
+  id<InfinitLinkCellProtocol> _delegate;
   NSTrackingArea* _tracking_area;
   BOOL _hover;
 
@@ -91,13 +92,17 @@
 {
   self.link.normal_image = [IAFunctions imageNamed:@"icon-share"];
   self.link.hover_image = [IAFunctions imageNamed:@"icon-share-hover"];
+  self.link.toolTip = NSLocalizedString(@"Click to open link", nil);
 
   self.clipboard.normal_image = [IAFunctions imageNamed:@"icon-clipboard"];
   self.clipboard.hover_image = [IAFunctions imageNamed:@"icon-clipboard-hover"];
+  self.clipboard.toolTip = NSLocalizedString(@"Click to copy link", nil);
 }
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
+              andDelegate:(id<InfinitLinkCellProtocol>)delegate
 {
+  _delegate = delegate;
   _transaction_link = link;
   [self setupButtons];
   self.click_count.count = link.click_count;
@@ -129,12 +134,15 @@
 
 - (IBAction)linkClicked:(NSButton*)sender
 {
-
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_transaction_link.url_link]];
 }
 
 - (IBAction)clipboardClicked:(NSButton*)sender
 {
-
+  NSPasteboard* paste_board = [NSPasteboard generalPasteboard];
+  [paste_board declareTypes:@[NSStringPboardType] owner:nil];
+  [paste_board setString:_transaction_link.url_link forType:NSStringPboardType];
+  [_delegate linkCell:self gotCopyToClipboardForLink:_transaction_link];
 }
 
 @end

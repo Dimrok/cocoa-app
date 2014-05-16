@@ -15,6 +15,8 @@
 #import "InfinitLinkClickCountView.h"
 #import "InfinitLinkFileIconView.h"
 
+@protocol InfinitLinkCellProtocol;
+
 @interface InfinitLinkCellView : NSTableCellView
 
 @property (nonatomic, strong) IBOutlet InfinitLinkFileIconView* icon_view;
@@ -27,6 +29,14 @@
 
 @property (nonatomic, readwrite) CGFloat progress;
 
-- (void)setupCellWithLink:(InfinitLinkTransaction*)link;
+- (void)setupCellWithLink:(InfinitLinkTransaction*)link
+              andDelegate:(id<InfinitLinkCellProtocol>)delegate;
+
+@end
+
+@protocol InfinitLinkCellProtocol <NSObject>
+
+- (void)linkCell:(InfinitLinkCellView*)sender
+gotCopyToClipboardForLink:(InfinitLinkTransaction*)link;
 
 @end
