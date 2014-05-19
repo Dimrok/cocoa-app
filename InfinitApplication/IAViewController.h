@@ -40,6 +40,8 @@
 - (void)viewChanged;
 - (void)aboutToChangeView;
 
+- (void)linkAdded:(InfinitLinkTransaction*)link;
+- (void)linkUpdated:(InfinitLinkTransaction*)link;
 - (void)transactionAdded:(IATransaction*)transaction;
 - (void)transactionUpdated:(IATransaction*)transaction;
 - (void)userUpdated:(IAUser*)user;

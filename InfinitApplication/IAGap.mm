@@ -6,8 +6,9 @@
 //  Copyright (c) 2013 infinit. All rights reserved.
 //
 
-#include <surface/gap/gap.hh>
-#include <surface/gap/enums.hh>
+#import <surface/gap/gap.hh>
+#import <surface/gap/enums.hh>
+#import <surface/gap/LinkTransaction.hh>
 
 #import "IAGap.h"
 
@@ -141,6 +142,7 @@ void on_deleted_swagger(uint32_t const user_id);
            "*meta*:TRACE,"
            "surface.gap.*.State:TRACE,"
            "surface.gap.*.Transition:TRACE,"
+           "surface.gap.TransactionMachine:TRACE,"
            "reactor.fsm.*:TRACE,"
            "frete.Frete:DEBUG,"
            "station.Station:DEBUG,"
@@ -178,7 +180,7 @@ void on_deleted_swagger(uint32_t const user_id);
 //    setenv("INFINIT_META_PROTOCOL", "http", 1);
 //    setenv("INFINIT_META_HOST", "127.0.0.1", 1);
 //    setenv("INFINIT_META_PORT", "8080", 1);
-
+//
 //    setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
 //    setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
 
@@ -674,6 +676,58 @@ return [NSString stringWithUTF8String:str]; \
                               message.UTF8String,
                               file_path.UTF8String,
                               os_description.UTF8String);
+}
+
+//- Link Transactions ------------------------------------------------------------------------------
+
+- (BOOL)is_link_transaction:(NSNumber*)transaction_id
+{
+  return gap_is_link_transaction(_state, transaction_id.unsignedIntValue);
+}
+
+- (NSNumber*)create_link_transaction:(NSArray*)files
+                             message:(NSString*)message
+{
+  std::vector<std::string> files_;
+  std::string message_(message.UTF8String);
+  for (NSString* file in files)
+  {
+    files_.push_back(file.UTF8String);
+  }
+  return [NSNumber numberWithUnsignedInt:gap_create_link_transaction(_state, files_, message_)];
+}
+
+- (NSArray*)link_transactions
+{
+  NSMutableArray* res = [NSMutableArray array];
+  auto transactions = gap_link_transactions(_state);
+  for (auto const& transaction_: transactions)
+  {
+    InfinitLinkTransaction* transaction =
+      [[InfinitLinkTransaction alloc]
+       initLinkTransactionWithId:[NSNumber numberWithUnsignedInt:transaction_.id]
+                            name:[NSString stringWithUTF8String:transaction_.name.c_str()]
+                modificationTime:transaction_.mtime
+                            link:[NSString stringWithUTF8String:transaction_.link.c_str()]
+                      clickCount:[NSNumber numberWithUnsignedInt:transaction_.click_count]
+                          status:transaction_.status];
+    [res addObject:transaction];
+  }
+  return res;
+}
+
+- (InfinitLinkTransaction*)link_transaction_by_id:(NSNumber*)transaction_id
+{
+  auto transaction_ = gap_link_transaction_by_id(_state, transaction_id.unsignedIntValue);
+  InfinitLinkTransaction* transaction =
+    [[InfinitLinkTransaction alloc]
+     initLinkTransactionWithId:transaction_id
+                          name:[NSString stringWithUTF8String:transaction_.name.c_str()]
+              modificationTime:transaction_.mtime
+                          link:[NSString stringWithUTF8String:transaction_.link.c_str()]
+                    clickCount:[NSNumber numberWithUnsignedInt:transaction_.click_count]
+                        status:transaction_.status];
+  return transaction;
 }
 
 @end

@@ -43,6 +43,10 @@
                    toUsers:(NSArray*)users
                withMessage:(NSString*)message;
 
+- (NSNumber*)sendController:(IAGeneralSendController*)sender
+            wantsCreateLink:(NSArray*)files
+                withMessage:(NSString*)message;
+
 - (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender;
 
 - (NSArray*)sendControllerWantsSwaggers:(IAGeneralSendController*)sender;

@@ -60,6 +60,35 @@
   [self.table_view reloadData];
 }
 
+//- Link Updated -----------------------------------------------------------------------------------
+
+- (void)linkAdded:(InfinitLinkTransaction*)link
+{
+  [_list insertObject:link atIndex:0];
+  [self.table_view beginUpdates];
+  [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                         withAnimation:NSTableViewAnimationSlideDown];
+  [self.table_view endUpdates];
+}
+
+- (void)linkUpdated:(InfinitLinkTransaction*)link
+{
+  NSUInteger row = 0;
+  for (InfinitLinkTransaction* existing in _list)
+  {
+    if (existing.id_.unsignedIntegerValue == link.id_.unsignedIntegerValue)
+    {
+      [_list replaceObjectAtIndex:row withObject:link];
+      [self.table_view beginUpdates];
+      [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                 columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+      [self.table_view endUpdates];
+      break;
+    }
+    row++;
+  }
+}
+
 //- Progress Handling ------------------------------------------------------------------------------
 
 - (void)setUpdatorRunning:(BOOL)is_running
@@ -117,7 +146,7 @@
       InfinitLinkCellView* cell = [self.table_view viewAtColumn:0 row:row
                                                 makeIfNecessary:NO];
       InfinitLinkTransaction* link = _list[row];
-      cell.progress = link.progress.doubleValue;
+      cell.progress = link.progress;
     }
   }
 }

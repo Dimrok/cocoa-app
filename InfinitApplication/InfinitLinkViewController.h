@@ -23,6 +23,9 @@
 
 @property (nonatomic, readwrite) BOOL changing;
 
+- (void)linkAdded:(InfinitLinkTransaction*)link;
+- (void)linkUpdated:(InfinitLinkTransaction*)link;
+
 - (NSUInteger)linksRunning;
 
 - (CGFloat)height;

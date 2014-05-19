@@ -293,6 +293,8 @@
 		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F49182A98C1001394B2 /* libmetaclient.dylib */; };
 		83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F60182A990F001394B2 /* libtransaction.dylib */; };
+		83D0AABB1926A04E0041F760 /* icon-menu-bar-link.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D0AAB91926A04E0041F760 /* icon-menu-bar-link.png */; };
+		83D0AABC1926A04E0041F760 /* icon-menu-bar-link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D0AABA1926A04E0041F760 /* icon-menu-bar-link@2x.png */; };
 		83D4206417C4DC6700D4E168 /* icon-check.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206017C4DC6700D4E168 /* icon-check.png */; };
 		83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206117C4DC6700D4E168 /* icon-check@2x.png */; };
 		83D4206617C4DC6700D4E168 /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206217C4DC6700D4E168 /* icon-error.png */; };
@@ -949,6 +951,8 @@
 		83CD702617A678C5004F55D1 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = ../Gap/Gap.xcodeproj; sourceTree = "<group>"; };
 		83CE1F49182A98C1001394B2 /* libmetaclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetaclient.dylib; path = ../../../Externals/lib/libmetaclient.dylib; sourceTree = "<group>"; };
 		83CE1F60182A990F001394B2 /* libtransaction.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtransaction.dylib; path = ../../../Externals/lib/libtransaction.dylib; sourceTree = "<group>"; };
+		83D0AAB91926A04E0041F760 /* icon-menu-bar-link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-link.png"; path = "../../../../fist-resources/slices/main/icon-menu-bar-link.png"; sourceTree = "<group>"; };
+		83D0AABA1926A04E0041F760 /* icon-menu-bar-link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-link@2x.png"; path = "../../../../fist-resources/slices/main/icon-menu-bar-link@2x.png"; sourceTree = "<group>"; };
 		83D4206017C4DC6700D4E168 /* icon-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check.png"; sourceTree = "<group>"; };
 		83D4206117C4DC6700D4E168 /* icon-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check@2x.png"; sourceTree = "<group>"; };
 		83D4206217C4DC6700D4E168 /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
@@ -1306,6 +1310,8 @@
 				832B5498188970C60022CC33 /* icon-menu-bar-fire@2x.png */,
 				832B5499188970C60022CC33 /* icon-menu-bar-inactive.png */,
 				832B549A188970C60022CC33 /* icon-menu-bar-inactive@2x.png */,
+				83D0AAB91926A04E0041F760 /* icon-menu-bar-link.png */,
+				83D0AABA1926A04E0041F760 /* icon-menu-bar-link@2x.png */,
 				83B9746F18882BC50089E0E0 /* Red Animated Icon */,
 				83B9744A188822D50089E0E0 /* Black Animated Icon */,
 			);
@@ -2291,6 +2297,7 @@
 				83C99E2417AB9DFB00AFF091 /* icon-add-cancel@2x.png in Resources */,
 				83481571187AD45A002ACDE0 /* icon-cancel-send@2x.png in Resources */,
 				83F5FD2E18EDEC5E0051F010 /* clippy_7.png in Resources */,
+				83D0AABB1926A04E0041F760 /* icon-menu-bar-link.png in Resources */,
 				83019CCC192546A600423FCA /* cat.png in Resources */,
 				834F137A19224FCF00BF36A4 /* InfinitLinkViewController.xib in Resources */,
 				83F5FD1D18EDEC5E0051F010 /* arrow-tooltip-onboarding@2x.png in Resources */,
@@ -2366,6 +2373,7 @@
 				83F5FD1C18EDEC5E0051F010 /* arrow-tooltip-onboarding.png in Resources */,
 				83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */,
 				83019CC919253A4100423FCA /* video@2x.png in Resources */,
+				83D0AABC1926A04E0041F760 /* icon-menu-bar-link@2x.png in Resources */,
 				83A8098117C26C890086A80D /* bg-triangle-top-white@2x.png in Resources */,
 				832B5482188970AC0022CC33 /* icon-menu-bar-animated-red-2.png in Resources */,
 				83D4206417C4DC6700D4E168 /* icon-check.png in Resources */,

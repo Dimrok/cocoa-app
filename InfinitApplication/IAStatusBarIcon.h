@@ -19,6 +19,7 @@
 @property (nonatomic, readwrite, setter = setHighlighted:) BOOL isHighlighted;
 @property (nonatomic, readwrite, setter = setLoggingIn:) BOOL isLoggingIn;
 @property (nonatomic, readwrite, setter = setTransferring:) BOOL isTransferring;
+@property (nonatomic, readonly) BOOL show_link;
 
 - (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate
             statusItem:(NSStatusItem*)status_item;
@@ -34,6 +35,8 @@
 
 - (void)statusBarIconClicked:(IAStatusBarIcon*)sender;
 - (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
+                    withFiles:(NSArray*)files;
+- (void)statusBarIconLinkDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files;
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender;
 

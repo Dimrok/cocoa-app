@@ -124,8 +124,6 @@
   _window_is_open = NO;
   _animating = YES;
   
-  [self.window.contentView removeConstraints:_view_constraints];
-  
   [_current_controller aboutToChangeView];
   
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
@@ -212,8 +210,7 @@
   [self.window.contentView addConstraints:_view_constraints];
   _current_controller = nil;
   _current_controller = new_controller;
-  [_delegate windowController:self
-     hasCurrentViewController:_current_controller];
+  [_delegate windowController:self hasCurrentViewController:_current_controller];
   
   _animating = NO;
 }
@@ -249,7 +246,7 @@
                                           options:NSLayoutFormatDirectionLeadingToTrailing
                                           metrics:nil
                                           views:@{@"view": controller.view}]];
-  
+
   [self.window.contentView addConstraints:_view_constraints];
   
   [self openWindow];

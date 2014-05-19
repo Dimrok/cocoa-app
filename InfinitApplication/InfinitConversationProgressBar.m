@@ -35,11 +35,9 @@
   return self;
 }
 
-- (CGFloat)func:(CGFloat)x ball:(NSInteger)ball
+- (BOOL)wantsUpdateLayer
 {
-  CGFloat x_offset = 0.17 * ball;
-  CGFloat f = 50 * pow(x - 0.25 - x_offset, 3) + 0.5;
-  return f;
+  return NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -52,6 +50,13 @@
     [IA_RGB_COLOUR(0, 214, 242) set];
     [ball fill];
   }
+}
+
+- (CGFloat)func:(CGFloat)x ball:(NSInteger)ball
+{
+  CGFloat x_offset = 0.17 * ball;
+  CGFloat f = 50 * pow(x - 0.25 - x_offset, 3) + 0.5;
+  return f;
 }
 
 - (void)setPos_multiplier:(CGFloat)pos_multiplier
@@ -85,17 +90,10 @@
 {
   if (self = [super initWithCoder:aDecoder])
   {
-    [self setWantsLayer:YES];
     _animating = NO;
   }
   return self;
 }
-
-- (BOOL)isFlipped
-{
-  return NO;
-}
-
 
 //- Drawing ----------------------------------------------------------------------------------------
 
@@ -110,6 +108,16 @@
   }
 }
 
+- (BOOL)isFlipped
+{
+  return NO;
+}
+
+- (BOOL)wantsUpdateLayer
+{
+  return NO;
+}
+
 //- Properties -------------------------------------------------------------------------------------
 
 - (void)setDoubleValue:(CGFloat)doubleValue
@@ -122,7 +130,6 @@
 
 - (void)setIndeterminate:(BOOL)flag
 {
-  [[NSAnimationContext currentContext] setDuration:0.0];
   if (flag)
   {
     _doubleValue = 0.0;
@@ -134,6 +141,7 @@
   }
   else
   {
+    [[NSAnimationContext currentContext] setDuration:0.0];
     [_ball_view removeFromSuperview];
     _ball_view = nil;
     [self setNeedsDisplay:YES];

@@ -185,6 +185,16 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
                        withMessage:message];
 }
 
+- (NSNumber*)sendView:(InfinitSendViewController*)sender
+      wantsCreateLink:(NSArray*)files
+          withMessage:(NSString*)message
+{
+  [_delegate sendControllerWantsClose:self];
+  return [_delegate sendController:self
+                   wantsCreateLink:files
+                       withMessage:message];
+}
+
 - (void)sendView:(InfinitSendViewController*)sender
        wantsAddFavourite:(IAUser*)user
 {

@@ -297,6 +297,20 @@
   [_transaction_controller markTransactionsRead];
 }
 
+- (void)linkAdded:(InfinitLinkTransaction*)link
+{
+  if (_current_controller != _link_controller)
+    return;
+  [_link_controller linkAdded:link];
+}
+
+- (void)linkUpdated:(InfinitLinkTransaction*)link
+{
+  if (_current_controller != _link_controller)
+    return;
+  [_link_controller linkUpdated:link];
+}
+
 - (void)transactionAdded:(IATransaction*)transaction
 {
   if (_current_controller != _transaction_controller)

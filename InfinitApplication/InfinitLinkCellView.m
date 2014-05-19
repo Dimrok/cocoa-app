@@ -92,11 +92,11 @@
 {
   self.link.normal_image = [IAFunctions imageNamed:@"icon-share"];
   self.link.hover_image = [IAFunctions imageNamed:@"icon-share-hover"];
-  self.link.toolTip = NSLocalizedString(@"Click to open link", nil);
+  self.link.toolTip = NSLocalizedString(@"Open link", nil);
 
   self.clipboard.normal_image = [IAFunctions imageNamed:@"icon-clipboard"];
   self.clipboard.hover_image = [IAFunctions imageNamed:@"icon-clipboard-hover"];
-  self.clipboard.toolTip = NSLocalizedString(@"Click to copy link", nil);
+  self.clipboard.toolTip = NSLocalizedString(@"Copy link", nil);
 }
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
@@ -111,11 +111,11 @@
   if (link.status == gap_transaction_transferring)
   {
     self.progress_indicator.hidden = NO;
-    [self setProgress:link.progress.doubleValue];
+    [self setProgress:link.progress];
   }
   else
   {
-    self.information.stringValue = [IAFunctions relativeDateOf:link.creation_time];
+    self.information.stringValue = [IAFunctions relativeDateOf:link.modification_time];
     self.progress_indicator.hidden = YES;
   }
 }

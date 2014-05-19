@@ -126,6 +126,18 @@
 
 //- Transaction and User Update Handling -----------------------------------------------------------
 
+- (void)linkAdded:(InfinitLinkTransaction*)link
+{
+  // Do nothing by default, overload if needed
+  return;
+}
+
+- (void)linkUpdated:(InfinitLinkTransaction*)link
+{
+  // Do nothing by default, overload if needed
+  return;
+}
+
 - (void)transactionAdded:(IATransaction*)transaction
 {
   // Do nothing by default, overload if needed

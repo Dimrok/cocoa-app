@@ -392,7 +392,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     [self updateProgress];
     return;
   }
-  
+
   self.bubble_view.important = _element.important;
   self.time_indicator.stringValue =
     [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
@@ -433,8 +433,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case TRANSACTION_VIEW_PENDING_SEND:
     case TRANSACTION_VIEW_PREPARING:
       [self setTransactionStatusButtonToCancel];
-      self.progress.hidden = NO;
       [self.progress setIndeterminate:YES];
+      self.progress.hidden = NO;
       self.information.stringValue = [self dataTransferredForTransaction:_element.transaction];
       self.information.hidden = NO;
       break;

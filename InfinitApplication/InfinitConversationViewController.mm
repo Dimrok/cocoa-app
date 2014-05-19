@@ -192,7 +192,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self.table_view reloadData];
   [self resizeContentView];
   [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
-  [self updateListOfRowsWithProgress];
   if ([[_delegate receiveOnboardingTransaction:self] other_user] == _user)
   {
     if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
@@ -211,6 +210,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
       [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:0.5];
     }
   }
+  [self updateListOfRowsWithProgress];
 }
 
 - (void)delayedStartOnboarding

@@ -53,6 +53,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   IAMeManager* _me_manager;
   InfinitStayAwakeManager* _stay_awake_manager;
   IATransactionManager* _transaction_manager;
+  InfinitLinkManager* _link_manager;
   IAUserManager* _user_manager;
   
   // Other
@@ -96,6 +97,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     
     _me_manager = [[IAMeManager alloc] initWithDelegate:self];
     _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
+    _link_manager = [[InfinitLinkManager alloc] initWithDelegate:self];
     _user_manager = [IAUserManager sharedInstanceWithDelegate:self];
     
     if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
@@ -303,8 +305,8 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
     [_desktop_notifier clearAllNotifications];
   NSArray* transaction_list = [_transaction_manager latestTransactionPerUser];
-  InfinitLinkTransaction* test = [InfinitLinkTransaction fakeTransaction];
-  NSArray* link_list = [NSArray arrayWithObject:test];
+//  NSArray* link_list = [_link_manager reversedLinkList];
+  NSArray* link_list = [NSArray arrayWithObject:[InfinitLinkTransaction fakeTransaction]];
   _main_view_controller =
     [[InfinitMainViewController alloc] initWithDelegate:self andTransactionList:transaction_list
                                             andLinkList:link_list];
@@ -437,6 +439,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   
   // XXX We must find a better way to manage fetching of history per user
   [_transaction_manager getHistory];
+  [_link_manager getHistory];
   
   if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"4"])
   {
@@ -885,6 +888,13 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
                              withMessage:message];
 }
 
+- (NSNumber*)sendController:(IAGeneralSendController*)sender
+            wantsCreateLink:(NSArray*)files
+                withMessage:(NSString*)message
+{
+  return [_link_manager createLinkWithFiles:files withMessage:message];
+}
+
 - (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender
 {
   return [IAUserManager favouritesList];
@@ -963,6 +973,34 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   if ([[IAAutoStartup sharedInstance] appInLoginItemList])
     [[IAAutoStartup sharedInstance] removeAppFromLoginItem];
 #endif
+}
+
+//- Link Manager Protocol --------------------------------------------------------------------------
+
+- (void)linkManager:(InfinitLinkManager*)sender
+hadStatusChangeForLink:(InfinitLinkTransaction*)link
+{
+  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
+    [_main_view_controller linkUpdated:link];
+}
+
+- (void)linkManager:(InfinitLinkManager*)sender
+         hasNewLink:(InfinitLinkTransaction*)link
+{
+  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
+    [_main_view_controller linkAdded:link];
+}
+
+- (void)linkManagerCopiedLinkToClipboard:(InfinitLinkManager*)sender
+{
+  if (_tooltip_controller == nil)
+    _tooltip_controller = [[InfinitTooltipViewController alloc] init];
+  NSString* message = NSLocalizedString(@"Link copied to clipboard!", nil);
+  [_tooltip_controller showPopoverForView:_status_bar_icon
+                       withArrowDirection:INPopoverArrowDirectionUp
+                              withMessage:message
+                         withPopAnimation:YES];
+  [self performSelector:@selector(delayedTooltipClose) withObject:nil afterDelay:5.0];
 }
 
 //- Login Window Protocol --------------------------------------------------------------------------
@@ -1260,6 +1298,12 @@ hadConnectionStateChange:(gap_UserStatus)status
       _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithFiles:files forUser:nil];
   }
+}
+
+- (void)statusBarIconLinkDrop:(IAStatusBarIcon*)sender
+                    withFiles:(NSArray*)files
+{
+  [_link_manager createLinkWithFiles:files withMessage:@""];
 }
 
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender

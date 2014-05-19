@@ -22,6 +22,7 @@ typedef enum __IAStatusBarIconStatus
   STATUS_BAR_ICON_ANIMATED,
   STATUS_BAR_ICON_FIRE_ANIMATED,
   STATUS_BAR_ICON_LOGGING_IN,
+  STATUS_BAR_ICON_LINK,
 } IAStatusBarIconStatus;
 
 typedef enum __InfinitStatusBarIconColour
@@ -35,7 +36,7 @@ typedef enum __InfinitStatusBarIconColour
 @private
   id _delegate;
   NSArray* _drag_types;
-  NSImage* _icon[4];
+  NSImage* _icon[8];
   NSImageView* _icon_view;
   BOOL _is_highlighted;
   gap_UserStatus _connected;
@@ -127,6 +128,7 @@ static NSDictionary* _grey_style;
     _icon[STATUS_BAR_ICON_CLICKED] = [IAFunctions imageNamed:@"icon-menu-bar-clicked"];
     _icon[STATUS_BAR_ICON_NO_CONNECTION] = [IAFunctions
                                             imageNamed:@"icon-menu-bar-inactive"];
+    _icon[STATUS_BAR_ICON_LINK] = [IAFunctions imageNamed:@"icon-menu-bar-link"];
     
     _icon_view = [[NSImageView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 16.0, 16.0)];
     _icon_view.image = _icon[STATUS_BAR_ICON_NO_CONNECTION];
@@ -207,6 +209,9 @@ static NSDictionary* _grey_style;
       break;
     case STATUS_BAR_ICON_NORMAL:
       _icon_view.image = _icon[STATUS_BAR_ICON_NORMAL];
+      break;
+    case STATUS_BAR_ICON_LINK:
+      _icon_view.image = _icon[STATUS_BAR_ICON_LINK];
       break;
   }
   
@@ -308,6 +313,10 @@ static NSDictionary* _grey_style;
     else if (_logging_in)
     {
       _current_mode = STATUS_BAR_ICON_LOGGING_IN;
+    }
+    else if (_show_link)
+    {
+      _current_mode = STATUS_BAR_ICON_LINK;
     }
     else if (_connected == gap_user_status_offline)
     {
@@ -455,8 +464,15 @@ static NSDictionary* _grey_style;
 {
   if (_is_highlighted)
     return;
+  if ([NSEvent modifierFlags] == NSAlternateKeyMask)
+  {
+    _show_link = YES;
+    [self determineCurrentMode];
+  }
   NSString* message;
-  if (_connected == gap_user_status_online)
+  if (_connected == gap_user_status_online && _show_link)
+    message = NSLocalizedString(@"Hold \u2325 and drop files to get a link!", nil);
+  else if (_connected == gap_user_status_online)
     message = NSLocalizedString(@"Online, send something!", nil);
   else
     message = NSLocalizedString(@"Offline!", nil);
@@ -468,12 +484,22 @@ static NSDictionary* _grey_style;
 - (void)mouseExited:(NSEvent*)theEvent
 {
   [_tooltip close];
+  if (_show_link)
+  {
+    _show_link = NO;
+    [self determineCurrentMode];
+  }
 }
 
 //- Drag Operations --------------------------------------------------------------------------------
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
+  if ([NSEvent modifierFlags] == NSAlternateKeyMask)
+  {
+    _show_link = YES;
+    [self determineCurrentMode];
+  }
   NSPasteboard* paste_board = sender.draggingPasteboard;
   if ([paste_board availableTypeFromArray:_drag_types])
   {
@@ -481,6 +507,15 @@ static NSDictionary* _grey_style;
     return NSDragOperationCopy;
   }
   return NSDragOperationNone;
+}
+
+- (void)draggingExited:(id<NSDraggingInfo>)sender
+{
+  if (_show_link)
+  {
+    _show_link = NO;
+    [self determineCurrentMode];
+  }
 }
 
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
@@ -492,9 +527,20 @@ static NSDictionary* _grey_style;
   NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
   
   if (files.count > 0)
-    [_delegate statusBarIconDragDrop:self withFiles:files];
+  {
+    if ([NSEvent modifierFlags] == NSAlternateKeyMask)
+      [_delegate statusBarIconLinkDrop:self withFiles:files];
+    else
+      [_delegate statusBarIconDragDrop:self withFiles:files];
+  }
   
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_DROP_STATUS_BAR_ICON];
+
+  if (_show_link)
+  {
+    _show_link = NO;
+    [self determineCurrentMode];
+  }
   
   return YES;
 }

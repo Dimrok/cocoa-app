@@ -95,6 +95,10 @@ wantsRemoveFileAtIndex:(NSInteger)index;
              toUsers:(NSArray*)users
          withMessage:(NSString*)message;
 
+- (NSNumber*)sendView:(InfinitSendViewController*)sender
+      wantsCreateLink:(NSArray*)files
+          withMessage:(NSString*)message;
+
 - (void)sendView:(InfinitSendViewController*)sender
 wantsAddFavourite:(IAUser*)user;
 

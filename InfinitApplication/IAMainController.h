@@ -14,6 +14,7 @@
 
 #import <Gap/IATransactionManager.h>
 #import <Gap/IAUserManager.h>
+#import <Gap/InfinitLinkManager.h>
 
 #import "IADesktopNotifier.h"
 #import "IAGeneralSendController.h"
@@ -46,6 +47,7 @@
                                         IAWindowControllerProtocol,
                                         InfinitClippyProtocol,
                                         InfinitConversationViewProtocol,
+                                        InfinitLinkManagerProtocol,
                                         InfinitLoginViewControllerProtocol,
                                         InfinitMainViewProtocol,
                                         InfinitOnboardingProtocol,

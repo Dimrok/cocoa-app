@@ -406,55 +406,72 @@
 
 - (BOOL)inputsGood
 {
-  NSMutableArray* recipients = [NSMutableArray arrayWithArray:[_search_controller recipientList]];
-  [_search_controller checkInputs];
-  if (recipients.count == 0)
-    return NO;
-
   NSArray* files = [_delegate sendViewWantsFileList:self];
   if (files.count == 0)
     return NO;
-
-  _recipient_list = [NSArray arrayWithArray:recipients];
-
-  for (id object in _recipient_list)
-  {
-    if ([object isKindOfClass:NSString.class] && ![IAFunctions stringIsValidEmail:object] &&
-        ![object isKindOfClass:IAUser.class])
-    {
-      return NO;
-    }
-  }
 
   _note = _note_controller.note;
   if (_note.length > 100)
     _note = [_note substringWithRange:NSMakeRange(0, 100)];
 
-  return YES;
+  if (self.user_link_view.mode == INFINIT_USER_MODE)
+  {
+    NSMutableArray* recipients = [NSMutableArray arrayWithArray:[_search_controller recipientList]];
+    [_search_controller checkInputs];
+    if (recipients.count == 0)
+      return NO;
+
+    _recipient_list = [NSArray arrayWithArray:recipients];
+
+    for (id object in _recipient_list)
+    {
+      if ([object isKindOfClass:NSString.class] && ![IAFunctions stringIsValidEmail:object] &&
+          ![object isKindOfClass:IAUser.class])
+      {
+        return NO;
+      }
+    }
+
+    return YES;
+  }
+  else
+  {
+    return YES;
+  }
 }
 
 - (void)doSend
 {
-  NSMutableArray* destinations = [NSMutableArray array];
-  for (id element in _recipient_list)
+  if (self.user_link_view.mode == INFINIT_USER_MODE)
   {
-    if ([element isKindOfClass:InfinitSearchElement.class])
+    NSMutableArray* destinations = [NSMutableArray array];
+    for (id element in _recipient_list)
     {
-      if ([element user] == nil)
-        [destinations addObject:[element email]];
-      else
-        [destinations addObject:[element user]];
+      if ([element isKindOfClass:InfinitSearchElement.class])
+      {
+        if ([element user] == nil)
+          [destinations addObject:[element email]];
+        else
+          [destinations addObject:[element user]];
+      }
+      else if ([element isKindOfClass:NSString.class])
+      {
+        [destinations addObject:element];
+      }
     }
-    else if ([element isKindOfClass:NSString.class])
-    {
-      [destinations addObject:element];
-    }
+    NSArray* transaction_ids = [_delegate sendView:self
+                                    wantsSendFiles:[_delegate sendViewWantsFileList:self]
+                                           toUsers:destinations
+                                       withMessage:_note];
+    (void)transaction_ids;
   }
-  NSArray* transaction_ids = [_delegate sendView:self
-                                  wantsSendFiles:[_delegate sendViewWantsFileList:self]
-                                         toUsers:destinations
-                                     withMessage:_note];
-  (void)transaction_ids;
+  else
+  {
+    NSNumber* transaction_id = [_delegate sendView:self
+                                   wantsCreateLink:[_delegate sendViewWantsFileList:self]
+                                       withMessage:_note];
+    (void)transaction_id;
+  }
 }
 
 //- User Interaction -------------------------------------------------------------------------------
@@ -586,6 +603,8 @@ wantsRemoveFavourite:(IAUser*)user
    {
      [self.view.window makeFirstResponder:_search_controller.search_field];
      [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
+     [self setSendButtonState];
+     self.send_button.toolTip = NSLocalizedString(@"Create Link", nil);
    }];
 }
 
@@ -602,6 +621,8 @@ wantsRemoveFavourite:(IAUser*)user
   {
     [self.view.window makeFirstResponder:_note_controller.note_field];
     [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
+    [self setSendButtonState];
+    self.send_button.toolTip = NSLocalizedString(@"Send", nil);
   }];
 }
 
