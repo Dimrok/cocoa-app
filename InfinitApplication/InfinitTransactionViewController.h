@@ -35,6 +35,8 @@
 
 - (void)markTransactionsRead;
 
+- (void)closeToolTips;
+
 @end
 
 @protocol InfinitTransactionViewProtocol <NSObject>
@@ -51,5 +53,10 @@
 - (void)userGotClicked:(IAUser*)user;
 
 - (void)markTransactionRead:(IATransaction*)transaction;
+
+//- Onboarding -------------------------------------------------------------------------------------
+
+- (IATransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender;
+- (IATransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender;
 
 @end

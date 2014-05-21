@@ -9,6 +9,8 @@
 #import "InfinitTransactionViewController.h"
 
 #import "IAAvatarManager.h"
+#import "InfinitOnboardingController.h"
+#import "InfinitTooltipViewController.h"
 
 @interface InfinitTransactionViewController ()
 @end
@@ -25,6 +27,8 @@
   // Progress handling.
   NSTimer* _progress_timer;
   NSMutableArray* _rows_with_progress;
+
+  InfinitTooltipViewController* _tooltip;
 }
 
 //- Init -------------------------------------------------------------------------------------------
@@ -74,6 +78,39 @@
 {
   _list = [NSMutableArray arrayWithArray:list];
   [self.table_view reloadData];
+}
+
+//- Onboarding -------------------------------------------------------------------------------------
+
+- (void)delayedStartReceiveOnboarding
+{
+  NSInteger row = ([_list indexOfObject:[_delegate receiveOnboardingTransaction:self]]);
+  if (row == NSNotFound)
+    return;
+
+  if (_tooltip == nil)
+    _tooltip = [[InfinitTooltipViewController alloc] init];
+  NSTableRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
+  NSString* message = NSLocalizedString(@"Click here to accept the file", nil);
+  [_tooltip showPopoverForView:row_view
+            withArrowDirection:INPopoverArrowDirectionLeft
+                   withMessage:message
+              withPopAnimation:YES];
+}
+
+- (void)delayedFileSentOnboarding
+{
+  NSInteger row = ([_list indexOfObject:[_delegate sendOnboardingTransaction:self]]);
+  if (row == NSNotFound)
+    return;
+  if (_tooltip == nil)
+    _tooltip = [[InfinitTooltipViewController alloc] init];
+  NSTableRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
+  NSString* message = NSLocalizedString(@"Click here to see your history with this person", nil);
+  [_tooltip showPopoverForView:row_view
+            withArrowDirection:INPopoverArrowDirectionLeft
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 //- Progress Handling ------------------------------------------------------------------------------
@@ -357,6 +394,11 @@
       [_delegate markTransactionRead:transaction];
     }
   }
+}
+
+- (void)closeToolTips
+{
+  [_tooltip close];
 }
 
 @end
