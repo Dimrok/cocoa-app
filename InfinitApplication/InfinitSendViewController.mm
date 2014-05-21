@@ -9,6 +9,8 @@
 #import "InfinitSendViewController.h"
 
 #import "InfinitMetricsManager.h"
+#import "InfinitTooltipViewController.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 //- User Link View ---------------------------------------------------------------------------------
@@ -39,9 +41,13 @@
                                         shadow:nil];
   _link_str = NSLocalizedString(@"GET A LINK", nil);
   _user_str = NSLocalizedString(@"SEND TO USER", nil);
+  _mode = mode;
+  if (_mode == INFINIT_USER_MODE)
+    _animate_mode = 0.0;
+  else
+    _animate_mode = 1.0;
   if (mode == INFINIT_USER_MODE)
   {
-    _mode = mode;
     self.user_text.attributedStringValue =
       [[NSAttributedString alloc] initWithString:_user_str attributes:_high_attrs];
     self.link_text.attributedStringValue =
@@ -49,7 +55,6 @@
   }
   else
   {
-    _mode = mode;
     self.user_text.attributedStringValue =
       [[NSAttributedString alloc] initWithString:_user_str attributes:_norm_attrs];
     self.link_text.attributedStringValue =
@@ -284,6 +289,8 @@
   CGFloat _last_search_height;
 
   BOOL _for_link;
+
+  InfinitTooltipViewController* _tooltip;
 }
 
 - (id)initWithDelegate:(id<InfinitSendViewProtocol>)delegate
@@ -366,6 +373,67 @@
     [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
     [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
   }
+  // Onboarding
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
+  {
+    [self performSelector:@selector(delayedOnboardSendFilesNoDestination) withObject:nil afterDelay:0.5];
+  }
+  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+  {
+    [self performSelector:@selector(delayedOnboardSendNoFilesNoDestination) withObject:nil afterDelay:0.5];
+  }
+  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
+  {
+    [self performSelector:@selector(delayedOnboardSendNoFilesDestination) withObject:nil afterDelay:0.5];
+  }
+  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
+  {
+    [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
+  }
+}
+
+- (void)delayedOnboardSendFilesNoDestination
+{
+  if (_tooltip == nil)
+    _tooltip = [[InfinitTooltipViewController alloc] init];
+  NSString* message = NSLocalizedString(@"Search by name or enter an email address", nil);
+  [_tooltip showPopoverForView:_search_controller.search_field
+            withArrowDirection:INPopoverArrowDirectionLeft
+                   withMessage:message
+              withPopAnimation:YES];
+}
+
+- (void)delayedOnboardSendNoFilesNoDestination
+{
+  if (_tooltip == nil)
+    _tooltip = [[InfinitTooltipViewController alloc] init];
+  NSString* message = NSLocalizedString(@"Search by name or enter an email address", nil);
+  [_tooltip showPopoverForView:_search_controller.search_field
+            withArrowDirection:INPopoverArrowDirectionLeft
+                   withMessage:message
+              withPopAnimation:YES];
+}
+
+- (void)delayedOnboardSendNoFilesDestination
+{
+  if (_tooltip == nil)
+    _tooltip = [[InfinitTooltipViewController alloc] init];
+  NSString* message = NSLocalizedString(@"Add some files", nil);
+  [_tooltip showPopoverForView:_files_controller.header_view
+            withArrowDirection:INPopoverArrowDirectionLeft
+                   withMessage:message
+              withPopAnimation:YES];
+}
+
+- (void)delayedOnboardSendFilesDestination
+{
+  if (_tooltip == nil)
+    _tooltip = [[InfinitTooltipViewController alloc] init];
+  NSString* message = NSLocalizedString(@"Click here to send", nil);
+  [_tooltip showPopoverForView:self.send_button
+            withArrowDirection:INPopoverArrowDirectionLeft
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 - (void)delayedCursorInSearch
@@ -402,6 +470,22 @@
   [self setSendButtonState];
   if (!_files_controller.open && files.count > 0)
     [_files_controller showFiles];
+
+  if (files.count > 0)
+  {
+    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendFilesNoDestination) withObject:nil afterDelay:0.5];
+    }
+    else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
+    }
+  }
 }
 
 - (BOOL)inputsGood
@@ -463,7 +547,11 @@
                                     wantsSendFiles:[_delegate sendViewWantsFileList:self]
                                            toUsers:destinations
                                        withMessage:_note];
-    (void)transaction_ids;
+    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
+    {
+      [_delegate sendView:self wantsSetOnboardingSendTransactionId:transaction_ids[0]];
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILE_SENDING];
+    }
   }
   else
   {
@@ -480,13 +568,16 @@
 {
   if ([self inputsGood])
     [self doSend];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
 }
 
 - (IBAction)cancelButtonClicked:(NSButton*)sender
 {
   [_delegate sendViewWantsCancel:self];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
+  if ([_delegate onboardingSend:self])
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
+  }
 }
 
 //- Note Protocol ----------------------------------------------------------------------------------
