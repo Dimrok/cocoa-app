@@ -53,9 +53,11 @@
 @protocol IAViewProtocol <NSObject>
 
 - (InfinitOnboardingState)onboardingState:(IAViewController*)sender;
+- (void)setOnboardingState:(InfinitOnboardingState)state;
 
 - (BOOL)onboardingSend:(IAViewController*)sender;
 
-- (void)setOnboardingState:(InfinitOnboardingState)state;
+- (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
+- (IATransaction*)sendOnboardingTransaction:(IAViewController*)sender;
 
 @end
