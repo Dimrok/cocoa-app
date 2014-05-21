@@ -444,6 +444,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   {
     [self closeNotificationWindow];
     [self startOnboarding];
+    [self saveOnboardingDone];
   }
   else if (_current_view_controller != nil &&
            _current_view_controller != _main_view_controller)
@@ -716,10 +717,6 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (void)handleQuit
 {
-  if (_onboard_controller != nil && _onboard_controller.receive_onboarding_done)
-  {
-    [self doneOnboarding];
-  }
   _stay_awake_manager = nil;
 
   [_status_bar_icon setHighlighted:NO];
@@ -790,7 +787,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   return _onboard_controller.receive_transaction;
 }
 
-- (IATransaction*)sendOnboardingTransaction:(InfinitConversationViewController*)sender
+- (IATransaction*)sendOnboardingTransaction:(IAViewController*)sender
 {
   return _onboard_controller.send_transaction;
 }
@@ -1184,7 +1181,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 //- Onboarding Protocol ----------------------------------------------------------------------------
 
-- (void)doneOnboarding
+- (void)saveOnboardingDone
 {
   [[IAUserPrefs sharedInstance] setPref:@"4" forKey:@"onboarded"];
 }
@@ -1209,7 +1206,7 @@ hadConnectionStateChange:(gap_UserStatus)status
       return;
       
     case INFINIT_ONBOARDING_DONE:
-      [self doneOnboarding];
+      [self saveOnboardingDone];
       
     default:
       return;
