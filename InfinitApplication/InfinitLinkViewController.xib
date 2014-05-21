@@ -70,7 +70,7 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </customView>
                                                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SfX-9g-Ypy" customClass="IAHoverButton">
-                                                        <rect key="frame" x="279" y="40" width="22" height="22"/>
+                                                        <rect key="frame" x="317" y="25" width="22" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-share" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pjj-s2-h3j">
                                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -81,7 +81,7 @@
                                                         </connections>
                                                     </button>
                                                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZG1-iK-S4L" customClass="IAHoverButton">
-                                                        <rect key="frame" x="279" y="11" width="22" height="22"/>
+                                                        <rect key="frame" x="317" y="25" width="22" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-clipboard" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="23u-pc-Yqu">
                                                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
