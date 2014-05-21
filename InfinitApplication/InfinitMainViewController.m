@@ -9,6 +9,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "InfinitMainViewController.h"
+#import "InfinitMetricsManager.h"
+#import "InfinitOnboardingController.h"
+#import "InfinitTooltipViewController.h"
 
 #import <version.hh>
 
@@ -225,6 +228,7 @@
   NSViewController* _current_controller;
 
   NSString* _version_str;
+  InfinitTooltipViewController* _tooltip;
 }
 
 - (id)initWithDelegate:(id<InfinitMainViewProtocol>)delegate
@@ -281,6 +285,39 @@
   [self.view_selector setupView];
   [self.view_selector setLinkCount:_link_controller.linksRunning];
   [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
+
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON];
+    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
+  }
+  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
+           [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
+  {
+    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
+  }
+  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+  {
+    [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:0.5];
+  }
+  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENDING ||
+           [_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
+  {
+    [_transaction_controller performSelector:@selector(delayedFileSentOnboarding) withObject:nil afterDelay:0.5];
+  }
+}
+
+//- Onboarding -------------------------------------------------------------------------------------
+
+- (void)delayedStartSendOnboarding
+{
+  if (_tooltip == nil)
+    _tooltip = [[InfinitTooltipViewController alloc] init];
+  NSString* message = NSLocalizedString(@"Click here to send a file", nil);
+  [_tooltip showPopoverForView:self.send_button
+            withArrowDirection:INPopoverArrowDirectionLeft
+                   withMessage:message
+              withPopAnimation:YES];
 }
 
 //- IAViewController -------------------------------------------------------------------------------
@@ -294,6 +331,8 @@
 {
   if (_current_controller == _transaction_controller)
     _transaction_controller.changing = YES;
+  [_tooltip close];
+  [_transaction_controller closeToolTips];
   [_transaction_controller markTransactionsRead];
 }
 
@@ -386,6 +425,11 @@
 
 - (void)userGotClicked:(IAUser*)user
 {
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON &&
+      [[_delegate receiveOnboardingTransaction:self] other_user] == user)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
+  }
   _transaction_controller.changing = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
@@ -401,6 +445,16 @@
 - (void)markTransactionRead:(IATransaction*)transaction
 {
   [_delegate markTransactionRead:transaction];
+}
+
+- (IATransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender
+{
+  return [_delegate receiveOnboardingTransaction:self];
+}
+
+- (IATransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender
+{
+  return [_delegate receiveOnboardingTransaction:self];
 }
 
 //- Transaction Link Protocol ----------------------------------------------------------------------
@@ -450,6 +504,7 @@
        _transaction_controller.changing = NO;
      }
    }];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_PEOPLE];
 }
 
 - (void)gotLinkClick:(InfinitMainTransactionLinkView*)sender
@@ -495,6 +550,7 @@
       _link_controller.changing = NO;
     }
   }];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_LINKS];
 }
 
 //- Button Handling --------------------------------------------------------------------------------
@@ -518,6 +574,10 @@
 
 - (IBAction)sendButtonClicked:(NSButton*)sender
 {
+  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
+  }
   _transaction_controller.changing = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {

@@ -8,9 +8,9 @@
 
 #import "IAViewController.h"
 
-#import "InfinitTransactionViewController.h"
 #import "InfinitLinkViewController.h"
 #import "InfinitMainCounterView.h"
+#import "InfinitTransactionViewController.h"
 
 //- User Link View ---------------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ typedef enum _InfinitTransactionLinkMode
 
 @end
 
-@protocol InfinitMainViewProtocol <NSObject>
+@protocol InfinitMainViewProtocol <IAViewProtocol>
 
 - (NSArray*)latestTransactionsByUser:(InfinitMainViewController*)sender;
 
