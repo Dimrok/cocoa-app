@@ -305,8 +305,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
     [_desktop_notifier clearAllNotifications];
   NSArray* transaction_list = [_transaction_manager latestTransactionPerUser];
-//  NSArray* link_list = [_link_manager reversedLinkList];
-  NSArray* link_list = [NSArray arrayWithObject:[InfinitLinkTransaction fakeTransaction]];
+  NSArray* link_list = [_link_manager reversedLinkList];
   _main_view_controller =
     [[InfinitMainViewController alloc] initWithDelegate:self andTransactionList:transaction_list
                                             andLinkList:link_list];
