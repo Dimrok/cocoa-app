@@ -111,6 +111,14 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"addressbook";
     case INFINIT_METRIC_MAIN_SEND:
       return @"send";
+    case INFINIT_METRIC_MAIN_PEOPLE:
+      return @"people";
+    case INFINIT_METRIC_MAIN_LINKS:
+      return @"links";
+    case INFINIT_METRIC_MAIN_COPY_LINK:
+      return @"copy link";
+    case INFINIT_METRIC_MAIN_OPEN_LINK:
+      return @"open link";
     case INFINIT_METRIC_NO_ADRESSBOOK_ACCESS:
       return @"addressbook";
     case INFINIT_METRIC_OPEN_PANEL:
@@ -144,6 +152,14 @@ static InfinitMetricsManager* _shared_instance = nil;
     case INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS:
       return @"accessible";
     case INFINIT_METRIC_MAIN_SEND:
+      return @"main view";
+    case INFINIT_METRIC_MAIN_PEOPLE:
+      return @"main view";
+    case INFINIT_METRIC_MAIN_LINKS:
+      return @"main view";
+    case INFINIT_METRIC_MAIN_COPY_LINK:
+      return @"main view";
+    case INFINIT_METRIC_MAIN_OPEN_LINK:
       return @"main view";
     case INFINIT_METRIC_NO_ADRESSBOOK_ACCESS:
       return @"inaccessible";
