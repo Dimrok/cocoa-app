@@ -282,4 +282,14 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   [_delegate setOnboardingState:state];
 }
 
+- (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender
+{
+  return [_delegate receiveOnboardingTransaction:sender];
+}
+
+- (IATransaction*)sendOnboardingTransaction:(IAViewController*)sender
+{
+  return [_delegate sendOnboardingTransaction:sender];
+}
+
 @end

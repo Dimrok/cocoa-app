@@ -57,11 +57,13 @@
 - (void)sendController:(IAGeneralSendController*)sender
   wantsRemoveFavourite:(IAUser*)user;
 
-- (void)sendController:(IAGeneralSendController*)sender
-wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
-
 - (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender;
 
 - (NSArray*)sendControllerWantsFriendsByLastInteraction:(IAGeneralSendController*)sender;
+
+//- Onboarding -------------------------------------------------------------------------------------
+
+- (void)sendController:(IAGeneralSendController*)sender
+wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
 @end
