@@ -34,6 +34,6 @@
 
 @protocol InfinitLinkViewProtocol <NSObject>
 
-- (void)linkGotCopiedToPasteBoard:(InfinitLinkTransaction*)link;
+- (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link;
 
 @end

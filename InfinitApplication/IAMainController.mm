@@ -976,6 +976,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 
 - (void)_copyLinkToClipboard:(InfinitLinkTransaction*)link
 {
+  [self closeNotificationWindow];
   NSPasteboard* paste_board = [NSPasteboard generalPasteboard];
   [paste_board declareTypes:@[NSStringPboardType] owner:nil];
   [paste_board setString:link.url_link forType:NSStringPboardType];

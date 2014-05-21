@@ -81,7 +81,7 @@ typedef enum _InfinitTransactionLinkMode
 
 - (void)markTransactionRead:(IATransaction*)transaction;
 
-- (void)linkGotCopiedToPasteBoard:(InfinitLinkTransaction*)link;
+- (void)copyLinkToClipboard:(InfinitLinkTransaction*)link;
 
 //- Gear Menu Handling -----------------------------------------------------------------------------
 

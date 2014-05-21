@@ -375,9 +375,9 @@
 
 //- Link View Protocol -----------------------------------------------------------------------------
 
-- (void)linkGotCopiedToPasteBoard:(InfinitLinkTransaction*)link
+- (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link
 {
-  [_delegate linkGotCopiedToPasteBoard:link];
+  [_delegate copyLinkToClipboard:link];
 }
 
 

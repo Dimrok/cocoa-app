@@ -215,7 +215,7 @@
 - (void)linkCell:(InfinitLinkCellView*)sender
 gotCopyToClipboardForLink:(InfinitLinkTransaction*)link
 {
-  [_delegate linkGotCopiedToPasteBoard:link];
+  [_delegate copyLinkToPasteBoard:link];
 }
 
 @end
