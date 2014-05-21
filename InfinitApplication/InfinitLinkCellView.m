@@ -8,7 +8,10 @@
 
 #import "InfinitLinkCellView.h"
 
+#import "InfinitMetricsManager.h"
 #import "InfinitLinkIconManager.h"
+
+#import <QuartzCore/QuartzCore.h>
 
 @implementation InfinitLinkCellView
 {
@@ -52,17 +55,49 @@
   _hover = YES;
   self.link.hidden = NO;
   self.clipboard.hidden = NO;
-  self.click_count.hidden = YES;
-  [self setNeedsDisplay:YES];
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+   {
+     context.duration = 0.2;
+     context.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+     [self.link.animator setFrameOrigin:NSMakePoint(279.0, 40.0)];
+     [self.clipboard.animator setFrameOrigin:NSMakePoint(279.0, 11.0)];
+     [self.click_count.animator setAlphaValue:0.0];
+   }
+                      completionHandler:^
+   {
+     [self.link setFrameOrigin:NSMakePoint(279.0, 40.0)];
+     [self.clipboard setFrameOrigin:NSMakePoint(279.0, 11.0)];
+     [self.click_count setAlphaValue:0.0];
+     self.click_count.hidden = YES;
+     self.link.hidden = NO;
+     self.clipboard.hidden = NO;
+   }];
 }
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
   _hover = NO;
-  self.link.hidden = YES;
-  self.clipboard.hidden = YES;
   self.click_count.hidden = NO;
-  [self setNeedsDisplay:YES];
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+  {
+    context.duration = 0.2;
+    context.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.link.animator setFrameOrigin:NSMakePoint(317.0, 25.0)];
+    [self.clipboard.animator setFrameOrigin:NSMakePoint(317.0, 25.0)];
+    [self.click_count.animator setAlphaValue:1.0];
+
+  }
+                      completionHandler:^
+  {
+    [self.link setFrameOrigin:NSMakePoint(317.0, 25.0)];
+    [self.clipboard setFrameOrigin:NSMakePoint(317.0, 25.0)];
+    [self.click_count setAlphaValue:1.0];
+    self.click_count.hidden = NO;
+    self.link.hidden = YES;
+    self.clipboard.hidden = YES;
+  }];
 }
 
 //- Drawing ----------------------------------------------------------------------------------------
@@ -135,6 +170,7 @@
 - (IBAction)linkClicked:(NSButton*)sender
 {
   [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_transaction_link.url_link]];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_OPEN_LINK];
 }
 
 - (IBAction)clipboardClicked:(NSButton*)sender
@@ -143,6 +179,7 @@
   [paste_board declareTypes:@[NSStringPboardType] owner:nil];
   [paste_board setString:_transaction_link.url_link forType:NSStringPboardType];
   [_delegate linkCell:self gotCopyToClipboardForLink:_transaction_link];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_COPY_LINK];
 }
 
 @end
