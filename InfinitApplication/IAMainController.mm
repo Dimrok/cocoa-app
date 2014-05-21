@@ -729,7 +729,8 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (BOOL)canUpdate
 {
-  if (!_logging_in && ![_transaction_manager hasTransferringTransaction] && _current_view_controller == nil)
+  if (!_logging_in && ![_transaction_manager hasTransferringTransaction] &&
+      ![_link_manager hasTransferringLink] && _current_view_controller == nil)
   {
     ELLE_LOG("%s: can update", self.description.UTF8String);
     return YES;
@@ -743,7 +744,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 
 - (void)updateStatusBarIcon
 {
-  if ([_transaction_manager hasTransferringTransaction])
+  if ([_transaction_manager hasTransferringTransaction] || [_link_manager hasTransferringLink])
     [_status_bar_icon setTransferring:YES];
   else
     [_status_bar_icon setTransferring:NO];
@@ -973,22 +974,11 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 
 //- Link Manager Protocol --------------------------------------------------------------------------
 
-- (void)linkManager:(InfinitLinkManager*)sender
-hadStatusChangeForLink:(InfinitLinkTransaction*)link
+- (void)_copyLinkToClipboard:(InfinitLinkTransaction*)link
 {
-  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
-    [_main_view_controller linkUpdated:link];
-}
-
-- (void)linkManager:(InfinitLinkManager*)sender
-         hasNewLink:(InfinitLinkTransaction*)link
-{
-  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
-    [_main_view_controller linkAdded:link];
-}
-
-- (void)linkManagerCopiedLinkToClipboard:(InfinitLinkManager*)sender
-{
+  NSPasteboard* paste_board = [NSPasteboard generalPasteboard];
+  [paste_board declareTypes:@[NSStringPboardType] owner:nil];
+  [paste_board setString:link.url_link forType:NSStringPboardType];
   if (_tooltip_controller == nil)
     _tooltip_controller = [[InfinitTooltipViewController alloc] init];
   NSString* message = NSLocalizedString(@"Link copied to clipboard!", nil);
@@ -997,6 +987,30 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
                               withMessage:message
                          withPopAnimation:YES];
   [self performSelector:@selector(delayedTooltipClose) withObject:nil afterDelay:5.0];
+}
+
+- (void)linkManager:(InfinitLinkManager*)sender
+hadStatusChangeForLink:(InfinitLinkTransaction*)link
+{
+  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
+    [_main_view_controller linkUpdated:link];
+  [self updateStatusBarIcon];
+}
+
+- (void)linkManager:(InfinitLinkManager*)sender
+         hasNewLink:(InfinitLinkTransaction*)link
+{
+  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
+    [_main_view_controller linkAdded:link];
+  [self updateStatusBarIcon];
+
+  if (link.status == gap_transaction_transferring)
+    [self _copyLinkToClipboard:link];
+}
+
+- (void)copyLinkToClipboard:(InfinitLinkTransaction*)link
+{
+  [self _copyLinkToClipboard:link];
 }
 
 //- Login Window Protocol --------------------------------------------------------------------------
@@ -1320,7 +1334,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (BOOL)stayAwakeManagerWantsActiveTransactions:(InfinitStayAwakeManager*)sender
 {
-  return  [_transaction_manager hasTransferringTransaction];
+  return ([_transaction_manager hasTransferringTransaction] && [_link_manager hasTransferringLink]);
 }
 
 //- Transaction Manager Protocol -------------------------------------------------------------------
