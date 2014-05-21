@@ -9,6 +9,7 @@
 #import "InfinitSendFilesViewController.h"
 
 #import "InfinitSendFileListCellView.h"
+#import "InfinitMetricsManager.h"
 
 //- View -------------------------------------------------------------------------------------------
 
@@ -356,7 +357,10 @@
 - (IBAction)informationClicked:(NSButton*)sender
 {
   if (_file_list.count == 0)
+  {
     [_delegate fileListGotAddFilesClicked:self];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
+  }
   else if (_open)
     [self hideFiles];
   else
@@ -376,6 +380,7 @@
 - (IBAction)addFilesClicked:(NSButton*)sender
 {
   [_delegate fileListGotAddFilesClicked:self];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
 }
 
 @end
