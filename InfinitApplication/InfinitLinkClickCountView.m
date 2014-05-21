@@ -18,8 +18,6 @@ static NSDictionary* _attrs = nil;
 
 - (void)setCount:(NSNumber*)count
 {
-  if (_count.unsignedIntegerValue == count.unsignedIntegerValue)
-    return;
   _count = count;
   if (_attrs == nil)
   {
@@ -45,8 +43,6 @@ static NSDictionary* _attrs = nil;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  if (_count.unsignedIntegerValue == 0)
-    return;
   CGFloat dim = NSHeight(self.bounds);
   NSRect rect;
   NSBezierPath* bg;
