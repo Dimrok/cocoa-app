@@ -294,9 +294,9 @@ ELLE_LOG_COMPONENT("OSX.MainController");
 {
   NSArray* user_transactions = [_transaction_manager transactionsForUser:user];
   _conversation_view_controller =
-  [[InfinitConversationViewController alloc] initWithDelegate:self
-                                                      forUser:user
-                                             withTransactions:user_transactions];
+    [[InfinitConversationViewController alloc] initWithDelegate:self
+                                                        forUser:user
+                                               withTransactions:user_transactions];
   [self openOrChangeViewController:_conversation_view_controller];
 }
 
@@ -308,7 +308,21 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   NSArray* link_list = [_link_manager reversedLinkList];
   _main_view_controller =
     [[InfinitMainViewController alloc] initWithDelegate:self andTransactionList:transaction_list
-                                            andLinkList:link_list];
+                                            andLinkList:link_list
+                                          forPeopleView:YES];
+  [self openOrChangeViewController:_main_view_controller];
+}
+
+- (void)showLinks
+{
+  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+    [_desktop_notifier clearAllNotifications];
+  NSArray* transaction_list = [_transaction_manager latestTransactionPerUser];
+  NSArray* link_list = [_link_manager reversedLinkList];
+  _main_view_controller =
+  [[InfinitMainViewController alloc] initWithDelegate:self andTransactionList:transaction_list
+                                          andLinkList:link_list
+                                        forPeopleView:NO];
   [self openOrChangeViewController:_main_view_controller];
 }
 
@@ -854,6 +868,12 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
   [_transaction_manager markTransactionAsRead:transaction];
 }
 
+- (void)desktopNotifier:(IADesktopNotifier*)sender
+hadClickNotificationForLinkId:(NSNumber*)transaction_id
+{
+  [self showLinks];
+}
+
 //- General Send Controller Protocol ---------------------------------------------------------------
 
 - (void)sendController:(IAGeneralSendController*)sender
@@ -996,6 +1016,9 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
   if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
     [_main_view_controller linkUpdated:link];
   [self updateStatusBarIcon];
+  [_desktop_notifier desktopNotificationForLink:link];
+  if (link.status == gap_transaction_transferring)
+    [self _copyLinkToClipboard:link];
 }
 
 - (void)linkManager:(InfinitLinkManager*)sender
@@ -1004,7 +1027,7 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
   if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
     [_main_view_controller linkAdded:link];
   [self updateStatusBarIcon];
-
+  [_desktop_notifier desktopNotificationForLink:link];
   if (link.status == gap_transaction_transferring)
     [self _copyLinkToClipboard:link];
 }
