@@ -48,7 +48,7 @@
   [bg fill];
   NSBezierPath* dark_line =
     [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 2.0)];
-  [IA_RGB_COLOUR(0, 195, 192) set];
+  [IA_GREY_COLOUR(230) set];
   [dark_line fill];
 }
 

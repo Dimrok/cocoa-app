@@ -126,12 +126,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 - (void)configurePersonView
 {
   [self.person_view setDelegate:self];
-  NSFont* font = [NSFont fontWithName:@"Montserrat" size:12.0];
+  NSFont* font = [NSFont fontWithName:@"Helvetica" size:12.0];
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   para.alignment = NSCenterTextAlignment;
   NSDictionary* attrs = [IAFunctions textStyleWithFont:font
                                         paragraphStyle:para
-                                                colour:IA_RGB_COLOUR(0, 195, 192)
+                                                colour:IA_GREY_COLOUR(32)
                                                 shadow:nil];
   if (_user.deleted)
   {
