@@ -27,9 +27,14 @@
   NSTrackingArea* _tracking_area;
 
   NSAttributedString* _link_norm_str;
+  NSAttributedString* _link_hover_str;
   NSAttributedString* _link_high_str;
+
   NSAttributedString* _transaction_norm_str;
+  NSAttributedString* _transaction_hover_str;
   NSAttributedString* _transaction_high_str;
+
+  BOOL _hover;
 }
 
 - (void)setupViewForPeopleView:(BOOL)flag
@@ -39,20 +44,27 @@
   para.alignment = NSCenterTextAlignment;
   NSDictionary* norm_attrs = [IAFunctions textStyleWithFont:font
                                              paragraphStyle:para
-                                                     colour:IA_RGB_COLOUR(81, 82, 73)
+                                                     colour:IA_RGB_COLOUR(139, 139, 131)
                                                      shadow:nil];
   NSDictionary* high_attrs = [IAFunctions textStyleWithFont:font
                                              paragraphStyle:para
                                                      colour:IA_RGB_COLOUR(0, 195, 192)
                                                      shadow:nil];
+  NSDictionary* hover_attrs = [IAFunctions textStyleWithFont:font
+                                              paragraphStyle:para
+                                                      colour:IA_RGB_COLOUR(81, 81, 73)
+                                                      shadow:nil];
   NSString* link_str = NSLocalizedString(@"LINKS", nil);
   NSString* transaction_str = NSLocalizedString(@"PEOPLE", nil);
 
   _link_norm_str = [[NSAttributedString alloc] initWithString:link_str attributes:norm_attrs];
+  _link_hover_str = [[NSAttributedString alloc] initWithString:link_str attributes:hover_attrs];
   _link_high_str = [[NSAttributedString alloc] initWithString:link_str attributes:high_attrs];
 
   _transaction_norm_str = [[NSAttributedString alloc] initWithString:transaction_str
                                                           attributes:norm_attrs];
+  _transaction_hover_str = [[NSAttributedString alloc] initWithString:transaction_str
+                                                           attributes:hover_attrs];
   _transaction_high_str = [[NSAttributedString alloc] initWithString:transaction_str
                                                           attributes:high_attrs];
   if (flag)
@@ -166,6 +178,7 @@
 {
   _tracking_area = [[NSTrackingArea alloc] initWithRect:self.bounds
                                                 options:(NSTrackingMouseEnteredAndExited |
+                                                         NSTrackingMouseMoved |
                                                          NSTrackingActiveAlways)
                                                   owner:self
                                                userInfo:nil];
@@ -187,16 +200,59 @@
   [super updateTrackingAreas];
 }
 
-- (void)mouseEntered:(NSEvent*)theEvent
-{
-}
-
 - (void)mouseExited:(NSEvent*)theEvent
 {
+  _hover = NO;
+  if (_mode == INFINIT_MAIN_VIEW_TRANSACTION_MODE)
+  {
+    self.transaction_text.attributedStringValue = _transaction_high_str;
+    self.link_text.attributedStringValue = _link_norm_str;
+  }
+  else
+  {
+    self.transaction_text.attributedStringValue = _transaction_norm_str;
+    self.link_text.attributedStringValue = _link_high_str;
+  }
+  [self setNeedsDisplay:YES];
+}
+
+- (void)mouseMoved:(NSEvent*)theEvent
+{
+  NSPoint loc = theEvent.locationInWindow;
+  if (loc.x < self.bounds.size.width / 2.0)
+  {
+    if (_mode == INFINIT_MAIN_VIEW_LINK_MODE)
+    {
+      self.transaction_text.attributedStringValue = _transaction_hover_str;
+      self.link_text.attributedStringValue = _link_high_str;
+      _hover = YES;
+    }
+    else
+    {
+      self.link_text.attributedStringValue = _link_norm_str;
+      _hover = NO;
+    }
+  }
+  else
+  {
+    if (_mode == INFINIT_MAIN_VIEW_TRANSACTION_MODE)
+    {
+      self.link_text.attributedStringValue = _link_hover_str;
+      self.transaction_text.attributedStringValue = _transaction_high_str;
+      _hover = YES;
+    }
+    else
+    {
+      self.transaction_text.attributedStringValue = _transaction_norm_str;
+      _hover = NO;
+    }
+  }
+  [self setNeedsDisplay:YES];
 }
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
+  _hover = NO;
   NSPoint click_loc = theEvent.locationInWindow;
   if (click_loc.x < self.bounds.size.width / 2.0)
     [_delegate gotUserClick:self];
@@ -213,7 +269,10 @@
   [bg fill];
   NSBezierPath* light_line =
   [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 2.0)];
-  [IA_GREY_COLOUR(230) set];
+  if (_hover)
+    [IA_RGB_COLOUR(184, 184, 184) set];
+  else
+    [IA_GREY_COLOUR(230) set];
   [light_line fill];
   NSRect dark_rect = {
     .origin = NSMakePoint((NSWidth(self.bounds) / 2.0) * _animate_mode, 0.0),

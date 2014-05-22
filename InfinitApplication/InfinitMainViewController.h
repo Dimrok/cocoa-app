@@ -31,7 +31,6 @@ typedef enum _InfinitTransactionLinkMode
 @property (nonatomic, readwrite) CGFloat animate_mode;
 
 - (void)setDelegate:(id<InfinitMainTransactionLinkProtocol>)delegate;
-- (void)setupView;
 
 - (void)setLinkCount:(NSUInteger)count;
 - (void)setTransactionCount:(NSUInteger)count;
