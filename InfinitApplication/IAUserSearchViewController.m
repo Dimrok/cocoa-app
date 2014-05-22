@@ -119,8 +119,8 @@
   if (self = [super initWithNibName:self.className bundle:nil])
   {
     _hover_row = 0;
-    _row_height = 45.0;
-    _max_rows_shown = 3;
+    _row_height = 38.0;
+    _max_rows_shown = 5;
     _delegate = nil;
     _token_count = 0;
     NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -665,9 +665,9 @@ writeRepresentedObjects:(NSArray*)objects
   CGFloat total_height = _search_results.count * _row_height;
   CGFloat max_height = _row_height * _max_rows_shown;
   if (total_height > max_height)
-    return max_height;
+    return max_height - 2.0;
   else
-    return total_height;
+    return total_height - 2.0;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
@@ -690,30 +690,26 @@ writeRepresentedObjects:(NSArray*)objects
     return nil;
   
   IASearchResultsCellView* cell;
-  if (element.user == nil)
-  {
-    cell = [tableView makeViewWithIdentifier:@"nonuser_search_cell"
-                                       owner:self];
-  }
-  else
-  {
-    cell = [tableView makeViewWithIdentifier:@"infinit_user_search_cell"
-                                       owner:self];
-  }
+  cell = [tableView makeViewWithIdentifier:@"infinit_search_cell"
+                                     owner:self];
   [cell setDelegate:self];
-  [cell setUserFullname:element.fullname];
+
   if (element.user != nil)
   {
+    [cell setUserFullname:element.fullname withDomain:@""];
+    cell.result_star.hidden = NO;
     [cell setUserFavourite:element.user.favourite];
-    [cell setUserHandle:element.user.handle];
   }
   else
   {
-    [cell setUserEmail:element.email];
+    NSString* domain =
+      [element.email substringFromIndex:([element.email rangeOfString:@"@"].location + 1)];
+    [cell setUserFullname:element.fullname withDomain:domain];
+    cell.result_star.hidden = YES;
   }
   
   NSImage* avatar = [IAFunctions makeRoundAvatar:element.avatar
-                                      ofDiameter:30.0
+                                      ofDiameter:24.0
                            withBorderOfThickness:0.0
                                         inColour:IA_GREY_COLOUR(255.0)
                                andShadowOfRadius:0.0];
@@ -1037,7 +1033,7 @@ writeRepresentedObjects:(NSArray*)objects
         return;
       element.avatar = image;
       [cell setUserAvatar:[IAFunctions makeRoundAvatar:image
-                                            ofDiameter:30.0
+                                            ofDiameter:24.0
                                  withBorderOfThickness:0.0
                                               inColour:IA_GREY_COLOUR(255.0)
                                      andShadowOfRadius:0.0]];

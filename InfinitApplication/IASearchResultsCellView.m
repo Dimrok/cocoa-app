@@ -13,6 +13,8 @@
 @implementation InfinitSelectedBoxView
 
 static NSImage* check_mark = nil;
+static NSDictionary* _fullname_style = nil;
+static NSDictionary* _domain_style = nil;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -26,14 +28,14 @@ static NSImage* check_mark = nil;
   NSBezierPath* circle = [NSBezierPath bezierPathWithOvalInRect:circle_bounds];
   if (_hover && !_selected)
   {
-    [IA_RGB_COLOUR(0, 255, 0) set];
+    [IA_RGB_COLOUR(43, 190, 189) set];
     [circle stroke];
   }
   else
   {
-    [IA_RGB_COLOUR(0, 195, 192) set];
     if (_selected)
     {
+      [IA_RGB_COLOUR(43, 190, 189) set];
       [circle fill];
       NSPoint point = NSMakePoint((NSWidth(self.bounds) / 2.0) - (check_mark.size.width / 2.0) + 1.0,
                                   (NSHeight(self.bounds) / 2.0) - (check_mark.size.height / 2.0) - 1.0);
@@ -44,6 +46,7 @@ static NSImage* check_mark = nil;
     }
     else
     {
+      [IA_GREY_COLOUR(214) set];
       [circle stroke];
     }
   }
@@ -92,48 +95,39 @@ static NSImage* check_mark = nil;
 }
 
 - (void)setUserFullname:(NSString*)fullname
+             withDomain:(NSString*)domain
 {
-  NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                 traits:NSUnboldFontMask
-                                                                 weight:0
-                                                                   size:12.0];
-  NSDictionary* style = [IAFunctions textStyleWithFont:name_font
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_RGB_COLOUR(37.0, 47.0, 51.0)
-                                                shadow:nil];
-  NSAttributedString* fullname_str = [[NSAttributedString alloc] initWithString:fullname
-                                                                     attributes:style];
-  self.result_fullname.attributedStringValue = fullname_str;
-}
-
-- (void)setUserEmail:(NSString*)email
-{
-  NSFont* email_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                  traits:NSUnboldFontMask
-                                                                  weight:0
-                                                                    size:11.0];
-  NSDictionary* style = [IAFunctions textStyleWithFont:email_font
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_GREY_COLOUR(196.0)
-                                                shadow:nil];
-  NSAttributedString* email_str = [[NSAttributedString alloc] initWithString:email
-                                                                  attributes:style];
-  self.result_email.attributedStringValue = email_str;
-}
-
-- (void)setUserHandle:(NSString*)handle
-{
-  NSFont* handle_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+  if (_fullname_style == nil)
+  {
+    NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
                                                                    weight:0
-                                                                     size:11.0];
-  NSDictionary* style = [IAFunctions textStyleWithFont:handle_font
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_GREY_COLOUR(196.0)
-                                                shadow:nil];
-  NSAttributedString* handle_str = [[NSAttributedString alloc] initWithString:handle
-                                                                   attributes:style];
-  self.result_handle.attributedStringValue = handle_str;
+                                                                     size:12.0];
+    _fullname_style = [IAFunctions textStyleWithFont:name_font
+                                      paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                              colour:IA_RGB_COLOUR(37, 47, 51)
+                                              shadow:nil];
+    NSFont* domain_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                     traits:NSUnboldFontMask
+                                                                     weight:0
+                                                                       size:10.0];
+    _domain_style = [IAFunctions textStyleWithFont:domain_font
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_GREY_COLOUR(190)
+                                            shadow:nil];
+  }
+  NSMutableAttributedString* fullname_str =
+    [[NSMutableAttributedString alloc] initWithString:fullname attributes:_fullname_style];
+
+  if (domain.length > 0)
+  {
+    NSAttributedString* domain_str =
+      [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  (%@)", domain]
+                                      attributes:_domain_style];
+    [fullname_str appendAttributedString:domain_str];
+  }
+
+  self.result_fullname.attributedStringValue = fullname_str;
 }
 
 - (void)setUserAvatar:(NSImage*)image
@@ -232,10 +226,7 @@ static NSImage* check_mark = nil;
 - (void)drawRect:(NSRect)dirtyRect
 {
   // Background
-  if (_hover)
-    [IA_RGB_COLOUR(242, 253, 255) set];
-  else
-    [IA_GREY_COLOUR(255) set];
+  [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
 
   // Dark line
@@ -244,10 +235,7 @@ static NSImage* check_mark = nil;
                                 NSWidth(self.bounds) - 65.0,
                                 1.0);
   NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
-  if (_hover)
-    [IA_RGB_COLOUR(50, 245, 242) set];
-  else
-    [IA_GREY_COLOUR(244) set];
+  [IA_GREY_COLOUR(244) set];
   [dark_line fill];
 }
 
