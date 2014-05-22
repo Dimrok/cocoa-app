@@ -1037,6 +1037,13 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
   [self _copyLinkToClipboard:link];
 }
 
+- (void)linkManager:(InfinitLinkManager*)sender
+hadDataUpdatedForLink:(InfinitLinkTransaction*)link
+{
+  if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
+    [_main_view_controller linkUpdated:link];
+}
+
 //- Login Window Protocol --------------------------------------------------------------------------
 
 - (void)tryLogin:(InfinitLoginViewController*)sender
