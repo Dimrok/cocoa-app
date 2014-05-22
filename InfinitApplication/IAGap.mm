@@ -62,6 +62,8 @@ void on_deleted_favorite(uint32_t const user_id);
 static
 void on_deleted_swagger(uint32_t const user_id);
 
+void on_link_transaction_update(surface::gap::LinkTransaction const& transaction_);
+
 @interface NotificationForwarder : NSObject
 
 - (id)init:(NSString*)msg withInfo:(NSDictionary*)info;
@@ -143,6 +145,8 @@ void on_deleted_swagger(uint32_t const user_id);
            "surface.gap.*.State:TRACE,"
            "surface.gap.*.Transition:TRACE,"
            "surface.gap.TransactionMachine:TRACE,"
+           "surface.gap.State.Transaction:TRACE,"
+           "surface.gap.Transaction:TRACE,"
            "reactor.fsm.*:TRACE,"
            "frete.Frete:DEBUG,"
            "station.Station:DEBUG,"
@@ -210,7 +214,8 @@ void on_deleted_swagger(uint32_t const user_id);
       (gap_avatar_available_callback(_state, &on_received_avatar) != gap_ok) ||
       (gap_trophonius_unavailable_callback(_state, &on_trophonius_unavailable) != gap_ok) ||
       (gap_deleted_favorite_callback(_state, &on_deleted_favorite) != gap_ok) ||
-      (gap_deleted_swagger_callback(_state, &on_deleted_swagger) != gap_ok))
+      (gap_deleted_swagger_callback(_state, &on_deleted_swagger) != gap_ok) ||
+      (gap_link_callback(_state, on_link_transaction_update) != gap_ok))
     // XXX add error callback
     //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
   {
@@ -530,7 +535,7 @@ return [NSString stringWithUTF8String:str]; \
                                           and_run_time:(NSNumber*)seconds;
 {
   UInt32 transaction_id =
-  gap_onboarding_receive_transaction(_state, file_path.UTF8String, seconds.unsignedIntValue);
+    gap_onboarding_receive_transaction(_state, file_path.UTF8String, seconds.unsignedIntValue);
   return [NSNumber numberWithUnsignedInt:transaction_id];
 }
 
@@ -697,21 +702,29 @@ return [NSString stringWithUTF8String:str]; \
   return [NSNumber numberWithUnsignedInt:gap_create_link_transaction(_state, files_, message_)];
 }
 
++ (InfinitLinkTransaction*)objcLinkTransactionFromCpp:(surface::gap::LinkTransaction const&)link_
+{
+  NSString* link_url;
+  if (link_.link)
+    link_url = [NSString stringWithUTF8String:link_.link.get().c_str()];
+  else
+    link_url = @"";
+  return [[InfinitLinkTransaction alloc]
+          initLinkTransactionWithId:[NSNumber numberWithUnsignedInt:link_.id]
+                               name:[NSString stringWithUTF8String:link_.name.c_str()]
+                   modificationTime:link_.mtime
+                               link:link_url
+                         clickCount:[NSNumber numberWithUnsignedInt:link_.click_count]
+                             status:link_.status];
+}
+
 - (NSArray*)link_transactions
 {
   NSMutableArray* res = [NSMutableArray array];
   auto transactions = gap_link_transactions(_state);
   for (auto const& transaction_: transactions)
   {
-    InfinitLinkTransaction* transaction =
-      [[InfinitLinkTransaction alloc]
-       initLinkTransactionWithId:[NSNumber numberWithUnsignedInt:transaction_.id]
-                            name:[NSString stringWithUTF8String:transaction_.name.c_str()]
-                modificationTime:transaction_.mtime
-                            link:[NSString stringWithUTF8String:transaction_.link.c_str()]
-                      clickCount:[NSNumber numberWithUnsignedInt:transaction_.click_count]
-                          status:transaction_.status];
-    [res addObject:transaction];
+    [res addObject:[IAGap objcLinkTransactionFromCpp:transaction_]];
   }
   return res;
 }
@@ -719,14 +732,7 @@ return [NSString stringWithUTF8String:str]; \
 - (InfinitLinkTransaction*)link_transaction_by_id:(NSNumber*)transaction_id
 {
   auto transaction_ = gap_link_transaction_by_id(_state, transaction_id.unsignedIntValue);
-  InfinitLinkTransaction* transaction =
-    [[InfinitLinkTransaction alloc]
-     initLinkTransactionWithId:transaction_id
-                          name:[NSString stringWithUTF8String:transaction_.name.c_str()]
-              modificationTime:transaction_.mtime
-                          link:[NSString stringWithUTF8String:transaction_.link.c_str()]
-                    clickCount:[NSNumber numberWithUnsignedInt:transaction_.click_count]
-                        status:transaction_.status];
+  InfinitLinkTransaction* transaction = [IAGap objcLinkTransactionFromCpp:transaction_];
   return transaction;
 }
 
@@ -893,3 +899,10 @@ static void on_deleted_swagger(uint32_t const user_id)
   }
 }
 
+void on_link_transaction_update(surface::gap::LinkTransaction const& transaction_)
+{
+  ELLE_TRACE("on_link_transaction_update: %d", transaction_.id);
+  InfinitLinkTransaction* link = [IAGap objcLinkTransactionFromCpp:transaction_];
+  NSMutableDictionary* msg = [NSMutableDictionary dictionaryWithDictionary:@{@"link": link}];
+  [IAGap sendNotif:IA_GAP_EVENT_LINK_TRANSACTION_NOTIFICATION withInfo:msg];
+}
