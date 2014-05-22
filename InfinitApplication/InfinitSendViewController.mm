@@ -20,10 +20,16 @@
 @private
   id<InfinitSendUserLinkProtocol> _delegate;
   NSTrackingArea* _tracking_area;
-  NSString* _link_str;
-  NSString* _user_str;
-  NSDictionary* _norm_attrs;
-  NSDictionary* _high_attrs;
+
+  NSAttributedString* _user_hover_str;
+  NSAttributedString* _user_high_str;
+  NSAttributedString* _user_norm_str;
+
+  NSAttributedString* _link_hover_str;
+  NSAttributedString* _link_high_str;
+  NSAttributedString* _link_norm_str;
+
+  BOOL _hover;
 }
 
 - (void)setupViewForMode:(InfinitUserLinkMode)mode
@@ -31,16 +37,29 @@
   NSFont* font = [NSFont fontWithName:@"Montserrat" size:11.0];
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   para.alignment = NSCenterTextAlignment;
-  _norm_attrs = [IAFunctions textStyleWithFont:font
-                                paragraphStyle:para
-                                        colour:IA_RGB_COLOUR(81, 82, 73)
-                                        shadow:nil];
-  _high_attrs = [IAFunctions textStyleWithFont:font
-                                paragraphStyle:para
-                                        colour:IA_RGB_COLOUR(0, 195, 192)
-                                        shadow:nil];
-  _link_str = NSLocalizedString(@"GET A LINK", nil);
-  _user_str = NSLocalizedString(@"SEND TO USER", nil);
+  NSDictionary* norm_attrs = [IAFunctions textStyleWithFont:font
+                                             paragraphStyle:para
+                                                     colour:IA_RGB_COLOUR(139, 139, 131)
+                                                     shadow:nil];
+  NSDictionary* high_attrs = [IAFunctions textStyleWithFont:font
+                                             paragraphStyle:para
+                                                    colour:IA_RGB_COLOUR(0, 195, 192)
+                                                    shadow:nil];
+  NSDictionary* hover_attrs = [IAFunctions textStyleWithFont:font
+                                              paragraphStyle:para
+                                                      colour:IA_RGB_COLOUR(81, 81, 73)
+                                                      shadow:nil];
+  NSString* link_str = NSLocalizedString(@"GET A LINK", nil);
+  NSString* user_str = NSLocalizedString(@"SEND TO USER", nil);
+
+  _link_high_str = [[NSAttributedString alloc] initWithString:link_str attributes:high_attrs];
+  _link_hover_str = [[NSAttributedString alloc] initWithString:link_str attributes:hover_attrs];
+  _link_norm_str = [[NSAttributedString alloc] initWithString:link_str attributes:norm_attrs];
+
+  _user_high_str = [[NSAttributedString alloc] initWithString:user_str attributes:high_attrs];
+  _user_hover_str = [[NSAttributedString alloc] initWithString:user_str attributes:hover_attrs];
+  _user_norm_str = [[NSAttributedString alloc] initWithString:user_str attributes:norm_attrs];
+
   _mode = mode;
   if (_mode == INFINIT_USER_MODE)
     _animate_mode = 0.0;
@@ -48,17 +67,13 @@
     _animate_mode = 1.0;
   if (mode == INFINIT_USER_MODE)
   {
-    self.user_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_user_str attributes:_high_attrs];
-    self.link_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_link_str attributes:_norm_attrs];
+    self.user_text.attributedStringValue = _user_high_str;
+    self.link_text.attributedStringValue = _link_norm_str;
   }
   else
   {
-    self.user_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_user_str attributes:_norm_attrs];
-    self.link_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_link_str attributes:_high_attrs];
+    self.user_text.attributedStringValue = _user_norm_str;
+    self.link_text.attributedStringValue = _link_high_str;
   }
 }
 
@@ -97,18 +112,14 @@
   CGFloat val;
   if (_mode == INFINIT_USER_MODE)
   {
-    self.user_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_user_str attributes:_high_attrs];
-    self.link_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_link_str attributes:_norm_attrs];
+    self.user_text.attributedStringValue = _user_high_str;
+    self.link_text.attributedStringValue = _link_norm_str;
     val = 0.0;
   }
   else
   {
-    self.user_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_user_str attributes:_norm_attrs];
-    self.link_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_link_str attributes:_high_attrs];
+    self.user_text.attributedStringValue = _user_norm_str;
+    self.link_text.attributedStringValue = _link_high_str;
     val = 1.0;
   }
 
@@ -147,6 +158,7 @@
 {
   _tracking_area = [[NSTrackingArea alloc] initWithRect:self.bounds
                                                 options:(NSTrackingMouseEnteredAndExited |
+                                                         NSTrackingMouseMoved |
                                                          NSTrackingActiveAlways)
                                                   owner:self
                                                userInfo:nil];
@@ -168,16 +180,59 @@
   [super updateTrackingAreas];
 }
 
-- (void)mouseEntered:(NSEvent*)theEvent
-{
-}
-
 - (void)mouseExited:(NSEvent*)theEvent
 {
+  _hover = NO;
+  if (_mode == INFINIT_USER_MODE)
+  {
+    self.user_text.attributedStringValue = _user_high_str;
+    self.link_text.attributedStringValue = _link_norm_str;
+  }
+  else
+  {
+    self.user_text.attributedStringValue = _user_norm_str;
+    self.link_text.attributedStringValue = _link_high_str;
+  }
+  [self setNeedsDisplay:YES];
+}
+
+- (void)mouseMoved:(NSEvent*)theEvent
+{
+  NSPoint loc = theEvent.locationInWindow;
+  if (loc.x < self.bounds.size.width / 2.0)
+  {
+    if (_mode == INFINIT_LINK_MODE)
+    {
+      self.user_text.attributedStringValue = _user_hover_str;
+      self.link_text.attributedStringValue = _link_high_str;
+      _hover = YES;
+    }
+    else
+    {
+      self.link_text.attributedStringValue = _link_norm_str;
+      _hover = NO;
+    }
+  }
+  else
+  {
+    if (_mode == INFINIT_USER_MODE)
+    {
+      self.link_text.attributedStringValue = _link_hover_str;
+      self.user_text.attributedStringValue = _user_high_str;
+      _hover = YES;
+    }
+    else
+    {
+      self.user_text.attributedStringValue = _user_norm_str;
+      _hover = NO;
+    }
+  }
+  [self setNeedsDisplay:YES];
 }
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
+  _hover = NO;
   NSPoint click_loc = theEvent.locationInWindow;
   if (click_loc.x < self.bounds.size.width / 2.0)
     [_delegate gotUserClick:self];
@@ -194,7 +249,10 @@
   [bg fill];
   NSBezierPath* light_line =
     [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 2.0)];
-  [IA_GREY_COLOUR(230) set];
+  if (_hover)
+    [IA_RGB_COLOUR(184, 184, 184) set];
+  else
+    [IA_GREY_COLOUR(230) set];
   [light_line fill];
   NSRect dark_rect = {
     .origin = NSMakePoint((NSWidth(self.bounds) / 2.0) * _animate_mode, 0.0),

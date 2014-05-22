@@ -250,7 +250,7 @@
   NSString* info_str;
   if (_file_list.count == 0)
   {
-    info_str = NSLocalizedString(@"  Add files...", nil);
+    info_str = NSLocalizedString(@"   Add files...", nil);
     self.header_view.show_files.hidden = YES;
     [self hideFiles];
     self.header_view.open = NO;
@@ -258,14 +258,14 @@
   }
   else if (_file_list.count == 1)
   {
-    info_str = [NSString stringWithFormat:@"  1 %@ (%@)",
+    info_str = [NSString stringWithFormat:@"   1 %@ (%@)",
                 NSLocalizedString(@"file", nil),
                 [IAFunctions fileSizeStringFrom:[self totalFileSize]]];
     self.header_view.got_files = YES;
   }
   else
   {
-    info_str = [NSString stringWithFormat:@"  %ld %@ (%@)",
+    info_str = [NSString stringWithFormat:@"   %ld %@ (%@)",
                 _file_list.count,
                 NSLocalizedString(@"files", nil),
                 [IAFunctions fileSizeStringFrom:[self totalFileSize]]];

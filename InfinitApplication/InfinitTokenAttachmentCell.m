@@ -45,7 +45,7 @@ static NSDictionary* _sel_attrs;
 
 - (NSPoint)cellBaselineOffset
 {
-  return NSMakePoint(0.0, -10.0);
+  return NSMakePoint(0.0, 0.0);
 }
 
 - (void)drawTokenWithFrame:(NSRect)rect
@@ -55,7 +55,7 @@ static NSDictionary* _sel_attrs;
     .origin = NSMakePoint(rect.origin.x + 5.0, rect.origin.y),
     .size = NSMakeSize(rect.size.width - 10.0, rect.size.height)
   };
-  CGFloat corner_radius = 10.0;
+  CGFloat corner_radius = 3.0;
   NSBezierPath* bg = [NSBezierPath bezierPathWithRoundedRect:token_rect
                                                      xRadius:corner_radius
                                                      yRadius:corner_radius];
