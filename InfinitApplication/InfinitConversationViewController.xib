@@ -44,7 +44,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <imageView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pzG-tP-8vj">
-                                    <rect key="frame" x="180" y="18" width="8" height="8"/>
+                                    <rect key="frame" x="180" y="16" width="10" height="10"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon-status-online" id="udM-dD-2K1"/>
                                 </imageView>
@@ -78,7 +78,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView autoresizesSubviews="NO" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="86" rowSizeStyle="automatic" viewBased="YES" id="1Lg-g7-nsw">
-                                        <rect key="frame" x="0.0" y="0.0" width="317" height="1"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="317" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -502,7 +502,7 @@
         <image name="conversation-icon-quote-right" width="8" height="7"/>
         <image name="conversation-icon-reject" width="18" height="18"/>
         <image name="conversation-icon-show-files" width="14" height="9"/>
-        <image name="icon-status-online" width="7" height="7"/>
+        <image name="icon-status-online" width="7" height="8"/>
         <image name="icon-transfer" width="27" height="18"/>
     </resources>
 </document>

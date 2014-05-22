@@ -47,7 +47,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6oz-XC-2H2" customClass="InfinitSizedTextField">
-                                                        <rect key="frame" x="73" y="39" width="57" height="15"/>
+                                                        <rect key="frame" x="71" y="39" width="57" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="155" id="Saj-tS-Y5E"/>
@@ -59,7 +59,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="je4-d3-bAe">
-                                                        <rect key="frame" x="73" y="22" width="198" height="14"/>
+                                                        <rect key="frame" x="71" y="22" width="198" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="194" id="eHS-TS-yQ7"/>
@@ -101,8 +101,8 @@
                                                 <constraints>
                                                     <constraint firstItem="wrC-KW-Omg" firstAttribute="leading" secondItem="6oz-XC-2H2" secondAttribute="trailing" constant="4" id="2eD-9S-HW2"/>
                                                     <constraint firstAttribute="trailing" secondItem="IuS-5P-ELW" secondAttribute="trailing" constant="21" id="Mqc-Zl-gmg"/>
-                                                    <constraint firstItem="6oz-XC-2H2" firstAttribute="leading" secondItem="ESE-Xm-Hac" secondAttribute="trailing" constant="13" id="nHe-AE-F85"/>
-                                                    <constraint firstItem="je4-d3-bAe" firstAttribute="leading" secondItem="ESE-Xm-Hac" secondAttribute="trailing" constant="13" id="riC-Tt-02V"/>
+                                                    <constraint firstItem="6oz-XC-2H2" firstAttribute="leading" secondItem="ESE-Xm-Hac" secondAttribute="trailing" constant="11" id="nHe-AE-F85"/>
+                                                    <constraint firstItem="je4-d3-bAe" firstAttribute="leading" secondItem="ESE-Xm-Hac" secondAttribute="trailing" constant="11" id="riC-Tt-02V"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="avatar_view" destination="ESE-Xm-Hac" id="nqZ-Bx-IeV"/>
@@ -161,6 +161,6 @@
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="icon-status-online" width="7" height="7"/>
+        <image name="icon-status-online" width="7" height="8"/>
     </resources>
 </document>
