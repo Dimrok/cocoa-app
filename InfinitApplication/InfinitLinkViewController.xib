@@ -48,7 +48,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kUD-Ub-kC5">
-                                                        <rect key="frame" x="73" y="37" width="177" height="15"/>
+                                                        <rect key="frame" x="73" y="39" width="177" height="15"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="File name" id="fGE-f4-xIA">
                                                             <font key="font" size="12" name="Helvetica"/>
@@ -57,7 +57,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="irP-E8-UXy">
-                                                        <rect key="frame" x="73" y="20" width="177" height="14"/>
+                                                        <rect key="frame" x="73" y="22" width="177" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Time/Info" id="w2M-YE-rSC">
                                                             <font key="font" size="11" name="Helvetica"/>
@@ -66,7 +66,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qoQ-OX-nSm" customClass="InfinitLinkClickCountView">
-                                                        <rect key="frame" x="251" y="24" width="50" height="23"/>
+                                                        <rect key="frame" x="251" y="25" width="50" height="23"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </customView>
                                                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SfX-9g-Ypy" customClass="IAHoverButton">

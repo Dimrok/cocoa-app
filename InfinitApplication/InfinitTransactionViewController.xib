@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D61" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -70,8 +70,8 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IuS-5P-ELW" customClass="InfinitSizedTextField">
-                                                        <rect key="frame" x="249" y="41" width="49" height="14"/>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IuS-5P-ELW" customClass="InfinitSizedTextField">
+                                                        <rect key="frame" x="269" y="41" width="29" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Time" id="97R-HQ-3Hw">
                                                             <font key="font" size="11" name="Helvetica"/>
@@ -100,6 +100,7 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="wrC-KW-Omg" firstAttribute="leading" secondItem="6oz-XC-2H2" secondAttribute="trailing" constant="4" id="2eD-9S-HW2"/>
+                                                    <constraint firstAttribute="trailing" secondItem="IuS-5P-ELW" secondAttribute="trailing" constant="21" id="Mqc-Zl-gmg"/>
                                                     <constraint firstItem="6oz-XC-2H2" firstAttribute="leading" secondItem="ESE-Xm-Hac" secondAttribute="trailing" constant="13" id="nHe-AE-F85"/>
                                                     <constraint firstItem="je4-d3-bAe" firstAttribute="leading" secondItem="ESE-Xm-Hac" secondAttribute="trailing" constant="13" id="riC-Tt-02V"/>
                                                 </constraints>
