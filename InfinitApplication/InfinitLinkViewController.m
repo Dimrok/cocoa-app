@@ -58,6 +58,7 @@
 {
   [super loadView];
   [self.table_view reloadData];
+  [self resizeView];
 }
 
 //- Link Updated -----------------------------------------------------------------------------------
@@ -208,6 +209,11 @@
     [_progress_timer invalidate];
   else
     [self updateListOfRowsWithProgress];
+}
+
+- (void)resizeView
+{
+  [_delegate linksViewResizeToHeight:self.height];
 }
 
 //- Cell Protocol ----------------------------------------------------------------------------------

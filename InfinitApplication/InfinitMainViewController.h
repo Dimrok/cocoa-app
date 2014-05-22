@@ -53,7 +53,8 @@ typedef enum _InfinitTransactionLinkMode
 
 - (id)initWithDelegate:(id<InfinitMainViewProtocol>)delegate
     andTransactionList:(NSArray*)transaction_list
-           andLinkList:(NSArray*)link_list;
+           andLinkList:(NSArray*)link_list
+            forPeopleView:(BOOL)flag;
 
 @property (nonatomic, retain) IBOutlet NSMenuItem* auto_start_toggle;
 @property (nonatomic, strong) IBOutlet InfinitMainTransactionLinkView* view_selector;

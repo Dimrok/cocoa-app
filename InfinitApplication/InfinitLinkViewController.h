@@ -35,5 +35,6 @@
 @protocol InfinitLinkViewProtocol <NSObject>
 
 - (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link;
+- (void)linksViewResizeToHeight:(CGFloat)height;
 
 @end

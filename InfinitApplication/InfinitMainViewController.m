@@ -32,7 +32,7 @@
   NSAttributedString* _transaction_high_str;
 }
 
-- (void)setupView
+- (void)setupViewForPeopleView:(BOOL)flag
 {
   NSFont* font = [NSFont fontWithName:@"Montserrat" size:11.0];
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -55,11 +55,24 @@
                                                           attributes:norm_attrs];
   _transaction_high_str = [[NSAttributedString alloc] initWithString:transaction_str
                                                           attributes:high_attrs];
-
-  self.transaction_text.attributedStringValue = _transaction_high_str;
-  self.link_text.attributedStringValue = _link_norm_str;
-  self.transaction_counter.highlighted = YES;
-  self.link_counter.highlighted = NO;
+  if (flag)
+  {
+    self.transaction_text.attributedStringValue = _transaction_high_str;
+    self.link_text.attributedStringValue = _link_norm_str;
+    self.transaction_counter.highlighted = YES;
+    self.link_counter.highlighted = NO;
+    _mode = INFINIT_MAIN_VIEW_TRANSACTION_MODE;
+    _animate_mode = 0.0;
+  }
+  else
+  {
+    self.transaction_text.attributedStringValue = _transaction_norm_str;
+    self.link_text.attributedStringValue = _link_high_str;
+    self.transaction_counter.highlighted = NO;
+    self.link_counter.highlighted = YES;
+    _mode = INFINIT_MAIN_VIEW_LINK_MODE;
+    _animate_mode = 1.0;
+  }
 }
 
 - (void)setDelegate:(id<InfinitMainTransactionLinkProtocol>)delegate
@@ -229,21 +242,28 @@
 
   NSString* _version_str;
   InfinitTooltipViewController* _tooltip;
+
+  BOOL _for_people_view;
 }
 
 - (id)initWithDelegate:(id<InfinitMainViewProtocol>)delegate
     andTransactionList:(NSArray*)transaction_list
            andLinkList:(NSArray*)link_list
+         forPeopleView:(BOOL)flag
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
+    _for_people_view = flag;
     _delegate = delegate;
     _transaction_controller =
       [[InfinitTransactionViewController alloc] initWithDelegate:self
                                               andTransactionList:transaction_list];
     _link_controller =
       [[InfinitLinkViewController alloc] initWithDelegate:self andLinkList:link_list];
-    _current_controller = _transaction_controller;
+    if (_for_people_view)
+      _current_controller = _transaction_controller;
+    else
+      _current_controller = _link_controller;
     _version_str =
       [NSString stringWithFormat:@"v%@", [NSString stringWithUTF8String:INFINIT_VERSION]];
   }
@@ -282,7 +302,7 @@
 {
   [super loadView];
   [self.view_selector setDelegate:self];
-  [self.view_selector setupView];
+  [self.view_selector setupViewForPeopleView:_for_people_view];
   [self.view_selector setLinkCount:_link_controller.linksRunning];
   [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
 
@@ -378,6 +398,21 @@
 - (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link
 {
   [_delegate copyLinkToClipboard:link];
+}
+
+- (void)linksViewResizeToHeight:(CGFloat)height
+{
+  if (height == self.content_height_constraint.constant)
+    return;
+
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+   {
+     context.duration = 0.15;
+   }
+                      completionHandler:^
+   {
+     [self.content_height_constraint.animator setConstant:height];
+   }];
 }
 
 
@@ -511,6 +546,10 @@
 {
   if (_current_controller == _link_controller)
     return;
+
+  [_tooltip close];
+  [_transaction_controller closeToolTips];
+  [_transaction_controller markTransactionsRead];
 
   if (self.main_view.wantsLayer == NO)
     self.main_view.wantsLayer = YES;
