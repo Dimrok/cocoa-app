@@ -18,11 +18,16 @@
 
 - (void)desktopNotificationForTransaction:(IATransaction*)transaction;
 
+- (void)desktopNotificationForLink:(InfinitLinkTransaction*)link;
+
 @end
 
 @protocol IADesktopNotifierProtocol <NSObject>
 
 - (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForTransactionId:(NSNumber*)transaction_id;
+
+- (void)desktopNotifier:(IADesktopNotifier*)sender
+hadClickNotificationForLinkId:(NSNumber*)transaction_id;
 
 @end

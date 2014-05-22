@@ -12,6 +12,7 @@
 
 #undef check
 #import <elle/log.hh>
+#import <surface/gap/enums.hh>
 
 ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
@@ -175,6 +176,39 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   return res;
 }
 
+
+- (NSUserNotification*)notificationFromLink:(InfinitLinkTransaction*)link
+{
+  NSUserNotification* res = [[NSUserNotification alloc] init];
+  NSString* message;
+  NSString* sound;
+  NSString* title;
+
+
+  switch (link.status)
+  {
+    case gap_transaction_finished:
+      title = NSLocalizedString(@"Success!", nil);
+      message = [NSString stringWithFormat:@"%@ %@",
+                 link.name, NSLocalizedString(@"successfully uploaded", nil)];
+      sound = _finished_sound.name;
+      break;
+
+    default:
+      return nil;
+  }
+
+  if (title == nil)
+    return nil;
+
+  res.title = title;
+  res.informativeText = message;
+  res.soundName = sound;
+  res.userInfo = @{@"link_id": link.id_,
+                   @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
+  return res;
+}
+
 - (void)clearAllNotifications
 {
   [_notification_centre removeAllDeliveredNotifications];
@@ -195,22 +229,43 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   [_notification_centre deliverNotification:user_notification];
 }
 
+//- Link Handling ----------------------------------------------------------------------------------
+
+- (void)desktopNotificationForLink:(InfinitLinkTransaction*)link
+{
+  NSUserNotification* user_notification = [self notificationFromLink:link];
+
+  if (user_notification == nil)
+    return;
+
+  ELLE_LOG("%s: show desktop notification for link (%d) with status: %d",
+           self.description.UTF8String, link.id_, link.status);
+  [_notification_centre deliverNotification:user_notification];
+}
+
 //- User Notifications Protocol --------------------------------------------------------------------
 
 - (void)userNotificationCenter:(NSUserNotificationCenter*)center
        didActivateNotification:(NSUserNotification*)notification
 {
   NSDictionary* dict = notification.userInfo;
-  NSNumber* transaction_id;
   if ([[dict objectForKey:@"pid"] intValue] != [[NSProcessInfo processInfo] processIdentifier])
     return;
-  if ([[dict objectForKey:@"transaction_id"] isKindOfClass:NSNumber.class])
-    transaction_id = [dict objectForKey:@"transaction_id"];
-  
-  if (transaction_id == nil || transaction_id.unsignedIntValue == 0)
-    return;
-  
-  [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
+  if ([dict objectForKey:@"transaction_id"] != nil)
+  {
+    NSNumber* transaction_id = [dict objectForKey:@"transaction_id"];
+    if (transaction_id == nil || transaction_id.unsignedIntValue == 0)
+      return;
+
+    [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
+  }
+  else if ([dict objectForKey:@"link_id"] != nil)
+  {
+    NSNumber* link_id = [dict objectForKey:@"link_id"];
+    if (link_id == nil || link_id.unsignedIntValue == 0)
+      return;
+    [_delegate desktopNotifier:self hadClickNotificationForLinkId:link_id];
+  }
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_DESKTOP_NOTIFICATION];
 }
 
