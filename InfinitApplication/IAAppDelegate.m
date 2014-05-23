@@ -130,11 +130,6 @@ immediateInstallationInvocation:(NSInvocation*)invocation
     [_controller handleInfinitLink:_infinit_url];
 }
 
-- (void)applicationWillResignActive:(NSNotification*)notification
-{
-  
-}
-
 //- Infinit URL Handling ---------------------------------------------------------------------------
 
 - (void)getURL:(NSAppleEventDescriptor*)event
