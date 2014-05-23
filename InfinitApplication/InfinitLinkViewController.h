@@ -23,6 +23,8 @@
 
 @property (nonatomic, readwrite) BOOL changing;
 
+- (void)updateModelWithList:(NSArray*)list;
+
 - (void)linkAdded:(InfinitLinkTransaction*)link;
 - (void)linkUpdated:(InfinitLinkTransaction*)link;
 

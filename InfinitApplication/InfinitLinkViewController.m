@@ -61,6 +61,12 @@
   [self resizeView];
 }
 
+- (void)updateModelWithList:(NSArray*)list
+{
+  _list = [NSMutableArray arrayWithArray:list];
+  [self.table_view reloadData];
+}
+
 //- Link Updated -----------------------------------------------------------------------------------
 
 - (void)linkAdded:(InfinitLinkTransaction*)link
@@ -70,6 +76,7 @@
   [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
                          withAnimation:NSTableViewAnimationSlideDown];
   [self.table_view endUpdates];
+  [self updateListOfRowsWithProgress];
 }
 
 - (void)linkUpdated:(InfinitLinkTransaction*)link
@@ -88,6 +95,7 @@
     }
     row++;
   }
+  [self updateListOfRowsWithProgress];
 }
 
 //- Progress Handling ------------------------------------------------------------------------------
@@ -144,8 +152,7 @@
     NSInteger row = num.unsignedIntegerValue;
     if (row < _list.count)
     {
-      InfinitLinkCellView* cell = [self.table_view viewAtColumn:0 row:row
-                                                makeIfNecessary:NO];
+      InfinitLinkCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
       InfinitLinkTransaction* link = _list[row];
       cell.progress = link.progress;
     }
@@ -197,7 +204,7 @@
 {
   CGFloat height = self.table_view.numberOfRows * _row_height;
   if (height > _max_rows * _row_height)
-    return (_max_rows * _row_height) - 2.0;
+    return (_max_rows * _row_height);
   else
     return height;
 }

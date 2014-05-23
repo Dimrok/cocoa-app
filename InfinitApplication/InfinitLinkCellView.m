@@ -162,7 +162,15 @@
   NSString* upload_str = [NSString stringWithFormat:@"%@... (%.0f %%)",
                           NSLocalizedString(@"Uploading", nil), 100 * progress];
   self.information.stringValue = upload_str;
-  [self.progress_indicator.animator setDoubleValue:progress];
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+  {
+    context.duration = 1.0;
+    [self.progress_indicator.animator setDoubleValue:progress];
+  }
+                      completionHandler:^
+  {
+    [self.progress_indicator setDoubleValue:progress];
+  }];
 }
 
 //- Button Handling --------------------------------------------------------------------------------

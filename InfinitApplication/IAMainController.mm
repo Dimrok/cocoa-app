@@ -1075,6 +1075,11 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   return [_transaction_manager latestTransactionPerUser];
 }
 
+- (NSArray*)linkHistory:(InfinitMainViewController*)sender
+{
+  return [_link_manager reversedLinkList];
+}
+
 - (NSUInteger)runningTransactionsForUser:(IAUser*)user
 {
   return [_transaction_manager activeTransactionsForUser:user];

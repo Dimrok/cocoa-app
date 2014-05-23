@@ -67,6 +67,7 @@ typedef enum _InfinitTransactionLinkMode
 @protocol InfinitMainViewProtocol <IAViewProtocol>
 
 - (NSArray*)latestTransactionsByUser:(InfinitMainViewController*)sender;
+- (NSArray*)linkHistory:(InfinitMainViewController*)sender;
 
 - (NSUInteger)runningTransactionsForUser:(IAUser*)user;
 - (NSUInteger)notDoneTransactionsForUser:(IAUser*)user;

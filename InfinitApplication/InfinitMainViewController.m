@@ -613,7 +613,8 @@
   if (self.main_view.wantsLayer == NO)
     self.main_view.wantsLayer = YES;
 
-  [_transaction_controller markTransactionsRead];
+  [_link_controller updateModelWithList:[_delegate linkHistory:self]];
+
   [self.view_selector setMode:INFINIT_MAIN_VIEW_LINK_MODE];
   _transaction_controller.changing = YES;
   self.main_view.animations = @{@"subviews": [self transitionFromLeft:YES]};
