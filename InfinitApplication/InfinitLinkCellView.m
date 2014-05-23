@@ -136,6 +136,7 @@
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
               andDelegate:(id<InfinitLinkCellProtocol>)delegate
+         withOnlineStatus:(gap_UserStatus)status
 {
   _delegate = delegate;
   _transaction_link = link;
@@ -146,13 +147,13 @@
   if (link.status == gap_transaction_transferring)
   {
     self.progress_indicator.hidden = NO;
-    [self setProgress:link.progress];
+    [self setProgress:link.progress withAnimation:NO andOnline:status];
   }
   else
   {
+    self.progress_indicator.hidden = YES;
     self.information.stringValue = [IAFunctions relativeDateOf:link.modification_time
                                                   longerFormat:YES];
-    self.progress_indicator.hidden = YES;
   }
 }
 
@@ -160,14 +161,23 @@
 
 - (void)setProgress:(CGFloat)progress
 {
-  [self setProgress:progress withAnimation:YES];
+  [self setProgress:progress withAnimation:YES andOnline:gap_user_status_online];
 }
 
 - (void)setProgress:(CGFloat)progress
       withAnimation:(BOOL)animate
+          andOnline:(gap_UserStatus)status
 {
-  NSString* upload_str = [NSString stringWithFormat:@"%@... (%.0f %%)",
-                          NSLocalizedString(@"Uploading", nil), 100 * progress];
+  NSString* upload_str;
+  if (status == gap_user_status_online)
+  {
+    upload_str = [NSString stringWithFormat:@"%@... (%.0f %%)",
+                  NSLocalizedString(@"Uploading", nil), 100 * progress];
+  }
+  else
+  {
+    upload_str = NSLocalizedString(@"No connection. Upload paused.", nil);
+  }
   self.information.stringValue = upload_str;
   if (animate)
   {

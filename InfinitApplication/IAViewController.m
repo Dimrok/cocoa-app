@@ -162,4 +162,10 @@
   return;
 }
 
+- (void)selfStatusChanged:(gap_UserStatus)status
+{
+  // Do nothing by default, overload if needed
+  return;
+}
+
 @end

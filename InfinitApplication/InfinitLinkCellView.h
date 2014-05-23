@@ -30,7 +30,8 @@
 @property (nonatomic, readwrite) CGFloat progress;
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
-              andDelegate:(id<InfinitLinkCellProtocol>)delegate;
+              andDelegate:(id<InfinitLinkCellProtocol>)delegate
+         withOnlineStatus:(gap_UserStatus)status;
 
 @end
 

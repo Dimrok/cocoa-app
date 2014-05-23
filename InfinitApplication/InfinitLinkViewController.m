@@ -24,12 +24,15 @@
   // Progress handling.
   NSTimer* _progress_timer;
   NSMutableArray* _rows_with_progress;
+
+  gap_UserStatus _me_status;
 }
 
 //- Init -------------------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate
            andLinkList:(NSArray*)list
+         andSelfStatus:(gap_UserStatus)status
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
@@ -37,6 +40,7 @@
     _list = [NSMutableArray arrayWithArray:list];
     _max_rows = 4;
     _row_height = 72.0;
+    _me_status = status;
   }
   return self;
 }
@@ -65,6 +69,12 @@
 {
   _list = [NSMutableArray arrayWithArray:list];
   [self.table_view reloadData];
+}
+
+- (void)selfStatusChanged:(gap_UserStatus)status
+{
+  [self.table_view reloadData];
+  _me_status = status;
 }
 
 //- Link Updated -----------------------------------------------------------------------------------
@@ -127,13 +137,16 @@
 
   NSUInteger row = 0;
 
-  for (InfinitLinkTransaction* link in _list)
-  {
-    if (link.status == gap_transaction_transferring)
+  if (_me_status == gap_user_status_online)
     {
-      [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
+    for (InfinitLinkTransaction* link in _list)
+    {
+      if (link.status == gap_transaction_transferring)
+      {
+        [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
+      }
+      row++;
     }
-    row++;
   }
 
   if (_rows_with_progress.count > 0)
@@ -183,7 +196,7 @@
     return [self.table_view makeViewWithIdentifier:@"no_link_cell" owner:self];
 
   InfinitLinkCellView* cell = [self.table_view makeViewWithIdentifier:@"link_cell" owner:self];
-  [cell setupCellWithLink:_list[row] andDelegate:self];
+  [cell setupCellWithLink:_list[row] andDelegate:self withOnlineStatus:_me_status];
   return cell;
 }
 

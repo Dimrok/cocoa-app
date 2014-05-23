@@ -47,6 +47,8 @@
 - (void)userUpdated:(IAUser*)user;
 - (void)userDeleted:(IAUser*)user;
 
+- (void)selfStatusChanged:(gap_UserStatus)status;
+
 @end
 
 

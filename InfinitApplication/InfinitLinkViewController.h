@@ -19,7 +19,8 @@
 @property (nonatomic, strong) IBOutlet NSTableView* table_view;
 
 - (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate
-           andLinkList:(NSArray*)list;
+           andLinkList:(NSArray*)list
+         andSelfStatus:(gap_UserStatus)status;
 
 @property (nonatomic, readwrite) BOOL changing;
 
@@ -31,6 +32,8 @@
 - (NSUInteger)linksRunning;
 
 - (CGFloat)height;
+
+- (void)selfStatusChanged:(gap_UserStatus)status;
 
 @end
 

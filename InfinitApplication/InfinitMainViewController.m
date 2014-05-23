@@ -270,7 +270,7 @@
   NSBezierPath* light_line =
   [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 2.0)];
   if (_hover)
-    [IA_RGB_COLOUR(184, 184, 184) set];
+    [IA_RGB_COLOUR(213, 213, 213) set];
   else
     [IA_GREY_COLOUR(230) set];
   [light_line fill];
@@ -318,7 +318,8 @@
       [[InfinitTransactionViewController alloc] initWithDelegate:self
                                               andTransactionList:transaction_list];
     _link_controller =
-      [[InfinitLinkViewController alloc] initWithDelegate:self andLinkList:link_list];
+      [[InfinitLinkViewController alloc] initWithDelegate:self andLinkList:link_list
+                                            andSelfStatus:[_delegate currentSelfStatus:self]];
     if (_for_people_view)
       _current_controller = _transaction_controller;
     else
@@ -450,6 +451,12 @@
   if (_current_controller != _transaction_controller)
     return;
   [_transaction_controller userUpdated:user];
+}
+
+- (void)selfStatusChanged:(gap_UserStatus)status
+{
+  if (_current_controller == _link_controller)
+    [_link_controller selfStatusChanged:status];
 }
 
 //- Link View Protocol -----------------------------------------------------------------------------

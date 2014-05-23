@@ -1174,17 +1174,9 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   [_general_send_controller openWithNoFileForLink:YES];
 }
 
-- (void)linkGotCopiedToPasteBoard:(InfinitLinkTransaction*)link
+- (gap_UserStatus)currentSelfStatus:(InfinitMainViewController*)status
 {
-  [self closeNotificationWindow];
-  if (_tooltip_controller == nil)
-    _tooltip_controller = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Link copied to clipboard!", nil);
-  [_tooltip_controller showPopoverForView:_status_bar_icon
-                       withArrowDirection:INPopoverArrowDirectionUp
-                              withMessage:message
-                         withPopAnimation:YES];
-  [self performSelector:@selector(delayedTooltipClose) withObject:nil afterDelay:5.0];
+  return [_me_manager connection_status];
 }
 
 //- Me Manager Protocol ----------------------------------------------------------------------------
@@ -1202,6 +1194,9 @@ hadConnectionStateChange:(gap_UserStatus)status
     [IAUserManager resyncUserStatuses];
   else if (status == gap_user_status_offline)
     [IAUserManager setAllUsersOffline];
+
+  if (_current_view_controller != nil)
+    [_current_view_controller selfStatusChanged:status];
 }
 
 //- No Connection View Protocol --------------------------------------------------------------------
