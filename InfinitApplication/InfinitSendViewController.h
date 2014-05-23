@@ -65,7 +65,6 @@ typedef enum _InfinitUserLinkMode
 @property (nonatomic, strong) IBOutlet NSView* search_view;
 @property (nonatomic, strong) IBOutlet NSView* note_view;
 @property (nonatomic, strong) IBOutlet NSView* files_view;
-@property (nonatomic, strong) IBOutlet NSTextField* file_count;
 @property (nonatomic, strong) IBOutlet NSButton* send_button;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_constraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint* note_constraint;

@@ -8,7 +8,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitSendViewController">
             <connections>
                 <outlet property="drop_view" destination="feD-Dd-K1b" id="XXm-93-WO6"/>
-                <outlet property="file_count" destination="hlN-aV-CPg" id="Mke-wb-1YY"/>
                 <outlet property="files_constraint" destination="f4z-F8-7gq" id="HPI-F3-7x0"/>
                 <outlet property="files_view" destination="c1o-0q-VeA" id="Ppe-Pd-Y9b"/>
                 <outlet property="footer_view" destination="XLL-4c-Odh" id="pBE-Hm-g8S"/>
@@ -43,18 +42,18 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yAi-G2-8d0">
-                                    <rect key="frame" x="26" y="15" width="102" height="16"/>
+                                    <rect key="frame" x="26" y="16" width="102" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="SEND TO USER" id="dN6-U1-fhH">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="SEND" id="dN6-U1-fhH">
                                         <font key="font" size="11" name="Helvetica"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4A-gY-zEl">
-                                    <rect key="frame" x="191" y="15" width="102" height="16"/>
+                                    <rect key="frame" x="191" y="16" width="102" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="GET A LINK" id="jdQ-14-los">
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="PUBLISH" id="jdQ-14-los">
                                         <font key="font" size="11" name="Helvetica"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -127,15 +126,6 @@ DQ
                                 <action selector="sendButtonClicked:" target="-2" id="bfI-eE-00M"/>
                             </connections>
                         </button>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlN-aV-CPg">
-                            <rect key="frame" x="298" y="5" width="20" height="14"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="CX7-Gs-0Cw">
-                                <font key="font" size="11" name="LucidaGrande"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2l-SG-A1n">
                             <rect key="frame" x="11" y="8" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

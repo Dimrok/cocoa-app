@@ -49,8 +49,8 @@
                                               paragraphStyle:para
                                                       colour:IA_RGB_COLOUR(81, 81, 73)
                                                       shadow:nil];
-  NSString* link_str = NSLocalizedString(@"GET A LINK", nil);
-  NSString* user_str = NSLocalizedString(@"SEND TO USER", nil);
+  NSString* link_str = NSLocalizedString(@"PUBLISH", nil);
+  NSString* user_str = NSLocalizedString(@"SEND", nil);
 
   _link_high_str = [[NSAttributedString alloc] initWithString:link_str attributes:high_attrs];
   _link_hover_str = [[NSAttributedString alloc] initWithString:link_str attributes:hover_attrs];
@@ -250,7 +250,7 @@
   NSBezierPath* light_line =
     [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 2.0)];
   if (_hover)
-    [IA_RGB_COLOUR(184, 184, 184) set];
+    [IA_RGB_COLOUR(213, 213, 213) set];
   else
     [IA_GREY_COLOUR(230) set];
   [light_line fill];
@@ -336,8 +336,6 @@
 @private
   id<InfinitSendViewProtocol> _delegate;
 
-  NSDictionary* _file_count_attrs;
-
   IAUserSearchViewController* _search_controller;
   InfinitSendNoteViewController* _note_controller;
   InfinitSendFilesViewController* _files_controller;
@@ -359,17 +357,7 @@
   {
     _for_link = for_link;
     _delegate = delegate;
-    NSShadow* file_count_shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
-                                                     blurRadius:1.0
-                                                         colour:IA_GREY_COLOUR(0.0)];
-    NSFont* small_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                    traits:NSUnboldFontMask
-                                                                    weight:0
-                                                                      size:10.0];
-    _file_count_attrs = [IAFunctions textStyleWithFont:small_font
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_GREY_COLOUR(255.0)
-                                                shadow:file_count_shadow];
+
     _search_controller = search_controller;
     [_search_controller setDelegate:self];
     _note_controller = [[InfinitSendNoteViewController alloc] initWithDelegate:self];
@@ -407,17 +395,6 @@
   [_files_controller updateWithFiles:[_delegate sendViewWantsFileList:self]];
   [super loadView];
   [self.user_link_view setDelegate:self];
-  NSInteger file_count = [_delegate sendViewWantsFileList:self].count;
-  if (file_count > 0)
-  {
-    NSString* count_str;
-    if (file_count > 99)
-      count_str = @"+";
-    else
-      count_str = [NSString stringWithFormat:@"%lu", file_count];
-    self.file_count.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:count_str attributes:_file_count_attrs];
-  }
   [self setSendButtonState];
   if (_for_link)
   {
@@ -518,13 +495,6 @@
 {
   NSArray* files = [_delegate sendViewWantsFileList:self];
   [_files_controller updateWithFiles:files];
-  NSString* count_str;
-  if (files.count > 99)
-    count_str = @"+";
-  else
-    count_str = [NSString stringWithFormat:@"%lu", files.count];
-  self.file_count.attributedStringValue =
-    [[NSAttributedString alloc] initWithString:count_str attributes:_file_count_attrs];
   [self setSendButtonState];
   if (!_files_controller.open && files.count > 0)
     [_files_controller showFiles];
@@ -753,7 +723,7 @@ wantsRemoveFavourite:(IAUser*)user
      [self.view.window makeFirstResponder:_search_controller.search_field];
      [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
      [self setSendButtonState];
-     self.send_button.toolTip = NSLocalizedString(@"Create Link", nil);
+     self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
    }];
 }
 
