@@ -297,12 +297,12 @@
   if ([self.search_field.objectValue count] == 0)
   {
     [clip_view setFrame:NSMakeRect(0.0, 3.0, clip_view.frame.size.width, 17.0)];
-    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26)];
+    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26.0)];
   }
   else
   {
     [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 26.0)];
-    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26)];
+    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26.0)];
   }
 }
 
