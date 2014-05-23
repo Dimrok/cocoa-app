@@ -67,15 +67,18 @@
 {
   [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  NSBezierPath* line =
-    [NSBezierPath bezierPathWithRect:NSMakeRect(20.0, 0.0, NSWidth(self.bounds) - 40.0, 1.0)];
-  [IA_GREY_COLOUR(229) set];
-  [line fill];
+  if (!_loading)
+  {
+    NSBezierPath* line =
+      [NSBezierPath bezierPathWithRect:NSMakeRect(20.0, 0.0, NSWidth(self.bounds) - 40.0, 1.0)];
+    [IA_GREY_COLOUR(229) set];
+    [line fill];
+  }
 }
 
-- (void)setNoResults:(BOOL)no_results
+- (void)setLoading:(BOOL)loading
 {
-  _no_results = no_results;
+  _loading = loading;
   [self setNeedsDisplay:YES];
 }
 
@@ -364,6 +367,7 @@
 
 - (void)searchLoading:(BOOL)loading
 {
+  [self.search_box_view setLoading:loading];
   self.search_image.hidden = loading;
   self.search_spinner.hidden = !loading;
   if (loading)
@@ -613,7 +617,6 @@ writeRepresentedObjects:(NSArray*)objects
   [self searchLoading:NO];
   [self setNoResultsHidden:YES];
   _search_results = nil;
-  [self.search_box_view setNoResults:NO];
   [_delegate searchView:self
         changedToHeight:NSHeight(self.search_box_view.frame)];
 
@@ -649,7 +652,6 @@ writeRepresentedObjects:(NSArray*)objects
     new_height =
       NSHeight(self.search_box_view.frame) + NSHeight(self.no_results_message.frame) + 20.0;
     [_delegate searchView:self changedToHeight:new_height];
-    [self.search_box_view setNoResults:YES];
     return;
   }
   else if (self.currentSearchString.length == 0)
@@ -668,7 +670,6 @@ writeRepresentedObjects:(NSArray*)objects
   [self.table_view reloadData];
   [self setNoResultsHidden:YES];
   new_height = NSHeight(self.search_box_view.frame) + [self tableHeight];
-  [self.search_box_view setNoResults:NO];
   [self.table_view scrollRowToVisible:0];
   [_delegate searchView:self changedToHeight:new_height];
 }

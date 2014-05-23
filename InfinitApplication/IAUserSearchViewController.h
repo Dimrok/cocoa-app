@@ -19,7 +19,7 @@
 @protocol IAUserSearchViewProtocol;
 
 @interface IASearchBoxView : NSView
-@property (nonatomic, readwrite, setter = setNoResults:) BOOL no_results;
+@property (nonatomic, readwrite, setter = setLoading:) BOOL loading;
 @end
 
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
