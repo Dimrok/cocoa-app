@@ -187,6 +187,12 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
   switch (link.status)
   {
+    case gap_transaction_transferring:
+      title = NSLocalizedString(@"Got link!", nil);
+      message = [NSString stringWithFormat:@"%@ %@",
+                 link.name, NSLocalizedString(@"copied to clipboard", nil)];
+      sound = _incoming_sound.name;
+      break;
     case gap_transaction_finished:
       title = NSLocalizedString(@"Success!", nil);
       message = [NSString stringWithFormat:@"%@ %@",
