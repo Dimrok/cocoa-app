@@ -395,7 +395,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
   self.bubble_view.important = _element.important;
   self.time_indicator.stringValue =
-    [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp];
+  [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp longerFormat:NO];
 
   switch (_element.transaction.view_mode)
   {

@@ -256,7 +256,8 @@
     [self setStatusIndicatorForTransaction:transaction];
   }
 
-  self.indicator_text.stringValue = [IAFunctions relativeDateOf:transaction.last_edit_timestamp];
+  self.indicator_text.stringValue = [IAFunctions relativeDateOf:transaction.last_edit_timestamp
+                                                   longerFormat:NO];
 
   _last_indicator_image = self.indicator.image;
   _last_indicator_text = self.indicator_text.stringValue;

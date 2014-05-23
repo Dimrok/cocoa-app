@@ -150,7 +150,8 @@
   }
   else
   {
-    self.information.stringValue = [IAFunctions relativeDateOf:link.modification_time];
+    self.information.stringValue = [IAFunctions relativeDateOf:link.modification_time
+                                                  longerFormat:YES];
     self.progress_indicator.hidden = YES;
   }
 }
