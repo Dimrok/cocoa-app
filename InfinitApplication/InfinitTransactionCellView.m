@@ -53,14 +53,12 @@
 {
   _hover = YES;
   [self setIndicatorOnHover];
-  [self setNeedsDisplay:YES];
 }
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
   _hover = NO;
   [self setIndicatorOnUnhover];
-  [self setNeedsDisplay:YES];
 }
 
 //- Drawing ----------------------------------------------------------------------------------------
@@ -72,9 +70,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  if (_hover)
-    [IA_RGB_COLOUR(239, 252, 255) set];
-  else if (_unread > 0)
+  if (_unread > 0)
     [IA_GREY_COLOUR(255) set];
   else
     [IA_GREY_COLOUR(248) set];
