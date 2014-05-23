@@ -15,4 +15,12 @@
   _cFlags.vCentered = 1;
 }
 
+- (void)drawInteriorWithFrame:(NSRect)cellFrame
+                       inView:(NSView*)controlView
+{
+  [IA_GREY_COLOUR(255) set];
+  NSRectFill(cellFrame);
+  [super drawInteriorWithFrame:cellFrame inView:controlView];
+}
+
 @end

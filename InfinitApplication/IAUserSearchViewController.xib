@@ -136,7 +136,7 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="icon-search" id="284"/>
                         </imageView>
                         <tokenField focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="772" customClass="OEXTokenField">
-                            <rect key="frame" x="42" y="11" width="261" height="24"/>
+                            <rect key="frame" x="42" y="7" width="261" height="26"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <tokenFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" focusRingType="none" alignment="left" placeholderString="Enter a name or email..." drawsBackground="YES" allowsEditingTextAttributes="YES" id="773" customClass="InfinitSearchTokenFieldCell">
                                 <font key="font" size="13" name="Helvetica-Light"/>

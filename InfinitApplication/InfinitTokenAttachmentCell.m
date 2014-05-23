@@ -45,7 +45,7 @@ static NSDictionary* _sel_attrs;
 
 - (NSPoint)cellBaselineOffset
 {
-  return NSMakePoint(0.0, 0.0);
+  return NSMakePoint(0.0, -7.0);
 }
 
 - (void)drawTokenWithFrame:(NSRect)rect
@@ -95,7 +95,7 @@ static NSDictionary* _sel_attrs;
     top_line =
       [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + corner_radius,
                                                   0.5,
-                                                  token_rect.size.width - (2 * corner_radius) + 4.0,
+                                                  token_rect.size.width - (2 * corner_radius),
                                                   1.0)];
   }
   else
@@ -103,7 +103,7 @@ static NSDictionary* _sel_attrs;
     top_line =
       [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + corner_radius,
                                                   1.0,
-                                                  token_rect.size.width - (2 * corner_radius) + 4.0,
+                                                  token_rect.size.width - (2 * corner_radius),
                                                   1.0)];
   }
   [top_line fill];

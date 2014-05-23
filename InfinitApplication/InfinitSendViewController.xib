@@ -137,7 +137,7 @@ DQ
                             </textFieldCell>
                         </textField>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2l-SG-A1n">
-                            <rect key="frame" x="13" y="8" width="20" height="20"/>
+                            <rect key="frame" x="11" y="8" width="20" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-cancel-send" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="DPb-SY-h8O">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>

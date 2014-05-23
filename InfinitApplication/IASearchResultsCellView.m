@@ -13,8 +13,6 @@
 @implementation InfinitSelectedBoxView
 
 static NSImage* check_mark = nil;
-static NSDictionary* _fullname_style = nil;
-static NSDictionary* _domain_style = nil;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -71,10 +69,18 @@ static NSDictionary* _domain_style = nil;
 @implementation IASearchResultsCellView
 {
   BOOL _is_favourite;
+  BOOL _infinit_user;
   id<IASearchResultsCellProtocol> _delegate;
 
   NSTrackingArea* _tracking_area;
+
+  NSAttributedString* _fullname_norm;
+  NSAttributedString* _fullname_selected;
 }
+
+static NSDictionary* _fullname_style = nil;
+static NSDictionary* _fullname_selected_style = nil;
+static NSDictionary* _domain_style = nil;
 
 - (void)prepareForReuse
 {
@@ -107,6 +113,10 @@ static NSDictionary* _domain_style = nil;
                                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                               colour:IA_RGB_COLOUR(37, 47, 51)
                                               shadow:nil];
+    _fullname_selected_style = [IAFunctions textStyleWithFont:name_font
+                                               paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                       colour:IA_RGB_COLOUR(43, 190, 189)
+                                                       shadow:nil];
     NSFont* domain_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                      traits:NSUnboldFontMask
                                                                      weight:0
@@ -116,18 +126,29 @@ static NSDictionary* _domain_style = nil;
                                             colour:IA_GREY_COLOUR(190)
                                             shadow:nil];
   }
-  NSMutableAttributedString* fullname_str =
+  NSMutableAttributedString* fullname_norm_str =
     [[NSMutableAttributedString alloc] initWithString:fullname attributes:_fullname_style];
-
+  NSMutableAttributedString* fullname_selected_str =
+    [[NSMutableAttributedString alloc] initWithString:fullname attributes:_fullname_selected_style];
   if (domain.length > 0)
   {
+    _infinit_user = NO;
+    self.result_star.hidden = YES;
     NSAttributedString* domain_str =
       [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  (%@)", domain]
                                       attributes:_domain_style];
-    [fullname_str appendAttributedString:domain_str];
+    [fullname_norm_str appendAttributedString:domain_str];
+    [fullname_selected_str appendAttributedString:domain_str];
+  }
+  else
+  {
+    _infinit_user = YES;
+    self.result_star.hidden = NO;
   }
 
-  self.result_fullname.attributedStringValue = fullname_str;
+  self.result_fullname.attributedStringValue = fullname_norm_str;
+  _fullname_norm = fullname_norm_str;
+  _fullname_selected = fullname_selected_str;
 }
 
 - (void)setUserAvatar:(NSImage*)image
@@ -198,7 +219,7 @@ static NSDictionary* _domain_style = nil;
 {
   _hover = hover;
   self.result_selected.hover = hover;
-  if (!_is_favourite)
+  if (_infinit_user && !_is_favourite)
     self.result_star.hidden = !hover;
   [self setNeedsDisplay:YES];
 }
@@ -212,6 +233,10 @@ static NSDictionary* _domain_style = nil;
 - (void)setSelected:(BOOL)selected
 {
   _selected = selected;
+  if (selected)
+    self.result_fullname.attributedStringValue = _fullname_selected;
+  else
+    self.result_fullname.attributedStringValue = _fullname_norm;
   self.result_selected.selected = selected;
   [self setNeedsDisplay:YES];
 }

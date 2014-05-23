@@ -270,6 +270,7 @@
   _token_count = [self.search_field.objectValue count];
   // WORKAROUND: Don't want token highlighted on drag and drop.
   [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0.2];
+  [self performSelector:@selector(fixClipView) withObject:nil afterDelay:0.2];
 }
 
 - (void)removeUser:(IAUser*)user
@@ -289,6 +290,22 @@
   [_delegate searchViewInputsChanged:self];
 }
 
+- (void)fixClipView
+{
+  // WORKAROUND for clipping of tokens
+  NSView* clip_view = self.search_field.subviews[0];
+  if ([self.search_field.objectValue count] == 0)
+  {
+    [clip_view setFrame:NSMakeRect(0.0, 3.0, clip_view.frame.size.width, 17.0)];
+    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26)];
+  }
+  else
+  {
+    [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 26.0)];
+    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26)];
+  }
+}
+
 - (void)addElement:(InfinitSearchElement*)element
 {
   if (element == nil)
@@ -306,8 +323,12 @@
     element.selected = YES;
     [[self.table_view viewAtColumn:0 row:row makeIfNecessary:NO] setSelected:YES];
   }
-  
   [self.search_field setObjectValue:temp];
+
+  if (temp.count == 0)
+    [self handleInputFieldChange];
+
+  [self fixClipView];
   [_delegate searchViewInputsChanged:self];
 }
 
@@ -324,12 +345,7 @@
   }
   [temp removeObject:element];
   [self.search_field setObjectValue:temp];
-  if (temp.count == 0)
-  {
-    [self handleInputFieldChange];
-    NSView* clip_view = self.search_field.subviews[0];
-    [clip_view setFrame:NSMakeRect(0.0, 3.0, clip_view.frame.size.width, 17.0)];
-  }
+  [self fixClipView];
   [_delegate searchViewInputsChanged:self];
 }
 
@@ -489,9 +505,6 @@ doCommandBySelector:(SEL)commandSelector
       }
     }
     [_delegate searchViewInputsChanged:self];
-    // WORKAROUND for clipping of tokens when selected with the keyboard
-    NSView* clip_view = self.search_field.subviews[0];
-    [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 26.0)];
     return YES;
   }
   else if (commandSelector == @selector(moveDown:))
@@ -697,7 +710,6 @@ writeRepresentedObjects:(NSArray*)objects
   if (element.user != nil)
   {
     [cell setUserFullname:element.fullname withDomain:@""];
-    cell.result_star.hidden = NO;
     [cell setUserFavourite:element.user.favourite];
   }
   else
@@ -705,7 +717,6 @@ writeRepresentedObjects:(NSArray*)objects
     NSString* domain =
       [element.email substringFromIndex:([element.email rangeOfString:@"@"].location + 1)];
     [cell setUserFullname:element.fullname withDomain:domain];
-    cell.result_star.hidden = YES;
   }
   
   NSImage* avatar = [IAFunctions makeRoundAvatar:element.avatar
@@ -844,7 +855,7 @@ writeRepresentedObjects:(NSArray*)objects
   if (search_string.length == 0)
   {
     [_search_controller clearResults];
-    [self clearResults];
+    [self fillSearchResultsWithFriends];
     return;
   }
   
@@ -884,7 +895,7 @@ writeRepresentedObjects:(NSArray*)objects
   if (search_string.length == 0)
   {
     [_search_controller clearResults];
-    [self clearResults];
+    [self fillSearchResultsWithFriends];
     return;
   }
   self.no_results_message.attributedStringValue = _no_result_msg_str;
