@@ -120,7 +120,7 @@
   {
     _hover_row = 0;
     _row_height = 38.0;
-    _max_rows_shown = 5;
+    _max_rows_shown = 4;
     _delegate = nil;
     _token_count = 0;
     NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
