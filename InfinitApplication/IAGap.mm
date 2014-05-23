@@ -145,11 +145,13 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
            "surface.gap.*.State:TRACE,"
            "surface.gap.*.Transition:TRACE,"
            "surface.gap.TransactionMachine:TRACE,"
+           "surface.gap.TransferMachine:DEBUG,"
            "surface.gap.State.Transaction:TRACE,"
            "surface.gap.Transaction:TRACE,"
            "reactor.fsm.*:TRACE,"
            "frete.Frete:DEBUG,"
            "station.Station:DEBUG,"
+           "infinit.surface.gap.Rounds:DEBUG,"
            "OSX*:DUMP"
            , 0);
     setenv("ELLE_LOG_PID", "1", 0);
