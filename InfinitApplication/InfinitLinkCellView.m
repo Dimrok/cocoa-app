@@ -52,11 +52,11 @@
 
 - (void)mouseEntered:(NSEvent*)theEvent
 {
-  _hover = YES;
-  self.link.hidden = NO;
-  self.clipboard.hidden = NO;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
+     _hover = YES;
+     self.link.hidden = NO;
+     self.clipboard.hidden = NO;
      context.duration = 0.2;
      context.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -77,10 +77,10 @@
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
-  _hover = NO;
-  self.click_count.hidden = NO;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
+    _hover = NO;
+    self.click_count.hidden = NO;
     context.duration = 0.2;
     context.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -160,18 +160,31 @@
 
 - (void)setProgress:(CGFloat)progress
 {
+  [self setProgress:progress withAnimation:YES];
+}
+
+- (void)setProgress:(CGFloat)progress
+      withAnimation:(BOOL)animate
+{
   NSString* upload_str = [NSString stringWithFormat:@"%@... (%.0f %%)",
                           NSLocalizedString(@"Uploading", nil), 100 * progress];
   self.information.stringValue = upload_str;
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+  if (animate)
   {
-    context.duration = 1.0;
-    [self.progress_indicator.animator setDoubleValue:progress];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+    {
+      context.duration = 1.0;
+      [self.progress_indicator.animator setDoubleValue:progress];
+    }
+                        completionHandler:^
+    {
+      self.progress_indicator.doubleValue = progress;
+    }];
   }
-                      completionHandler:^
+  else
   {
-    [self.progress_indicator setDoubleValue:progress];
-  }];
+    self.progress_indicator.doubleValue = progress;
+  }
 }
 
 //- Button Handling --------------------------------------------------------------------------------
