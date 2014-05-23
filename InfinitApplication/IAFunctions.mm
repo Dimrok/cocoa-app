@@ -390,6 +390,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
 }
 
 + (NSString*)relativeDateOf:(NSTimeInterval)timestamp
+               longerFormat:(BOOL)longer
 {
   NSDate* transaction_date = [NSDate dateWithTimeIntervalSince1970:timestamp];
   NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
@@ -403,8 +404,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   else if (timestamp < now && timestamp > (now - 60 * 60.0)) // an hour ago
   {
     CGFloat time_ago = floor((now - timestamp) / 60.0);
-    res = [NSString stringWithFormat:@"%.0f %@", time_ago, NSLocalizedString(@"min ago",
-                                                                             @"min ago")];
+    res = [NSString stringWithFormat:@"%.0f %@", time_ago, NSLocalizedString(@"min ago", nil)];
   }
   else if ([IAFunctions isToday:transaction_date])
   {
@@ -413,12 +413,18 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   }
   else if ([IAFunctions isInLastWeek:transaction_date])
   {
-    formatter.dateFormat = @"EEE";
+    if (longer)
+      formatter.dateFormat = @"EEEE";
+    else
+      formatter.dateFormat = @"EEE";
     res = [formatter stringFromDate:transaction_date];
   }
   else
   {
-    formatter.dateFormat = @"d MMM";
+    if (longer)
+      formatter.dateFormat = @"d MMMM";
+    else
+      formatter.dateFormat = @"d MMM";
     res = [formatter stringFromDate:transaction_date];
   }
   return res;

@@ -57,7 +57,8 @@ typedef enum __INFINIT_OS_X_VERSION
 
 + (NSImage*)addressBookUserAvatar;
 
-+ (NSString*)relativeDateOf:(NSTimeInterval)timestamp;
++ (NSString*)relativeDateOf:(NSTimeInterval)timestamp
+               longerFormat:(BOOL)longer;
 
 + (NSImage*)makeAvatarFor:(NSString*)fullname;
 
