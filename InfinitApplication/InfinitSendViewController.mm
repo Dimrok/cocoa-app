@@ -715,6 +715,7 @@ wantsRemoveFavourite:(IAUser*)user
 {
   [self.user_link_view setMode:INFINIT_USER_MODE];
   _note_controller.link_mode = NO;
+  self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
    {
      context.duration = 0.15;
@@ -733,6 +734,7 @@ wantsRemoveFavourite:(IAUser*)user
 {
   [self.user_link_view setMode:INFINIT_LINK_MODE];
   _note_controller.link_mode = YES;
+  self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
   {
     context.duration = 0.15;
