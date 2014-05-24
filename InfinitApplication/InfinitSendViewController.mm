@@ -401,11 +401,13 @@
     [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
     _note_controller.link_mode = YES;
     self.search_constraint.constant = 0.0;
+    self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
     [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
   }
   else
   {
     [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
+    self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
     [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
   }
   // Onboarding

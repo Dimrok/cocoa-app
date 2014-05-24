@@ -366,6 +366,11 @@
   [self.view_selector setLinkCount:_link_controller.linksRunning];
   [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
 
+  if (_for_people_view)
+    self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
+  else
+    self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
+
   if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON];
@@ -568,6 +573,8 @@
   if (self.main_view.wantsLayer == NO)
     self.main_view.wantsLayer = YES;
 
+  self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
+
   [_transaction_controller updateModelWithList:[_delegate latestTransactionsByUser:self]];
 
   [self.view_selector setMode:INFINIT_MAIN_VIEW_TRANSACTION_MODE];
@@ -619,6 +626,8 @@
 
   if (self.main_view.wantsLayer == NO)
     self.main_view.wantsLayer = YES;
+
+  self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
 
   [_link_controller updateModelWithList:[_delegate linkHistory:self]];
 
