@@ -164,7 +164,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 {
   _logging_in = NO;
   self.close_button.hand_cursor = NO;
-  [self.close_button setHoverImage:[IAFunctions imageNamed:@"icon-onboarding-close-hover"]];
+  [self.close_button setHoverImage:[IAFunctions imageNamed:@"login-icon-close-hover"]];
   [self setLoginButtonText];
   [self setLinkText];
   [self configureForMode];
