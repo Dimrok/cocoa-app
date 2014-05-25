@@ -125,7 +125,9 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"open infinit";
     case INFINIT_METRIC_SEND_TRASH:
       return @"cancel";
-      
+    case INFINIT_METRIC_UPLOAD_SCREENSHOT:
+      return @"upload screenshot";
+
     default:
       return @"unknown";
   }
@@ -167,6 +169,8 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"status bar icon";
     case INFINIT_METRIC_SEND_TRASH:
       return @"send view";
+    case INFINIT_METRIC_UPLOAD_SCREENSHOT:
+      return @"";
       
     default:
       return @"unknown";

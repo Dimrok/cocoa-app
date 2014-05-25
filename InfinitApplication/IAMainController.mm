@@ -1130,6 +1130,7 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 - (BOOL)autoUploadScreenshots:(InfinitMainViewController*)sender
 {
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
   return [_screenshot_manager watch];
 }
 
