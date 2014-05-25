@@ -161,9 +161,9 @@
                       completionHandler:^
    {
      self.window.alphaValue = 1.0;
-     [_delegate windowController:self
-        hasCurrentViewController:_current_controller];
+     [_delegate windowController:self hasCurrentViewController:_current_controller];
      _animating = NO;
+     [_current_controller viewChanged];
    }];
 }
 
@@ -188,7 +188,6 @@
   
   [self.window.contentView replaceSubview:_current_controller.view
                                      with:new_controller.view];
-  [new_controller viewChanged];
   
   _view_constraints = [NSMutableArray arrayWithArray:
                        [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
@@ -206,6 +205,7 @@
   _current_controller = nil;
   _current_controller = new_controller;
   [_delegate windowController:self hasCurrentViewController:_current_controller];
+  [_current_controller viewChanged];
   
   _animating = NO;
 }
@@ -228,8 +228,6 @@
   [self.window setFrame:frame display:NO animate:NO];
   
   [self.window.contentView addSubview:controller.view];
-  
-  [controller viewChanged];
   
   _view_constraints = [NSMutableArray arrayWithArray:
                        [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"

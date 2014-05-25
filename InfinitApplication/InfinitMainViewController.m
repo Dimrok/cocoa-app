@@ -395,6 +395,14 @@
   }
 }
 
+- (void)viewChanged
+{
+  // WORKAROUND stop flashing when changing subview by enabling layer backing. Need to do this once
+  // the view has opened so that we get a shadow during opening animation.
+  self.main_view.wantsLayer = YES;
+  self.main_view.layer.masksToBounds = YES;
+}
+
 //- Onboarding -------------------------------------------------------------------------------------
 
 - (void)delayedStartSendOnboarding
@@ -573,9 +581,6 @@
   if (_current_controller == _transaction_controller)
     return;
 
-  if (self.main_view.wantsLayer == NO)
-    self.main_view.wantsLayer = YES;
-
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
 
   [_transaction_controller updateModelWithList:[_delegate latestTransactionsByUser:self]];
@@ -626,9 +631,6 @@
   [_tooltip close];
   [_transaction_controller closeToolTips];
   [_transaction_controller markTransactionsRead];
-
-  if (self.main_view.wantsLayer == NO)
-    self.main_view.wantsLayer = YES;
 
   self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
 
