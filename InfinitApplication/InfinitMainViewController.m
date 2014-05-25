@@ -299,7 +299,9 @@
   InfinitLinkViewController* _link_controller;
   NSViewController* _current_controller;
 
+  BOOL _auto_start;
   NSString* _version_str;
+
   InfinitTooltipViewController* _tooltip;
 
   BOOL _for_people_view;
@@ -324,8 +326,10 @@
       _current_controller = _transaction_controller;
     else
       _current_controller = _link_controller;
+
     _version_str =
       [NSString stringWithFormat:@"v%@", [NSString stringWithUTF8String:INFINIT_VERSION]];
+    _auto_start = [_delegate autostart:self];
   }
   return self;
 }
@@ -339,12 +343,11 @@
                                             metrics:nil
                                               views:@{@"view": _current_controller.view}];
   [self.main_view addConstraints:contraints];
-
-  if ([_delegate autostart:self])
+  _version_item.title = _version_str;
+  if (_auto_start)
     _auto_start_toggle.state = NSOnState;
   else
     _auto_start_toggle.state = NSOffState;
-  _version_item.title = _version_str;
 }
 
 - (CATransition*)transitionFromLeft:(BOOL)from_left
