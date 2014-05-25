@@ -585,6 +585,7 @@
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
 
   [_transaction_controller updateModelWithList:[_delegate latestTransactionsByUser:self]];
+  [_transaction_controller.table_view scrollRowToVisible:0];
 
   [self.view_selector setMode:INFINIT_MAIN_VIEW_TRANSACTION_MODE];
   _link_controller.changing = YES;
@@ -636,6 +637,7 @@
   self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
 
   [_link_controller updateModelWithList:[_delegate linkHistory:self]];
+  [_link_controller.table_view scrollRowToVisible:0];
 
   [self.view_selector setMode:INFINIT_MAIN_VIEW_LINK_MODE];
   _transaction_controller.changing = YES;
