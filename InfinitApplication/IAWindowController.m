@@ -175,6 +175,12 @@
     [_delegate windowControllerWantsCloseWindow:self];
 }
 
+- (void)windowDidResize:(NSNotification*)notification
+{
+  [self.window display];
+  [self.window invalidateShadow];
+}
+
 //- View Handling ----------------------------------------------------------------------------------
 
 - (void)changeToViewController:(IAViewController*)new_controller
