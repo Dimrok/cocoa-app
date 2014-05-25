@@ -528,7 +528,7 @@ static NSDictionary* _grey_style;
   
   if (files.count > 0)
   {
-    if ([NSEvent modifierFlags] == NSAlternateKeyMask)
+    if (_show_link)
       [_delegate statusBarIconLinkDrop:self withFiles:files];
     else
       [_delegate statusBarIconDragDrop:self withFiles:files];
