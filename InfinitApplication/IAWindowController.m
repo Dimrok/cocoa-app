@@ -105,6 +105,7 @@
 }
 
 //- Window Handling --------------------------------------------------------------------------------
+
 - (void)closeWindow
 {
   [self closeWindowWithAnimation:YES];
@@ -172,12 +173,6 @@
     return;
   if ([_current_controller closeOnFocusLost] && !_animating)
     [_delegate windowControllerWantsCloseWindow:self];
-}
-
-- (void)windowDidResize:(NSNotification*)notification
-{
-  [self.window display];
-  [self.window invalidateShadow];
 }
 
 //- View Handling ----------------------------------------------------------------------------------
