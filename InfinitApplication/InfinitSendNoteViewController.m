@@ -16,7 +16,7 @@
   CGFloat _last_height;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder*)aDecoder
 {
   if (self = [super initWithCoder:aDecoder])
   {
@@ -101,6 +101,8 @@
   NSUInteger _note_limit;
   NSDictionary* _norm_characters_attrs;
   NSDictionary* _done_characters_attrs;
+
+  NSString* _last_note; // Hack to add files when dropping on the selected note field.
 }
 
 - (id)initWithDelegate:(id<InfinitSendNoteViewProtocol>)delegate
@@ -146,6 +148,7 @@
   self.characters_label.attributedStringValue =
     [[NSAttributedString alloc]initWithString:@"100" attributes:_norm_characters_attrs];
   self.characters_label.hidden = YES;
+  _last_note = @"";
 }
 
 - (void)setLink_mode:(BOOL)link_mode
@@ -167,6 +170,21 @@
   if (control != self.note_field)
     return;
 
+  // Nasty hack to check if we got a file dropped in the note field while it's active.
+  NSString* string_diff =
+    [self.note_field.stringValue stringByReplacingOccurrencesOfString:_last_note withString:@""];
+  if (string_diff.length > 1)
+  {
+    NSMutableArray* files =
+      [NSMutableArray arrayWithArray:[string_diff componentsSeparatedByString:@"\n"]];
+    // Only check the first one as it's unlikely that it will be a file and the others won't.
+    if ([[NSFileManager defaultManager] fileExistsAtPath:files[0]])
+    {
+      self.note_field.stringValue = _last_note;
+      [_delegate noteView:self gotFilesDropped:files];
+    }
+  }
+
   if (self.note_field.stringValue.length > _note_limit)
   {
     self.note_field.stringValue = [self.note_field.stringValue
@@ -187,6 +205,7 @@
       [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", chars_left]
                                       attributes:_done_characters_attrs];
   }
+  _last_note = self.note_field.stringValue;
 }
 
 - (BOOL)control:(NSControl*)control

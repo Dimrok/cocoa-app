@@ -43,4 +43,7 @@
 - (void)noteView:(InfinitSendNoteViewController*)sender
      wantsHeight:(CGFloat)height;
 
+- (void)noteView:(InfinitSendNoteViewController*)sender
+ gotFilesDropped:(NSArray*)files;
+
 @end

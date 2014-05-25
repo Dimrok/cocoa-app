@@ -626,6 +626,13 @@
   [self.note_constraint setConstant:height];
 }
 
+
+- (void)noteView:(InfinitSendNoteViewController*)sender
+ gotFilesDropped:(NSArray*)files
+{
+  [_delegate sendView:self hadFilesDropped:files];
+}
+
 //- Files Protocol ---------------------------------------------------------------------------------
 
 - (void)fileList:(InfinitSendFilesViewController*)sender
