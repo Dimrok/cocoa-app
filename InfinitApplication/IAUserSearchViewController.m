@@ -191,17 +191,16 @@
   // WORKAROUND: Place holder text has been fixed in 10.9
   if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
   {
-    NSFont* search_font = [[NSFontManager sharedFontManager]fontWithFamily:@"Helvetica"
-                                                                    traits:NSUnboldFontMask
-                                                                    weight:3
-                                                                      size:12.0];
+    NSFont* search_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                     traits:NSUnboldFontMask
+                                                                     weight:3
+                                                                       size:12.0];
 
     NSDictionary* search_attrs =
       [IAFunctions textStyleWithFont:search_font
                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                               colour:IA_GREY_COLOUR(190)
                               shadow:nil];
-    
     NSString* placeholder_str = NSLocalizedString(@"Search or select a user", nil);
     NSAttributedString* search_placeholder =
       [[NSAttributedString alloc] initWithString:placeholder_str attributes:search_attrs];
@@ -273,7 +272,6 @@
   _token_count = [self.search_field.objectValue count];
   // WORKAROUND: Don't want token highlighted on drag and drop.
   [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0.2];
-  [self performSelector:@selector(fixClipView) withObject:nil afterDelay:0.2];
 }
 
 - (void)removeUser:(IAUser*)user
@@ -299,7 +297,7 @@
   NSView* clip_view = self.search_field.subviews[0];
   if ([self.search_field.objectValue count] == 0)
   {
-    [clip_view setFrame:NSMakeRect(0.0, 3.0, clip_view.frame.size.width, 17.0)];
+    [clip_view setFrame:NSMakeRect(0.0, 5.0, clip_view.frame.size.width, 17.0)];
     [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26.0)];
   }
   else
@@ -356,6 +354,7 @@
 {
   // WORKAROUND: Because NSTokenField doesn't do moveToEndOfLine
   [[self.search_field currentEditor] moveToEndOfLine:nil];
+  [self fixClipView];
 }
 
 - (NSArray*)recipientList
@@ -367,7 +366,6 @@
 
 - (void)searchLoading:(BOOL)loading
 {
-  [self.search_box_view setLoading:loading];
   self.search_image.hidden = loading;
   self.search_spinner.hidden = !loading;
   if (loading)
@@ -446,6 +444,7 @@
   {
     [self searchLoading:NO];
     [self updateResultsTable];
+    [self fixClipView];
   }
 
   NSArray* tokens = self.search_field.objectValue;
@@ -617,8 +616,8 @@ writeRepresentedObjects:(NSArray*)objects
   [self searchLoading:NO];
   [self setNoResultsHidden:YES];
   _search_results = nil;
-  [_delegate searchView:self
-        changedToHeight:NSHeight(self.search_box_view.frame)];
+  self.search_box_view.loading = YES;
+  [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
 
   // WORKAROUND: Centre placeholder text when field is empty.
   if ([self.search_field.objectValue count] == 0)
@@ -647,6 +646,7 @@ writeRepresentedObjects:(NSArray*)objects
   CGFloat new_height;
   if (_search_results.count == 0 && self.currentSearchString.length > 0) // No results so show message
   {
+    self.search_box_view.loading = NO;
     [self.table_view reloadData];
     [self setNoResultsHidden:NO];
     new_height =
@@ -658,6 +658,7 @@ writeRepresentedObjects:(NSArray*)objects
   {
     [self fillSearchResultsWithFriends];
   }
+  self.search_box_view.loading = NO;
   _hover_row = 0;
   if (_search_results.count > 0)
     [[_search_results objectAtIndex:0] setHover:YES];
@@ -1049,6 +1050,7 @@ writeRepresentedObjects:(NSArray*)objects
                                  withBorderOfThickness:0.0
                                               inColour:IA_GREY_COLOUR(255.0)
                                      andShadowOfRadius:0.0]];
+      return;
     }
     row++;
   }

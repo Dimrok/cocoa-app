@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib
 {
-  _cFlags.vCentered = 1;
+   _cFlags.vCentered = 1;
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame

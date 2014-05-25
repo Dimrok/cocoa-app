@@ -138,8 +138,8 @@
                         <tokenField focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="772" customClass="OEXTokenField">
                             <rect key="frame" x="42" y="7" width="261" height="26"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <tokenFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" focusRingType="none" alignment="left" placeholderString="Enter a name or email..." drawsBackground="YES" allowsEditingTextAttributes="YES" id="773" customClass="InfinitSearchTokenFieldCell">
-                                <font key="font" size="13" name="Helvetica-Light"/>
+                            <tokenFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" focusRingType="none" alignment="left" placeholderString="Search or select a user" drawsBackground="YES" allowsEditingTextAttributes="YES" id="773" customClass="InfinitSearchTokenFieldCell">
+                                <font key="font" size="12" name="Helvetica-Light"/>
                                 <color key="textColor" red="0.18823529410000001" green="0.23921568630000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </tokenFieldCell>
