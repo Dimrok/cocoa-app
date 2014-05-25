@@ -109,6 +109,19 @@
 - (void)closeWindow
 {
   [self closeWindowWithAnimation:YES];
+  NSPoint mouse_loc = [NSEvent mouseLocation];
+  for (NSScreen* screen in [NSScreen screens])
+  {
+    if (mouse_loc.y > NSHeight(screen.frame) - [[NSStatusBar systemStatusBar] thickness])
+      return;
+  }
+  for (NSRunningApplication* app in [[NSWorkspace sharedWorkspace] runningApplications])
+  {
+    if (app.ownsMenuBar)
+    {
+      [app activateWithOptions:NSApplicationActivateAllWindows];
+    }
+  }
 }
 
 - (void)closeWindowWithAnimation:(BOOL)animate
