@@ -265,6 +265,7 @@
 		83B9BFC2191C338400B34659 /* icon-contact-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B9BFC0191C338400B34659 /* icon-contact-checked@2x.png */; };
 		83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC54E186047EE00EB277E /* sound_sent.aiff */; };
 		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
+		83C30A2A193298BF00D07D2C /* InfinitScreenshotManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */; };
 		83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83C709851822E22C00F530C4 /* libz.1.2.8.dylib */; };
 		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
 		83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C7599017AA428700BE6CD5 /* IAWindowController.xib */; };
@@ -914,6 +915,8 @@
 		83B9BFC0191C338400B34659 /* icon-contact-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-contact-checked@2x.png"; path = "../../../../fist-resources/slices/view_send/icon-contact-checked@2x.png"; sourceTree = "<group>"; };
 		83BEC54E186047EE00EB277E /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_sent.aiff; sourceTree = "<group>"; };
 		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
+		83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitScreenshotManager.h; sourceTree = "<group>"; };
+		83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitScreenshotManager.mm; sourceTree = "<group>"; };
 		83C709851822E22C00F530C4 /* libz.1.2.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.8.dylib; path = ../../../Externals/lib/libz.1.2.8.dylib; sourceTree = "<group>"; };
 		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
 		83C7598F17AA428700BE6CD5 /* IAWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAWindowController.m; sourceTree = "<group>"; };
@@ -1656,6 +1659,8 @@
 				83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */,
 				83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */,
 				83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */,
+				83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */,
+				83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2503,6 +2508,7 @@
 				834F13741921813200BF36A4 /* InfinitAvatarView.m in Sources */,
 				83019CA91925354300423FCA /* InfinitLinkIconManager.m in Sources */,
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
+				83C30A2A193298BF00D07D2C /* InfinitScreenshotManager.mm in Sources */,
 				83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */,
 				83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */,
 				83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */,
