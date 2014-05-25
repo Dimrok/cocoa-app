@@ -239,7 +239,32 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)desktopNotificationForLink:(InfinitLinkTransaction*)link
 {
-  NSUserNotification* user_notification = [self notificationFromLink:link];
+  NSUserNotification* user_notification;
+  BOOL replaced = NO;
+  
+  for (NSUserNotification* notif in [_notification_centre deliveredNotifications])
+  {
+    if ([notif.userInfo valueForKey:@"link_id"] == link.id_)
+    {
+      ELLE_DEBUG("%s: already have a delivered notification for this link (%d), replace it",
+                 self.description.UTF8String, link.id_.unsignedIntegerValue);
+      user_notification = [[NSUserNotification alloc] init];
+      user_notification.title = NSLocalizedString(@"Uploaded and Got Link!", nil);
+      user_notification.informativeText =
+      [NSString stringWithFormat:@"%@ %@ %@", NSLocalizedString(@"Copied link for", nil), link.name,
+       NSLocalizedString(@"to the clipboard", nil)];
+      user_notification.soundName = nil;
+      user_notification.userInfo =
+      @{@"link_id": link.id_,
+        @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
+      [_notification_centre removeDeliveredNotification:notif];
+      replaced = YES;
+      break;
+    }
+  }
+
+  if (!replaced)
+    user_notification = [self notificationFromLink:link];
 
   if (user_notification == nil)
     return;
