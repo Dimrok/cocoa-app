@@ -30,7 +30,6 @@
 @interface IAViewController : NSViewController
 
 @property (nonatomic, retain) IBOutlet NSLayoutConstraint* content_height_constraint;
-@property (nonatomic, retain) IBOutlet NSLayoutConstraint* content_width_constraint;
 @property (nonatomic, retain) IBOutlet IAFooterView* footer_view;
 @property (nonatomic, retain) IBOutlet IAHeaderView* header_view;
 @property (nonatomic, retain) IBOutlet IAMainView* main_view;
