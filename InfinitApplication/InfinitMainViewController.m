@@ -300,6 +300,7 @@
   NSViewController* _current_controller;
 
   BOOL _auto_start;
+  BOOL _auto_upload;
   NSString* _version_str;
 
   InfinitTooltipViewController* _tooltip;
@@ -330,6 +331,7 @@
     _version_str =
       [NSString stringWithFormat:@"v%@", [NSString stringWithUTF8String:INFINIT_VERSION]];
     _auto_start = [_delegate autostart:self];
+    _auto_upload = [_delegate autoUploadScreenshots:self];
   }
   return self;
 }
@@ -348,6 +350,11 @@
     _auto_start_toggle.state = NSOnState;
   else
     _auto_start_toggle.state = NSOffState;
+
+  if (_auto_upload)
+    _auto_upload_toggle.state = NSOnState;
+  else
+    _auto_upload_toggle.state = NSOffState;
 }
 
 - (CATransition*)transitionFromLeft:(BOOL)from_left
@@ -749,15 +756,33 @@
 
 - (IBAction)onToggleAutoStartClick:(NSMenuItem*)sender
 {
-  if (sender.state == NSOffState)
+  if (sender != self.auto_start_toggle)
+    return;
+  if (self.auto_start_toggle.state == NSOffState)
   {
-    sender.state = NSOnState;
+    self.auto_start_toggle.state = NSOnState;
     [_delegate setAutoStart:YES];
   }
   else
   {
-    sender.state = NSOffState;
+    self.auto_start_toggle.state = NSOffState;
     [_delegate setAutoStart:NO];
+  }
+}
+
+- (IBAction)onToggleUploadScreenshot:(NSMenuItem*)sender
+{
+  if (sender != self.auto_upload_toggle)
+    return;
+  if (self.auto_upload_toggle.state == NSOffState)
+  {
+    self.auto_upload_toggle.state = NSOnState;
+    [_delegate setAutoUploadScreenshots:YES];
+  }
+  else
+  {
+    self.auto_upload_toggle.state = NSOffState;
+    [_delegate setAutoUploadScreenshots:NO];
   }
 }
 

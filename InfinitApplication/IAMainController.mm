@@ -54,6 +54,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   InfinitStayAwakeManager* _stay_awake_manager;
   IATransactionManager* _transaction_manager;
   InfinitLinkManager* _link_manager;
+  InfinitScreenshotManager* _screenshot_manager;
   IAUserManager* _user_manager;
   
   // Other
@@ -98,6 +99,7 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     _me_manager = [[IAMeManager alloc] initWithDelegate:self];
     _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
     _link_manager = [[InfinitLinkManager alloc] initWithDelegate:self];
+    _screenshot_manager = [[InfinitScreenshotManager alloc] initWithDelegate:self];
     _user_manager = [IAUserManager sharedInstanceWithDelegate:self];
     
     if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
@@ -1126,6 +1128,16 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   [_delegate mainControllerWantsCheckForUpdate:self];
 }
 
+- (BOOL)autoUploadScreenshots:(InfinitMainViewController*)sender
+{
+  return [_screenshot_manager watch];
+}
+
+- (void)setAutoUploadScreenshots:(BOOL)upload
+{
+  _screenshot_manager.watch = upload;
+}
+
 - (BOOL)autostart:(InfinitMainViewController*)sender
 {
   return [self appInLoginItems];
@@ -1361,6 +1373,14 @@ hadConnectionStateChange:(gap_UserStatus)status
   if (_general_send_controller == nil)
     _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller filesOverStatusBarIcon];
+}
+
+//- Screenshot Manager Protocol --------------------------------------------------------------------
+
+- (void)screenshotManager:(InfinitScreenshotManager*)sender
+            gotScreenshot:(NSString*)path
+{
+  [_link_manager createLinkWithFiles:@[path] withMessage:@""];
 }
 
 //- Stay Awake Manager Protocol --------------------------------------------------------------------
