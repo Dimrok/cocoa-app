@@ -17,8 +17,9 @@
 - (void)clearAllNotifications;
 
 - (void)desktopNotificationForTransaction:(IATransaction*)transaction;
-
 - (void)desktopNotificationForLink:(InfinitLinkTransaction*)link;
+
+- (void)desktopNotificationForLinkCopied:(InfinitLinkTransaction*)link;
 
 @end
 

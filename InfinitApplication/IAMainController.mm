@@ -995,22 +995,15 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 //- Link Manager Protocol --------------------------------------------------------------------------
 
 - (void)_copyLinkToClipboard:(InfinitLinkTransaction*)link
-                 withPopover:(BOOL)with_popover
+            withNotification:(BOOL)notify
 {
   NSPasteboard* paste_board = [NSPasteboard generalPasteboard];
   [paste_board declareTypes:@[NSStringPboardType] owner:nil];
   [paste_board setString:link.url_link forType:NSStringPboardType];
-  if (with_popover)
+  if (notify)
   {
-    if (_tooltip_controller == nil)
-      _tooltip_controller = [[InfinitTooltipViewController alloc] init];
-    NSString* message = NSLocalizedString(@"Link copied to clipboard!", nil);
-    [_tooltip_controller showPopoverForView:_status_bar_icon
-                         withArrowDirection:INPopoverArrowDirectionUp
-                                withMessage:message
-                           withPopAnimation:YES];
     [self closeNotificationWindow];
-    [self performSelector:@selector(delayedTooltipClose) withObject:nil afterDelay:5.0];
+    [_desktop_notifier desktopNotificationForLinkCopied:link];
   }
 }
 
@@ -1022,7 +1015,7 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
   [self updateStatusBarIcon];
   [_desktop_notifier desktopNotificationForLink:link];
   if (link.status == gap_transaction_transferring)
-    [self _copyLinkToClipboard:link withPopover:NO];
+    [self _copyLinkToClipboard:link withNotification:NO];
 }
 
 - (void)linkManager:(InfinitLinkManager*)sender
@@ -1033,12 +1026,12 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
   [self updateStatusBarIcon];
   [_desktop_notifier desktopNotificationForLink:link];
   if (link.status == gap_transaction_transferring)
-    [self _copyLinkToClipboard:link withPopover:NO];
+    [self _copyLinkToClipboard:link withNotification:NO];
 }
 
 - (void)copyLinkToClipboard:(InfinitLinkTransaction*)link
 {
-  [self _copyLinkToClipboard:link withPopover:YES];
+  [self _copyLinkToClipboard:link withNotification:YES];
 }
 
 - (void)linkManager:(InfinitLinkManager*)sender

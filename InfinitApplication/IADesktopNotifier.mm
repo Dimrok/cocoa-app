@@ -189,8 +189,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   {
     case gap_transaction_transferring:
       title = NSLocalizedString(@"Got link!", nil);
-      message = [NSString stringWithFormat:@"%@ %@",
-                 link.name, NSLocalizedString(@"copied to clipboard", nil)];
+      message = [NSString stringWithFormat:@"%@ %@ %@", NSLocalizedString(@"Copied link for", nil),
+                 link.name, NSLocalizedString(@"to the clipboard", nil)];
       sound = _incoming_sound.name;
       break;
     case gap_transaction_finished:
@@ -246,6 +246,25 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
   ELLE_LOG("%s: show desktop notification for link (%d) with status: %d",
            self.description.UTF8String, link.id_, link.status);
+  [_notification_centre deliverNotification:user_notification];
+}
+
+- (void)desktopNotificationForLinkCopied:(InfinitLinkTransaction*)link
+{
+  NSUserNotification* user_notification = [[NSUserNotification alloc] init];
+
+  user_notification.title = NSLocalizedString(@"Got Link!", nil);
+  user_notification.informativeText =
+    [NSString stringWithFormat:@"%@ %@ %@", NSLocalizedString(@"Copied link for", nil), link.name,
+     NSLocalizedString(@"to the clipboard", nil)];
+  user_notification.soundName = nil;
+  user_notification.userInfo =
+    @{@"link_id": link.id_,
+      @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
+
+  ELLE_LOG("%s: show desktop notification for copy link (%d)",
+           self.description.UTF8String, link.id_);
+
   [_notification_centre deliverNotification:user_notification];
 }
 
