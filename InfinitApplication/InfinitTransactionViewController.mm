@@ -95,7 +95,8 @@
   [_tooltip showPopoverForView:row_view
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 - (void)delayedFileSentOnboarding
@@ -110,7 +111,8 @@
   [_tooltip showPopoverForView:row_view
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 //- Progress Handling ------------------------------------------------------------------------------

@@ -226,7 +226,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_tooltip showPopoverForView:cell.accept_button
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 - (void)delayedStatusOnboarding
@@ -242,7 +243,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_tooltip showPopoverForView:cell.transaction_status_button
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 //- View Functions ---------------------------------------------------------------------------------
@@ -462,7 +464,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_tooltip showPopoverForView:cell.file_icon
             withArrowDirection:INPopoverArrowDirectionRight
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 - (IBAction)conversationCellViewWantsAccept:(NSButton*)sender

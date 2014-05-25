@@ -19,7 +19,8 @@
 - (void)showPopoverForView:(NSView*)view
         withArrowDirection:(INPopoverArrowDirection)direction
                withMessage:(NSString*)message
-          withPopAnimation:(BOOL)pop;
+          withPopAnimation:(BOOL)pop
+                   forTime:(NSTimeInterval)time;
 
 - (void)close;
 

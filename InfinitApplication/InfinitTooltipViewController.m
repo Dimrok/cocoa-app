@@ -38,6 +38,11 @@
   return self;
 }
 
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:nil];
+}
+
 - (BOOL)showing
 {
   return _popover_controller.popoverIsVisible;
@@ -47,6 +52,7 @@
         withArrowDirection:(INPopoverArrowDirection)direction
                withMessage:(NSString*)message
           withPopAnimation:(BOOL)pop
+                   forTime:(NSTimeInterval)time
 {
   if (pop)
     _popover_controller.animationType = INPopoverAnimationTypePop;
@@ -61,6 +67,8 @@
                       preferredArrowDirection:direction
                         anchorsToPositionView:YES];
   _focus_window = view.window;
+  if (time != 0)
+    [self performSelector:@selector(close) withObject:nil afterDelay:time];
 }
 
 - (void)close

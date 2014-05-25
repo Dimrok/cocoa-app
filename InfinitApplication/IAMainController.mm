@@ -1461,16 +1461,8 @@ hadConnectionStateChange:(gap_UserStatus)status
   [_tooltip_controller showPopoverForView:_status_bar_icon
                        withArrowDirection:INPopoverArrowDirectionUp
                               withMessage:message
-                         withPopAnimation:YES];
-  [self performSelector:@selector(delayedTooltipClose) withObject:nil afterDelay:5.0];
-}
-
-- (void)delayedTooltipClose
-{
-  if (_tooltip_controller == nil)
-    return;
-  [_tooltip_controller close];
-  _tooltip_controller = nil;
+                         withPopAnimation:YES
+                                  forTime:5.0];
 }
 
 - (void)transactionManagerHadFileSent:(IATransactionManager*)sender

@@ -413,7 +413,8 @@
   [_tooltip showPopoverForView:self.send_button
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 //- IAViewController -------------------------------------------------------------------------------

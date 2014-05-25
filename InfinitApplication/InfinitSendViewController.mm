@@ -437,7 +437,8 @@
   [_tooltip showPopoverForView:_search_controller.search_field
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 - (void)delayedOnboardSendNoFilesNoDestination
@@ -448,7 +449,8 @@
   [_tooltip showPopoverForView:_search_controller.search_field
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 - (void)delayedOnboardSendNoFilesDestination
@@ -459,7 +461,8 @@
   [_tooltip showPopoverForView:_files_controller.header_view
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 - (void)delayedOnboardSendFilesDestination
@@ -470,7 +473,8 @@
   [_tooltip showPopoverForView:self.send_button
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
-              withPopAnimation:YES];
+              withPopAnimation:YES
+                       forTime:5.0];
 }
 
 - (void)delayedCursorInSearch

@@ -455,7 +455,8 @@ static NSDictionary* _grey_style;
     [_tooltip showPopoverForView:self
               withArrowDirection:INPopoverArrowDirectionUp
                      withMessage:message
-                withPopAnimation:NO];
+                withPopAnimation:NO
+                         forTime:0.0];
   }
 }
 
