@@ -1041,6 +1041,11 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
     [_main_view_controller linkUpdated:link];
 }
 
+- (void)linkManagerCreatedLink:(InfinitLinkManager*)sender
+{
+  [_sent_sound play];
+}
+
 //- Login Window Protocol --------------------------------------------------------------------------
 
 - (void)tryLogin:(InfinitLoginViewController*)sender
