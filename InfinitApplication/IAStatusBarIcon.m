@@ -72,8 +72,7 @@ static NSDictionary* _grey_style;
   if (self = [super initWithFrame:frame])
   {
     [self addSubview:_icon_view];
-    _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType,
-                   nil];
+    _drag_types = @[NSFilenamesPboardType];
     _number_of_items = 0;
     _connected = gap_user_status_offline;
     _is_transferring = NO;
