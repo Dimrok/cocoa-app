@@ -53,8 +53,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 - (void)dealloc
 {
   _query.delegate = nil;
-  if ([_query isStarted])
-    [_query stopQuery];
+  [_query stopQuery];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
@@ -66,15 +65,13 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   _watch = watch;
   if (_watch)
   {
-    if ([_query isStopped])
-      [_query startQuery];
+    [_query startQuery];
     [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"upload_screenshots"];
     ELLE_LOG("%s: start watching for screenshots", self.description.UTF8String);
   }
   else
   {
-    if ([_query isStarted])
-      [_query stopQuery];
+    [_query stopQuery];
     [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"upload_screenshots"];
     ELLE_LOG("%s: stop watching for screenshots", self.description.UTF8String);
   }
