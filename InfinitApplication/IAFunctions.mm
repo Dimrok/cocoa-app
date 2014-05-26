@@ -427,7 +427,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
       formatter.dateFormat = @"d MMM";
     res = [formatter stringFromDate:transaction_date];
   }
-  return res;
+  return res.capitalizedString;
 }
 
 + (NSString*)osVersionString
