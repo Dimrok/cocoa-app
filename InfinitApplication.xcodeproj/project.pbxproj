@@ -242,7 +242,7 @@
 		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
 		8398835717A6AC96009409B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8398835617A6AC95009409B3 /* Security.framework */; };
 		8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */; };
-		839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.m */; };
+		839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */; };
 		839DFC1817D8ED45001D60DD /* icon-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1617D8ED45001D60DD /* icon-back.png */; };
 		839DFC1917D8ED45001D60DD /* icon-back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 839DFC1717D8ED45001D60DD /* icon-back@2x.png */; };
 		83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8368F2BD17F1890C00135C37 /* libcurl.4.dylib */; };
@@ -893,7 +893,7 @@
 		8398836817A6FDE6009409B3 /* IACentredTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredTextFieldCell.h; sourceTree = "<group>"; };
 		8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredTextFieldCell.m; sourceTree = "<group>"; };
 		839DDCF018D8C7D50021B826 /* InfinitConversationProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationProgressBar.h; sourceTree = "<group>"; };
-		839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationProgressBar.m; sourceTree = "<group>"; };
+		839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitConversationProgressBar.mm; sourceTree = "<group>"; };
 		839DFC1617D8ED45001D60DD /* icon-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back.png"; sourceTree = "<group>"; };
 		839DFC1717D8ED45001D60DD /* icon-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-back@2x.png"; sourceTree = "<group>"; };
 		83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
@@ -1366,7 +1366,7 @@
 				836A679218D790D600A15677 /* InfinitConversationElement.h */,
 				836A679318D790D600A15677 /* InfinitConversationElement.m */,
 				839DDCF018D8C7D50021B826 /* InfinitConversationProgressBar.h */,
-				839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.m */,
+				839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */,
 				8321BE7818E0D33600237252 /* InfinitConversationFileCellView.h */,
 				8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */,
 				837DE2C518E10DBB003A63A8 /* InfinitFileListScrollView.h */,
@@ -2557,7 +2557,7 @@
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
-				839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.m in Sources */,
+				839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */,
 				833C319117CCC85200941C09 /* IADesktopNotifier.mm in Sources */,
 				831AA69F17D0FCC00004AE8D /* IAMeManager.mm in Sources */,
 				8337673819088A820073A621 /* OEXTokenAttachmentCell.m in Sources */,

@@ -10,6 +10,13 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import <algorithm>
+
+namespace
+{
+  const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>::min();
+}
+
 //- Indeterminate Progress Bar ---------------------------------------------------------------------
 
 @interface InfinitConversationBallAnimation : NSView
@@ -42,7 +49,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  if (_x_pos == 0.0)
+  if (_pos_multiplier == 0.0)
     return;
 
   for (NSInteger i = 0; i < 4; i++)
@@ -134,18 +141,28 @@
 
 - (void)setIndeterminate:(BOOL)flag
 {
-  [[NSAnimationContext currentContext] setDuration:0.0];
+  if (_animating)
+  {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    _animating = NO;
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+    {
+      context.duration = kMinimumTimeInterval;
+      [_ball_view setPos_multiplier:0.0];
+    } completionHandler:nil];
+  }
   if (flag)
   {
     _doubleValue = 0.0;
     _ball_view = nil;
     _ball_view = [[InfinitConversationBallAnimation alloc] initWithFrame:self.bounds];
     [self addSubview:_ball_view];
-    [_ball_view setNeedsDisplay:YES];
     [self runBallAnimation];
+    [_ball_view setNeedsDisplay:YES];
   }
   else
   {
+    _animating = YES;
     [_ball_view removeFromSuperview];
     _ball_view = nil;
     [self setNeedsDisplay:YES];
@@ -156,6 +173,8 @@
 - (void)runBallAnimation
 {
   _animating = YES;
+  _ball_view.pos_multiplier = 0.0;
+
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 3.0;
@@ -164,11 +183,8 @@
                       completionHandler:^
    {
      _animating = NO;
-     _ball_view.pos_multiplier = 0.0;
      if (self.isIndeterminate)
-     {
-       [self runBallAnimation];
-     }
+       [self performSelector:@selector(runBallAnimation) withObject:nil afterDelay:3.5];
    }];
 }
 
