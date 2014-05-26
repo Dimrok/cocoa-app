@@ -70,7 +70,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 
 - (void)setWatch:(BOOL)watch
 {
-  if ((watch && [_query isStarted]) || (watch && [_query isStopped]))
+  if ((watch && [_query isStarted]) || (!watch && [_query isStopped]))
     return;
 
   _watch = watch;
