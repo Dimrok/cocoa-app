@@ -42,6 +42,9 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+  if (_x_pos == 0.0)
+    return;
+
   for (NSInteger i = 0; i < 4; i++)
   {
     NSRect ball_rect = _base_ball_rect;
