@@ -133,18 +133,22 @@
 
 - (void)awakeFromNib
 {
-  NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                            traits:NSUnboldFontMask
-                                                            weight:3
-                                                              size:12.0];
-  NSDictionary* attrs = [IAFunctions textStyleWithFont:font
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_GREY_COLOUR(190)
-                                                shadow:nil];
-  NSString* add_str = NSLocalizedString(@"Optional message...", nil);
-  NSAttributedString* add_note = [[NSAttributedString alloc] initWithString:add_str
-                                                                 attributes:attrs];
-  [self.note_field.cell setPlaceholderAttributedString:add_note];
+  // WORKAROUND older versions of OS X don't handle setting of placeholder string well.
+  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
+  {
+    NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                              traits:NSUnboldFontMask
+                                                              weight:3
+                                                                size:12.0];
+    NSDictionary* attrs = [IAFunctions textStyleWithFont:font
+                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                  colour:IA_GREY_COLOUR(190)
+                                                  shadow:nil];
+    NSString* add_str = NSLocalizedString(@"Optional message...", nil);
+    NSAttributedString* add_note = [[NSAttributedString alloc] initWithString:add_str
+                                                                   attributes:attrs];
+    [self.note_field.cell setPlaceholderAttributedString:add_note];
+  }
   self.characters_label.attributedStringValue =
     [[NSAttributedString alloc]initWithString:@"100" attributes:_norm_characters_attrs];
   self.characters_label.hidden = YES;
