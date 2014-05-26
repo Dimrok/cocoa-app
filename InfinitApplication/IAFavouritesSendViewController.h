@@ -10,6 +10,7 @@
 
 #import "IAFavouriteView.h"
 #import "IAFavouritesView.h"
+#import "InfinitLinkShortcutView.h"
 
 @protocol IAFavouritesSendViewProtocol;
 
@@ -37,6 +38,9 @@
 - (void)favouritesView:(IAFavouritesSendViewController*)sender
          gotDropOnUser:(IAUser*)user
              withFiles:(NSArray*)files;
+
+- (void)favouritesView:(IAFavouritesSendViewController*)sender
+  gotDropLinkWithFiles:(NSArray*)files;
 
 - (void)favouritesViewWantsClose:(IAFavouritesSendViewController*)sender;
 

@@ -179,7 +179,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   if (shadow_radius > 0.0)
   {
     shadow.shadowBlurRadius = shadow_radius;
-    shadow.shadowColor = IA_RGBA_COLOUR(32.0, 32.0, 32.0, 0.2);
+    shadow.shadowColor = IA_GREY_COLOUR(0);
     shadow.shadowOffset = NSZeroSize;
     [shadow set];
   }

@@ -48,9 +48,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   if (!_send_view_open)
   {
     [self cancelOpenFavourites];
-    [self performSelector:@selector(showFavourites)
-               withObject:nil
-               afterDelay:0.5];
+    [self showFavourites];
   }
 }
 
@@ -263,6 +261,14 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 {
   [_favourites_send_controller hideFavourites];
   _favourites_send_controller = nil;
+}
+
+- (void)favouritesView:(IAFavouritesSendViewController*)sender
+  gotDropLinkWithFiles:(NSArray*)files
+{
+  [_favourites_send_controller hideFavourites];
+  _favourites_send_controller = nil;
+  [_delegate sendController:self wantsCreateLink:files withMessage:@""];
 }
 
 //- Onboarding Protocol ----------------------------------------------------------------------------

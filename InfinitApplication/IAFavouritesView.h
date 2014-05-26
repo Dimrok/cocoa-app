@@ -9,10 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 #import "IAFavouriteView.h"
+#import "InfinitLinkShortcutView.h"
 
 @protocol IAFavouritesViewProtocol;
 
-@interface IAFavouritesView : NSView <IAFavouriteViewProtocol>
+@interface IAFavouritesView : NSView <IAFavouriteViewProtocol,
+                                      InfinitLinkShortcutViewProtocol>
 
 - (id)initWithFrame:(NSRect)frameRect;
 
@@ -27,5 +29,7 @@
 - (void)favouritesView:(IAFavouritesView*)sender
          gotDropOnUser:(IAUser*)user
              withFiles:(NSArray*)files;
+- (void)linkViewGotDrop:(InfinitLinkShortcutView*)sender
+              withFiles:(NSArray*)files;
 
 @end

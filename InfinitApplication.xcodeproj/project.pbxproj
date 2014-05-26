@@ -266,6 +266,7 @@
 		83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC54E186047EE00EB277E /* sound_sent.aiff */; };
 		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
 		83C30A2A193298BF00D07D2C /* InfinitScreenshotManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */; };
+		83C30A411933EA5100D07D2C /* InfinitLinkShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A401933EA5100D07D2C /* InfinitLinkShortcutView.m */; };
 		83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83C709851822E22C00F530C4 /* libz.1.2.8.dylib */; };
 		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
 		83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C7599017AA428700BE6CD5 /* IAWindowController.xib */; };
@@ -917,6 +918,8 @@
 		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
 		83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitScreenshotManager.h; sourceTree = "<group>"; };
 		83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitScreenshotManager.mm; sourceTree = "<group>"; };
+		83C30A3F1933EA5100D07D2C /* InfinitLinkShortcutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkShortcutView.h; sourceTree = "<group>"; };
+		83C30A401933EA5100D07D2C /* InfinitLinkShortcutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkShortcutView.m; sourceTree = "<group>"; };
 		83C709851822E22C00F530C4 /* libz.1.2.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.8.dylib; path = ../../../Externals/lib/libz.1.2.8.dylib; sourceTree = "<group>"; };
 		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
 		83C7598F17AA428700BE6CD5 /* IAWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAWindowController.m; sourceTree = "<group>"; };
@@ -1090,6 +1093,8 @@
 				83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */,
 				83014AC517BB742700ECDE96 /* IAFavouritesView.h */,
 				83014AC617BB742700ECDE96 /* IAFavouritesView.m */,
+				83C30A3F1933EA5100D07D2C /* InfinitLinkShortcutView.h */,
+				83C30A401933EA5100D07D2C /* InfinitLinkShortcutView.m */,
 			);
 			name = "Favourites Send View";
 			sourceTree = "<group>";
@@ -2516,6 +2521,7 @@
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,
 				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */,
 				838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */,
+				83C30A411933EA5100D07D2C /* InfinitLinkShortcutView.m in Sources */,
 				83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */,
 				832808CF17A2C1480025B6F8 /* IAFunctions.mm in Sources */,
 				832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */,

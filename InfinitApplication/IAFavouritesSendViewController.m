@@ -8,6 +8,10 @@
 
 #import "IAFavouritesSendViewController.h"
 
+#import "InfinitMetricsManager.h"
+
+#import <QuartzCore/QuartzCore.h>
+
 @interface IAFavouritesSendViewController ()
 @end
 
@@ -34,8 +38,10 @@
   NSMutableArray* _favourite_views;
   NSWindow* _window;
   NSSize _favourite_size;
+  NSSize _link_size;
   NSPoint _start_pos;
   BOOL _window_open;
+  InfinitLinkShortcutView* _link_view;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -61,7 +67,8 @@
   {
     _delegate = delegate;
     _favourite_views = [NSMutableArray array];
-    _favourite_size = NSMakeSize(80.0, 75.0); // Add space for name at the bottom
+    _favourite_size = NSMakeSize(80.0, 80.0);
+    _link_size = NSMakeSize(70.0, 70.0);
   }
   return self;
 }
@@ -113,24 +120,34 @@
   return NSMakeRect(x, y, _favourite_size.width, _favourite_size.height);
 }
 
-- (void)addFavouriteSubViews
+- (void)addSubViews
 {
+  NSRect favourite_rect = NSMakeRect(_start_pos.x, _start_pos.y,
+                                     _favourite_size.width, _favourite_size.height);
   for (IAUser* favourite in _favourites)
   {
-    NSRect favourite_rect = NSMakeRect(_start_pos.x,
-                                       _start_pos.y,
-                                       _favourite_size.width,
-                                       _favourite_size.height);
-    IAFavouriteView* favourite_view = [[IAFavouriteView alloc]
-                                       initWithFrame:favourite_rect
-                                       andDelegate:self.favourites_view
-                                       andUser:favourite];
+    IAFavouriteView* favourite_view = [[IAFavouriteView alloc] initWithFrame:favourite_rect
+                                                                 andDelegate:self.favourites_view
+                                                                     andUser:favourite];
     [self.favourites_view addSubview:favourite_view];
     [_favourite_views addObject:favourite_view];
   }
+
+  NSRect link_rect = NSMakeRect(_start_pos.x, _start_pos.y, _link_size.width, _link_size.height);
+  _link_view = [[InfinitLinkShortcutView alloc] initWithFrame:link_rect
+                                                  andDelegate:self.favourites_view];
+  [self.favourites_view addSubview:_link_view];
+
+  NSPoint link_pos =
+    NSMakePoint((NSWidth(self.favourites_view.frame) - _link_size.width) / 2.0,
+                (NSHeight(self.favourites_view.frame) - _link_size.height) / 2.0 + 40.0);
+
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
-     context.duration = 0.2;
+     context.duration = 0.3;
+     context.timingFunction =
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+     [_link_view.animator setFrameOrigin:link_pos];
      NSInteger i = 0;
      for (IAFavouriteView* fav_view in _favourite_views)
      {
@@ -139,6 +156,7 @@
    }
                       completionHandler:^
    {
+     [_link_view setFrameOrigin:link_pos];
      NSInteger i = 0;
      for (IAFavouriteView* fav_view in _favourite_views)
      {
@@ -155,7 +173,7 @@
   _window_open = YES;
   
   NSMutableArray* temp_arr =
-  [NSMutableArray arrayWithArray:[_delegate favouritesViewWantsFavourites:self]];
+    [NSMutableArray arrayWithArray:[_delegate favouritesViewWantsFavourites:self]];
   // If we don't have favourites, add some swaggers
   if (temp_arr.count < 5)
   {
@@ -191,8 +209,8 @@
   _window.contentView = self.view;
   
   [_window makeKeyAndOrderFront:nil];
-  
-  [self addFavouriteSubViews];
+
+  [self addSubViews];
   
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
@@ -215,6 +233,7 @@
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.2;
+     [_link_view.animator setFrameOrigin:_start_pos];
      for (IAFavouriteView* fav_view in _favourite_views)
      {
        [fav_view.animator setFrameOrigin:_start_pos];
@@ -222,6 +241,7 @@
    }
                       completionHandler:^
    {
+     [_link_view setFrameOrigin:_start_pos];
      for (IAFavouriteView* fav_view in _favourite_views)
      {
        [fav_view setFrameOrigin:_start_pos];
@@ -257,6 +277,14 @@
   [_delegate favouritesView:self
               gotDropOnUser:user
                   withFiles:files];
+}
+
+- (void)linkViewGotDrop:(InfinitLinkShortcutView*)sender
+              withFiles:(NSArray*)files
+{
+  [_delegate favouritesView:self gotDropLinkWithFiles:files];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_FAVOURITES_LINK_DROP];
+  
 }
 
 @end

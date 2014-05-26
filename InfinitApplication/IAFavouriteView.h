@@ -10,7 +10,7 @@
 
 @protocol IAFavouriteViewProtocol;
 
-@interface IAFavouriteView : NSView
+@interface IAFavouriteView : NSView <NSDraggingDestination>
 
 @property (nonatomic, readonly) IAUser* user;
 
