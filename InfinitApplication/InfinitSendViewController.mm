@@ -411,19 +411,20 @@
     [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
   }
   // Onboarding
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
+  InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
+  if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
   {
     [self performSelector:@selector(delayedOnboardSendFilesNoDestination) withObject:nil afterDelay:0.5];
   }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
   {
     [self performSelector:@selector(delayedOnboardSendNoFilesNoDestination) withObject:nil afterDelay:0.5];
   }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
+  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
   {
     [self performSelector:@selector(delayedOnboardSendNoFilesDestination) withObject:nil afterDelay:0.5];
   }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
+  else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
   {
     [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
   }
@@ -518,6 +519,21 @@
       [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_DESTINATION];
       [_tooltip close];
       [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
+    }
+  }
+  else
+  {
+    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendNoFilesNoDestination) withObject:nil afterDelay:0.5];
+    }
+    else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendNoFilesDestination) withObject:nil afterDelay:0.5];
     }
   }
 }
@@ -706,6 +722,39 @@ wantsRemoveFavourite:(IAUser*)user
 
 - (void)searchViewInputsChanged:(IAUserSearchViewController*)sender
 {
+  // Change the onboarding state according to how the recipients have changed.
+  InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
+  NSArray* recipients = [_search_controller recipientList];
+  if (recipients.count > 0)
+  {
+    if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendNoFilesDestination) withObject:nil afterDelay:0.5];
+    }
+    else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
+    }
+  }
+  else
+  {
+    if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendNoFilesNoDestination) withObject:nil afterDelay:0.5];
+    }
+    else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
+    {
+      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION];
+      [_tooltip close];
+      [self performSelector:@selector(delayedOnboardSendFilesNoDestination) withObject:nil afterDelay:0.5];
+    }
+  }
   [self setSendButtonState];
 }
 

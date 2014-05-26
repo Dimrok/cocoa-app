@@ -194,9 +194,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
   if ([[_delegate receiveOnboardingTransaction:self] other_user] == _user)
   {
-    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
-        [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-        [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
+    InfinitOnboardingState onboard_state = [_delegate onboardingState:self];
+    if (onboard_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
+        onboard_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
+        onboard_state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION ||
+        onboard_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
     {
       [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
       [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:0.5];
@@ -215,9 +217,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)delayedStartOnboarding
 {
-  NSInteger row = [self _rowForTransaction:[_delegate receiveOnboardingTransaction:self]];
+  IATransaction* onboarding_transaction = [_delegate receiveOnboardingTransaction:self];
+  NSInteger row = [self _rowForTransaction:onboarding_transaction];
   if (row == -1)
     return;
+
+  if (onboarding_transaction.view_mode != TRANSACTION_VIEW_WAITING_ACCEPT)
+  {
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_DONE];
+  }
 
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
@@ -232,7 +240,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)delayedStatusOnboarding
 {
-  NSInteger row = [self _rowForTransaction:[_delegate sendOnboardingTransaction:self]];
+  IATransaction* onboarding_transaction = [_delegate sendOnboardingTransaction:self];
+  NSInteger row = [self _rowForTransaction:onboarding_transaction];
   if (row == -1)
     return;
 
@@ -480,8 +489,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
     [_tooltip close];
-    NSString* message = NSLocalizedString(@"Click here when it's done to open the file",
-                                          nil);
+    NSString* message = NSLocalizedString(@"Click here when it's done to open the file", nil);
     [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
                withObject:message
                afterDelay:0.5];

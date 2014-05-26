@@ -381,22 +381,24 @@
   else
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
 
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
+  InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
+
+  if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON];
     [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
   }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-           [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
+  else if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
+           onboarding_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
   {
     [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
   }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
   {
     [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:0.5];
   }
-  else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENDING ||
-           [_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
+  else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILE_SENDING ||
+           onboarding_state == INFINIT_ONBOARDING_SEND_FILE_SENT)
   {
     [_transaction_controller performSelector:@selector(delayedFileSentOnboarding) withObject:nil afterDelay:0.5];
   }
