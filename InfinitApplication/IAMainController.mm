@@ -1265,9 +1265,6 @@ hadConnectionStateChange:(gap_UserStatus)status
       [self performSelector:@selector(delayShowClippyDragAndDrop) withObject:nil afterDelay:3.0];
       return;
       
-    case INFINIT_ONBOARDING_DONE:
-      [self saveOnboardingDone];
-      
     default:
       return;
   }
@@ -1381,7 +1378,8 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)screenshotManager:(InfinitScreenshotManager*)sender
             gotScreenshot:(NSString*)path
 {
-  [_link_manager createLinkWithFiles:@[path] withMessage:@""];
+  if ([_me_manager connection_status] == gap_user_status_online)
+    [_link_manager createLinkWithFiles:@[path] withMessage:@""];
 }
 
 //- Stay Awake Manager Protocol --------------------------------------------------------------------
