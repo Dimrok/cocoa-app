@@ -62,7 +62,8 @@
 - (void)setPos_multiplier:(CGFloat)pos_multiplier
 {
   _pos_multiplier = pos_multiplier;
-  [self setNeedsDisplay:YES];
+  if (_pos_multiplier > 0.0)
+    [self setNeedsDisplay:YES];
 }
 
 + (id)defaultAnimationForKey:(NSString*)key
@@ -122,7 +123,7 @@
 
 - (void)setDoubleValue:(CGFloat)doubleValue
 {
-  if (doubleValue < _doubleValue || doubleValue > self.maxValue || doubleValue < self.minValue)
+  if (doubleValue > self.maxValue || doubleValue < self.minValue)
     return;
   _doubleValue = doubleValue;
   [self setNeedsDisplay:YES];
@@ -130,6 +131,7 @@
 
 - (void)setIndeterminate:(BOOL)flag
 {
+  [[NSAnimationContext currentContext] setDuration:0.0];
   if (flag)
   {
     _doubleValue = 0.0;
@@ -141,7 +143,6 @@
   }
   else
   {
-    [[NSAnimationContext currentContext] setDuration:0.0];
     [_ball_view removeFromSuperview];
     _ball_view = nil;
     [self setNeedsDisplay:YES];
