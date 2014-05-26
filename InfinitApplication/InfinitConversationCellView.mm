@@ -102,17 +102,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   _tracking_area = nil;
 }
 
-- (void)resetCursorRects
-{
-  [super resetCursorRects];
-  NSCursor* cursor;
-  if (self.clickable)
-    cursor = [NSCursor pointingHandCursor];
-  else
-    cursor = [NSCursor arrowCursor];
-  [self addCursorRect:self.bounds cursor:cursor];
-}
-
 - (void)createTrackingArea
 {
   _tracking_area = [[NSTrackingArea alloc] initWithRect:self.bounds
