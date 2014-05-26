@@ -41,8 +41,16 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
                                              selector:@selector(gotScreenShot:)
                                                  name:NSMetadataQueryDidUpdateNotification
                                                object:_query];
+    NSPredicate* main_predicate = [NSPredicate predicateWithFormat:@"kMDItemIsScreenCapture = 1"];
+    NSPredicate* type_predicate =
+      [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'public.image'"];
+    NSPredicate* time_predicate =
+      [NSPredicate predicateWithFormat:@"kMDItemContentCreationDate > %@", [NSDate date]];
     _query.delegate = self;
-    _query.predicate = [NSPredicate predicateWithFormat:@"kMDItemIsScreenCapture = 1"];
+    _query.predicate =
+      [NSCompoundPredicate andPredicateWithSubpredicates:@[main_predicate, type_predicate, time_predicate]];
+    _query.notificationBatchingInterval = 0.1;
+    _query.searchScopes = @[NSMetadataQueryUserHomeScope];
 
     if (_watch)
       [_query startQuery];
@@ -58,10 +66,13 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-//- Watching ----------------------------------------------------------------------------
+//- Watching ---------------------------------------------------------------------------------------
 
 - (void)setWatch:(BOOL)watch
 {
+  if ((watch && [_query isStarted]) || (watch && [_query isStopped]))
+    return;
+
   _watch = watch;
   if (_watch)
   {
