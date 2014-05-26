@@ -49,11 +49,9 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     NSPredicate* main_predicate = [NSPredicate predicateWithFormat:@"kMDItemIsScreenCapture = 1"];
     NSPredicate* type_predicate =
       [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'public.image'"];
-    NSPredicate* time_predicate =
-      [NSPredicate predicateWithFormat:@"kMDItemContentCreationDate > %@", [NSDate date]];
     _query.delegate = self;
     _query.predicate =
-      [NSCompoundPredicate andPredicateWithSubpredicates:@[main_predicate, type_predicate, time_predicate]];
+      [NSCompoundPredicate andPredicateWithSubpredicates:@[main_predicate, type_predicate]];
     _query.notificationBatchingInterval = 0.1;
     _query.searchScopes = @[[self screenCaptureLocation]];
 
@@ -119,8 +117,10 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 
   if (data_item == nil)
     return;
+
+  NSDate* new_date = [data_item valueForAttribute:NSMetadataItemFSCreationDateKey];
   
-  if ([data_item valueForAttribute:NSMetadataItemFSContentChangeDateKey] <= _last_capture_time)
+  if ([new_date compare:_last_capture_time] == NSOrderedAscending)
     return;
 
   NSString* screenshot_path = [data_item valueForAttribute:NSMetadataItemPathKey];
