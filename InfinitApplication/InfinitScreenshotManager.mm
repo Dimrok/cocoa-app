@@ -22,6 +22,9 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   NSMetadataQuery* _query;
 
   BOOL _watch;
+
+  // Used to ensure that we only upload new screenshots.
+  NSDate* _last_capture_time;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -41,6 +44,8 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
                                              selector:@selector(gotScreenShot:)
                                                  name:NSMetadataQueryDidUpdateNotification
                                                object:_query];
+    _last_capture_time = [NSDate date];
+
     NSPredicate* main_predicate = [NSPredicate predicateWithFormat:@"kMDItemIsScreenCapture = 1"];
     NSPredicate* type_predicate =
       [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'public.image'"];
@@ -50,12 +55,29 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     _query.predicate =
       [NSCompoundPredicate andPredicateWithSubpredicates:@[main_predicate, type_predicate, time_predicate]];
     _query.notificationBatchingInterval = 0.1;
-    _query.searchScopes = @[NSMetadataQueryUserHomeScope];
+    _query.searchScopes = @[[self screenCaptureLocation]];
 
     if (_watch)
       [_query startQuery];
   }
   return self;
+}
+
+- (NSString*)screenCaptureLocation
+{
+	NSString* location =
+    [[[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.apple.screencapture"] objectForKey:@"location"];
+	if (location)
+  {
+		location = [location stringByExpandingTildeInPath];
+		if (![location hasSuffix:@"/"])
+    {
+			location = [location stringByAppendingString:@"/"];
+		}
+		return location;
+	}
+
+	return [[@"~/Desktop" stringByExpandingTildeInPath] stringByAppendingString:@"/"];
 }
 
 - (void)dealloc
@@ -94,11 +116,19 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 - (void)gotScreenShot:(NSNotification*)notification
 {
   NSMetadataItem* data_item = [notification.userInfo[@"kMDQueryUpdateAddedItems"] lastObject];
+
   if (data_item == nil)
     return;
+  
+  if ([data_item valueForAttribute:NSMetadataItemFSContentChangeDateKey] <= _last_capture_time)
+    return;
+
   NSString* screenshot_path = [data_item valueForAttribute:NSMetadataItemPathKey];
   if (screenshot_path.length == 0)
     return;
+
+  _last_capture_time = [NSDate date];
+
   ELLE_LOG("%s: got screenshot with path: %s",
            self.description.UTF8String, screenshot_path.UTF8String);
   [_delegate screenshotManager:self gotScreenshot:screenshot_path];
