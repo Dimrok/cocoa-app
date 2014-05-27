@@ -294,6 +294,8 @@
 - (void)fixClipView
 {
   // WORKAROUND for clipping of tokens
+  if (self.search_field.subviews.count == 0)
+    return;
   NSView* clip_view = self.search_field.subviews[0];
   if ([self.search_field.objectValue count] == 0)
   {
