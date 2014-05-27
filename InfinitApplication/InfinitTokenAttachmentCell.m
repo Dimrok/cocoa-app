@@ -123,7 +123,7 @@ static NSDictionary* _sel_attrs;
   }
   else
   {
-    avatar_rect = NSMakeRect(token_rect.origin.x - 1.0, token_rect.origin.y, 24.0, 24.0);
+    avatar_rect = NSMakeRect(token_rect.origin.x - 1.0, token_rect.origin.y, 24.0, 25.0);
   }
   
   NSBezierPath* clip = [IAFunctions roundedLeftSideBezierWithRect:avatar_rect
