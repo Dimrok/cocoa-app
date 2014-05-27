@@ -529,12 +529,16 @@ static NSDictionary* _grey_style;
   if (files.count > 0)
   {
     if (_show_link)
+    {
       [_delegate statusBarIconLinkDrop:self withFiles:files];
+      [InfinitMetricsManager sendMetric:INFINIT_METRIC_STATUS_ICON_LINK_DROP];
+    }
     else
+    {
       [_delegate statusBarIconDragDrop:self withFiles:files];
+      [InfinitMetricsManager sendMetric:INFINIT_METRIC_DROP_STATUS_BAR_ICON];
+    }
   }
-  
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_DROP_STATUS_BAR_ICON];
 
   if (_show_link)
   {
