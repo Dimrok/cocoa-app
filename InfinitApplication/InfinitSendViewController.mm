@@ -432,6 +432,12 @@
   }
 }
 
+- (void)aboutToChangeView
+{
+  if (_tooltip != nil)
+    [_tooltip close];
+}
+
 - (void)delayedOnboardSendFilesNoDestination
 {
   if (_tooltip == nil)
