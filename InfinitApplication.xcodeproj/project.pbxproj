@@ -69,7 +69,7 @@
 		8328083217A2B4A60025B6F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8328083017A2B4A60025B6F8 /* InfoPlist.strings */; };
 		8328083517A2B4A60025B6F8 /* InfinitApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8328083417A2B4A60025B6F8 /* InfinitApplicationTests.m */; };
 		8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8328084117A2B51F0025B6F8 /* application_icon.icns */; };
-		832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 832808C617A2BBD70025B6F8 /* IAStatusBarIcon.m */; };
+		832808C717A2BBD70025B6F8 /* IAStatusBarIcon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808C617A2BBD70025B6F8 /* IAStatusBarIcon.mm */; };
 		832808CF17A2C1480025B6F8 /* IAFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808CE17A2C1480025B6F8 /* IAFunctions.mm */; };
 		832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808D117A2C9E40025B6F8 /* IAMainController.mm */; };
 		832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808E617A2E5C10025B6F8 /* IANotLoggedInViewController.mm */; };
@@ -687,7 +687,7 @@
 		8328084117A2B51F0025B6F8 /* application_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = application_icon.icns; sourceTree = "<group>"; };
 		8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = ../Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		832808C517A2BBD70025B6F8 /* IAStatusBarIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAStatusBarIcon.h; sourceTree = "<group>"; };
-		832808C617A2BBD70025B6F8 /* IAStatusBarIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAStatusBarIcon.m; sourceTree = "<group>"; };
+		832808C617A2BBD70025B6F8 /* IAStatusBarIcon.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = IAStatusBarIcon.mm; sourceTree = "<group>"; };
 		832808CD17A2C1470025B6F8 /* IAFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFunctions.h; sourceTree = "<group>"; };
 		832808CE17A2C1480025B6F8 /* IAFunctions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAFunctions.mm; sourceTree = "<group>"; };
 		832808D017A2C9E40025B6F8 /* IAMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMainController.h; sourceTree = "<group>"; };
@@ -1287,7 +1287,7 @@
 			children = (
 				832808CC17A2C0C40025B6F8 /* Images */,
 				832808C517A2BBD70025B6F8 /* IAStatusBarIcon.h */,
-				832808C617A2BBD70025B6F8 /* IAStatusBarIcon.m */,
+				832808C617A2BBD70025B6F8 /* IAStatusBarIcon.mm */,
 			);
 			name = "Status Bar Icon";
 			sourceTree = "<group>";
@@ -2519,7 +2519,7 @@
 				83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,
-				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.m in Sources */,
+				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.mm in Sources */,
 				838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */,
 				83C30A411933EA5100D07D2C /* InfinitLinkShortcutView.m in Sources */,
 				83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */,

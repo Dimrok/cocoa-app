@@ -13,6 +13,13 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import <algorithm>
+
+namespace
+{
+  const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>::min();
+}
+
 typedef enum __IAStatusBarIconStatus
 {
   STATUS_BAR_ICON_NORMAL = 0,
@@ -304,7 +311,14 @@ static NSDictionary* _grey_style;
     IAStatusBarIconStatus last_mode = _current_mode;
     // WORKAROUND Stop the animation to avoid spin locks on 10.7/10.8.
     if (_animating)
-      [[NSAnimationContext currentContext] setDuration:0.0];
+    {
+      [NSObject cancelPreviousPerformRequestsWithTarget:self];
+      _animating = NO;
+      [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+       {
+         context.duration = kMinimumTimeInterval;
+       } completionHandler:nil];
+    }
     if (_is_highlighted)
     {
       _current_mode = STATUS_BAR_ICON_CLICKED;
