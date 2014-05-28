@@ -1255,6 +1255,13 @@ hadConnectionStateChange:(gap_UserStatus)status
 {
   switch (state)
   {
+    case INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON:
+    case INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW:
+      [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                               selector:@selector(waitForUserToClickNotification)
+                                                 object:nil];
+      return;
+
     case INFINIT_ONBOARDING_RECEIVE_NO_ACTION:
       [self showClippyViewWithMode:INFINIT_CLIPPY_TRANSFER_PENDING];
       return;
@@ -1276,7 +1283,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (void)delayShowClippyDragAndDrop
 {
-  if (_current_view_controller == nil && [self onboardingState:nil] != INFINIT_ONBOARDING_DONE)
+  if (_current_view_controller == nil)
     [self showClippyViewWithMode:INFINIT_CLIPPY_DRAG_AND_DROP];
 }
 
