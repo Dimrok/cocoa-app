@@ -430,6 +430,7 @@
 
 - (BOOL)closeOnFocusLost
 {
+  [_transaction_controller closeToolTips];
   return YES;
 }
 
@@ -437,6 +438,8 @@
 {
   if (_current_controller == _transaction_controller)
     _transaction_controller.changing = YES;
+  else if (_current_controller == _link_controller)
+    _link_controller.changing = YES;
   [_tooltip close];
   [_transaction_controller closeToolTips];
   [_transaction_controller markTransactionsRead];
