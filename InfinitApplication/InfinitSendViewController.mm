@@ -402,12 +402,14 @@
     _note_controller.link_mode = YES;
     self.search_constraint.constant = 0.0;
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
+    self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
     [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
   }
   else
   {
     [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
     self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
+    self.send_button.toolTip = NSLocalizedString(@"Send", nil);
     [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
   }
   // Onboarding
@@ -776,6 +778,7 @@ wantsRemoveFavourite:(IAUser*)user
   [self.user_link_view setMode:INFINIT_USER_MODE];
   _note_controller.link_mode = NO;
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
+  self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
    {
      context.duration = 0.15;
@@ -786,7 +789,6 @@ wantsRemoveFavourite:(IAUser*)user
      [self.view.window makeFirstResponder:_search_controller.search_field];
      [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
      [self setSendButtonState];
-     self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
    }];
 }
 
@@ -795,6 +797,7 @@ wantsRemoveFavourite:(IAUser*)user
   [self.user_link_view setMode:INFINIT_LINK_MODE];
   _note_controller.link_mode = YES;
   self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
+  self.send_button.toolTip = NSLocalizedString(@"Send", nil);
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
   {
     context.duration = 0.15;
@@ -805,7 +808,6 @@ wantsRemoveFavourite:(IAUser*)user
     [self.view.window makeFirstResponder:_note_controller.note_field];
     [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
     [self setSendButtonState];
-    self.send_button.toolTip = NSLocalizedString(@"Send", nil);
   }];
 }
 
