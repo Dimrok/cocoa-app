@@ -52,7 +52,6 @@
 		831AA69F17D0FCC00004AE8D /* IAMeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831AA69E17D0FCC00004AE8D /* IAMeManager.mm */; };
 		831B024A190719EA00018B7C /* InfinitSearchTokenFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 831B0249190719EA00018B7C /* InfinitSearchTokenFieldCell.m */; };
 		831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; };
-		831BC170192A64F200B13B61 /* Infinit - Episode 1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 83019CA6192532B100423FCA /* Infinit - Episode 1.mp4 */; };
 		831E22D6183E563800F0623C /* InfinitSearchController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831E22D5183E563800F0623C /* InfinitSearchController.mm */; };
 		831E22D9183E565300F0623C /* InfinitSearchPersonResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831E22D8183E565300F0623C /* InfinitSearchPersonResult.mm */; };
 		831FB21E17A8FE1700696604 /* IAAvatarManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831FB21D17A8FE1700696604 /* IAAvatarManager.mm */; };
@@ -263,6 +262,7 @@
 		83B9744518842F540089E0E0 /* InfinitSendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B9744418842F540089E0E0 /* InfinitSendFileListCellView.m */; };
 		83B9BFC1191C338400B34659 /* icon-contact-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B9BFBF191C338400B34659 /* icon-contact-checked.png */; };
 		83B9BFC2191C338400B34659 /* icon-contact-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83B9BFC0191C338400B34659 /* icon-contact-checked@2x.png */; };
+		83BDF6701935955200DDA4E6 /* Infinit - Episode 2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 83BDF66F193594FA00DDA4E6 /* Infinit - Episode 2.mp4 */; };
 		83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC54E186047EE00EB277E /* sound_sent.aiff */; };
 		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
 		83C30A2A193298BF00D07D2C /* InfinitScreenshotManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */; };
@@ -610,7 +610,6 @@
 		83019C8B1925326200423FCA /* icon-clipboard-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-clipboard-hover@2x.png"; path = "../../../../fist-resources/slices/view_main/icon-clipboard-hover@2x.png"; sourceTree = "<group>"; };
 		83019CA21925326F00423FCA /* icon-share-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-share-hover.png"; path = "../../../../fist-resources/slices/view_main/icon-share-hover.png"; sourceTree = "<group>"; };
 		83019CA31925326F00423FCA /* icon-share-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-share-hover@2x.png"; path = "../../../../fist-resources/slices/view_main/icon-share-hover@2x.png"; sourceTree = "<group>"; };
-		83019CA6192532B100423FCA /* Infinit - Episode 1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Infinit - Episode 1.mp4"; path = "../../../../fist-resources/onboarding_videos/Infinit - Episode 1.mp4"; sourceTree = "<group>"; };
 		83019CA71925354300423FCA /* InfinitLinkIconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkIconManager.h; sourceTree = "<group>"; };
 		83019CA81925354300423FCA /* InfinitLinkIconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkIconManager.m; sourceTree = "<group>"; };
 		83019CAA19253A4000423FCA /* archive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = archive.png; path = "../../../../fist-resources/slices/mimetypes/archive.png"; sourceTree = "<group>"; };
@@ -914,6 +913,7 @@
 		83B9744418842F540089E0E0 /* InfinitSendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFileListCellView.m; sourceTree = "<group>"; };
 		83B9BFBF191C338400B34659 /* icon-contact-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-contact-checked.png"; path = "../../../../fist-resources/slices/view_send/icon-contact-checked.png"; sourceTree = "<group>"; };
 		83B9BFC0191C338400B34659 /* icon-contact-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-contact-checked@2x.png"; path = "../../../../fist-resources/slices/view_send/icon-contact-checked@2x.png"; sourceTree = "<group>"; };
+		83BDF66F193594FA00DDA4E6 /* Infinit - Episode 2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Infinit - Episode 2.mp4"; path = "../../../../fist-resources/onboarding_videos/Infinit - Episode 2.mp4"; sourceTree = "<group>"; };
 		83BEC54E186047EE00EB277E /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_sent.aiff; sourceTree = "<group>"; };
 		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
 		83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitScreenshotManager.h; sourceTree = "<group>"; };
@@ -1236,7 +1236,7 @@
 		8328084017A2B5100025B6F8 /* Common Resources */ = {
 			isa = PBXGroup;
 			children = (
-				83019CA6192532B100423FCA /* Infinit - Episode 1.mp4 */,
+				83BDF66F193594FA00DDA4E6 /* Infinit - Episode 2.mp4 */,
 				83059E0A19213B42008DA14A /* Montserrat.ttf */,
 				837DE2DE18E2121A003A63A8 /* icon-status-online.png */,
 				837DE2DF18E2121A003A63A8 /* icon-status-online@2x.png */,
@@ -2209,7 +2209,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831BC170192A64F200B13B61 /* Infinit - Episode 1.mp4 in Resources */,
+				83BDF6701935955200DDA4E6 /* Infinit - Episode 2.mp4 in Resources */,
 				83CC2C5619252FDA00EBB96E /* icon-share.png in Resources */,
 				83019C8C1925326200423FCA /* icon-clipboard-hover.png in Resources */,
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
