@@ -789,14 +789,18 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     return;
   _onboard_controller = [[InfinitOnboardingController alloc] initWithDeleage:self
                                                        andReceiveTransaction:fake_transaction];
+  [_onboard_controller setState:INFINIT_ONBOARDING_RECEIVE_NOTIFICATION];
   [self performSelector:@selector(waitForUserToClickNotification) withObject:nil afterDelay:10.0];
 }
 
 - (void)waitForUserToClickNotification
 {
   // The user didn't react to the desktop notification so follow track for didn't do anything.
-  if (_current_view_controller == nil)
+  if (_current_view_controller == nil &&
+      _onboard_controller.state != INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON)
+  {
     _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_NO_ACTION;
+  }
 }
 
 - (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
@@ -911,6 +915,7 @@ hadClickNotificationForLinkId:(NSNumber*)transaction_id
             wantsCreateLink:(NSArray*)files
                 withMessage:(NSString*)message
 {
+  [_sent_sound play];
   return [_link_manager createLinkWithFiles:files withMessage:message];
 }
 
@@ -1045,7 +1050,6 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 - (void)linkManagerCreatedLink:(InfinitLinkManager*)sender
 {
-  [_sent_sound play];
 }
 
 //- Login Window Protocol --------------------------------------------------------------------------
@@ -1357,6 +1361,7 @@ hadConnectionStateChange:(gap_UserStatus)status
                     withFiles:(NSArray*)files
 {
   [_link_manager createLinkWithFiles:files withMessage:@""];
+  [_sent_sound play];
 }
 
 - (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
