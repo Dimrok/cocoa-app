@@ -227,9 +227,10 @@
 {
   _changing = changing;
   if (changing)
+  {
     [_progress_timer invalidate];
-  else
-    [self updateListOfRowsWithProgress];
+    _progress_timer = nil;
+  }
 }
 
 - (void)resizeView
