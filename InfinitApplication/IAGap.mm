@@ -142,6 +142,7 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
     setenv("ELLE_LOG_LEVEL",
            "*trophonius*:TRACE,"
            "*meta*:TRACE,"
+           "surface.gap.*:TRACE,"
            "surface.gap.*.State:TRACE,"
            "surface.gap.*.Transition:TRACE,"
            "surface.gap.TransactionMachine:TRACE,"
@@ -149,7 +150,7 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
            "surface.gap.State.Transaction:TRACE,"
            "surface.gap.Transaction:TRACE,"
            "reactor.fsm.*:TRACE,"
-           "frete.Frete:DEBUG,"
+           "frete.Frete:TRACE,"
            "station.Station:DEBUG,"
            "infinit.surface.gap.Rounds:DEBUG,"
            "OSX*:DUMP"
@@ -172,6 +173,8 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
     
 #ifdef BUILD_PRODUCTION
     production = true;
+
+    setenv("INFINIT_LOCAL_ADDRESS", "1.1.1.1", 1);
     
     setenv("INFINIT_METRICS_INFINIT", "1", 1);
     setenv("INFINIT_METRICS_INFINIT_HOST", "metrics.9.0.api.production.infinit.io", 1);
@@ -193,7 +196,7 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
 //    setenv("INFINIT_METRICS_INFINIT", "1", 1);
 //    setenv("INFINIT_METRICS_INFINIT_HOST", "127.0.0.1", 1);
 //    setenv("INFINIT_METRICS_INFINIT_PORT", "8282", 1);
-    
+
     setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
     
