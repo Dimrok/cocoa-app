@@ -173,8 +173,6 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
     
 #ifdef BUILD_PRODUCTION
     production = true;
-
-    setenv("INFINIT_LOCAL_ADDRESS", "1.1.1.1", 1);
     
     setenv("INFINIT_METRICS_INFINIT", "1", 1);
     setenv("INFINIT_METRICS_INFINIT_HOST", "metrics.9.0.api.production.infinit.io", 1);
