@@ -584,7 +584,7 @@
 
 - (IATransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender
 {
-  return [_delegate receiveOnboardingTransaction:self];
+  return [_delegate sendOnboardingTransaction:self];
 }
 
 //- Transaction Link Protocol ----------------------------------------------------------------------
