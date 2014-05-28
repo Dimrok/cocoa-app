@@ -69,6 +69,7 @@
 {
   _list = [NSMutableArray arrayWithArray:list];
   [self.table_view reloadData];
+  [self updateListOfRowsWithProgress];
 }
 
 - (void)selfStatusChanged:(gap_UserStatus)status

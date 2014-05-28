@@ -78,6 +78,7 @@
 {
   _list = [NSMutableArray arrayWithArray:list];
   [self.table_view reloadData];
+  [self updateListOfRowsWithProgress];
 }
 
 //- Onboarding -------------------------------------------------------------------------------------
