@@ -377,9 +377,15 @@
   [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
 
   if (_for_people_view)
+  {
     self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
+    self.send_button.toolTip = NSLocalizedString(@"Send a file", nil);
+  }
   else
+  {
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
+    self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
+  }
 
   InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
 
@@ -595,6 +601,7 @@
     return;
 
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
+  self.send_button.toolTip = NSLocalizedString(@"Send a file", nil);
 
   [_transaction_controller updateModelWithList:[_delegate latestTransactionsByUser:self]];
   [_transaction_controller.table_view scrollRowToVisible:0];
@@ -647,6 +654,7 @@
   [_transaction_controller markTransactionsRead];
 
   self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
+  self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
 
   [_link_controller updateModelWithList:[_delegate linkHistory:self]];
   [_link_controller.table_view scrollRowToVisible:0];
