@@ -78,6 +78,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)dealloc
 {
+  [_progress_timer invalidate];
+  _progress_timer = nil;
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
@@ -713,6 +715,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 {
   _changing = YES;
   [_tooltip close];
+  [_progress_timer invalidate];
+  _progress_timer = nil;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [self setUpdatorRunning:NO];
   [_delegate conversationView:self wantsMarkTransactionsReadForUser:_user];
