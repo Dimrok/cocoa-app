@@ -28,6 +28,8 @@
 
 - (void)closeWindow;
 
+- (void)closeWindowWithoutLosingFocus;
+
 - (void)closeWindowWithAnimation:(BOOL)animate;
 
 - (void)changeToViewController:(IAViewController*)new_controller;

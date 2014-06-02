@@ -124,6 +124,11 @@
   }
 }
 
+- (void)closeWindowWithoutLosingFocus
+{
+  [self closeWindowWithAnimation:YES];
+}
+
 - (void)closeWindowWithAnimation:(BOOL)animate
 {
   if (!animate)

@@ -407,6 +407,17 @@ ELLE_LOG_COMPONENT("OSX.MainController");
   _general_send_controller = nil;
 }
 
+- (void)closeNotificationWindowWithoutLosingFocus
+{
+  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+    [_desktop_notifier clearAllNotifications];
+  [_window_controller closeWindowWithoutLosingFocus];
+  [_status_bar_icon setHighlighted:NO];
+  _conversation_view_controller = nil;
+  _main_view_controller = nil;
+  _general_send_controller = nil;
+}
+
 //- Login and Logout -------------------------------------------------------------------------------
 
 - (void)loginWithUsername:(NSString*)username
@@ -1120,7 +1131,7 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 - (void)reportAProblem:(InfinitMainViewController*)sender
 {
-  [self closeNotificationWindow];
+  [self closeNotificationWindowWithoutLosingFocus];
   if (_report_problem_controller == nil)
     _report_problem_controller = [[IAReportProblemWindowController alloc] initWithDelegate:self];
 
