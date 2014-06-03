@@ -13,7 +13,11 @@
 #import "InfinitOnboardingController.h"
 #import "InfinitTooltipViewController.h"
 
+#undef check
+#import <elle/log.hh>
 #import <version.hh>
+
+ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 #define IA_FEEDBACK_LINK "http://feedback.infinit.io"
 #define IA_PROFILE_LINK "https://infinit.io/account"
@@ -378,11 +382,13 @@
 
   if (_for_people_view)
   {
+    ELLE_LOG("%s: loading main view for people", self.description.UTF8String);
     self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
     self.send_button.toolTip = NSLocalizedString(@"Send a file", nil);
   }
   else
   {
+    ELLE_LOG("%s: loading main view for links", self.description.UTF8String);
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
     self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
   }
@@ -600,6 +606,8 @@
   if (_current_controller == _transaction_controller)
     return;
 
+  ELLE_LOG("%s: changing to people view", self.description.UTF8String);
+
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
   self.send_button.toolTip = NSLocalizedString(@"Send a file", nil);
 
@@ -648,6 +656,8 @@
 {
   if (_current_controller == _link_controller)
     return;
+
+  ELLE_LOG("%s: changing to link view", self.description.UTF8String);
 
   [_tooltip close];
   [_transaction_controller closeToolTips];
@@ -743,7 +753,7 @@
 - (IBAction)logoutClicked:(NSMenuItem*)sender
 {
   [_delegate logout:self];
-}
+} 
 
 - (IBAction)onFeedbackClick:(NSMenuItem*)sender
 {

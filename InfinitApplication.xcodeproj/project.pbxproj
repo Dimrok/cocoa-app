@@ -165,7 +165,7 @@
 		834F137D192250E700BF36A4 /* InfinitLinkCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 834F137C192250E700BF36A4 /* InfinitLinkCellView.m */; };
 		834F13801922522F00BF36A4 /* InfinitLinkClickCountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 834F137F1922522F00BF36A4 /* InfinitLinkClickCountView.m */; };
 		834F13831922532D00BF36A4 /* InfinitLinkProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 834F13821922532D00BF36A4 /* InfinitLinkProgressIndicator.m */; };
-		834F13871922618200BF36A4 /* InfinitMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 834F13851922618200BF36A4 /* InfinitMainViewController.m */; };
+		834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 834F13851922618200BF36A4 /* InfinitMainViewController.mm */; };
 		834F13881922618200BF36A4 /* InfinitMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834F13861922618200BF36A4 /* InfinitMainViewController.xib */; };
 		8355259019301A830034CEA2 /* login-icon-close-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 8355258C19301A830034CEA2 /* login-icon-close-hover.png */; };
 		8355259119301A830034CEA2 /* login-icon-close-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8355258D19301A830034CEA2 /* login-icon-close-hover@2x.png */; };
@@ -804,7 +804,7 @@
 		834F13811922532D00BF36A4 /* InfinitLinkProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkProgressIndicator.h; sourceTree = "<group>"; };
 		834F13821922532D00BF36A4 /* InfinitLinkProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkProgressIndicator.m; sourceTree = "<group>"; };
 		834F13841922618200BF36A4 /* InfinitMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMainViewController.h; sourceTree = "<group>"; };
-		834F13851922618200BF36A4 /* InfinitMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMainViewController.m; sourceTree = "<group>"; };
+		834F13851922618200BF36A4 /* InfinitMainViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitMainViewController.mm; sourceTree = "<group>"; };
 		834F13861922618200BF36A4 /* InfinitMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitMainViewController.xib; sourceTree = "<group>"; };
 		8355258C19301A830034CEA2 /* login-icon-close-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-icon-close-hover.png"; path = "../../../../fist-resources/slices/login_view/login-icon-close-hover.png"; sourceTree = "<group>"; };
 		8355258D19301A830034CEA2 /* login-icon-close-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-icon-close-hover@2x.png"; path = "../../../../fist-resources/slices/login_view/login-icon-close-hover@2x.png"; sourceTree = "<group>"; };
@@ -1115,7 +1115,7 @@
 			children = (
 				8355259C19301B3A0034CEA2 /* Resources */,
 				834F13841922618200BF36A4 /* InfinitMainViewController.h */,
-				834F13851922618200BF36A4 /* InfinitMainViewController.m */,
+				834F13851922618200BF36A4 /* InfinitMainViewController.mm */,
 				834F13861922618200BF36A4 /* InfinitMainViewController.xib */,
 				83019CD21925629800423FCA /* InfinitMainCounterView.h */,
 				83019CD31925629800423FCA /* InfinitMainCounterView.m */,
@@ -2559,7 +2559,7 @@
 				837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */,
 				83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */,
 				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
-				834F13871922618200BF36A4 /* InfinitMainViewController.m in Sources */,
+				834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */,
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
