@@ -22,7 +22,7 @@
 #import <elle/log.hh>
 #import <surface/gap/enums.hh>
 
-ELLE_LOG_COMPONENT("OSX.MainController");
+ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 @implementation IAMainController
 {
@@ -625,18 +625,6 @@ ELLE_LOG_COMPONENT("OSX.MainController");
     ELLE_LOG("%s: logged out", self.description.UTF8String);
   else
     ELLE_WARN("%s: logout failed", self.description.UTF8String);
-}
-
-- (void)logoutAndQuitCallback:(IAGapOperationResult*)result
-{
-  [self logoutCallback:result];
-  [self performSelector:@selector(delayedClose) withObject:nil afterDelay:0.2];
-}
-
-- (void)delayedClose
-{
-  [[IAGapState instance] freeGap];
-  [_delegate terminateApplication:self];
 }
 
 - (BOOL)credentialsInChain:(NSString*)username
