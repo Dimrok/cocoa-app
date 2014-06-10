@@ -168,19 +168,21 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
     
 #ifdef BUILD_PRODUCTION
     production = true;
-    
+
+    setenv("INFINIT_METRICS_INFINIT", "1", 1); // In order to ensure that we send UI metrics.
     setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 0);
+
 #else
     production = false;
     
     setenv("ELLE_REAL_ASSERT", "1", 1);
 
-//    setenv("INFINIT_META_PROTOCOL", "http", 1);
-//    setenv("INFINIT_META_HOST", "127.0.0.1", 1);
-//    setenv("INFINIT_META_PORT", "8080", 1);
-//
-//    setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
-//    setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
+    setenv("INFINIT_META_PROTOCOL", "http", 1);
+    setenv("INFINIT_META_HOST", "127.0.0.1", 1);
+    setenv("INFINIT_META_PORT", "8080", 1);
+
+    setenv("INFINIT_TROPHONIUS_HOST", "127.0.0.1", 1);
+    setenv("INFINIT_TROPHONIUS_PORT", "8181", 1);
 
 //    setenv("INFINIT_METRICS_INFINIT", "1", 1);
 //    setenv("INFINIT_METRICS_INFINIT_HOST", "127.0.0.1", 1);
