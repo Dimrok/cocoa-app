@@ -82,6 +82,8 @@ ELLE_LOG_COMPONENT("OSX.AvatarManager");
     {
       res = [IAFunctions makeAvatarFor:user.fullname];
     }
+    // Store avatar in cache.
+    [_cache setObject:res forKey:user.user_id];
   }
   return res;
 }
