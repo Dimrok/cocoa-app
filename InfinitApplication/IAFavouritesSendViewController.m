@@ -186,9 +186,6 @@
     }
   }
   
-  if (temp_arr.count == 0)
-    return;
-  
   // XXX For now we only handle up to 5 favourites
   if (temp_arr.count > 5)
     _favourites = [temp_arr subarrayWithRange:NSMakeRange(0, 5)];
