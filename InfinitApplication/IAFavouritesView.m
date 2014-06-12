@@ -11,7 +11,7 @@
 @implementation IAFavouritesView
 {
 @private
-  id<IAFavouritesViewProtocol> _delegate;
+  __weak id<IAFavouritesViewProtocol> _delegate;
   NSArray* _drag_types;
   BOOL _mouse_in_favourite;
 }

@@ -33,7 +33,7 @@
 
 @implementation IAFavouritesSendViewController
 {
-  id<IAFavouritesSendViewProtocol> _delegate;
+  __weak id<IAFavouritesSendViewProtocol> _delegate;
   NSArray* _favourites;
   NSMutableArray* _favourite_views;
   NSWindow* _window;
@@ -71,6 +71,11 @@
     _link_size = NSMakeSize(70.0, 70.0);
   }
   return self;
+}
+
+- (void)dealloc
+{
+  [_favourite_views removeAllObjects];
 }
 
 - (void)loadView

@@ -13,7 +13,7 @@
 @implementation IAFavouriteView
 {
 @private
-  id <IAFavouriteViewProtocol> _delegate;
+  __weak id <IAFavouriteViewProtocol> _delegate;
   IAUser* _user;
   NSArray* _drag_types;
   BOOL _hovering;

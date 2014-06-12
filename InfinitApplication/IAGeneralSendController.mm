@@ -17,7 +17,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
 @private
   // Delegate
-  id<IAGeneralSendControllerProtocol> _delegate;
+  __weak id<IAGeneralSendControllerProtocol> _delegate;
   
   // Send views
   IAFavouritesSendViewController* _favourites_send_controller;
@@ -39,6 +39,13 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
     _send_view_open = NO;
   }
   return self;
+}
+
+- (void)dealloc
+{
+  _user_search_controller = nil;
+  _favourites_send_controller = nil;
+  _send_controller = nil;
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -152,6 +159,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
   _files = nil;
   [_delegate sendControllerWantsClose:self];
+  _send_controller = nil;
 }
 
 - (NSArray*)sendViewWantsFileList:(InfinitSendViewController*)sender
@@ -253,8 +261,13 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 {
   [_favourites_send_controller hideFavourites];
   _favourites_send_controller = nil;
-  [_delegate sendControllerGotDropOnFavourite:self];
-  [self openWithFiles:files forUser:user];
+  if (files.count > 0)
+  {
+    NSArray* res =
+      [_delegate sendController:self wantsSendFiles:files toUsers:@[user] withMessage:@""];
+    [_delegate sendController:self wantsSetOnboardingSendTransactionId:res[0]];
+    [_delegate sendControllerGotDropOnFavourite:self];
+  }
 }
 
 - (void)favouritesViewWantsClose:(IAFavouritesSendViewController*)sender
@@ -268,7 +281,10 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 {
   [_favourites_send_controller hideFavourites];
   _favourites_send_controller = nil;
-  [_delegate sendController:self wantsCreateLink:files withMessage:@""];
+  if (files.count > 0)
+  {
+    [_delegate sendController:self wantsCreateLink:files withMessage:@""];
+  }
 }
 
 //- Onboarding Protocol ----------------------------------------------------------------------------

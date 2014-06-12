@@ -17,7 +17,7 @@
 @interface IAFavouritesSendViewController : NSViewController <IAFavouritesViewProtocol,
                                                               NSWindowDelegate>
 
-@property (nonatomic, strong) IBOutlet IAFavouritesView* favourites_view;
+@property (nonatomic, weak) IBOutlet IAFavouritesView* favourites_view;
 
 - (id)initWithDelegate:(id<IAFavouritesSendViewProtocol>)delegate;
 

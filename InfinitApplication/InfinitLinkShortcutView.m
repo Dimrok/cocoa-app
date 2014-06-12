@@ -11,7 +11,7 @@
 @implementation InfinitLinkShortcutView
 {
 @private
-  id<InfinitLinkShortcutViewProtocol> _delegate;
+  __weak id<InfinitLinkShortcutViewProtocol> _delegate;
   NSArray* _drag_types;
   BOOL _hover;
 }
