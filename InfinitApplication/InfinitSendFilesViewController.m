@@ -224,24 +224,29 @@ static NSDictionary* _info_attrs = nil;
       NSUInteger file_size = 0;
       if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
       {
-        NSDirectoryEnumerator* dir_enum =
-          [[NSFileManager defaultManager] enumeratorAtURL:[NSURL URLWithString:file_path]
-                               includingPropertiesForKeys:@[NSURLTotalFileAllocatedSizeKey,
-                                                            NSURLIsDirectoryKey]
-                                                  options:0
-                                             errorHandler:nil];
-        for (NSURL* file in dir_enum)
+        NSURL* file_url =
+          [NSURL URLWithString:[file_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        if (file_url != nil)
         {
-          if (weak_block.isCancelled)
-            return;
-
-          NSNumber* is_directory;
-          [file getResourceValue:&is_directory forKey:NSURLIsDirectoryKey error:NULL];
-          if (is_directory.boolValue == NO)
+          NSDirectoryEnumerator* dir_enum =
+            [[NSFileManager defaultManager] enumeratorAtURL:file_url
+                                 includingPropertiesForKeys:@[NSURLTotalFileAllocatedSizeKey,
+                                                              NSURLIsDirectoryKey]
+                                                    options:NSDirectoryEnumerationSkipsHiddenFiles
+                                               errorHandler:nil];
+          for (NSURL* file in dir_enum)
           {
-            NSNumber* file_size;
-            [file getResourceValue:&file_size forKey:NSURLFileSizeKey error:NULL];
-            res += file_size.unsignedIntegerValue;
+            if (weak_block.isCancelled)
+              return;
+
+            NSNumber* is_directory;
+            [file getResourceValue:&is_directory forKey:NSURLIsDirectoryKey error:NULL];
+            if (is_directory.boolValue == NO)
+            {
+              NSNumber* file_size;
+              [file getResourceValue:&file_size forKey:NSURLFileSizeKey error:NULL];
+              res += file_size.unsignedIntegerValue;
+            }
           }
         }
       }
