@@ -26,8 +26,8 @@
 
 @interface InfinitSendNoteViewController : NSViewController <InfinitSendNoteProtocol>
 
-@property (nonatomic, strong) IBOutlet NSTextField* note_field;
-@property (nonatomic, strong) IBOutlet NSTextField* characters_label;
+@property (nonatomic, weak) IBOutlet NSTextField* note_field;
+@property (nonatomic, weak) IBOutlet NSTextField* characters_label;
 @property (nonatomic, readwrite) BOOL link_mode;
 
 - (id)initWithDelegate:(id<InfinitSendNoteViewProtocol>)delegate;

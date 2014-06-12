@@ -11,9 +11,9 @@
 //- Header -----------------------------------------------------------------------------------------
 
 @interface InfinitSendFilesHeaderView : NSView
-@property (nonatomic, strong) IBOutlet NSButton* information;
-@property (nonatomic, strong) IBOutlet NSButton* add_files;
-@property (nonatomic, strong) IBOutlet NSButton* show_files;
+@property (nonatomic, weak) IBOutlet NSButton* information;
+@property (nonatomic, weak) IBOutlet NSButton* add_files;
+@property (nonatomic, weak) IBOutlet NSButton* show_files;
 @property (nonatomic, readwrite) BOOL open;
 @property (nonatomic, readwrite) BOOL got_files;
 @end
@@ -25,8 +25,8 @@
 @interface InfinitSendFilesViewController : NSViewController <NSTableViewDataSource,
                                                               NSTableViewDelegate>
 
-@property (nonatomic, strong) IBOutlet InfinitSendFilesHeaderView* header_view;
-@property (nonatomic, strong) IBOutlet NSTableView* table_view;
+@property (nonatomic, weak) IBOutlet InfinitSendFilesHeaderView* header_view;
+@property (nonatomic, weak) IBOutlet NSTableView* table_view;
 @property (nonatomic, readonly) BOOL open;
 
 

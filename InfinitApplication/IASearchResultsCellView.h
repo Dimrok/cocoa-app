@@ -17,10 +17,10 @@
 
 @interface IASearchResultsCellView : NSTableCellView
 
-@property (nonatomic, strong) IBOutlet NSImageView* result_avatar;
-@property (nonatomic, strong) IBOutlet NSTextField* result_fullname;
-@property (nonatomic, strong) IBOutlet NSButton* result_star;
-@property (nonatomic, strong) IBOutlet InfinitSelectedBoxView* result_selected;
+@property (nonatomic, weak) IBOutlet NSImageView* result_avatar;
+@property (nonatomic, weak) IBOutlet NSTextField* result_fullname;
+@property (nonatomic, weak) IBOutlet NSButton* result_star;
+@property (nonatomic, weak) IBOutlet InfinitSelectedBoxView* result_selected;
 @property (nonatomic, readwrite) BOOL selected;
 @property (nonatomic, readwrite) BOOL hover;
 

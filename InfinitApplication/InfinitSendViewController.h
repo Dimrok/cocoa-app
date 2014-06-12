@@ -23,8 +23,8 @@ typedef enum _InfinitUserLinkMode
 @protocol InfinitSendUserLinkProtocol;
 
 @interface InfinitSendUserLinkView : NSView
-@property (nonatomic, strong) IBOutlet NSTextField* user_text;
-@property (nonatomic, strong) IBOutlet NSTextField* link_text;
+@property (nonatomic, weak) IBOutlet NSTextField* user_text;
+@property (nonatomic, weak) IBOutlet NSTextField* link_text;
 @property (nonatomic, readwrite) InfinitUserLinkMode mode;
 @property (nonatomic, readwrite) CGFloat animate_mode;
 
@@ -43,7 +43,7 @@ typedef enum _InfinitUserLinkMode
 @protocol InfinitSendDropViewProtocol;
 
 @interface InfinitSendDropView : NSView <NSDraggingDestination>
-@property (nonatomic, readwrite) id<InfinitSendDropViewProtocol> delegate;
+@property (nonatomic, readwrite, weak) id<InfinitSendDropViewProtocol> delegate;
 @end
 
 @protocol InfinitSendDropViewProtocol <NSObject>
@@ -60,15 +60,15 @@ typedef enum _InfinitUserLinkMode
                                                          InfinitSendFilesViewProtocol,
                                                          InfinitSendUserLinkProtocol>
 
-@property (nonatomic, strong) IBOutlet InfinitSendUserLinkView* user_link_view;
-@property (nonatomic, strong) IBOutlet InfinitSendDropView* drop_view;
-@property (nonatomic, strong) IBOutlet NSView* search_view;
-@property (nonatomic, strong) IBOutlet NSView* note_view;
-@property (nonatomic, strong) IBOutlet NSView* files_view;
-@property (nonatomic, strong) IBOutlet NSButton* send_button;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* search_constraint;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* note_constraint;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* files_constraint;
+@property (nonatomic, weak) IBOutlet InfinitSendUserLinkView* user_link_view;
+@property (nonatomic, weak) IBOutlet InfinitSendDropView* drop_view;
+@property (nonatomic, weak) IBOutlet NSView* search_view;
+@property (nonatomic, weak) IBOutlet NSView* note_view;
+@property (nonatomic, weak) IBOutlet NSView* files_view;
+@property (nonatomic, weak) IBOutlet NSButton* send_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* search_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* note_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* files_constraint;
 
 - (id)initWithDelegate:(id<InfinitSendViewProtocol>)delegate
   withSearchController:(IAUserSearchViewController*)search_controller

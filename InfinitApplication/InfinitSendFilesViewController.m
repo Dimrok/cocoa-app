@@ -155,12 +155,14 @@
 @implementation InfinitSendFilesViewController
 {
 @private
-  id<InfinitSendFilesViewProtocol> _delegate;
+  __weak id<InfinitSendFilesViewProtocol> _delegate;
   NSArray* _file_list;
   CGFloat _row_height;
   CGFloat _max_table_height;
-  NSDictionary* _info_attrs;
+  NSOperationQueue* _operation_queue;
 }
+
+static NSDictionary* _info_attrs = nil;
 
 - (id)initWithDelegate:(id<InfinitSendFilesViewProtocol>)delegate
 {
@@ -169,16 +171,28 @@
     _delegate = delegate;
     _row_height = 45.0;
     _max_table_height = _row_height * 3;
-    NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                              traits:NSUnboldFontMask
-                                                              weight:3
-                                                                size:12.0];
-    _info_attrs = [IAFunctions textStyleWithFont:font
-                                  paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                          colour:IA_GREY_COLOUR(190)
-                                          shadow:nil];
+    if (_info_attrs == nil)
+    {
+      NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                traits:NSUnboldFontMask
+                                                                weight:3
+                                                                  size:12.0];
+      _info_attrs = [IAFunctions textStyleWithFont:font
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_GREY_COLOUR(190)
+                                            shadow:nil];
+    }
+    _operation_queue = [[NSOperationQueue alloc] init];
+    _operation_queue.maxConcurrentOperationCount = 1;
+
   }
   return self;
+}
+
+- (void)dealloc
+{
+  if (_operation_queue.operationCount > 0)
+    [_operation_queue cancelAllOperations];
 }
 
 - (void)awakeFromNib
@@ -187,70 +201,85 @@
   // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
   [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
   [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
-
-  [self updateWithFiles:_file_list];
 }
 
-- (NSUInteger)sizeForFolderAtPath:(NSString*)source
-                            error:(NSError**)error
+- (NSOperation*)asynchronouslySetFileSize
 {
-  NSArray* contents;
-  unsigned long long size = 0;
-  NSEnumerator* enumerator;
-  NSString* path;
-  BOOL is_directory;
+  NSBlockOperation* block = [[NSBlockOperation alloc] init];
+  __weak NSBlockOperation* weak_block = block;
+  __weak InfinitSendFilesViewController* weak_self = self;
+  __weak NSArray* weak_file_list = _file_list;
+  [block addExecutionBlock:^{
+    if (weak_file_list.count == 0)
+      [NSNumber numberWithUnsignedInteger:0];
 
-  // Determine Paths to Add
-  if ([[NSFileManager defaultManager] fileExistsAtPath:source isDirectory:&is_directory] && is_directory)
-  {
-    contents = [[NSFileManager defaultManager] subpathsAtPath:source];
-  }
-  else
-  {
-    contents = [NSArray array];
-  }
-  // Add Size Of All Paths
-  enumerator = [contents objectEnumerator];
-  while (path = [enumerator nextObject])
-  {
-    NSDictionary * fattrs = [[NSFileManager defaultManager]
-                             attributesOfItemAtPath:[source stringByAppendingPathComponent:path]
-                             error:error];
-    size += [[fattrs objectForKey:NSFileSize] unsignedLongLongValue];
-  }
-  // Return Total Size in Bytes
+    NSUInteger res = 0;
 
-  return size;
-}
-
-- (NSNumber*)totalFileSize
-{
-  if (_file_list.count == 0)
-    [NSNumber numberWithUnsignedInteger:0];
-
-  NSNumber* res;
-
-  for (NSString* file_path in _file_list)
-  {
-    BOOL is_directory;
-    NSNumber* file_size;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
+    for (NSString* file_path in weak_file_list)
     {
-      file_size = [NSNumber numberWithUnsignedInteger:[self sizeForFolderAtPath:file_path error:nil]];
+      if (weak_block.isCancelled)
+        return;
+
+      BOOL is_directory;
+      NSUInteger file_size = 0;
+      if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
+      {
+        NSDirectoryEnumerator* dir_enum =
+          [[NSFileManager defaultManager] enumeratorAtURL:[NSURL URLWithString:file_path]
+                               includingPropertiesForKeys:@[NSURLTotalFileAllocatedSizeKey,
+                                                            NSURLIsDirectoryKey]
+                                                  options:0
+                                             errorHandler:nil];
+        for (NSURL* file in dir_enum)
+        {
+          if (weak_block.isCancelled)
+            return;
+
+          NSNumber* is_directory;
+          [file getResourceValue:&is_directory forKey:NSURLIsDirectoryKey error:NULL];
+          if (is_directory.boolValue == NO)
+          {
+            NSNumber* file_size;
+            [file getResourceValue:&file_size forKey:NSURLFileSizeKey error:NULL];
+            res += file_size.unsignedIntegerValue;
+          }
+        }
+      }
+      else
+      {
+        NSDictionary* file_properties =
+          [[NSFileManager defaultManager] attributesOfItemAtPath:file_path error:NULL];
+        file_size = [file_properties fileSize];
+      }
+      res += file_size;
+    }
+
+    NSNumber* total_size = [NSNumber numberWithUnsignedInteger:res];
+
+    NSString* info_str;
+    if (weak_file_list.count == 1)
+    {
+      info_str = [NSString stringWithFormat:@"   1 %@ (%@)",
+                  NSLocalizedString(@"file", nil),
+                  [IAFunctions fileSizeStringFrom:total_size]];
     }
     else
     {
-      NSDictionary* file_properties =
-        [[NSFileManager defaultManager] attributesOfItemAtPath:file_path error:NULL];
-      file_size = [NSNumber numberWithUnsignedInteger:[file_properties fileSize]];
+      info_str = [NSString stringWithFormat:@"   %ld %@ (%@)",
+                  weak_file_list.count,
+                  NSLocalizedString(@"files", nil),
+                  [IAFunctions fileSizeStringFrom:total_size]];
     }
-    res = [NSNumber numberWithUnsignedInteger:(res.unsignedIntegerValue + file_size.unsignedIntegerValue)];
-  }
-  return res;
+    weak_self.header_view.information.attributedTitle =
+      [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
+  }];
+  return block;
 }
 
 - (void)updateWithFiles:(NSArray*)files
 {
+  if (_operation_queue.operationCount > 0)
+    [_operation_queue cancelAllOperations];
   _file_list = [files copy];
   NSString* info_str;
   if (_file_list.count == 0)
@@ -265,7 +294,7 @@
   {
     info_str = [NSString stringWithFormat:@"   1 %@ (%@)",
                 NSLocalizedString(@"file", nil),
-                [IAFunctions fileSizeStringFrom:[self totalFileSize]]];
+                NSLocalizedString(@"Calculating...", nil)];
     self.header_view.got_files = YES;
   }
   else
@@ -273,11 +302,16 @@
     info_str = [NSString stringWithFormat:@"   %ld %@ (%@)",
                 _file_list.count,
                 NSLocalizedString(@"files", nil),
-                [IAFunctions fileSizeStringFrom:[self totalFileSize]]];
+                NSLocalizedString(@"Calculating...", nil)];
     self.header_view.got_files = YES;
   }
   self.header_view.information.attributedTitle =
     [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
+  if (_file_list.count > 0)
+  {
+    __weak InfinitSendFilesViewController* weak_self = self;
+    [_operation_queue addOperation:[weak_self asynchronouslySetFileSize]];
+  }
   if (_open)
     [self updateTable];
 }

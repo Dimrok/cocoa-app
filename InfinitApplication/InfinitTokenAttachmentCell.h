@@ -10,6 +10,6 @@
 
 @interface InfinitTokenAttachmentCell : OEXTokenAttachmentCell
 
-@property (nonatomic, strong) NSImage* avatar;
+@property (nonatomic, weak) NSImage* avatar;
 
 @end

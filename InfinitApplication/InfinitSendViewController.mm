@@ -18,7 +18,7 @@
 @implementation InfinitSendUserLinkView
 {
 @private
-  id<InfinitSendUserLinkProtocol> _delegate;
+  __weak id<InfinitSendUserLinkProtocol> _delegate;
   NSTrackingArea* _tracking_area;
 
   NSAttributedString* _user_hover_str;
@@ -49,8 +49,8 @@
                                               paragraphStyle:para
                                                       colour:IA_RGB_COLOUR(81, 81, 73)
                                                       shadow:nil];
-  NSString* link_str = NSLocalizedString(@"PUBLISH", nil);
-  NSString* user_str = NSLocalizedString(@"SEND", nil);
+  NSString* link_str = NSLocalizedString(@"LINK", nil);
+  NSString* user_str = NSLocalizedString(@"PEOPLE", nil);
 
   _link_high_str = [[NSAttributedString alloc] initWithString:link_str attributes:high_attrs];
   _link_hover_str = [[NSAttributedString alloc] initWithString:link_str attributes:hover_attrs];
@@ -334,9 +334,9 @@
 @implementation InfinitSendViewController
 {
 @private
-  id<InfinitSendViewProtocol> _delegate;
+  __weak id<InfinitSendViewProtocol> _delegate;
 
-  IAUserSearchViewController* _search_controller;
+  __weak IAUserSearchViewController* _search_controller;
   InfinitSendNoteViewController* _note_controller;
   InfinitSendFilesViewController* _files_controller;
 
@@ -367,6 +367,14 @@
   return self;
 }
 
+- (void)dealloc
+{
+  _files_controller = nil;
+  _note_controller = nil;
+  _search_controller = nil;
+  _tooltip = nil;
+}
+
 - (void)awakeFromNib
 {
   self.drop_view.delegate = self;
@@ -392,7 +400,6 @@
 
 - (void)loadView
 {
-  [_files_controller updateWithFiles:[_delegate sendViewWantsFileList:self]];
   [super loadView];
   [self.user_link_view setDelegate:self];
   [self setSendButtonState];
@@ -430,6 +437,7 @@
   {
     [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
   }
+  [_files_controller updateWithFiles:[_delegate sendViewWantsFileList:self]];
 }
 
 - (void)aboutToChangeView

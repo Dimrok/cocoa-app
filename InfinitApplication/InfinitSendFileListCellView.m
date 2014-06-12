@@ -12,12 +12,38 @@
 {
 @private
   NSString* _file_path;
+  NSOperationQueue* _operation_queue;
+  NSUInteger _calcd_file_size;
 }
 
 static NSDictionary* _filename_style = nil;
 static NSDictionary* _file_size_style = nil;
 
 //- Initialisation ---------------------------------------------------------------------------------
+
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+  if (self = [super initWithCoder:aDecoder])
+  {
+    _file_size = 0;
+    _operation_queue = [[NSOperationQueue alloc] init];
+    _operation_queue.maxConcurrentOperationCount = 1;
+  }
+  return self;
+}
+
+- (void)dealloc
+{
+  if (_operation_queue.operationCount > 0)
+    [_operation_queue cancelAllOperations];
+}
+
+- (void)prepareForReuse
+{
+  _calcd_file_size = 0;
+  if (_operation_queue.operationCount > 0)
+    [_operation_queue cancelAllOperations];
+}
 
 - (BOOL)isOpaque
 {
@@ -51,36 +77,66 @@ static NSDictionary* _file_size_style = nil;
 
 //- General Functions ------------------------------------------------------------------------------
 
-- (NSUInteger)sizeForFolderAtPath:(NSString*)source
-                            error:(NSError**)error
+- (NSBlockOperation*)asynchronouslySetFileSize:(NSString*)file_path
 {
-  NSArray* contents;
-  unsigned long long size = 0;
-  NSEnumerator* enumerator;
-  NSString* path;
-  BOOL is_directory;
+  NSBlockOperation* block = [[NSBlockOperation alloc] init];
+  __weak NSBlockOperation* weak_block = block;
+  __weak NSString* weak_file_path = file_path;
+  __weak InfinitSendFileListCellView* weak_self = self;
+  [block addExecutionBlock:^{
+    BOOL is_directory;
+    NSUInteger res = 0;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:weak_file_path isDirectory:&is_directory] && is_directory)
+    {
+      NSDirectoryEnumerator* dir_enum =
+        [[NSFileManager defaultManager] enumeratorAtURL:[NSURL URLWithString:weak_file_path]
+                             includingPropertiesForKeys:@[NSURLTotalFileAllocatedSizeKey,
+                                                          NSURLIsDirectoryKey]
+                                                options:0
+                                           errorHandler:nil];
+      for (NSURL* file in dir_enum)
+      {
+        if (weak_block.isCancelled)
+          return;
 
-  // Determine Paths to Add
-  if ([[NSFileManager defaultManager] fileExistsAtPath:source isDirectory:&is_directory] && is_directory)
-  {
-    contents = [[NSFileManager defaultManager] subpathsAtPath:source];
-  }
-  else
-  {
-    contents = [NSArray array];
-  }
-  // Add Size Of All Paths
-  enumerator = [contents objectEnumerator];
-  while (path = [enumerator nextObject])
-  {
-    NSDictionary * fattrs = [[NSFileManager defaultManager]
-                             attributesOfItemAtPath:[source stringByAppendingPathComponent:path]
-                             error:error];
-    size += [[fattrs objectForKey:NSFileSize] unsignedLongLongValue];
-  }
-  // Return Total Size in Bytes
+        NSNumber* is_directory;
+        [file getResourceValue:&is_directory forKey:NSURLIsDirectoryKey error:NULL];
+        if (is_directory.boolValue == NO)
+        {
+          NSNumber* file_size;
+          [file getResourceValue:&file_size forKey:NSURLFileSizeKey error:NULL];
+          res += file_size.unsignedIntegerValue;
+        }
+      }
+    }
+    else
+    {
+      NSDictionary* file_properties =
+        [[NSFileManager defaultManager] attributesOfItemAtPath:weak_file_path error:NULL];
+      res = [file_properties fileSize];
+    }
 
-  return size;
+    NSNumber* file_size = [NSNumber numberWithUnsignedInteger:res];
+    __weak NSNumber* weak_file_size = file_size;
+
+    // Ensure that the drawing takes place on the main thread.
+    if ([weak_self respondsToSelector:@selector(updateFileSize:)])
+    {
+      [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [weak_self updateFileSize:weak_file_size];
+      }];
+    }
+  }];
+  return block;
+}
+
+- (void)updateFileSize:(NSNumber*)file_size
+{
+  _calcd_file_size = file_size.unsignedIntegerValue;
+  NSString* file_size_str =
+    [IAFunctions fileSizeStringFrom:[NSNumber numberWithUnsignedInteger:_calcd_file_size]];
+  self.file_size.attributedStringValue =
+    [[NSAttributedString alloc] initWithString:file_size_str attributes:_file_size_style];
 }
 
 - (void)setupCellWithFilePath:(NSString*)file_path
@@ -119,23 +175,20 @@ static NSDictionary* _file_size_style = nil;
                                              initWithString:file_name
                                              attributes:_filename_style];
 
-  BOOL is_directory;
-  NSNumber* file_size = 0;
+  self.file_size.attributedStringValue = [[NSAttributedString alloc] initWithString:@""
+                                                                         attributes:_file_size_style];
 
-  if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
+  if (_calcd_file_size == 0)
   {
-    file_size = [NSNumber numberWithUnsignedInteger:[self sizeForFolderAtPath:file_path error:nil]];
+    [_operation_queue addOperation:[self asynchronouslySetFileSize:file_path]];
   }
   else
   {
-    NSDictionary* file_properties = [[NSFileManager defaultManager] attributesOfItemAtPath:file_path
-                                                                                     error:NULL];
-    file_size = [NSNumber numberWithUnsignedInteger:[file_properties fileSize]];
+    NSString* file_size_str =
+    [IAFunctions fileSizeStringFrom:[NSNumber numberWithUnsignedInteger:_calcd_file_size]];
+    self.file_size.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:file_size_str attributes:_file_size_style];
   }
-
-  NSString* file_size_str = [IAFunctions fileSizeStringFrom:file_size];
-  self.file_size.attributedStringValue = [[NSAttributedString alloc] initWithString:file_size_str
-                                                                         attributes:_file_size_style];
 
   self.file_icon_and_name.image = [[NSWorkspace sharedWorkspace] iconForFile:file_path];
 }

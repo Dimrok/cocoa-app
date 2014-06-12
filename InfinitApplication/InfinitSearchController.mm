@@ -21,7 +21,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 @implementation InfinitSearchController
 {
 @private
-  id<InfinitSearchControllerProtocol> _delegate;
+  __weak id<InfinitSearchControllerProtocol> _delegate;
   
   ABAddressBook* _addressbook;
   

@@ -97,7 +97,7 @@
 
 @implementation InfinitSendNoteViewController
 {
-  id<InfinitSendNoteViewProtocol> _delegate;
+  __weak id<InfinitSendNoteViewProtocol> _delegate;
   NSUInteger _note_limit;
   NSDictionary* _norm_characters_attrs;
   NSDictionary* _done_characters_attrs;

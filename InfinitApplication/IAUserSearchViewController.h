@@ -29,13 +29,13 @@
                                                           IASearchResultsCellProtocol,
                                                           InfinitSearchControllerProtocol>
 
-@property (nonatomic, strong) IBOutlet NSScrollView* results_view;
-@property (nonatomic, strong) IBOutlet IASearchBoxView* search_box_view;
-@property (nonatomic, strong) IBOutlet OEXTokenField* search_field;
-@property (nonatomic, strong) IBOutlet NSImageView* search_image;
-@property (nonatomic, strong) IBOutlet NSProgressIndicator* search_spinner;
-@property (nonatomic, strong) IBOutlet NSTextField* no_results_message;
-@property (nonatomic, strong) IBOutlet NSTableView* table_view;
+@property (nonatomic, weak) IBOutlet NSScrollView* results_view;
+@property (nonatomic, weak) IBOutlet IASearchBoxView* search_box_view;
+@property (nonatomic, weak) IBOutlet OEXTokenField* search_field;
+@property (nonatomic, weak) IBOutlet NSImageView* search_image;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator* search_spinner;
+@property (nonatomic, weak) IBOutlet NSTextField* no_results_message;
+@property (nonatomic, weak) IBOutlet NSTableView* table_view;
 
 - (id)init;
 

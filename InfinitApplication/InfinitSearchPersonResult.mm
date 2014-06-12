@@ -19,7 +19,7 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 @implementation InfinitSearchPersonResult
 {
 @private
-  id<InfinitSearchPersonResultProtocol> _delegate;
+  __weak id<InfinitSearchPersonResultProtocol> _delegate;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------

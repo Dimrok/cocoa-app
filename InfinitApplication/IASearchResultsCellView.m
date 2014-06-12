@@ -70,7 +70,7 @@ static NSImage* check_mark = nil;
 {
   BOOL _is_favourite;
   BOOL _infinit_user;
-  id<IASearchResultsCellProtocol> _delegate;
+  __weak id<IASearchResultsCellProtocol> _delegate;
 
   NSTrackingArea* _tracking_area;
 

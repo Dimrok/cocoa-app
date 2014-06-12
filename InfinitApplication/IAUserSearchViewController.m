@@ -93,7 +93,7 @@
 
 @implementation IAUserSearchViewController
 {
-  id<IAUserSearchViewProtocol> _delegate;
+  __weak id<IAUserSearchViewProtocol> _delegate;
   
   NSMutableArray* _search_results;
   NSUInteger _token_count;
@@ -169,6 +169,9 @@
 {
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  _search_field.objectValue = @[];
+  _search_field.delegate = nil;
+  _search_field = nil;
 }
 
 - (void)awakeFromNib
