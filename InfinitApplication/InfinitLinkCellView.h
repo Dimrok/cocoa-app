@@ -19,13 +19,13 @@
 
 @interface InfinitLinkCellView : NSTableCellView
 
-@property (nonatomic, strong) IBOutlet InfinitLinkFileIconView* icon_view;
-@property (nonatomic, strong) IBOutlet NSTextField* name;
-@property (nonatomic, strong) IBOutlet NSTextField* information;
-@property (nonatomic, strong) IBOutlet InfinitLinkClickCountView* click_count;
-@property (nonatomic, strong) IBOutlet IAHoverButton* link;
-@property (nonatomic, strong) IBOutlet IAHoverButton* clipboard;
-@property (nonatomic, strong) IBOutlet InfinitLinkProgressIndicator* progress_indicator;
+@property (nonatomic, weak) IBOutlet InfinitLinkFileIconView* icon_view;
+@property (nonatomic, weak) IBOutlet NSTextField* name;
+@property (nonatomic, weak) IBOutlet NSTextField* information;
+@property (nonatomic, weak) IBOutlet InfinitLinkClickCountView* click_count;
+@property (nonatomic, weak) IBOutlet IAHoverButton* link;
+@property (nonatomic, weak) IBOutlet IAHoverButton* clipboard;
+@property (nonatomic, weak) IBOutlet InfinitLinkProgressIndicator* progress_indicator;
 
 @property (nonatomic, readwrite) CGFloat progress;
 

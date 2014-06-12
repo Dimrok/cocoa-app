@@ -18,7 +18,7 @@
 @implementation InfinitTransactionViewController
 {
 @private
-  id<InfinitTransactionViewProtocol> _delegate;
+  __weak id<InfinitTransactionViewProtocol> _delegate;
   NSMutableArray* _list;
 
   NSUInteger _max_rows;
@@ -53,7 +53,11 @@
 
 - (void)dealloc
 {
-  _progress_timer = nil;
+  if (_progress_timer != nil)
+  {
+    [_progress_timer invalidate];
+    _progress_timer = nil;
+  }
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }

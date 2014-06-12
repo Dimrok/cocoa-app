@@ -43,7 +43,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 @implementation InfinitConversationViewController
 {
 @private
-  id<InfinitConversationViewProtocol> _delegate;
+  __weak id<InfinitConversationViewProtocol> _delegate;
     
   NSMutableArray* _elements;
   IAUser* _user;
@@ -78,8 +78,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)dealloc
 {
-  [_progress_timer invalidate];
-  _progress_timer = nil;
+  if (_progress_timer != nil)
+  {
+    [_progress_timer invalidate];
+    _progress_timer = nil;
+  }
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }

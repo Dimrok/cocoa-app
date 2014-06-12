@@ -17,11 +17,11 @@
                                                                  InfinitConversationPersonViewProtocol,
                                                                  InfinitConversationCellViewProtocol>
 
-@property (nonatomic, strong) IBOutlet NSButton* back_button;
-@property (nonatomic, strong) IBOutlet InfinitConversationPersonView* person_view;
-@property (nonatomic, strong) IBOutlet NSScrollView* scroll_view;
-@property (nonatomic, strong) IBOutlet NSTableView* table_view;
-@property (nonatomic, strong) IBOutlet NSButton* transfer_button;
+@property (nonatomic, weak) IBOutlet NSButton* back_button;
+@property (nonatomic, weak) IBOutlet InfinitConversationPersonView* person_view;
+@property (nonatomic, weak) IBOutlet NSScrollView* scroll_view;
+@property (nonatomic, weak) IBOutlet NSTableView* table_view;
+@property (nonatomic, weak) IBOutlet NSButton* transfer_button;
 @property (nonatomic, readonly) IAUser* user;
 
 - (id)initWithDelegate:(id<InfinitConversationViewProtocol>)delegate

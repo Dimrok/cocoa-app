@@ -16,7 +16,7 @@
                                                          NSTableViewDelegate,
                                                          InfinitLinkCellProtocol>
 
-@property (nonatomic, strong) IBOutlet NSTableView* table_view;
+@property (nonatomic, weak) IBOutlet NSTableView* table_view;
 
 - (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate
            andLinkList:(NSArray*)list

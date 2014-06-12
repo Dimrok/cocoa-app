@@ -16,7 +16,7 @@
 @implementation InfinitLinkCellView
 {
 @private
-  id<InfinitLinkCellProtocol> _delegate;
+  __weak id<InfinitLinkCellProtocol> _delegate;
   NSTrackingArea* _tracking_area;
   BOOL _hover;
 

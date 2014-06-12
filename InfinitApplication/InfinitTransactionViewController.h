@@ -15,7 +15,7 @@
 @interface InfinitTransactionViewController : NSViewController <NSTableViewDelegate,
                                                                 NSTableViewDataSource>
 
-@property (nonatomic, strong) IBOutlet NSTableView* table_view;
+@property (nonatomic, weak) IBOutlet NSTableView* table_view;
 
 @property (nonatomic, readwrite) BOOL changing;
 

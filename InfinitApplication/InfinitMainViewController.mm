@@ -27,7 +27,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 @implementation InfinitMainTransactionLinkView
 {
 @private
-  id<InfinitMainTransactionLinkProtocol> _delegate;
+  __weak id<InfinitMainTransactionLinkProtocol> _delegate;
   NSTrackingArea* _tracking_area;
 
   NSAttributedString* _link_norm_str;
@@ -297,7 +297,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 @implementation InfinitMainViewController
 {
 @private
-  id<InfinitMainViewProtocol> _delegate;
+  __weak id<InfinitMainViewProtocol> _delegate;
 
   InfinitTransactionViewController* _transaction_controller;
   InfinitLinkViewController* _link_controller;

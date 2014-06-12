@@ -14,9 +14,9 @@
 
 @interface InfinitConversationPersonView : NSView
 
-@property (nonatomic, strong) IBOutlet InfinitSizedTextField* fullname;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* fullname_width;
-@property (nonatomic, strong) IBOutlet NSImageView* online_status;
+@property (nonatomic, weak) IBOutlet InfinitSizedTextField* fullname;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* fullname_width;
+@property (nonatomic, weak) IBOutlet NSImageView* online_status;
 
 - (void)setDelegate:(id<InfinitConversationPersonViewProtocol>)delegate;
 

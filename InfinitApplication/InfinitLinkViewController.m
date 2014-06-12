@@ -15,7 +15,7 @@
 @implementation InfinitLinkViewController
 {
 @private
-  id<InfinitLinkViewProtocol> _delegate;
+  __weak id<InfinitLinkViewProtocol> _delegate;
   NSMutableArray* _list;
 
   CGFloat _row_height;
@@ -47,7 +47,11 @@
 
 - (void)dealloc
 {
-  _progress_timer = nil;
+  if (_progress_timer != nil)
+  {
+    [_progress_timer invalidate];
+    _progress_timer = nil;
+  }
 }
 
 - (void)awakeFromNib

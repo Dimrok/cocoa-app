@@ -22,23 +22,23 @@
                                                           NSTableViewDelegate,
                                                           InfinitConversationBubbleViewProtocol>
 
-@property (nonatomic, strong) IBOutlet NSImageView* avatar;
-@property (nonatomic, strong) IBOutlet NSImageView* file_icon;
-@property (nonatomic, strong) IBOutlet NSTextField* file_name;
-@property (nonatomic, strong) IBOutlet NSImageView* file_list_icon;
-@property (nonatomic, strong) IBOutlet NSImageView* message_icon;
-@property (nonatomic, strong) IBOutlet NSTextField* time_indicator;
-@property (nonatomic, strong) IBOutlet NSTextField* information;
-@property (nonatomic, strong) IBOutlet IAHoverButton* reject_button;
-@property (nonatomic, strong) IBOutlet IAHoverButton* accept_button;
-@property (nonatomic, strong) IBOutlet IAHoverButton* transaction_status_button;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* bubble_height;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* table_height;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint* message_height;
-@property (nonatomic, strong) IBOutlet InfinitFileListScrollView* table_container;
-@property (nonatomic, strong) IBOutlet InfinitConversationMessageField* message;
-@property (nonatomic, strong) IBOutlet InfinitConversationBubbleView* bubble_view;
-@property (nonatomic, strong) IBOutlet InfinitConversationProgressBar* progress;
+@property (nonatomic, weak) IBOutlet NSImageView* avatar;
+@property (nonatomic, weak) IBOutlet NSImageView* file_icon;
+@property (nonatomic, weak) IBOutlet NSTextField* file_name;
+@property (nonatomic, weak) IBOutlet NSImageView* file_list_icon;
+@property (nonatomic, weak) IBOutlet NSImageView* message_icon;
+@property (nonatomic, weak) IBOutlet NSTextField* time_indicator;
+@property (nonatomic, weak) IBOutlet NSTextField* information;
+@property (nonatomic, weak) IBOutlet IAHoverButton* reject_button;
+@property (nonatomic, weak) IBOutlet IAHoverButton* accept_button;
+@property (nonatomic, weak) IBOutlet IAHoverButton* transaction_status_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bubble_height;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* table_height;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* message_height;
+@property (nonatomic, weak) IBOutlet InfinitFileListScrollView* table_container;
+@property (nonatomic, weak) IBOutlet InfinitConversationMessageField* message;
+@property (nonatomic, weak) IBOutlet InfinitConversationBubbleView* bubble_view;
+@property (nonatomic, weak) IBOutlet InfinitConversationProgressBar* progress;
 
 
 + (CGFloat)heightOfCellForElement:(InfinitConversationElement*)element;

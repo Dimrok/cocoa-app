@@ -13,13 +13,13 @@
 
 @interface InfinitTransactionCellView : NSTableCellView
 
-@property (nonatomic, strong) IBOutlet InfinitAvatarView* avatar_view;
-@property (nonatomic, strong) IBOutlet InfinitAvatarBadgeView* badge;
-@property (nonatomic, strong) IBOutlet NSTextField* fullname;
-@property (nonatomic, strong) IBOutlet NSTextField* information;
-@property (nonatomic, strong) IBOutlet NSTextField* indicator_text;
-@property (nonatomic, strong) IBOutlet NSImageView* indicator;
-@property (nonatomic, strong) IBOutlet NSImageView* user_status;
+@property (nonatomic, weak) IBOutlet InfinitAvatarView* avatar_view;
+@property (nonatomic, weak) IBOutlet InfinitAvatarBadgeView* badge;
+@property (nonatomic, weak) IBOutlet NSTextField* fullname;
+@property (nonatomic, weak) IBOutlet NSTextField* information;
+@property (nonatomic, weak) IBOutlet NSTextField* indicator_text;
+@property (nonatomic, weak) IBOutlet NSImageView* indicator;
+@property (nonatomic, weak) IBOutlet NSImageView* user_status;
 
 @property (nonatomic, readwrite) CGFloat progress;
 

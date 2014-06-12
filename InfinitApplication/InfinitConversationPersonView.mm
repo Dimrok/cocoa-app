@@ -11,7 +11,7 @@
 @implementation InfinitConversationPersonView
 {
 @private
-  id<InfinitConversationPersonViewProtocol> _delegate;
+  __weak id<InfinitConversationPersonViewProtocol> _delegate;
   NSTrackingArea* _tracking_area;
   NSInteger _tracking_options;
 }

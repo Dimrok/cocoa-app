@@ -23,10 +23,10 @@ typedef enum _InfinitTransactionLinkMode
 @protocol InfinitMainTransactionLinkProtocol;
 
 @interface InfinitMainTransactionLinkView : NSView
-@property (nonatomic, strong) IBOutlet NSTextField* transaction_text;
-@property (nonatomic, strong) IBOutlet NSTextField* link_text;
-@property (nonatomic, strong) IBOutlet InfinitMainCounterView* transaction_counter;
-@property (nonatomic, strong) IBOutlet InfinitMainCounterView* link_counter;
+@property (nonatomic, weak) IBOutlet NSTextField* transaction_text;
+@property (nonatomic, weak) IBOutlet NSTextField* link_text;
+@property (nonatomic, weak) IBOutlet InfinitMainCounterView* transaction_counter;
+@property (nonatomic, weak) IBOutlet InfinitMainCounterView* link_counter;
 @property (nonatomic, readwrite) InfinitTransactionLinkMode mode;
 @property (nonatomic, readwrite) CGFloat animate_mode;
 

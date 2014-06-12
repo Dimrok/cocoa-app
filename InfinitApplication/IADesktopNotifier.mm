@@ -19,7 +19,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 @implementation IADesktopNotifier
 {
 @private
-  id <IADesktopNotifierProtocol> _delegate;
+  __weak id<IADesktopNotifierProtocol> _delegate;
   NSUserNotificationCenter* _notification_centre;
   
   NSSound* _finished_sound;
