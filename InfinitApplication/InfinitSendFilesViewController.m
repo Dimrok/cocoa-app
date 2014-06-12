@@ -211,72 +211,78 @@ static NSDictionary* _info_attrs = nil;
   __weak NSArray* weak_file_list = _file_list;
   [block addExecutionBlock:^{
     if (weak_file_list.count == 0)
-      [NSNumber numberWithUnsignedInteger:0];
+      return;
 
     NSUInteger res = 0;
 
-    for (NSString* file_path in weak_file_list)
+    @autoreleasepool
     {
-      if (weak_block.isCancelled)
-        return;
-
-      BOOL is_directory;
-      NSUInteger file_size = 0;
-      if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
+      for (NSString* file_path in weak_file_list)
       {
-        NSURL* file_url =
-          [NSURL URLWithString:[file_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        if (file_url != nil)
-        {
-          NSDirectoryEnumerator* dir_enum =
-            [[NSFileManager defaultManager] enumeratorAtURL:file_url
-                                 includingPropertiesForKeys:@[NSURLTotalFileAllocatedSizeKey,
-                                                              NSURLIsDirectoryKey]
-                                                    options:NSDirectoryEnumerationSkipsHiddenFiles
-                                               errorHandler:nil];
-          for (NSURL* file in dir_enum)
-          {
-            if (weak_block.isCancelled)
-              return;
+        if (weak_block.isCancelled)
+          return;
 
-            NSNumber* is_directory;
-            [file getResourceValue:&is_directory forKey:NSURLIsDirectoryKey error:NULL];
-            if (is_directory.boolValue == NO)
+        BOOL is_directory;
+        NSUInteger file_size = 0;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
+        {
+          NSURL* file_url =
+            [NSURL URLWithString:[file_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+          if (file_url != nil)
+          {
+            NSDirectoryEnumerator* dir_enum =
+              [[NSFileManager defaultManager] enumeratorAtURL:file_url
+                                   includingPropertiesForKeys:@[NSURLTotalFileAllocatedSizeKey,
+                                                                NSURLIsDirectoryKey]
+                                                      options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                 errorHandler:nil];
+            for (NSURL* file in dir_enum)
             {
-              NSNumber* file_size;
-              [file getResourceValue:&file_size forKey:NSURLFileSizeKey error:NULL];
-              res += file_size.unsignedIntegerValue;
+              if (weak_block.isCancelled)
+                return;
+
+              @autoreleasepool
+              {
+                NSNumber* is_directory;
+                [file getResourceValue:&is_directory forKey:NSURLIsDirectoryKey error:NULL];
+                if (is_directory.boolValue == NO)
+                {
+                  NSNumber* file_size;
+                  [file getResourceValue:&file_size forKey:NSURLFileSizeKey error:NULL];
+                  res += file_size.unsignedIntegerValue;
+                }
+              }
             }
           }
         }
+        else
+        {
+          NSDictionary* file_properties =
+            [[NSFileManager defaultManager] attributesOfItemAtPath:file_path error:NULL];
+          file_size = [file_properties fileSize];
+        }
+        res += file_size;
+      }
+
+      NSNumber* total_size = [NSNumber numberWithUnsignedInteger:res];
+
+      NSString* info_str;
+      if (weak_file_list.count == 1)
+      {
+        info_str = [NSString stringWithFormat:@"   1 %@ (%@)",
+                    NSLocalizedString(@"file", nil),
+                    [IAFunctions fileSizeStringFrom:total_size]];
       }
       else
       {
-        NSDictionary* file_properties =
-          [[NSFileManager defaultManager] attributesOfItemAtPath:file_path error:NULL];
-        file_size = [file_properties fileSize];
+        info_str = [NSString stringWithFormat:@"   %ld %@ (%@)",
+                    weak_file_list.count,
+                    NSLocalizedString(@"files", nil),
+                    [IAFunctions fileSizeStringFrom:total_size]];
       }
-      res += file_size;
+      weak_self.header_view.information.attributedTitle =
+        [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
     }
-
-    NSNumber* total_size = [NSNumber numberWithUnsignedInteger:res];
-
-    NSString* info_str;
-    if (weak_file_list.count == 1)
-    {
-      info_str = [NSString stringWithFormat:@"   1 %@ (%@)",
-                  NSLocalizedString(@"file", nil),
-                  [IAFunctions fileSizeStringFrom:total_size]];
-    }
-    else
-    {
-      info_str = [NSString stringWithFormat:@"   %ld %@ (%@)",
-                  weak_file_list.count,
-                  NSLocalizedString(@"files", nil),
-                  [IAFunctions fileSizeStringFrom:total_size]];
-    }
-    weak_self.header_view.information.attributedTitle =
-      [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
   }];
   return block;
 }
