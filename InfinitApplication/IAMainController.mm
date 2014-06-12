@@ -952,7 +952,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 - (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender
 {
   if ([_onboard_controller inSendOnboarding])
-    _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILES_DESTINATION;
+    _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILE_SENDING;
 }
 
 - (NSArray*)sendControllerWantsFriendsByLastInteraction:(IAGeneralSendController*)sender
