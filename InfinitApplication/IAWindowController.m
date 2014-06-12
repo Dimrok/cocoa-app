@@ -80,7 +80,7 @@
 @private
   id<IAWindowControllerProtocol> _delegate;
   BOOL _window_is_open;
-  IAViewController* _current_controller;
+  __weak IAViewController* _current_controller;
   NSMutableArray* _view_constraints;
   BOOL _animating;
 }
@@ -156,10 +156,9 @@
      [self.window orderOut:nil];
      [self.window close];
      [_current_controller.view removeFromSuperview];
-     [_delegate windowController:self
-        hasCurrentViewController:nil];
      _animating = NO;
      _current_controller = nil;
+     [_delegate windowController:self hasCurrentViewController:_current_controller];
    }];
 }
 
