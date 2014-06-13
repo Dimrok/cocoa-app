@@ -208,7 +208,11 @@ static NSDictionary* _info_attrs = nil;
 {
   NSBlockOperation* block = [[NSBlockOperation alloc] init];
   __weak NSBlockOperation* weak_block = block;
-  __weak InfinitSendFilesViewController* weak_self = self;
+  __weak InfinitSendFilesViewController* weak_self;
+  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  {
+    weak_self = self;
+  }
   __weak NSArray* weak_file_list = _file_list;
   [block addExecutionBlock:^{
     if (weak_file_list.count == 0)
@@ -281,8 +285,16 @@ static NSDictionary* _info_attrs = nil;
                     NSLocalizedString(@"files", nil),
                     [IAFunctions fileSizeStringFrom:total_size]];
       }
-      weak_self.header_view.information.attributedTitle =
-        [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
+      if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
+      {
+        self.header_view.information.attributedTitle =
+          [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
+      }
+      else
+      {
+        weak_self.header_view.information.attributedTitle =
+          [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
+      }
     }
   }];
   return block;
@@ -321,8 +333,15 @@ static NSDictionary* _info_attrs = nil;
     [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
   if (_file_list.count > 0)
   {
-    __weak InfinitSendFilesViewController* weak_self = self;
-    [_operation_queue addOperation:[weak_self asynchronouslySetFileSize]];
+    if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
+    {
+      [_operation_queue addOperation:[self asynchronouslySetFileSize]];
+    }
+    else
+    {
+      __weak InfinitSendFilesViewController* weak_self = self;
+      [_operation_queue addOperation:[weak_self asynchronouslySetFileSize]];
+    }
   }
   if (_open)
     [self updateTable];

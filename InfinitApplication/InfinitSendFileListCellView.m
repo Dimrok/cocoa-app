@@ -82,7 +82,11 @@ static NSDictionary* _file_size_style = nil;
   NSBlockOperation* block = [[NSBlockOperation alloc] init];
   __weak NSBlockOperation* weak_block = block;
   __weak NSString* weak_file_path = file_path;
-  __weak InfinitSendFileListCellView* weak_self = self;
+  __weak InfinitSendFileListCellView* weak_self;
+  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  {
+    weak_self = self;
+  }
   [block addExecutionBlock:^{
     BOOL is_directory;
     NSUInteger res = 0;
@@ -127,11 +131,23 @@ static NSDictionary* _file_size_style = nil;
     __weak NSNumber* weak_file_size = file_size;
 
     // Ensure that the drawing takes place on the main thread.
-    if ([weak_self respondsToSelector:@selector(updateFileSize:)])
+    if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
     {
-      [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [weak_self updateFileSize:weak_file_size];
-      }];
+      if ([self respondsToSelector:@selector(updateFileSize:)])
+      {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+          [self updateFileSize:weak_file_size];
+        }];
+      }
+    }
+    else
+    {
+      if ([weak_self respondsToSelector:@selector(updateFileSize:)])
+      {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+          [weak_self updateFileSize:weak_file_size];
+        }];
+      }
     }
   }];
   return block;
