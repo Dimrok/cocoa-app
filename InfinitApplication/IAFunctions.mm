@@ -119,13 +119,13 @@ ELLE_LOG_COMPONENT("OSX.Functions");
 + (BOOL)stringIsValidEmail:(NSString*)str
 {
   NSString* email_regex =
-    @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
-    @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
-    @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
-    @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
-    @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
-    @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
-    @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+  @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
+  @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
+  @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
+  @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
+  @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
+  @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
+  @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
   NSPredicate* email_test = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", email_regex];
   return [email_test evaluateWithObject:str];
 }
@@ -167,14 +167,14 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   CGFloat image_diameter = diameter;
   image_diameter -= 2.0 * border_thickness;
   image_diameter -= 2.0 * shadow_radius;
-  
+
   square_image.size = NSMakeSize(image_diameter, image_diameter);
-  
+
   NSImage* res = [[NSImage alloc] initWithSize:NSMakeSize(diameter, diameter)];
   [res lockFocus];
-  
+
   [NSGraphicsContext saveGraphicsState];
-  
+
   NSShadow* shadow = [[NSShadow alloc] init];
   if (shadow_radius > 0.0)
   {
@@ -183,7 +183,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     shadow.shadowOffset = NSZeroSize;
     [shadow set];
   }
-  
+
   if (border_thickness > 0.0)
   {
     NSBezierPath* border = [NSBezierPath bezierPathWithOvalInRect:
@@ -194,13 +194,13 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     [colour set];
     [border fill];
   }
-  
+
   [NSGraphicsContext restoreGraphicsState];
-  
+
   [NSGraphicsContext saveGraphicsState];
-  
+
   [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-  
+
   NSBezierPath* image_path = [NSBezierPath bezierPathWithOvalInRect:
                               NSMakeRect(border_thickness + shadow_radius,
                                          border_thickness + shadow_radius,
@@ -214,9 +214,9 @@ ELLE_LOG_COMPONENT("OSX.Functions");
                   fromRect:NSZeroRect
                  operation:NSCompositeSourceOver
                   fraction:1.0];
-  
+
   [res unlockFocus];
-  
+
   [NSGraphicsContext restoreGraphicsState];
   return res;
 }
@@ -226,7 +226,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
 {
   NSString* res;
   CGFloat size = file_size.doubleValue;
-  
+
   if (size < pow(10.0, 3.0))
     res = [NSString stringWithFormat:@"%.0f B", size];
   else if (size < pow(10.0, 6.0))
@@ -237,7 +237,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     res = [NSString stringWithFormat:@"%.2f GB", size / pow(10.0, 9.0)];
   else
     res = [NSString stringWithFormat:@"%.3f TB", size / pow(10.0, 12.0)];
-  
+
   return res;
 }
 
@@ -261,7 +261,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
 + (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left
 {
   NSString* res;
-  
+
   if (seconds_left < 10)
     res = NSLocalizedString(@"less than 10 s", @"less than 10 s");
   else if (seconds_left < 60)
@@ -283,14 +283,14 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   {
     res = NSLocalizedString(@"more than two days", @"more than two days");
   }
-  
+
   return res;
 }
 
 + (NSImage*)makeAvatarFor:(NSString*)fullname
 {
   NSImage* avatar = [[NSImage alloc] initWithSize:NSMakeSize(256.0, 256.0)];
-  
+
   NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                             traits:NSUnboldFontMask
                                                             weight:5
@@ -308,7 +308,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   for (NSString* chunk in chunks)
     if (chunk.length > 0)
       [letters_str appendString:[NSString stringWithFormat:@"%c", [chunk characterAtIndex:0]]];
-  
+
   NSAttributedString* letters = [[NSAttributedString alloc]
                                  initWithString:[letters_str uppercaseString]
                                  attributes:style];
@@ -316,7 +316,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
                                   (avatar.size.height - letters.size.height) / 2.0,
                                   letters.size.width,
                                   letters.size.height);
-  
+
   NSBezierPath* bg = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0,
                                                                  0.0,
                                                                  avatar.size.width,
@@ -326,7 +326,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   [bg fill];
   [letters drawInRect:letter_rect];
   [avatar unlockFocus];
-  
+
   return avatar;
 }
 
@@ -338,18 +338,18 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     ELLE_LOG("Infinit doesn't have access to Address Book");
     return nil;
   }
-  
+
 	NSData* image_data = nil;
-  
+
   if (address_book != nil)
     image_data = address_book.me.imageData;
-  
+
 	NSImage* result;
   if (image_data == nil)
     result = nil;
   else
     result = [[NSImage alloc] initWithData:image_data];
-  
+
 	return result;
 }
 
@@ -490,7 +490,9 @@ ELLE_LOG_COMPONENT("OSX.Functions");
       return INFINIT_OS_X_VERSION_10_8;
     case 9:
       return INFINIT_OS_X_VERSION_10_9;
-      
+    case 10:
+      return INFINIT_OS_X_VERSION_10_10;
+
     default:
       return INFINIT_OS_X_VERSION_UNKNOWN;
   }
