@@ -309,7 +309,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   NSArray* transaction_list = [_transaction_manager latestTransactionPerUser];
   NSArray* link_list = [_link_manager reversedLinkList];
   _main_view_controller =
-    [[InfinitMainViewController alloc] initWithDelegate:self andTransactionList:transaction_list
+    [[InfinitMainViewController alloc] initWithDelegate:self
+                                     andTransactionList:transaction_list
                                             andLinkList:link_list
                                           forPeopleView:YES];
   [self openOrChangeViewController:_main_view_controller];
@@ -321,10 +322,12 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [_desktop_notifier clearAllNotifications];
   NSArray* transaction_list = [_transaction_manager latestTransactionPerUser];
   NSArray* link_list = [_link_manager reversedLinkList];
+  _main_view_controller = nil;
   _main_view_controller =
-  [[InfinitMainViewController alloc] initWithDelegate:self andTransactionList:transaction_list
-                                          andLinkList:link_list
-                                        forPeopleView:NO];
+    [[InfinitMainViewController alloc] initWithDelegate:self
+                                     andTransactionList:transaction_list
+                                            andLinkList:link_list
+                                          forPeopleView:NO];
   [self openOrChangeViewController:_main_view_controller];
 }
 
@@ -402,9 +405,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [_desktop_notifier clearAllNotifications];
   [_window_controller closeWindow];
   [_status_bar_icon setHighlighted:NO];
-  _conversation_view_controller = nil;
-  _main_view_controller = nil;
-  _general_send_controller = nil;
 }
 
 - (void)closeNotificationWindowWithoutLosingFocus
@@ -413,9 +413,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [_desktop_notifier clearAllNotifications];
   [_window_controller closeWindowWithoutLosingFocus];
   [_status_bar_icon setHighlighted:NO];
-  _conversation_view_controller = nil;
-  _main_view_controller = nil;
-  _general_send_controller = nil;
 }
 
 //- Login and Logout -------------------------------------------------------------------------------
