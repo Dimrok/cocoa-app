@@ -155,7 +155,8 @@
 @implementation InfinitSendFilesViewController
 {
 @private
-  __weak id<InfinitSendFilesViewProtocol> _delegate;
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
+  id<InfinitSendFilesViewProtocol> _delegate;
   NSArray* _file_list;
   CGFloat _row_height;
   CGFloat _max_table_height;

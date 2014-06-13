@@ -11,7 +11,8 @@
 @implementation InfinitConversationPersonView
 {
 @private
-  __weak id<InfinitConversationPersonViewProtocol> _delegate;
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
+  id<InfinitConversationPersonViewProtocol> _delegate;
   NSTrackingArea* _tracking_area;
   NSInteger _tracking_options;
 }

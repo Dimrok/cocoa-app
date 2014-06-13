@@ -11,7 +11,8 @@
 @implementation IAFavouritesView
 {
 @private
-  __weak id<IAFavouritesViewProtocol> _delegate;
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
+  id<IAFavouritesViewProtocol> _delegate;
   NSArray* _drag_types;
   BOOL _mouse_in_favourite;
 }

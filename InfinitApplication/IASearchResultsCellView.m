@@ -70,7 +70,8 @@ static NSImage* check_mark = nil;
 {
   BOOL _is_favourite;
   BOOL _infinit_user;
-  __weak id<IASearchResultsCellProtocol> _delegate;
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
+  id<IASearchResultsCellProtocol> _delegate;
 
   NSTrackingArea* _tracking_area;
 

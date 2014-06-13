@@ -16,7 +16,8 @@
 @implementation InfinitLinkCellView
 {
 @private
-  __weak id<InfinitLinkCellProtocol> _delegate;
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
+  id<InfinitLinkCellProtocol> _delegate;
   NSTrackingArea* _tracking_area;
   BOOL _hover;
 

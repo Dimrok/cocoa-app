@@ -18,7 +18,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 @implementation InfinitScreenshotManager
 {
 @private
-  id<InfinitScreenshotManagerProtocol> _delegate;
+  __weak id<InfinitScreenshotManagerProtocol> _delegate;
   NSMetadataQuery* _query;
 
   BOOL _watch;

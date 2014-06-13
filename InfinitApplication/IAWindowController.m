@@ -78,9 +78,10 @@
 @implementation IAWindowController
 {
 @private
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
   id<IAWindowControllerProtocol> _delegate;
   BOOL _window_is_open;
-  __weak IAViewController* _current_controller;
+  IAViewController* _current_controller;
   NSMutableArray* _view_constraints;
   BOOL _animating;
 }
