@@ -18,7 +18,8 @@
 @implementation InfinitSendUserLinkView
 {
 @private
-  __weak id<InfinitSendUserLinkProtocol> _delegate;
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
+  id<InfinitSendUserLinkProtocol> _delegate;
   NSTrackingArea* _tracking_area;
 
   NSAttributedString* _user_hover_str;
@@ -336,7 +337,8 @@
 @private
   __weak id<InfinitSendViewProtocol> _delegate;
 
-  __weak IAUserSearchViewController* _search_controller;
+  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
+  IAUserSearchViewController* _search_controller;
   InfinitSendNoteViewController* _note_controller;
   InfinitSendFilesViewController* _files_controller;
 

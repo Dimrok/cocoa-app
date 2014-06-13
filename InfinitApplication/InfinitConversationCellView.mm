@@ -54,7 +54,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 @property (nonatomic, readwrite) BOOL important;
 @property (nonatomic, readwrite) BOOL clickable;
 @property (nonatomic, readwrite) CGFloat hover;
-@property (nonatomic, readwrite, weak) id<InfinitConversationBubbleViewProtocol> delegate;
+@property (nonatomic, readwrite) id<InfinitConversationBubbleViewProtocol> delegate;
 @property (nonatomic, readwrite) BOOL showing_list;
 
 @end
