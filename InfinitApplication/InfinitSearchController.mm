@@ -43,7 +43,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (id)initWithDelegate:(id<InfinitSearchControllerProtocol>)delegate
 {
-  if (self == [super init])
+  if (self = [super init])
   {
     _delegate = delegate;
     _result_list = [NSMutableArray array];
