@@ -43,7 +43,7 @@ typedef enum _InfinitUserLinkMode
 @protocol InfinitSendDropViewProtocol;
 
 @interface InfinitSendDropView : NSView <NSDraggingDestination>
-@property (nonatomic, readwrite, weak) id<InfinitSendDropViewProtocol> delegate;
+@property (nonatomic, readwrite) id<InfinitSendDropViewProtocol> delegate;
 @end
 
 @protocol InfinitSendDropViewProtocol <NSObject>
