@@ -215,8 +215,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
       user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
   {
     IAUser* user = [IAUserManager userWithId:user_id];
-    if (_general_send_controller == nil)
-      _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithFiles:nil forUser:user];
   }
   else if (user_id.integerValue == 0)
@@ -820,8 +819,7 @@ wantsMarkTransactionsReadForUser:(IAUser*)user
 - (void)conversationView:(InfinitConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user
 {
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithFiles:nil forUser:user];
 }
 
@@ -1173,15 +1171,13 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 - (void)sendGotClicked:(InfinitMainViewController*)sender
 {
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithNoFileForLink:NO];
 }
 
 - (void)makeLinkGotClicked:(InfinitMainViewController*)sender
 {
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithNoFileForLink:YES];
 }
 
@@ -1333,8 +1329,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (void)delayedOpenSendView:(NSArray*)files
 {
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithFiles:files forUser:nil];
 }
 
@@ -1354,8 +1349,7 @@ hadConnectionStateChange:(gap_UserStatus)status
   }
   else
   {
-    if (_general_send_controller == nil)
-      _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithFiles:files forUser:nil];
   }
 }
@@ -1375,9 +1369,8 @@ hadConnectionStateChange:(gap_UserStatus)status
   {
     return;
   }
-  
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller filesOverStatusBarIcon];
 }
 
