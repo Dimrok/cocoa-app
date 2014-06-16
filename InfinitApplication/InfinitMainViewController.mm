@@ -28,7 +28,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitMainTransactionLinkProtocol> _delegate;
+  __unsafe_unretained id<InfinitMainTransactionLinkProtocol> _delegate;
   NSTrackingArea* _tracking_area;
 
   NSAttributedString* _link_norm_str;

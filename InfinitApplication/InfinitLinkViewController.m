@@ -16,7 +16,7 @@
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitLinkViewProtocol> _delegate;
+  __unsafe_unretained id<InfinitLinkViewProtocol> _delegate;
   NSMutableArray* _list;
 
   CGFloat _row_height;

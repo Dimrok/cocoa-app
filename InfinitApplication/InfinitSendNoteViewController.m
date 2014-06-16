@@ -98,7 +98,7 @@
 @implementation InfinitSendNoteViewController
 {
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitSendNoteViewProtocol> _delegate;
+  __unsafe_unretained id<InfinitSendNoteViewProtocol> _delegate;
   NSUInteger _note_limit;
   NSDictionary* _norm_characters_attrs;
   NSDictionary* _done_characters_attrs;

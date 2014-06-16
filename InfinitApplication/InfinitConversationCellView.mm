@@ -186,7 +186,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitConversationCellViewProtocol> _delegate;
+  __unsafe_unretained id<InfinitConversationCellViewProtocol> _delegate;
   InfinitConversationElement* _element;
   NSTrackingArea* _tracking_area;
   BOOL _hovered;

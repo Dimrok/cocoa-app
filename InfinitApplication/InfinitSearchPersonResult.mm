@@ -20,7 +20,7 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitSearchPersonResultProtocol> _delegate;
+  __unsafe_unretained id<InfinitSearchPersonResultProtocol> _delegate;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------

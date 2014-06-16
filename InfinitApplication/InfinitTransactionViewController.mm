@@ -19,7 +19,7 @@
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitTransactionViewProtocol> _delegate;
+  __unsafe_unretained id<InfinitTransactionViewProtocol> _delegate;
   NSMutableArray* _list;
 
   NSUInteger _max_rows;

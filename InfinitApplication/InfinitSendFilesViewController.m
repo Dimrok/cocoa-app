@@ -156,7 +156,7 @@
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitSendFilesViewProtocol> _delegate;
+  __unsafe_unretained id<InfinitSendFilesViewProtocol> _delegate;
   NSArray* _file_list;
   CGFloat _row_height;
   CGFloat _max_table_height;
@@ -204,15 +204,17 @@ static NSDictionary* _info_attrs = nil;
   [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
 }
 
+- (void)stopCalculatingFileSize
+{
+  if (_operation_queue.operationCount > 0)
+    [_operation_queue cancelAllOperations];
+}
+
 - (NSOperation*)asynchronouslySetFileSize
 {
   NSBlockOperation* block = [[NSBlockOperation alloc] init];
   __weak NSBlockOperation* weak_block = block;
-  __weak InfinitSendFilesViewController* weak_self;
-  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
-  {
-    weak_self = self;
-  }
+  __unsafe_unretained InfinitSendFilesViewController* weak_self = self;
   __weak NSArray* weak_file_list = _file_list;
   [block addExecutionBlock:^{
     if (weak_file_list.count == 0)
@@ -285,16 +287,8 @@ static NSDictionary* _info_attrs = nil;
                     NSLocalizedString(@"files", nil),
                     [IAFunctions fileSizeStringFrom:total_size]];
       }
-      if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
-      {
-        self.header_view.information.attributedTitle =
-          [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
-      }
-      else
-      {
-        weak_self.header_view.information.attributedTitle =
-          [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
-      }
+      weak_self.header_view.information.attributedTitle =
+        [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
     }
   }];
   return block;
@@ -333,15 +327,8 @@ static NSDictionary* _info_attrs = nil;
     [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
   if (_file_list.count > 0)
   {
-    if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
-    {
-      [_operation_queue addOperation:[self asynchronouslySetFileSize]];
-    }
-    else
-    {
-      __weak InfinitSendFilesViewController* weak_self = self;
-      [_operation_queue addOperation:[weak_self asynchronouslySetFileSize]];
-    }
+    __unsafe_unretained InfinitSendFilesViewController* weak_self = self;
+    [_operation_queue addOperation:[weak_self asynchronouslySetFileSize]];
   }
   if (_open)
     [self updateTable];

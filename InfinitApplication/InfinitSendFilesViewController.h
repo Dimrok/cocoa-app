@@ -36,6 +36,8 @@
 
 - (void)showFiles;
 
+- (void)stopCalculatingFileSize;
+
 @end
 
 @protocol InfinitSendFilesViewProtocol <NSObject>

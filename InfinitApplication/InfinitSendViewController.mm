@@ -19,7 +19,7 @@
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitSendUserLinkProtocol> _delegate;
+  __unsafe_unretained id<InfinitSendUserLinkProtocol> _delegate;
   NSTrackingArea* _tracking_area;
 
   NSAttributedString* _user_hover_str;
@@ -444,6 +444,10 @@
 
 - (void)aboutToChangeView
 {
+  [_files_controller stopCalculatingFileSize];
+  _search_controller = nil;
+  _note_controller = nil;
+  _files_controller = nil;
   if (_tooltip != nil)
     [_tooltip close];
 }

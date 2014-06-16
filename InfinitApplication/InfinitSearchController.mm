@@ -22,7 +22,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<InfinitSearchControllerProtocol> _delegate;
+  __unsafe_unretained id<InfinitSearchControllerProtocol> _delegate;
   
   ABAddressBook* _addressbook;
   
