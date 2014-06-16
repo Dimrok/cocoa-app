@@ -403,7 +403,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [_desktop_notifier clearAllNotifications];
   [_window_controller closeWindow];
   [_status_bar_icon setHighlighted:NO];
-  _general_send_controller = nil;
 }
 
 - (void)closeNotificationWindowWithoutLosingFocus
@@ -412,7 +411,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [_desktop_notifier clearAllNotifications];
   [_window_controller closeWindowWithoutLosingFocus];
   [_status_bar_icon setHighlighted:NO];
-  _general_send_controller = nil;
 }
 
 //- Login and Logout -------------------------------------------------------------------------------
@@ -820,8 +818,7 @@ wantsMarkTransactionsReadForUser:(IAUser*)user
 - (void)conversationView:(InfinitConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user
 {
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithFiles:nil forUser:user];
 }
 
@@ -1173,15 +1170,13 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 - (void)sendGotClicked:(InfinitMainViewController*)sender
 {
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+   _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithNoFileForLink:NO];
 }
 
 - (void)makeLinkGotClicked:(InfinitMainViewController*)sender
 {
-  if (_general_send_controller == nil)
-    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithNoFileForLink:YES];
 }
 
@@ -1333,7 +1328,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (void)delayedOpenSendView:(NSArray*)files
 {
-  if (_general_send_controller == nil)
+  if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
     _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   [_general_send_controller openWithFiles:files forUser:nil];
 }
@@ -1354,7 +1349,7 @@ hadConnectionStateChange:(gap_UserStatus)status
   }
   else
   {
-    if (_general_send_controller == nil)
+    if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
       _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller openWithFiles:files forUser:nil];
   }
@@ -1375,9 +1370,11 @@ hadConnectionStateChange:(gap_UserStatus)status
   {
     return;
   }
-  if (_general_send_controller == nil)
+  if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
+  {
     _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-  [_general_send_controller filesOverStatusBarIcon];
+    [_general_send_controller filesOverStatusBarIcon];
+  }
 }
 
 //- Screenshot Manager Protocol --------------------------------------------------------------------

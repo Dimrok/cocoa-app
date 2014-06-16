@@ -375,7 +375,7 @@ static NSDictionary* _grey_style;
     message = NSLocalizedString(@"Online, send something!", nil);
   else
     message = NSLocalizedString(@"Offline!", nil);
-  [self performSelector:@selector(delayedShowPopeverWithMessage:)
+  [self performSelector:@selector(delayedShowPopoverWithMessage:)
              withObject:message
              afterDelay:0.5];
   [self determineCurrentMode];
@@ -460,7 +460,7 @@ static NSDictionary* _grey_style;
   [_delegate statusBarIconClicked:self];
 }
 
-- (void)delayedShowPopeverWithMessage:(NSString*)message
+- (void)delayedShowPopoverWithMessage:(NSString*)message
 {
   NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
   mouse_loc = [self convertPoint:mouse_loc fromView:nil];
@@ -490,7 +490,7 @@ static NSDictionary* _grey_style;
     message = NSLocalizedString(@"Online, send something!", nil);
   else
     message = NSLocalizedString(@"Offline!", nil);
-  [self performSelector:@selector(delayedShowPopeverWithMessage:)
+  [self performSelector:@selector(delayedShowPopoverWithMessage:)
              withObject:message
              afterDelay:1.0];
 }

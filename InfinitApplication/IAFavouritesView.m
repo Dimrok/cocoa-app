@@ -47,7 +47,8 @@
 
 - (void)dragLost
 {
-  [_delegate favouritesViewHadDragExit:self];
+  if (_delegate)
+    [_delegate favouritesViewHadDragExit:self];
 }
 
 - (void)resetTimeout

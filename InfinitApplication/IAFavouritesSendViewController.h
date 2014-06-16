@@ -22,6 +22,8 @@
 
 - (id)initWithDelegate:(id<IAFavouritesSendViewProtocol>)delegate;
 
+- (void)setDelegate:(id<IAFavouritesSendViewProtocol>)delegate;
+
 - (void)hideFavourites;
 - (void)showFavourites;
 

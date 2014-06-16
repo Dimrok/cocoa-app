@@ -45,6 +45,8 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
   [_user_search_controller setDelegate:nil];
   _user_search_controller = nil;
+  [_favourites_send_controller hideFavourites];
+  [_favourites_send_controller setDelegate:nil];
   _favourites_send_controller = nil;
   _send_controller = nil;
 }
@@ -57,7 +59,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   {
     [_favourites_send_controller resetTimeout];
   }
-  else if (!_send_view_open)
+  else
   {
     [self cancelOpenFavourites];
     [self showFavourites];
@@ -100,15 +102,11 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
   _send_view_open = YES;
   [_favourites_send_controller hideFavourites];
-  if (_send_controller == nil)
-  {
-    if (_user_search_controller == nil)
-      _user_search_controller = [[IAUserSearchViewController alloc] init];
-    _send_controller =
-      [[InfinitSendViewController alloc] initWithDelegate:self
-                                     withSearchController:_user_search_controller
-                                                  forLink:for_link];
-  }
+  _user_search_controller = [[IAUserSearchViewController alloc] init];
+  _send_controller =
+    [[InfinitSendViewController alloc] initWithDelegate:self
+                                   withSearchController:_user_search_controller
+                                                forLink:for_link];
   [_delegate sendController:self wantsActiveController:_send_controller];
 }
 
@@ -126,7 +124,8 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   }
   _send_view_open = YES;
   [self cancelOpenFavourites];
-  [_favourites_send_controller hideFavourites];
+  if (_favourites_send_controller.open)
+    [_favourites_send_controller hideFavourites];
   for (NSString* file in files)
   {
     if (![_files containsObject:file])
@@ -139,13 +138,13 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
     _send_controller = [[InfinitSendViewController alloc] initWithDelegate:self
                                                       withSearchController:_user_search_controller
                                                                    forLink:NO];
+    [_delegate sendController:self wantsActiveController:_send_controller];
+    [_user_search_controller addUser:user];
   }
   else
   {
     [_send_controller filesUpdated];
   }
-  [_delegate sendController:self wantsActiveController:_send_controller];
-  [_user_search_controller addUser:user];
 }
 
 - (void)showFavourites

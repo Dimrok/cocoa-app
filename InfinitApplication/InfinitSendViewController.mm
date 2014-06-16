@@ -371,6 +371,7 @@
 
 - (void)dealloc
 {
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
   _files_controller = nil;
   _note_controller = nil;
   _search_controller = nil;

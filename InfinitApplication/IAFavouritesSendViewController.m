@@ -71,6 +71,11 @@
   return self;
 }
 
+- (void)setDelegate:(id<IAFavouritesSendViewProtocol>)delegate
+{
+  _delegate = delegate;
+}
+
 - (void)loadView
 {
   [super loadView];
@@ -260,6 +265,7 @@
         for (IAFavouriteView* fav_view in _favourite_views)
           [fav_view removeFromSuperview];
         [_favourite_views removeAllObjects];
+        [_favourites_view setDelegate:nil];
       }];
    }];
 }
