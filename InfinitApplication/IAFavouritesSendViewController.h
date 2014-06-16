@@ -18,11 +18,14 @@
                                                               NSWindowDelegate>
 
 @property (nonatomic, weak) IBOutlet IAFavouritesView* favourites_view;
+@property (nonatomic) BOOL open;
 
 - (id)initWithDelegate:(id<IAFavouritesSendViewProtocol>)delegate;
 
 - (void)hideFavourites;
 - (void)showFavourites;
+
+- (void)resetTimeout;
 
 @end
 

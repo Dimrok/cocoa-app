@@ -20,6 +20,8 @@
 
 - (void)setDelegate:(id<IAFavouritesViewProtocol>)delegate;
 
+- (void)resetTimeout;
+
 @end
 
 

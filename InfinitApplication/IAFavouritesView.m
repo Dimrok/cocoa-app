@@ -12,8 +12,7 @@
 {
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  id<IAFavouritesViewProtocol> _delegate;
-  NSArray* _drag_types;
+  __unsafe_unretained id<IAFavouritesViewProtocol> _delegate;
   BOOL _mouse_in_favourite;
 }
 
@@ -23,12 +22,15 @@
 {
   if (self = [super initWithFrame:frameRect])
   {
-    _drag_types = [NSArray arrayWithObjects:NSFilenamesPboardType, nil];
     _mouse_in_favourite = NO;
-    [self registerForDraggedTypes:_drag_types];
     [self performSelector:@selector(dragLost) withObject:nil afterDelay:3.0];
   }
   return self;
+}
+
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (BOOL)isOpaque
@@ -43,51 +45,15 @@
 
 //- Dragging Functions -----------------------------------------------------------------------------
 
-- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
-{
-  NSPasteboard* paste_board = sender.draggingPasteboard;
-  if ([paste_board availableTypeFromArray:_drag_types])
-  {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    return NSDragOperationCopy;
-  }
-  return NSDragOperationNone;
-}
-
-- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
-{
-  NSPasteboard* paste_board = sender.draggingPasteboard;
-  if (![paste_board availableTypeFromArray:_drag_types])
-    return NO;
-
-  NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
-
-  if (files.count > 0)
-  {
-    [_delegate favouritesView:self
-                gotDropOnUser:nil
-                    withFiles:files];
-  }
-
-  return YES;
-}
-
 - (void)dragLost
 {
   [_delegate favouritesViewHadDragExit:self];
 }
 
-- (void)draggingExited:(id<NSDraggingInfo>)sender
+- (void)resetTimeout
 {
-  if (!_mouse_in_favourite)
-  {
-    [self performSelector:@selector(dragLost) withObject:nil afterDelay:0.5];
-  }
-}
-
-- (void)draggingEnded:(id<NSDraggingInfo>)sender
-{
-  [self dragLost];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [self performSelector:@selector(dragLost) withObject:nil afterDelay:3.0];
 }
 
 //- Favourite View Protocol ------------------------------------------------------------------------

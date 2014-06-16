@@ -43,6 +43,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 
 - (void)dealloc
 {
+  [_user_search_controller setDelegate:nil];
   _user_search_controller = nil;
   _favourites_send_controller = nil;
   _send_controller = nil;
@@ -52,7 +53,11 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 
 - (void)filesOverStatusBarIcon
 {
-  if (!_send_view_open)
+  if (_favourites_send_controller != nil && _favourites_send_controller.open)
+  {
+    [_favourites_send_controller resetTimeout];
+  }
+  else if (!_send_view_open)
   {
     [self cancelOpenFavourites];
     [self showFavourites];
@@ -146,11 +151,16 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 - (void)showFavourites
 {
   ELLE_TRACE("%s: show favourites", self.description.UTF8String);
+
   if (_favourites_send_controller == nil)
   {
     _favourites_send_controller = [[IAFavouritesSendViewController alloc] initWithDelegate:self];
-    [_favourites_send_controller showFavourites];
   }
+  else
+  {
+    [_favourites_send_controller hideFavourites];
+  }
+  [_favourites_send_controller showFavourites];
 }
 
 //- Send View Protocol -----------------------------------------------------------------------------
@@ -159,7 +169,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
   _files = nil;
   [_delegate sendControllerWantsClose:self];
-  _send_controller = nil;
 }
 
 - (NSArray*)sendViewWantsFileList:(InfinitSendViewController*)sender
@@ -260,7 +269,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
              withFiles:(NSArray*)files
 {
   [_favourites_send_controller hideFavourites];
-  _favourites_send_controller = nil;
   if (files.count > 0)
   {
     NSArray* res =
@@ -273,14 +281,12 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 - (void)favouritesViewWantsClose:(IAFavouritesSendViewController*)sender
 {
   [_favourites_send_controller hideFavourites];
-  _favourites_send_controller = nil;
 }
 
 - (void)favouritesView:(IAFavouritesSendViewController*)sender
   gotDropLinkWithFiles:(NSArray*)files
 {
   [_favourites_send_controller hideFavourites];
-  _favourites_send_controller = nil;
   if (files.count > 0)
   {
     [_delegate sendController:self wantsCreateLink:files withMessage:@""];

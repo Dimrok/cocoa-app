@@ -34,13 +34,11 @@
 @implementation IAFavouritesSendViewController
 {
   __weak id<IAFavouritesSendViewProtocol> _delegate;
-  NSArray* _favourites;
   NSMutableArray* _favourite_views;
   NSWindow* _window;
   NSSize _favourite_size;
   NSSize _link_size;
   NSPoint _start_pos;
-  BOOL _window_open;
   InfinitLinkShortcutView* _link_view;
 }
 
@@ -71,11 +69,6 @@
     _link_size = NSMakeSize(70.0, 70.0);
   }
   return self;
-}
-
-- (void)dealloc
-{
-  [_favourite_views removeAllObjects];
 }
 
 - (void)loadView
@@ -122,20 +115,22 @@
   x += 0.5 * frame_size.width + margin;
   y -= arc_radius - frame_size.height - 0.45 * _favourite_size.height;
   y = frame_size.height - y;
-  return NSMakeRect(x, y, _favourite_size.width, _favourite_size.height);
+
+  NSRect res = NSMakeRect(x, y, _favourite_size.width, _favourite_size.height);
+  return res;
 }
 
-- (void)addSubViews
+- (void)addSubViewsForFavourites:(NSArray*)favourites
 {
   NSRect favourite_rect = NSMakeRect(_start_pos.x, _start_pos.y,
                                      _favourite_size.width, _favourite_size.height);
-  for (IAUser* favourite in _favourites)
+  for (IAUser* favourite in favourites)
   {
     IAFavouriteView* favourite_view = [[IAFavouriteView alloc] initWithFrame:favourite_rect
                                                                  andDelegate:self.favourites_view
                                                                      andUser:favourite];
-    [self.favourites_view addSubview:favourite_view];
     [_favourite_views addObject:favourite_view];
+    [self.favourites_view addSubview:favourite_view];
   }
 
   NSRect link_rect = NSMakeRect(_start_pos.x, _start_pos.y, _link_size.width, _link_size.height);
@@ -156,7 +151,7 @@
      NSInteger i = 0;
      for (IAFavouriteView* fav_view in _favourite_views)
      {
-       [fav_view.animator setFrame:[self favouritePosition:i++ of:_favourites.count]];
+       [fav_view.animator setFrame:[self favouritePosition:i++ of:favourites.count]];
      }
    }
                       completionHandler:^
@@ -165,17 +160,17 @@
      NSInteger i = 0;
      for (IAFavouriteView* fav_view in _favourite_views)
      {
-       [fav_view setFrame:[self favouritePosition:i++ of:_favourites.count]];
+       [fav_view setFrame:[self favouritePosition:i++ of:favourites.count]];
      }
    }];
 }
 
 - (void)showFavourites
 {
-  if (_window != nil || _window_open)
+  if (_window != nil || _open)
     return;
-  
-  _window_open = YES;
+
+  _open = YES;
   
   NSMutableArray* temp_arr =
     [NSMutableArray arrayWithArray:[_delegate favouritesViewWantsFavourites:self]];
@@ -192,10 +187,11 @@
   }
   
   // XXX For now we only handle up to 5 favourites
+  NSArray* favourites;
   if (temp_arr.count > 5)
-    _favourites = [temp_arr subarrayWithRange:NSMakeRange(0, 5)];
+    favourites = [temp_arr subarrayWithRange:NSMakeRange(0, 5)];
   else
-    _favourites = [NSArray arrayWithArray:temp_arr];
+    favourites = [NSArray arrayWithArray:temp_arr];
   
   NSRect frame = NSZeroRect;
   frame.size = self.view.bounds.size;
@@ -204,6 +200,10 @@
                              midpoint.y - NSHeight(self.view.frame));
   
   [self.favourites_view setDelegate:self];
+  for (NSView* view in _favourites_view.subviews)
+  {
+    [view removeFromSuperview];
+  }
   
   _window = [IAFavouritesSendViewController windowWithFrame:frame];
   _window.alphaValue = 0.0;
@@ -212,7 +212,7 @@
   
   [_window makeKeyAndOrderFront:nil];
 
-  [self addSubViews];
+  [self addSubViewsForFavourites:favourites];
   
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
@@ -227,10 +227,8 @@
 
 - (void)hideFavourites
 {
-  if (_window == nil || !_window_open)
+  if (_window == nil || !_open)
     return;
-  
-  _window_open = NO;
   
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
@@ -255,14 +253,20 @@
       }
                          completionHandler:^
       {
+        _open = NO;
         [_window orderOut:nil];
         _window.delegate = nil;
         _window = nil;
         for (IAFavouriteView* fav_view in _favourite_views)
           [fav_view removeFromSuperview];
-        _favourite_views = nil;
+        [_favourite_views removeAllObjects];
       }];
    }];
+}
+
+- (void)resetTimeout
+{
+  [_favourites_view resetTimeout];
 }
 
 //- Favourites View Protocol -----------------------------------------------------------------------
