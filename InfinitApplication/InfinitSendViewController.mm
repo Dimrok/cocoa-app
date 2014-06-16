@@ -410,9 +410,9 @@
   {
     [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
     _note_controller.link_mode = YES;
-    self.search_constraint.constant = 0.0;
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
     self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
+    self.search_constraint.constant = 0.0;
     [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
   }
   else
@@ -708,6 +708,8 @@ wantsChangeHeight:(CGFloat)height
    changedToHeight:(CGFloat)height
 {
   _last_search_height = height;
+  if (_user_link_view.mode == INFINIT_LINK_MODE)
+    return;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
   {
     context.duration = 0.15;
