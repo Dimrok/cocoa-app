@@ -381,12 +381,15 @@
 - (void)awakeFromNib
 {
   self.drop_view.delegate = self;
-  [self.search_view addSubview:_search_controller.view];
-  [self.search_view addConstraints:[NSLayoutConstraint
-                                    constraintsWithVisualFormat:@"V:|[search_view]|"
-                                    options:0
-                                    metrics:nil
-                                    views:@{@"search_view": _search_controller.view}]];
+  if (!_for_link)
+  {
+    [self.search_view addSubview:_search_controller.view];
+    [self.search_view addConstraints:[NSLayoutConstraint
+                                      constraintsWithVisualFormat:@"V:|[search_view]|"
+                                      options:0
+                                      metrics:nil
+                                      views:@{@"search_view": _search_controller.view}]];
+  }
   [self.note_view addSubview:_note_controller.view];
   [self.note_view addConstraints:[NSLayoutConstraint
                                   constraintsWithVisualFormat:@"V:|[note_view]|"
@@ -705,8 +708,6 @@ wantsChangeHeight:(CGFloat)height
    changedToHeight:(CGFloat)height
 {
   _last_search_height = height;
-  if (_user_link_view.mode == INFINIT_LINK_MODE)
-    return;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
   {
     context.duration = 0.15;
@@ -795,6 +796,15 @@ wantsRemoveFavourite:(IAUser*)user
 
 - (void)gotUserClick:(InfinitSendUserLinkView*)sender
 {
+  if (![self.search_view.subviews containsObject:_search_controller.view])
+  {
+    [self.search_view addSubview:_search_controller.view];
+    [self.search_view addConstraints:[NSLayoutConstraint
+                                      constraintsWithVisualFormat:@"V:|[search_view]|"
+                                      options:0
+                                      metrics:nil
+                                      views:@{@"search_view": _search_controller.view}]];
+  }
   [self.user_link_view setMode:INFINIT_USER_MODE];
   _note_controller.link_mode = NO;
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
