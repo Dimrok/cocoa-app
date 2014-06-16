@@ -446,9 +446,6 @@
 - (void)aboutToChangeView
 {
   [_files_controller stopCalculatingFileSize];
-  _search_controller = nil;
-  _note_controller = nil;
-  _files_controller = nil;
   if (_tooltip != nil)
     [_tooltip close];
 }
