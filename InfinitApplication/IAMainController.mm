@@ -1399,7 +1399,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (BOOL)stayAwakeManagerWantsActiveTransactions:(InfinitStayAwakeManager*)sender
 {
-  return ([_transaction_manager hasTransferringTransaction] && [_link_manager hasTransferringLink]);
+  return ([_transaction_manager hasTransferringTransaction] || [_link_manager hasTransferringLink]);
 }
 
 //- Transaction Manager Protocol -------------------------------------------------------------------

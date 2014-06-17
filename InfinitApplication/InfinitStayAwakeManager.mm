@@ -41,53 +41,53 @@ static void* _ref_con;
 @implementation InfinitStayAwakeManager
 {
 @private
-    id<InfinitStayAwakeProtocol> _delegate;
+  __weak id<InfinitStayAwakeProtocol> _delegate;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<InfinitStayAwakeProtocol>)delegate
 {
-    if (self = [super init])
-    {
-        _ref_con = NULL;
-        [self registerForPowerEvents];
-        return self;
-    }
-    return nil;
+  if (self = [super init])
+  {
+    _ref_con = NULL;
+    _delegate = delegate;
+    [self registerForPowerEvents];
+  }
+  return self;
 }
 
 + (InfinitStayAwakeManager*)setUpInstanceWithDelegate:(id<InfinitStayAwakeProtocol>)delegate
 {
-    if (_instance == nil)
-    {
-        _instance = [[InfinitStayAwakeManager alloc] initWithDelegate:delegate];
-    }
-    return _instance;
+  if (_instance == nil)
+  {
+    _instance = [[InfinitStayAwakeManager alloc] initWithDelegate:delegate];
+  }
+  return _instance;
 }
 
 + (InfinitStayAwakeManager*)instance
 {
-    return _instance;
+  return _instance;
 }
 
 - (BOOL)_preventSleep
 {
-    BOOL running_transfers = [_delegate stayAwakeManagerWantsActiveTransactions:self];
-    
-    if (!running_transfers)
-        return NO;
+  BOOL running_transfers = [_delegate stayAwakeManagerWantsActiveTransactions:self];
 
-    CFStringRef power_source = IOPSGetProvidingPowerSourceType(NULL);
-    if (CFStringCompare(power_source, CFSTR(kIOPMACPowerKey), 0) == 0)
-        return YES;
-    
+  if (!running_transfers)
     return NO;
+
+  CFStringRef power_source = IOPSGetProvidingPowerSourceType(NULL);
+  if (CFStringCompare(power_source, CFSTR(kIOPMACPowerKey), 0) == 0)
+    return YES;
+
+  return NO;
 }
 
 + (BOOL)preventSleep
 {
-    return [_instance _preventSleep];
+  return [_instance _preventSleep];
 }
 
 static
@@ -97,69 +97,69 @@ c_sleep_callback(void* ref_con,
                  natural_t message_type,
                  void* message_argument)
 {
-    switch (message_type)
-    {
-        case kIOMessageCanSystemSleep:
-            // Idle sleep about to kick in
-            if ([InfinitStayAwakeManager preventSleep])
-            {
-                ELLE_LOG("preventing computer sleep");
-                IOCancelPowerChange(_root_port, (long)message_argument);
-            }
-            else
-            {
-                ELLE_LOG("allowing computer sleep");
-                IOAllowPowerChange(_root_port, (long)message_argument);
-            }
-            break;
-            
-        case kIOMessageSystemWillSleep:
-            // System will go to sleep
-            IOAllowPowerChange(_root_port, (long)message_argument);
-            break;
-            
-        case kIOMessageSystemWillPowerOn:
-            // System has started the wake up process
-            break;
-            
-        case kIOMessageSystemHasPoweredOn:
-            // System has finished waking up
-            break;
-            
-        default:
-            break;
-    }
+  switch (message_type)
+  {
+    case kIOMessageCanSystemSleep:
+      // Idle sleep about to kick in
+      if ([InfinitStayAwakeManager preventSleep])
+      {
+        ELLE_LOG("preventing computer sleep");
+        IOCancelPowerChange(_root_port, (long)message_argument);
+      }
+      else
+      {
+        ELLE_LOG("allowing computer sleep");
+        IOAllowPowerChange(_root_port, (long)message_argument);
+      }
+      break;
+
+    case kIOMessageSystemWillSleep:
+      // System will go to sleep
+      IOAllowPowerChange(_root_port, (long)message_argument);
+      break;
+
+    case kIOMessageSystemWillPowerOn:
+      // System has started the wake up process
+      break;
+
+    case kIOMessageSystemHasPoweredOn:
+      // System has finished waking up
+      break;
+
+    default:
+      break;
+  }
 }
 
 - (void)registerForPowerEvents
 {
-    _root_port = IORegisterForSystemPower(_ref_con,
-                                          &_notify_port_ref,
-                                          c_sleep_callback,
-                                          &_notifier_object);
-    if (_root_port == 0)
-    {
-        ELLE_WARN("%s: IORegisterForSystemPower failed", self.description.UTF8String);
-    }
-    
-    CFRunLoopAddSource(CFRunLoopGetCurrent(),
-                       IONotificationPortGetRunLoopSource(_notify_port_ref),
-                       kCFRunLoopCommonModes);
+  _root_port = IORegisterForSystemPower(_ref_con,
+                                        &_notify_port_ref,
+                                        c_sleep_callback,
+                                        &_notifier_object);
+  if (_root_port == 0)
+  {
+    ELLE_WARN("%s: IORegisterForSystemPower failed", self.description.UTF8String);
+  }
+
+  CFRunLoopAddSource(CFRunLoopGetCurrent(),
+                     IONotificationPortGetRunLoopSource(_notify_port_ref),
+                     kCFRunLoopCommonModes);
 }
 
 - (void)unregisterForPowerEvents
 {
-    CFRunLoopRemoveSource(CFRunLoopGetCurrent(),
-                          IONotificationPortGetRunLoopSource(_notify_port_ref),
-                          kCFRunLoopCommonModes);
-    IODeregisterForSystemPower(&_notifier_object);
-    IOServiceClose(_root_port);
-    IONotificationPortDestroy(_notify_port_ref);
+  CFRunLoopRemoveSource(CFRunLoopGetCurrent(),
+                        IONotificationPortGetRunLoopSource(_notify_port_ref),
+                        kCFRunLoopCommonModes);
+  IODeregisterForSystemPower(&_notifier_object);
+  IOServiceClose(_root_port);
+  IONotificationPortDestroy(_notify_port_ref);
 }
 
 - (void)dealloc
 {
-    [self unregisterForPowerEvents];
+  [self unregisterForPowerEvents];
 }
 
 @end
