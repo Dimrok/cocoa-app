@@ -229,6 +229,10 @@
           andNotDoneTransactions:[_delegate notDoneTransactionsForUser:user]
            andUnreadTransactions:[_delegate unreadTransactionsForUser:user]
                      andProgress:[_delegate totalProgressForUser:user]];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_9)
+  {
+    cell.identifier = nil;
+  }
   return cell;
 }
 
