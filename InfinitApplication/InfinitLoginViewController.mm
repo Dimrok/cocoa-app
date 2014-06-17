@@ -321,8 +321,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 - (IBAction)onProblemClick:(NSButton*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"mailto:support@infinit.io?Subject=Login%20Problem"]];
-  [self closeLoginView];
+  [_delegate loginViewWantsReportProblem:self];
 }
 
 //- Register and Forgot Password -------------------------------------------------------------------

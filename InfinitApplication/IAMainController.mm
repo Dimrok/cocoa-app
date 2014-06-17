@@ -1069,6 +1069,15 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   [self handleQuit];
 }
 
+- (void)loginViewWantsReportProblem:(InfinitLoginViewController*)sender
+{
+  [self closeNotificationWindowWithoutLosingFocus];
+  if (_report_problem_controller == nil)
+    _report_problem_controller = [[IAReportProblemWindowController alloc] initWithDelegate:self];
+
+  [_report_problem_controller show];
+}
+
 //- Main View Protocol -----------------------------------------------------------------------------
 
 - (NSArray*)latestTransactionsByUser:(InfinitMainViewController*)sender

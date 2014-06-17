@@ -55,4 +55,6 @@ typedef enum __InfinitLoginViewMode
 
 - (void)loginViewWantsCloseAndQuit:(InfinitLoginViewController*)sender;
 
+- (void)loginViewWantsReportProblem:(InfinitLoginViewController*)sender;
+
 @end
