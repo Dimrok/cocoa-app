@@ -61,6 +61,12 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   return self;
 }
 
+- (void)dealloc
+{
+  [_result_list removeAllObjects];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 //- Address Book Handling --------------------------------------------------------------------------
 
 - (BOOL)accessToAddressBook

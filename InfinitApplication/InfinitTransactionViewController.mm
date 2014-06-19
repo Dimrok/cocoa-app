@@ -54,13 +54,13 @@
 
 - (void)dealloc
 {
+  [NSNotificationCenter.defaultCenter removeObserver:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
   if (_progress_timer != nil)
   {
     [_progress_timer invalidate];
     _progress_timer = nil;
   }
-  [NSNotificationCenter.defaultCenter removeObserver:self];
-  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)awakeFromNib
