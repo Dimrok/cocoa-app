@@ -305,9 +305,15 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   else // for case when fullname has no length, add a U for unknown
     chunks = [NSArray arrayWithObject:@"U"];
   NSMutableString* letters_str = [NSMutableString string];
+  NSRange char_range;
   for (NSString* chunk in chunks)
+  {
     if (chunk.length > 0)
-      [letters_str appendString:[NSString stringWithFormat:@"%c", [chunk characterAtIndex:0]]];
+    {
+      char_range = [chunk rangeOfComposedCharacterSequenceAtIndex:0];
+      [letters_str appendString:[NSString stringWithFormat:@"%@", [chunk substringWithRange:char_range]]];
+    }
+  }
 
   NSAttributedString* letters = [[NSAttributedString alloc]
                                  initWithString:[letters_str uppercaseString]
