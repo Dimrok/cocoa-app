@@ -818,8 +818,15 @@ wantsMarkTransactionsReadForUser:(IAUser*)user
 - (void)conversationView:(InfinitConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user
 {
-  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-  [_general_send_controller openWithFiles:nil forUser:user];
+  if ([_me_manager connection_status] != gap_user_status_online)
+  {
+    [self showNotConnectedView];
+  }
+  else
+  {
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+    [_general_send_controller openWithFiles:nil forUser:user];
+  }
 }
 
 - (void)conversationViewWantsBack:(InfinitConversationViewController*)sender
