@@ -87,6 +87,11 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
   return self;
 }
 
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 - (void)fire
 {
   [self performSelectorOnMainThread:@selector(_fire)

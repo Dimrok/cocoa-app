@@ -341,6 +341,13 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   return self;
 }
 
+- (void)dealloc
+{
+  _transaction_controller = nil;
+  _link_controller = nil;
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 - (void)awakeFromNib
 {
   [self.main_view addSubview:_current_controller.view];

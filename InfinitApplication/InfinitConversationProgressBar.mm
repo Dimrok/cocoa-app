@@ -106,6 +106,11 @@ namespace
   return self;
 }
 
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 //- Drawing ----------------------------------------------------------------------------------------
 
 - (void)drawRect:(NSRect)dirtyRect

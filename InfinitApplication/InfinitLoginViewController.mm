@@ -82,6 +82,11 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   return self;
 }
 
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 - (BOOL)closeOnFocusLost
 {
   if (_logging_in)

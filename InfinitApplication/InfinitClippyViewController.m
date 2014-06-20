@@ -126,6 +126,11 @@
   return self;
 }
 
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 - (BOOL)closeOnFocusLost
 {
   return NO;

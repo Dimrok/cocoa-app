@@ -32,6 +32,10 @@ ELLE_LOG_COMPONENT("OSX.CrashReportManager");
   return instance;
 }
 
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
 
 - (void)setupCrashReporter
 {

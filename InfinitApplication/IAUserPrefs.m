@@ -49,6 +49,11 @@
 	return self;
 }
 
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 - (id)prefsForKey:(NSString*)key
 {
 	return _values[key];
