@@ -1479,6 +1479,13 @@ hadConnectionStateChange:(gap_UserStatus)status
   [_current_view_controller transactionUpdated:transaction];
 }
 
+- (void)transactionManager:(IATransactionManager*)sender
+    hadTransactionAccepted:(IATransaction*)transaction
+{
+  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+    [_desktop_notifier desktopNotificationForTransactionAccepted:transaction];
+}
+
 - (void)transactionManagerHasGotHistory:(IATransactionManager*)sender
 {
   if (_current_view_controller == nil)

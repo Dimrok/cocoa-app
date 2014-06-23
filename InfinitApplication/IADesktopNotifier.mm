@@ -75,7 +75,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   return truncated_filename;
 }
 
-- (NSUserNotification*)notificationFromTransaction:(IATransaction*)transaction
+- (NSUserNotification*)_statusNotificationFromTransaction:(IATransaction*)transaction
 {
   NSUserNotification* res = [[NSUserNotification alloc] init];
   NSString* filename;
@@ -176,6 +176,20 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   return res;
 }
 
+- (NSUserNotification*)_acceptedNotificationFromTransaction:(IATransaction*)transaction
+{
+  NSUserNotification* res = [[NSUserNotification alloc] init];
+
+  res.title = NSLocalizedString(@"Accepted!", nil);
+  NSString* message = [NSString stringWithFormat:@"%@ %@",
+                       transaction.other_user.fullname,
+                       NSLocalizedString(@"accepted your transfer", nil)];
+  res.informativeText = message;
+  res.soundName = nil;
+  res.userInfo = @{@"transaction_id": transaction.transaction_id,
+                   @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
+  return res;
+}
 
 - (NSUserNotification*)notificationFromLink:(InfinitLinkTransaction*)link
 {
@@ -224,7 +238,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)desktopNotificationForTransaction:(IATransaction*)transaction
 {
-  NSUserNotification* user_notification = [self notificationFromTransaction:transaction];
+  NSUserNotification* user_notification = [self _statusNotificationFromTransaction:transaction];
   
   if (user_notification == nil)
     return;
@@ -232,6 +246,18 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   ELLE_LOG("%s: show desktop notification for transaction (%d) with status: %d",
            self.description.UTF8String, transaction.transaction_id, transaction.status);
   
+  [_notification_centre deliverNotification:user_notification];
+}
+
+- (void)desktopNotificationForTransactionAccepted:(IATransaction*)transaction
+{
+  ELLE_LOG("%s: show desktop notification for transaction (%d) accepted",
+           self.description.UTF8String, transaction.transaction_id);
+  NSUserNotification* user_notification = [self _acceptedNotificationFromTransaction:transaction];
+
+  if (user_notification == nil)
+    return;
+
   [_notification_centre deliverNotification:user_notification];
 }
 
