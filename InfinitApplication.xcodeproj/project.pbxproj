@@ -307,6 +307,10 @@
 		83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206117C4DC6700D4E168 /* icon-check@2x.png */; };
 		83D4206617C4DC6700D4E168 /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206217C4DC6700D4E168 /* icon-error.png */; };
 		83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D4206317C4DC6700D4E168 /* icon-error@2x.png */; };
+		83DA7771195879BF00CC1F4D /* link-icon-cancel-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DA776D195879BF00CC1F4D /* link-icon-cancel-hover.png */; };
+		83DA7772195879BF00CC1F4D /* link-icon-cancel-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DA776E195879BF00CC1F4D /* link-icon-cancel-hover@2x.png */; };
+		83DA7773195879BF00CC1F4D /* link-icon-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DA776F195879BF00CC1F4D /* link-icon-cancel.png */; };
+		83DA7774195879BF00CC1F4D /* link-icon-cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DA7770195879BF00CC1F4D /* link-icon-cancel@2x.png */; };
 		83DD1B1418F1AB2400F5AEEE /* libarchive.13.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */; };
 		83E1B73A191E6F85000338A3 /* InfinitSendFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */; };
 		83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */; };
@@ -964,6 +968,10 @@
 		83D4206117C4DC6700D4E168 /* icon-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-check@2x.png"; sourceTree = "<group>"; };
 		83D4206217C4DC6700D4E168 /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
 		83D4206317C4DC6700D4E168 /* icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@2x.png"; sourceTree = "<group>"; };
+		83DA776D195879BF00CC1F4D /* link-icon-cancel-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "link-icon-cancel-hover.png"; path = "../../../../fist-resources/slices/view_link/link-icon-cancel-hover.png"; sourceTree = "<group>"; };
+		83DA776E195879BF00CC1F4D /* link-icon-cancel-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "link-icon-cancel-hover@2x.png"; path = "../../../../fist-resources/slices/view_link/link-icon-cancel-hover@2x.png"; sourceTree = "<group>"; };
+		83DA776F195879BF00CC1F4D /* link-icon-cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "link-icon-cancel.png"; path = "../../../../fist-resources/slices/view_link/link-icon-cancel.png"; sourceTree = "<group>"; };
+		83DA7770195879BF00CC1F4D /* link-icon-cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "link-icon-cancel@2x.png"; path = "../../../../fist-resources/slices/view_link/link-icon-cancel@2x.png"; sourceTree = "<group>"; };
 		83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libarchive.13.dylib; path = ../../../Externals/lib/libarchive.13.dylib; sourceTree = "<group>"; };
 		83E1B737191E6F85000338A3 /* InfinitSendFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendFilesViewController.h; sourceTree = "<group>"; };
 		83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFilesViewController.m; sourceTree = "<group>"; };
@@ -1711,6 +1719,10 @@
 		83CC2C491923B37B00EBB96E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83DA776D195879BF00CC1F4D /* link-icon-cancel-hover.png */,
+				83DA776E195879BF00CC1F4D /* link-icon-cancel-hover@2x.png */,
+				83DA776F195879BF00CC1F4D /* link-icon-cancel.png */,
+				83DA7770195879BF00CC1F4D /* link-icon-cancel@2x.png */,
 				83CC2C5019252FCA00EBB96E /* icon-clipboard.png */,
 				83CC2C5119252FCA00EBB96E /* icon-clipboard@2x.png */,
 				83019C8A1925326200423FCA /* icon-clipboard-hover.png */,
@@ -2237,12 +2249,14 @@
 				831FB23617A9370400696604 /* bg-header-top-gray.png in Resources */,
 				832B5462188970A50022CC33 /* icon-menu-bar-animated-black-6.png in Resources */,
 				836ABEF718E4B1310013D721 /* conversation-icon-status-offline@2x.png in Resources */,
+				83DA7772195879BF00CC1F4D /* link-icon-cancel-hover@2x.png in Resources */,
 				832B5487188970AC0022CC33 /* icon-menu-bar-animated-red-7.png in Resources */,
 				83019CBD19253A4100423FCA /* document@2x.png in Resources */,
 				83F5FD2F18EDEC5E0051F010 /* clippy_7@2x.png in Resources */,
 				83F5FD2718EDEC5E0051F010 /* clippy_3@2x.png in Resources */,
 				832B546C188970A50022CC33 /* icon-menu-bar-animated-black-16.png in Resources */,
 				83F5FD2B18EDEC5E0051F010 /* clippy_5@2x.png in Resources */,
+				83DA7774195879BF00CC1F4D /* link-icon-cancel@2x.png in Resources */,
 				8355259B19301B330034CEA2 /* send-icon-upload@2x.png in Resources */,
 				839249D818D8AAA900EE72C7 /* conversation-icon-back.png in Resources */,
 				839249E518D8AAA900EE72C7 /* conversation-icon-hide-files@2x.png in Resources */,
@@ -2376,6 +2390,7 @@
 				835525A019301B560034CEA2 /* icon-upload@2x.png in Resources */,
 				83019CD01925470900423FCA /* folder.png in Resources */,
 				837A7F8917FC25E000600ACD /* bg-main-button-disabled@2x.png in Resources */,
+				83DA7773195879BF00CC1F4D /* link-icon-cancel.png in Resources */,
 				834582941822774700899526 /* icon-gear.png in Resources */,
 				839249DC18D8AAA900EE72C7 /* conversation-icon-canceled.png in Resources */,
 				83EADC2E17E205E800D49D77 /* logo.png in Resources */,
@@ -2400,6 +2415,7 @@
 				83CC2C5719252FDA00EBB96E /* icon-share@2x.png in Resources */,
 				832B545E188970A50022CC33 /* icon-menu-bar-animated-black-2.png in Resources */,
 				83019CC519253A4100423FCA /* picture@2x.png in Resources */,
+				83DA7771195879BF00CC1F4D /* link-icon-cancel-hover.png in Resources */,
 				83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */,
 				83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */,
 				83D4206617C4DC6700D4E168 /* icon-error.png in Resources */,

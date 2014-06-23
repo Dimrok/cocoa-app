@@ -126,6 +126,10 @@
 
 - (void)setupButtons
 {
+  self.cancel.normal_image = [IAFunctions imageNamed:@"link-icon-cancel"];
+  self.cancel.hover_image = [IAFunctions imageNamed:@"link-icon-cancel-hover"];
+  self.cancel.toolTip = NSLocalizedString(@"Cancel", nil);
+
   self.link.normal_image = [IAFunctions imageNamed:@"icon-share"];
   self.link.hover_image = [IAFunctions imageNamed:@"icon-share-hover"];
   self.link.toolTip = NSLocalizedString(@"Open link", nil);
@@ -156,6 +160,10 @@
     self.information.stringValue = [IAFunctions relativeDateOf:link.modification_time
                                                   longerFormat:YES];
   }
+  if (link.status == gap_transaction_transferring)
+    self.cancel.hidden = NO;
+  else
+    self.cancel.hidden = YES;
 }
 
 //- Progress Handling ------------------------------------------------------------------------------
@@ -199,6 +207,11 @@
 }
 
 //- Button Handling --------------------------------------------------------------------------------
+
+- (IBAction)cancelClicked:(NSButton*)sender
+{
+  [_delegate linkCell:self gotCancelForLink:_transaction_link];
+}
 
 - (IBAction)linkClicked:(NSButton*)sender
 {

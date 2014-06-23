@@ -477,6 +477,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   if (_current_controller != _link_controller)
     return;
   [_link_controller linkUpdated:link];
+  [self.view_selector setLinkCount:_link_controller.linksRunning];
 }
 
 - (void)transactionAdded:(IATransaction*)transaction
@@ -509,6 +510,11 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 }
 
 //- Link View Protocol -----------------------------------------------------------------------------
+
+- (void)cancelLink:(InfinitLinkTransaction*)link
+{
+  [_delegate cancelLink:link];
+}
 
 - (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link
 {

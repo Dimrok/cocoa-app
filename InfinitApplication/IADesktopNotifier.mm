@@ -270,7 +270,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   
   for (NSUserNotification* notif in [_notification_centre deliveredNotifications])
   {
-    if ([notif.userInfo valueForKey:@"link_id"] == link.id_)
+    if ([notif.userInfo valueForKey:@"link_id"] == link.id_ && link.status == gap_transaction_finished)
     {
       ELLE_DEBUG("%s: already have a delivered notification for this link (%d), replace it",
                  self.description.UTF8String, link.id_.unsignedIntegerValue);

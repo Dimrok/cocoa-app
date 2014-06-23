@@ -83,6 +83,7 @@ typedef enum _InfinitTransactionLinkMode
 
 - (void)markTransactionRead:(IATransaction*)transaction;
 
+- (void)cancelLink:(InfinitLinkTransaction*)link;
 - (void)copyLinkToClipboard:(InfinitLinkTransaction*)link;
 
 - (gap_UserStatus)currentSelfStatus:(InfinitMainViewController*)status;

@@ -39,6 +39,7 @@
 
 @protocol InfinitLinkViewProtocol <NSObject>
 
+- (void)cancelLink:(InfinitLinkTransaction*)link;
 - (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link;
 - (void)linksViewResizeToHeight:(CGFloat)height;
 

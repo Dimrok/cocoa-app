@@ -1041,6 +1041,11 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
   [self _copyLinkToClipboard:link withNotification:YES];
 }
 
+- (void)cancelLink:(InfinitLinkTransaction*)link
+{
+  [_link_manager cancelLink:link];
+}
+
 - (void)linkManager:(InfinitLinkManager*)sender
 hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 {

@@ -102,11 +102,28 @@
   {
     if (existing.id_.unsignedIntegerValue == link.id_.unsignedIntegerValue)
     {
-      [_list replaceObjectAtIndex:row withObject:link];
-      [self.table_view beginUpdates];
-      [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
-                                 columnIndexes:[NSIndexSet indexSetWithIndex:0]];
-      [self.table_view endUpdates];
+      if (link.status == gap_transaction_failed)
+      {
+        [self.table_view beginUpdates];
+        [_list removeObject:link];
+        [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                               withAnimation:NSTableViewAnimationSlideRight];
+        if (_list.count == 0)
+        {
+          [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                                 withAnimation:NSTableViewAnimationSlideRight];
+        }
+        [self.table_view endUpdates];
+        [_delegate linksViewResizeToHeight:self.height];
+      }
+      else
+      {
+        [_list replaceObjectAtIndex:row withObject:link];
+        [self.table_view beginUpdates];
+        [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                   columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+        [self.table_view endUpdates];
+      }
       break;
     }
     row++;
@@ -244,6 +261,25 @@
 }
 
 //- Cell Protocol ----------------------------------------------------------------------------------
+
+- (void)linkCell:(InfinitLinkCellView*)sender
+gotCancelForLink:(InfinitLinkTransaction*)link
+{
+  [_progress_timer invalidate];
+  NSInteger row = [self.table_view rowForView:sender];
+  [self.table_view beginUpdates];
+  [_list removeObject:link];
+  [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                         withAnimation:NSTableViewAnimationSlideRight];
+  if (_list.count == 0)
+  {
+    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                           withAnimation:NSTableViewAnimationSlideRight];
+  }
+  [self.table_view endUpdates];
+  [_delegate cancelLink:link];
+  [_delegate linksViewResizeToHeight:self.height];
+}
 
 - (void)linkCell:(InfinitLinkCellView*)sender
 gotCopyToClipboardForLink:(InfinitLinkTransaction*)link

@@ -23,6 +23,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField* name;
 @property (nonatomic, weak) IBOutlet NSTextField* information;
 @property (nonatomic, weak) IBOutlet InfinitLinkClickCountView* click_count;
+@property (nonatomic, weak) IBOutlet IAHoverButton* cancel;
 @property (nonatomic, weak) IBOutlet IAHoverButton* link;
 @property (nonatomic, weak) IBOutlet IAHoverButton* clipboard;
 @property (nonatomic, weak) IBOutlet InfinitLinkProgressIndicator* progress_indicator;
@@ -39,5 +40,8 @@
 
 - (void)linkCell:(InfinitLinkCellView*)sender
 gotCopyToClipboardForLink:(InfinitLinkTransaction*)link;
+
+- (void)linkCell:(InfinitLinkCellView*)sender
+gotCancelForLink:(InfinitLinkTransaction*)link;
 
 @end
