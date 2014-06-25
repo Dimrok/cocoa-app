@@ -67,9 +67,9 @@ static NSDictionary* _attrs = nil;
   NSBezierPath* bg = [NSBezierPath bezierPathWithOvalInRect:self.bounds];
 
   if (_highlighted)
-    [IA_GREY_COLOUR(204) set];
+    [IA_RGB_COLOUR(0, 195, 192) set];
   else
-    [IA_RGB_COLOUR(81, 82, 73) set];
+    [IA_RGB_COLOUR(139, 139, 131) set];
   [bg fill];
   CGFloat x_pos = floor((NSWidth(self.bounds) - _num_str.size.width) / 2.0) + 1.0;
   CGFloat y_pos = floor((NSHeight(self.bounds) - _num_str.size.height) / 2.0) + 2.0;

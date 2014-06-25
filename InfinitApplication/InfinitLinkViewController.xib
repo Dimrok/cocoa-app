@@ -103,9 +103,13 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     </customView>
                                                     <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RcN-gk-O6f" customClass="IAHoverButton">
-                                                        <rect key="frame" x="129" y="19" width="20" height="20"/>
+                                                        <rect key="frame" x="129" y="22" width="14" height="14"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="link-icon-cancel" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="bEP-hv-ATm">
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="14" id="fkf-8h-UPE"/>
+                                                            <constraint firstAttribute="height" constant="14" id="yr8-91-sWl"/>
+                                                        </constraints>
+                                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="link-icon-cancel" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="bEP-hv-ATm">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
