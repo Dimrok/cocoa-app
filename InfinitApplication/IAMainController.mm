@@ -679,6 +679,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     NSString* password = [[NSString alloc] initWithBytes:pwd_ptr
                                                   length:pwd_len
                                                 encoding:NSUTF8StringEncoding];
+    free(pwd_ptr);
     if (password.length == 0)
       return nil;
     
