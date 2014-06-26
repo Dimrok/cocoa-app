@@ -253,6 +253,7 @@
     [_progress_timer invalidate];
     _progress_timer = nil;
   }
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)resizeView
