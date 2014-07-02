@@ -153,7 +153,7 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
            "frete.Frete:TRACE,"
            "station.Station:DEBUG,"
            "infinit.surface.gap.Rounds:DEBUG,"
-           "reactor.http.Request.bugofdoom:DUMP,"
+           "reactor.network.upnp:DEBUG,"
            "OSX*:DUMP"
            , 0);
     setenv("ELLE_LOG_PID", "1", 0);
