@@ -328,7 +328,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   NSUserNotification* user_notification = [[NSUserNotification alloc] init];
   user_notification.title = NSLocalizedString(@"Infinit Updated!", nil);
   user_notification.informativeText = [NSString stringWithFormat:@"%@ %@",
-                                       NSLocalizedString(@"Infinit updated to version ", nil),
+                                       NSLocalizedString(@"Infinit updated to version", nil),
                                        version];
   user_notification.soundName = nil;
   user_notification.userInfo =
