@@ -887,6 +887,11 @@ hadClickNotificationForLinkId:(NSNumber*)transaction_id
   [self showLinks];
 }
 
+- (void)desktopNotifierHadClickApplicationUpdatedNotification:(IADesktopNotifier*)sender
+{
+  [self showNotifications];
+}
+
 //- General Send Controller Protocol ---------------------------------------------------------------
 
 - (void)sendController:(IAGeneralSendController*)sender

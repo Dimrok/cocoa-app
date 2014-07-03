@@ -361,6 +361,10 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       return;
     [_delegate desktopNotifier:self hadClickNotificationForLinkId:link_id];
   }
+  else
+  {
+    [_delegate desktopNotifierHadClickApplicationUpdatedNotification:self];
+  }
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_DESKTOP_NOTIFICATION];
 }
 

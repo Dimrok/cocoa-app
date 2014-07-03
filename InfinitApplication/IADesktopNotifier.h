@@ -34,4 +34,6 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id;
 - (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForLinkId:(NSNumber*)transaction_id;
 
+- (void)desktopNotifierHadClickApplicationUpdatedNotification:(IADesktopNotifier*)sender;
+
 @end
