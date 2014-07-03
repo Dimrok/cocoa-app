@@ -148,6 +148,8 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
                                                  attributes:nil
                                                       error:nil];
     }
+    // XXX temp: after 0.9.9 remove unset.
+    unsetenv("ELLE_LOG_FILE");
     setenv("INFINIT_LOG_FILE", [[[IALogFileManager sharedInstance] currentLogFilePath] UTF8String], 1);
     [[IALogFileManager sharedInstance] removeOldLogFile];
     
