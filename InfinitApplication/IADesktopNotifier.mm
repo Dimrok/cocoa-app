@@ -319,6 +319,25 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   [_notification_centre deliverNotification:user_notification];
 }
 
+//- Application Updated Notification ---------------------------------------------------------------
+
+- (void)desktopNotificationForApplicationUpdated
+{
+  NSString* version =
+    [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+  NSUserNotification* user_notification = [[NSUserNotification alloc] init];
+  user_notification.title = NSLocalizedString(@"Infinit Updated!", nil);
+  user_notification.informativeText = [NSString stringWithFormat:@"%@ %@",
+                                       NSLocalizedString(@"Infinit updated to version ", nil),
+                                       version];
+  user_notification.soundName = nil;
+  user_notification.userInfo =
+    @{@"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
+  ELLE_LOG("%s: show desktop notification for application updated to %s",
+           self.description.UTF8String, version.UTF8String);
+  [_notification_centre deliverNotification:user_notification];
+}
+
 //- User Notifications Protocol --------------------------------------------------------------------
 
 - (void)userNotificationCenter:(NSUserNotificationCenter*)center

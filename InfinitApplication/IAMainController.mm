@@ -439,6 +439,12 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)onSuccessfulLogin
 {
   ELLE_LOG("%s: completed login", self.description.UTF8String);
+
+  if ([[[IAUserPrefs sharedInstance] prefsForKey:@"updated"] isEqualToString:@"1"])
+  {
+    [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"updated"];
+    [_desktop_notifier desktopNotificationForApplicationUpdated];
+  }
   
   if (_update_credentials && [[IAKeychainManager sharedInstance] credentialsInKeychain:_username])
   {

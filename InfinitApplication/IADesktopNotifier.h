@@ -22,6 +22,8 @@
 
 - (void)desktopNotificationForLinkCopied:(InfinitLinkTransaction*)link;
 
+- (void)desktopNotificationForApplicationUpdated;
+
 @end
 
 @protocol IADesktopNotifierProtocol <NSObject>
