@@ -141,25 +141,6 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
 {
   if (self = [super init])
   {
-    NSArray* exe_path = NSBundle.mainBundle.executablePath.pathComponents;
-    NSString* binary_dir = [NSString pathWithComponents:[exe_path subarrayWithRange:NSMakeRange(0, [exe_path count] - 1)]];
-    setenv("INFINIT_BINARY_DIR", binary_dir.UTF8String, 1);
-    setenv("ELLE_LOG_LEVEL",
-           "*trophonius*:TRACE,"
-           "*meta*:TRACE,"
-           "surface.gap.*:TRACE,"
-           "surface.gap.TransferMachine:DEBUG,"
-           "reactor.fsm.*:TRACE,"
-           "frete.Frete:TRACE,"
-           "station.Station:DEBUG,"
-           "infinit.surface.gap.Rounds:DEBUG,"
-           "reactor.network.upnp:DEBUG,"
-           "OSX*:DUMP"
-           , 0);
-    setenv("ELLE_LOG_PID", "1", 0);
-    setenv("ELLE_LOG_TID", "1", 0);
-    setenv("ELLE_LOG_TIME", "1", 0);
-    setenv("ELLE_LOG_DISPLAY_TYPE", "1", 0);
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:@".infinit"] isDirectory:nil])
     {
       [[NSFileManager defaultManager] createDirectoryAtPath:[NSHomeDirectory() stringByAppendingPathComponent:@".infinit"]
@@ -167,7 +148,7 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
                                                  attributes:nil
                                                       error:nil];
     }
-    setenv("ELLE_LOG_FILE", [[[IALogFileManager sharedInstance] currentLogFilePath] UTF8String], 1);
+    setenv("INFINIT_LOG_FILE", [[[IALogFileManager sharedInstance] currentLogFilePath] UTF8String], 1);
     [[IALogFileManager sharedInstance] removeOldLogFile];
     
     bool production = false;
