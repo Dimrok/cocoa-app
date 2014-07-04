@@ -131,6 +131,10 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"create link";
     case INFINIT_METRIC_STATUS_ICON_LINK_DROP:
       return @"create link";
+    case INFINIT_METRIC_CONTEXTUAL_SEND:
+      return @"send";
+    case INFINIT_METRIC_CONTEXTUAL_LINK:
+      return @"create link";
 
     default:
       return @"unknown";
@@ -179,6 +183,10 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"favourites";
     case INFINIT_METRIC_STATUS_ICON_LINK_DROP:
       return @"status icon drop";
+    case INFINIT_METRIC_CONTEXTUAL_SEND:
+      return @"contextual";
+    case INFINIT_METRIC_CONTEXTUAL_LINK:
+      return @"contextual";
 
     default:
       return @"unknown";

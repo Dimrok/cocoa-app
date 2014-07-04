@@ -276,6 +276,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   }
 
   [self openSendViewForFiles:files];
+  _contextual_send_files = nil;
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONTEXTUAL_SEND];
 }
 
 - (void)openSendViewForFiles:(NSArray*)files
@@ -295,6 +297,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   }
   [self createLinkWithFiles:files andMessage:@""];
   _contextual_link_files = nil;
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONTEXTUAL_LINK];
 }
 
 - (NSNumber*)createLinkWithFiles:(NSArray*)files andMessage:(NSString*)message
