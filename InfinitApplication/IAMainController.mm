@@ -48,6 +48,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   
   // Infinit Link Handling
   NSURL* _infinit_link;
+
+  // Contextual Send Files Handling
+  NSArray* _contextual_send_files;
+  NSArray* _contextual_link_files;
   
   // Managers
   IAMeManager* _me_manager;
@@ -106,6 +110,9 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
       _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
     
     _infinit_link = nil;
+    _contextual_send_files = nil;
+    _contextual_link_files = nil;
+
     _autologin_cooling_down = NO;
     _login_retry_cooldown = 3.0;
     _login_retry_cooldown_max = 60.0;
@@ -171,7 +178,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)handleInfinitLink:(NSURL*)link
 {
   // If we're not logged in, store the link and activate it when we are.
-  if (![[IAGapState instance] logged_in])
+  if ([_me_manager connection_status] != gap_user_status_online)
   {
     _infinit_link = link;
     return;
@@ -255,6 +262,45 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                     onObject:self
                                     withData:handle_check];
   _infinit_link = nil;
+}
+
+//- Handle Contextual ------------------------------------------------------------------------------
+
+- (void)handleContextualSendFiles:(NSArray*)files
+{
+  // If we're not logged in, store files and open view when we're ready.
+  if ([_me_manager connection_status] != gap_user_status_online)
+  {
+    _contextual_send_files = files;
+    return;
+  }
+
+  [self openSendViewForFiles:files];
+}
+
+- (void)openSendViewForFiles:(NSArray*)files
+{
+  [_status_bar_icon setHighlighted:YES];
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  [_general_send_controller openWithFiles:files forUser:nil];
+  _contextual_send_files = nil;
+}
+
+- (void)handleContextualCreateLink:(NSArray*)files
+{
+  if ([_me_manager connection_status] != gap_user_status_online)
+  {
+    _contextual_link_files = files;
+    return;
+  }
+  [self createLinkWithFiles:files andMessage:@""];
+  _contextual_link_files = nil;
+}
+
+- (NSNumber*)createLinkWithFiles:(NSArray*)files andMessage:(NSString*)message
+{
+  [_sent_sound play];
+  return [_link_manager createLinkWithFiles:files withMessage:message];
 }
 
 //- Handle Views -----------------------------------------------------------------------------------
@@ -484,10 +530,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   [[IAGapState instance] startPolling];
   
   [self updateStatusBarIcon];
-  
-  // If we've got an unhandled link, handle it now
-  if (_infinit_link != nil)
-    [self handleInfinitLink:_infinit_link];
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
@@ -1230,9 +1272,25 @@ hadConnectionStateChange:(gap_UserStatus)status
     [self showNotifications];
   }
   if (status == gap_user_status_online)
+  {
     [IAUserManager resyncUserStatuses];
+
+    // If we've got unhandled link or service
+    if (_infinit_link != nil)
+      [self handleInfinitLink:_infinit_link];
+
+    if (_contextual_send_files != nil)
+    {
+      [self handleContextualSendFiles:_contextual_send_files];
+    }
+
+    if (_contextual_link_files != nil)
+      [self handleContextualCreateLink:_contextual_link_files];
+  }
   else if (status == gap_user_status_offline)
+  {
     [IAUserManager setAllUsersOffline];
+  }
 
   if (_current_view_controller != nil)
     [_current_view_controller selfStatusChanged:status];

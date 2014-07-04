@@ -23,6 +23,8 @@
   NSInvocation* _update_invocation;
   
   NSURL* _infinit_url;
+  NSArray* _contextual_send_files;
+  NSArray* _contextual_link_files;
 }
 
 //- Sparkle Updater --------------------------------------------------------------------------------
@@ -100,6 +102,8 @@ immediateInstallationInvocation:(NSInvocation*)invocation
     _log_manager = [IALogFileManager sharedInstance];
     _updating = NO;
     _infinit_url = nil;
+    _contextual_send_files = nil;
+    _contextual_link_files = nil;
   }
   return self;
 }
@@ -127,9 +131,13 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
+  [NSApp setServicesProvider:self];
+
   _controller = [[IAMainController alloc] initWithDelegate:self];
   if (_infinit_url != nil) // Infinit was launched with a link
     [_controller handleInfinitLink:_infinit_url];
+  else if (_contextual_send_files != nil) // Infinit was launched to send files
+    [_controller handleContextualSendFiles:_contextual_send_files];
 }
 
 //- Infinit URL Handling ---------------------------------------------------------------------------
@@ -143,6 +151,34 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
     _infinit_url = infinit_url;
   else
     [_controller handleInfinitLink:infinit_url];
+}
+
+//- Infinit Context Menu Handling ------------------------------------------------------------------
+
+- (void)contextMenuSendFile:(NSPasteboard*)paste_board
+                   userData:(NSString*)user_data
+                      error:(NSString**)error
+{
+  NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
+  if (files.count == 0)
+    return;
+  if (_controller == nil)
+    _contextual_send_files = files;
+  else
+    [_controller handleContextualSendFiles:files];
+}
+
+- (void)contextMenuCreateLink:(NSPasteboard*)paste_board
+                     userData:(NSString*)user_data
+                        error:(NSString**)error
+{
+  NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
+  if (files.count == 0)
+    return;
+  if (_controller == nil)
+    _contextual_link_files = files;
+  else
+    [_controller handleContextualCreateLink:files];
 }
 
 //- Quit Handling ----------------------------------------------------------------------------------

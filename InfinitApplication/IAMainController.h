@@ -59,6 +59,9 @@
 
 - (void)handleInfinitLink:(NSURL*)link;
 
+- (void)handleContextualSendFiles:(NSArray*)files;
+- (void)handleContextualCreateLink:(NSArray*)files;
+
 - (void)handleQuit;
 
 - (BOOL)canUpdate;

@@ -59,5 +59,48 @@
 	<string>http://download.infinit.io/sparkle-cast.xml</string>
 	<key>SUShowReleaseNotes</key>
 	<true/>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSTextContent</key>
+				<array>
+					<string>FilePath</string>
+				</array>
+			</dict>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+			</array>
+			<key>NSMessage</key>
+			<string>contextMenuSendFile</string>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Send with Infinit</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>NSRequiredContext</key>
+			<dict>
+				<key>NSTextContent</key>
+				<array>
+					<string>FilePath</string>
+				</array>
+			</dict>
+			<key>NSMessage</key>
+			<string>contextMenuCreateLink</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+			</array>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Get Infinit Link</string>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
