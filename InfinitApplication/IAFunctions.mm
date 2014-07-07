@@ -403,9 +403,9 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
   formatter.locale = [NSLocale currentLocale];
   NSString* res;
-  if (timestamp <  now && timestamp > (now - 3 * 60.0)) // 3 min ago
+  if (timestamp < now && timestamp > (now - 3 * 60.0)) // 3 min ago
   {
-    res = NSLocalizedString(@"Now", @"Now");
+    res = NSLocalizedString(@"Now", nil);
   }
   else if (timestamp < now && timestamp > (now - 60 * 60.0)) // an hour ago
   {
@@ -423,7 +423,7 @@ ELLE_LOG_COMPONENT("OSX.Functions");
       formatter.dateFormat = @"EEEE";
     else
       formatter.dateFormat = @"EEE";
-    res = [formatter stringFromDate:transaction_date];
+    res = [[formatter stringFromDate:transaction_date] capitalizedString];
   }
   else
   {
@@ -431,9 +431,9 @@ ELLE_LOG_COMPONENT("OSX.Functions");
       formatter.dateFormat = @"d MMMM";
     else
       formatter.dateFormat = @"d MMM";
-    res = [formatter stringFromDate:transaction_date];
+    res = [[formatter stringFromDate:transaction_date] capitalizedString];;
   }
-  return res.capitalizedString;
+  return res;
 }
 
 + (NSString*)osVersionString
