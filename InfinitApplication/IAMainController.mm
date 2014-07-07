@@ -282,8 +282,11 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)openSendViewForFiles:(NSArray*)files
 {
-  [_status_bar_icon setHighlighted:YES];
-  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
+  {
+    [_status_bar_icon setHighlighted:YES];
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  }
   [_general_send_controller openWithFiles:files forUser:nil];
   _contextual_send_files = nil;
 }
