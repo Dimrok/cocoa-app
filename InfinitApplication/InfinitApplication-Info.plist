@@ -62,6 +62,11 @@
 	<key>NSServices</key>
 	<array>
 		<dict>
+			<key>NSKeyEquivalent</key>
+			<dict>
+				<key>default</key>
+				<string>I</string>
+			</dict>
 			<key>NSRequiredContext</key>
 			<dict>
 				<key>NSTextContent</key>
@@ -82,6 +87,11 @@
 			</dict>
 		</dict>
 		<dict>
+			<key>NSKeyEquivalent</key>
+			<dict>
+				<key>default</key>
+				<string>L</string>
+			</dict>
 			<key>NSRequiredContext</key>
 			<dict>
 				<key>NSTextContent</key>
