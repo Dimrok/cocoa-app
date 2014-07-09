@@ -35,6 +35,11 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 
 - (void)dealloc
 {
+  [self cancelCallbacks];
+}
+
+- (void)cancelCallbacks
+{
   _delegate = nil;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [NSNotificationCenter.defaultCenter removeObserver:self];

@@ -38,6 +38,8 @@ static NSInteger infinit_favourite_rank = 10;
 - (void)email:(NSString*)email
 isInfinitUser:(IAUser*)user;
 
+- (void)cancelCallbacks;
+
 @end
 
 

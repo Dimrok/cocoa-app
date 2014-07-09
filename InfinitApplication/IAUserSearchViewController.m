@@ -168,11 +168,20 @@
 
 - (void)dealloc
 {
+  _search_controller = nil;
+  self.table_view.delegate = nil;
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   _search_field.objectValue = @[];
   _search_field.delegate = nil;
   _search_field = nil;
+}
+
+- (void)aboutToChangeView
+{
+  [_search_controller cancelCallbacks];
+  [NSNotificationCenter.defaultCenter removeObserver:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)awakeFromNib

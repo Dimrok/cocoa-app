@@ -63,8 +63,17 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (void)dealloc
 {
+  [self cancelCallbacks];
+}
+
+- (void)cancelCallbacks
+{
+  _delegate = nil;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
-  [_result_list removeAllObjects];
+  for (InfinitSearchPersonResult* person in _result_list)
+  {
+    [person cancelCallbacks];
+  }
 }
 
 //- Address Book Handling --------------------------------------------------------------------------

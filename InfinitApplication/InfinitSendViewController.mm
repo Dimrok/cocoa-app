@@ -451,6 +451,7 @@
   [_files_controller stopCalculatingFileSize];
   if (_tooltip != nil)
     [_tooltip close];
+  [_search_controller aboutToChangeView];
 }
 
 - (void)delayedOnboardSendFilesNoDestination

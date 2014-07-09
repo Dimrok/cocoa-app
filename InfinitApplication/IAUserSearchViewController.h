@@ -51,6 +51,8 @@
 
 - (void)checkInputs;
 
+- (void)aboutToChangeView;
+
 @end
 
 @protocol IAUserSearchViewProtocol <NSObject>

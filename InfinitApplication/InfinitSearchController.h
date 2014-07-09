@@ -22,6 +22,8 @@
 
 - (void)searchString:(NSString*)search_string;
 
+- (void)cancelCallbacks;
+
 @end
 
 @protocol InfinitSearchControllerProtocol <NSObject>
