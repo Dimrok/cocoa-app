@@ -347,6 +347,7 @@ static NSDictionary* _info_attrs = nil;
 
 - (void)updateTable
 {
+  [self.table_view reloadData];
   CGFloat height = NSHeight(self.header_view.frame) + [self tableHeight];
   [_delegate fileList:self wantsChangeHeight:height];
 }
