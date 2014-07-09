@@ -14,7 +14,7 @@
  */
 @interface OEXTokenTextStorage : NSTextStorage
 
-@property(nonatomic, weak) id <OEXTokenTextStorageDelegate> delegate;
+@property(assign) id <OEXTokenTextStorageDelegate> delegate;
 
 - (id)initWithAttributedString:(NSAttributedString *)attrStr;
 
@@ -22,7 +22,7 @@
 
 #pragma mark -
 
-@protocol OEXTokenTextStorageDelegate <NSObject>
+@protocol OEXTokenTextStorageDelegate <NSTextStorageDelegate>
 
 @optional
 - (void)tokenTextStorage:(OEXTokenTextStorage *)textStorage updateTokenAttachment:(NSTextAttachment *)attachment forRange:(NSRange)range;
