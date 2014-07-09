@@ -48,6 +48,8 @@
 
 - (void)dealloc
 {
+  self.table_view.delegate = nil;
+  _delegate = nil;
   if (_progress_timer != nil)
   {
     [_progress_timer invalidate];
