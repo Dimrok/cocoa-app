@@ -119,7 +119,7 @@ namespace
   {
     [IA_RGB_COLOUR(0, 214, 242) set];
     NSRect bar = NSMakeRect(self.bounds.origin.x, 5.0,
-                            (NSWidth(self.bounds) / self.maxValue * _doubleValue), 2.0);
+                            (NSWidth(self.bounds) / self.maxValue * self.doubleValue), 2.0);
     NSRectFill(bar);
   }
 }
@@ -140,7 +140,7 @@ namespace
 {
   if (doubleValue > self.maxValue || doubleValue < self.minValue)
     return;
-  _doubleValue = doubleValue;
+  super.doubleValue = doubleValue;
   [self setNeedsDisplay:YES];
 }
 
@@ -158,7 +158,7 @@ namespace
   }
   if (flag)
   {
-    _doubleValue = 0.0;
+    self.doubleValue = 0.0;
     _ball_view = nil;
     _ball_view = [[InfinitConversationBallAnimation alloc] initWithFrame:self.bounds];
     [self addSubview:_ball_view];
