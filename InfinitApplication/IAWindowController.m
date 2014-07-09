@@ -181,7 +181,7 @@
      self.window.alphaValue = 1.0;
      [_delegate windowController:self hasCurrentViewController:_current_controller];
      _animating = NO;
-     [_current_controller viewChanged];
+     [_current_controller viewActive];
    }];
 }
 
@@ -229,7 +229,7 @@
   _current_controller = nil;
   _current_controller = new_controller;
   [_delegate windowController:self hasCurrentViewController:_current_controller];
-  [_current_controller viewChanged];
+  [_current_controller viewActive];
   
   _animating = NO;
 }

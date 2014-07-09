@@ -154,7 +154,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [self.problem_button setHoverTextAttributes:link_hover_attrs];
 }
 
-- (void)viewChanged
+- (void)viewActive
 {
   // WORKAROUND: Ensure that email field has focus
   [self performSelector:@selector(delayedFocusOnEmailField) withObject:nil afterDelay:0.3];

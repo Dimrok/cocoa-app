@@ -424,7 +424,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   }
 }
 
-- (void)viewChanged
+- (void)viewActive
 {
   // WORKAROUND stop flashing when changing subview by enabling layer backing. Need to do this once
   // the view has opened so that we get a shadow during opening animation.

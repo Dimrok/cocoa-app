@@ -14,6 +14,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <surface/gap/enums.hh>
+
 #import "InfinitOnboardingController.h"
 
 @interface IAFooterView : NSView
@@ -36,7 +38,7 @@
 
 - (BOOL)closeOnFocusLost;
 
-- (void)viewChanged;
+- (void)viewActive;
 - (void)aboutToChangeView;
 
 - (void)linkAdded:(InfinitLinkTransaction*)link;

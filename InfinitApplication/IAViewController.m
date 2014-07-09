@@ -114,7 +114,7 @@
   return NO;
 }
 
-- (void)viewChanged
+- (void)viewActive
 {
   // Called just before view is shown
 }
