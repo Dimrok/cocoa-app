@@ -414,15 +414,8 @@ static NSDictionary* _info_attrs = nil;
 
 - (IBAction)informationClicked:(NSButton*)sender
 {
-  if (_file_list.count == 0)
-  {
-    [_delegate fileListGotAddFilesClicked:self];
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
-  }
-  else if (_open)
-    [self hideFiles];
-  else
-    [self showFiles];
+  [_delegate fileListGotAddFilesClicked:self];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
 }
 
 - (IBAction)showFilesClicked:(NSButton*)sender
