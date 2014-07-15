@@ -1420,6 +1420,7 @@ hadConnectionStateChange:(gap_UserStatus)status
   else
   {
     [self selectView];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_OPEN_PANEL];
   }
 }
 

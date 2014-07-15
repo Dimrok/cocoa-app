@@ -394,8 +394,6 @@ static NSDictionary* _grey_style;
   _icon_view.alphaValue = 1.0;
   [self determineCurrentMode];
   // Only send metric when the panel is opened
-  if (_is_highlighted)
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_OPEN_PANEL];
 }
 
 - (void)setLoggingIn:(BOOL)isLoggingIn
