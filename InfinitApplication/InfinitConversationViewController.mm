@@ -78,7 +78,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)dealloc
 {
+  _delegate = nil;
   self.table_view.delegate = nil;
+  self.table_view.dataSource = nil;
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   if (_progress_timer != nil)

@@ -49,6 +49,7 @@
 - (void)dealloc
 {
   self.table_view.delegate = nil;
+  self.table_view.dataSource = nil;
   _delegate = nil;
   if (_progress_timer != nil)
   {

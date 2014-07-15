@@ -55,6 +55,7 @@
 - (void)dealloc
 {
   self.table_view.delegate = nil;
+  self.table_view.dataSource = nil;
   _delegate = nil;
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];

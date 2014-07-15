@@ -170,6 +170,7 @@
 {
   _search_controller = nil;
   self.table_view.delegate = nil;
+  self.table_view.dataSource = nil;
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   _search_field.objectValue = @[];
