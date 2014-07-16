@@ -10,6 +10,6 @@
 
 @interface InfinitConversationProgressBar : NSProgressIndicator
 
-@property (nonatomic, readwrite) CGFloat doubleValue;
+@property (readwrite) CGFloat doubleValue;
 
 @end
