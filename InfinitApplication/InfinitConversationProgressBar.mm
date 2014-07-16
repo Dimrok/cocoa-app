@@ -104,7 +104,7 @@ namespace
   if (self = [super initWithCoder:aDecoder])
   {
     _animating = NO;
-    self.doubleValue = 0.0;
+    super.doubleValue = 0.0;
   }
   return self;
 }
