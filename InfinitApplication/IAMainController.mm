@@ -1464,7 +1464,8 @@ hadConnectionStateChange:(gap_UserStatus)status
 {
   if (![[IAGapState instance] logged_in] ||
       [_me_manager connection_status] != gap_user_status_online ||
-      _current_view_controller.class == InfinitSendViewController.class)
+      _current_view_controller.class == InfinitSendViewController.class ||
+      [self onboardingState:nil] != INFINIT_ONBOARDING_DONE)
   {
     return;
   }
