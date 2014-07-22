@@ -328,7 +328,7 @@ static NSSize favourites_size = {430.f, 170.f};
   }
                       completionHandler:^
   {
-//    [_delegate favouritesView:self gotDropOnUser:user withFiles:files];
+    [_delegate favouritesView:self gotDropOnUser:user withFiles:files];
   }];
 }
 
@@ -348,8 +348,8 @@ static NSSize favourites_size = {430.f, 170.f};
    }
                       completionHandler:^
    {
-//     [_delegate favouritesView:self gotDropLinkWithFiles:files];
-//     [InfinitMetricsManager sendMetric:INFINIT_METRIC_FAVOURITES_LINK_DROP];
+     [_delegate favouritesView:self gotDropLinkWithFiles:files];
+     [InfinitMetricsManager sendMetric:INFINIT_METRIC_FAVOURITES_LINK_DROP];
    }];
 }
 
