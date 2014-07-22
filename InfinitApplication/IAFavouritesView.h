@@ -28,9 +28,9 @@
 @protocol IAFavouritesViewProtocol <NSObject>
 
 - (void)favouritesViewHadDragExit:(IAFavouritesView*)sender;
-- (void)favouritesView:(IAFavouritesView*)sender
-         gotDropOnUser:(IAUser*)user
-             withFiles:(NSArray*)files;
+- (void)favouriteView:(IAFavouriteView*)sender
+        gotDropOnUser:(IAUser*)user
+            withFiles:(NSArray*)files;
 - (void)linkViewGotDrop:(InfinitLinkShortcutView*)sender
               withFiles:(NSArray*)files;
 

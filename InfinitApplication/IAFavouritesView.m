@@ -62,7 +62,7 @@
 - (void)favouriteView:(IAFavouriteView*)sender
              gotFiles:(NSArray*)files
 {
-  [_delegate favouritesView:self gotDropOnUser:sender.user withFiles:files];
+  [_delegate favouriteView:sender gotDropOnUser:sender.user withFiles:files];
 }
 
 - (void)favouriteViewGotDragEnter:(IAFavouriteView*)sender

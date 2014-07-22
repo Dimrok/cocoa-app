@@ -17,7 +17,6 @@
   IAUser* _user;
   NSArray* _drag_types;
   BOOL _hovering;
-  CGFloat _avatar_diameter;
   NSImage* _avatar;
   NSImage* _current_image;
   NSAttributedString* _name;
@@ -41,9 +40,8 @@
                                                name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                              object:nil];
     _avatar = [IAAvatarManager getAvatarForUser:_user];
-    _avatar_diameter = 65.0;
     _current_image = [IAFunctions makeRoundAvatar:_avatar
-                                       ofDiameter:_avatar_diameter
+                                       ofDiameter:self.avatar_diameter
                             withBorderOfThickness:3.0
                                          inColour:IA_RGBA_COLOUR(255, 255, 255, 0.8)
                                 andShadowOfRadius:4.0];
@@ -91,6 +89,11 @@
 
 //- Drawing ----------------------------------------------------------------------------------------
 
+- (CGFloat)avatar_diameter
+{
+  return (self.frame.size.width - 15.0);
+}
+
 - (BOOL)isOpaque
 {
   return NO;
@@ -98,11 +101,11 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  CGFloat avatar_w_diff = NSWidth(self.bounds) - _avatar_diameter;
+  CGFloat avatar_w_diff = NSWidth(self.bounds) - self.avatar_diameter;
   NSRect avatar_rect = NSMakeRect(self.bounds.origin.x + (avatar_w_diff / 2.0),
-                                  self.bounds.origin.y + NSHeight(self.bounds) - _avatar_diameter,
-                                  _avatar_diameter,
-                                  _avatar_diameter);
+                                  self.bounds.origin.y + NSHeight(self.bounds) - self.avatar_diameter,
+                                  self.avatar_diameter,
+                                  self.avatar_diameter);
   [_current_image drawInRect:avatar_rect
                     fromRect:NSZeroRect
                    operation:NSCompositeSourceOver
@@ -122,7 +125,7 @@
     [_delegate favouriteViewGotDragEnter:self];
     _hovering = YES;
     _current_image = [IAFunctions makeRoundAvatar:_avatar
-                                       ofDiameter:_avatar_diameter
+                                       ofDiameter:self.avatar_diameter
                             withBorderOfThickness:3.0
                                          inColour:IA_GREY_COLOUR(255)
                                 andShadowOfRadius:4.0];
@@ -137,7 +140,7 @@
   [_delegate favouriteViewGotDragExit:self];
   _hovering = NO;
   _current_image = [IAFunctions makeRoundAvatar:_avatar
-                                     ofDiameter:_avatar_diameter
+                                     ofDiameter:self.avatar_diameter
                           withBorderOfThickness:3.0
                                        inColour:IA_RGBA_COLOUR(255, 255, 255, 0.8)
                               andShadowOfRadius:4.0];

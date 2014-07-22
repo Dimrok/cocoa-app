@@ -267,7 +267,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
          gotDropOnUser:(IAUser*)user
              withFiles:(NSArray*)files
 {
-  [_favourites_send_controller hideFavourites];
   if (files.count > 0)
   {
     NSArray* res =

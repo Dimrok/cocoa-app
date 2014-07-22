@@ -90,6 +90,11 @@ static CGFloat _image_diameter;
   return NO;
 }
 
+- (CGFloat)link_image_diameter
+{
+  return (self.frame.size.width - 20.0);
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
   NSImage* image;
@@ -98,11 +103,11 @@ static CGFloat _image_diameter;
   else
     image = _link_image_norm;
 
-  CGFloat avatar_w_diff = NSWidth(self.bounds) - _image_diameter;
+  CGFloat avatar_w_diff = NSWidth(self.bounds) - self.link_image_diameter;
   NSRect image_rect = NSMakeRect(self.bounds.origin.x + (avatar_w_diff / 2.0),
-                                 self.bounds.origin.y + NSHeight(self.bounds) - _image_diameter,
-                                 _image_diameter,
-                                 _image_diameter);
+                                 self.bounds.origin.y + NSHeight(self.bounds) - self.link_image_diameter,
+                                 self.link_image_diameter,
+                                 self.link_image_diameter);
 
   [image drawInRect:image_rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 

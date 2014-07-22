@@ -85,17 +85,28 @@
 
 //- General Functions ------------------------------------------------------------------------------
 
-// Function to calculate position of bottom left corner of each favourite based on their number
-- (NSRect)favouritePosition:(NSInteger)number of:(NSInteger)total
+static CGFloat margin = 5.f;
+static NSSize favourites_size = {430.f, 170.f};
+
+- (NSRect)favourites_area
 {
-  // Leave a margin on the sides of the view
-  CGFloat margin = 5.0;
-  NSSize frame_size = NSMakeSize(NSWidth(self.view.frame) - 2 * margin,
-                                 NSHeight(self.view.frame));
+  NSPoint offset = NSMakePoint(floor((self.view.frame.size.width - favourites_size.width) / 2.0),
+                               floor(self.view.frame.size.height - favourites_size.width));
+  NSRect res = {
+    .origin = offset,
+    .size = favourites_size
+  };
+  return res;
+}
+
+// Function to calculate position of bottom left corner of each favourite based on their number
+- (NSRect)favouritePosition:(NSInteger)number
+                         of:(NSInteger)total
+{
   // Select aribitrary arc radius
-  CGFloat arc_radius = 1.25 * frame_size.height;
+  CGFloat arc_radius = 1.25 * self.favourites_area.size.height;
   // Calculate maximum angle that we can use for displaying favourites
-  CGFloat arc_angle = 2.0 * asin((frame_size.width - _favourite_size.width) / (2.0 * arc_radius));
+  CGFloat arc_angle = 2.0 * asin((self.favourites_area.size.width - _favourite_size.width) / (2.0 * arc_radius));
   // Calculate the angle around the x-axis of the circle
   CGFloat start_angle = - (0.5 * arc_angle);
   // Find the difference in angle between each view
@@ -117,9 +128,9 @@
   CGFloat y = arc_radius * cos(start_angle + (number * delta)) - (0.5 * _favourite_size.width);
   CGFloat x = arc_radius * sin(start_angle + (number * delta)) - (0.5 * _favourite_size.width);
   // Move coordinates into frame
-  x += 0.5 * frame_size.width + margin;
-  y -= arc_radius - frame_size.height - 0.45 * _favourite_size.height;
-  y = frame_size.height - y;
+  x += 0.5 * self.favourites_area.size.width + self.favourites_area.origin.x + margin;
+  y -= arc_radius - self.favourites_area.size.height - 0.75 * _favourite_size.height;
+  y = self.favourites_area.size.height - self.favourites_area.origin.y - y;
 
   NSRect res = NSMakeRect(x, y, _favourite_size.width, _favourite_size.height);
   return res;
@@ -144,8 +155,8 @@
   [self.favourites_view addSubview:_link_view];
 
   NSPoint link_pos =
-    NSMakePoint((NSWidth(self.favourites_view.frame) - _link_size.width) / 2.0,
-                (NSHeight(self.favourites_view.frame) - _link_size.height) / 2.0 + 40.0);
+    NSMakePoint((self.favourites_area.size.width - _link_size.width) / 2.0 + self.favourites_area.origin.x,
+                (self.favourites_area.size.height - _link_size.height) / 2.0 + 40.0 - self.favourites_area.origin.y);
 
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
@@ -232,24 +243,41 @@
 
 - (void)hideFavourites
 {
+  [self hideFavouritesExcluding:nil];
+}
+
+- (void)hideFavouritesExcluding:(NSView*)excluded_view
+{
   if (_window == nil || !_open)
     return;
-  
+
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.2;
-     [_link_view.animator setFrameOrigin:_start_pos];
+     if (excluded_view != _link_view)
+     {
+       [_link_view.animator setFrameOrigin:_start_pos];
+     }
      for (IAFavouriteView* fav_view in _favourite_views)
      {
-       [fav_view.animator setFrameOrigin:_start_pos];
+       if (excluded_view != fav_view)
+       {
+         [fav_view.animator setFrameOrigin:_start_pos];
+       }
      }
    }
                       completionHandler:^
    {
-     [_link_view setFrameOrigin:_start_pos];
+     if (excluded_view != _link_view)
+     {
+       [_link_view setFrameOrigin:_start_pos];
+     }
      for (IAFavouriteView* fav_view in _favourite_views)
      {
-       [fav_view setFrameOrigin:_start_pos];
+       if (excluded_view != fav_view)
+       {
+         [fav_view setFrameOrigin:_start_pos];
+       }
      }
      [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
       {
@@ -264,6 +292,7 @@
         _window = nil;
         for (IAFavouriteView* fav_view in _favourite_views)
           [fav_view removeFromSuperview];
+        [_link_view removeFromSuperview];
         [_favourite_views removeAllObjects];
         [_favourites_view setDelegate:nil];
       }];
@@ -282,21 +311,46 @@
   [_delegate favouritesViewWantsClose:self];
 }
 
-- (void)favouritesView:(IAFavouritesView*)sender
-         gotDropOnUser:(IAUser*)user
-             withFiles:(NSArray*)files
+- (void)favouriteView:(IAFavouriteView*)sender
+        gotDropOnUser:(IAUser*)user
+            withFiles:(NSArray*)files
 {
-  [_delegate favouritesView:self
-              gotDropOnUser:user
-                  withFiles:files];
+  CGFloat end_size = 250.0;
+  NSRect end_rect = NSMakeRect(sender.frame.origin.x - ((end_size - sender.frame.size.width) / 2.0),
+                               sender.frame.origin.y - ((end_size - sender.frame.size.height) / 2.0),
+                               end_size, end_size);
+  [self hideFavouritesExcluding:sender];
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+  {
+    context.duration = 0.2;
+    [sender.animator setFrame:end_rect];
+    [sender.animator setAlphaValue:0.0];
+  }
+                      completionHandler:^
+  {
+//    [_delegate favouritesView:self gotDropOnUser:user withFiles:files];
+  }];
 }
 
 - (void)linkViewGotDrop:(InfinitLinkShortcutView*)sender
               withFiles:(NSArray*)files
 {
-  [_delegate favouritesView:self gotDropLinkWithFiles:files];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_FAVOURITES_LINK_DROP];
-  
+  CGFloat end_size = 175.0;
+  NSRect end_rect = NSMakeRect(sender.frame.origin.x - ((end_size - sender.frame.size.width) / 2.0),
+                               sender.frame.origin.y - ((end_size - sender.frame.size.height) / 2.0),
+                               end_size, end_size);
+  [self hideFavouritesExcluding:sender];
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+   {
+     context.duration = 0.2;
+     [sender.animator setFrame:end_rect];
+     [sender.animator setAlphaValue:0.0];
+   }
+                      completionHandler:^
+   {
+//     [_delegate favouritesView:self gotDropLinkWithFiles:files];
+//     [InfinitMetricsManager sendMetric:INFINIT_METRIC_FAVOURITES_LINK_DROP];
+   }];
 }
 
 @end
