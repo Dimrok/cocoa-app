@@ -243,9 +243,9 @@
 {
   CGFloat height = self.table_view.numberOfRows * _row_height;
   if (height > _max_rows * _row_height)
-    return (_max_rows * _row_height);
+    return (_max_rows * _row_height) - 2.0;
   else
-    return height;
+    return height - 2.0;
 }
 
 - (void)setChanging:(BOOL)changing
