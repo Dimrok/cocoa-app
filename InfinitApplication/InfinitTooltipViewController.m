@@ -19,8 +19,6 @@
   NSSize _arrow_size;
 }
 
-@synthesize message = _message;
-
 - (id)init
 {
   if (self = [super initWithNibName:self.className bundle:nil])
