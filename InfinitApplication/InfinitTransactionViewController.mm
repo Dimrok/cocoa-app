@@ -376,6 +376,8 @@
 
 - (CGFloat)height
 {
+  if (_list.count == 0)
+    return _row_height;
   CGFloat height = self.table_view.numberOfRows * _row_height;
 
   if (height > _max_rows * _row_height)
