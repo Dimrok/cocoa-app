@@ -516,6 +516,11 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [_delegate cancelLink:link];
 }
 
+- (void)deleteLink:(InfinitLinkTransaction*)link
+{
+  [_delegate deleteLink:link];
+}
+
 - (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link
 {
   [_delegate copyLinkToClipboard:link];
