@@ -241,6 +241,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case TRANSACTION_VIEW_CLOUD_BUFFERED:
     case TRANSACTION_VIEW_PREPARING:
     case TRANSACTION_VIEW_RUNNING:
+    case TRANSACTION_VIEW_OTHER_DEVICE:
       return YES;
       
     default:
@@ -458,6 +459,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
         self.information.stringValue =
           [IAFunctions fileSizeStringFrom:_element.transaction.total_size];
       }
+      self.information.hidden = NO;
+      break;
+    case TRANSACTION_VIEW_OTHER_DEVICE:
+      [self setTransactionStatusButtonToCancel];
+      self.progress.hidden = YES;
+      self.information.stringValue = NSLocalizedString(@"Transfer on another device...", nil);
       self.information.hidden = NO;
       break;
 

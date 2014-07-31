@@ -514,6 +514,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     case TRANSACTION_VIEW_PREPARING:
     case TRANSACTION_VIEW_RUNNING:
     case TRANSACTION_VIEW_CLOUD_BUFFERED:
+    case TRANSACTION_VIEW_OTHER_DEVICE:
       return YES;
       
     default:
