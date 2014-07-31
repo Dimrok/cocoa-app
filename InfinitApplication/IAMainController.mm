@@ -1106,6 +1106,11 @@ hadStatusChangeForLink:(InfinitLinkTransaction*)link
   [_link_manager cancelLink:link];
 }
 
+- (void)deleteLink:(InfinitLinkTransaction*)link
+{
+  [_link_manager deleteLink:link];
+}
+
 - (void)linkManager:(InfinitLinkManager*)sender
 hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 {
@@ -1114,8 +1119,7 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 }
 
 - (void)linkManagerCreatedLink:(InfinitLinkManager*)sender
-{
-}
+{}
 
 //- Login Window Protocol --------------------------------------------------------------------------
 
