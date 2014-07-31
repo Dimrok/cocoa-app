@@ -179,7 +179,7 @@ static NSDictionary* _grey_style;
     NSRect rect;
     [[NSColor selectedMenuItemColor] set];
     // WORKAROUND: Highlighting of icon on non-retina screens is broken
-    if ([[NSScreen mainScreen] backingScaleFactor] == 1.0)
+    if ([[NSScreen mainScreen] backingScaleFactor] == 1.0 && [IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_10)
     {
       rect = NSMakeRect(self.frame.origin.x,
                         self.frame.origin.y + 1.0,
