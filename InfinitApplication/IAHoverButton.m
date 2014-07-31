@@ -16,12 +16,6 @@
 
 //- Initialisation ---------------------------------------------------------------------------------
 
-@synthesize hand_cursor = _hand_cursor;
-@synthesize hover_attrs = _hover_attrs;
-@synthesize hover_image = _hover_image;
-@synthesize normal_attrs = _normal_attrs;
-@synthesize normal_image = _normal_image;
-
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
   if (self = [super initWithCoder:aDecoder])
