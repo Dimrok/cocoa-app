@@ -238,19 +238,38 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)desktopNotificationForTransaction:(IATransaction*)transaction
 {
+  if (transaction.on_another_device)
+  {
+    ELLE_DEBUG("%s: transaction (%d) for another device, remove existing notifications",
+               self.description.UTF8String, transaction.transaction_id.unsignedIntegerValue);
+
+    for (NSUserNotification* notif in [_notification_centre deliveredNotifications])
+    {
+      if ([notif.userInfo valueForKey:@"transaction_id"] == transaction.transaction_id)
+      {
+        [_notification_centre removeDeliveredNotification:notif];
+      }
+    }
+    return;
+  }
+
   NSUserNotification* user_notification = [self _statusNotificationFromTransaction:transaction];
   
   if (user_notification == nil)
     return;
   
   ELLE_LOG("%s: show desktop notification for transaction (%d) with status: %d",
-           self.description.UTF8String, transaction.transaction_id, transaction.status);
+           self.description.UTF8String, transaction.transaction_id.unsignedIntegerValue,
+           transaction.status);
   
   [_notification_centre deliverNotification:user_notification];
 }
 
 - (void)desktopNotificationForTransactionAccepted:(IATransaction*)transaction
 {
+  if (transaction.on_another_device)
+    return;
+
   ELLE_LOG("%s: show desktop notification for transaction (%d) accepted",
            self.description.UTF8String, transaction.transaction_id);
   NSUserNotification* user_notification = [self _acceptedNotificationFromTransaction:transaction];
@@ -265,6 +284,9 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)desktopNotificationForLink:(InfinitLinkTransaction*)link
 {
+  if (link.on_another_device)
+    return;
+
   NSUserNotification* user_notification;
   BOOL replaced = NO;
   
