@@ -92,7 +92,7 @@
                                                     <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OGA-Kg-8Se" customClass="InfinitLinkBlurView">
                                                         <rect key="frame" x="317" y="2" width="130" height="72"/>
                                                         <subviews>
-                                                            <button hidden="YES" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Ji-dGD" customClass="IAHoverButton">
+                                                            <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Ji-dGD" customClass="IAHoverButton">
                                                                 <rect key="frame" x="90" y="25" width="22" height="22"/>
                                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-delete" imagePosition="overlaps" alignment="center" alternateImage="icon-delete-confirm" imageScaling="proportionallyDown" inset="2" id="vPX-RB-qSG">
                                                                     <behavior key="behavior" lightByContents="YES"/>
@@ -102,7 +102,7 @@
                                                                     <action selector="deleteLinkClicked:" target="EP9-ei-aIw" id="jjg-za-8iI"/>
                                                                 </connections>
                                                             </button>
-                                                            <button hidden="YES" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZG1-iK-S4L" customClass="IAHoverButton">
+                                                            <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZG1-iK-S4L" customClass="IAHoverButton">
                                                                 <rect key="frame" x="66" y="25" width="22" height="22"/>
                                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-clipboard" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="23u-pc-Yqu">
                                                                     <behavior key="behavior" lightByContents="YES"/>
@@ -112,7 +112,7 @@
                                                                     <action selector="clipboardClicked:" target="EP9-ei-aIw" id="RXO-Yc-Q28"/>
                                                                 </connections>
                                                             </button>
-                                                            <button hidden="YES" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SfX-9g-Ypy" customClass="IAHoverButton">
+                                                            <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SfX-9g-Ypy" customClass="IAHoverButton">
                                                                 <rect key="frame" x="39" y="25" width="22" height="22"/>
                                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-share" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pjj-s2-h3j">
                                                                     <behavior key="behavior" lightByContents="YES"/>
