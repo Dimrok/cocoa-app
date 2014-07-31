@@ -143,6 +143,7 @@ namespace
   }
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
+    context.duration = kMinimumTimeInterval;
     [self.buttons_constraint.animator setConstant:317.0];
   } completionHandler:nil];
 }
