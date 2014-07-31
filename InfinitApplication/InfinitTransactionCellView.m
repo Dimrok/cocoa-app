@@ -108,7 +108,7 @@
 
 - (void)setIndicatorOnHover
 {
-  self.indicator.image = [IAFunctions imageNamed:@"main-icon-expand"];
+  self.indicator.image = [IAFunctions imageNamed:@"icon-expand"];
   self.indicator.hidden = NO;
   self.indicator.toolTip = NSLocalizedString(@"Click to expand", nil);
   self.indicator_text.stringValue = NSLocalizedString(@"Open", nil);
