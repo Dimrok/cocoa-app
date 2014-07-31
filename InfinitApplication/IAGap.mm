@@ -589,6 +589,11 @@ return [NSString stringWithUTF8String:str]; \
                                                                 transaction_id.unsignedIntValue)];
 }
 
+- (void)delete_transaction:(NSNumber*)transaction_id
+{
+  gap_delete_link_transaction(_state, transaction_id.unsignedIntValue);
+}
+
 - (NSNumber*)reject_transaction:(NSNumber*)transaction_id
 {
   return [NSNumber numberWithUnsignedInt:gap_reject_transaction(_state,
