@@ -7,6 +7,7 @@
 //
 
 #import "InfinitLinkViewController.h"
+#import "InfinitTooltipViewController.h"
 
 @interface InfinitLinkViewController ()
 
@@ -27,6 +28,9 @@
   NSMutableArray* _rows_with_progress;
 
   gap_UserStatus _me_status;
+
+  InfinitTooltipViewController* _tooltip_controller;
+  NSString * _delete_link_message;
 }
 
 //- Init -------------------------------------------------------------------------------------------
@@ -42,6 +46,8 @@
     _max_rows = 4;
     _row_height = 72.0;
     _me_status = status;
+    _tooltip_controller = nil;
+    _delete_link_message = NSLocalizedString(@"Click again to delete", nil);
   }
   return self;
 }
@@ -105,7 +111,9 @@
   {
     if (existing.id_.unsignedIntegerValue == link.id_.unsignedIntegerValue)
     {
-      if (link.status == gap_transaction_failed)
+      if (link.status == gap_transaction_failed ||
+          link.status == gap_transaction_canceled ||
+          link.status == gap_transaction_deleted)
       {
         [self.table_view beginUpdates];
         [_list removeObject:link];
@@ -241,6 +249,8 @@
 
 - (CGFloat)height
 {
+  if (_list.count == 0)
+    return _row_height;
   CGFloat height = self.table_view.numberOfRows * _row_height;
   if (height > _max_rows * _row_height)
     return (_max_rows * _row_height) - 2.0;
@@ -283,12 +293,56 @@ gotCancelForLink:(InfinitLinkTransaction*)link
   [self.table_view endUpdates];
   [_delegate cancelLink:link];
   [_delegate linksViewResizeToHeight:self.height];
+  [self updateListOfRowsWithProgress];
 }
 
 - (void)linkCell:(InfinitLinkCellView*)sender
 gotCopyToClipboardForLink:(InfinitLinkTransaction*)link
 {
   [_delegate copyLinkToPasteBoard:link];
+}
+
+- (void)linkCell:(InfinitLinkCellView*)sender
+gotDeleteForLink:(InfinitLinkTransaction*)link
+{
+  if (sender.delete_clicks < 2)
+  {
+    if (_tooltip_controller == nil)
+      _tooltip_controller = [[InfinitTooltipViewController alloc] init];
+    [_tooltip_controller showPopoverForView:sender.delete_link
+                         withArrowDirection:INPopoverArrowDirectionLeft
+                                withMessage:_delete_link_message
+                           withPopAnimation:NO
+                                    forTime:5.0];
+  }
+  else
+  {
+    [_tooltip_controller close];
+    NSUInteger row = [self.table_view rowForView:sender];
+    [self.table_view beginUpdates];
+    [_list removeObject:link];
+    [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
+                           withAnimation:NSTableViewAnimationSlideRight];
+    [self.table_view endUpdates];
+    [_delegate deleteLink:link];
+    [_delegate linksViewResizeToHeight:self.height];
+    if (_list.count == 0)
+      [self.table_view reloadData];
+    [self updateListOfRowsWithProgress];
+  }
+}
+
+- (void)linkCellLostMouseHover:(InfinitLinkCellView*)sender
+{
+  [_tooltip_controller close];
+  NSUInteger row = [self.table_view rowForView:sender];
+  for (NSUInteger i = 0; i < self.table_view.numberOfRows; i++)
+  {
+    if (i != row)
+    {
+      [[self.table_view viewAtColumn:0 row:i makeIfNecessary:NO] hideControls];
+    }
+  }
 }
 
 @end

@@ -17,6 +17,9 @@
 
 @protocol InfinitLinkCellProtocol;
 
+@interface InfinitLinkBlurView : NSView
+@end
+
 @interface InfinitLinkCellView : NSTableCellView
 
 @property (nonatomic, weak) IBOutlet InfinitLinkFileIconView* icon_view;
@@ -26,6 +29,12 @@
 @property (nonatomic, weak) IBOutlet IAHoverButton* cancel;
 @property (nonatomic, weak) IBOutlet IAHoverButton* link;
 @property (nonatomic, weak) IBOutlet IAHoverButton* clipboard;
+@property (nonatomic, weak) IBOutlet IAHoverButton* delete_link;
+
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* buttons_constraint;
+
+@property (nonatomic) NSUInteger delete_clicks;
+@property (nonatomic, weak) IBOutlet InfinitLinkBlurView* blur_view;
 @property (nonatomic, weak) IBOutlet InfinitLinkProgressIndicator* progress_indicator;
 
 @property (nonatomic, readwrite) CGFloat progress;
@@ -33,6 +42,8 @@
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
               andDelegate:(id<InfinitLinkCellProtocol>)delegate
          withOnlineStatus:(gap_UserStatus)status;
+
+- (void)hideControls;
 
 @end
 
@@ -43,5 +54,10 @@ gotCopyToClipboardForLink:(InfinitLinkTransaction*)link;
 
 - (void)linkCell:(InfinitLinkCellView*)sender
 gotCancelForLink:(InfinitLinkTransaction*)link;
+
+- (void)linkCell:(InfinitLinkCellView*)sender
+gotDeleteForLink:(InfinitLinkTransaction*)link;
+
+- (void)linkCellLostMouseHover:(InfinitLinkCellView*)sender;
 
 @end
