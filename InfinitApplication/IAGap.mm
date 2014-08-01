@@ -354,6 +354,11 @@ return [NSString stringWithUTF8String:str]; \
   return gap_transaction_progress(_state, transaction_id.unsignedIntValue);
 }
 
+- (BOOL)transaction_concern_device:(NSNumber*)transaction_id
+{
+  return gap_transaction_concern_device(_state, transaction_id.unsignedIntValue);
+}
+
 - (gap_Status)poll
 {
   return gap_poll(_state);
@@ -382,6 +387,11 @@ return [NSString stringWithUTF8String:str]; \
 - (NSNumber*)self_id
 {
   return [NSNumber numberWithUnsignedInt:(gap_self_id(_state))];
+}
+
+- (NSString*)self_device_id
+{
+  return [NSString stringWithUTF8String:gap_self_device_id(_state).c_str()];
 }
 
 - (void)set_avatar:(NSImage*)avatar
