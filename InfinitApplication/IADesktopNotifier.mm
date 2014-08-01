@@ -284,7 +284,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)desktopNotificationForLink:(InfinitLinkTransaction*)link
 {
-  if (link.on_another_device)
+  if (!link.concerns_this_device)
     return;
 
   NSUserNotification* user_notification;
