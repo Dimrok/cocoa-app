@@ -238,7 +238,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)desktopNotificationForTransaction:(IATransaction*)transaction
 {
-  if (transaction.on_another_device)
+  if (!transaction.concerns_this_device)
   {
     ELLE_DEBUG("%s: transaction (%d) for another device, remove existing notifications",
                self.description.UTF8String, transaction.transaction_id.unsignedIntegerValue);
@@ -267,7 +267,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)desktopNotificationForTransactionAccepted:(IATransaction*)transaction
 {
-  if (transaction.on_another_device)
+  if (!transaction.concerns_this_device)
     return;
 
   ELLE_LOG("%s: show desktop notification for transaction (%d) accepted",
