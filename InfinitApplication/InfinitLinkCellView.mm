@@ -207,7 +207,7 @@ namespace
   }
   else if (link.status == gap_transaction_on_other_device)
   {
-    self.information.stringValue = NSLocalizedString(@"Transferring on another device", nil);
+    self.information.stringValue = NSLocalizedString(@"Uploading elsewhere", nil);
   }
   else
   {
