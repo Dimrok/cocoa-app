@@ -448,7 +448,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       if (_element.transaction.from_me)
       {
         [self setTransactionStatusButtonToCancel];
-        self.information.stringValue = NSLocalizedString(@"Waiting for user to accept...", nil);
+        if (_element.transaction.to_self)
+          self.information.stringValue = NSLocalizedString(@"Accept on another device.", nil);
+        else
+          self.information.stringValue = NSLocalizedString(@"Waiting for user to accept...", nil);
       }
       else
       {
