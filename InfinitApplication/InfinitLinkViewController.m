@@ -345,6 +345,8 @@ gotDeleteForLink:(InfinitLinkTransaction*)link
 - (void)linkCellLostMouseHover:(InfinitLinkCellView*)sender
 {
   [_tooltip_controller close];
+  if (_list.count == 0)
+    return;
   NSUInteger row = [self.table_view rowForView:sender];
   for (NSUInteger i = 0; i < self.table_view.numberOfRows; i++)
   {
