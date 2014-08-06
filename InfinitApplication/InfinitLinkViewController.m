@@ -98,8 +98,18 @@
 {
   [_list insertObject:link atIndex:0];
   [self.table_view beginUpdates];
-  [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                         withAnimation:NSTableViewAnimationSlideDown];
+  if (_list.count == 0)
+  {
+    [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                           withAnimation:NSTableViewAnimationSlideRight];
+    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                           withAnimation:NSTableViewAnimationSlideRight];
+  }
+  else
+  {
+    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                           withAnimation:NSTableViewAnimationSlideDown];
+  }
   [self.table_view endUpdates];
   [self updateListOfRowsWithProgress];
 }
