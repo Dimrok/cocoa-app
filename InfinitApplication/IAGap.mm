@@ -601,7 +601,7 @@ return [NSString stringWithUTF8String:str]; \
 
 - (void)delete_transaction:(NSNumber*)transaction_id
 {
-  gap_delete_link_transaction(_state, transaction_id.unsignedIntValue);
+  gap_delete_transaction(_state, transaction_id.unsignedIntValue);
 }
 
 - (NSNumber*)reject_transaction:(NSNumber*)transaction_id
