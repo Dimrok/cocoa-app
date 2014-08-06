@@ -98,7 +98,7 @@
 {
   [_list insertObject:link atIndex:0];
   [self.table_view beginUpdates];
-  if (_list.count == 0)
+  if (_list.count == 1) // First transaction.
   {
     [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
                            withAnimation:NSTableViewAnimationSlideRight];

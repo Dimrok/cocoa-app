@@ -292,10 +292,20 @@
   }
   if (!found) // Got transaction with new user
   {
-    [self.table_view beginUpdates];
     [_list insertObject:transaction atIndex:0];
-    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                           withAnimation:NSTableViewAnimationSlideDown];
+    [self.table_view beginUpdates];
+    if (_list.count == 1) // First transaction.
+    {
+      [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                             withAnimation:NSTableViewAnimationSlideRight];
+      [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                             withAnimation:NSTableViewAnimationSlideRight];
+    }
+    else
+    {
+      [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                             withAnimation:NSTableViewAnimationSlideDown];
+    }
     [self.table_view endUpdates];
   }
 
