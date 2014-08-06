@@ -154,8 +154,9 @@ static NSSize favourites_size = {430.f, 170.f};
                                                   andDelegate:self.favourites_view];
   [self.favourites_view addSubview:_link_view];
 
+  CGFloat diff_x = (_favourite_size.width - _link_size.width) / 2.0;
   NSPoint link_pos =
-    NSMakePoint((self.favourites_area.size.width - _link_size.width) / 2.0 + self.favourites_area.origin.x,
+    NSMakePoint((self.favourites_area.size.width - _link_size.width) / 2.0 + self.favourites_area.origin.x + diff_x,
                 (self.favourites_area.size.height - _link_size.height) / 2.0 + 40.0 - self.favourites_area.origin.y);
 
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
