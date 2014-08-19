@@ -246,26 +246,6 @@
 		836EAE6C19891DAE0053BE85 /* icon-search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE6A19891DAE0053BE85 /* icon-search@2x.png */; };
 		836EAE6F19891DB70053BE85 /* icon-cancel-send.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE6D19891DB70053BE85 /* icon-cancel-send.png */; };
 		836EAE7019891DB70053BE85 /* icon-cancel-send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE6E19891DB70053BE85 /* icon-cancel-send@2x.png */; };
-		83732B4119892B620030B0F0 /* clippy_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B2D19892B620030B0F0 /* clippy_1.png */; };
-		83732B4219892B620030B0F0 /* clippy_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B2E19892B620030B0F0 /* clippy_1@2x.png */; };
-		83732B4319892B620030B0F0 /* clippy_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B2F19892B620030B0F0 /* clippy_2.png */; };
-		83732B4419892B620030B0F0 /* clippy_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3019892B620030B0F0 /* clippy_2@2x.png */; };
-		83732B4519892B620030B0F0 /* clippy_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3119892B620030B0F0 /* clippy_3.png */; };
-		83732B4619892B620030B0F0 /* clippy_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3219892B620030B0F0 /* clippy_3@2x.png */; };
-		83732B4719892B620030B0F0 /* clippy_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3319892B620030B0F0 /* clippy_4.png */; };
-		83732B4819892B620030B0F0 /* clippy_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3419892B620030B0F0 /* clippy_4@2x.png */; };
-		83732B4919892B620030B0F0 /* clippy_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3519892B620030B0F0 /* clippy_5.png */; };
-		83732B4A19892B620030B0F0 /* clippy_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3619892B620030B0F0 /* clippy_5@2x.png */; };
-		83732B4B19892B620030B0F0 /* clippy_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3719892B620030B0F0 /* clippy_6.png */; };
-		83732B4C19892B620030B0F0 /* clippy_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3819892B620030B0F0 /* clippy_6@2x.png */; };
-		83732B4D19892B620030B0F0 /* clippy_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3919892B620030B0F0 /* clippy_7.png */; };
-		83732B4E19892B620030B0F0 /* clippy_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3A19892B620030B0F0 /* clippy_7@2x.png */; };
-		83732B4F19892B620030B0F0 /* clippy_8.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3B19892B620030B0F0 /* clippy_8.png */; };
-		83732B5019892B620030B0F0 /* clippy_8@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3C19892B620030B0F0 /* clippy_8@2x.png */; };
-		83732B5119892B620030B0F0 /* clippy_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3D19892B620030B0F0 /* clippy_9.png */; };
-		83732B5219892B620030B0F0 /* clippy_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3E19892B620030B0F0 /* clippy_9@2x.png */; };
-		83732B5319892B620030B0F0 /* clippy_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B3F19892B620030B0F0 /* clippy_10.png */; };
-		83732B5419892B620030B0F0 /* clippy_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B4019892B620030B0F0 /* clippy_10@2x.png */; };
 		83732B571989418F0030B0F0 /* icon-delete-confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B551989418F0030B0F0 /* icon-delete-confirm.png */; };
 		83732B581989418F0030B0F0 /* icon-delete-confirm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B561989418F0030B0F0 /* icon-delete-confirm@2x.png */; };
 		8379844A18C4928B0083E284 /* libaws.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8379844918C4928B0083E284 /* libaws.dylib */; };
@@ -290,6 +270,27 @@
 		839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */; };
 		83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8368F2BD17F1890C00135C37 /* libcurl.4.dylib */; };
 		83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */; };
+		83A208931994D31D00C85C47 /* clippy_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A2087F1994D31D00C85C47 /* clippy_1.png */; };
+		83A208941994D31D00C85C47 /* clippy_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208801994D31D00C85C47 /* clippy_1@2x.png */; };
+		83A208951994D31D00C85C47 /* clippy_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208811994D31D00C85C47 /* clippy_2.png */; };
+		83A208961994D31D00C85C47 /* clippy_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208821994D31D00C85C47 /* clippy_2@2x.png */; };
+		83A208971994D31D00C85C47 /* clippy_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208831994D31D00C85C47 /* clippy_3.png */; };
+		83A208981994D31D00C85C47 /* clippy_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208841994D31D00C85C47 /* clippy_3@2x.png */; };
+		83A208991994D31D00C85C47 /* clippy_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208851994D31D00C85C47 /* clippy_4.png */; };
+		83A2089A1994D31D00C85C47 /* clippy_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208861994D31D00C85C47 /* clippy_4@2x.png */; };
+		83A2089B1994D31D00C85C47 /* clippy_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208871994D31D00C85C47 /* clippy_5.png */; };
+		83A2089C1994D31D00C85C47 /* clippy_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208881994D31D00C85C47 /* clippy_5@2x.png */; };
+		83A2089D1994D31D00C85C47 /* clippy_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208891994D31D00C85C47 /* clippy_6.png */; };
+		83A2089E1994D31D00C85C47 /* clippy_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A2088A1994D31D00C85C47 /* clippy_6@2x.png */; };
+		83A2089F1994D31D00C85C47 /* clippy_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A2088B1994D31D00C85C47 /* clippy_7.png */; };
+		83A208A01994D31D00C85C47 /* clippy_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A2088C1994D31D00C85C47 /* clippy_7@2x.png */; };
+		83A208A11994D31D00C85C47 /* clippy_8.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A2088D1994D31D00C85C47 /* clippy_8.png */; };
+		83A208A21994D31D00C85C47 /* clippy_8@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A2088E1994D31D00C85C47 /* clippy_8@2x.png */; };
+		83A208A31994D31D00C85C47 /* clippy_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A2088F1994D31D00C85C47 /* clippy_9.png */; };
+		83A208A41994D31D00C85C47 /* clippy_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208901994D31D00C85C47 /* clippy_9@2x.png */; };
+		83A208A51994D31D00C85C47 /* clippy_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208911994D31D00C85C47 /* clippy_10.png */; };
+		83A208A61994D31D00C85C47 /* clippy_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208921994D31D00C85C47 /* clippy_10@2x.png */; };
+		83A208AB1994D43800C85C47 /* libboost_context.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A208A71994D3F200C85C47 /* libboost_context.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83A4F683183681A90038AC65 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
 		83A4F684183681A90038AC65 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
 		83A8097E17C26C890086A80D /* bg-triangle-top-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */; };
@@ -543,6 +544,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				83A208AB1994D43800C85C47 /* libboost_context.dylib in Copy Infinit Libraries */,
 				8337672A19087E8C0073A621 /* libboost_chrono.dylib in Copy Infinit Libraries */,
 				8337672B19087E8C0073A621 /* libboost_date_time.dylib in Copy Infinit Libraries */,
 				8337672C19087E8C0073A621 /* libboost_signals.dylib in Copy Infinit Libraries */,
@@ -875,26 +877,6 @@
 		836EAE6D19891DB70053BE85 /* icon-cancel-send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-cancel-send.png"; path = "../../../../fist-resources/slices/mac/view_send/icon-cancel-send.png"; sourceTree = "<group>"; };
 		836EAE6E19891DB70053BE85 /* icon-cancel-send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-cancel-send@2x.png"; path = "../../../../fist-resources/slices/mac/view_send/icon-cancel-send@2x.png"; sourceTree = "<group>"; };
 		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		83732B2D19892B620030B0F0 /* clippy_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_1.png; path = ../../mac/view_onboarding/clippy/clippy_1.png; sourceTree = "<group>"; };
-		83732B2E19892B620030B0F0 /* clippy_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_1@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_1@2x.png"; sourceTree = "<group>"; };
-		83732B2F19892B620030B0F0 /* clippy_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_2.png; path = ../../mac/view_onboarding/clippy/clippy_2.png; sourceTree = "<group>"; };
-		83732B3019892B620030B0F0 /* clippy_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_2@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_2@2x.png"; sourceTree = "<group>"; };
-		83732B3119892B620030B0F0 /* clippy_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_3.png; path = ../../mac/view_onboarding/clippy/clippy_3.png; sourceTree = "<group>"; };
-		83732B3219892B620030B0F0 /* clippy_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_3@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_3@2x.png"; sourceTree = "<group>"; };
-		83732B3319892B620030B0F0 /* clippy_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_4.png; path = ../../mac/view_onboarding/clippy/clippy_4.png; sourceTree = "<group>"; };
-		83732B3419892B620030B0F0 /* clippy_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_4@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_4@2x.png"; sourceTree = "<group>"; };
-		83732B3519892B620030B0F0 /* clippy_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_5.png; path = ../../mac/view_onboarding/clippy/clippy_5.png; sourceTree = "<group>"; };
-		83732B3619892B620030B0F0 /* clippy_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_5@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_5@2x.png"; sourceTree = "<group>"; };
-		83732B3719892B620030B0F0 /* clippy_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_6.png; path = ../../mac/view_onboarding/clippy/clippy_6.png; sourceTree = "<group>"; };
-		83732B3819892B620030B0F0 /* clippy_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_6@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_6@2x.png"; sourceTree = "<group>"; };
-		83732B3919892B620030B0F0 /* clippy_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_7.png; path = ../../mac/view_onboarding/clippy/clippy_7.png; sourceTree = "<group>"; };
-		83732B3A19892B620030B0F0 /* clippy_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_7@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_7@2x.png"; sourceTree = "<group>"; };
-		83732B3B19892B620030B0F0 /* clippy_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_8.png; path = ../../mac/view_onboarding/clippy/clippy_8.png; sourceTree = "<group>"; };
-		83732B3C19892B620030B0F0 /* clippy_8@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_8@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_8@2x.png"; sourceTree = "<group>"; };
-		83732B3D19892B620030B0F0 /* clippy_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_9.png; path = ../../mac/view_onboarding/clippy/clippy_9.png; sourceTree = "<group>"; };
-		83732B3E19892B620030B0F0 /* clippy_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_9@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_9@2x.png"; sourceTree = "<group>"; };
-		83732B3F19892B620030B0F0 /* clippy_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_10.png; path = ../../mac/view_onboarding/clippy/clippy_10.png; sourceTree = "<group>"; };
-		83732B4019892B620030B0F0 /* clippy_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_10@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_10@2x.png"; sourceTree = "<group>"; };
 		83732B551989418F0030B0F0 /* icon-delete-confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete-confirm.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete-confirm.png"; sourceTree = "<group>"; };
 		83732B561989418F0030B0F0 /* icon-delete-confirm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete-confirm@2x.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete-confirm@2x.png"; sourceTree = "<group>"; };
 		8379844918C4928B0083E284 /* libaws.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaws.dylib; path = ../../../Externals/lib/libaws.dylib; sourceTree = "<group>"; };
@@ -927,6 +909,27 @@
 		839DDCF018D8C7D50021B826 /* InfinitConversationProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationProgressBar.h; sourceTree = "<group>"; };
 		839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitConversationProgressBar.mm; sourceTree = "<group>"; };
 		83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
+		83A2087F1994D31D00C85C47 /* clippy_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_1.png; path = ../../mac/view_onboarding/clippy/clippy_1.png; sourceTree = "<group>"; };
+		83A208801994D31D00C85C47 /* clippy_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_1@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_1@2x.png"; sourceTree = "<group>"; };
+		83A208811994D31D00C85C47 /* clippy_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_2.png; path = ../../mac/view_onboarding/clippy/clippy_2.png; sourceTree = "<group>"; };
+		83A208821994D31D00C85C47 /* clippy_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_2@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_2@2x.png"; sourceTree = "<group>"; };
+		83A208831994D31D00C85C47 /* clippy_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_3.png; path = ../../mac/view_onboarding/clippy/clippy_3.png; sourceTree = "<group>"; };
+		83A208841994D31D00C85C47 /* clippy_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_3@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_3@2x.png"; sourceTree = "<group>"; };
+		83A208851994D31D00C85C47 /* clippy_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_4.png; path = ../../mac/view_onboarding/clippy/clippy_4.png; sourceTree = "<group>"; };
+		83A208861994D31D00C85C47 /* clippy_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_4@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_4@2x.png"; sourceTree = "<group>"; };
+		83A208871994D31D00C85C47 /* clippy_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_5.png; path = ../../mac/view_onboarding/clippy/clippy_5.png; sourceTree = "<group>"; };
+		83A208881994D31D00C85C47 /* clippy_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_5@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_5@2x.png"; sourceTree = "<group>"; };
+		83A208891994D31D00C85C47 /* clippy_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_6.png; path = ../../mac/view_onboarding/clippy/clippy_6.png; sourceTree = "<group>"; };
+		83A2088A1994D31D00C85C47 /* clippy_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_6@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_6@2x.png"; sourceTree = "<group>"; };
+		83A2088B1994D31D00C85C47 /* clippy_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_7.png; path = ../../mac/view_onboarding/clippy/clippy_7.png; sourceTree = "<group>"; };
+		83A2088C1994D31D00C85C47 /* clippy_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_7@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_7@2x.png"; sourceTree = "<group>"; };
+		83A2088D1994D31D00C85C47 /* clippy_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_8.png; path = ../../mac/view_onboarding/clippy/clippy_8.png; sourceTree = "<group>"; };
+		83A2088E1994D31D00C85C47 /* clippy_8@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_8@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_8@2x.png"; sourceTree = "<group>"; };
+		83A2088F1994D31D00C85C47 /* clippy_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_9.png; path = ../../mac/view_onboarding/clippy/clippy_9.png; sourceTree = "<group>"; };
+		83A208901994D31D00C85C47 /* clippy_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_9@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_9@2x.png"; sourceTree = "<group>"; };
+		83A208911994D31D00C85C47 /* clippy_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_10.png; path = ../../mac/view_onboarding/clippy/clippy_10.png; sourceTree = "<group>"; };
+		83A208921994D31D00C85C47 /* clippy_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_10@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_10@2x.png"; sourceTree = "<group>"; };
+		83A208A71994D3F200C85C47 /* libboost_context.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_context.dylib; path = ../../../Externals/lib/libboost_context.dylib; sourceTree = "<group>"; };
 		83A8097A17C26C880086A80D /* bg-triangle-top-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey.png"; sourceTree = "<group>"; };
 		83A8097B17C26C890086A80D /* bg-triangle-top-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-grey@2x.png"; sourceTree = "<group>"; };
 		83A8097C17C26C890086A80D /* bg-triangle-top-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-triangle-top-white.png"; sourceTree = "<group>"; };
@@ -1738,6 +1741,7 @@
 			isa = PBXGroup;
 			children = (
 				8337671A19087DFC0073A621 /* libboost_chrono.dylib */,
+				83A208A71994D3F200C85C47 /* libboost_context.dylib */,
 				8337671B19087DFC0073A621 /* libboost_date_time.dylib */,
 				8337671E19087DFC0073A621 /* libboost_signals.dylib */,
 				8337671F19087DFC0073A621 /* libboost_system.dylib */,
@@ -1907,26 +1911,26 @@
 		83F5FD0718EDEC5E0051F010 /* clippy */ = {
 			isa = PBXGroup;
 			children = (
-				83732B2D19892B620030B0F0 /* clippy_1.png */,
-				83732B2E19892B620030B0F0 /* clippy_1@2x.png */,
-				83732B2F19892B620030B0F0 /* clippy_2.png */,
-				83732B3019892B620030B0F0 /* clippy_2@2x.png */,
-				83732B3119892B620030B0F0 /* clippy_3.png */,
-				83732B3219892B620030B0F0 /* clippy_3@2x.png */,
-				83732B3319892B620030B0F0 /* clippy_4.png */,
-				83732B3419892B620030B0F0 /* clippy_4@2x.png */,
-				83732B3519892B620030B0F0 /* clippy_5.png */,
-				83732B3619892B620030B0F0 /* clippy_5@2x.png */,
-				83732B3719892B620030B0F0 /* clippy_6.png */,
-				83732B3819892B620030B0F0 /* clippy_6@2x.png */,
-				83732B3919892B620030B0F0 /* clippy_7.png */,
-				83732B3A19892B620030B0F0 /* clippy_7@2x.png */,
-				83732B3B19892B620030B0F0 /* clippy_8.png */,
-				83732B3C19892B620030B0F0 /* clippy_8@2x.png */,
-				83732B3D19892B620030B0F0 /* clippy_9.png */,
-				83732B3E19892B620030B0F0 /* clippy_9@2x.png */,
-				83732B3F19892B620030B0F0 /* clippy_10.png */,
-				83732B4019892B620030B0F0 /* clippy_10@2x.png */,
+				83A2087F1994D31D00C85C47 /* clippy_1.png */,
+				83A208801994D31D00C85C47 /* clippy_1@2x.png */,
+				83A208811994D31D00C85C47 /* clippy_2.png */,
+				83A208821994D31D00C85C47 /* clippy_2@2x.png */,
+				83A208831994D31D00C85C47 /* clippy_3.png */,
+				83A208841994D31D00C85C47 /* clippy_3@2x.png */,
+				83A208851994D31D00C85C47 /* clippy_4.png */,
+				83A208861994D31D00C85C47 /* clippy_4@2x.png */,
+				83A208871994D31D00C85C47 /* clippy_5.png */,
+				83A208881994D31D00C85C47 /* clippy_5@2x.png */,
+				83A208891994D31D00C85C47 /* clippy_6.png */,
+				83A2088A1994D31D00C85C47 /* clippy_6@2x.png */,
+				83A2088B1994D31D00C85C47 /* clippy_7.png */,
+				83A2088C1994D31D00C85C47 /* clippy_7@2x.png */,
+				83A2088D1994D31D00C85C47 /* clippy_8.png */,
+				83A2088E1994D31D00C85C47 /* clippy_8@2x.png */,
+				83A2088F1994D31D00C85C47 /* clippy_9.png */,
+				83A208901994D31D00C85C47 /* clippy_9@2x.png */,
+				83A208911994D31D00C85C47 /* clippy_10.png */,
+				83A208921994D31D00C85C47 /* clippy_10@2x.png */,
 			);
 			name = clippy;
 			path = "../../../../fist-resources/slices/view_onboarding/clippy";
@@ -2176,6 +2180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83BDF6701935955200DDA4E6 /* Infinit - Episode 2.mp4 in Resources */,
+				83A2089B1994D31D00C85C47 /* clippy_5.png in Resources */,
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
 				836EAD4D1988EE710053BE85 /* arrow-tooltip-onboarding.png in Resources */,
 				836EADB11988EEC70053BE85 /* icon-status-online.png in Resources */,
@@ -2183,7 +2188,6 @@
 				836EAE481988F4500053BE85 /* icon-menu-bar-animated-black-3.png in Resources */,
 				836EACF81988EE300053BE85 /* link-icon-cancel@2x.png in Resources */,
 				836EAE2B1988F43E0053BE85 /* icon-menu-bar-animated-red-10.png in Resources */,
-				83732B4619892B620030B0F0 /* clippy_3@2x.png in Resources */,
 				836EACF01988EE300053BE85 /* icon-delete@2x.png in Resources */,
 				836EAD121988EE3B0053BE85 /* document@2x.png in Resources */,
 				836EAE271988F43E0053BE85 /* icon-menu-bar-animated-red-6.png in Resources */,
@@ -2192,14 +2196,15 @@
 				837A7F8817FC25E000600ACD /* bg-main-button-disabled.png in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
 				836EADCE1988F2040053BE85 /* icon-gear.png in Resources */,
-				83732B4519892B620030B0F0 /* clippy_3.png in Resources */,
 				836EAD4E1988EE710053BE85 /* arrow-tooltip-onboarding@2x.png in Resources */,
 				8328081B17A2B4A60025B6F8 /* Credits.rtf in Resources */,
 				836EAD8D1988EEC70053BE85 /* conversation-icon-canceled@2x.png in Resources */,
 				836EAD871988EEC70053BE85 /* conversation-icon-accept@2x.png in Resources */,
 				837A7F8B17FC25E000600ACD /* bg-main-button@2x.png in Resources */,
 				8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */,
+				83A208991994D31D00C85C47 /* clippy_4.png in Resources */,
 				836EAD191988EE3B0053BE85 /* photoshop.png in Resources */,
+				83A2089C1994D31D00C85C47 /* clippy_5@2x.png in Resources */,
 				836EADE71988F3960053BE85 /* send-icon-files@2x.png in Resources */,
 				836EADCF1988F2040053BE85 /* icon-gear@2x.png in Resources */,
 				836EADEB1988F3960053BE85 /* send-icon-show-files@2x.png in Resources */,
@@ -2207,12 +2212,10 @@
 				836EADDE1988F33F0053BE85 /* icon-star.png in Resources */,
 				836EAD861988EEC70053BE85 /* conversation-icon-accept.png in Resources */,
 				836EADFB1988F3DE0053BE85 /* icon-contact-checked@2x.png in Resources */,
-				83732B4119892B620030B0F0 /* clippy_1.png in Resources */,
 				836EAE071988F42D0053BE85 /* icon-menu-bar-active@2x.png in Resources */,
 				836EAD9C1988EEC70053BE85 /* conversation-icon-quote-right.png in Resources */,
 				836EAD9B1988EEC70053BE85 /* conversation-icon-quote-left@2x.png in Resources */,
 				832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */,
-				83732B4B19892B620030B0F0 /* clippy_6.png in Resources */,
 				836EAE541988F4500053BE85 /* icon-menu-bar-animated-black-15.png in Resources */,
 				836EAD501988EE710053BE85 /* btn-onboarding@2x.png in Resources */,
 				837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */,
@@ -2229,6 +2232,7 @@
 				836EADCA1988F1F90053BE85 /* icon-transfer.png in Resources */,
 				836EACEE1988EE300053BE85 /* icon-delete-hover@2x.png in Resources */,
 				836EAE081988F42D0053BE85 /* icon-menu-bar-clicked.png in Resources */,
+				83A208A41994D31D00C85C47 /* clippy_9@2x.png in Resources */,
 				836EAD8A1988EEC70053BE85 /* conversation-icon-bufferised.png in Resources */,
 				836EAE331988F43E0053BE85 /* icon-menu-bar-animated-red-18.png in Resources */,
 				836EAE511988F4500053BE85 /* icon-menu-bar-animated-black-12.png in Resources */,
@@ -2246,6 +2250,7 @@
 				836EAE561988F4500053BE85 /* icon-menu-bar-animated-black-17.png in Resources */,
 				836EAE461988F4500053BE85 /* icon-menu-bar-animated-black-1.png in Resources */,
 				836EAD941988EEC70053BE85 /* conversation-icon-hide-files.png in Resources */,
+				83A2089F1994D31D00C85C47 /* clippy_7.png in Resources */,
 				83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */,
 				836EAD151988EE3B0053BE85 /* illustrator.png in Resources */,
 				836EAD921988EEC70053BE85 /* conversation-icon-finished.png in Resources */,
@@ -2257,33 +2262,34 @@
 				836EAD0D1988EE3B0053BE85 /* archive.png in Resources */,
 				836EAE0A1988F42D0053BE85 /* icon-menu-bar-fire.png in Resources */,
 				83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */,
+				83A208A11994D31D00C85C47 /* clippy_8.png in Resources */,
 				836EAD9A1988EEC70053BE85 /* conversation-icon-quote-left.png in Resources */,
 				836EADAF1988EEC70053BE85 /* conversation-icon-status-offline@2x.png in Resources */,
 				83B8A70F18201F0700AD775F /* icon-main-unread@2x.png in Resources */,
-				83732B5419892B620030B0F0 /* clippy_10@2x.png in Resources */,
 				836EAD911988EEC70053BE85 /* conversation-icon-error@2x.png in Resources */,
 				836EAD0F1988EE3B0053BE85 /* cat.png in Resources */,
 				83ECD4CF1827A04F007DDB13 /* icon-main-download@2x.png in Resources */,
+				83A208A51994D31D00C85C47 /* clippy_10.png in Resources */,
 				836EAD1E1988EE3B0053BE85 /* powerpoint@2x.png in Resources */,
 				836EADA31988EEC70053BE85 /* conversation-icon-reject-hover@2x.png in Resources */,
 				836EADBD1988EF650053BE85 /* icon-expand.png in Resources */,
 				836EADAC1988EEC70053BE85 /* conversation-icon-show-files.png in Resources */,
 				836EAE501988F4500053BE85 /* icon-menu-bar-animated-black-11.png in Resources */,
-				83732B4819892B620030B0F0 /* clippy_4@2x.png in Resources */,
 				836EAE681988F5970053BE85 /* icon-share@2x.png in Resources */,
 				836EAD931988EEC70053BE85 /* conversation-icon-finished@2x.png in Resources */,
 				836EADAD1988EEC70053BE85 /* conversation-icon-show-files@2x.png in Resources */,
 				836EADFA1988F3DE0053BE85 /* icon-contact-checked.png in Resources */,
 				836EAE0E1988F42D0053BE85 /* icon-menu-bar-link.png in Resources */,
 				836EAD161988EE3B0053BE85 /* illustrator@2x.png in Resources */,
+				83A208981994D31D00C85C47 /* clippy_3@2x.png in Resources */,
 				834F136419214B9F00BF36A4 /* InfinitSendNoteViewController.xib in Resources */,
 				836EAE521988F4500053BE85 /* icon-menu-bar-animated-black-13.png in Resources */,
 				836EADA41988EEC70053BE85 /* conversation-icon-reject.png in Resources */,
 				836EADD21988F2270053BE85 /* icon-upload.png in Resources */,
 				836EADB21988EEC70053BE85 /* icon-status-online@2x.png in Resources */,
+				83A208931994D31D00C85C47 /* clippy_1.png in Resources */,
 				836EADE91988F3960053BE85 /* send-icon-hide-files@2x.png in Resources */,
 				836EADD71988F2BE0053BE85 /* icon-back@2x.png in Resources */,
-				83732B4D19892B620030B0F0 /* clippy_7.png in Resources */,
 				836EAE261988F43E0053BE85 /* icon-menu-bar-animated-red-5.png in Resources */,
 				836EAE241988F43E0053BE85 /* icon-menu-bar-animated-red-3.png in Resources */,
 				834F137A19224FCF00BF36A4 /* InfinitLinkViewController.xib in Resources */,
@@ -2291,6 +2297,7 @@
 				836EAD9E1988EEC70053BE85 /* conversation-icon-quote.png in Resources */,
 				836EACF31988EE300053BE85 /* icon-edit.png in Resources */,
 				836EAE221988F43E0053BE85 /* icon-menu-bar-animated-red-1.png in Resources */,
+				83A208A61994D31D00C85C47 /* clippy_10@2x.png in Resources */,
 				836EACF41988EE300053BE85 /* icon-edit@2x.png in Resources */,
 				836EAD1A1988EE3B0053BE85 /* photoshop@2x.png in Resources */,
 				836EAE6F19891DB70053BE85 /* icon-cancel-send.png in Resources */,
@@ -2298,6 +2305,7 @@
 				836EAE651988F5970053BE85 /* icon-share-hover.png in Resources */,
 				836EAD1B1988EE3B0053BE85 /* picture.png in Resources */,
 				83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */,
+				83A208951994D31D00C85C47 /* clippy_2.png in Resources */,
 				836EADD31988F2270053BE85 /* icon-upload@2x.png in Resources */,
 				836EAD141988EE3B0053BE85 /* folder@2x.png in Resources */,
 				836EAE061988F42D0053BE85 /* icon-menu-bar-active.png in Resources */,
@@ -2306,10 +2314,13 @@
 				836EAE531988F4500053BE85 /* icon-menu-bar-animated-black-14.png in Resources */,
 				836EADF31988F3B50053BE85 /* send-icon-delete@2x.png in Resources */,
 				836EAE6C19891DAE0053BE85 /* icon-search@2x.png in Resources */,
-				83732B4F19892B620030B0F0 /* clippy_8.png in Resources */,
+				83A2089D1994D31D00C85C47 /* clippy_6.png in Resources */,
+				83A2089A1994D31D00C85C47 /* clippy_4@2x.png in Resources */,
+				83A208941994D31D00C85C47 /* clippy_1@2x.png in Resources */,
 				836EAE551988F4500053BE85 /* icon-menu-bar-animated-black-16.png in Resources */,
 				836EAE471988F4500053BE85 /* icon-menu-bar-animated-black-2.png in Resources */,
 				836EADF71988F3C80053BE85 /* icon-note@2x.png in Resources */,
+				83A208961994D31D00C85C47 /* clippy_2@2x.png in Resources */,
 				836EAD181988EE3B0053BE85 /* music@2x.png in Resources */,
 				836EADC31988F1B80053BE85 /* login-icon-close-hover.png in Resources */,
 				836EAE0D1988F42D0053BE85 /* icon-menu-bar-inactive@2x.png in Resources */,
@@ -2319,6 +2330,8 @@
 				83732B581989418F0030B0F0 /* icon-delete-confirm@2x.png in Resources */,
 				83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */,
 				836EAE251988F43E0053BE85 /* icon-menu-bar-animated-red-4.png in Resources */,
+				83A208A31994D31D00C85C47 /* clippy_9.png in Resources */,
+				83A208A21994D31D00C85C47 /* clippy_8@2x.png in Resources */,
 				836EAD171988EE3B0053BE85 /* music.png in Resources */,
 				836EAD851988EEC70053BE85 /* conversation-icon-accept-hover@2x.png in Resources */,
 				836EAE4B1988F4500053BE85 /* icon-menu-bar-animated-black-6.png in Resources */,
@@ -2327,10 +2340,11 @@
 				836EAE2D1988F43E0053BE85 /* icon-menu-bar-animated-red-12.png in Resources */,
 				83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */,
 				836EADEF1988F3A10053BE85 /* icon-add-file@2x.png in Resources */,
+				83A208A01994D31D00C85C47 /* clippy_7@2x.png in Resources */,
+				83A2089E1994D31D00C85C47 /* clippy_6@2x.png in Resources */,
 				836EAE2A1988F43E0053BE85 /* icon-menu-bar-animated-red-9.png in Resources */,
 				836EAD201988EE3B0053BE85 /* video@2x.png in Resources */,
 				837A7F8A17FC25E000600ACD /* bg-main-button.png in Resources */,
-				83732B4E19892B620030B0F0 /* clippy_7@2x.png in Resources */,
 				836EAE311988F43E0053BE85 /* icon-menu-bar-animated-red-16.png in Resources */,
 				836EAE301988F43E0053BE85 /* icon-menu-bar-animated-red-15.png in Resources */,
 				83EADC2F17E205E800D49D77 /* logo@2x.png in Resources */,
@@ -2345,20 +2359,17 @@
 				836EADEA1988F3960053BE85 /* send-icon-show-files.png in Resources */,
 				836EACF11988EE300053BE85 /* icon-edit-hover.png in Resources */,
 				836EAD101988EE3B0053BE85 /* cat@2x.png in Resources */,
-				83732B4219892B620030B0F0 /* clippy_1@2x.png in Resources */,
 				836EADDD1988F33F0053BE85 /* icon-star-selected@2x.png in Resources */,
 				83A8097E17C26C890086A80D /* bg-triangle-top-grey.png in Resources */,
 				836EAE0C1988F42D0053BE85 /* icon-menu-bar-inactive.png in Resources */,
 				83732B571989418F0030B0F0 /* icon-delete-confirm.png in Resources */,
 				836EACED1988EE300053BE85 /* icon-delete-hover.png in Resources */,
+				83A208971994D31D00C85C47 /* clippy_3.png in Resources */,
 				836EAE2F1988F43E0053BE85 /* icon-menu-bar-animated-red-14.png in Resources */,
 				83A8097F17C26C890086A80D /* bg-triangle-top-grey@2x.png in Resources */,
-				83732B4719892B620030B0F0 /* clippy_4.png in Resources */,
-				83732B5319892B620030B0F0 /* clippy_10.png in Resources */,
 				83A8098017C26C890086A80D /* bg-triangle-top-white.png in Resources */,
 				836EACF51988EE300053BE85 /* link-icon-cancel-hover.png in Resources */,
 				836EAE4F1988F4500053BE85 /* icon-menu-bar-animated-black-10.png in Resources */,
-				83732B4419892B620030B0F0 /* clippy_2@2x.png in Resources */,
 				836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */,
 				836EADEE1988F3A10053BE85 /* icon-add-file.png in Resources */,
 				83A8098117C26C890086A80D /* bg-triangle-top-white@2x.png in Resources */,
@@ -2370,21 +2381,16 @@
 				83D4206517C4DC6700D4E168 /* icon-check@2x.png in Resources */,
 				83D4206617C4DC6700D4E168 /* icon-error.png in Resources */,
 				834F136A19216E2B00BF36A4 /* InfinitTransactionViewController.xib in Resources */,
-				83732B5219892B620030B0F0 /* clippy_9@2x.png in Resources */,
 				836EAE0F1988F42D0053BE85 /* icon-menu-bar-link@2x.png in Resources */,
 				83B8A70E18201F0700AD775F /* icon-main-unread.png in Resources */,
 				836EAE571988F4500053BE85 /* icon-menu-bar-animated-black-18.png in Resources */,
 				836EADDC1988F33F0053BE85 /* icon-star-selected.png in Resources */,
-				83732B5119892B620030B0F0 /* clippy_9.png in Resources */,
 				836EAE671988F5970053BE85 /* icon-share.png in Resources */,
 				836EAD8C1988EEC70053BE85 /* conversation-icon-canceled.png in Resources */,
 				83D4206717C4DC6700D4E168 /* icon-error@2x.png in Resources */,
 				836EAD9D1988EEC70053BE85 /* conversation-icon-quote-right@2x.png in Resources */,
 				836EAE0B1988F42D0053BE85 /* icon-menu-bar-fire@2x.png in Resources */,
 				836EADA51988EEC70053BE85 /* conversation-icon-reject@2x.png in Resources */,
-				83732B4919892B620030B0F0 /* clippy_5.png in Resources */,
-				83732B4C19892B620030B0F0 /* clippy_6@2x.png in Resources */,
-				83732B4319892B620030B0F0 /* clippy_2.png in Resources */,
 				836EAE091988F42D0053BE85 /* icon-menu-bar-clicked@2x.png in Resources */,
 				836EADE81988F3960053BE85 /* send-icon-hide-files.png in Resources */,
 				833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */,
@@ -2394,13 +2400,11 @@
 				83ECD4CE1827A04F007DDB13 /* icon-main-download.png in Resources */,
 				83ECD4D11827A04F007DDB13 /* icon-main-upload@2x.png in Resources */,
 				836EADD61988F2BE0053BE85 /* icon-back.png in Resources */,
-				83732B5019892B620030B0F0 /* clippy_8@2x.png in Resources */,
 				836EADDF1988F33F0053BE85 /* icon-star@2x.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
 				836EAE291988F43E0053BE85 /* icon-menu-bar-animated-red-8.png in Resources */,
 				836EAE4D1988F4500053BE85 /* icon-menu-bar-animated-black-8.png in Resources */,
 				836EAE5D1988F5630053BE85 /* icon-clipboard-hover@2x.png in Resources */,
-				83732B4A19892B620030B0F0 /* clippy_5@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2452,7 +2456,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Christopher Crone (9E27AS8W64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libarchive.13.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libaws.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_chrono.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_date_time.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_signals.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_system.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_thread.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++.1.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++abi.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrash.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrypto.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcryptography.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurl.4.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libelle.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libfrete.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libgap.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetaclient.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetrics.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libpapier.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libprotocol.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libreactor.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libssl.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libstation.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtransaction.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtrophonius-client.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libz.1.2.8.dylib\"\n";
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Mac Developer: Christopher Crone (9E27AS8W64)\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libarchive.13.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libaws.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_chrono.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_coroutine.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_context.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_date_time.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_signals.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_system.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libboost_thread.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++.1.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libc++abi.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrash.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcrypto.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcryptography.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libcurl.4.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libelle.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libfrete.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libgap.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetaclient.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libmetrics.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libpapier.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libprotocol.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libreactor.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libssl.1.0.0.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libstation.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtransaction.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libtrophonius-client.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/libz.1.2.8.dylib\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
