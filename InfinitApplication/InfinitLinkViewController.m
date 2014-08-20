@@ -9,6 +9,8 @@
 #import "InfinitLinkViewController.h"
 #import "InfinitTooltipViewController.h"
 
+#import "InfinitMetricsManager.h"
+
 @interface InfinitLinkViewController ()
 
 @end
@@ -339,6 +341,7 @@ gotDeleteForLink:(InfinitLinkTransaction*)link
     if (_list.count == 0)
       [self.table_view reloadData];
     [self updateListOfRowsWithProgress];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_DELETE_LINK];
   }
 }
 
