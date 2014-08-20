@@ -1212,13 +1212,14 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 - (BOOL)autoUploadScreenshots:(InfinitMainViewController*)sender
 {
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
   return [_screenshot_manager watch];
 }
 
 - (void)setAutoUploadScreenshots:(BOOL)upload
 {
   _screenshot_manager.watch = upload;
+  if (upload)
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
 }
 
 - (BOOL)autostart:(InfinitMainViewController*)sender
