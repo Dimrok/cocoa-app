@@ -280,13 +280,9 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   NSArray* infinit_results = result.data;
   for (IAUser* user in infinit_results)
   {
-    // Don't include me inside the list.
-    if (![user isEqual:[[IAGapState instance] self_user]])
-    {
-      InfinitSearchPersonResult* new_person =
-        [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
-      [_infinit_name_results addObject:new_person];
-    }
+    InfinitSearchPersonResult* new_person =
+      [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
+    [_infinit_name_results addObject:new_person];
   }
   
   [self sortAndAggregateResults];
