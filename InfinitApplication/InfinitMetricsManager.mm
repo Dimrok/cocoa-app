@@ -119,6 +119,8 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"copy link";
     case INFINIT_METRIC_MAIN_OPEN_LINK:
       return @"open link";
+    case INFINIT_METRIC_MAIN_DELETE_LINK:
+      return @"delete link";
     case INFINIT_METRIC_NO_ADRESSBOOK_ACCESS:
       return @"addressbook";
     case INFINIT_METRIC_OPEN_PANEL:
@@ -170,6 +172,8 @@ static InfinitMetricsManager* _shared_instance = nil;
     case INFINIT_METRIC_MAIN_COPY_LINK:
       return @"main view";
     case INFINIT_METRIC_MAIN_OPEN_LINK:
+      return @"main view";
+    case INFINIT_METRIC_MAIN_DELETE_LINK:
       return @"main view";
     case INFINIT_METRIC_NO_ADRESSBOOK_ACCESS:
       return @"inaccessible";
