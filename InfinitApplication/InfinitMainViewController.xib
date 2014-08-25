@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A298i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.8" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitMainViewController">
             <connections>
-                <outlet property="auto_start_toggle" destination="LfE-SS-Ok7" id="KR6-LX-dAM"/>
-                <outlet property="auto_upload_toggle" destination="p2C-f0-Q9t" id="9Du-6L-66Q"/>
                 <outlet property="content_height_constraint" destination="osY-0t-Ay4" id="GfO-yM-ngE"/>
                 <outlet property="footer_view" destination="hwd-fU-mZe" id="GND-Fw-9hc"/>
                 <outlet property="gear_button" destination="eY6-mc-4s8" id="3Ev-qV-5a0"/>
@@ -151,16 +148,10 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="nSC-qx-BhU"/>
-                <menuItem title="Start at Login" id="LfE-SS-Ok7">
+                <menuItem title="Settings" id="p2C-f0-Q9t">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="onToggleAutoStartClick:" target="-2" id="P3P-xe-Dtz"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Auto-upload Screenshots" id="p2C-f0-Q9t">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="onToggleUploadScreenshot:" target="-2" id="jRo-l8-gOb"/>
+                        <action selector="onSettingsClick:" target="-2" id="BLr-go-RjW"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="gll-KM-KUC"/>

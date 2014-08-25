@@ -304,8 +304,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   InfinitLinkViewController* _link_controller;
   NSViewController* _current_controller;
 
-  BOOL _auto_start;
-  BOOL _auto_upload;
   NSString* _version_str;
 
   InfinitTooltipViewController* _tooltip;
@@ -335,8 +333,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
     _version_str =
       [NSString stringWithFormat:@"v%@", [NSString stringWithUTF8String:INFINIT_VERSION]];
-    _auto_start = [_delegate autostart:self];
-    _auto_upload = [_delegate autoUploadScreenshots:self];
   }
   return self;
 }
@@ -358,15 +354,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
                                               views:@{@"view": _current_controller.view}];
   [self.main_view addConstraints:contraints];
   _version_item.title = _version_str;
-  if (_auto_start)
-    _auto_start_toggle.state = NSOnState;
-  else
-    _auto_start_toggle.state = NSOffState;
-
-  if (_auto_upload)
-    _auto_upload_toggle.state = NSOnState;
-  else
-    _auto_upload_toggle.state = NSOffState;
 }
 
 - (CATransition*)transitionFromLeft:(BOOL)from_left
@@ -796,36 +783,9 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [_delegate checkForUpdate:self];
 }
 
-- (IBAction)onToggleAutoStartClick:(NSMenuItem*)sender
+- (IBAction)onSettingsClick:(NSMenuItem*)sender
 {
-  if (sender != self.auto_start_toggle)
-    return;
-  if (self.auto_start_toggle.state == NSOffState)
-  {
-    self.auto_start_toggle.state = NSOnState;
-    [_delegate setAutoStart:YES];
-  }
-  else
-  {
-    self.auto_start_toggle.state = NSOffState;
-    [_delegate setAutoStart:NO];
-  }
-}
-
-- (IBAction)onToggleUploadScreenshot:(NSMenuItem*)sender
-{
-  if (sender != self.auto_upload_toggle)
-    return;
-  if (self.auto_upload_toggle.state == NSOffState)
-  {
-    self.auto_upload_toggle.state = NSOnState;
-    [_delegate setAutoUploadScreenshots:YES];
-  }
-  else
-  {
-    self.auto_upload_toggle.state = NSOffState;
-    [_delegate setAutoUploadScreenshots:NO];
-  }
+  [_delegate settings:self];
 }
 
 @end

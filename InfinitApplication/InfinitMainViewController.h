@@ -55,8 +55,6 @@ typedef enum _InfinitTransactionLinkMode
            andLinkList:(NSArray*)link_list
             forPeopleView:(BOOL)flag;
 
-@property (nonatomic, retain) IBOutlet NSMenuItem* auto_start_toggle;
-@property (nonatomic, retain) IBOutlet NSMenuItem* auto_upload_toggle;
 @property (nonatomic, strong) IBOutlet InfinitMainTransactionLinkView* view_selector;
 @property (nonatomic, strong) IBOutlet NSMenu* gear_menu;
 @property (nonatomic, strong) IBOutlet NSButton* gear_button;
@@ -91,10 +89,7 @@ typedef enum _InfinitTransactionLinkMode
 
 //- Gear Menu Handling -----------------------------------------------------------------------------
 
-- (BOOL)autoUploadScreenshots:(InfinitMainViewController*)sender;
-- (void)setAutoUploadScreenshots:(BOOL)upload;
-- (BOOL)autostart:(InfinitMainViewController*)sender;
-- (void)setAutoStart:(BOOL)state;
+- (void)settings:(InfinitMainViewController*)sender;
 - (void)checkForUpdate:(InfinitMainViewController*)sender;
 - (void)reportAProblem:(InfinitMainViewController*)sender;
 - (void)logout:(InfinitMainViewController*)sender;
