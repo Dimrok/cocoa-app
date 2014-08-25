@@ -381,7 +381,42 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSString*)self_email
 {
-  RETURN_CSTRING(gap_self_email(_state));
+  return [NSString stringWithUTF8String:(gap_self_email(_state).c_str())];
+}
+
+- (gap_Status)set_self_email:(NSString*)email withPassword:(NSString*)password
+{
+  auto res = gap_set_self_email(_state, email.UTF8String, password.UTF8String);
+  password = @"";
+  return res;
+}
+
+- (gap_Status)change_password:(NSString*)old_password
+                 new_password:(NSString*)new_passowrd
+{
+  auto res = gap_change_password(_state, old_password.UTF8String, new_passowrd.UTF8String);
+  new_passowrd = @"";
+  return res;
+}
+
+- (NSString*)self_fullname
+{
+  return [NSString stringWithUTF8String:(gap_self_fullname(_state).c_str())];
+}
+
+- (gap_Status)set_self_fullname:(NSString*)fullname
+{
+  return gap_set_self_fullname(_state, fullname.UTF8String);
+}
+
+- (NSString*)self_handle
+{
+  return [NSString stringWithUTF8String:(gap_self_handle(_state).c_str())];
+}
+
+- (gap_Status)set_self_handle:(NSString*)handle
+{
+  return gap_set_self_handle(_state, handle.UTF8String);
 }
 
 - (NSNumber*)self_id
@@ -394,7 +429,7 @@ return [NSString stringWithUTF8String:str]; \
   return [NSString stringWithUTF8String:gap_self_device_id(_state).c_str()];
 }
 
-- (void)set_avatar:(NSImage*)avatar
+- (gap_Status)set_avatar:(NSImage*)avatar
 {
   
   [avatar lockFocus];
@@ -405,7 +440,7 @@ return [NSString stringWithUTF8String:str]; \
   
   NSData* image_data = [bitmapImageRep representationUsingType:NSPNGFileType properties:nil];
   
-  gap_update_avatar(_state, image_data.bytes, image_data.length);
+  return gap_update_avatar(_state, image_data.bytes, image_data.length);
 }
 
 - (NSImage*)get_avatar:(NSNumber*)user_id
@@ -423,6 +458,11 @@ return [NSString stringWithUTF8String:str]; \
   {
     return nil;
   }
+}
+
+- (void)refresh_avatar:(NSNumber*)user_id
+{
+  gap_refresh_avatar(_state, user_id.unsignedIntValue);
 }
 
 - (NSString*)user_fullname:(NSNumber*)user_id
