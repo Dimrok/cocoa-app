@@ -88,6 +88,19 @@ ELLE_LOG_COMPONENT("OSX.AvatarManager");
   return res;
 }
 
+//- Refresh Avatar ---------------------------------------------------------------------------------
+
+- (void)_reloadAvatarForUser:(IAUser*)user
+{
+  [[IAGapState instance] refreshAvatarForUser:user.user_id];
+  [_cache removeObjectForKey:user.user_id];
+}
+
++ (void)reloadAvatarForUser:(IAUser*)user
+{
+  [[IAAvatarManager _instance] _reloadAvatarForUser:user];
+}
+
 //- Callbacks --------------------------------------------------------------------------------------
 
 - (void)receivedAvatarNotification:(NSNotification*)notification

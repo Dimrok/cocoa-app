@@ -17,4 +17,6 @@
 
 + (NSImage*)getAvatarForUser:(IAUser*)user;
 
++ (void)reloadAvatarForUser:(IAUser*)user;
+
 @end
