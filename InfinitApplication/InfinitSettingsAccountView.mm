@@ -120,7 +120,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0, 270.0);
+  return NSMakeSize(480.0, 280.0);
 }
 
 //- Button Handling --------------------------------------------------------------------------------
@@ -270,6 +270,9 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changeEmail:(NSButton*)sender
 {
+  self.change_email_error.hidden = YES;
+  self.change_email_field.stringValue = @"";
+  self.change_email_password.stringValue = @"";
   [NSApp beginSheet:self.change_email_panel
      modalForWindow:[_delegate getWindow:self]
       modalDelegate:self
@@ -279,6 +282,9 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changePassword:(NSButton*)sender
 {
+  self.password_error.hidden = YES;
+  self.change_password_field.stringValue = @"";
+  self.old_password_field.stringValue = @"";
   [NSApp beginSheet:self.change_password_panel
      modalForWindow:[_delegate getWindow:self]
       modalDelegate:self

@@ -44,11 +44,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+            <rect key="frame" x="0.0" y="0.0" width="480" height="280"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VPz-3W-rVp">
-                    <rect key="frame" x="43" y="59" width="100" height="17"/>
+                    <rect key="frame" x="43" y="69" width="100" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="96" id="StF-Jb-bWQ"/>
                     </constraints>
@@ -59,7 +59,7 @@
                     </textFieldCell>
                 </textField>
                 <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3GK-sU-jaI">
-                    <rect key="frame" x="314" y="195" width="88" height="32"/>
+                    <rect key="frame" x="314" y="205" width="88" height="32"/>
                     <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jIg-Td-Hxj">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -69,10 +69,10 @@
                     </connections>
                 </button>
                 <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Llr-FY-6p5">
-                    <rect key="frame" x="365" y="149" width="16" height="16"/>
+                    <rect key="frame" x="365" y="159" width="16" height="16"/>
                 </progressIndicator>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lon-bz-UC5">
-                    <rect key="frame" x="154" y="59" width="91" height="17"/>
+                    <rect key="frame" x="154" y="69" width="91" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Email address" id="ade-pA-Mel">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -80,7 +80,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0w-3a-RZz">
-                    <rect key="frame" x="251" y="50" width="88" height="32"/>
+                    <rect key="frame" x="251" y="60" width="88" height="32"/>
                     <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="piC-FI-lZa">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -90,7 +90,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="18C-Op-lDQ">
-                    <rect key="frame" x="43" y="149" width="100" height="17"/>
+                    <rect key="frame" x="43" y="159" width="100" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="gPV-W5-wle">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -98,11 +98,11 @@
                     </textFieldCell>
                 </textField>
                 <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oq3-bS-m31">
-                    <rect key="frame" x="365" y="115" width="13" height="13"/>
+                    <rect key="frame" x="365" y="125" width="13" height="13"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon-check" id="D3P-Qd-90W"/>
                 </imageView>
                 <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1v-KD-mPB">
-                    <rect key="frame" x="154" y="110" width="200" height="22"/>
+                    <rect key="frame" x="154" y="120" width="200" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Kwt-f1-hwe">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -114,11 +114,11 @@
                     </connections>
                 </textField>
                 <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q8S-Ko-M21">
-                    <rect key="frame" x="365" y="151" width="13" height="13"/>
+                    <rect key="frame" x="365" y="161" width="13" height="13"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon-check" id="qK7-FE-Jlv"/>
                 </imageView>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ieb-va-TUj">
-                    <rect key="frame" x="226" y="196" width="88" height="32"/>
+                    <rect key="frame" x="226" y="206" width="88" height="32"/>
                     <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NrY-dY-h4o">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -128,7 +128,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fly-MW-AdF">
-                    <rect key="frame" x="43" y="113" width="100" height="17"/>
+                    <rect key="frame" x="43" y="123" width="100" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Handle:" id="RhC-b9-5bM">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -136,10 +136,10 @@
                     </textFieldCell>
                 </textField>
                 <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Qji-fy-xSG">
-                    <rect key="frame" x="365" y="113" width="16" height="16"/>
+                    <rect key="frame" x="365" y="123" width="16" height="16"/>
                 </progressIndicator>
                 <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w5I-zq-cES">
-                    <rect key="frame" x="148" y="19" width="88" height="32"/>
+                    <rect key="frame" x="148" y="29" width="88" height="32"/>
                     <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="M8O-X0-ABl">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -149,7 +149,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2m2-0W-NqJ">
-                    <rect key="frame" x="359" y="140" width="82" height="32"/>
+                    <rect key="frame" x="359" y="150" width="82" height="32"/>
                     <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K3j-tN-ls0">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -159,7 +159,7 @@
                     </connections>
                 </button>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pqf-QL-F4D">
-                    <rect key="frame" x="156" y="84" width="201" height="17"/>
+                    <rect key="frame" x="156" y="94" width="201" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Handle error" id="hO1-Yd-Jif">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -167,7 +167,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKx-Nv-95r">
-                    <rect key="frame" x="43" y="28" width="100" height="17"/>
+                    <rect key="frame" x="43" y="38" width="100" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="KlQ-5v-VO9">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -175,7 +175,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mnD-LP-1iR">
-                    <rect key="frame" x="154" y="146" width="200" height="22"/>
+                    <rect key="frame" x="154" y="156" width="200" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7Eb-3X-H6B">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -187,7 +187,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1bT-dq-tmB">
-                    <rect key="frame" x="43" y="205" width="100" height="17"/>
+                    <rect key="frame" x="43" y="215" width="100" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Avatar:" id="pKv-Pc-t8B">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -195,7 +195,7 @@
                     </textFieldCell>
                 </textField>
                 <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DJD-nN-Gcw">
-                    <rect key="frame" x="359" y="104" width="82" height="32"/>
+                    <rect key="frame" x="359" y="114" width="82" height="32"/>
                     <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1iC-ju-ylU">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -205,7 +205,7 @@
                     </connections>
                 </button>
                 <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hmE-CP-61o" customClass="InfinitSettingsAvatarView">
-                    <rect key="frame" x="156" y="182" width="62" height="62"/>
+                    <rect key="frame" x="156" y="192" width="62" height="62"/>
                     <subviews>
                         <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Pxu-wn-glm">
                             <rect key="frame" x="23" y="23" width="16" height="16"/>
@@ -231,14 +231,14 @@
         <window title="Change Email" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Bi6-uL-Vag" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="410" height="196"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="410" height="205"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="6o8-RS-oPn">
-                <rect key="frame" x="0.0" y="0.0" width="410" height="196"/>
+                <rect key="frame" x="0.0" y="0.0" width="410" height="205"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dZ4-kt-dUE">
-                        <rect key="frame" x="167" y="104" width="200" height="22"/>
+                        <rect key="frame" x="167" y="113" width="200" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Gaa-ON-e1K">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -249,7 +249,7 @@
                         </connections>
                     </textField>
                     <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eYr-Sd-7ZZ">
-                        <rect key="frame" x="167" y="72" width="200" height="22"/>
+                        <rect key="frame" x="167" y="81" width="200" height="22"/>
                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="VL9-ak-QVW">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -263,7 +263,7 @@
                         </connections>
                     </secureTextField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s1s-1z-cx3">
-                        <rect key="frame" x="61" y="107" width="100" height="17"/>
+                        <rect key="frame" x="61" y="116" width="100" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New Email:" id="kWS-XU-CKS">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -271,7 +271,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tDj-hu-DXR">
-                        <rect key="frame" x="42" y="75" width="119" height="17"/>
+                        <rect key="frame" x="42" y="84" width="119" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current Password:" id="bJC-Kh-DjT">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -279,7 +279,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MI8-Ys-df8">
-                        <rect key="frame" x="291" y="12" width="82" height="32"/>
+                        <rect key="frame" x="291" y="15" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PmF-0A-eO7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -292,7 +292,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KL9-wF-caF">
-                        <rect key="frame" x="209" y="12" width="82" height="32"/>
+                        <rect key="frame" x="209" y="15" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kby-YW-RBE">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -305,7 +305,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cIf-S2-Jup">
-                        <rect key="frame" x="26" y="133" width="358" height="45"/>
+                        <rect key="frame" x="26" y="142" width="358" height="45"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Warning! Changing your email will cancel your running transactions." id="xkj-EJ-GH5">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -313,10 +313,10 @@ Gw
                         </textFieldCell>
                     </textField>
                     <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="axl-MJ-OjN">
-                        <rect key="frame" x="375" y="21" width="16" height="16"/>
+                        <rect key="frame" x="375" y="24" width="16" height="16"/>
                     </progressIndicator>
                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sJw-j6-U0b">
-                        <rect key="frame" x="167" y="48" width="200" height="17"/>
+                        <rect key="frame" x="167" y="55" width="200" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Email error" id="edE-xN-pm3">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -372,14 +372,14 @@ DQ
         <window title="Change Password" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="591-BL-WzF" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="-44" y="1016" width="410" height="196"/>
+            <rect key="contentRect" x="-44" y="1016" width="410" height="205"/>
             <rect key="screenRect" x="-240" y="900" width="1920" height="1080"/>
             <view key="contentView" id="0gT-ex-UUd">
-                <rect key="frame" x="0.0" y="0.0" width="410" height="196"/>
+                <rect key="frame" x="0.0" y="0.0" width="410" height="205"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uIZ-Kb-O4H">
-                        <rect key="frame" x="39" y="104" width="119" height="17"/>
+                        <rect key="frame" x="39" y="116" width="119" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current Password:" id="Y6d-7i-hzH">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -387,7 +387,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YG9-va-TTN">
-                        <rect key="frame" x="36" y="72" width="119" height="17"/>
+                        <rect key="frame" x="36" y="84" width="119" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New Password:" id="uh4-a6-dby">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -395,7 +395,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QD6-ID-PYG">
-                        <rect key="frame" x="288" y="10" width="82" height="32"/>
+                        <rect key="frame" x="288" y="15" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LTf-tA-CdF">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -408,7 +408,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZsZ-NQ-Ksp">
-                        <rect key="frame" x="206" y="10" width="82" height="32"/>
+                        <rect key="frame" x="206" y="15" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PeM-u3-afI">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -421,10 +421,10 @@ Gw
                         </connections>
                     </button>
                     <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="HHF-HC-JHx">
-                        <rect key="frame" x="370" y="19" width="16" height="16"/>
+                        <rect key="frame" x="370" y="24" width="16" height="16"/>
                     </progressIndicator>
                     <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJq-ax-ajR">
-                        <rect key="frame" x="164" y="101" width="200" height="22"/>
+                        <rect key="frame" x="164" y="113" width="200" height="22"/>
                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="ROc-bv-ON2">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -438,7 +438,7 @@ Gw
                         </connections>
                     </secureTextField>
                     <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0n2-W4-sLZ">
-                        <rect key="frame" x="164" y="69" width="200" height="22"/>
+                        <rect key="frame" x="164" y="81" width="200" height="22"/>
                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="jKv-0i-bhY">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -452,7 +452,7 @@ Gw
                         </connections>
                     </secureTextField>
                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VJD-Uu-ozO">
-                        <rect key="frame" x="162" y="44" width="200" height="17"/>
+                        <rect key="frame" x="162" y="55" width="200" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Password error" id="ijD-mI-5Zf">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -460,7 +460,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vC2-jY-dQ0">
-                        <rect key="frame" x="26" y="134" width="358" height="45"/>
+                        <rect key="frame" x="26" y="143" width="358" height="45"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Warning! Changing your password will cancel your running transactions." id="HVA-yV-Elk">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
