@@ -1213,11 +1213,7 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 - (void)settings:(InfinitMainViewController*)sender
 {
-  [self closeNotificationWindowWithoutLosingFocus];
-  if (_settings_window == nil)
-    _settings_window = [[InfinitSettingsWindow alloc] initWithDelegate:self];
-
-  [_settings_window show];
+  [self openPreferences];
 }
 
 - (void)logout:(InfinitMainViewController*)sender
@@ -1379,6 +1375,18 @@ hadConnectionStateChange:(gap_UserStatus)status
 }
 
 //- Settings Protocol ------------------------------------------------------------------------------
+
+- (void)openPreferences
+{
+  if (![[IAGapState instance] logged_in])
+    return;
+
+  [self closeNotificationWindowWithoutLosingFocus];
+  if (_settings_window == nil)
+    _settings_window = [[InfinitSettingsWindow alloc] initWithDelegate:self];
+
+  [_settings_window show];
+}
 
 - (BOOL)infinitInLoginItems:(InfinitSettingsWindow*)sender
 {

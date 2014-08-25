@@ -205,6 +205,13 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
   [NSApp terminate:self];
 }
 
+//- Settings Handling ------------------------------------------------------------------------------
+
+- (IBAction)openPreferences:(id)sender
+{
+  [_controller openPreferences];
+}
+
 //- Main Controller Protocol -----------------------------------------------------------------------
 
 - (void)terminateApplication:(IAMainController*)sender

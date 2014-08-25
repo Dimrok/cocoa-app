@@ -61,6 +61,8 @@
 
 - (void)handleInfinitLink:(NSURL*)link;
 
+- (void)openPreferences;
+
 - (void)handleContextualSendFiles:(NSArray*)files;
 - (void)handleContextualCreateLink:(NSArray*)files;
 
