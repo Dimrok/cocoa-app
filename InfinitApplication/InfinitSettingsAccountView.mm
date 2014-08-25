@@ -64,14 +64,13 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (void)loadView
 {
-  [super loadView];
   _start_avatar_image = [IAAvatarManager getAvatarForUser:[_instance self_user]];
   if (_start_avatar_image == nil)
     _start_avatar_image = [IAFunctions makeAvatarFor:[_instance selfFullname]];
 
   _start_name = [_instance selfFullname];
   _start_handle = [_instance selfHandle];
-  [super loadview];
+  [super loadView];
 
   self.avatar.delegate = self;
   self.avatar.image = _start_avatar_image;
