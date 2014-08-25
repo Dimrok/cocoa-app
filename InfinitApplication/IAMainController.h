@@ -30,8 +30,9 @@
 #import "InfinitLoginViewController.h"
 #import "InfinitMainViewController.h"
 #import "InfinitOnboardingController.h"
-#import "InfinitStayAwakeManager.h"
 #import "InfinitScreenshotManager.h"
+#import "InfinitSettingsWindow.h"
+#import "InfinitStayAwakeManager.h"
 
 @protocol IAMainControllerProtocol;
 
@@ -53,6 +54,7 @@
                                         InfinitMainViewProtocol,
                                         InfinitOnboardingProtocol,
                                         InfinitScreenshotManagerProtocol,
+                                        InfinitSettingsProtocol,
                                         InfinitStayAwakeProtocol>
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;

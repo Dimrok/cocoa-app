@@ -42,6 +42,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   IANotLoggedInViewController* _not_logged_view_controller;
   InfinitOnboardingController* _onboard_controller;
   IAReportProblemWindowController* _report_problem_controller;
+  InfinitSettingsWindow* _settings_window;
   IAWindowController* _window_controller;
   InfinitMainViewController* _main_view_controller;
   InfinitTooltipViewController* _tooltip_controller;
@@ -1210,33 +1211,13 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   [_delegate mainControllerWantsCheckForUpdate:self];
 }
 
-- (BOOL)autoUploadScreenshots:(InfinitMainViewController*)sender
+- (void)settings:(InfinitMainViewController*)sender
 {
-  return [_screenshot_manager watch];
-}
+  [self closeNotificationWindowWithoutLosingFocus];
+  if (_settings_window == nil)
+    _settings_window = [[InfinitSettingsWindow alloc] initWithDelegate:self];
 
-- (void)setAutoUploadScreenshots:(BOOL)upload
-{
-  _screenshot_manager.watch = upload;
-  if (upload)
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
-}
-
-- (BOOL)autostart:(InfinitMainViewController*)sender
-{
-  return [self appInLoginItems];
-}
-
-- (void)setAutoStart:(BOOL)state
-{
-  if (state)
-  {
-    [self addToLoginItems];
-  }
-  else
-  {
-    [self removeFromLoginItems];
-  }
+  [_settings_window show];
 }
 
 - (void)logout:(InfinitMainViewController*)sender
@@ -1395,6 +1376,37 @@ hadConnectionStateChange:(gap_UserStatus)status
 {
   [_report_problem_controller close];
   _report_problem_controller = nil;
+}
+
+//- Settings Protocol ------------------------------------------------------------------------------
+
+- (BOOL)infinitInLoginItems:(InfinitSettingsWindow*)sender
+{
+  return [self appInLoginItems];
+}
+
+- (void)setInfinitInLoginItems:(InfinitSettingsWindow*)sender
+                            to:(BOOL)value
+{
+  if (value && ![self appInLoginItems])
+  {
+    [self addToLoginItems];
+  }
+  else if (!value && [self appInLoginItems])
+  {
+    [self removeFromLoginItems];
+  }
+}
+
+- (BOOL)uploadsScreenshots:(InfinitSettingsWindow*)sender
+{
+  return _screenshot_manager.watch;
+}
+
+- (void)setUploadsScreenshots:(InfinitSettingsWindow*)sender
+                           to:(BOOL)value
+{
+  _screenshot_manager.watch = value;
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
