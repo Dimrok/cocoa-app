@@ -757,6 +757,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   NSRect frame = _status_item.view.window.frame;
   NSPoint result = NSMakePoint(floor(frame.origin.x + frame.size.width / 2.0),
                                floor(frame.origin.y - 5.0));
+  CGFloat x_screen_edge =
+    [NSScreen mainScreen].frame.origin.x + [NSScreen mainScreen].frame.size.width;
+  if (result.x + (_window_controller.window.frame.size.width / 2.0) < x_screen_edge)
+    result.x = x_screen_edge - (_window_controller.window.frame.size.width / 2.0) - 10.0;
   return result;
 }
 
