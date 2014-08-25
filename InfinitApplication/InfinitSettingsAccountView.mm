@@ -62,8 +62,9 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
     self.avatar.image = [IAAvatarManager getAvatarForUser:_instance.self_user];
 }
 
-- (void)viewDidLoad
+- (void)loadView
 {
+  [super loadView];
   _start_avatar_image = [IAAvatarManager getAvatarForUser:[_instance self_user]];
   if (_start_avatar_image == nil)
     _start_avatar_image = [IAFunctions makeAvatarFor:[_instance selfFullname]];
@@ -76,7 +77,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   self.avatar.image = _start_avatar_image;
   self.name.stringValue = _start_name;
   self.handle.stringValue = _start_handle;
-  self.email.stringValue = [_instance selfEmail];;
+  self.email.stringValue = [_instance selfEmail];
 }
 
 - (void)controlTextDidChange:(NSNotification*)notification
