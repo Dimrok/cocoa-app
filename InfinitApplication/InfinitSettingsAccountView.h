@@ -39,7 +39,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField* handle_error;
 
 // Change email panel
-@property (nonatomic, weak) IBOutlet NSPanel* change_email_panel;
+@property (nonatomic, assign) IBOutlet NSPanel* change_email_panel;
 @property (nonatomic, weak) IBOutlet NSTextField* change_email_field;
 @property (nonatomic, weak) IBOutlet NSSecureTextField* change_email_password;
 @property (nonatomic, weak) IBOutlet NSTextField* change_email_error;
@@ -48,10 +48,10 @@
 @property (nonatomic, weak) IBOutlet NSProgressIndicator* change_email_progress;
 
 // Changed email panel
-@property (nonatomic, weak) IBOutlet NSPanel* changed_email_panel;
+@property (nonatomic, assign) IBOutlet NSPanel* changed_email_panel;
 
 // Change password panel
-@property (nonatomic, weak) IBOutlet NSPanel* change_password_panel;
+@property (nonatomic, assign) IBOutlet NSPanel* change_password_panel;
 @property (nonatomic, weak) IBOutlet NSSecureTextField* old_password_field;
 @property (nonatomic, weak) IBOutlet NSSecureTextField* change_password_field;
 @property (nonatomic, weak) IBOutlet NSTextField* password_error;
