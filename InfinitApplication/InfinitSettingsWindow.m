@@ -41,7 +41,7 @@
 
   self.account_button.enabled = YES;
   self.general_button.enabled = YES;
-  [self changeToViewController:_general_view];
+  [self changeToViewController:_general_view withAnimation:NO];
   self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
 }
 
@@ -49,6 +49,8 @@
 
 - (void)show
 {
+  self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
+  [self changeToViewController:_general_view withAnimation:NO];
   [self.window center];
   [self showWindow:self];
 }
@@ -64,6 +66,7 @@
 //- View Change Handling ---------------------------------------------------------------------------
 
 - (void)changeToViewController:(NSViewController*)controller
+                 withAnimation:(BOOL)animate
 {
   CGFloat d_height =
     [(InfinitSettingsViewController*)controller startSize].height - [self.window.contentView frame].size.height;
@@ -76,12 +79,12 @@
 
 - (IBAction)accountClicked:(NSToolbarItem*)sender
 {
-  [self changeToViewController:_account_view];
+  [self changeToViewController:_account_view withAnimation:YES];
 }
 
 - (IBAction)generalClicked:(NSToolbarItem*)sender
 {
-  [self changeToViewController:_general_view];
+  [self changeToViewController:_general_view withAnimation:YES];
 }
 
 //- Account View Protocol --------------------------------------------------------------------------
