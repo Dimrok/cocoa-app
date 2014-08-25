@@ -71,7 +71,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
   _start_name = [_instance selfFullname];
   _start_handle = [_instance selfHandle];
-  [super viewDidLoad];
+  [super loadview];
 
   self.avatar.delegate = self;
   self.avatar.image = _start_avatar_image;
