@@ -11,8 +11,8 @@
 #import <Gap/IAGapState.h>
 #import <version.hh>
 
-#define INFINIT_REGISTER_URL "http://infinit.io/register"
-#define INFINIT_FORGOT_PASSWORD_URL "http://infinit.io/forgot_password"
+#define INFINIT_REGISTER_URL "https://infinit.io/register?utm_source=app&utm_medium=mac"
+#define INFINIT_FORGOT_PASSWORD_URL "https://infinit.io/forgot_password?utm_source=app&utm_medium=mac"
 
 #undef check
 #import <elle/log.hh>
