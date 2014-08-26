@@ -158,8 +158,8 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
     production = true;
 
     setenv("INFINIT_METRICS_INFINIT", "1", 1); // In order to ensure that we send UI metrics.
-    setenv("INFINIT_METRICS_INFINIT_HOST", "metrics.9.0.api.production.infinit.io", 1);
-    setenv("INFINIT_METRICS_INFINIT_PORT", "80", 1);
+    setenv("INFINIT_METRICS_INFINIT_HOST", "metrics.9.0.api.production.infinit.io", 0);
+    setenv("INFINIT_METRICS_INFINIT_PORT", "80", 0);
 
     setenv("INFINIT_CRASH_DEST", "crash@infinit.io", 0);
 
