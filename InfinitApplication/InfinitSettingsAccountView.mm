@@ -127,6 +127,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changeAvatar:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
   file_dialog.canChooseFiles = YES;
   file_dialog.canChooseDirectories = NO;
@@ -147,6 +149,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)saveAvatar:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   self.change_avatar.enabled = NO;
   self.change_avatar.hidden = YES;
   self.save_avatar.enabled = NO;
@@ -179,6 +183,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)saveFullname:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   self.save_fullname.enabled = NO;
   self.name.enabled = NO;
   self.save_fullname.hidden = YES;
@@ -223,6 +229,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)saveHandle:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   self.save_handle.enabled = NO;
   self.handle.enabled = NO;
   self.save_handle.hidden = YES;
@@ -270,6 +278,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changeEmail:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   self.change_email_error.hidden = YES;
   self.change_email_field.stringValue = @"";
   self.change_email_password.stringValue = @"";
@@ -282,6 +292,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changePassword:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   self.password_error.hidden = YES;
   self.change_password_field.stringValue = @"";
   self.old_password_field.stringValue = @"";
@@ -296,6 +308,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)confirmChangeEmail:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   if ([IAFunctions stringIsValidEmail:self.change_email_field.stringValue])
   {
     if (self.change_email_password.stringValue.length > 2)
@@ -389,6 +403,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)confirmChangePassword:(NSButton*)sender
 {
+  if (!_instance.logged_in)
+    return;
   if (self.change_password_field.stringValue.length > 2)
   {
     self.password_error.hidden = YES;
