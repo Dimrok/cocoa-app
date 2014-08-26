@@ -13,7 +13,8 @@
 
 @protocol InfinitSettingsProtocol;
 
-@interface InfinitSettingsWindow : NSWindowController <InfinitSettingsAccountProtocol,
+@interface InfinitSettingsWindow : NSWindowController <NSWindowDelegate,
+                                                       InfinitSettingsAccountProtocol,
                                                        InfinitSettingsGeneralProtocol>
 
 @property (nonatomic, weak) IBOutlet NSToolbarItem* account_button;

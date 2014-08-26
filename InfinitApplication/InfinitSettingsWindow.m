@@ -38,7 +38,6 @@
 - (void)windowDidLoad
 {
   [super windowDidLoad];
-
   self.account_button.enabled = YES;
   self.general_button.enabled = YES;
   [self changeToViewController:_general_view withAnimation:NO];
@@ -116,6 +115,13 @@
                            to:(BOOL)value
 {
   [_delegate setUploadsScreenshots:self to:value];
+}
+
+//- Window Delegate --------------------------------------------------------------------------------
+
+- (BOOL)windowShouldClose:(id)sender
+{
+  return YES;
 }
 
 @end
