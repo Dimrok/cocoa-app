@@ -15,6 +15,8 @@
 #undef check
 #import <elle/log.hh>
 
+#define IA_PROFILE_LINK "https://infinit.io/account?utm_source=app&utm_medium=mac"
+
 ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 @interface InfinitSettingsAccountView ()
@@ -62,7 +64,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
     self.avatar.image = [IAAvatarManager getAvatarForUser:_instance.self_user];
 }
 
-- (void)loadView
+- (void)loadData
 {
   _start_avatar_image = [IAAvatarManager getAvatarForUser:[_instance self_user]];
   if (_start_avatar_image == nil)
@@ -70,13 +72,18 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
   _start_name = [_instance selfFullname];
   _start_handle = [_instance selfHandle];
-  [super loadView];
 
   self.avatar.delegate = self;
   self.avatar.image = _start_avatar_image;
   self.name.stringValue = _start_name;
   self.handle.stringValue = _start_handle;
   self.email.stringValue = [_instance selfEmail];
+}
+
+- (void)loadView
+{
+  [super loadView];
+  [self loadData];
 }
 
 - (void)controlTextDidChange:(NSNotification*)notification
@@ -302,6 +309,12 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
       modalDelegate:self
      didEndSelector:nil
         contextInfo:nil];
+}
+
+- (IBAction)webProfile:(NSButton*)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:
+                                          [NSString stringWithUTF8String:IA_PROFILE_LINK]]];
 }
 
 //- Change Email Panel -----------------------------------------------------------------------------

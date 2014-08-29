@@ -212,6 +212,16 @@
                         </progressIndicator>
                     </subviews>
                 </customView>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RnI-nQ-frj">
+                    <rect key="frame" x="154" y="1" width="110" height="32"/>
+                    <buttonCell key="cell" type="bevel" title="Go to web profile" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Qsw-FG-pxr">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="webProfile:" target="-2" id="cY4-lQ-kdb"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="1bT-dq-tmB" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="45" id="041-U9-iCD"/>
@@ -232,7 +242,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="410" height="205"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <view key="contentView" id="6o8-RS-oPn">
                 <rect key="frame" x="0.0" y="0.0" width="410" height="205"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -325,6 +335,9 @@ Gw
                     </textField>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="initialFirstResponder" destination="dZ4-kt-dUE" id="QuJ-bL-1g0"/>
+            </connections>
             <point key="canvasLocation" x="221" y="636"/>
         </window>
         <window title="Email Changed" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="dmc-9B-4la" customClass="NSPanel">
@@ -469,6 +482,9 @@ Gw
                     </textField>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="initialFirstResponder" destination="gJq-ax-ajR" id="6pI-oI-ldX"/>
+            </connections>
             <point key="canvasLocation" x="767" y="222"/>
         </window>
     </objects>

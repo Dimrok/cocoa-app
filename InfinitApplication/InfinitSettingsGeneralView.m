@@ -75,4 +75,9 @@
   [_delegate setUploadsScreenshots:self to:_auto_upload_screenshots];
 }
 
+- (IBAction)checkForUpdates:(NSButton*)sender
+{
+  [_delegate checkForUpdate:self];
+}
+
 @end

@@ -31,4 +31,6 @@
 - (void)setUploadsScreenshots:(InfinitSettingsGeneralView*)sender
                            to:(BOOL)value;
 
+- (void)checkForUpdate:(InfinitSettingsGeneralView*)sender;
+
 @end

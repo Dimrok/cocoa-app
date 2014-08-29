@@ -61,6 +61,8 @@
 
 - (id)initWithDelegate:(id<InfinitSettingsAccountProtocol>)delegate;
 
+- (void)loadData;
+
 @end
 
 @protocol InfinitSettingsAccountProtocol <NSObject>

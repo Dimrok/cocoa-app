@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bWW-gG-HyP">
-                    <rect key="frame" x="120" y="91" width="240" height="18"/>
+                    <rect key="frame" x="120" y="104" width="240" height="18"/>
                     <buttonCell key="cell" type="check" title="Launch Infinit at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cuD-cD-L6e">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -30,7 +30,7 @@
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vjt-bv-yIL">
-                    <rect key="frame" x="120" y="62" width="240" height="18"/>
+                    <rect key="frame" x="120" y="75" width="240" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically upload screenshots" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wrR-Ur-Egq">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -40,7 +40,18 @@
                         <outlet property="nextKeyView" destination="bWW-gG-HyP" id="LJg-UU-JPR"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRb-0U-vvc">
+                    <rect key="frame" x="116" y="35" width="166" height="32"/>
+                    <buttonCell key="cell" type="push" title="Check for updates..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PP7-tu-kV9">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="checkForUpdates:" target="-2" id="gyj-iy-WSS"/>
+                    </connections>
+                </button>
             </subviews>
+            <point key="canvasLocation" x="255" y="363"/>
         </customView>
     </objects>
 </document>

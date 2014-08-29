@@ -48,6 +48,7 @@
 
 - (void)show
 {
+  [_account_view loadData];
   self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
   [self changeToViewController:_general_view withAnimation:NO];
   [self.window center];
@@ -115,6 +116,11 @@
                            to:(BOOL)value
 {
   [_delegate setUploadsScreenshots:self to:value];
+}
+
+- (void)checkForUpdate:(InfinitSettingsGeneralView*)sender
+{
+  [_delegate checkForUpdate:sender];
 }
 
 //- Window Delegate --------------------------------------------------------------------------------

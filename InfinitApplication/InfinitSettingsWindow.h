@@ -38,4 +38,6 @@
 - (void)setUploadsScreenshots:(InfinitSettingsWindow*)sender
                            to:(BOOL)value;
 
+- (void)checkForUpdate:(InfinitSettingsWindow*)sender;
+
 @end
