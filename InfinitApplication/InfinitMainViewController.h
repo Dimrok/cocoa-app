@@ -90,7 +90,6 @@ typedef enum _InfinitTransactionLinkMode
 //- Gear Menu Handling -----------------------------------------------------------------------------
 
 - (void)settings:(InfinitMainViewController*)sender;
-- (void)checkForUpdate:(InfinitMainViewController*)sender;
 - (void)reportAProblem:(InfinitMainViewController*)sender;
 - (void)logout:(InfinitMainViewController*)sender;
 - (void)quit:(InfinitMainViewController*)sender;

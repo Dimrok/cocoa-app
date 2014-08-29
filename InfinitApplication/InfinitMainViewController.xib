@@ -96,7 +96,7 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bg-main-button" id="dFa-F3-jwp"/>
                         </imageView>
                         <button toolTip="Settings" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eY6-mc-4s8">
-                            <rect key="frame" x="13" y="9" width="18" height="18"/>
+                            <rect key="frame" x="11" y="7" width="25" height="25"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-gear" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="tTx-df-wS6">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -106,7 +106,7 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                             </connections>
                         </button>
                         <button toolTip="Send a file" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tU3-mI-zza">
-                            <rect key="frame" x="279" y="9" width="27" height="18"/>
+                            <rect key="frame" x="273" y="7" width="35" height="25"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-transfer" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Q8q-BS-2Ph">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -130,10 +130,16 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
         </customView>
         <menu autoenablesItems="NO" id="TZg-Rw-nQG">
             <items>
-                <menuItem title="Profile" id="DeA-sL-3AJ">
+                <menuItem title="Preferences" keyEquivalent="," id="p2C-f0-Q9t">
+                    <connections>
+                        <action selector="onSettingsClick:" target="-2" id="BLr-go-RjW"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="nSC-qx-BhU"/>
+                <menuItem title="Report a Problem" id="IG7-5h-WAf">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="onProfileClick:" target="-2" id="vnO-LK-OSC"/>
+                        <action selector="onReportProblemClick:" target="-2" id="ntO-FA-pf7"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Send Feedback" id="uiZ-nN-xDe">
@@ -142,25 +148,7 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                         <action selector="onFeedbackClick:" target="-2" id="oCx-1U-v3b"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Report a Problem" id="IG7-5h-WAf">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="onReportProblemClick:" target="-2" id="ntO-FA-pf7"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="nSC-qx-BhU"/>
-                <menuItem title="Settings" keyEquivalent="," id="p2C-f0-Q9t">
-                    <connections>
-                        <action selector="onSettingsClick:" target="-2" id="BLr-go-RjW"/>
-                    </connections>
-                </menuItem>
                 <menuItem isSeparatorItem="YES" id="gll-KM-KUC"/>
-                <menuItem title="Check for Update" id="htG-zl-Pil">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="onCheckForUpdateClick:" target="-2" id="Spu-d5-gcZ"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Version" enabled="NO" id="rgi-jQ-wyG">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>

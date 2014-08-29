@@ -20,7 +20,6 @@
 ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 #define IA_FEEDBACK_LINK "http://feedback.infinit.io"
-#define IA_PROFILE_LINK "https://infinit.io/account?utm_source=app&utm_medium=mac"
 
 //- Transaction Link View --------------------------------------------------------------------------
 
@@ -767,20 +766,9 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
                                           [NSString stringWithUTF8String:IA_FEEDBACK_LINK]]];
 }
 
-- (IBAction)onProfileClick:(NSMenuItem*)sender
-{
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:
-                                          [NSString stringWithUTF8String:IA_PROFILE_LINK]]];
-}
-
 - (IBAction)onReportProblemClick:(NSMenuItem*)sender
 {
   [_delegate reportAProblem:self];
-}
-
-- (IBAction)onCheckForUpdateClick:(NSMenuItem*)sender
-{
-  [_delegate checkForUpdate:self];
 }
 
 - (IBAction)onSettingsClick:(NSMenuItem*)sender
