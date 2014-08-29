@@ -88,13 +88,13 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (void)awakeFromNib
 {
-  NSString* web_profile_str = NSLocalizedString(@"Go to web profile", nil);
   NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:13.0]
                                         paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                 colour:IA_RGB_COLOUR(0, 146, 207)
                                                 shadow:nil];
-  self.web_profile_link.attributedTitle = [[NSAttributedString alloc] initWithString:web_profile_str
-                                                                          attributes:attrs];
+  self.web_profile_link.normal_attrs = attrs;
+  self.web_profile_link.hover_attrs = attrs;
+  self.web_profile_link.hand_cursor = YES;
 }
 
 - (void)controlTextDidChange:(NSNotification*)notification
