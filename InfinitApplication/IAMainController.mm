@@ -1210,11 +1210,6 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   [_report_problem_controller show];
 }
 
-- (void)checkForUpdate:(InfinitMainViewController*)sender
-{
-  [_delegate mainControllerWantsCheckForUpdate:self];
-}
-
 - (void)settings:(InfinitMainViewController*)sender
 {
   [self openPreferences];
@@ -1419,6 +1414,11 @@ hadConnectionStateChange:(gap_UserStatus)status
                            to:(BOOL)value
 {
   _screenshot_manager.watch = value;
+}
+
+- (void)checkForUpdate:(InfinitSettingsWindow*)sender
+{
+  [_delegate mainControllerWantsCheckForUpdate:self];
 }
 
 //- Status Bar Icon Protocol -----------------------------------------------------------------------
