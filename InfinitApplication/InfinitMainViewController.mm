@@ -456,6 +456,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   if (_current_controller != _link_controller)
     return;
   [_link_controller linkAdded:link];
+  [self.view_selector setLinkCount:_link_controller.linksRunning];
 }
 
 - (void)linkUpdated:(InfinitLinkTransaction*)link
