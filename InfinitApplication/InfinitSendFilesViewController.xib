@@ -31,7 +31,7 @@
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xvg-6q-5uj">
-                            <rect key="frame" x="283" y="11" width="20" height="20"/>
+                            <rect key="frame" x="279" y="9" width="25" height="25"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-add-file" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KoD-pO-lYG">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -41,7 +41,7 @@
                             </connections>
                         </button>
                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DUI-BG-YfF">
-                            <rect key="frame" x="254" y="11" width="20" height="20"/>
+                            <rect key="frame" x="253" y="9" width="25" height="25"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="send-icon-show-files" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="r1i-DU-B2d">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
