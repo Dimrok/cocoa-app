@@ -86,6 +86,17 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   [self loadData];
 }
 
+- (void)awakeFromNib
+{
+  NSString* web_profile_str = NSLocalizedString(@"Go to web profile", nil);
+  NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:13.0]
+                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                colour:IA_RGB_COLOUR(0, 146, 207)
+                                                shadow:nil];
+  self.web_profile_link.attributedTitle = [[NSAttributedString alloc] initWithString:web_profile_str
+                                                                          attributes:attrs];
+}
+
 - (void)controlTextDidChange:(NSNotification*)notification
 {
   if ([notification.object isKindOfClass:NSTextField.class])

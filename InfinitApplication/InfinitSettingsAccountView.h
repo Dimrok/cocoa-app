@@ -38,6 +38,8 @@
 
 @property (nonatomic, weak) IBOutlet NSTextField* handle_error;
 
+@property (nonatomic, weak) IBOutlet NSButton* web_profile_link;
+
 // Change email panel
 @property (nonatomic, assign) IBOutlet NSPanel* change_email_panel;
 @property (nonatomic, weak) IBOutlet NSTextField* change_email_field;
