@@ -67,6 +67,7 @@
 - (void)handleContextualCreateLink:(NSArray*)files;
 
 - (void)handleQuit;
+- (void)handleQuitForUpdate;
 
 - (BOOL)canUpdate;
 
