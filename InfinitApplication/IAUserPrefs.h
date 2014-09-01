@@ -10,6 +10,9 @@
 + (IAUserPrefs*)sharedInstance;
 
 - (id)prefsForKey:(NSString*)key;
-- (void)setPref:(NSString*)prefs forKey:(NSString*)key;
+- (void)setPref:(NSString*)prefs
+         forKey:(NSString*)key;
+- (void)setPrefNow:(NSString*)prefs
+            forKey:(NSString*)key;
 
 @end

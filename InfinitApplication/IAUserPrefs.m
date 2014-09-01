@@ -70,6 +70,16 @@
                afterDelay:0.25];
 }
 
+- (void)setPrefNow:(NSString*)prefs
+            forKey:(NSString*)key
+{
+  [_values setValue:prefs forKey:key];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                           selector:@selector(synchronizeDelayed)
+                                             object:nil];
+  [self synchronizeDelayed];
+}
+
 - (BOOL)synchronizeDelayed
 {
 	NSString* path = [[IAUserPrefs appSupportPath]
