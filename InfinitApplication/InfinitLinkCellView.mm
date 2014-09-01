@@ -73,6 +73,11 @@ namespace
   [self addTrackingArea:_tracking_area];
 }
 
+- (void)prepareForReuse
+{
+  _click_count = 0;
+}
+
 - (void)updateTrackingAreas
 {
   [self removeTrackingArea:_tracking_area];
