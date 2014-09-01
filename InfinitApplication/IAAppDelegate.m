@@ -11,6 +11,7 @@
 #import <Sparkle/Sparkle.h>
 
 #import "IALogFileManager.h"
+#import "IAUserPrefs.h"
 
 //- Automatic Relaunching --------------------------------------------------------------------------
 
@@ -51,7 +52,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
   _updating = YES;
   _update_invocation = invocation;
   if (_controller != nil)
-    [_controller handleQuitForUpdate];
+    [_controller handleQuit];
   else
     [self terminateApplication:nil];
   return YES;
@@ -60,6 +61,7 @@ shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
 - (void)updaterWillRelaunchApplication:(SUUpdater*)updater
 {
   NSLog(@"%@ Will relaunch", self);
+  [[IAUserPrefs sharedInstance] setPrefNow:@"1" forKey:@"updated"];
 }
 
 - (void)delayedTryUpdate:(NSInvocation*)invocation
