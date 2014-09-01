@@ -797,12 +797,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   [_delegate terminateApplication:self];
 }
 
-- (void)handleQuitForUpdate
-{
-  [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"updated"];
-  [self handleQuit];
-}
-
 - (BOOL)canUpdate
 {
   if (!_logging_in && ![_transaction_manager hasTransferringTransaction] &&
