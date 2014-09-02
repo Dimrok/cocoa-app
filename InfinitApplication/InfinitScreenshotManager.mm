@@ -35,10 +35,19 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   {
     _query = [[NSMetadataQuery alloc] init];
     _delegate = delegate;
-    if ([[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"1"])
-      _watch = YES;
-    else
+    if ([[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] == nil)
+    {
       _watch = NO;
+      [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"upload_screenshots"];
+    }
+    else if ([[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"1"])
+    {
+      _watch = YES;
+    }
+    else
+    {
+      _watch = NO;
+    }
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(gotScreenShot:)
@@ -90,20 +99,20 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 
 - (void)setWatch:(BOOL)watch
 {
-  if ((watch && [_query isStarted]) || (!watch && [_query isStopped]))
+  if (_watch == watch)
     return;
 
   _watch = watch;
+  NSString* value = [NSString stringWithFormat:@"%d", _watch];
+  [[IAUserPrefs sharedInstance] setPref:value forKey:@"upload_screenshots"];
   if (_watch)
   {
     [_query startQuery];
-    [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"upload_screenshots"];
     ELLE_LOG("%s: start watching for screenshots", self.description.UTF8String);
   }
   else
   {
     [_query stopQuery];
-    [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"upload_screenshots"];
     ELLE_LOG("%s: stop watching for screenshots", self.description.UTF8String);
   }
 
