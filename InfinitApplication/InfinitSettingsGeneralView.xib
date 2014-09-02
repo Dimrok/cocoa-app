@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitSettingsGeneralView">
             <connections>
                 <outlet property="launch_at_startup" destination="bWW-gG-HyP" id="h7M-1c-eQ0"/>
+                <outlet property="stay_awake" destination="Yh1-fR-oQb" id="AYw-gn-9si"/>
                 <outlet property="upload_screenshots" destination="Vjt-bv-yIL" id="119-lf-4XS"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -19,7 +20,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bWW-gG-HyP">
-                    <rect key="frame" x="120" y="104" width="240" height="18"/>
+                    <rect key="frame" x="95" y="114" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Launch Infinit at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cuD-cD-L6e">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -30,24 +31,35 @@
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vjt-bv-yIL">
-                    <rect key="frame" x="120" y="75" width="240" height="18"/>
+                    <rect key="frame" x="95" y="94" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically upload screenshots" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wrR-Ur-Egq">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleUploadScreenshots:" target="-2" id="OJ4-3p-8zR"/>
-                        <outlet property="nextKeyView" destination="bWW-gG-HyP" id="LJg-UU-JPR"/>
+                        <outlet property="nextKeyView" destination="Yh1-fR-oQb" id="lkS-Xu-OuG"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRb-0U-vvc">
-                    <rect key="frame" x="116" y="35" width="166" height="32"/>
+                    <rect key="frame" x="91" y="34" width="166" height="32"/>
                     <buttonCell key="cell" type="push" title="Check for updates..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PP7-tu-kV9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="checkForUpdates:" target="-2" id="gyj-iy-WSS"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-fR-oQb">
+                    <rect key="frame" x="95" y="74" width="290" height="18"/>
+                    <buttonCell key="cell" type="check" title="Stay awake while transferring on AC power" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qW2-Gc-YZE">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleStayAwake:" target="-2" id="txZ-y6-l61"/>
+                        <outlet property="nextKeyView" destination="bWW-gG-HyP" id="jy3-11-5ZF"/>
                     </connections>
                 </button>
             </subviews>

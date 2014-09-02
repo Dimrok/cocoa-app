@@ -15,6 +15,7 @@
 @interface InfinitSettingsGeneralView : InfinitSettingsViewController
 
 @property (nonatomic, weak) IBOutlet NSButton* launch_at_startup;
+@property (nonatomic, weak) IBOutlet NSButton* stay_awake;
 @property (nonatomic, weak) IBOutlet NSButton* upload_screenshots;
 
 - (id)initWithDelegate:(id<InfinitSettingsGeneralProtocol>)delegate;
@@ -30,6 +31,10 @@
 - (BOOL)uploadsScreenshots:(InfinitSettingsGeneralView*)sender;
 - (void)setUploadsScreenshots:(InfinitSettingsGeneralView*)sender
                            to:(BOOL)value;
+
+- (BOOL)stayAwake:(InfinitSettingsGeneralView*)sender;
+- (void)setStayAwake:(InfinitSettingsGeneralView*)sender
+                  to:(BOOL)value;
 
 - (void)checkForUpdate:(InfinitSettingsGeneralView*)sender;
 

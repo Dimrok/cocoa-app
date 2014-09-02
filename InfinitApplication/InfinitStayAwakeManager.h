@@ -16,6 +16,9 @@
 
 + (InfinitStayAwakeManager*)instance;
 
++ (BOOL)stayAwake;
++ (void)setStayAwake:(BOOL)stay_awake;
+
 @end
 
 @protocol InfinitStayAwakeProtocol <NSObject>

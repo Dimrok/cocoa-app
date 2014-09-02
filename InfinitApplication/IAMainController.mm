@@ -1416,6 +1416,17 @@ hadConnectionStateChange:(gap_UserStatus)status
   _screenshot_manager.watch = value;
 }
 
+- (BOOL)stayAwake:(InfinitSettingsWindow*)sender
+{
+  return [InfinitStayAwakeManager stayAwake];
+}
+
+- (void)setStayAwake:(InfinitSettingsWindow*)sender
+                  to:(BOOL)value
+{
+  [InfinitStayAwakeManager setStayAwake:value];
+}
+
 - (void)checkForUpdate:(InfinitSettingsWindow*)sender
 {
   [_delegate mainControllerWantsCheckForUpdate:self];

@@ -8,6 +8,7 @@
 // https://developer.apple.com/library/mac/qa/qa1340/_index.html
 
 #import "InfinitStayAwakeManager.h"
+#import "IAUserPrefs.h"
 
 #import <ctype.h>
 #import <stdlib.h>
@@ -42,6 +43,7 @@ static void* _ref_con;
 {
 @private
   __weak id<InfinitStayAwakeProtocol> _delegate;
+  BOOL _stay_awake;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -53,6 +55,20 @@ static void* _ref_con;
     _ref_con = NULL;
     _delegate = delegate;
     [self registerForPowerEvents];
+
+    if ([[IAUserPrefs sharedInstance] prefsForKey:@"stay_awake"] == nil)
+    {
+      [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"stay_awake"];
+      _stay_awake = YES;
+    }
+    else if ([[[IAUserPrefs sharedInstance] prefsForKey:@"stay_awake"] isEqualToString:@"1"])
+    {
+      _stay_awake = YES;
+    }
+    else
+    {
+      _stay_awake = NO;
+    }
   }
   return self;
 }
@@ -71,8 +87,33 @@ static void* _ref_con;
   return _instance;
 }
 
+- (BOOL)_stayAwake
+{
+  return _stay_awake;
+}
+
++ (BOOL)stayAwake
+{
+  return [[InfinitStayAwakeManager instance] _stayAwake];
+}
+
+- (void)_setStayAwake:(BOOL)stay_awake
+{
+  _stay_awake = stay_awake;
+  NSString* value = [NSString stringWithFormat:@"%d", _stay_awake];
+  [[IAUserPrefs sharedInstance] setPref:value forKey:@"stay_awake"];
+}
+
++ (void)setStayAwake:(BOOL)stay_awake
+{
+  [[InfinitStayAwakeManager instance] _setStayAwake:stay_awake];
+}
+
 - (BOOL)_preventSleep
 {
+  if (!_stay_awake)
+    return NO;
+
   BOOL running_transfers = [_delegate stayAwakeManagerWantsActiveTransactions:self];
 
   if (!running_transfers)

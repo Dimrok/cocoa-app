@@ -19,6 +19,7 @@
 
   BOOL _auto_launch;
   BOOL _auto_upload_screenshots;
+  BOOL _auto_stay_awake;
 }
 
 //- Initialization ---------------------------------------------------------------------------------
@@ -36,6 +37,7 @@
 {
   _auto_launch = [_delegate infinitInLoginItems:self];
   _auto_upload_screenshots = [_delegate uploadsScreenshots:self];
+  _auto_stay_awake = [_delegate stayAwake:self];
   [super loadView];
   if (_auto_launch)
     self.launch_at_startup.state = NSOnState;
@@ -46,6 +48,11 @@
     self.upload_screenshots.state = NSOnState;
   else
     self.upload_screenshots.state = NSOffState;
+
+  if (_auto_stay_awake)
+    self.stay_awake.state = NSOnState;
+  else
+    self.stay_awake.state = NSOffState;
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -73,6 +80,15 @@
   else
     _auto_upload_screenshots = NO;
   [_delegate setUploadsScreenshots:self to:_auto_upload_screenshots];
+}
+
+- (IBAction)toggleStayAwake:(NSButton*)sender
+{
+  if (self.stay_awake.state == NSOnState)
+    _auto_stay_awake = YES;
+  else
+    _auto_stay_awake = NO;
+  [_delegate setStayAwake:self to:_auto_stay_awake];
 }
 
 - (IBAction)checkForUpdates:(NSButton*)sender

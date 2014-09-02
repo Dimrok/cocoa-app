@@ -118,9 +118,20 @@
   [_delegate setUploadsScreenshots:self to:value];
 }
 
+- (BOOL)stayAwake:(InfinitSettingsGeneralView*)sender
+{
+  return [_delegate stayAwake:self];
+}
+
+- (void)setStayAwake:(InfinitSettingsGeneralView*)sender
+                  to:(BOOL)value
+{
+  [_delegate setStayAwake:self to:value];
+}
+
 - (void)checkForUpdate:(InfinitSettingsGeneralView*)sender
 {
-  [_delegate checkForUpdate:sender];
+  [_delegate checkForUpdate:self];
 }
 
 //- Window Delegate --------------------------------------------------------------------------------
