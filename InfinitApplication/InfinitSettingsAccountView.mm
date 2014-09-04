@@ -138,7 +138,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0, 280.0);
+  return NSMakeSize(480.0, 300.0);
 }
 
 //- Button Handling --------------------------------------------------------------------------------
