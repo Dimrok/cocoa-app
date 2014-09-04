@@ -76,6 +76,7 @@ namespace
 - (void)prepareForReuse
 {
   _click_count = 0;
+  self.buttons_constraint.constant = 317.0;
 }
 
 - (void)updateTrackingAreas
