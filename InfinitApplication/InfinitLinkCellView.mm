@@ -94,10 +94,13 @@ namespace
    {
      _hover = YES;
      context.duration = 0.2;
+     [self.click_count.animator setAlphaValue:0.0];
      [self.buttons_constraint.animator setConstant:187.0];
    }
                       completionHandler:^
    {
+     self.click_count.animator.alphaValue = 0.0;
+     self.click_count.hidden = YES;
      self.buttons_constraint.constant = 187.0;
    }];
 }
@@ -118,11 +121,14 @@ namespace
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.2;
+     [self.click_count.animator setAlphaValue:1.0];
      [self.buttons_constraint.animator setConstant:317.0];
    }
                       completionHandler:^
    {
      _hover = NO;
+     self.click_count.alphaValue = 1.0;
+     self.click_count.hidden = NO;
      self.buttons_constraint.constant = 317.0;
    }];
 }
@@ -144,6 +150,8 @@ namespace
   {
     context.duration = kMinimumTimeInterval;
     [self.buttons_constraint.animator setConstant:317.0];
+    self.click_count.hidden = NO;
+    self.click_count.alphaValue = 1.0;
   } completionHandler:nil];
 }
 
