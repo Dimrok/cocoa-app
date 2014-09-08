@@ -11,6 +11,8 @@
 
 #import "InfinitMetricsManager.h"
 
+#import <surface/gap/enums.hh>
+
 @interface InfinitLinkViewController ()
 
 @end
