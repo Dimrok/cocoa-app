@@ -213,9 +213,16 @@ static NSSize favourites_size = {430.f, 170.f};
   NSRect frame = NSZeroRect;
   frame.size = self.view.bounds.size;
   NSPoint midpoint = [_delegate favouritesViewWantsMidpoint:self];
-  frame.origin = NSMakePoint(midpoint.x - NSWidth(self.view.frame) / 2.0,
-                             midpoint.y - NSHeight(self.view.frame));
-  
+  NSPoint origin = NSMakePoint(midpoint.x - NSWidth(self.view.frame) / 2.0 - 5.0,
+                               midpoint.y - NSHeight(self.view.frame));
+
+  CGFloat x_screen_edge =
+  [NSScreen mainScreen].frame.origin.x + [NSScreen mainScreen].frame.size.width;
+  if (origin.x + (NSWidth(self.view.frame) / 2.0) > x_screen_edge)
+    origin.x = x_screen_edge - (NSWidth(self.view.frame) / 2.0) - 10.0;
+
+  frame.origin = origin;
+
   [self.favourites_view setDelegate:self];
   for (NSView* view in _favourites_view.subviews)
   {
