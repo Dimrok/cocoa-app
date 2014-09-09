@@ -55,12 +55,13 @@ typedef enum __InfinitStatusBarIconColour
   NSArray* _black_animated_images;
   NSArray* _red_animated_images;
 
-  BOOL _animating;
-
   NSTrackingArea* _tracking_area;
   InfinitTooltipViewController* _tooltip;
 
   NSAttributedString* _notifications_str;
+
+  NSTimer* _animation_timer;
+  BOOL _animating;
 }
 @synthesize isFire = _is_fire;
 @synthesize isHighlighted = _is_highlighted;
@@ -95,6 +96,8 @@ static NSDictionary* _grey_style;
   _tracking_area = nil;
   [self unregisterDraggedTypes];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [_animation_timer invalidate];
+  _animation_timer = nil;
 }
 
 - (void)updateTrackingAreas
@@ -168,6 +171,7 @@ static NSDictionary* _grey_style;
                                             shadow:nil];
     }
     _tooltip = [[InfinitTooltipViewController alloc] init];
+    _animating = NO;
   }
   return self;
 }
@@ -267,102 +271,104 @@ static NSDictionary* _grey_style;
 }
 
 - (void)showAnimatedIconForMode:(IAStatusBarIconStatus)mode
-                   withDuration:(NSTimeInterval)duration
 {
-  IAStatusBarIconStatus start_mode = mode;
-  _animating = YES;
-  NSArray* images;
+  NSString* colour;
   switch (mode)
   {
     case STATUS_BAR_ICON_ANIMATED:
-      images = _black_animated_images;
+      colour = @"black";
       break;
     case STATUS_BAR_ICON_FIRE_ANIMATED:
-      images = _red_animated_images;
+      colour = @"red";
       break;
       
     default:
       return;
   }
-  CAKeyframeAnimation* kfa = [CAKeyframeAnimation animation];
-  kfa.values = images;
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-   {
-     context.duration = duration;
-     _icon_view.animations = @{@"image": kfa};
-     _icon_view.animator.image = images[images.count - 1];
-   }
-                      completionHandler:^
-   {
-     _animating = NO;
-     if (start_mode == _current_mode)
-       [self showAnimatedIconForMode:mode withDuration:duration];
-     else
-       [self setNeedsDisplay:YES];
-   }];
+  NSMutableDictionary* user_info =
+    [NSMutableDictionary dictionaryWithDictionary:@{@"frame": @0, @"colour": colour}];
+
+  if (_animation_timer)
+    [_animation_timer invalidate];
+  _animation_timer = [NSTimer timerWithTimeInterval:1/18.0
+                                             target:self
+                                           selector:@selector(updateIconImage:)
+                                           userInfo:user_info
+                                            repeats:YES];
+  [[NSRunLoop mainRunLoop] addTimer:_animation_timer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)updateIconImage:(NSTimer*)timer
+{
+  NSMutableDictionary* user_info = timer.userInfo;
+  NSUInteger frame = [user_info[@"frame"] unsignedIntegerValue];
+  NSArray* images;
+  if ([user_info[@"colour"] isEqualToString:@"red"])
+    images = _red_animated_images;
+  else
+    images = _black_animated_images;
+  _icon_view.image = images[frame];
+  [self setNeedsDisplay:YES];
+  if (frame < images.count - 1)
+    frame++;
+  else
+    frame = 0;
+  [user_info setValue:[NSNumber numberWithUnsignedInteger:frame] forKey:@"frame"];
 }
 
 //- General Functions ------------------------------------------------------------------------------
 
 - (void)determineCurrentMode
 {
-  @synchronized(self)
+  if (!_animating)
   {
-    IAStatusBarIconStatus last_mode = _current_mode;
-    // WORKAROUND Stop the animation to avoid spin locks on 10.7/10.8.
-    if (_animating)
-    {
-      [NSObject cancelPreviousPerformRequestsWithTarget:self];
-      _animating = NO;
-      [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-       {
-         context.duration = kMinimumTimeInterval;
-       } completionHandler:nil];
-    }
-    if (_is_highlighted)
-    {
-      _current_mode = STATUS_BAR_ICON_CLICKED;
-    }
-    else if (_logging_in)
-    {
-      _current_mode = STATUS_BAR_ICON_LOGGING_IN;
-    }
-    else if (_show_link)
-    {
-      _current_mode = STATUS_BAR_ICON_LINK;
-    }
-    else if (_connected == gap_user_status_offline)
-    {
-      _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
-    }
-    else if (_is_transferring && _is_fire)
-    {
-      if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
-      {
-        _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
-        [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED withDuration:1.0];
-      }
-    }
-    else if (!_is_transferring && _is_fire)
-    {
-      _current_mode = STATUS_BAR_ICON_FIRE;
-    }
-    else if (_is_transferring && !_is_fire)
-    {
-      if (_current_mode != STATUS_BAR_ICON_ANIMATED)
-      {
-        _current_mode = STATUS_BAR_ICON_ANIMATED;
-        [self showAnimatedIconForMode:STATUS_BAR_ICON_ANIMATED withDuration:1.0];
-      }
-    }
-    else
-    {
-      _current_mode = STATUS_BAR_ICON_NORMAL;
-    }
-    [self setNotificationString];
-    if (last_mode != _current_mode)
-      [self setNeedsDisplay:YES];
+    [_animation_timer invalidate];
+    _animation_timer = nil;
   }
+  IAStatusBarIconStatus last_mode = _current_mode;
+  if (_is_highlighted)
+  {
+    _current_mode = STATUS_BAR_ICON_CLICKED;
+  }
+  else if (_logging_in)
+  {
+    _current_mode = STATUS_BAR_ICON_LOGGING_IN;
+  }
+  else if (_show_link)
+  {
+    _current_mode = STATUS_BAR_ICON_LINK;
+  }
+  else if (_connected == gap_user_status_offline)
+  {
+    _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
+  }
+  else if (_is_transferring && _is_fire)
+  {
+    if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
+    {
+      _current_mode = STATUS_BAR_ICON_FIRE_ANIMATED;
+      [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED];
+    }
+  }
+  else if (!_is_transferring && _is_fire)
+  {
+    _current_mode = STATUS_BAR_ICON_FIRE;
+  }
+  else if (_is_transferring && !_is_fire)
+  {
+    if (_current_mode != STATUS_BAR_ICON_ANIMATED)
+    {
+      _current_mode = STATUS_BAR_ICON_ANIMATED;
+      [self showAnimatedIconForMode:STATUS_BAR_ICON_ANIMATED];
+    }
+  }
+  else
+  {
+    _current_mode = STATUS_BAR_ICON_NORMAL;
+  }
+  [self setNotificationString];
+  if (last_mode != _current_mode)
+    [self setNeedsDisplay:YES];
 }
 
 - (void)setConnected:(gap_UserStatus)connected
@@ -446,6 +452,7 @@ static NSDictionary* _grey_style;
 
 - (void)setTransferring:(BOOL)isTransferring
 {
+  _animating = isTransferring;
   _is_transferring = isTransferring;
   _icon_view.alphaValue = 1.0;
   [self determineCurrentMode];
