@@ -139,8 +139,6 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"create link";
     case INFINIT_METRIC_PREFERENCES:
       return @"open preferences";
-    case INFINIT_METRIC_FIRST_LAUNCH:
-      return @"first launch";
 
     default:
       return @"unknown";
@@ -197,8 +195,6 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"contextual";
     case INFINIT_METRIC_PREFERENCES:
       return @"click";
-    case INFINIT_METRIC_FIRST_LAUNCH:
-      return @"login view";
 
     default:
       return @"unknown";

@@ -124,7 +124,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     {
       [self addToLoginItems];
       [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"first_launch"];
-      [InfinitMetricsManager sendMetric:INFINIT_METRIC_FIRST_LAUNCH];
     }
     
     if (![self tryAutomaticLogin])
