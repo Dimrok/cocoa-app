@@ -166,23 +166,42 @@
     if (UTTypeConformsTo(file_uti, kUTTypeImage))
     {
       CFRelease(file_uti);
+      NSDictionary* file_properties = [[NSFileManager defaultManager] attributesOfItemAtPath:file
+                                                                                       error:NULL];
       NSImage* image = [[NSImage alloc] initWithContentsOfFile:file];
       if (image != nil)
       {
-        self.image = image;
-        [_delegate settingsAvatarGotImage:self.image];
-        return YES;
+        [_delegate settingsAvatarGotImage:self.image ofSize:file_properties.fileSize];
+        if (file_properties.fileSize <= [_delegate maxAvatarSize])
+        {
+          self.image = image;
+          return YES;
+        }
+        else
+        {
+          return NO;
+        }
       }
     }
   }
   else if ([paste_board availableTypeFromArray:@[NSTIFFPboardType]])
   {
     NSImage* image = [paste_board readObjectsForClasses:@[NSImage.class] options:@{}][0];
+    NSData* image_data = [[image representations][0] representationUsingType:NSPNGFileType
+                                                                  properties:nil];
+    image = [[NSImage alloc] initWithData:image_data];
     if (image != nil)
     {
-      self.image = image;
-      [_delegate settingsAvatarGotImage:self.image];
-      return YES;
+      [_delegate settingsAvatarGotImage:self.image ofSize:image_data.length];
+      if (image_data.length <= [_delegate maxAvatarSize])
+      {
+        self.image = image;
+        return YES;
+      }
+      else
+      {
+        return NO;
+      }
     }
   }
   return NO;

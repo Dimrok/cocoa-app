@@ -38,6 +38,7 @@
 @property (nonatomic, weak) IBOutlet NSImageView* fullname_check;
 @property (nonatomic, weak) IBOutlet NSImageView* handle_check;
 
+@property (nonatomic, weak) IBOutlet NSTextField* avatar_error;
 @property (nonatomic, weak) IBOutlet NSTextField* handle_error;
 
 @property (nonatomic, weak) IBOutlet IAHoverButton* web_profile_link;

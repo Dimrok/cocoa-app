@@ -20,6 +20,9 @@
 
 @protocol InfinitSettingsAvatarProtocol <NSObject>
 
-- (void)settingsAvatarGotImage:(NSImage*)image;
+- (void)settingsAvatarGotImage:(NSImage*)image
+                        ofSize:(unsigned long long)size;
+
+- (unsigned long long)maxAvatarSize;
 
 @end

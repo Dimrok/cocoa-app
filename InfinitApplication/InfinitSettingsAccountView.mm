@@ -33,6 +33,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   NSString* _start_name;
   NSString* _start_handle;
   NSString* _start_email;
+
+  unsigned long long _avatar_size_limit;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -47,6 +49,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
                                            selector:@selector(gotAvatar:)
                                                name:IA_AVATAR_MANAGER_AVATAR_FETCHED
                                              object:nil];
+    _avatar_size_limit = 2 * 1024 * 1024;
   }
   return self;
 }
@@ -138,7 +141,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0, 300.0);
+  return NSMakeSize(480.0, 320.0);
 }
 
 //- Button Handling --------------------------------------------------------------------------------
@@ -158,9 +161,22 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
     if (result == NSOKButton)
     {
       NSURL* file = [file_dialog URLs][0];
-      self.avatar.image = [[NSImage alloc] initWithContentsOfURL:file];
-      self.save_avatar.enabled = YES;
-      self.save_avatar.hidden = NO;
+
+      NSDictionary* file_properties =
+        [[NSFileManager defaultManager] attributesOfItemAtPath:file.path error:NULL];
+      if (file_properties.fileSize <= _avatar_size_limit)
+      {
+        self.avatar_error.hidden = YES;
+        self.avatar.image = [[NSImage alloc] initWithContentsOfURL:file];
+        self.save_avatar.enabled = YES;
+        self.save_avatar.hidden = NO;
+      }
+      else
+      {
+        self.avatar_error.stringValue =
+          NSLocalizedString(@"Please choose an image smaller than 2 MB", nil);
+        self.avatar_error.hidden = NO;
+      }
     }
   }];
 }
@@ -485,9 +501,25 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 //- Settings Avatar Protocol -----------------------------------------------------------------------
 
 - (void)settingsAvatarGotImage:(NSImage*)image
+                        ofSize:(unsigned long long)size
 {
-  self.save_avatar.enabled = YES;
-  self.save_avatar.hidden = NO;
+  if (size <= _avatar_size_limit)
+  {
+    self.save_avatar.enabled = YES;
+    self.save_avatar.hidden = NO;
+    self.avatar_error.hidden = YES;
+  }
+  else
+  {
+    self.avatar_error.stringValue =
+      NSLocalizedString(@"Please choose an image smaller than 2 MB", nil);
+    self.avatar_error.hidden = NO;
+  }
+}
+
+- (unsigned long long)maxAvatarSize
+{
+  return _avatar_size_limit;
 }
 
 @end
