@@ -77,11 +77,15 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (NSUserNotification*)_statusNotificationFromTransaction:(IATransaction*)transaction
 {
+  // Only show desktop notifications on concerned devices.
+  if (!transaction.concerns_this_device)
+    return nil;
+
   NSUserNotification* res = [[NSUserNotification alloc] init];
   NSString* filename;
-  NSString* message;
-  NSString* sound;
-  NSString* title;
+  NSString* message = nil;
+  NSString* sound = nil;
+  NSString* title = nil;
   if (transaction.files_count > 1)
   {
     filename = [NSString stringWithFormat:@"%lu %@", transaction.files_count,
@@ -100,13 +104,24 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   {
     case TRANSACTION_VIEW_WAITING_ACCEPT:
       if (transaction.from_me)
-        return nil;
-      title = NSLocalizedString(@"Incoming!", @"incoming!");
-      sound = _incoming_sound.name;
-      message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
-                 NSLocalizedString(@"wants to send", @"wants to send"),
-                 filename,
-                 NSLocalizedString(@"to you", @"to you")];
+      {
+        title = NSLocalizedString(@"Sending!", nil);
+        sound = _incoming_sound.name;
+        message = [NSString stringWithFormat:@"%@ %@ %@ %@",
+                   NSLocalizedString(@"Sending", nil),
+                   filename,
+                   NSLocalizedString(@"to", nil),
+                   transaction.recipient.fullname];
+      }
+      else
+      {
+        title = NSLocalizedString(@"Incoming!", @"incoming!");
+        sound = _incoming_sound.name;
+        message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
+                   NSLocalizedString(@"wants to send", @"wants to send"),
+                   filename,
+                   NSLocalizedString(@"to you", @"to you")];
+      }
       break;
       
     case TRANSACTION_VIEW_REJECTED:
@@ -193,6 +208,9 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (NSUserNotification*)notificationFromLink:(InfinitLinkTransaction*)link
 {
+  // Only show desktop notifications on concerned devices.
+  if (!link.concerns_this_device)
+    return nil;
   NSUserNotification* res = [[NSUserNotification alloc] init];
   NSString* message;
   NSString* sound;
