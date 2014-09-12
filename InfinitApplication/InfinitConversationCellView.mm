@@ -242,8 +242,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case TRANSACTION_VIEW_PREPARING:
     case TRANSACTION_VIEW_RUNNING:
     case TRANSACTION_VIEW_OTHER_DEVICE:
+    case TRANSACTION_VIEW_FINISHED:
+      if (element.transaction.concerns_this_device)
+        return NO;
       return YES;
-      
+
     default:
       return NO;
   }
@@ -419,7 +422,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case TRANSACTION_VIEW_FINISHED:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-finished"];
       [self.transaction_status_button setToolTip:NSLocalizedString(@"Finished", nil)];
-      self.information.hidden = YES;
+      if (!_element.transaction.concerns_this_device)
+      {
+        self.information.stringValue = NSLocalizedString(@"Finished on another device.", nil);
+        self.information.hidden = NO;
+      }
+      else
+      {
+        self.information.hidden = YES;
+      }
       break;
     case TRANSACTION_VIEW_PENDING_SEND:
     case TRANSACTION_VIEW_PREPARING:
