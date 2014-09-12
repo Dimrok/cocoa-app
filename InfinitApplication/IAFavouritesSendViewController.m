@@ -349,16 +349,21 @@ static NSSize favourites_size = {430.f, 170.f};
                                sender.frame.origin.y - ((end_size - sender.frame.size.height) / 2.0),
                                end_size, end_size);
   [self hideFavouritesExcluding:sender];
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-   {
-     context.duration = 0.2;
-     [sender.animator setFrame:end_rect];
-     [sender.animator setAlphaValue:0.0];
-   }
-                      completionHandler:^
-   {
-     [_delegate favouritesView:self gotDropLinkWithFiles:files];
-   }];
+  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
+    [_delegate favouritesView:self gotDropLinkWithFiles:files];
+  else
+  {
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+     {
+       context.duration = 0.2;
+       [sender.animator setFrame:end_rect];
+       [sender.animator setAlphaValue:0.0];
+     }
+                        completionHandler:^
+     {
+       [_delegate favouritesView:self gotDropLinkWithFiles:files];
+     }];
+  }
 }
 
 @end
