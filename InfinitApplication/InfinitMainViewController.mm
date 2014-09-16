@@ -516,7 +516,10 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 - (void)linksViewResizeToHeight:(CGFloat)height
 {
   if (height == self.content_height_constraint.constant)
+  {
+    [_link_controller resizeComplete];
     return;
+  }
 
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
