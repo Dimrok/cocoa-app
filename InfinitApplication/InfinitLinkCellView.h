@@ -45,6 +45,8 @@
 
 - (void)hideControls;
 
+- (void)checkMouseInside;
+
 @end
 
 @protocol InfinitLinkCellProtocol <NSObject>
@@ -59,5 +61,7 @@ gotCancelForLink:(InfinitLinkTransaction*)link;
 gotDeleteForLink:(InfinitLinkTransaction*)link;
 
 - (void)linkCellLostMouseHover:(InfinitLinkCellView*)sender;
+
+- (BOOL)userScrolling:(InfinitLinkCellView*)sender;
 
 @end

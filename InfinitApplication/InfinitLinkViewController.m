@@ -35,6 +35,8 @@
 
   InfinitTooltipViewController* _tooltip_controller;
   NSString * _delete_link_message;
+
+  BOOL _scrolling;
 }
 
 //- Init -------------------------------------------------------------------------------------------
@@ -66,6 +68,8 @@
     [_progress_timer invalidate];
     _progress_timer = nil;
   }
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)awakeFromNib
@@ -74,6 +78,12 @@
   // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
   [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
   [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(tableDidScroll:)
+                                               name:NSViewBoundsDidChangeNotification
+                                             object:self.table_view.enclosingScrollView.contentView];
+  _scrolling = NO;
 }
 
 - (void)loadView
@@ -94,6 +104,31 @@
 {
   [self.table_view reloadData];
   _me_status = status;
+}
+
+//- Scroll Handling --------------------------------------------------------------------------------
+
+- (void)tableDidScroll:(NSNotification*)notification
+{
+  if (!_scrolling)
+  {
+    _scrolling = YES;
+    for (NSUInteger i = 0; i < self.table_view.numberOfRows; i++)
+    {
+      [[self.table_view viewAtColumn:0 row:i makeIfNecessary:NO] hideControls];
+    }
+  }
+  [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scrollDone) object:nil];
+  [self performSelector:@selector(scrollDone) withObject:nil afterDelay:0.2];
+}
+
+- (void)scrollDone
+{
+  _scrolling = NO;
+  for (NSUInteger i = 0; i < self.table_view.numberOfRows; i++)
+  {
+    [[self.table_view viewAtColumn:0 row:i makeIfNecessary:NO] checkMouseInside];
+  }
 }
 
 //- Link Updated -----------------------------------------------------------------------------------
@@ -245,6 +280,7 @@
 
   InfinitLinkCellView* cell = [self.table_view makeViewWithIdentifier:@"link_cell" owner:self];
   [cell setupCellWithLink:_list[row] andDelegate:self withOnlineStatus:_me_status];
+  cell.identifier = nil;
   return cell;
 }
 
@@ -338,12 +374,12 @@ gotDeleteForLink:(InfinitLinkTransaction*)link
     [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
                            withAnimation:NSTableViewAnimationSlideRight];
     [self.table_view endUpdates];
-    [_delegate deleteLink:link];
     [_delegate linksViewResizeToHeight:self.height];
     if (_list.count == 0)
       [self.table_view reloadData];
     [self updateListOfRowsWithProgress];
     [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_DELETE_LINK];
+    [_delegate deleteLink:link];
   }
 }
 
@@ -360,6 +396,11 @@ gotDeleteForLink:(InfinitLinkTransaction*)link
       [[self.table_view viewAtColumn:0 row:i makeIfNecessary:NO] hideControls];
     }
   }
+}
+
+- (BOOL)userScrolling:(InfinitLinkCellView*)sender
+{
+  return _scrolling;
 }
 
 @end

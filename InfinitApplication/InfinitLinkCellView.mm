@@ -77,6 +77,8 @@ namespace
 {
   _click_count = 0;
   self.buttons_constraint.constant = 317.0;
+  self.click_count.hidden = NO;
+  self.click_count.alphaValue = 1.0;
 }
 
 - (void)updateTrackingAreas
@@ -88,7 +90,7 @@ namespace
 
 - (void)mouseEntered:(NSEvent*)theEvent
 {
-  if (_hover)
+  if (_hover || [_delegate userScrolling:self])
     return;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
@@ -153,6 +155,14 @@ namespace
     self.click_count.hidden = NO;
     self.click_count.alphaValue = 1.0;
   } completionHandler:nil];
+}
+
+- (void)checkMouseInside
+{
+  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
+  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
+  if (NSPointInRect(mouse_loc, self.bounds))
+    [self mouseEntered:nil];
 }
 
 //- Drawing ----------------------------------------------------------------------------------------
