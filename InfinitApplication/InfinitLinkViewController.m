@@ -78,12 +78,6 @@
   // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
   [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
   [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
-
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(tableDidScroll:)
-                                               name:NSViewBoundsDidChangeNotification
-                                             object:self.table_view.enclosingScrollView.contentView];
-  _scrolling = NO;
 }
 
 - (void)loadView
@@ -91,6 +85,10 @@
   [super loadView];
   [self.table_view reloadData];
   [self resizeView];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(tableDidScroll:)
+                                               name:NSViewBoundsDidChangeNotification
+                                             object:self.table_view.enclosingScrollView.contentView];
 }
 
 - (void)updateModelWithList:(NSArray*)list
@@ -321,7 +319,13 @@
 
 - (void)resizeView
 {
+  _scrolling = YES;
   [_delegate linksViewResizeToHeight:self.height];
+}
+
+- (void)resizeComplete
+{
+  _scrolling = NO;
 }
 
 //- Cell Protocol ----------------------------------------------------------------------------------

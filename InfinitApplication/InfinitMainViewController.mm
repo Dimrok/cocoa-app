@@ -521,10 +521,12 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
+     [self.content_height_constraint.animator setConstant:height];
    }
                       completionHandler:^
    {
-     [self.content_height_constraint.animator setConstant:height];
+     self.content_height_constraint.constant = height;
+     [_link_controller resizeComplete];
    }];
 }
 
@@ -539,10 +541,11 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
+    [self.content_height_constraint.animator setConstant:height];
   }
                       completionHandler:^
   {
-    [self.content_height_constraint.animator setConstant:height];
+    self.content_height_constraint.constant = height;
   }];
 }
 

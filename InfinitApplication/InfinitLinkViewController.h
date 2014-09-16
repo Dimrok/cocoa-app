@@ -33,6 +33,8 @@
 
 - (CGFloat)height;
 
+- (void)resizeComplete;
+
 - (void)selfStatusChanged:(gap_UserStatus)status;
 
 @end
