@@ -12,9 +12,9 @@
 
 typedef enum __InfinitLoginViewMode
 {
-    LOGIN_VIEW_NOT_LOGGED_IN = 0,
-    LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS = 1,
-    LOGIN_VIEW_LOGGING_IN = 2,
+  INFINIT_LOGIN_VIEW_REGISTER,
+  INFINIT_LOGIN_VIEW_NOT_LOGGED_IN,
+  INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS,
 } InfinitLoginViewMode;
 
 @class InfinitLoginView;
@@ -23,22 +23,25 @@ typedef enum __InfinitLoginViewMode
 
 @interface InfinitLoginViewController : IAViewController
 
-@property (nonatomic, strong) IBOutlet IAHoverButton* close_button;
-@property (nonatomic, strong) IBOutlet IAHoverButton* create_account_button;
-@property (nonatomic, strong) IBOutlet NSTextField* email_address;
-@property (nonatomic, strong) IBOutlet NSTextField* error_message;
-@property (nonatomic, strong) IBOutlet IAHoverButton* forgot_password_button;
-@property (nonatomic, strong) IBOutlet IABottomButton* login_button;
-@property (nonatomic, readwrite, setter = setLoginViewMode:) InfinitLoginViewMode mode;
-@property (nonatomic, strong) IBOutlet NSTextField* password;
-@property (nonatomic, strong) IBOutlet IAHoverButton* problem_button;
-@property (nonatomic, strong) IBOutlet NSProgressIndicator* spinner;
-@property (nonatomic, strong) IBOutlet NSTextField* version;
+@property (nonatomic, weak) IBOutlet IABottomButton* action_button;
+@property (nonatomic, weak) IBOutlet NSTextField* action_text;
+@property (nonatomic, weak) IBOutlet IAHoverButton* close_button;
+@property (nonatomic, weak) IBOutlet NSTextField* email_address;
+@property (nonatomic, weak) IBOutlet NSTextField* error_message;
+@property (nonatomic, weak) IBOutlet NSTextField* fullname;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* fullname_pos;
+@property (nonatomic, weak) IBOutlet IAHoverButton* got_account;
+@property (nonatomic, weak) IBOutlet IAHoverButton* help_button;
+@property (nonatomic, weak) IBOutlet NSTextField* password;
+@property (nonatomic, weak) IBOutlet IAHoverButton* problem_button;
+@property (nonatomic, readwrite) BOOL running;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator* spinner;
+@property (nonatomic, weak) IBOutlet NSTextField* version;
+
+@property (nonatomic, readwrite) InfinitLoginViewMode mode;
 
 - (id)initWithDelegate:(id<InfinitLoginViewControllerProtocol>)delegate
               withMode:(InfinitLoginViewMode)mode;
-
-- (void)setLoginViewMode:(InfinitLoginViewMode)mode;
 
 - (void)showWithError:(NSString*)error
              username:(NSString*)username
@@ -47,6 +50,11 @@ typedef enum __InfinitLoginViewMode
 @end
 
 @protocol InfinitLoginViewControllerProtocol <NSObject>
+
+- (void)registered:(InfinitLoginViewController*)sender;
+
+- (void)alreadyLoggedIn:(InfinitLoginViewController*)sender;
+
 - (void)tryLogin:(InfinitLoginViewController*)sender
         username:(NSString*)username
         password:(NSString*)password;

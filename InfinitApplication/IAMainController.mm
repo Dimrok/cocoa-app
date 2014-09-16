@@ -151,7 +151,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)delayedLoginViewOpen
 {
-  [self showLoginView];
+  if (_login_view_controller == nil)
+    _login_view_controller = [[InfinitLoginViewController alloc] initWithDelegate:self
+                                                                         withMode:INFINIT_LOGIN_VIEW_REGISTER];
+  [self openOrChangeViewController:_login_view_controller];
 }
 
 - (BOOL)tryAutomaticLogin
@@ -386,12 +389,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   if (_login_view_controller == nil)
   {
-    _login_view_controller = [[InfinitLoginViewController alloc] initWithDelegate:self
-                                                                         withMode:LOGIN_VIEW_NOT_LOGGED_IN];
-  }
-  else
-  {
-    [_login_view_controller setLoginViewMode:LOGIN_VIEW_NOT_LOGGED_IN];
+    _login_view_controller =
+      [[InfinitLoginViewController alloc] initWithDelegate:self withMode:INFINIT_LOGIN_VIEW_REGISTER];
   }
   [self openOrChangeViewController:_login_view_controller];
 }
@@ -643,12 +642,13 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     
     if (_login_view_controller == nil)
     {
-      _login_view_controller = [[InfinitLoginViewController alloc] initWithDelegate:self
-                                                                           withMode:LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
+      _login_view_controller =
+        [[InfinitLoginViewController alloc] initWithDelegate:self
+                                                    withMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
     }
     else
     {
-      [_login_view_controller setLoginViewMode:LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
+      _login_view_controller.mode = INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS;
     }
     
     NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
@@ -1157,6 +1157,18 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
     _report_problem_controller = [[IAReportProblemWindowController alloc] initWithDelegate:self];
 
   [_report_problem_controller show];
+}
+
+- (void)registered:(InfinitLoginViewController*)sender
+{
+  [self onSuccessfulLogin];
+  [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
+}
+
+- (void)alreadyLoggedIn:(InfinitLoginViewController*)sender
+{
+  [self updateStatusBarIcon];
+  [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
 }
 
 //- Main View Protocol -----------------------------------------------------------------------------
