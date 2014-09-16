@@ -300,7 +300,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
     self.handle_check.hidden = NO;
     switch (result.status)
     {
-      case gap_handle_already_registred:
+      case gap_handle_already_registered:
         self.handle_error.stringValue = NSLocalizedString(@"Handle already taken...", nil);
         self.handle_error.hidden = NO;
         break;
@@ -404,7 +404,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   {
     switch (result.status)
     {
-      case gap_email_already_registred:
+      case gap_email_already_registered:
         self.change_email_error.stringValue =
         NSLocalizedString(@"This email is already taken", nil);
         break;
