@@ -322,6 +322,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 {
   self.mode = INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS;
   self.running = NO;
+  [self.spinner stopAnimation:nil];
   if (username.length > 0 && password.length > 0)
   {
     self.email_address.stringValue = username;
@@ -421,6 +422,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 - (void)registerCallback:(IAGapOperationResult*)result
 {
   self.running = NO;
+  [self.spinner stopAnimation:nil];
   if (result.success)
   {
     ELLE_LOG("%s: Successfully registered as: %s",
