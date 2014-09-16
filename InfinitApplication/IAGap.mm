@@ -252,18 +252,12 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
 - (gap_Status)register_:(NSString*)fullname
                   email:(NSString*)email
                password:(NSString*)hash_password
-            device_name:(NSString*)device_name
-        activation_code:(NSString*)activation_code
 {
-  gap_Status res =  gap_register(_state, fullname.UTF8String,
-                                 email.UTF8String,
-                                 hash_password.UTF8String,
-                                 device_name.UTF8String,
-                                 activation_code.UTF8String);
-  if (res == gap_ok)
-  {
-    return [self login:email password:hash_password];
-  }
+  gap_Status res = gap_register(_state,
+                                fullname.UTF8String,
+                                email.UTF8String,
+                                hash_password.UTF8String);
+  // Successful registration will log the user in.
   return res;
 }
 
