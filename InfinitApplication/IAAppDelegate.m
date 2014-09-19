@@ -202,7 +202,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 - (void)delayedTerminate
 {
   NSLog(@"%@ Cleaning up took to long, killing application", self);
-  [NSApp terminate:self];
+  [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
 }
 
 //- Settings Handling ------------------------------------------------------------------------------
@@ -226,7 +226,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
   else
   {
     NSLog(@"%@ Terminating application", self);
-    [NSApp terminate:self];
+    [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
   }
 }
 
