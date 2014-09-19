@@ -336,6 +336,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 - (void)showError:(NSString*)error
 {
+  [self.spinner stopAnimation:nil];
   self.error_message.attributedStringValue =
     [[NSAttributedString alloc] initWithString:error
                                     attributes:_error_attrs];
@@ -429,7 +430,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
              self.description.UTF8String, self.email_address.stringValue);
     [[IAKeychainManager sharedInstance] addPasswordKeychain:self.email_address.stringValue
                                                    password:self.password.stringValue];
-    [_delegate registered:self];
+    [_delegate registered:self withEmail:self.email_address.stringValue];
   }
   else
   {

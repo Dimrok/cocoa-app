@@ -51,7 +51,8 @@ typedef enum __InfinitLoginViewMode
 
 @protocol InfinitLoginViewControllerProtocol <NSObject>
 
-- (void)registered:(InfinitLoginViewController*)sender;
+- (void)registered:(InfinitLoginViewController*)sender
+         withEmail:(NSString*)email;
 
 - (void)alreadyLoggedIn:(InfinitLoginViewController*)sender;
 

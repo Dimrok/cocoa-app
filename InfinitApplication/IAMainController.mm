@@ -387,10 +387,15 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)showLoginView
 {
+  [self showLoginViewForMode:INFINIT_LOGIN_VIEW_REGISTER];
+}
+
+- (void)showLoginViewForMode:(InfinitLoginViewMode)mode
+{
   if (_login_view_controller == nil)
   {
     _login_view_controller =
-      [[InfinitLoginViewController alloc] initWithDelegate:self withMode:INFINIT_LOGIN_VIEW_REGISTER];
+    [[InfinitLoginViewController alloc] initWithDelegate:self withMode:mode];
   }
   [self openOrChangeViewController:_login_view_controller];
 }
@@ -426,7 +431,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   }
   else
   {
-    [self showLoginView];
+    [self showLoginViewForMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN];
   }
 }
 
@@ -513,8 +518,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [[IAUserPrefs sharedInstance] setPref:_username forKey:@"user:email"];
   
   [self updateStatusBarIcon];
-  
-  _login_view_controller = nil;
+
   
   // XXX We must find a better way to manage fetching of history per user
   [_transaction_manager getHistory];
@@ -658,7 +662,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
       password = @"";
     
     if (_current_view_controller != _login_view_controller)
-      [self showLoginView];
+      [self showLoginViewForMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
     
     [_login_view_controller showWithError:error
                                  username:username
@@ -764,13 +768,18 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   return result;
 }
 
+- (void)showLoginViewForLogout
+{
+  [self showLoginViewForMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN];
+}
+
 - (void)logoutAndShowLoginCallback:(IAGapOperationResult*)result
 {
   if (result.success)
   {
     [_status_bar_icon setNumberOfItems:0];
     ELLE_LOG("%s: logged out", self.description.UTF8String);
-    [self performSelector:@selector(showLoginView) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(showLoginViewForLogout) withObject:nil afterDelay:0.3];
   }
   else
   {
@@ -1160,14 +1169,20 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 }
 
 - (void)registered:(InfinitLoginViewController*)sender
+         withEmail:(NSString*)email
 {
+  _username = email;
+  [_status_bar_icon setConnected:gap_user_status_online];
   [self onSuccessfulLogin];
+  [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
 }
 
 - (void)alreadyLoggedIn:(InfinitLoginViewController*)sender
 {
   [self updateStatusBarIcon];
+  [_status_bar_icon setConnected:gap_user_status_online];
+  [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
 }
 
