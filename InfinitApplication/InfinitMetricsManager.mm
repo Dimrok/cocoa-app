@@ -208,6 +208,13 @@ static InfinitMetricsManager* _shared_instance = nil;
   return [IAGapState instance].self_user.real_id;
 }
 
+- (NSString*)_deviceId
+{
+  if (![[IAGapState instance] logged_in])
+    return nil;
+  return [IAGapState instance].self_device_id;
+}
+
 //- Send Metric ------------------------------------------------------------------------------------
 
 - (void)_sendMetric:(InfinitMetricType)metric
@@ -229,6 +236,10 @@ static InfinitMetricsManager* _shared_instance = nil;
     [metric_dict setObject:[self _userId] forKey:@"user"];
   else
     [metric_dict setObject:@"unknown" forKey:@"user"];
+  if ([self _deviceId])
+    [metric_dict setObject:[self _deviceId] forKey:@"device_id"];
+  else
+    [metric_dict setObject:@"unknown" forKey:@"device_id"];
   NSData* json_data = [NSJSONSerialization dataWithJSONObject:metric_dict options:0 error:nil];
   NSMutableURLRequest* request =
   [[NSMutableURLRequest alloc] initWithURL:_metrics_url
