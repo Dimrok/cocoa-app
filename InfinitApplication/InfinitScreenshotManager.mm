@@ -37,15 +37,18 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     _delegate = delegate;
     if ([[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] == nil)
     {
+      ELLE_LOG("%s: not watching for screenshots", self.description.UTF8String);
       _watch = NO;
       [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"upload_screenshots"];
     }
     else if ([[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"1"])
     {
+      ELLE_LOG("%s: watching for screenshots", self.description.UTF8String);
       _watch = YES;
     }
     else
     {
+      ELLE_LOG("%s: not watching for screenshots", self.description.UTF8String);
       _watch = NO;
     }
 
