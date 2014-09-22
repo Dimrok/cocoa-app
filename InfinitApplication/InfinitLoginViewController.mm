@@ -457,6 +457,17 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
       case gap_fullname_not_valid:
         error = NSLocalizedString(@"Full name not valid.", nil);
         break;
+      case gap_network_error:
+      case gap_meta_unreachable:
+        error = [NSString stringWithFormat:@"%@",
+                 NSLocalizedString(@"Connection problem, check Internet connection.",
+                                   @"no route to internet")];
+        break;
+      case gap_deprecated:
+        error = [NSString stringWithFormat:@"%@",
+                 NSLocalizedString(@"Please update Infinit.", @"please update infinit.")];
+        [_delegate loginViewWantsCheckForUpdate:self];
+        break;
 
       default:
         error = [NSString stringWithFormat:@"%@: %d", NSLocalizedString(@"Unknown error", nil),
