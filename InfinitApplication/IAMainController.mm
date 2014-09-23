@@ -775,6 +775,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)logoutAndShowLoginCallback:(IAGapOperationResult*)result
 {
+  _settings_window = nil;
   if (result.success)
   {
     [_status_bar_icon setNumberOfItems:0];
@@ -789,6 +790,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)handleLogout
 {
+  [_settings_window close];
   [self closeNotificationWindow];
   [self updateStatusBarIcon];
   [[IAGapState instance] logout:@selector(logoutAndShowLoginCallback:) onObject:self];
@@ -1549,8 +1551,9 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)screenshotManager:(InfinitScreenshotManager*)sender
             gotScreenshot:(NSString*)path
 {
-  if ([_me_manager connection_status] == gap_user_status_online)
-    [_link_manager createLinkWithFiles:@[path] withMessage:@""];
+  if (![[IAGapState instance] logged_in] || [_me_manager connection_status] != gap_user_status_online)
+    return;
+  [_link_manager createLinkWithFiles:@[path] withMessage:@""];
 }
 
 //- Stay Awake Manager Protocol --------------------------------------------------------------------
