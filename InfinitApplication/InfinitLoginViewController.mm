@@ -533,6 +533,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 - (IBAction)changeModeClicked:(IAHoverButton*)sender
 {
+  if (_running)
+    return;
   _showing_error = NO;
   self.error_message.alphaValue = 0.0;
   if (_mode == INFINIT_LOGIN_VIEW_REGISTER)
