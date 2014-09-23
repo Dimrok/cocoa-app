@@ -1619,7 +1619,7 @@ hadConnectionStateChange:(gap_UserStatus)status
   
   if (_onboard_controller.state == INFINIT_ONBOARDING_SEND_FILE_SENDING &&
       _onboard_controller.send_transaction == transaction &&
-      transaction.is_done)
+      (transaction.is_done || transaction.view_mode == TRANSACTION_VIEW_CLOUD_BUFFERED))
   {
     _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILE_SENT;
   }
