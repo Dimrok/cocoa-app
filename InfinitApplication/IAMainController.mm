@@ -1405,7 +1405,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (void)openPreferences
 {
-  if (![[IAGapState instance] logged_in])
+  if (![[IAGapState instance] logged_in] || _me_manager.connection_status != gap_user_status_online)
     return;
 
   [self closeNotificationWindowWithoutLosingFocus];
