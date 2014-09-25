@@ -212,7 +212,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
       [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:0.5];
     }
   }
-  else if ([[_delegate sendOnboardingTransaction:self] other_user] == _user)
+  else if ([[[_delegate sendOnboardingTransaction:self] other_user] isEqual:_user])
   {
     if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
     {
