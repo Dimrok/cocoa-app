@@ -214,6 +214,23 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
   }
 }
 
+- (gap_Status)set_proxy:(gap_ProxyType)type
+                   host:(NSString*)host
+                   port:(NSUInteger)port
+               username:(NSString*)username
+               password:(NSString*)password
+{
+  gap_Status res = gap_set_proxy(_state, type, host.UTF8String, port,
+                                 username.UTF8String, password.UTF8String);
+  return res;
+}
+
+- (gap_Status)unset_proxy:(gap_ProxyType)type
+{
+  gap_Status res = gap_unset_proxy(_state, type);
+  return res;
+}
+
 - (gap_Status)login:(NSString*)email
            password:(NSString*)hash_password;
 {
