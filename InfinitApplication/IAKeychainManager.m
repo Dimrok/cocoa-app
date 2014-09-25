@@ -56,7 +56,7 @@
   OSStatus status;
 
   status = SecKeychainFindGenericPassword(
-    NULL, // default keychain
+    NULL,                         // default keychain
     (UInt32)_service_name.length, // length of service name
     _service_name.UTF8String,     // service name
     (UInt32)user_email.length,    // length of account name
@@ -64,6 +64,37 @@
     password_length,              // length of password
     password_data,                // pointer to password data
     item_ref                      // the item reference
+  );
+
+  return status;
+}
+
+- (OSStatus)fetchInternetPassword:(NSString*)server
+                           onPort:(NSUInteger)port
+                  serviceProtocol:(SecProtocolType)service_protocol
+               authenticationType:(SecAuthenticationType)auth_type
+                     withUsername:(NSString*)username
+                     passwordData:(void**)password_data
+                   passwordLength:(UInt32*)password_length
+                          itemRef:(SecKeychainItemRef*)item_ref
+{
+  OSStatus status;
+  status = SecKeychainFindInternetPassword(
+    NULL,
+    (UInt32)server.length,
+    server.UTF8String,
+    0,
+    NULL,
+    (UInt32)username.length,
+    username.UTF8String,
+    0,
+    NULL,
+    (UInt16)port,
+    service_protocol,
+    auth_type,
+    password_length,
+    password_data,
+    item_ref
   );
 
   return status;
@@ -122,7 +153,7 @@
   if (status != noErr)
     return status;
 
-  trusted_applications = [NSArray arrayWithObject:(__bridge id)infinit_app];
+  trusted_applications = @[(__bridge id)infinit_app];
 
   status = SecAccessCreate((__bridge CFStringRef)_service_name,
                            (__bridge CFArrayRef)(trusted_applications),

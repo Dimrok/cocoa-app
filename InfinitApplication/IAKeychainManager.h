@@ -17,6 +17,15 @@
                  passwordLength:(UInt32*)password_length
                         itemRef:(SecKeychainItemRef*)item_ref;
 
+- (OSStatus)fetchInternetPassword:(NSString*)server
+                           onPort:(NSUInteger)port
+                  serviceProtocol:(SecProtocolType)service_protocol
+               authenticationType:(SecAuthenticationType)auth_type
+                     withUsername:(NSString*)username
+                     passwordData:(void**)password_data
+                   passwordLength:(UInt32*)password_length
+                          itemRef:(SecKeychainItemRef*)item_ref;
+
 - (BOOL)credentialsInKeychain:(NSString*)email_address;
 
 - (OSStatus)changeUser:(NSString*)user_email
