@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="InfinitProxyWindow">
+            <connections>
+                <outlet property="host" destination="rW2-zU-IMn" id="1EK-gP-hHg"/>
+                <outlet property="password" destination="SIe-tX-V9l" id="afL-LJ-Pcq"/>
+                <outlet property="password_text" destination="Y7e-If-beD" id="3YK-XO-FyT"/>
+                <outlet property="port" destination="9fD-PV-vUm" id="npa-mA-80L"/>
+                <outlet property="requires_password" destination="dcS-Z8-R6u" id="GRK-hp-dTa"/>
+                <outlet property="type" destination="vBv-qr-WsC" id="2ci-sb-s8H"/>
+                <outlet property="username" destination="kr1-2M-AvB" id="VGG-kF-0xH"/>
+                <outlet property="username_text" destination="g6v-db-r2M" id="a0Z-07-s2Q"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Infinit Proxy" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="420" height="260"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="420" height="260"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kr1-2M-AvB">
+                        <rect key="frame" x="172" y="91" width="200" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="u9M-a3-bjI">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <outlet property="nextKeyView" destination="SIe-tX-V9l" id="6bR-z4-Z3g"/>
+                        </connections>
+                    </textField>
+                    <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SIe-tX-V9l">
+                        <rect key="frame" x="172" y="61" width="200" height="22"/>
+                        <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="zVP-ga-vNX">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <allowedInputSourceLocales>
+                                <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                            </allowedInputSourceLocales>
+                        </secureTextFieldCell>
+                        <connections>
+                            <outlet property="nextKeyView" destination="rW2-zU-IMn" id="bfJ-4i-ido"/>
+                        </connections>
+                    </secureTextField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g6v-db-r2M">
+                        <rect key="frame" x="46" y="96" width="120" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="F3C-Oh-2rb">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rW2-zU-IMn">
+                        <rect key="frame" x="92" y="153" width="200" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="lyg-9q-ikI">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dvR-VW-W9O">
+                        <rect key="frame" x="51" y="156" width="37" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Host:" id="OKX-PY-F6B">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y7e-If-beD">
+                        <rect key="frame" x="46" y="66" width="120" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="ikx-yz-DZQ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcS-Z8-R6u">
+                        <rect key="frame" x="51" y="126" width="175" height="18"/>
+                        <buttonCell key="cell" type="check" title="Proxy requires password" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dgy-z6-p5p">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="requiresPasswordToggle:" target="-2" id="Yi2-Ij-lBc"/>
+                            <outlet property="nextKeyView" destination="kr1-2M-AvB" id="wkh-Ts-B2g"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hml-BH-HHH">
+                        <rect key="frame" x="298" y="156" width="8" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title=":" id="Psy-5k-nMm">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fQd-Ea-e3A">
+                        <rect key="frame" x="111" y="192" width="235" height="18"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="235" height="18"/>
+                        <size key="intercellSpacing" width="4" height="2"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="Dad-eb-FU2">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="radio" title="Proxy Type" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="vBv-qr-WsC">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                    </matrix>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlD-SO-GXb">
+                        <rect key="frame" x="109" y="222" width="265" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Please enter your proxy settings for Infinit:" id="1ei-Wh-Ge1">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uaj-Xj-1vq">
+                        <rect key="frame" x="324" y="9" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bPQ-jF-z0A">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="okCliked:" target="-2" id="8yR-wm-53P"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pJv-Sy-HGK">
+                        <rect key="frame" x="242" y="9" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pF0-Lu-Gxi">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelClicked:" target="-2" id="h9r-Qx-zTZ"/>
+                        </connections>
+                    </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q0p-dd-3E7">
+                        <rect key="frame" x="49" y="191" width="48" height="48"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="application_icon" id="4Ol-9g-Dxb"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9fD-PV-vUm">
+                        <rect key="frame" x="312" y="153" width="60" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="HQ2-ln-53g">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="SAL-SZ-bpI">
+                                <real key="minimum" value="0.0"/>
+                                <real key="maximum" value="65535"/>
+                            </numberFormatter>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+                <outlet property="initialFirstResponder" destination="SIe-tX-V9l" id="dST-0b-ECN"/>
+            </connections>
+            <point key="canvasLocation" x="523" y="307"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="application_icon" width="512" height="512"/>
+    </resources>
+</document>

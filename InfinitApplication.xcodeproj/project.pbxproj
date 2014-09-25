@@ -93,6 +93,10 @@
 		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
 		836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 836A679318D790D600A15677 /* InfinitConversationElement.m */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
+		836D648619D063D300D77D9B /* InfinitReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D648519D063D300D77D9B /* InfinitReachability.m */; };
+		836D648919D0667D00D77D9B /* InfinitNetworkManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */; };
+		836D648E19D433B000D77D9B /* InfinitProxyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D648C19D433B000D77D9B /* InfinitProxyWindow.m */; };
+		836D648F19D433B000D77D9B /* InfinitProxyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836D648D19D433B000D77D9B /* InfinitProxyWindow.xib */; };
 		836EACED1988EE300053BE85 /* icon-delete-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EACE11988EE300053BE85 /* icon-delete-hover.png */; };
 		836EACEE1988EE300053BE85 /* icon-delete-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EACE21988EE300053BE85 /* icon-delete-hover@2x.png */; };
 		836EACEF1988EE300053BE85 /* icon-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EACE31988EE300053BE85 /* icon-delete.png */; };
@@ -354,6 +358,7 @@
 		83ECD4D11827A04F007DDB13 /* icon-main-upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83ECD4CD1827A04F007DDB13 /* icon-main-upload@2x.png */; };
 		83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */; };
 		83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */; };
+		83F4F2F219D053670003863C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4F2F119D053670003863C /* SystemConfiguration.framework */; };
 		83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */; };
 		83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCE718EC61AF0051F010 /* INPopoverController.m */; };
 		83F5FCF018EC61AF0051F010 /* INPopoverParentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCEA18EC61AF0051F010 /* INPopoverParentWindow.m */; };
@@ -734,6 +739,13 @@
 		836A679318D790D600A15677 /* InfinitConversationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationElement.m; sourceTree = "<group>"; };
 		836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsCellView.h; sourceTree = "<group>"; };
 		836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsCellView.m; sourceTree = "<group>"; };
+		836D648419D063D300D77D9B /* InfinitReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitReachability.h; sourceTree = "<group>"; };
+		836D648519D063D300D77D9B /* InfinitReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitReachability.m; sourceTree = "<group>"; };
+		836D648719D0667D00D77D9B /* InfinitNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitNetworkManager.h; sourceTree = "<group>"; };
+		836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitNetworkManager.mm; sourceTree = "<group>"; };
+		836D648B19D433B000D77D9B /* InfinitProxyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitProxyWindow.h; sourceTree = "<group>"; };
+		836D648C19D433B000D77D9B /* InfinitProxyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitProxyWindow.m; sourceTree = "<group>"; };
+		836D648D19D433B000D77D9B /* InfinitProxyWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitProxyWindow.xib; sourceTree = "<group>"; };
 		836EACE11988EE300053BE85 /* icon-delete-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete-hover.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete-hover.png"; sourceTree = "<group>"; };
 		836EACE21988EE300053BE85 /* icon-delete-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete-hover@2x.png"; sourceTree = "<group>"; };
 		836EACE31988EE300053BE85 /* icon-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete.png"; sourceTree = "<group>"; };
@@ -1020,6 +1032,7 @@
 		83F1148217AE63E700DCF662 /* IAUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserSearchViewController.h; sourceTree = "<group>"; };
 		83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAUserSearchViewController.m; sourceTree = "<group>"; };
 		83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAUserSearchViewController.xib; sourceTree = "<group>"; };
+		83F4F2F119D053670003863C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		83F5FCD118EB3E2E0051F010 /* InfinitSizedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSizedTextField.h; sourceTree = "<group>"; };
 		83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSizedTextField.m; sourceTree = "<group>"; };
 		83F5FCE618EC61AF0051F010 /* INPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPopoverController.h; sourceTree = "<group>"; };
@@ -1046,6 +1059,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F4F2F219D053670003863C /* SystemConfiguration.framework in Frameworks */,
 				8392497418D7B70100EE72C7 /* QuartzCore.framework in Frameworks */,
 				8392497318D7B6D900EE72C7 /* CrashReporter.framework in Frameworks */,
 				8311EA0418C603D200410450 /* libelle.dylib in Frameworks */,
@@ -1160,6 +1174,7 @@
 		8328080917A2B4A60025B6F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83F4F2F119D053670003863C /* SystemConfiguration.framework */,
 				83E1E1BA1861A48E00F8DDF9 /* IOKit.framework */,
 				836F867517ECA30300D7202C /* QuartzCore.framework */,
 				83014AC317BB6E2E00ECDE96 /* AddressBook.framework */,
@@ -1196,6 +1211,7 @@
 				83C124B517A7CE9800BE1252 /* Managers */,
 				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
+				836D648A19D41F4500D77D9B /* Proxy View */,
 				837A7F5A17FC070600600ACD /* Report Problem Window */,
 				831E22D3183E561E00F0623C /* Search Controller */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
@@ -1473,6 +1489,16 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		836D648A19D41F4500D77D9B /* Proxy View */ = {
+			isa = PBXGroup;
+			children = (
+				836D648B19D433B000D77D9B /* InfinitProxyWindow.h */,
+				836D648C19D433B000D77D9B /* InfinitProxyWindow.m */,
+				836D648D19D433B000D77D9B /* InfinitProxyWindow.xib */,
+			);
+			name = "Proxy View";
+			sourceTree = "<group>";
+		};
 		836EAE601988F5670053BE85 /* MIME types */ = {
 			isa = PBXGroup;
 			children = (
@@ -1572,8 +1598,6 @@
 				838AAC7A17D73734009083D4 /* IABottomButton.m */,
 				8398835317A6AA9D009409B3 /* IAUserPrefs.h */,
 				8398835417A6AA9D009409B3 /* IAUserPrefs.m */,
-				8398835017A6A5BB009409B3 /* IAKeychainManager.h */,
-				8398835117A6A5BB009409B3 /* IAKeychainManager.m */,
 				8398834D17A6A5AE009409B3 /* IAAutoStartup.h */,
 				8398834E17A6A5AE009409B3 /* IAAutoStartup.m */,
 				832808CD17A2C1470025B6F8 /* IAFunctions.h */,
@@ -1675,20 +1699,26 @@
 			children = (
 				831FB21C17A8FE1700696604 /* IAAvatarManager.h */,
 				831FB21D17A8FE1700696604 /* IAAvatarManager.mm */,
-				831AA69D17D0FCC00004AE8D /* IAMeManager.h */,
-				831AA69E17D0FCC00004AE8D /* IAMeManager.mm */,
-				83CD106717D48D9700AA0A19 /* IALogFileManager.h */,
-				83CD106817D48D9700AA0A19 /* IALogFileManager.m */,
 				83CD107E17D49D7E00AA0A19 /* IACrashReportManager.h */,
 				83CD107F17D49D7E00AA0A19 /* IACrashReportManager.mm */,
-				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
-				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */,
+				8398835017A6A5BB009409B3 /* IAKeychainManager.h */,
+				8398835117A6A5BB009409B3 /* IAKeychainManager.m */,
+				83CD106717D48D9700AA0A19 /* IALogFileManager.h */,
+				83CD106817D48D9700AA0A19 /* IALogFileManager.m */,
+				831AA69D17D0FCC00004AE8D /* IAMeManager.h */,
+				831AA69E17D0FCC00004AE8D /* IAMeManager.mm */,
 				83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */,
 				83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */,
+				836D648719D0667D00D77D9B /* InfinitNetworkManager.h */,
+				836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */,
 				83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */,
 				83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */,
+				836D648419D063D300D77D9B /* InfinitReachability.h */,
+				836D648519D063D300D77D9B /* InfinitReachability.m */,
 				83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */,
 				83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */,
+				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
+				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2269,6 +2299,7 @@
 				836EADDE1988F33F0053BE85 /* icon-star.png in Resources */,
 				836EAD861988EEC70053BE85 /* conversation-icon-accept.png in Resources */,
 				836EADFB1988F3DE0053BE85 /* icon-contact-checked@2x.png in Resources */,
+				836D648F19D433B000D77D9B /* InfinitProxyWindow.xib in Resources */,
 				836EAE071988F42D0053BE85 /* icon-menu-bar-active@2x.png in Resources */,
 				836EAD9C1988EEC70053BE85 /* conversation-icon-quote-right.png in Resources */,
 				836EAD9B1988EEC70053BE85 /* conversation-icon-quote-left@2x.png in Resources */,
@@ -2561,6 +2592,7 @@
 				836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */,
 				834F137D192250E700BF36A4 /* InfinitLinkCellView.mm in Sources */,
 				834F136919216E2B00BF36A4 /* InfinitTransactionViewController.mm in Sources */,
+				836D648E19D433B000D77D9B /* InfinitProxyWindow.m in Sources */,
 				8337673B19088A820073A621 /* OEXTokenTextStorage.m in Sources */,
 				83F5FCF018EC61AF0051F010 /* INPopoverParentWindow.m in Sources */,
 				83F5FCFB18EC99870051F010 /* InfinitOnboardingController.m in Sources */,
@@ -2571,6 +2603,7 @@
 				8333D45D17A976570093942B /* IAViewController.m in Sources */,
 				831E22D6183E563800F0623C /* InfinitSearchController.mm in Sources */,
 				83E73FB019A5E2B700B7E8EF /* InfinitSettingsAccountView.mm in Sources */,
+				836D648919D0667D00D77D9B /* InfinitNetworkManager.mm in Sources */,
 				83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */,
 				834F13831922532D00BF36A4 /* InfinitLinkProgressIndicator.m in Sources */,
 				833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */,
@@ -2578,6 +2611,7 @@
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
 				837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */,
 				83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */,
+				836D648619D063D300D77D9B /* InfinitReachability.m in Sources */,
 				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
 				834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */,
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,

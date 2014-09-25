@@ -29,6 +29,7 @@
 #import "InfinitConversationViewController.h"
 #import "InfinitLoginViewController.h"
 #import "InfinitMainViewController.h"
+#import "InfinitNetworkManager.h"
 #import "InfinitOnboardingController.h"
 #import "InfinitScreenshotManager.h"
 #import "InfinitSettingsWindow.h"
@@ -52,6 +53,7 @@
                                         InfinitLinkManagerProtocol,
                                         InfinitLoginViewControllerProtocol,
                                         InfinitMainViewProtocol,
+                                        InfinitNetworkManagerProtocol,
                                         InfinitOnboardingProtocol,
                                         InfinitScreenshotManagerProtocol,
                                         InfinitSettingsProtocol,

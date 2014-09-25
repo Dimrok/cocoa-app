@@ -59,6 +59,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   InfinitStayAwakeManager* _stay_awake_manager;
   IATransactionManager* _transaction_manager;
   InfinitLinkManager* _link_manager;
+  InfinitNetworkManager* _network_manager;
   InfinitScreenshotManager* _screenshot_manager;
   IAUserManager* _user_manager;
   
@@ -104,6 +105,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     _me_manager = [[IAMeManager alloc] initWithDelegate:self];
     _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
     _link_manager = [[InfinitLinkManager alloc] initWithDelegate:self];
+    _network_manager = [[InfinitNetworkManager alloc] initWithDelegate:self];
     _screenshot_manager = [[InfinitScreenshotManager alloc] initWithDelegate:self];
     _user_manager = [IAUserManager sharedInstanceWithDelegate:self];
     
@@ -538,8 +540,9 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   [[IACrashReportManager sharedInstance] sendExistingCrashReports];
   
   [[IAGapState instance] startPolling];
-  
+
   [self updateStatusBarIcon];
+  _login_view_controller = nil;
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
@@ -610,7 +613,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
       case gap_meta_down_with_message:
         error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"Infinit is currently unavailable, try again later.",
+                 NSLocalizedString(@"Infinit is currently unavailable.",
                                    @"infinit is currently unavailable")];
         // XXX display actual Meta message
         break;
@@ -619,7 +622,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
         if (_new_credentials)
         {
           error = [NSString stringWithFormat:@"%@",
-                   NSLocalizedString(@"Unable to contact our servers, please contact support.",
+                   NSLocalizedString(@"Unable to contact our servers, contact support.",
                                      @"unable to contact our servers")];
           break;
         }
@@ -1170,6 +1173,11 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   [_report_problem_controller show];
 }
 
+- (void)loginViewWantsCheckForUpdate:(InfinitLoginViewController*)sender
+{
+  [_delegate mainControllerWantsCheckForUpdate:self];
+}
+
 - (void)registered:(InfinitLoginViewController*)sender
          withEmail:(NSString*)email
 {
@@ -1407,7 +1415,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (void)openPreferences
 {
-  if (![[IAGapState instance] logged_in] || _me_manager.connection_status != gap_user_status_online)
+  if (![[IAGapState instance] logged_in])
     return;
 
   [self closeNotificationWindowWithoutLosingFocus];
