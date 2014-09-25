@@ -121,7 +121,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-GQ-jBL">
+                        <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-GQ-jBL">
                             <rect key="frame" x="34" y="191" width="158" height="19"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="CREATE YOUR ACCOUNT" id="fMH-Tr-bf0">
                                 <font key="font" size="12" name="Montserrat-Regular"/>
@@ -206,7 +206,6 @@
                         <constraint firstItem="39" firstAttribute="top" secondItem="GsY-kP-ntE" secondAttribute="bottom" constant="9" id="fqa-gW-vns"/>
                         <constraint firstAttribute="trailing" secondItem="397" secondAttribute="trailing" constant="10" id="jyx-Vz-C4L"/>
                         <constraint firstItem="zju-bT-mfu" firstAttribute="top" secondItem="20" secondAttribute="top" constant="116" id="neX-oN-GKR"/>
-                        <constraint firstItem="E8a-GQ-jBL" firstAttribute="leading" secondItem="20" secondAttribute="leading" constant="36" id="pwh-rv-tps"/>
                         <constraint firstAttribute="bottom" secondItem="40" secondAttribute="bottom" constant="55" id="xeC-NW-ETo"/>
                     </constraints>
                 </customView>
