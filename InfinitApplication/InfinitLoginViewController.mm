@@ -58,6 +58,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   NSDictionary* _link_hover_attrs;
   NSDictionary* _link_right_attrs;
   NSDictionary* _link_right_hover_attrs;
+  NSDictionary* _action_attrs;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -127,6 +128,12 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
                                               paragraphStyle:link_right
                                                       colour:IA_RGB_COLOUR(11.0, 117.0, 162)
                                                       shadow:nil];
+    
+    _action_attrs = [IAFunctions textStyleWithFont:[NSFont fontWithName:@"Montserrat" size:12.0]
+                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                            colour:IA_RGB_COLOUR(60, 60, 60)
+                                            shadow:nil];
+
     _showing_error = NO;
   }
   return self;
@@ -154,13 +161,17 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   {
     action_button_text = NSLocalizedString(@"REGISTER", nil);
     got_account_text = NSLocalizedString(@"Already have an account?", nil);
-    self.action_text.stringValue = NSLocalizedString(@"CREATE AN ACCOUNT", nil);
+    self.action_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"CREATE AN ACCOUNT", nil)
+                                      attributes:_action_attrs];
   }
   else
   {
     action_button_text = NSLocalizedString(@"LOGIN", nil);
     got_account_text = NSLocalizedString(@"Need an account?", nil);
-    self.action_text.stringValue = NSLocalizedString(@"LOGIN", nil);
+    self.action_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LOGIN", nil)
+                                      attributes:_action_attrs];
   }
   self.action_button.attributedTitle = [[NSAttributedString alloc] initWithString:action_button_text
                                                                        attributes:_button_attrs];
@@ -207,10 +218,19 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [super loadView];
   if (_mode != INFINIT_LOGIN_VIEW_REGISTER)
   {
+    self.action_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LOGIN", nil)
+                                      attributes:_action_attrs];
      self.fullname.alphaValue = 0.0;
      self.fullname.hidden = YES;
      self.content_height_constraint.constant = 333.0;
      [self.view.window makeFirstResponder:self.email_address];
+  }
+  else
+  {
+    self.action_text.attributedStringValue =
+      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"CREATE AN ACCOUNT", nil)
+                                      attributes:_action_attrs];
   }
 }
 
@@ -379,6 +399,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 - (BOOL)loginInputsGood
 {
+  self.email_address.stringValue =
+    [self.email_address.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   if (![IAFunctions stringIsValidEmail:self.email_address.stringValue])
   {
     NSString* error = NSLocalizedString(@"Please enter a valid email address.", nil);
@@ -406,6 +428,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 - (BOOL)registerInputsGood
 {
+  self.email_address.stringValue =
+    [self.email_address.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   if (self.fullname.stringValue.length < 3)
   {
     NSString* error = NSLocalizedString(@"Please enter a name with at least 3 characters", nil);
