@@ -748,15 +748,6 @@ writeRepresentedObjects:(NSArray*)objects
   return cell;
 }
 
-- (NSTableRowView*)tableView:(NSTableView*)tableView
-               rowViewForRow:(NSInteger)row
-{
-  NSTableRowView* row_view = [tableView rowViewAtRow:row makeIfNecessary:YES];
-  if (row_view == nil)
-    row_view = [[NSTableRowView alloc] initWithFrame:NSZeroRect];
-  return row_view;
-}
-
 //- User Interactions With Table -------------------------------------------------------------------
 
 - (void)setHover:(BOOL)hover
@@ -1056,17 +1047,20 @@ writeRepresentedObjects:(NSArray*)objects
     if ([element.user isEqual:user])
     {
       NSImage* image = [notification.userInfo objectForKey:@"avatar"];
-      IASearchResultsCellView* cell =
-        [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-      if (image == nil || cell == nil)
+      if (row < self.table_view.numberOfRows)
+      {
+        IASearchResultsCellView* cell =
+          [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+        if (image == nil || cell == nil)
+          return;
+        element.avatar = image;
+        [cell setUserAvatar:[IAFunctions makeRoundAvatar:image
+                                              ofDiameter:24.0
+                                   withBorderOfThickness:0.0
+                                                inColour:IA_GREY_COLOUR(255.0)
+                                       andShadowOfRadius:0.0]];
         return;
-      element.avatar = image;
-      [cell setUserAvatar:[IAFunctions makeRoundAvatar:image
-                                            ofDiameter:24.0
-                                 withBorderOfThickness:0.0
-                                              inColour:IA_GREY_COLOUR(255.0)
-                                     andShadowOfRadius:0.0]];
-      return;
+      }
     }
     row++;
   }
