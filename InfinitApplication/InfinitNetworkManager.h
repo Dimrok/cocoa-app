@@ -16,6 +16,8 @@
 
 - (id)initWithDelegate:(id<InfinitNetworkManagerProtocol>)delegate;
 
+- (void)checkProxySettings;
+
 @end
 
 @protocol InfinitNetworkManagerProtocol <NSObject>

@@ -70,6 +70,8 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
   NSNumber* _modal_port;
   NSString* _modal_username;
   NSString* _modal_password;
+
+  BOOL _checking_for_proxy;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -85,6 +87,7 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
                                                object:nil];
     _reachability = [InfinitReachability reachabilityForInternetConnection];
     [_reachability startNotifier];
+    _checking_for_proxy = NO;
     [self checkProxySettings];
   }
   return self;
@@ -118,6 +121,9 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
 
 - (void)checkProxySettings
 {
+  if (_checking_for_proxy)
+    return;
+  _checking_for_proxy = YES;
   _http_proxy = nil;
   _https_proxy = nil;
   _socks_proxy = nil;
@@ -197,6 +203,7 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
             }
             else
             {
+              proxy.host = @"";
             }
           }
         }
@@ -232,6 +239,7 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
     }
     CFRelease(proxies);
   }
+  _checking_for_proxy = NO;
 }
 
 //- Proxy Modal Protocol ---------------------------------------------------------------------------

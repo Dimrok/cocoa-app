@@ -481,6 +481,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   [_status_bar_icon setLoggingIn:YES];
   if (_current_view_controller == _not_logged_view_controller)
     [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
+
+  [_network_manager checkProxySettings];
   
   [[IAGapState instance] login:username
                   withPassword:password
