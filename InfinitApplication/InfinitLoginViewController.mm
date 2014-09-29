@@ -451,7 +451,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   if (result.success)
   {
     ELLE_LOG("%s: Successfully registered as: %s",
-             self.description.UTF8String, self.email_address.stringValue);
+             self.description.UTF8String, self.email_address.stringValue.UTF8String);
     [[IAKeychainManager sharedInstance] addPasswordKeychain:self.email_address.stringValue
                                                    password:self.password.stringValue];
     [_delegate registered:self withEmail:self.email_address.stringValue];
