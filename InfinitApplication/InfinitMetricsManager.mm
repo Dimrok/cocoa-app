@@ -131,6 +131,8 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"upload screenshot";
     case INFINIT_METRIC_FAVOURITES_LINK_DROP:
       return @"create link";
+    case INFINIT_METRIC_FAVOURITES_PERSON_DROP:
+      return @"create transaction";
     case INFINIT_METRIC_STATUS_ICON_LINK_DROP:
       return @"create link";
     case INFINIT_METRIC_CONTEXTUAL_SEND:
@@ -186,6 +188,8 @@ static InfinitMetricsManager* _shared_instance = nil;
     case INFINIT_METRIC_UPLOAD_SCREENSHOT:
       return @"automatic";
     case INFINIT_METRIC_FAVOURITES_LINK_DROP:
+      return @"favourites";
+    case INFINIT_METRIC_FAVOURITES_PERSON_DROP:
       return @"favourites";
     case INFINIT_METRIC_STATUS_ICON_LINK_DROP:
       return @"status icon drop";
