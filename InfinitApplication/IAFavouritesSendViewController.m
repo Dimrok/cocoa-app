@@ -323,6 +323,7 @@ static NSSize favourites_size = {430.f, 170.f};
         gotDropOnUser:(IAUser*)user
             withFiles:(NSArray*)files
 {
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_FAVOURITES_PERSON_DROP];
   CGFloat end_size = 250.0;
   NSRect end_rect = NSMakeRect(sender.frame.origin.x - ((end_size - sender.frame.size.width) / 2.0),
                                sender.frame.origin.y - ((end_size - sender.frame.size.height) / 2.0),
