@@ -270,6 +270,8 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
                   email:(NSString*)email
                password:(NSString*)hash_password
 {
+  if (_callbacks_set == NO)
+    [self setCallbacks];
   gap_Status res = gap_register(_state,
                                 fullname.UTF8String,
                                 email.UTF8String,
