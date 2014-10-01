@@ -389,17 +389,18 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
   InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
 
-  if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON];
-    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
-  }
-  else if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-           onboarding_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
-  {
-    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
-  }
-  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+//  if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON];
+//    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
+//  }
+//  else if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
+//           onboarding_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
+//  {
+//    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
+//  }
+//  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
+  if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
   {
     [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:0.5];
   }
@@ -579,11 +580,11 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (void)userGotClicked:(IAUser*)user
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON &&
-      [[_delegate receiveOnboardingTransaction:self] other_user] == user)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
-  }
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON &&
+//      [[_delegate receiveOnboardingTransaction:self] other_user] == user)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
+//  }
   _transaction_controller.changing = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
@@ -739,10 +740,10 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (IBAction)sendButtonClicked:(NSButton*)sender
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
-  }
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
+//  }
   _transaction_controller.changing = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
