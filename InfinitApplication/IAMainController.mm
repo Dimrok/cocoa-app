@@ -527,7 +527,14 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   // XXX We must find a better way to manage fetching of history per user
   [_transaction_manager getHistory];
   [_link_manager getHistory];
+
+  [[IACrashReportManager sharedInstance] sendExistingCrashReports];
   
+  [[IAGapState instance] startPolling];
+
+  [self updateStatusBarIcon];
+  _login_view_controller = nil;
+
   if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"4"])
   {
     [self closeNotificationWindow];
@@ -539,12 +546,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   {
     [self showNotifications];
   }
-  [[IACrashReportManager sharedInstance] sendExistingCrashReports];
-  
-  [[IAGapState instance] startPolling];
-
-  [self updateStatusBarIcon];
-  _login_view_controller = nil;
 }
 
 - (void)loginCallback:(IAGapOperationResult*)result
@@ -798,6 +799,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   [_settings_window close];
   [self closeNotificationWindow];
   [self updateStatusBarIcon];
+  [_network_manager checkProxySettings];
   [[IAGapState instance] logout:@selector(logoutAndShowLoginCallback:) onObject:self];
 }
 
