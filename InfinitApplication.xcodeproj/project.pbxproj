@@ -41,7 +41,6 @@
 		8328082A17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328080A17A2B4A60025B6F8 /* Cocoa.framework */; };
 		8328083217A2B4A60025B6F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8328083017A2B4A60025B6F8 /* InfoPlist.strings */; };
 		8328083517A2B4A60025B6F8 /* InfinitApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8328083417A2B4A60025B6F8 /* InfinitApplicationTests.m */; };
-		8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8328084117A2B51F0025B6F8 /* application_icon.icns */; };
 		832808C717A2BBD70025B6F8 /* IAStatusBarIcon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808C617A2BBD70025B6F8 /* IAStatusBarIcon.mm */; };
 		832808CF17A2C1480025B6F8 /* IAFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808CE17A2C1480025B6F8 /* IAFunctions.mm */; };
 		832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808D117A2C9E40025B6F8 /* IAMainController.mm */; };
@@ -91,6 +90,7 @@
 		834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 834F13851922618200BF36A4 /* InfinitMainViewController.mm */; };
 		834F13881922618200BF36A4 /* InfinitMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834F13861922618200BF36A4 /* InfinitMainViewController.xib */; };
 		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; };
+		8364920219DB12CA004F911D /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8364920119DB12CA004F911D /* icon.icns */; };
 		836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 836A679318D790D600A15677 /* InfinitConversationElement.m */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
 		836D648619D063D300D77D9B /* InfinitReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D648519D063D300D77D9B /* InfinitReachability.m */; };
@@ -314,7 +314,6 @@
 		83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.mm */; };
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
 		83B9744518842F540089E0E0 /* InfinitSendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B9744418842F540089E0E0 /* InfinitSendFileListCellView.m */; };
-		83BDF6701935955200DDA4E6 /* Infinit - Episode 2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 83BDF66F193594FA00DDA4E6 /* Infinit - Episode 2.mp4 */; };
 		83BEC54F186047EE00EB277E /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83BEC54E186047EE00EB277E /* sound_sent.aiff */; };
 		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
 		83C30A2A193298BF00D07D2C /* InfinitScreenshotManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */; };
@@ -661,7 +660,6 @@
 		8328083117A2B4A60025B6F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8328083317A2B4A60025B6F8 /* InfinitApplicationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfinitApplicationTests.h; sourceTree = "<group>"; };
 		8328083417A2B4A60025B6F8 /* InfinitApplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfinitApplicationTests.m; sourceTree = "<group>"; };
-		8328084117A2B51F0025B6F8 /* application_icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = application_icon.icns; sourceTree = "<group>"; };
 		8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = ../Sparkle/Sparkle.xcodeproj; sourceTree = "<group>"; };
 		832808C517A2BBD70025B6F8 /* IAStatusBarIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAStatusBarIcon.h; sourceTree = "<group>"; };
 		832808C617A2BBD70025B6F8 /* IAStatusBarIcon.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = IAStatusBarIcon.mm; sourceTree = "<group>"; };
@@ -734,6 +732,7 @@
 		834F13851922618200BF36A4 /* InfinitMainViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitMainViewController.mm; sourceTree = "<group>"; };
 		834F13861922618200BF36A4 /* InfinitMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitMainViewController.xib; sourceTree = "<group>"; };
 		8364316717DDC39B00572726 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../Externals/lib/libstation.dylib; sourceTree = "<group>"; };
+		8364920119DB12CA004F911D /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = "../../../../fist-resources/slices/mac/icon/icon.icns"; sourceTree = "<group>"; };
 		8368F2BD17F1890C00135C37 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		836A679218D790D600A15677 /* InfinitConversationElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationElement.h; sourceTree = "<group>"; };
 		836A679318D790D600A15677 /* InfinitConversationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationElement.m; sourceTree = "<group>"; };
@@ -973,7 +972,6 @@
 		83B8A726182246E500AD775F /* InfinitLoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitLoginViewController.mm; sourceTree = "<group>"; };
 		83B8A727182246E500AD775F /* InfinitLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitLoginViewController.xib; sourceTree = "<group>"; };
 		83B9744418842F540089E0E0 /* InfinitSendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFileListCellView.m; sourceTree = "<group>"; };
-		83BDF66F193594FA00DDA4E6 /* Infinit - Episode 2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Infinit - Episode 2.mp4"; path = "../../../../fist-resources/onboarding_videos/Infinit - Episode 2.mp4"; sourceTree = "<group>"; };
 		83BEC54E186047EE00EB277E /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = sound_sent.aiff; sourceTree = "<group>"; };
 		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
 		83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitScreenshotManager.h; sourceTree = "<group>"; };
@@ -1262,7 +1260,7 @@
 		8328084017A2B5100025B6F8 /* Common Resources */ = {
 			isa = PBXGroup;
 			children = (
-				83BDF66F193594FA00DDA4E6 /* Infinit - Episode 2.mp4 */,
+				8364920119DB12CA004F911D /* icon.icns */,
 				83059E0A19213B42008DA14A /* Montserrat.ttf */,
 				83BEC54E186047EE00EB277E /* sound_sent.aiff */,
 				837A7F8417FC25E000600ACD /* bg-main-button-disabled.png */,
@@ -1277,7 +1275,6 @@
 				831FB23517A9370400696604 /* bg-header-top-gray@2x.png */,
 				83C99E0817AB9A1700AFF091 /* bg-header-top-white.png */,
 				83C99E0917AB9A1700AFF091 /* bg-header-top-white@2x.png */,
-				8328084117A2B51F0025B6F8 /* application_icon.icns */,
 				836EAD801988EEC70053BE85 /* icon-status-online.png */,
 				836EAD811988EEC70053BE85 /* icon-status-online@2x.png */,
 			);
@@ -2265,7 +2262,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83BDF6701935955200DDA4E6 /* Infinit - Episode 2.mp4 in Resources */,
 				83A2089B1994D31D00C85C47 /* clippy_5.png in Resources */,
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
 				836EAD4D1988EE710053BE85 /* arrow-tooltip-onboarding.png in Resources */,
@@ -2295,7 +2291,6 @@
 				836EADE71988F3960053BE85 /* send-icon-files@2x.png in Resources */,
 				836EADCF1988F2040053BE85 /* icon-gear@2x.png in Resources */,
 				836EADEB1988F3960053BE85 /* send-icon-show-files@2x.png in Resources */,
-				8328084217A2B51F0025B6F8 /* application_icon.icns in Resources */,
 				836EADDE1988F33F0053BE85 /* icon-star.png in Resources */,
 				836EAD861988EEC70053BE85 /* conversation-icon-accept.png in Resources */,
 				836EADFB1988F3DE0053BE85 /* icon-contact-checked@2x.png in Resources */,
@@ -2376,6 +2371,7 @@
 				836EAE521988F4500053BE85 /* icon-menu-bar-animated-black-13.png in Resources */,
 				836EADA41988EEC70053BE85 /* conversation-icon-reject.png in Resources */,
 				836EADD21988F2270053BE85 /* icon-upload.png in Resources */,
+				8364920219DB12CA004F911D /* icon.icns in Resources */,
 				836EADB21988EEC70053BE85 /* icon-status-online@2x.png in Resources */,
 				83A208931994D31D00C85C47 /* clippy_1.png in Resources */,
 				836EADE91988F3960053BE85 /* send-icon-hide-files@2x.png in Resources */,
