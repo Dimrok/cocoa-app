@@ -25,7 +25,6 @@
 #import "IAStatusBarIcon.h"
 #import "IAViewController.h"
 #import "IAWindowController.h"
-#import "InfinitClippyViewController.h"
 #import "InfinitConversationViewController.h"
 #import "InfinitLoginViewController.h"
 #import "InfinitMainViewController.h"
@@ -48,7 +47,6 @@
                                         IAUserManagerProtocol,
                                         IAViewProtocol,
                                         IAWindowControllerProtocol,
-                                        InfinitClippyProtocol,
                                         InfinitConversationViewProtocol,
                                         InfinitLinkManagerProtocol,
                                         InfinitLoginViewControllerProtocol,
