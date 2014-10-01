@@ -106,13 +106,22 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
   if (_reachability.currentReachabilityStatus == InfinitNotReachable)
   {
     ELLE_LOG("%s: lost internet connection", self.description.UTF8String);
+    [[IAGapState instance] setInternetConnection:NO
+                                 performSelector:@selector(setInternetConnectionCallback:)
+                                        onObject:self];
   }
   else if (_reachability.currentReachabilityStatus == InfinitReachable)
   {
     ELLE_LOG("%s: got internet connection", self.description.UTF8String);
     [self checkProxySettings];
+    [[IAGapState instance] setInternetConnection:YES
+                                 performSelector:@selector(setInternetConnectionCallback:)
+                                        onObject:self];
   }
 }
+
+- (void)setInternetConnectionCallback:(IAGapOperationResult*)result
+{}
 
 - (NSString*)proxy:(NSString*)proxy_type withStr:(NSString*)str
 {
