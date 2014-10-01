@@ -154,7 +154,7 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
           if (![[[IAUserPrefs sharedInstance] prefsForKey:@"asked_proxy_permission"] isEqualToString:@"1"])
           {
             NSAlert* permission_popup = [[NSAlert alloc] init];
-            permission_popup.icon = [NSImage imageNamed:@"application_icon"];
+            permission_popup.icon = [NSImage imageNamed:@"icon"];
             [permission_popup addButtonWithTitle:@"OK"];
             permission_popup.messageText = NSLocalizedString(@"Proxy Permission", nil);
             permission_popup.informativeText =
