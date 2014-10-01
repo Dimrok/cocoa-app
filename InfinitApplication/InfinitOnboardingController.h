@@ -36,8 +36,10 @@ typedef enum __InfinitOnboardingState
 @property (nonatomic, readwrite) IATransaction* send_transaction;
 @property (nonatomic, readonly) BOOL receive_onboarding_done;
 
-- (id)initWithDeleage:(id<InfinitOnboardingProtocol>)delegate
+- (id)initWithDelegate:(id<InfinitOnboardingProtocol>)delegate
        andReceiveTransaction:(IATransaction*)transaction;
+
+- (id)initForSendOnboardingWithDelegate:(id<InfinitOnboardingProtocol>)delegate;
 
 - (BOOL)inSendOnboarding;
 

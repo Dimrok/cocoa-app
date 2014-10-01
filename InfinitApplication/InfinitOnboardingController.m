@@ -19,7 +19,7 @@
 @synthesize send_transaction = _send_transaction;
 @synthesize receive_onboarding_done = _receive_onboarding_done;
 
-- (id)initWithDeleage:(id<InfinitOnboardingProtocol>)delegate
+- (id)initWithDelegate:(id<InfinitOnboardingProtocol>)delegate
 andReceiveTransaction:(IATransaction*)transaction
 {
   if (self = [super init])
@@ -27,6 +27,17 @@ andReceiveTransaction:(IATransaction*)transaction
     _delegate = delegate;
     _receive_transaction = transaction;
     _receive_onboarding_done = NO;
+  }
+  return self;
+}
+
+- (id)initForSendOnboardingWithDelegate:(id<InfinitOnboardingProtocol>)delegate
+{
+  if (self = [super init])
+  {
+    _delegate = delegate;
+    _receive_onboarding_done = YES;
+    _receive_transaction = nil;
   }
   return self;
 }
