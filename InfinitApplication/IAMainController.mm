@@ -34,7 +34,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   
   // View controllers
   IAViewController* _current_view_controller;
-  InfinitClippyViewController* _clippy_view_controller;
+//  InfinitClippyViewController* _clippy_view_controller;
   InfinitConversationViewController* _conversation_view_controller;
   IAGeneralSendController* _general_send_controller;
   InfinitLoginViewController* _login_view_controller;
@@ -319,19 +319,19 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)openOrChangeViewController:(IAViewController*)view_controller
 {
-  if (view_controller.class != InfinitClippyViewController.class)
+//  if (view_controller.class != InfinitClippyViewController.class)
     [_status_bar_icon setHighlighted:YES];
-  else
-    [_status_bar_icon setHighlighted:NO];
+//  else
+//    [_status_bar_icon setHighlighted:NO];
   if ([_window_controller windowIsOpen])
   {
-    if (_current_view_controller.class == InfinitClippyViewController.class)
-    {
-      [self closeNotificationWindow];
-      [self performSelector:@selector(openOrChangeViewController:)
-                 withObject:view_controller
-                 afterDelay:0.4];
-    }
+//    if (_current_view_controller.class == InfinitClippyViewController.class)
+//    {
+//      [self closeNotificationWindow];
+//      [self performSelector:@selector(openOrChangeViewController:)
+//                 withObject:view_controller
+//                 afterDelay:0.4];
+//    }
     [_window_controller changeToViewController:view_controller];
   }
   else
@@ -341,13 +341,13 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   }
 }
 
-- (void)showClippyViewWithMode:(InfinitClippyMode)mode
-{
-  _clippy_view_controller = nil;
-  _clippy_view_controller = [[InfinitClippyViewController alloc] initWithDelegate:self
-                                                                          andMode:mode];
-  [self openOrChangeViewController:_clippy_view_controller];
-}
+//- (void)showClippyViewWithMode:(InfinitClippyMode)mode
+//{
+//  _clippy_view_controller = nil;
+//  _clippy_view_controller = [[InfinitClippyViewController alloc] initWithDelegate:self
+//                                                                          andMode:mode];
+//  [self openOrChangeViewController:_clippy_view_controller];
+//}
 
 - (void)showConversationViewForUser:(IAUser*)user
 {
@@ -854,24 +854,25 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)startOnboarding
 {
-  IATransaction* fake_transaction = [_transaction_manager makeOnboardingTransaction];
-  if (fake_transaction == nil)
-    return;
-  _onboard_controller = [[InfinitOnboardingController alloc] initWithDeleage:self
-                                                       andReceiveTransaction:fake_transaction];
-  [_onboard_controller setState:INFINIT_ONBOARDING_RECEIVE_NOTIFICATION];
-  [self performSelector:@selector(waitForUserToClickNotification) withObject:nil afterDelay:10.0];
+//  IATransaction* fake_transaction = [_transaction_manager makeOnboardingTransaction];
+//  if (fake_transaction == nil)
+//    return;
+//  _onboard_controller = [[InfinitOnboardingController alloc] initWithDeleage:self
+//                                                       andReceiveTransaction:fake_transaction];
+//  [_onboard_controller setState:INFINIT_ONBOARDING_RECEIVE_NOTIFICATION];
+//  [self performSelector:@selector(waitForUserToClickNotification) withObject:nil afterDelay:10.0];
+  _onboard_controller = [[InfinitOnboardingController alloc] initForSendOnboardingWithDelegate:self];
 }
 
-- (void)waitForUserToClickNotification
-{
-  // The user didn't react to the desktop notification so follow track for didn't do anything.
-  if (_current_view_controller == nil &&
-      _onboard_controller.state != INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON)
-  {
-    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_NO_ACTION;
-  }
-}
+//- (void)waitForUserToClickNotification
+//{
+//  // The user didn't react to the desktop notification so follow track for didn't do anything.
+//  if (_current_view_controller == nil &&
+//      _onboard_controller.state != INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON)
+//  {
+//    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_NO_ACTION;
+//  }
+//}
 
 - (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
 {
@@ -933,15 +934,15 @@ wantsMarkTransactionsReadForUser:(IAUser*)user
 - (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 {
-  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION ||
-      _onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
-  {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(waitForUserToClickNotification)
-                                               object:nil];
-    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW;
-  }
-  
+//  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION ||
+//      _onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
+//  {
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self
+//                                             selector:@selector(waitForUserToClickNotification)
+//                                               object:nil];
+//    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW;
+//  }
+
   IATransaction* transaction = [_transaction_manager transactionWithId:transaction_id];
   if (transaction == nil)
     return;
@@ -1339,18 +1340,18 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 //- Clippy Protocol --------------------------------------------------------------------------------
 
-- (void)clippyViewGotDoneClicked:(InfinitClippyViewController*)sender
-{
-  if (_clippy_view_controller.mode == INFINIT_CLIPPY_TRANSFER_PENDING)
-  {
-    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON;
-  }
-  else if (_clippy_view_controller.mode == INFINIT_CLIPPY_DRAG_AND_DROP)
-  {
-    _onboard_controller.state = INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION;
-  }
-  [self closeNotificationWindow];
-}
+//- (void)clippyViewGotDoneClicked:(InfinitClippyViewController*)sender
+//{
+//  if (_clippy_view_controller.mode == INFINIT_CLIPPY_TRANSFER_PENDING)
+//  {
+//    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON;
+//  }
+//  else if (_clippy_view_controller.mode == INFINIT_CLIPPY_DRAG_AND_DROP)
+//  {
+//    _onboard_controller.state = INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION;
+//  }
+//  [self closeNotificationWindow];
+//}
 
 //- Onboarding Protocol ----------------------------------------------------------------------------
 
@@ -1362,39 +1363,39 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)onboardingStateChanged:(InfinitOnboardingController*)sender
                        toState:(InfinitOnboardingState)state
 {
-  switch (state)
-  {
-    case INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON:
-    case INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW:
-      [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                               selector:@selector(waitForUserToClickNotification)
-                                                 object:nil];
-      return;
-
-    case INFINIT_ONBOARDING_RECEIVE_NO_ACTION:
-      [self showClippyViewWithMode:INFINIT_CLIPPY_TRANSFER_PENDING];
-      return;
-      
-    case INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD:
-      _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_DONE;
-      [self performSelector:@selector(delayShowClippyDragAndDrop) withObject:nil afterDelay:145.0];
-      return;
-      
-    case INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE:
-      _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_DONE;
-      [self performSelector:@selector(delayShowClippyDragAndDrop) withObject:nil afterDelay:3.0];
-      return;
-      
-    default:
-      return;
-  }
+//  switch (state)
+//  {
+//    case INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON:
+//    case INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW:
+//      [NSObject cancelPreviousPerformRequestsWithTarget:self
+//                                               selector:@selector(waitForUserToClickNotification)
+//                                                 object:nil];
+//      return;
+//
+//    case INFINIT_ONBOARDING_RECEIVE_NO_ACTION:
+//      [self showClippyViewWithMode:INFINIT_CLIPPY_TRANSFER_PENDING];
+//      return;
+//      
+//    case INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD:
+//      _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_DONE;
+//      [self performSelector:@selector(delayShowClippyDragAndDrop) withObject:nil afterDelay:145.0];
+//      return;
+//      
+//    case INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE:
+//      _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_DONE;
+//      [self performSelector:@selector(delayShowClippyDragAndDrop) withObject:nil afterDelay:3.0];
+//      return;
+//      
+//    default:
+//      return;
+//  }
 }
 
-- (void)delayShowClippyDragAndDrop
-{
-  if (_current_view_controller == nil)
-    [self showClippyViewWithMode:INFINIT_CLIPPY_DRAG_AND_DROP];
-}
+//- (void)delayShowClippyDragAndDrop
+//{
+//  if (_current_view_controller == nil)
+//    [self showClippyViewWithMode:INFINIT_CLIPPY_DRAG_AND_DROP];
+//}
 
 //- Report Problem Protocol ------------------------------------------------------------------------
 
@@ -1476,12 +1477,13 @@ hadConnectionStateChange:(gap_UserStatus)status
 
 - (void)statusBarIconClicked:(IAStatusBarIcon*)sender
 {
-  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
-  {
-    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON;
-    [self showNotifications];
-  }
-  else if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_DONE)
+//  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
+//  {
+//    _onboard_controller.state = INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON;
+//    [self showNotifications];
+//  }
+//  else if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_DONE)
+  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_DONE)
   {
     _onboard_controller.state = INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION;
     [self showNotifications];
