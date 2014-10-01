@@ -92,10 +92,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (BOOL)closeOnFocusLost
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE];
-  }
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE];
+//  }
   return YES;
 }
 
@@ -200,69 +200,69 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self.table_view reloadData];
   [self resizeContentView];
   [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
-  if ([[_delegate receiveOnboardingTransaction:self] other_user] == _user)
-  {
-    InfinitOnboardingState onboard_state = [_delegate onboardingState:self];
-    if (onboard_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
-        onboard_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-        onboard_state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION ||
-        onboard_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
-      [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:0.5];
-    }
-  }
-  else if ([[[_delegate sendOnboardingTransaction:self] other_user] isEqual:_user])
-  {
-    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
-      [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:0.5];
-    }
-  }
+//  if ([[_delegate receiveOnboardingTransaction:self] other_user] == _user)
+//  {
+//    InfinitOnboardingState onboard_state = [_delegate onboardingState:self];
+//    if (onboard_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
+//        onboard_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
+//        onboard_state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION ||
+//        onboard_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
+//    {
+//      [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
+//      [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:0.5];
+//    }
+//  }
+//  else if ([[[_delegate sendOnboardingTransaction:self] other_user] isEqual:_user])
+//  {
+//    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
+//    {
+//      [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
+//      [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:0.5];
+//    }
+//  }
   [self updateListOfRowsWithProgress];
 }
 
-- (void)delayedStartOnboarding
-{
-  IATransaction* onboarding_transaction = [_delegate receiveOnboardingTransaction:self];
-  NSInteger row = [self _rowForTransaction:onboarding_transaction];
-  if (row == -1)
-    return;
-
-  if (onboarding_transaction.view_mode != TRANSACTION_VIEW_WAITING_ACCEPT)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_DONE];
-  }
-
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-  NSString* message = NSLocalizedString(@"Click here to accept", nil);
-  [_tooltip showPopoverForView:cell.accept_button
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
-}
-
-- (void)delayedStatusOnboarding
-{
-  IATransaction* onboarding_transaction = [_delegate sendOnboardingTransaction:self];
-  NSInteger row = [self _rowForTransaction:onboarding_transaction];
-  if (row == -1)
-    return;
-
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-  NSString* message = NSLocalizedString(@"Hover here for the status", nil);
-  [_tooltip showPopoverForView:cell.transaction_status_button
-            withArrowDirection:INPopoverArrowDirectionRight
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
-}
+//- (void)delayedStartOnboarding
+//{
+//  IATransaction* onboarding_transaction = [_delegate receiveOnboardingTransaction:self];
+//  NSInteger row = [self _rowForTransaction:onboarding_transaction];
+//  if (row == -1)
+//    return;
+//
+//  if (onboarding_transaction.view_mode != TRANSACTION_VIEW_WAITING_ACCEPT)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_DONE];
+//  }
+//
+//  if (_tooltip == nil)
+//    _tooltip = [[InfinitTooltipViewController alloc] init];
+//  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+//  NSString* message = NSLocalizedString(@"Click here to accept", nil);
+//  [_tooltip showPopoverForView:cell.accept_button
+//            withArrowDirection:INPopoverArrowDirectionLeft
+//                   withMessage:message
+//              withPopAnimation:YES
+//                       forTime:5.0];
+//}
+//
+//- (void)delayedStatusOnboarding
+//{
+//  IATransaction* onboarding_transaction = [_delegate sendOnboardingTransaction:self];
+//  NSInteger row = [self _rowForTransaction:onboarding_transaction];
+//  if (row == -1)
+//    return;
+//
+//  if (_tooltip == nil)
+//    _tooltip = [[InfinitTooltipViewController alloc] init];
+//  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+//  NSString* message = NSLocalizedString(@"Hover here for the status", nil);
+//  [_tooltip showPopoverForView:cell.transaction_status_button
+//            withArrowDirection:INPopoverArrowDirectionRight
+//                   withMessage:message
+//              withPopAnimation:YES
+//                       forTime:5.0];
+//}
 
 //- View Functions ---------------------------------------------------------------------------------
 
@@ -425,23 +425,23 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
-      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
-      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
-  }
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
+//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
+//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
+//  }
   [self backToNotificationView];
 }
 
 - (IBAction)transferButtonClicked:(NSButton*)sender
 {
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
-      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
-      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
-  }
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
+//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
+//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
+//  }
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
@@ -470,20 +470,20 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     return row;
 }
 
-- (void)delayedReceiveOnboardingDoneWithMessage:(NSString*)message
-{
-  NSUInteger row =
-    [self _rowForTransaction:[_delegate receiveOnboardingTransaction:self]];
-  if (row == -1)
-    return;
-
-  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-  [_tooltip showPopoverForView:cell.file_icon
-            withArrowDirection:INPopoverArrowDirectionRight
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
-}
+//- (void)delayedReceiveOnboardingDoneWithMessage:(NSString*)message
+//{
+//  NSUInteger row =
+//    [self _rowForTransaction:[_delegate receiveOnboardingTransaction:self]];
+//  if (row == -1)
+//    return;
+//
+//  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+//  [_tooltip showPopoverForView:cell.file_icon
+//            withArrowDirection:INPopoverArrowDirectionRight
+//                   withMessage:message
+//              withPopAnimation:YES
+//                       forTime:5.0];
+//}
 
 - (IBAction)conversationCellViewWantsAccept:(NSButton*)sender
 {
@@ -492,16 +492,16 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_delegate conversationView:self
        wantsAcceptTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
-      [_delegate receiveOnboardingTransaction:self] == element.transaction)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
-    [_tooltip close];
-    NSString* message = NSLocalizedString(@"Click here when it's done to open the file", nil);
-    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
-               withObject:message
-               afterDelay:0.5];
-  }
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
+//      [_delegate receiveOnboardingTransaction:self] == element.transaction)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
+//    [_tooltip close];
+//    NSString* message = NSLocalizedString(@"Click here when it's done to open the file", nil);
+//    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
+//               withObject:message
+//               afterDelay:0.5];
+//  }
 }
 
 - (BOOL)transactionCancellable:(IATransactionViewMode)view_mode
@@ -530,16 +530,16 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (![self transactionCancellable:element.transaction.view_mode])
     return;
   
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
-      [_delegate receiveOnboardingTransaction:self] == element.transaction)
-  {
-    [_tooltip close];
-    NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
-    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
-               withObject:message
-               afterDelay:0.5];
-  }
-  
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
+//      [_delegate receiveOnboardingTransaction:self] == element.transaction)
+//  {
+//    [_tooltip close];
+//    NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
+//    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
+//               withObject:message
+//               afterDelay:0.5];
+//  }
+
   [_delegate conversationView:self
        wantsCancelTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_CANCEL];
@@ -556,16 +556,16 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [_delegate conversationView:self
        wantsRejectTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_REJECT];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
-      [_delegate receiveOnboardingTransaction:self] == element.transaction)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
-    [_tooltip close];
-    NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
-    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
-               withObject:message
-               afterDelay:0.5];
-  }
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
+//      [_delegate receiveOnboardingTransaction:self] == element.transaction)
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
+//    [_tooltip close];
+//    NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
+//    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
+//               withObject:message
+//               afterDelay:0.5];
+//  }
 }
 
 //- Person View Protocol ---------------------------------------------------------------------------
@@ -603,12 +603,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)conversationCellBubbleViewGotClicked:(InfinitConversationCellView*)sender
 {
-  NSInteger row = [self.table_view rowForView:sender];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
-      [_delegate receiveOnboardingTransaction:self] == [_elements[row] transaction])
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD];
-  }
+//  NSInteger row = [self.table_view rowForView:sender];
+//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
+//      [_delegate receiveOnboardingTransaction:self] == [_elements[row] transaction])
+//  {
+//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD];
+//  }
 }
 
 //- Transaction Callbacks --------------------------------------------------------------------------
