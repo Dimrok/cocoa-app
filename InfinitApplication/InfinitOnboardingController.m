@@ -38,6 +38,7 @@ andReceiveTransaction:(IATransaction*)transaction
     _delegate = delegate;
     _receive_onboarding_done = YES;
     _receive_transaction = nil;
+    _state = INFINIT_ONBOARDING_RECEIVE_DONE;
   }
   return self;
 }
