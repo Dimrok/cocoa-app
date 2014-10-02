@@ -108,7 +108,7 @@
 
 - (void)setIndicatorOnHover
 {
-  self.indicator.image = [IAFunctions imageNamed:@"icon-expand"];
+  self.indicator.image = [IAFunctions imageNamed:@"main-icon-expand"];
   self.indicator.hidden = NO;
   self.indicator.toolTip = NSLocalizedString(@"Click to expand", nil);
   self.indicator_text.stringValue = NSLocalizedString(@"Open", nil);
@@ -129,7 +129,7 @@
     case TRANSACTION_VIEW_WAITING_ACCEPT:
       if (!transaction.from_me)
       {
-        self.indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
+        self.indicator.image = [IAFunctions imageNamed:@"main-icon-unread"];
         self.indicator.hidden = NO;
       }
       else
@@ -141,25 +141,25 @@
     case TRANSACTION_VIEW_RUNNING:
       if (transaction.from_me)
       {
-        self.indicator.image = [IAFunctions imageNamed:@"icon-main-upload"];
+        self.indicator.image = [IAFunctions imageNamed:@"main-icon-upload"];
         self.indicator.toolTip = @"Uploading";
       }
       else
       {
-        self.indicator.image = [IAFunctions imageNamed:@"icon-main-download"];
+        self.indicator.image = [IAFunctions imageNamed:@"main-icon-download"];
         self.indicator.toolTip = @"Downloading";
       }
       self.indicator.hidden = NO;
       break;
 
     case TRANSACTION_VIEW_FAILED:
-      self.indicator.image = [IAFunctions imageNamed:@"icon-error"];
+      self.indicator.image = [IAFunctions imageNamed:@"main-icon-error"];
       self.indicator.toolTip = @"Failed";
       self.indicator.hidden = NO;
       break;
 
     case TRANSACTION_VIEW_CLOUD_BUFFERED:
-      self.indicator.image = [IAFunctions imageNamed:@"conversation-icon-bufferised"];
+      self.indicator.image = [IAFunctions imageNamed:@"main-icon-bufferised"];
       self.indicator.toolTip = @"Uploaded";
       self.indicator.hidden = NO;
       break;
@@ -235,7 +235,7 @@
 
     self.information.stringValue = message;
 
-    self.indicator.image = [IAFunctions imageNamed:@"icon-main-unread"];
+    self.indicator.image = [IAFunctions imageNamed:@"main-icon-unread"];
     [self.indicator setHidden:NO];
   }
   else
