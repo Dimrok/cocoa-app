@@ -905,6 +905,8 @@
 		837A7F6F17FC072300600ACD /* IAReportProblemWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAReportProblemWindowController.h; sourceTree = "<group>"; };
 		837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAReportProblemWindowController.m; sourceTree = "<group>"; };
 		837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAReportProblemWindowController.xib; sourceTree = "<group>"; };
+		837B2A6719DD962B00A3CDE1 /* InfinitFeatureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFeatureManager.h; sourceTree = "<group>"; };
+		837B2A6819DD962B00A3CDE1 /* InfinitFeatureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFeatureManager.m; sourceTree = "<group>"; };
 		837B2A7E19DD966400A3CDE1 /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = sound_sent.aiff; path = "../../../../fist-resources/sounds/sound_sent.aiff"; sourceTree = "<group>"; };
 		837B2A8019DD966E00A3CDE1 /* sound_finished.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = sound_finished.aiff; path = "../../../../fist-resources/sounds/sound_finished.aiff"; sourceTree = "<group>"; };
 		837B2A8119DD966E00A3CDE1 /* sound_incoming.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = sound_incoming.aiff; path = "../../../../fist-resources/sounds/sound_incoming.aiff"; sourceTree = "<group>"; };
@@ -1717,6 +1719,8 @@
 				83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */,
 				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
 				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */,
+				837B2A6719DD962B00A3CDE1 /* InfinitFeatureManager.h */,
+				837B2A6819DD962B00A3CDE1 /* InfinitFeatureManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2636,6 +2640,7 @@
 				834F136D19217E9600BF36A4 /* InfinitTransactionCellView.m in Sources */,
 				8321BE7A18E0D33600237252 /* InfinitConversationFileCellView.m in Sources */,
 				838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */,
+				837B2A6919DD962B00A3CDE1 /* InfinitFeatureManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
