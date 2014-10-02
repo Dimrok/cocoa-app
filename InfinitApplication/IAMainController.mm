@@ -15,6 +15,7 @@
 #import "IAGap.h"
 #import "IAKeychainManager.h"
 #import "IAUserPrefs.h"
+#import "InfinitFeatureManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTooltipViewController.h"
 
@@ -500,6 +501,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)onSuccessfulLogin
 {
   ELLE_LOG("%s: completed login", self.description.UTF8String);
+
+  [[InfinitFeatureManager sharedInstance] fetchFeatures];
 
   if ([[[IAUserPrefs sharedInstance] prefsForKey:@"updated"] isEqualToString:@"1"])
   {
