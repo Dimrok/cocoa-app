@@ -214,6 +214,11 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
   }
 }
 
+- (gap_Status)internet_connection:(BOOL)connected
+{
+  return gap_internet_connection(_state, connected);
+}
+
 - (gap_Status)set_proxy:(gap_ProxyType)type
                    host:(NSString*)host
                    port:(NSUInteger)port
