@@ -652,9 +652,9 @@ return [NSString stringWithUTF8String:str]; \
                                                                 transaction_id.unsignedIntValue)];
 }
 
-- (void)delete_transaction:(NSNumber*)transaction_id
+- (NSNumber*)delete_transaction:(NSNumber*)transaction_id
 {
-  gap_delete_transaction(_state, transaction_id.unsignedIntValue);
+  return [NSNumber numberWithUnsignedInt:gap_delete_transaction(_state, transaction_id.unsignedIntValue)];
 }
 
 - (NSNumber*)reject_transaction:(NSNumber*)transaction_id
@@ -715,27 +715,23 @@ return [NSString stringWithUTF8String:str]; \
 - (gap_Status)send_last_crash_logs:(NSString*)user_name
                    crash_file_path:(NSString*)crash_file_path
                     last_state_log:(NSString*)last_state_log
-                    os_description:(NSString*)os_description
                    additional_info:(NSString*)additional_info
 {
   return gap_send_last_crash_logs(_state,
                                   user_name.UTF8String,
                                   crash_file_path.UTF8String,
                                   last_state_log.UTF8String,
-                                  os_description.UTF8String,
                                   additional_info.UTF8String);
 }
 
 - (gap_Status)send_user_report:(NSString*)user_name
                        message:(NSString*)message
                      file_path:(NSString*)file_path
-                os_description:(NSString*)os_description
 {
   return gap_send_user_report(_state,
                               user_name.UTF8String,
                               message.UTF8String,
-                              file_path.UTF8String,
-                              os_description.UTF8String);
+                              file_path.UTF8String);
 }
 
 //- Link Transactions ------------------------------------------------------------------------------

@@ -138,8 +138,6 @@ ELLE_LOG_COMPONENT("OSX.CrashReportManager");
   NSString* last_state_log = [[IALogFileManager sharedInstance] lastLogFilePath];
   NSString* crash_file_path = [self getAppleCrashReport];
   
-  NSString* os_description = [NSString stringWithFormat:@"OS X %@", [IAFunctions osVersionString]];
-  
   NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
   NSString* additional_info = @"None";
   
@@ -148,7 +146,6 @@ ELLE_LOG_COMPONENT("OSX.CrashReportManager");
     [[IAGapState instance] sendLastCrashLogsForUser:user_name
                                       crashFilePath:crash_file_path
                                        lastStateLog:last_state_log
-                                      osDescription:os_description
                                      additionalInfo:additional_info
                                     performSelector:@selector(crashReportSent:)
                                            onObject:self];
@@ -168,12 +165,10 @@ ELLE_LOG_COMPONENT("OSX.CrashReportManager");
                           andFile:(NSString*)file_path
 {
   NSString* user_name = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
-  NSString* os_description = [NSString stringWithFormat:@"OS X %@", [IAFunctions osVersionString]];
   
   [[IAGapState instance] sendUserReportForUser:user_name
                                        message:message
                                       filePath:file_path
-                                 osDescription:os_description
                                performSelector:@selector(userReportSent:)
                                       onObject:self];
 }
