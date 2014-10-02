@@ -8,6 +8,8 @@
 
 #import "InfinitMetricsManager.h"
 
+#import "InfinitFeatureManager.h"
+
 #import <version.hh>
 
 #undef check
@@ -243,7 +245,8 @@ static InfinitMetricsManager* _shared_instance = nil;
                                                     @"method": [self _eventMethod:metric],
                                                     @"os": @"OS X",
                                                     @"os_version": [IAFunctions osVersionString],
-                                                    @"timestamp": timestamp}];
+                                                    @"timestamp": timestamp,
+                                                    @"features": [[InfinitFeatureManager sharedInstance] featuresString]}];
   if ([self _userId] != nil)
     [metric_dict setObject:[self _userId] forKey:@"user"];
   else
