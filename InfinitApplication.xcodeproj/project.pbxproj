@@ -68,6 +68,8 @@
 		8337673A19088A820073A621 /* OEXTokenFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673519088A820073A621 /* OEXTokenFieldCell.m */; };
 		8337673B19088A820073A621 /* OEXTokenTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673719088A820073A621 /* OEXTokenTextStorage.m */; };
 		8337673E19088E910073A621 /* InfinitTokenAttachmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673D19088E910073A621 /* InfinitTokenAttachmentCell.m */; };
+		833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.m */; };
+		833B238C19DA938300D3F104 /* InfinitFirstScreenshotModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 833B238A19DA938300D3F104 /* InfinitFirstScreenshotModal.xib */; };
 		833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833B59CB18D75D4800A43339 /* InfinitConversationViewController.mm */; };
 		833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 833B59CC18D75D4800A43339 /* InfinitConversationViewController.xib */; };
 		833B59D418D774C400A43339 /* InfinitConversationCellView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833B59D318D774C400A43339 /* InfinitConversationCellView.mm */; };
@@ -358,6 +360,8 @@
 		83EC175919AB2DFA0063A3B3 /* InfinitSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EC175819AB2DFA0063A3B3 /* InfinitSettingsViewController.m */; };
 		83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */; };
 		83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */; };
+		83F1A37519DEBC400045ADD7 /* screenshot_illustration.png in Resources */ = {isa = PBXBuildFile; fileRef = 83F1A37419DEBC400045ADD7 /* screenshot_illustration.png */; };
+		83F1A37819DEBCC70045ADD7 /* InfinitScreenshotTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F1A37719DEBCC70045ADD7 /* InfinitScreenshotTextView.m */; };
 		83F4F2F219D053670003863C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4F2F119D053670003863C /* SystemConfiguration.framework */; };
 		83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */; };
 		83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCE718EC61AF0051F010 /* INPopoverController.m */; };
@@ -696,6 +700,9 @@
 		8337673719088A820073A621 /* OEXTokenTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXTokenTextStorage.m; sourceTree = "<group>"; };
 		8337673C19088E910073A621 /* InfinitTokenAttachmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTokenAttachmentCell.h; sourceTree = "<group>"; };
 		8337673D19088E910073A621 /* InfinitTokenAttachmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTokenAttachmentCell.m; sourceTree = "<group>"; };
+		833B238819DA938300D3F104 /* InfinitFirstScreenshotModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFirstScreenshotModal.h; sourceTree = "<group>"; };
+		833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFirstScreenshotModal.m; sourceTree = "<group>"; };
+		833B238A19DA938300D3F104 /* InfinitFirstScreenshotModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFirstScreenshotModal.xib; sourceTree = "<group>"; };
 		833B59CA18D75D4800A43339 /* InfinitConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationViewController.h; sourceTree = "<group>"; };
 		833B59CB18D75D4800A43339 /* InfinitConversationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitConversationViewController.mm; sourceTree = "<group>"; tabWidth = 2; };
 		833B59CC18D75D4800A43339 /* InfinitConversationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitConversationViewController.xib; sourceTree = "<group>"; };
@@ -1033,6 +1040,9 @@
 		83F1148217AE63E700DCF662 /* IAUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserSearchViewController.h; sourceTree = "<group>"; };
 		83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAUserSearchViewController.m; sourceTree = "<group>"; };
 		83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAUserSearchViewController.xib; sourceTree = "<group>"; };
+		83F1A37419DEBC400045ADD7 /* screenshot_illustration.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = screenshot_illustration.png; path = "../../../../fist-resources/mockups/mac/other/screenshot_illustration.png"; sourceTree = "<group>"; };
+		83F1A37619DEBCC70045ADD7 /* InfinitScreenshotTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitScreenshotTextView.h; sourceTree = "<group>"; };
+		83F1A37719DEBCC70045ADD7 /* InfinitScreenshotTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitScreenshotTextView.m; sourceTree = "<group>"; };
 		83F4F2F119D053670003863C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		83F5FCD118EB3E2E0051F010 /* InfinitSizedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSizedTextField.h; sourceTree = "<group>"; };
 		83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSizedTextField.m; sourceTree = "<group>"; };
@@ -1205,6 +1215,7 @@
 				83F5FCFC18ECB8B40051F010 /* Clippy View */,
 				833B59B518D75D2300A43339 /* Conversation View */,
 				833C318A17CCC81100941C09 /* Desktop Notifier */,
+				833B237319DA930800D3F104 /* First Screenshot Modal */,
 				83CD6FB217A672C7004F55D1 /* Gap */,
 				83B8A7241822466F00AD775F /* Login View */,
 				832808D317A2D5E80025B6F8 /* Main Controller */,
@@ -1369,6 +1380,19 @@
 				8337673719088A820073A621 /* OEXTokenTextStorage.m */,
 			);
 			name = OEXTokenField;
+			sourceTree = "<group>";
+		};
+		833B237319DA930800D3F104 /* First Screenshot Modal */ = {
+			isa = PBXGroup;
+			children = (
+				83F1A35D19DEBB500045ADD7 /* Resources */,
+				833B238819DA938300D3F104 /* InfinitFirstScreenshotModal.h */,
+				833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.m */,
+				833B238A19DA938300D3F104 /* InfinitFirstScreenshotModal.xib */,
+				83F1A37619DEBCC70045ADD7 /* InfinitScreenshotTextView.h */,
+				83F1A37719DEBCC70045ADD7 /* InfinitScreenshotTextView.m */,
+			);
+			name = "First Screenshot Modal";
 			sourceTree = "<group>";
 		};
 		833B59B518D75D2300A43339 /* Conversation View */ = {
@@ -1938,6 +1962,14 @@
 			name = "Search Results";
 			sourceTree = "<group>";
 		};
+		83F1A35D19DEBB500045ADD7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83F1A37419DEBC400045ADD7 /* screenshot_illustration.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		83F5FCD418EC61690051F010 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -2472,10 +2504,12 @@
 				836EAE4F1988F4500053BE85 /* icon-menu-bar-animated-black-10.png in Resources */,
 				836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */,
 				836EADEE1988F3A10053BE85 /* icon-add-file.png in Resources */,
+				833B238C19DA938300D3F104 /* InfinitFirstScreenshotModal.xib in Resources */,
 				836EAD111988EE3B0053BE85 /* document.png in Resources */,
 				836EAD1C1988EE3B0053BE85 /* picture@2x.png in Resources */,
 				836EAE7019891DB70053BE85 /* icon-cancel-send@2x.png in Resources */,
 				83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */,
+				83F1A37519DEBC400045ADD7 /* screenshot_illustration.png in Resources */,
 				834F136A19216E2B00BF36A4 /* InfinitTransactionViewController.xib in Resources */,
 				836EAE0F1988F42D0053BE85 /* icon-menu-bar-link@2x.png in Resources */,
 				836EAE571988F4500053BE85 /* icon-menu-bar-animated-black-18.png in Resources */,
@@ -2612,6 +2646,7 @@
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
 				837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */,
 				83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */,
+				83F1A37819DEBCC70045ADD7 /* InfinitScreenshotTextView.m in Sources */,
 				836D648619D063D300D77D9B /* InfinitReachability.m in Sources */,
 				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
 				834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */,
@@ -2625,6 +2660,7 @@
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */,
+				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.m in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */,
 				83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */,
 				834F137119217FA700BF36A4 /* InfinitAvatarBadgeView.m in Sources */,

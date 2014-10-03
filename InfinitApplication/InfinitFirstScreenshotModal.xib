@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A379a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="InfinitFirstScreenshotModal">
+            <connections>
+                <outlet property="information" destination="ZW9-jg-Url" id="a5B-ZX-iZX"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Screenshot sharing made easier!" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="651" height="569"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="651" height="569"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mYA-JJ-NjV" customClass="InfinitScreenshotTextView">
+                        <rect key="frame" x="0.0" y="61" width="651" height="139"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZW9-jg-Url">
+                                <rect key="frame" x="18" y="25" width="615" height="75"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="HyD-Dm-NxF">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">Whenever you take a screenshot, we'll upload it and copy a link to your
+clipboard so you can share it in a message, an email or a tweet.</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </customView>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ha4-cq-9f3">
+                        <rect key="frame" x="0.0" y="200" width="651" height="369"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="screenshot_illustration" id="mQZ-Ry-lvz"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rde-5I-gpe">
+                        <rect key="frame" x="14" y="13" width="110" height="32"/>
+                        <buttonCell key="cell" type="push" title="No, Thanks" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G3I-sg-frX">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="noClicked:" target="-2" id="s3b-Xx-tog"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViY-Rl-ufb">
+                        <rect key="frame" x="414" y="13" width="223" height="32"/>
+                        <buttonCell key="cell" type="push" title="Sure, upload my screenshots!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6P6-np-uB4">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="yesClicked:" target="-2" id="MzD-fd-bhb"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+                <outlet property="initialFirstResponder" destination="ViY-Rl-ufb" id="bVw-b2-Oyx"/>
+            </connections>
+            <point key="canvasLocation" x="452.5" y="281.5"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="screenshot_illustration" width="651" height="369"/>
+    </resources>
+</document>

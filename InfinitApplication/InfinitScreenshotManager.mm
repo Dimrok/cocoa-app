@@ -9,6 +9,7 @@
 #import "InfinitScreenshotManager.h"
 
 #import "IAUserPrefs.h"
+#import "InfinitFirstScreenshotModal.h"
 
 #import "InfinitMetricsManager.h"
 
@@ -24,6 +25,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   NSMetadataQuery* _query;
 
   BOOL _watch;
+  BOOL _first_screenshot;
 
   // Used to ensure that we only upload new screenshots.
   NSDate* _last_capture_time;
@@ -37,16 +39,14 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   {
     _query = [[NSMetadataQuery alloc] init];
     _delegate = delegate;
-    if ([[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] == nil)
-    {
-      ELLE_LOG("%s: not watching for screenshots", self.description.UTF8String);
-      _watch = NO;
-      [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"upload_screenshots"];
-    }
-    else if ([[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"1"])
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"0"])
     {
       ELLE_LOG("%s: watching for screenshots", self.description.UTF8String);
       _watch = YES;
+      if (![[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"1"])
+        _first_screenshot = YES;
+      else
+        _first_screenshot = NO;
     }
     else
     {
@@ -108,6 +108,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     return;
 
   _watch = watch;
+  _first_screenshot = NO;
   NSString* value = [NSString stringWithFormat:@"%d", _watch];
   [[IAUserPrefs sharedInstance] setPref:value forKey:@"upload_screenshots"];
   if (_watch)
@@ -142,6 +143,25 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     return;
 
   _last_capture_time = [NSDate date];
+
+  if (_first_screenshot)
+  {
+    _first_screenshot = NO;
+    @autoreleasepool
+    {
+      InfinitFirstScreenshotModal* screenshot_modal = [[InfinitFirstScreenshotModal alloc] init];
+      NSInteger res = [NSApp runModalForWindow:screenshot_modal.window];
+      if (res == INFINIT_NO_UPLOAD_SCREENSHOTS)
+      {
+        [self setWatch:NO];
+        return;
+      }
+      else
+      {
+        [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"upload_screenshots"];
+      }
+    }
+  }
 
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
   ELLE_LOG("%s: got screenshot with path: %s",
