@@ -10,6 +10,8 @@
 
 #import "IAUserPrefs.h"
 
+#import "InfinitMetricsManager.h"
+
 #undef check
 #import <elle/log.hh>
 
@@ -141,6 +143,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 
   _last_capture_time = [NSDate date];
 
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
   ELLE_LOG("%s: got screenshot with path: %s",
            self.description.UTF8String, screenshot_path.UTF8String);
   [_delegate screenshotManager:self gotScreenshot:screenshot_path];
