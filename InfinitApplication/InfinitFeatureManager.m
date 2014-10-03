@@ -52,7 +52,10 @@ static InfinitFeatureManager* _instance = nil;
   {
     [res appendString:[NSString stringWithFormat:@"%@=%@;", key, _features[key]]];
   }
-  return [res substringToIndex:(res.length - 1)];
+  if (res.length > 0)
+    return [res substringToIndex:(res.length - 1)];
+  else
+    return res;
 }
 
 @end
