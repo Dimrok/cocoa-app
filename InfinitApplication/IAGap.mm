@@ -260,6 +260,18 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
   return hash_pass;
 }
 
+- (NSDictionary*)fetch_features
+{
+  std::unordered_map<std::string, std::string> features_ = gap_fetch_features(_state);
+  NSMutableDictionary* features = [[NSMutableDictionary alloc] init];
+  for (std::pair<std::string, std::string> const& pair: features_)
+  {
+    NSString* key = [NSString stringWithFormat:@"%s", pair.first.c_str()];
+    features[key] = [NSString stringWithFormat:@"%s", pair.second.c_str()];
+  }
+  return features;
+}
+
 - (gap_Status)logout
 {
   clear_model();
