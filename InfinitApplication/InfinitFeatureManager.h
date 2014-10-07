@@ -16,4 +16,6 @@
 - (NSDictionary*)features;
 - (NSString*)featuresString;
 
+- (NSString*)valueForFeature:(NSString*)feature;
+
 @end

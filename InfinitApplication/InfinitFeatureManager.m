@@ -58,4 +58,9 @@ static InfinitFeatureManager* _instance = nil;
     return res;
 }
 
+- (NSString*)valueForFeature:(NSString*)feature
+{
+  return _features[feature];
+}
+
 @end

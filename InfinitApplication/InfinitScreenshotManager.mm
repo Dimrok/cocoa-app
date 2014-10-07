@@ -151,14 +151,20 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     {
       InfinitFirstScreenshotModal* screenshot_modal = [[InfinitFirstScreenshotModal alloc] init];
       NSInteger res = [NSApp runModalForWindow:screenshot_modal.window];
-      if (res == INFINIT_NO_UPLOAD_SCREENSHOTS)
+      if (res == INFINIT_UPLOAD_SCREENSHOTS)
       {
+        [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_YES];
+        [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"upload_screenshots"];
+      }
+      else if (res == INFINIT_NO_UPLOAD_SCREENSHOTS)
+      {
+        [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_NO];
         [self setWatch:NO];
         return;
       }
       else
       {
-        [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"upload_screenshots"];
+        return;
       }
     }
   }

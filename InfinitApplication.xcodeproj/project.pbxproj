@@ -68,7 +68,7 @@
 		8337673A19088A820073A621 /* OEXTokenFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673519088A820073A621 /* OEXTokenFieldCell.m */; };
 		8337673B19088A820073A621 /* OEXTokenTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673719088A820073A621 /* OEXTokenTextStorage.m */; };
 		8337673E19088E910073A621 /* InfinitTokenAttachmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673D19088E910073A621 /* InfinitTokenAttachmentCell.m */; };
-		833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.m */; };
+		833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.mm */; };
 		833B238C19DA938300D3F104 /* InfinitFirstScreenshotModal.xib in Resources */ = {isa = PBXBuildFile; fileRef = 833B238A19DA938300D3F104 /* InfinitFirstScreenshotModal.xib */; };
 		833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833B59CB18D75D4800A43339 /* InfinitConversationViewController.mm */; };
 		833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 833B59CC18D75D4800A43339 /* InfinitConversationViewController.xib */; };
@@ -701,7 +701,7 @@
 		8337673C19088E910073A621 /* InfinitTokenAttachmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTokenAttachmentCell.h; sourceTree = "<group>"; };
 		8337673D19088E910073A621 /* InfinitTokenAttachmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTokenAttachmentCell.m; sourceTree = "<group>"; };
 		833B238819DA938300D3F104 /* InfinitFirstScreenshotModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFirstScreenshotModal.h; sourceTree = "<group>"; };
-		833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFirstScreenshotModal.m; sourceTree = "<group>"; };
+		833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFirstScreenshotModal.mm; sourceTree = "<group>"; };
 		833B238A19DA938300D3F104 /* InfinitFirstScreenshotModal.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFirstScreenshotModal.xib; sourceTree = "<group>"; };
 		833B59CA18D75D4800A43339 /* InfinitConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationViewController.h; sourceTree = "<group>"; };
 		833B59CB18D75D4800A43339 /* InfinitConversationViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitConversationViewController.mm; sourceTree = "<group>"; tabWidth = 2; };
@@ -1387,7 +1387,7 @@
 			children = (
 				83F1A35D19DEBB500045ADD7 /* Resources */,
 				833B238819DA938300D3F104 /* InfinitFirstScreenshotModal.h */,
-				833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.m */,
+				833B238919DA938300D3F104 /* InfinitFirstScreenshotModal.mm */,
 				833B238A19DA938300D3F104 /* InfinitFirstScreenshotModal.xib */,
 				83F1A37619DEBCC70045ADD7 /* InfinitScreenshotTextView.h */,
 				83F1A37719DEBCC70045ADD7 /* InfinitScreenshotTextView.m */,
@@ -1731,6 +1731,8 @@
 				83CD106817D48D9700AA0A19 /* IALogFileManager.m */,
 				831AA69D17D0FCC00004AE8D /* IAMeManager.h */,
 				831AA69E17D0FCC00004AE8D /* IAMeManager.mm */,
+				837B2A6719DD962B00A3CDE1 /* InfinitFeatureManager.h */,
+				837B2A6819DD962B00A3CDE1 /* InfinitFeatureManager.m */,
 				83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */,
 				83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */,
 				836D648719D0667D00D77D9B /* InfinitNetworkManager.h */,
@@ -1743,8 +1745,6 @@
 				83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */,
 				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
 				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */,
-				837B2A6719DD962B00A3CDE1 /* InfinitFeatureManager.h */,
-				837B2A6819DD962B00A3CDE1 /* InfinitFeatureManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -2660,7 +2660,7 @@
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */,
-				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.m in Sources */,
+				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.mm in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */,
 				83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */,
 				834F137119217FA700BF36A4 /* InfinitAvatarBadgeView.m in Sources */,

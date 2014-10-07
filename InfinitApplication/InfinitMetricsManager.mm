@@ -135,6 +135,10 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"create link";
     case INFINIT_METRIC_UPLOAD_SCREENSHOT:
       return @"upload screenshot";
+    case INFINIT_METRIC_SCREENSHOT_MODAL_NO:
+      return @"upload screenshots";
+    case INFINIT_METRIC_SCREENSHOT_MODAL_YES:
+      return @"upload screenshots";
     case INFINIT_METRIC_FAVOURITES_LINK_DROP:
       return @"create link";
     case INFINIT_METRIC_FAVOURITES_PERSON_DROP:
@@ -197,6 +201,10 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"send view";
     case INFINIT_METRIC_UPLOAD_SCREENSHOT:
       return @"automatic";
+    case INFINIT_METRIC_SCREENSHOT_MODAL_NO:
+      return @"no";
+    case INFINIT_METRIC_SCREENSHOT_MODAL_YES:
+      return @"yes";
     case INFINIT_METRIC_FAVOURITES_LINK_DROP:
       return @"favourites";
     case INFINIT_METRIC_FAVOURITES_PERSON_DROP:
@@ -241,12 +249,17 @@ static InfinitMetricsManager* _shared_instance = nil;
   NSDate* now = [NSDate date];
   NSNumber* timestamp = [NSNumber numberWithDouble:now.timeIntervalSince1970];
   NSMutableDictionary* metric_dict =
-    [NSMutableDictionary dictionaryWithDictionary:@{@"event": [self _eventName:metric],
-                                                    @"method": [self _eventMethod:metric],
-                                                    @"os": @"OS X",
-                                                    @"os_version": [IAFunctions osVersionString],
-                                                    @"timestamp": timestamp,
-                                                    @"features": [[InfinitFeatureManager sharedInstance] featuresString]}];
+    [NSMutableDictionary dictionaryWithDictionary:@{
+      @"event": [self _eventName:metric],
+      @"method": [self _eventMethod:metric],
+      @"os": @"OS X",
+      @"os_version": [IAFunctions osVersionString],
+      @"timestamp": timestamp
+    }];
+  if ([[InfinitFeatureManager sharedInstance] features] != nil)
+    metric_dict[@"features"] = [[InfinitFeatureManager sharedInstance] features];
+  else
+    metric_dict[@"features"] = @[];
   if ([self _userId] != nil)
     [metric_dict setObject:[self _userId] forKey:@"user"];
   else
