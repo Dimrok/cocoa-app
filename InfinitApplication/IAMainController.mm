@@ -15,6 +15,7 @@
 #import "IAGap.h"
 #import "IAKeychainManager.h"
 #import "IAUserPrefs.h"
+#import "InfinitDownloadDestinationManager.h"
 #import "InfinitFeatureManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTooltipViewController.h"
@@ -1685,6 +1686,11 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)transactionManagerHadFileSent:(IATransactionManager*)sender
 {
   [_sent_sound play];
+}
+
+- (void)transactionManagerWantsEnsureDownloadDestination:(IATransactionManager*)sender
+{
+  [[InfinitDownloadDestinationManager sharedInstance] ensureDownloadDestination];
 }
 
 //- User Manager Protocol --------------------------------------------------------------------------
