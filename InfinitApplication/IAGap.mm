@@ -16,6 +16,7 @@
 #import <Gap/IAGapState.h>
 
 #import "IALogFileManager.h"
+#import "IAUserPrefs.h"
 
 #undef check
 #import <elle/log.hh>
@@ -181,9 +182,34 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
 
     setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
-    
-    _state = gap_new(production);
-    
+
+    NSString* download_dir =
+      [NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES) firstObject];
+
+    NSString* user_download_dir = [[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"];
+
+    BOOL is_dir;
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:user_download_dir isDirectory:&is_dir])
+    {
+      if (is_dir)
+        download_dir = user_download_dir;
+      else
+        NSLog(@"Download path is not folder, falling back");
+    }
+    else
+    {
+      NSLog(@"Download path does not exist, falling back");
+    }
+
+    NSLog(@"Download path set to: %@", download_dir);
+
+    _state = gap_new(production, download_dir.UTF8String);
+
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"] isEqualToString:download_dir])
+    {
+      [[IAUserPrefs sharedInstance] setPref:download_dir forKey:@"download_directory"];
+    }
     
     if (_state == NULL)
       return nil;
@@ -687,7 +713,8 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSString*)get_output_dir
 {
-  RETURN_CSTRING(gap_get_output_dir(_state));
+  NSString* res = [NSString stringWithUTF8String:gap_get_output_dir(_state).c_str()];
+  return res;
 }
 
 
