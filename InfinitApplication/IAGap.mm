@@ -707,8 +707,9 @@ return [NSString stringWithUTF8String:str]; \
 }
 
 - (gap_Status)set_output_dir:(NSString*)output_path
+                    fallback:(BOOL)fallback
 {
-  return gap_set_output_dir(_state, output_path.UTF8String);
+  return gap_set_output_dir(_state, output_path.UTF8String, fallback);
 }
 
 - (NSString*)get_output_dir
