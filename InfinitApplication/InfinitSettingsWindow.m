@@ -65,16 +65,17 @@
 
 //- View Change Handling ---------------------------------------------------------------------------
 
-- (void)changeToViewController:(NSViewController*)controller
+- (void)changeToViewController:(InfinitSettingsViewController*)controller
                  withAnimation:(BOOL)animate
 {
   CGFloat d_height =
-    [(InfinitSettingsViewController*)controller startSize].height - [self.window.contentView frame].size.height;
+    [controller startSize].height - [self.window.contentView frame].size.height;
   self.window.contentView = controller.view;
+  [controller loadData];
   NSRect new_rect = NSMakeRect(self.window.frame.origin.x,
                                self.window.frame.origin.y - d_height,
                                self.window.frame.size.width, self.window.frame.size.height + d_height);
-  [self.window setFrame:new_rect display:YES animate:YES];
+  [self.window setFrame:new_rect display:YES animate:animate];
 }
 
 - (IBAction)accountClicked:(NSToolbarItem*)sender

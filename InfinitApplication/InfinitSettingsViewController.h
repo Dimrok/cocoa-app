@@ -12,4 +12,6 @@
 
 @property (nonatomic, readonly) NSSize startSize;
 
+- (void)loadData;
+
 @end

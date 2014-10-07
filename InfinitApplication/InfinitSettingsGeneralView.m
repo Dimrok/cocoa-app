@@ -10,7 +10,7 @@
 
 #import <Gap/IAGapState.h>
 
-#import "IAUserPrefs.h"
+#import "InfinitDownloadDestinationManager.h"
 
 @interface InfinitSettingsGeneralView ()
 
@@ -38,14 +38,12 @@
   return self;
 }
 
-- (void)loadView
+- (void)loadData
 {
   _auto_launch = [_delegate infinitInLoginItems:self];
   _auto_upload_screenshots = [_delegate uploadsScreenshots:self];
   _auto_stay_awake = [_delegate stayAwake:self];
-  _download_dir_str = [[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"];
-
-  [super loadView];
+  _download_dir_str = [[InfinitDownloadDestinationManager sharedInstance] download_destination];
   if (_auto_launch)
     self.launch_at_startup.state = NSOnState;
   else
@@ -62,6 +60,12 @@
     self.stay_awake.state = NSOffState;
 
   self.download_dir.stringValue = _download_dir_str;
+}
+
+- (void)loadView
+{
+  [super loadView];
+  [self loadData];
 }
 
 //- General Functions ------------------------------------------------------------------------------
@@ -122,8 +126,7 @@ shouldEnableURL:(NSURL*)url
       NSString* download_dir = [dir_selector.URLs[0] path];
       _download_dir_str = download_dir;
       self.download_dir.stringValue = download_dir;
-      [[IAUserPrefs sharedInstance] setPref:download_dir forKey:@"download_directory"];
-      [[IAGapState instance] setOutputDirectory:download_dir];
+      [[InfinitDownloadDestinationManager sharedInstance] setDownloadDestination:download_dir];
     }
   }];
 }
