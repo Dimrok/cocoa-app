@@ -96,7 +96,9 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
 - (void)dealloc
 {
   [_reachability stopNotifier];
+  _reachability = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 //- Connection Changed Callback --------------------------------------------------------------------
