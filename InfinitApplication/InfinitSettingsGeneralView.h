@@ -12,11 +12,12 @@
 
 @protocol InfinitSettingsGeneralProtocol;
 
-@interface InfinitSettingsGeneralView : InfinitSettingsViewController
+@interface InfinitSettingsGeneralView : InfinitSettingsViewController <NSOpenSavePanelDelegate>
 
 @property (nonatomic, weak) IBOutlet NSButton* launch_at_startup;
 @property (nonatomic, weak) IBOutlet NSButton* stay_awake;
 @property (nonatomic, weak) IBOutlet NSButton* upload_screenshots;
+@property (nonatomic, weak) IBOutlet NSTextField* download_dir;
 
 - (id)initWithDelegate:(id<InfinitSettingsGeneralProtocol>)delegate;
 

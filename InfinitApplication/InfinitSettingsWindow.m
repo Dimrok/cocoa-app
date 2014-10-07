@@ -37,6 +37,7 @@
 
 - (void)windowDidLoad
 {
+  [self.window center];
   [super windowDidLoad];
   self.account_button.enabled = YES;
   self.general_button.enabled = YES;
@@ -51,7 +52,6 @@
   [_account_view loadData];
   self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
   [self changeToViewController:_general_view withAnimation:NO];
-  [self.window center];
   [self showWindow:self];
 }
 

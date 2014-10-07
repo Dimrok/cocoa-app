@@ -8,6 +8,10 @@
 
 #import "InfinitSettingsGeneralView.h"
 
+#import <Gap/IAGapState.h>
+
+#import "IAUserPrefs.h"
+
 @interface InfinitSettingsGeneralView ()
 
 @end
@@ -20,6 +24,7 @@
   BOOL _auto_launch;
   BOOL _auto_upload_screenshots;
   BOOL _auto_stay_awake;
+  NSString* _download_dir_str;
 }
 
 //- Initialization ---------------------------------------------------------------------------------
@@ -38,6 +43,8 @@
   _auto_launch = [_delegate infinitInLoginItems:self];
   _auto_upload_screenshots = [_delegate uploadsScreenshots:self];
   _auto_stay_awake = [_delegate stayAwake:self];
+  _download_dir_str = [[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"];
+
   [super loadView];
   if (_auto_launch)
     self.launch_at_startup.state = NSOnState;
@@ -53,13 +60,15 @@
     self.stay_awake.state = NSOnState;
   else
     self.stay_awake.state = NSOffState;
+
+  self.download_dir.stringValue = _download_dir_str;
 }
 
 //- General Functions ------------------------------------------------------------------------------
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0, 170.0);
+  return NSMakeSize(480.0, 220.0);
 }
 
 //- Toggle Handling --------------------------------------------------------------------------------
@@ -89,6 +98,34 @@
   else
     _auto_stay_awake = NO;
   [_delegate setStayAwake:self to:_auto_stay_awake];
+}
+
+//- Other Button Handling --------------------------------------------------------------------------
+
+- (BOOL)panel:(id)sender
+shouldEnableURL:(NSURL*)url
+{
+  return [[NSFileManager defaultManager] isWritableFileAtPath:url.path];
+}
+
+- (IBAction)changeDownloadDir:(NSButton*)sender
+{
+  NSOpenPanel* dir_selector = [NSOpenPanel openPanel];
+  dir_selector.delegate = self;
+  dir_selector.canChooseFiles = NO;
+  dir_selector.canChooseDirectories = YES;
+  dir_selector.allowsMultipleSelection = NO;
+  [dir_selector beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result)
+  {
+    if (result == NSFileHandlingPanelOKButton)
+    {
+      NSString* download_dir = [dir_selector.URLs[0] path];
+      _download_dir_str = download_dir;
+      self.download_dir.stringValue = download_dir;
+      [[IAUserPrefs sharedInstance] setPref:download_dir forKey:@"download_directory"];
+      [[IAGapState instance] setOutputDirectory:download_dir];
+    }
+  }];
 }
 
 - (IBAction)checkForUpdates:(NSButton*)sender
