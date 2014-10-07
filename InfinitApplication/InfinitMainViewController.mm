@@ -745,6 +745,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 //    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
 //  }
   _transaction_controller.changing = YES;
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_SEND];
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
