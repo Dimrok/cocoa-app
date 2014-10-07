@@ -7,7 +7,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitFirstScreenshotModal">
             <connections>
+                <outlet property="affirmative" destination="ViY-Rl-ufb" id="N0B-DA-epZ"/>
                 <outlet property="information" destination="ZW9-jg-Url" id="a5B-ZX-iZX"/>
+                <outlet property="negative" destination="rde-5I-gpe" id="71V-Gd-RfL"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -17,7 +19,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="651" height="569"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="651" height="569"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -41,7 +43,7 @@ clipboard so you can share it in a message, an email or a tweet.</string>
                         <rect key="frame" x="0.0" y="200" width="651" height="369"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="screenshot_illustration" id="mQZ-Ry-lvz"/>
                     </imageView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rde-5I-gpe">
+                    <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rde-5I-gpe">
                         <rect key="frame" x="14" y="13" width="110" height="32"/>
                         <buttonCell key="cell" type="push" title="No, Thanks" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G3I-sg-frX">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -54,7 +56,7 @@ Gw
                             <action selector="noClicked:" target="-2" id="s3b-Xx-tog"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViY-Rl-ufb">
+                    <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViY-Rl-ufb">
                         <rect key="frame" x="414" y="13" width="223" height="32"/>
                         <buttonCell key="cell" type="push" title="Sure, upload my screenshots!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6P6-np-uB4">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -68,6 +70,10 @@ DQ
                         </connections>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="rde-5I-gpe" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="08v-gx-hkF"/>
+                    <constraint firstAttribute="trailing" secondItem="ViY-Rl-ufb" secondAttribute="trailing" constant="20" id="a4W-jm-wIZ"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>

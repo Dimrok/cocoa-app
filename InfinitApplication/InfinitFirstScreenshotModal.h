@@ -17,6 +17,8 @@ typedef enum
 @interface InfinitFirstScreenshotModal : NSWindowController
 
 @property (nonatomic, weak) IBOutlet NSTextField* information;
+@property (nonatomic, weak) IBOutlet NSButton* affirmative;
+@property (nonatomic, weak) IBOutlet NSButton* negative;
 
 - (id)init;
 
