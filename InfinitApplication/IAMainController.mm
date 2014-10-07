@@ -810,11 +810,16 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)handleQuit
 {
   _stay_awake_manager = nil;
+  _network_manager = nil;
+  _screenshot_manager = nil;
 
   [_status_bar_icon setHighlighted:NO];
   [_status_bar_icon setHidden:YES];
   [_window_controller closeWindowWithAnimation:NO];
 
+
+  if ([NSApp modalWindow] != nil)
+    [NSApp abortModal];
   [[IAGapState instance] freeGap];
   [_delegate terminateApplication:self];
 }
