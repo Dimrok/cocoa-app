@@ -725,7 +725,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)showFileInFinder:(NSString*)filename
 {
-  NSString* download_dir = [NSHomeDirectory() stringByAppendingPathComponent:@"Downloads"];
+  NSString* download_dir = [NSHomeDirectory() stringByAppendingPathComponent:[[IAGapState instance] outputDirectory]];
   NSMutableArray* file_urls = [NSMutableArray array];
   NSString* file_path = [download_dir stringByAppendingPathComponent:filename];
   if ([self pathExists:file_path])
