@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bWW-gG-HyP">
-                    <rect key="frame" x="95" y="166" width="290" height="18"/>
+                    <rect key="frame" x="95" y="168" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Launch Infinit at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cuD-cD-L6e">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -32,7 +32,7 @@
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vjt-bv-yIL">
-                    <rect key="frame" x="95" y="146" width="290" height="18"/>
+                    <rect key="frame" x="95" y="148" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Automatically upload screenshots" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wrR-Ur-Egq">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -43,7 +43,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRb-0U-vvc">
-                    <rect key="frame" x="110" y="23" width="166" height="32"/>
+                    <rect key="frame" x="110" y="25" width="166" height="32"/>
                     <buttonCell key="cell" type="push" title="Check for updates..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PP7-tu-kV9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -53,7 +53,7 @@
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-fR-oQb">
-                    <rect key="frame" x="95" y="126" width="290" height="18"/>
+                    <rect key="frame" x="95" y="128" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Stay awake while transferring on AC power" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qW2-Gc-YZE">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -64,7 +64,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9p5-7z-URn">
-                    <rect key="frame" x="114" y="94" width="163" height="17"/>
+                    <rect key="frame" x="114" y="96" width="163" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Download files to:" id="Bdy-QN-bnS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -72,7 +72,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="goy-5a-ANT">
-                    <rect key="frame" x="326" y="62" width="98" height="32"/>
+                    <rect key="frame" x="326" y="64" width="98" height="32"/>
                     <buttonCell key="cell" type="push" title="Browse..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rgc-zt-oZK">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -82,7 +82,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LWl-UA-aMd">
-                    <rect key="frame" x="116" y="68" width="208" height="22"/>
+                    <rect key="frame" x="116" y="70" width="208" height="22"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="/Users/someone/Downloads" placeholderString="" drawsBackground="YES" usesSingleLineMode="YES" id="Awy-UF-qym">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
