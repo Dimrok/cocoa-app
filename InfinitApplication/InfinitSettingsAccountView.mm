@@ -81,6 +81,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   self.name.stringValue = _start_name;
   self.handle.stringValue = _start_handle;
   self.email.stringValue = [_instance selfEmail];
+  self.fullname_check.hidden = YES;
+  self.handle_check.hidden = YES;
 }
 
 - (void)loadView
