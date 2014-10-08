@@ -83,6 +83,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   self.email.stringValue = [_instance selfEmail];
   self.fullname_check.hidden = YES;
   self.handle_check.hidden = YES;
+  self.avatar_error.hidden = YES;
+  self.handle_error.hidden = YES;
 }
 
 - (void)loadView
@@ -474,6 +476,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   if (result.success)
   {
     ELLE_LOG("%s: changed password", self.description.UTF8String);
+    [_delegate closeSettingsWindow:self];
     self.password_error.hidden = YES;
     [[IAKeychainManager sharedInstance] changeUser:_start_email
                                           password:self.change_password_field.stringValue];

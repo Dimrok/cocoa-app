@@ -74,4 +74,6 @@
 
 - (NSWindow*)getWindow:(InfinitSettingsAccountView*)sender;
 
+- (void)closeSettingsWindow:(InfinitSettingsAccountView*)sender;
+
 @end

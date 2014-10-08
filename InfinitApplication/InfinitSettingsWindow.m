@@ -50,6 +50,8 @@
 - (void)show
 {
   [_account_view loadData];
+  self.account_button.enabled = YES;
+  self.general_button.enabled = YES;
   self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
   [self changeToViewController:_general_view withAnimation:NO];
   [self showWindow:self];
@@ -93,6 +95,11 @@
 - (NSWindow*)getWindow:(InfinitSettingsAccountView*)sender
 {
   return self.window;
+}
+
+- (void)closeSettingsWindow:(InfinitSettingsAccountView*)sender
+{
+  [self close];
 }
 
 //- General View Protocol --------------------------------------------------------------------------
