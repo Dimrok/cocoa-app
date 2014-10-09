@@ -8,8 +8,6 @@
 
 #import "InfinitFirstScreenshotModal.h"
 
-#import "InfinitFeatureManager.h"
-
 #undef check
 #import <elle/log.hh>
 
@@ -33,14 +31,6 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotModal");
 
 - (void)windowDidLoad
 {
-  NSString* version = [[InfinitFeatureManager sharedInstance] valueForFeature:@"screenshot_modal"];
-  ELLE_LOG("%s: version: %s", self.description.UTF8String, version);
-  if (![version isEqualToString:@"v1"] && ![version isEqualToString:@"v2"])
-  {
-    ELLE_WARN("%s: unknown version, falling back to v1", self.description.UTF8String);
-    version = @"v1";
-  }
-
   [self.window center];
   [super windowDidLoad];
 
@@ -49,7 +39,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotModal");
                                                                         weight:3
                                                                           size:18.0];
   NSMutableParagraphStyle* information_para =
-  [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   information_para.alignment = NSCenterTextAlignment;
   information_para.lineSpacing = 8.0;
   NSDictionary* information_attrs = [IAFunctions textStyleWithFont:instruction_font
@@ -61,16 +51,9 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotModal");
 clipboard so you can share it in a message, an email or a tweet.", nil);
   self.information.attributedStringValue =
     [[NSAttributedString alloc] initWithString:info_text attributes:information_attrs];
-  if ([version isEqualToString:@"v1"])
-  {
-    self.affirmative.title = NSLocalizedString(@"Help me share my screenshots!", nil);
-    self.negative.title = NSLocalizedString(@"No thanks", nil);
-  }
-  else if ([version isEqualToString:@"v2"])
-  {
-    self.affirmative.title = NSLocalizedString(@"Sure, upload my screenshots!", nil);
-    self.negative.title = NSLocalizedString(@"I like it when it's hard", nil);
-  }
+
+  self.affirmative.title = NSLocalizedString(@"Help me share my screenshots!", nil);
+  self.negative.title = NSLocalizedString(@"No thanks", nil);
 }
 
 //- Close ------------------------------------------------------------------------------------------

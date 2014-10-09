@@ -12,6 +12,7 @@
 #import "InfinitFirstScreenshotModal.h"
 
 #import "InfinitMetricsManager.h"
+#import "InfinitFeatureManager.h"
 
 #undef check
 #import <elle/log.hh>
@@ -37,9 +38,17 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 {
   if (self = [super init])
   {
+    NSString* version = [[InfinitFeatureManager sharedInstance] valueForFeature:@"screenshot_modal"];
+    ELLE_LOG("%s: version: %s", self.description.UTF8String, version);
+    if (![version isEqualToString:@"v1"] && ![version isEqualToString:@"v2"])
+    {
+      ELLE_WARN("%s: unknown version, falling back to v2", self.description.UTF8String);
+      version = @"v2";
+    }
     _query = [[NSMetadataQuery alloc] init];
     _delegate = delegate;
-    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"0"])
+    if (![[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"0"] &&
+        [version isEqualToString:@"v1"])
     {
       ELLE_LOG("%s: watching for screenshots", self.description.UTF8String);
       _watch = YES;
@@ -52,6 +61,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     {
       ELLE_LOG("%s: not watching for screenshots", self.description.UTF8String);
       _watch = NO;
+      _first_screenshot = NO;
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self
