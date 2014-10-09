@@ -108,7 +108,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     _transaction_manager = [[IATransactionManager alloc] initWithDelegate:self];
     _link_manager = [[InfinitLinkManager alloc] initWithDelegate:self];
     _network_manager = [[InfinitNetworkManager alloc] initWithDelegate:self];
-    _screenshot_manager = [[InfinitScreenshotManager alloc] initWithDelegate:self];
     _user_manager = [IAUserManager sharedInstanceWithDelegate:self];
     
     if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
@@ -504,6 +503,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   ELLE_LOG("%s: completed login", self.description.UTF8String);
 
   [[InfinitFeatureManager sharedInstance] fetchFeatures];
+  // Instantiate screenshot manager after we've got the features as we're AB testing the first
+  // screenshot modal.
+  if (_screenshot_manager == nil)
+    _screenshot_manager = [[InfinitScreenshotManager alloc] initWithDelegate:self];
 
   if ([[[IAUserPrefs sharedInstance] prefsForKey:@"updated"] isEqualToString:@"1"])
   {
