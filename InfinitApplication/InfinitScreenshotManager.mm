@@ -39,7 +39,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   if (self = [super init])
   {
     NSString* version = [[InfinitFeatureManager sharedInstance] valueForFeature:@"screenshot_modal"];
-    ELLE_LOG("%s: version: %s", self.description.UTF8String, version);
+    ELLE_LOG("%s: version: %s", self.description.UTF8String, version.UTF8String);
     if (![version isEqualToString:@"v1"] && ![version isEqualToString:@"v2"])
     {
       ELLE_WARN("%s: unknown version, falling back to v2", self.description.UTF8String);
