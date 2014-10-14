@@ -412,7 +412,6 @@
   if (_for_link)
   {
     [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
-    _note_controller.link_mode = YES;
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
     self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
     self.search_constraint.constant = 0.0;
@@ -483,7 +482,7 @@
   if (_tooltip == nil)
     _tooltip = [[InfinitTooltipViewController alloc] init];
   NSString* message = NSLocalizedString(@"Add some files", nil);
-  [_tooltip showPopoverForView:_files_controller.header_view
+  [_tooltip showPopoverForView:_files_controller.view
             withArrowDirection:INPopoverArrowDirectionLeft
                    withMessage:message
               withPopAnimation:YES
@@ -527,8 +526,6 @@
   NSArray* files = [_delegate sendViewWantsFileList:self];
   [_files_controller updateWithFiles:files];
   [self setSendButtonState];
-  if (!_files_controller.open && files.count > 0)
-    [_files_controller showFiles];
 
   if (files.count > 0)
   {
@@ -809,7 +806,6 @@ wantsRemoveFavourite:(IAUser*)user
                                       views:@{@"search_view": _search_controller.view}]];
   }
   [self.user_link_view setMode:INFINIT_USER_MODE];
-  _note_controller.link_mode = NO;
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
   self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
@@ -828,7 +824,6 @@ wantsRemoveFavourite:(IAUser*)user
 - (void)gotLinkClick:(InfinitSendUserLinkView*)sender
 {
   [self.user_link_view setMode:INFINIT_LINK_MODE];
-  _note_controller.link_mode = YES;
   self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
   self.send_button.toolTip = NSLocalizedString(@"Send", nil);
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)

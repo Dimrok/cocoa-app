@@ -11,47 +11,11 @@
 //- Note Field -------------------------------------------------------------------------------------
 
 @implementation InfinitSendNoteField
-{
-@private
-  CGFloat _last_height;
-}
-
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
-  if (self = [super initWithCoder:aDecoder])
-  {
-    _last_height = 15.0;
-  }
-  return self;
-}
 
 - (BOOL)becomeFirstResponder
 {
   [(id<InfinitSendNoteProtocol>)_delegate gotFocus:self];
   return [super becomeFirstResponder];
-}
-
-- (NSSize)intrinsicContentSize
-{
-  if (![self.cell wraps])
-    return [super intrinsicContentSize];
-
-  NSRect frame = self.frame;
-
-  CGFloat width = frame.size.width;
-
-  // Make the frame very high, while keeping the width
-  frame.size.height = CGFLOAT_MAX;
-
-  // Calculate new height within the frame
-  // with practically infinite height.
-  CGFloat height = [self.cell cellSizeForBounds:frame].height;
-  if (_last_height != height)
-  {
-    [(id<InfinitSendNoteProtocol>)_delegate changedHeightBy:(height - _last_height)];
-    _last_height = height;
-  }
-  return NSMakeSize(width, height);
 }
 
 @end
@@ -68,24 +32,10 @@
 {
   [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  if (!_link_mode)
-  {
-    NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, NSHeight(self.bounds) - 1.0,
-                                                                     NSWidth(self.bounds), 1.0)];
-    [IA_GREY_COLOUR(230) set];
-    [line fill];
-  }
-}
-
-- (void)setLink_mode:(BOOL)link_mode
-{
-  _link_mode = link_mode;
-  [self setNeedsDisplay:YES];
-}
-
-- (NSSize)intrinsicContentSize
-{
-  return self.frame.size;
+  NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 1.0,
+                                                                   NSWidth(self.bounds), 1.0)];
+  [IA_GREY_COLOUR(230) set];
+  [line fill];
 }
 
 @end
@@ -154,12 +104,6 @@
     [[NSAttributedString alloc]initWithString:@"100" attributes:_norm_characters_attrs];
   self.characters_label.hidden = YES;
   _last_note = @"";
-}
-
-- (void)setLink_mode:(BOOL)link_mode
-{
-  _link_mode = link_mode;
-  ((InfinitSendNoteView*)self.view).link_mode = link_mode;
 }
 
 //- Note Handling ----------------------------------------------------------------------------------
@@ -242,12 +186,6 @@ doCommandBySelector:(SEL)commandSelector
 - (void)gotFocus:(InfinitSendNoteField*)sender
 {
   self.characters_label.hidden = NO;
-}
-
-- (void)changedHeightBy:(CGFloat)diff
-{
-  CGFloat frame_height = self.view.frame.size.height + diff;
-  [_delegate noteView:self wantsHeight:frame_height];
 }
 
 @end

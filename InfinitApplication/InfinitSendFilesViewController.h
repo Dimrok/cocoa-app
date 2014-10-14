@@ -8,33 +8,52 @@
 
 #import <Cocoa/Cocoa.h>
 
-//- Header -----------------------------------------------------------------------------------------
+//- File Model -------------------------------------------------------------------------------------
 
-@interface InfinitSendFilesHeaderView : NSView
-@property (nonatomic, weak) IBOutlet NSButton* information;
-@property (nonatomic, weak) IBOutlet NSButton* add_files;
-@property (nonatomic, weak) IBOutlet NSButton* show_files;
-@property (nonatomic, readwrite) BOOL open;
-@property (nonatomic, readwrite) BOOL got_files;
+@interface InfinitSendFileModel : NSObject
+@property (nonatomic, readonly) BOOL add_files_placeholder;
+@property (nonatomic, readwrite) NSImage* icon;
+@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readwrite) NSString* path;
+
+- (id)initAddFilesPlaceholder;
+
+@end
+
+//- Send Files Collection View Item ----------------------------------------------------------------
+
+@interface InfinitSendFilesCollectionViewItem : NSCollectionViewItem
+@end
+
+//- Send Files Collection View ---------------------------------------------------------------------
+
+@interface InfinitSendFilesCollectionView : NSCollectionView
+@end
+
+//- Send Files View --------------------------------------------------------------------------------
+
+@interface InfinitSendFilesView : NSView
+@property (nonatomic, readwrite) NSUInteger rows;
+@property (nonatomic, readwrite) CGFloat hover;
 @end
 
 //- Controller -------------------------------------------------------------------------------------
 
 @protocol InfinitSendFilesViewProtocol;
 
-@interface InfinitSendFilesViewController : NSViewController <NSTableViewDataSource,
-                                                              NSTableViewDelegate>
+@interface InfinitSendFilesViewController : NSViewController
 
-@property (nonatomic, weak) IBOutlet InfinitSendFilesHeaderView* header_view;
-@property (nonatomic, weak) IBOutlet NSTableView* table_view;
+@property (nonatomic, weak) IBOutlet InfinitSendFilesCollectionView* collection_view;
+@property (nonatomic, weak) IBOutlet NSTextField* info;
+@property (nonatomic, weak) IBOutlet InfinitSendFilesView* view;
+
+@property (nonatomic, readwrite) NSMutableArray* file_list;
 @property (nonatomic, readonly) BOOL open;
 
 
 - (id)initWithDelegate:(id<InfinitSendFilesViewProtocol>)delegate;
 
 - (void)updateWithFiles:(NSArray*)files;
-
-- (void)showFiles;
 
 - (void)stopCalculatingFileSize;
 

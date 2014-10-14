@@ -6,107 +6,285 @@
 //  Copyright (c) 2014 Infinit. All rights reserved.
 //
 
-#import "InfinitSendFilesViewController.h"
+#import <QuickLook/QuickLook.h>
+#import <QuartzCore/QuartzCore.h>
 
-#import "InfinitSendFileListCellView.h"
+#import "InfinitSendFilesViewController.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitSendFileView.h"
+
+//- File Model -------------------------------------------------------------------------------------
+
+@implementation InfinitSendFileModel
+{
+@private
+  NSImage* _preview;
+}
+
+- (id)initWithPath:(NSString*)path
+{
+  if (self = [super init])
+  {
+    _add_files_placeholder = NO;
+    _preview = nil;
+    _path = path;
+  }
+  return self;
+}
+
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
+- (NSImage*)icon
+{
+  if (self.add_files_placeholder)
+    return [IAFunctions imageNamed:@"icon-add-file"];
+  if (_preview != nil)
+    return _preview;
+  BOOL is_dir;
+  [[NSFileManager defaultManager] fileExistsAtPath:self.path isDirectory:&is_dir];
+  if (!is_dir)
+    [self performSelectorInBackground:@selector(getFilePreview) withObject:nil];
+  return [[NSWorkspace sharedWorkspace] iconForFile:self.path];
+}
+
+- (void)getFilePreview
+{
+  NSURL* path_url = [NSURL fileURLWithPath:self.path];
+  NSDictionary* options = @{(NSString*)kQLThumbnailOptionIconModeKey: [NSNumber numberWithBool:YES]};
+  CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault,
+                                          (__bridge CFURLRef)path_url,
+                                          CGSizeMake(110, 110),
+                                          (__bridge CFDictionaryRef)options);
+  NSImage* res = [[NSImage alloc] initWithCGImage:ref size:NSMakeSize(200, 200)];
+  if (ref)
+  {
+    CFRelease(ref);
+    [self willChangeValueForKey:@"icon"];
+    _preview = res;
+    [self didChangeValueForKey:@"icon"];
+  }
+}
+
+- (NSString*)name
+{
+  if (self.add_files_placeholder)
+    return NSLocalizedString(@"Add files...", nil);
+  return self.path.lastPathComponent;
+}
+
+- (id)initAddFilesPlaceholder
+{
+  if (self = [super init])
+  {
+    _add_files_placeholder = YES;
+    _path = nil;
+  }
+  return self;
+}
+
+@end
+
+//- Send Files Collection View Item ----------------------------------------------------------------
+
+@implementation InfinitSendFilesCollectionViewItem
+
+// Override copyWithZone: so that we can attach the close button to the view.
+- (id)copyWithZone:(NSZone*)zone
+{
+  InfinitSendFilesCollectionViewItem* res = [super copyWithZone:zone];
+  InfinitSendFileView* view = (InfinitSendFileView*)res.view;
+  view.remove_button = [view viewWithTag:5];
+  view.icon_button = [view viewWithTag:6];
+  return res;
+}
+
+@end
+
+//- Send Files Collection View ---------------------------------------------------------------------
+
+@implementation InfinitSendFilesCollectionView
+
+- (NSCollectionViewItem*)newItemForRepresentedObject:(id)object
+{
+  InfinitSendFilesCollectionViewItem* res =
+    (InfinitSendFilesCollectionViewItem*)[super newItemForRepresentedObject:object];
+  InfinitSendFileView* view = (InfinitSendFileView*)res.view;
+  if ([object path] == nil)
+    view.add_files_placeholder = YES;
+  else
+    view.add_files_placeholder = NO;
+  return res;
+}
+
+@end
 
 //- View -------------------------------------------------------------------------------------------
 
-@interface InfinitSendFilesView : NSView
-@property (nonatomic) IBOutlet InfinitSendFilesView* header_view;
-@property (nonatomic) IBOutlet NSTableView* file_list;
-@property (nonatomic, readwrite) BOOL open;
-@end
-
 @implementation InfinitSendFilesView
-
-- (BOOL)isOpaque
-{
-  return YES;
-}
-
-- (NSSize)intrinsicContentSize
-{
-  CGFloat height = NSHeight(_header_view.frame);
-  NSInteger no_rows = _file_list.numberOfRows;
-  if (no_rows > 3)
-    no_rows = 3;
-  if (_open)
-    height += (45.0 * no_rows);
-  return NSMakeSize(317.0, height);
-}
-
-- (void)setOpen:(BOOL)open
-{
-  _open = open;
-  self.header_view.open = open;
-}
-
-@end
-
-//- Header View ------------------------------------------------------------------------------------
-
-@implementation InfinitSendFilesHeaderView
 {
 @private
+  NSArray* _icons;
   NSTrackingArea* _tracking_area;
 }
 
+static CGFloat _radius = 150.0;
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+  if (self = [super initWithFrame:frameRect])
+  {
+    _icons = @[[IAFunctions imageNamed:@"icon-media-picture"],
+               [IAFunctions imageNamed:@"icon-media-folder"],
+               [IAFunctions imageNamed:@"icon-media-ps"],
+               [IAFunctions imageNamed:@"icon-media-video"]];
+  }
+  return self;
+}
+
 - (BOOL)isOpaque
 {
   return YES;
+}
+
+- (void)setHover:(CGFloat)hover
+{
+  _hover = hover;
+  [self setNeedsDisplay:YES];
+}
+
+- (CGFloat)rotationOfImage:(NSUInteger)i
+                  forHover:(CGFloat)hover
+{
+  CGFloat hover_delta = 15.0;
+  if (i < 2)
+    hover_delta = (hover * hover_delta);
+  else
+    hover_delta = -(hover * hover_delta);
+  CGFloat angle;
+  switch (i)
+  {
+    case 0:
+      angle = 20.0;
+      break;
+    case 1:
+      angle = 7.5;
+      break;
+    case 2:
+      angle = -7.5;
+      break;
+    case 3:
+      angle = -20.0;
+      break;
+
+    default:
+      angle = 0.0;
+      break;
+  }
+  return angle + hover_delta;
+}
+
+- (CGFloat)degToRad:(CGFloat)deg
+{
+  return deg * (M_PI / 180.0);
+}
+
+- (NSPoint)locationOfImage:(NSUInteger)i
+                  forHover:(CGFloat)hover
+{
+  CGFloat angle = 90.0;
+  CGFloat angle_delta = 15.0;
+  CGFloat hover_delta = 10.0;
+  CGFloat multiplier = 0.0;
+  switch (i)
+  {
+    case 0:
+      multiplier = +2.0;
+      break;
+    case 1:
+      multiplier = +0.65;
+      break;
+    case 2:
+      multiplier = -0.65;
+      break;
+    case 3:
+      multiplier = -2.0;
+      break;
+    default:
+      break;
+  }
+  angle = angle + (angle_delta * multiplier);
+  if (i < 2)
+    angle = angle + (hover_delta * hover);
+  else
+    angle = angle - (hover_delta * hover);
+  return NSMakePoint(_radius * cos([self degToRad:angle]), _radius * sin([self degToRad:angle]));
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  [IA_GREY_COLOUR(248) set];
-  NSRectFill(self.bounds);
-  [IA_GREY_COLOUR(230) set];
-  NSBezierPath* dark_line =
-    [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, NSHeight(self.bounds) - 1.0,
-                                                NSWidth(self.bounds), 1.0)];
-  [dark_line fill];
-  [IA_GREY_COLOUR(255) set];
-  NSBezierPath* light_line =
-    [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, NSHeight(self.bounds) - 2.0,
-                                                NSWidth(self.bounds), 1.0)];
-  [light_line fill];
-  if (_open)
+  if (self.rows == 0)
   {
-    [IA_GREY_COLOUR(230) set];
-    dark_line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 1.0,
-                                                            NSWidth(self.bounds), 1.0)];
-    [dark_line fill];
-    [IA_GREY_COLOUR(255) set];
-    light_line =
-      [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0,
-                                                  NSWidth(self.bounds), 1.0)];
-    [light_line fill];
-  }
-}
+    CGFloat bg_diff = (255 - 248) * _hover;
+    [IA_RGB_COLOUR(248 - bg_diff, 248 - bg_diff, 248 + bg_diff) set];
+    NSRectFill(self.bounds);
+    CGFloat border = 15.0;
+    NSBezierPath* path =
+      [NSBezierPath bezierPathWithRect:NSMakeRect(border,
+                                                  border,
+                                                  NSWidth(self.bounds) - (2 * border),
+                                                  NSHeight(self.bounds) - (2 * border))];
+    CGFloat pattern[2] = {10.0, 5.0};
+    [path setLineDash:pattern count:2 phase:0.0];
+    path.lineWidth = 1.0;
+    [IA_GREY_COLOUR(215) set];
+    [path stroke];
+    for (NSUInteger i = 0; i < _icons.count; i++)
+    {
+      NSImage* image = _icons[i];
+      NSPoint loc = [self locationOfImage:i forHover:_hover];
+      CGFloat rot_angle = [self rotationOfImage:i forHover:_hover];
+      CGFloat x_diff = 0.0;
+      CGFloat y_diff = 0.0;
+      if (i < 2)
+        x_diff = (image.size.height * sin([self degToRad:rot_angle]) / 2.0);
+      else
+        y_diff = image.size.width * sin([self degToRad:rot_angle]);
+      NSAffineTransform* image_rotation = [NSAffineTransform transform];
+      [image_rotation translateXBy:floor((loc.x + (NSWidth(self.bounds) / 2.0) - (image.size.width / 2.0)) + x_diff)
+                               yBy:floor(loc.y - (image.size.height / 2.0) - 25.0 - y_diff)];
+      [image_rotation rotateByDegrees:rot_angle];
+      [image_rotation concat];
 
-- (void)setOpen:(BOOL)open
-{
-  _open = open;
-  if (_open)
-    self.show_files.image = [IAFunctions imageNamed:@"send-icon-hide-files"];
+      [image drawAtPoint:NSMakePoint(0.0, 0.0)
+                fromRect:NSZeroRect
+               operation:NSCompositeSourceOver
+                fraction:1.0];
+
+      [image_rotation invert];
+      [image_rotation concat];
+    }
+  }
   else
-    self.show_files.image = [IAFunctions imageNamed:@"send-icon-show-files"];
+  {
+    [IA_GREY_COLOUR(248) set];
+    NSRectFill(self.bounds);
+  }
 }
 
-- (void)setGot_files:(BOOL)got_files
+- (NSSize)intrinsicContentSize
 {
-  _got_files = got_files;
-  if (!_got_files)
-  {
-    self.show_files.hidden = YES;
-    return;
-  }
-  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
-  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
-  if (NSPointInRect(mouse_loc, self.bounds))
-    [self mouseEntered:nil];
+  if (self.rows == 0)
+    return NSMakeSize(317.0, 197.0);
+
+  CGFloat height = self.rows * 100.0 + 45.0;
+  return NSMakeSize(317.0, height);
+}
+
+- (void)mouseDown:(NSEvent*)theEvent
+{
 }
 
 - (void)createTrackingArea
@@ -118,13 +296,6 @@
                                                userInfo:nil];
 
   [self addTrackingArea:_tracking_area];
-
-  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
-  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
-  if (NSPointInRect(mouse_loc, self.bounds))
-    [self mouseEntered:nil];
-  else
-    [self mouseExited:nil];
 }
 
 - (void)updateTrackingAreas
@@ -134,15 +305,32 @@
   [super updateTrackingAreas];
 }
 
-- (void)mouseExited:(NSEvent*)theEvent
-{
-  self.show_files.hidden = YES;
-}
-
 - (void)mouseEntered:(NSEvent*)theEvent
 {
-  if (_got_files)
-    self.show_files.hidden = NO;
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+   {
+     [self.animator setHover:1.0];
+   } completionHandler:^{
+     self.hover = 1.0;
+   }];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+   {
+     [self.animator setHover:0.0];
+   } completionHandler:^{
+     self.hover = 0.0;
+   }];
+}
+
++ (id)defaultAnimationForKey:(NSString*)key
+{
+  if ([key isEqualToString:@"hover"])
+    return [CABasicAnimation animation];
+
+  return [super defaultAnimationForKey:key];
 }
 
 @end
@@ -157,7 +345,6 @@
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
   __unsafe_unretained id<InfinitSendFilesViewProtocol> _delegate;
-  NSArray* _file_list;
   CGFloat _row_height;
   CGFloat _max_table_height;
   NSOperationQueue* _operation_queue;
@@ -178,8 +365,10 @@ static NSDictionary* _info_attrs = nil;
                                                                 traits:NSUnboldFontMask
                                                                 weight:3
                                                                   size:12.0];
+      NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+      para.alignment = NSRightTextAlignment;
       _info_attrs = [IAFunctions textStyleWithFont:font
-                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                    paragraphStyle:para
                                             colour:IA_GREY_COLOUR(190)
                                             shadow:nil];
     }
@@ -198,16 +387,45 @@ static NSDictionary* _info_attrs = nil;
 
 - (void)awakeFromNib
 {
-  // WORKAROUND: Stop 15" Macbook Pro always rendering scroll bars
-  // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
-  [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
-  [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
+  self.view.rows = 0;
+  self.info.hidden = YES;
 }
 
 - (void)stopCalculatingFileSize
 {
   if (_operation_queue.operationCount > 0)
     [_operation_queue cancelAllOperations];
+}
+
+- (void)filesChanged
+{
+  if (_file_list.count > 1)
+  {
+    NSString* calculating = NSLocalizedString(@"Calculating...", nil);
+    self.info.attributedStringValue = [[NSAttributedString alloc] initWithString:calculating
+                                                                      attributes:_info_attrs];
+    __unsafe_unretained InfinitSendFilesViewController* weak_self = self;
+    [_operation_queue addOperation:[weak_self asynchronouslySetFileSize]];
+  }
+  if (_file_list.count == 1)
+  {
+    self.view.rows = 0;
+    self.collection_view.enclosingScrollView.hidden = YES;
+    self.info.hidden = YES;
+  }
+  else if (_file_list.count < 4)
+  {
+    self.view.rows = 1;
+    self.collection_view.enclosingScrollView.hidden = NO;
+    self.info.hidden = NO;
+  }
+  else
+  {
+    self.view.rows = 2;
+    self.collection_view.enclosingScrollView.hidden = NO;
+    self.info.hidden = NO;
+  }
+  [_delegate fileList:self wantsChangeHeight:self.view.intrinsicContentSize.height];
 }
 
 - (NSOperation*)asynchronouslySetFileSize
@@ -217,24 +435,24 @@ static NSDictionary* _info_attrs = nil;
   __unsafe_unretained InfinitSendFilesViewController* weak_self = self;
   __weak NSArray* weak_file_list = _file_list;
   [block addExecutionBlock:^{
-    if (weak_file_list.count == 0)
+    if (weak_file_list.count == 1)
       return;
 
     NSUInteger res = 0;
 
     @autoreleasepool
     {
-      for (NSString* file_path in weak_file_list)
+      for (InfinitSendFileModel* file in weak_file_list)
       {
         if (weak_block.isCancelled)
           return;
 
         BOOL is_directory;
         NSUInteger file_size = 0;
-        if ([[NSFileManager defaultManager] fileExistsAtPath:file_path isDirectory:&is_directory] && is_directory)
+        if ([[NSFileManager defaultManager] fileExistsAtPath:file.path isDirectory:&is_directory] && is_directory)
         {
           NSURL* file_url =
-            [NSURL URLWithString:[file_path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            [NSURL URLWithString:[file.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
           if (file_url != nil)
           {
             NSDirectoryEnumerator* dir_enum =
@@ -265,7 +483,7 @@ static NSDictionary* _info_attrs = nil;
         else
         {
           NSDictionary* file_properties =
-            [[NSFileManager defaultManager] attributesOfItemAtPath:file_path error:NULL];
+            [[NSFileManager defaultManager] attributesOfItemAtPath:file.path error:NULL];
           file_size = [file_properties fileSize];
         }
         res += file_size;
@@ -276,19 +494,22 @@ static NSDictionary* _info_attrs = nil;
       NSString* info_str;
       if (weak_file_list.count == 1)
       {
-        info_str = [NSString stringWithFormat:@"   1 %@ (%@)",
+        info_str = [NSString stringWithFormat:@"1 %@ (%@)",
                     NSLocalizedString(@"file", nil),
                     [IAFunctions fileSizeStringFrom:total_size]];
       }
       else
       {
-        info_str = [NSString stringWithFormat:@"   %ld %@ (%@)",
-                    weak_file_list.count,
+        info_str = [NSString stringWithFormat:@"%ld %@ (%@)",
+                    weak_file_list.count - 1,
                     NSLocalizedString(@"files", nil),
                     [IAFunctions fileSizeStringFrom:total_size]];
       }
-      weak_self.header_view.information.attributedTitle =
-        [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
+      if (weak_self != nil)
+      {
+        weak_self.info.attributedStringValue =
+          [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
+      }
     }
   }];
   return block;
@@ -298,140 +519,55 @@ static NSDictionary* _info_attrs = nil;
 {
   if (_operation_queue.operationCount > 0)
     [_operation_queue cancelAllOperations];
-  _file_list = [files copy];
-  NSString* info_str;
-  if (_file_list.count == 0)
-  {
-    info_str = NSLocalizedString(@"   Add files...", nil);
-    self.header_view.show_files.hidden = YES;
-    [self hideFiles];
-    self.header_view.open = NO;
-    self.header_view.got_files = NO;
-  }
-  else if (_file_list.count == 1)
-  {
-    info_str = [NSString stringWithFormat:@"   1 %@ (%@)",
-                NSLocalizedString(@"file", nil),
-                NSLocalizedString(@"Calculating...", nil)];
-    self.header_view.got_files = YES;
-  }
-  else
-  {
-    info_str = [NSString stringWithFormat:@"   %ld %@ (%@)",
-                _file_list.count,
-                NSLocalizedString(@"files", nil),
-                NSLocalizedString(@"Calculating...", nil)];
-    self.header_view.got_files = YES;
-  }
-  self.header_view.information.attributedTitle =
-    [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
-  if (_file_list.count > 0)
-  {
-    __unsafe_unretained InfinitSendFilesViewController* weak_self = self;
-    [_operation_queue addOperation:[weak_self asynchronouslySetFileSize]];
-  }
-  if (_open)
-    [self updateTable];
-}
 
-//- Table Handling ---------------------------------------------------------------------------------
-
-- (CGFloat)tableHeight
-{
-  CGFloat height = self.table_view.numberOfRows * _row_height;
-  if (height > _max_table_height)
-    return _max_table_height;
-  else
-    return height;
-}
-
-- (void)updateTable
-{
-  [self.table_view reloadData];
-  CGFloat height = NSHeight(self.header_view.frame) + [self tableHeight];
-  [_delegate fileList:self wantsChangeHeight:height];
-}
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
-{
-  return _file_list.count;
-}
-
-- (CGFloat)tableView:(NSTableView*)tableView
-         heightOfRow:(NSInteger)row
-{
-  return _row_height;
-}
-
-- (NSView*)tableView:(NSTableView*)tableView
-  viewForTableColumn:(NSTableColumn*)tableColumn
-                 row:(NSInteger)row
-{
-  NSString* file = [_file_list objectAtIndex:row];
-  if (file.length == 0)
-    return nil;
-  InfinitSendFileListCellView* cell = [tableView makeViewWithIdentifier:@"file_cell"
-                                                                  owner:self];
-  [cell setupCellWithFilePath:[_file_list objectAtIndex:row]];
-  return cell;
+  NSMutableArray* temp_arr = [[NSMutableArray alloc] init];
+  for (NSString* path in files)
+    [temp_arr addObject:[[InfinitSendFileModel alloc] initWithPath:[path copy]]];
+  [temp_arr addObject:[[InfinitSendFileModel alloc] initAddFilesPlaceholder]];
+  [self setFile_list:temp_arr];
 }
 
 //- User Interaction -------------------------------------------------------------------------------
 
-- (IBAction)removeFileClicked:(NSButton*)sender
+- (void)removeFileClicked:(NSString*)file
 {
-  NSInteger row = [self.table_view rowForView:sender];
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-   {
-     [self.table_view beginUpdates];
-     [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                            withAnimation:NSTableViewAnimationSlideRight];
-     [self.table_view endUpdates];
-   }
-                      completionHandler:^
-   {
-     [_delegate fileList:self wantsRemoveFileAtIndex:row];
-   }];
+  NSUInteger index = 0;
+  for (InfinitSendFileModel* model in _file_list)
+  {
+    if ([model.path isEqualToString:file])
+      break;
+    index++;
+  }
+  if (index < _file_list.count)
+    [self removeObjectFromFile_listAtIndex:index];
 }
 
-- (void)showFiles
+- (void)fileIconClicked:(InfinitSendFileModel*)file
 {
-  [self.table_view reloadData];
-  _open = YES;
-  ((InfinitSendFilesView*)self.view).open = _open;
-  CGFloat height = NSHeight(self.header_view.frame) + [self tableHeight];
-  [_delegate fileList:self wantsChangeHeight:height];
+  if (file.add_files_placeholder)
+    [_delegate fileListGotAddFilesClicked:self];
 }
 
-- (void)hideFiles
+//- KVO Array --------------------------------------------------------------------------------------
+
+- (void)insertObject:(InfinitSendFileModel*)object
+  inFile_listAtIndex:(NSUInteger)index
 {
-  if (!_open)
-    return;
-  _open = NO;
-  ((InfinitSendFilesView*)self.view).open = _open;
-  [_delegate fileList:self wantsChangeHeight:NSHeight(self.header_view.frame)];
+  [_file_list insertObject:object atIndex:index];
+  [self filesChanged];
 }
 
-- (IBAction)informationClicked:(NSButton*)sender
+- (void)removeObjectFromFile_listAtIndex:(NSUInteger)index
 {
-  [_delegate fileListGotAddFilesClicked:self];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
+  [_file_list removeObjectAtIndex:index];
+  [_delegate fileList:self wantsRemoveFileAtIndex:index];
+  [self filesChanged];
 }
 
-- (IBAction)showFilesClicked:(NSButton*)sender
+- (void)setFile_list:(NSMutableArray*)file_list
 {
-  if (_file_list.count == 0)
-    return;
-  if (_open)
-    [self hideFiles];
-  else
-    [self showFiles];
-}
-
-- (IBAction)addFilesClicked:(NSButton*)sender
-{
-  [_delegate fileListGotAddFilesClicked:self];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
+  _file_list = file_list;
+  [self filesChanged];
 }
 
 @end
