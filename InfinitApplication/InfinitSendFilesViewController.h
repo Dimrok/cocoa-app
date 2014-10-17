@@ -32,20 +32,29 @@
 
 //- Send Files View --------------------------------------------------------------------------------
 
+@protocol InfinitSendFilesSubViewProtocol;
+
 @interface InfinitSendFilesView : NSView
+@property (assign, readwrite) id<InfinitSendFilesSubViewProtocol> delegate;
 @property (nonatomic, readwrite) NSUInteger rows;
 @property (nonatomic, readwrite) CGFloat hover;
+@end
+
+@protocol InfinitSendFilesSubViewProtocol <NSObject>
+- (void)sendFilesViewWantsAddFiles:(InfinitSendFilesView*)sender;
+- (void)sendFilesView:(InfinitSendFilesView*)sender
+      gotFilesDropped:(NSArray*)files;
 @end
 
 //- Controller -------------------------------------------------------------------------------------
 
 @protocol InfinitSendFilesViewProtocol;
 
-@interface InfinitSendFilesViewController : NSViewController
+@interface InfinitSendFilesViewController : NSViewController <InfinitSendFilesSubViewProtocol>
 
 @property (nonatomic, weak) IBOutlet InfinitSendFilesCollectionView* collection_view;
 @property (nonatomic, weak) IBOutlet NSTextField* info;
-@property (nonatomic, weak) IBOutlet InfinitSendFilesView* view;
+@property (nonatomic, strong) IBOutlet InfinitSendFilesView* view;
 
 @property (nonatomic, readwrite) NSMutableArray* file_list;
 @property (nonatomic, readonly) BOOL open;
@@ -68,5 +77,7 @@ wantsRemoveFileAtIndex:(NSInteger)index;
 wantsChangeHeight:(CGFloat)height;
 
 - (void)fileListGotAddFilesClicked:(InfinitSendFilesViewController*)sender;
+- (void)fileList:(InfinitSendFilesViewController*)sender
+ gotFilesDropped:(NSArray*)files;
 
 @end

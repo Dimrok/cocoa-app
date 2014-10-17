@@ -38,16 +38,10 @@ typedef enum _InfinitUserLinkMode
 - (void)gotLinkClick:(InfinitSendUserLinkView*)sender;
 @end
 
-//- View -------------------------------------------------------------------------------------------
+//- Infinit Send Button Cell -----------------------------------------------------------------------
 
-@protocol InfinitSendDropViewProtocol;
-
-@interface InfinitSendDropView : NSView <NSDraggingDestination>
-@property (nonatomic, readwrite, assign) id<InfinitSendDropViewProtocol> delegate;
-@end
-
-@protocol InfinitSendDropViewProtocol <NSObject>
-- (void)gotDroppedFiles:(NSArray*)files;
+@interface InfinitSendButtonCell : NSButtonCell
+@property (nonatomic, readwrite) NSDictionary* disabled_attrs;
 @end
 
 //- Controller -------------------------------------------------------------------------------------
@@ -55,18 +49,17 @@ typedef enum _InfinitUserLinkMode
 @protocol InfinitSendViewProtocol;
 
 @interface InfinitSendViewController : IAViewController <IAUserSearchViewProtocol,
-                                                         InfinitSendDropViewProtocol,
                                                          InfinitSendNoteViewProtocol,
                                                          InfinitSendFilesViewProtocol,
                                                          InfinitSendUserLinkProtocol>
 
 @property (nonatomic, weak) IBOutlet InfinitSendUserLinkView* user_link_view;
-@property (nonatomic, weak) IBOutlet InfinitSendDropView* drop_view;
 @property (nonatomic, weak) IBOutlet NSView* search_view;
 @property (nonatomic, weak) IBOutlet NSView* note_view;
 @property (nonatomic, weak) IBOutlet NSView* files_view;
 @property (nonatomic, weak) IBOutlet NSButton* send_button;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* search_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* search_note_contraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* note_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* files_constraint;
 

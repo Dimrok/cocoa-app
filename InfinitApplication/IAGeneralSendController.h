@@ -36,6 +36,8 @@
 
 - (void)sendControllerWantsClose:(IAGeneralSendController*)sender;
 
+- (void)sendControllerWantsBack:(IAGeneralSendController*)sender;
+
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender;
 
 - (NSArray*)sendController:(IAGeneralSendController*)sender

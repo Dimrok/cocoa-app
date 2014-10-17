@@ -8,6 +8,8 @@
 
 #import "InfinitSendFileView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation InfinitSendFileView
 {
 @private
@@ -76,6 +78,14 @@
    } completionHandler:^{
      self.remove_button.alphaValue = 0.0;
    }];
+}
+
++ (id)defaultAnimationForKey:(NSString*)key
+{
+  if ([key isEqualToString:@"hover"])
+    return [CABasicAnimation animation];
+
+  return [super defaultAnimationForKey:key];
 }
 
 @end

@@ -35,7 +35,10 @@
 
 - (void)setupViewForMode:(InfinitUserLinkMode)mode
 {
-  NSFont* font = [NSFont fontWithName:@"Montserrat" size:11.0];
+  NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Montserrat"
+                                                            traits:NSBoldFontMask
+                                                            weight:3
+                                                              size:11.0];
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   para.alignment = NSCenterTextAlignment;
   NSDictionary* norm_attrs = [IAFunctions textStyleWithFont:font
@@ -50,8 +53,8 @@
                                               paragraphStyle:para
                                                       colour:IA_RGB_COLOUR(81, 81, 73)
                                                       shadow:nil];
-  NSString* link_str = NSLocalizedString(@"LINK", nil);
-  NSString* user_str = NSLocalizedString(@"PEOPLE", nil);
+  NSString* link_str = NSLocalizedString(@"GET A LINK", nil);
+  NSString* user_str = NSLocalizedString(@"SEND TO SOMEONE", nil);
 
   _link_high_str = [[NSAttributedString alloc] initWithString:link_str attributes:high_attrs];
   _link_hover_str = [[NSAttributedString alloc] initWithString:link_str attributes:hover_attrs];
@@ -266,63 +269,22 @@
 
 @end
 
-//- View -------------------------------------------------------------------------------------------
+//- Infinit Send Button Cell -----------------------------------------------------------------------
 
-@implementation InfinitSendDropView
-{
-  NSArray* _drag_types;
-}
+@implementation InfinitSendButtonCell
 
-- (id)initWithFrame:(NSRect)frameRect
+- (NSRect)drawTitle:(NSAttributedString*)title
+          withFrame:(NSRect)frame
+             inView:(NSView*)controlView
 {
-  if (self = [super initWithFrame:frameRect])
+  if (![self isEnabled])
   {
-    _drag_types = [NSArray arrayWithObject:NSFilenamesPboardType];
-    [self registerForDraggedTypes:_drag_types];
+    return [super drawTitle:[[NSAttributedString alloc] initWithString:self.attributedTitle.string
+                                                            attributes:self.disabled_attrs]
+                  withFrame:frame inView:controlView];
   }
-  return self;
-}
 
-- (BOOL)isOpaque
-{
-  return YES;
-}
-
-- (NSSize)intrinsicContentSize
-{
-  return self.bounds.size;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-  [IA_GREY_COLOUR(255) set];
-  NSRectFill(self.bounds);
-}
-
-//- Drag Operations --------------------------------------------------------------------------------
-
-- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
-{
-  NSPasteboard* paste_board = sender.draggingPasteboard;
-  if ([paste_board availableTypeFromArray:_drag_types])
-  {
-    return NSDragOperationCopy;
-  }
-  return NSDragOperationNone;
-}
-
-- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
-{
-  NSPasteboard* paste_board = sender.draggingPasteboard;
-  if (![paste_board availableTypeFromArray:_drag_types])
-    return NO;
-
-  NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
-
-  if (files.count > 0)
-    [_delegate gotDroppedFiles:files];
-
-  return YES;
+  return [super drawTitle:title withFrame:frame inView:controlView];
 }
 
 @end
@@ -337,19 +299,25 @@
 @private
   __weak id<InfinitSendViewProtocol> _delegate;
 
-  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
   IAUserSearchViewController* _search_controller;
   InfinitSendNoteViewController* _note_controller;
   InfinitSendFilesViewController* _files_controller;
 
   NSArray* _recipient_list;
   NSString* _note;
-  CGFloat _last_search_height;
 
   BOOL _for_link;
 
   InfinitTooltipViewController* _tooltip;
+
+  NSAttributedString* _send_str;
+  NSAttributedString* _link_str;
+
+  CGFloat _last_search_height;
+  CGFloat _last_files_height;
 }
+
+static NSDictionary* _send_btn_disabled_attrs = nil;
 
 - (id)initWithDelegate:(id<InfinitSendViewProtocol>)delegate
   withSearchController:(IAUserSearchViewController*)search_controller
@@ -359,12 +327,37 @@
   {
     _for_link = for_link;
     _delegate = delegate;
+    _last_search_height = 45.0;
+    _last_files_height = 197.0;
 
     _search_controller = search_controller;
     [_search_controller setDelegate:self];
     _note_controller = [[InfinitSendNoteViewController alloc] initWithDelegate:self];
     _files_controller = [[InfinitSendFilesViewController alloc] initWithDelegate:self];
     [self.user_link_view setDelegate:self];
+    NSFont* send_btn_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Montserrat"
+                                                                       traits:(NSUnboldFontMask|NSUnitalicFontMask)
+                                                                       weight:3
+                                                                         size:13.0];
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSCenterTextAlignment;
+    NSShadow* shadow = [[NSShadow alloc] init];
+    shadow.shadowOffset = NSMakeSize(0.0, -1.0);
+    NSDictionary* attrs = [IAFunctions textStyleWithFont:send_btn_font
+                                          paragraphStyle:para
+                                                  colour:IA_GREY_COLOUR(255)
+                                                  shadow:shadow];
+    _send_str = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"SEND", nil)
+                                                attributes:attrs];
+    _link_str = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"GET A LINK", nil)
+                                                attributes:attrs];
+    if (_send_btn_disabled_attrs == nil)
+    {
+      _send_btn_disabled_attrs = [IAFunctions textStyleWithFont:send_btn_font
+                                                 paragraphStyle:para
+                                                         colour:IA_RGBA_COLOUR(255, 255, 255, 0.5)
+                                                         shadow:shadow];
+    }
   }
   return self;
 }
@@ -380,16 +373,13 @@
 
 - (void)awakeFromNib
 {
-  self.drop_view.delegate = self;
-  if (!_for_link)
-  {
-    [self.search_view addSubview:_search_controller.view];
-    [self.search_view addConstraints:[NSLayoutConstraint
-                                      constraintsWithVisualFormat:@"V:|[search_view]|"
-                                      options:0
-                                      metrics:nil
-                                      views:@{@"search_view": _search_controller.view}]];
-  }
+  [self.send_button.cell setDisabled_attrs:_send_btn_disabled_attrs];
+  [self.search_view addSubview:_search_controller.view];
+  [self.search_view addConstraints:[NSLayoutConstraint
+                                    constraintsWithVisualFormat:@"V:|[search_view]|"
+                                    options:0
+                                    metrics:nil
+                                    views:@{@"search_view": _search_controller.view}]];
   [self.note_view addSubview:_note_controller.view];
   [self.note_view addConstraints:[NSLayoutConstraint
                                   constraintsWithVisualFormat:@"V:|[note_view]|"
@@ -412,16 +402,17 @@
   if (_for_link)
   {
     [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
-    self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
-    self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
-    self.search_constraint.constant = 0.0;
+    self.send_button.attributedTitle = _link_str;
+    self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
+    _search_controller.link_mode = YES;
     [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
   }
   else
   {
     [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
-    self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
-    self.send_button.toolTip = NSLocalizedString(@"Send", nil);
+    self.send_button.attributedTitle = _send_str;
+    self.send_button.toolTip = NSLocalizedString(@"Send to someone", nil);
+    _search_controller.link_mode = NO;
     [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
   }
   // Onboarding
@@ -572,7 +563,6 @@
   if (self.user_link_view.mode == INFINIT_USER_MODE)
   {
     NSMutableArray* recipients = [NSMutableArray arrayWithArray:[_search_controller recipientList]];
-    [_search_controller checkInputs];
     if (recipients.count == 0)
       return NO;
 
@@ -645,7 +635,15 @@
 
 - (IBAction)cancelButtonClicked:(NSButton*)sender
 {
-  [_delegate sendViewWantsCancel:self];
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+  {
+    context.duration = 0.15;
+    [self.files_constraint.animator setConstant:50.0];
+    [self.note_constraint.animator setConstant:20.0];
+  } completionHandler:^{
+    [_delegate sendViewWantsCancel:self];
+  }];
+
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
   if ([_delegate onboardingSend:self])
   {
@@ -661,12 +659,7 @@
     return;
   [self.view.window makeFirstResponder:_search_controller.search_field];
   [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
-}
-
-- (void)noteView:(InfinitSendNoteViewController*)sender
-     wantsHeight:(CGFloat)height
-{
-  [self.note_constraint setConstant:height];
+  [_search_controller showResults];
 }
 
 
@@ -687,6 +680,11 @@ wantsRemoveFileAtIndex:(NSInteger)index
 - (void)fileList:(InfinitSendFilesViewController*)sender
 wantsChangeHeight:(CGFloat)height
 {
+  if (height == _last_files_height)
+    return;
+  _last_files_height = height;
+  [self.main_view removeConstraint:self.content_height_constraint];
+  self.content_height_constraint = nil;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
@@ -694,6 +692,7 @@ wantsChangeHeight:(CGFloat)height
    }
                       completionHandler:^
    {
+     self.files_constraint.constant = height;
    }];
 }
 
@@ -702,45 +701,85 @@ wantsChangeHeight:(CGFloat)height
   [_delegate sendViewWantsOpenFileDialogBox:self];
 }
 
+- (void)fileList:(InfinitSendFilesViewController*)sender
+ gotFilesDropped:(NSArray*)files
+{
+  [_delegate sendView:self hadFilesDropped:files];
+}
+
 //- Search Protocol --------------------------------------------------------------------------------
 
 - (void)searchView:(IAUserSearchViewController*)sender
    changedToHeight:(CGFloat)height
 {
+  if (_last_search_height == height)
+    return;
   _last_search_height = height;
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
+  BOOL search_mode = NO;
+  CGFloat content_height = height + self.note_constraint.constant + self.files_constraint.constant;
+  if (self.content_height_constraint == nil)
+  {
+    self.content_height_constraint =
+      [NSLayoutConstraint constraintWithItem:self.main_view
+                                   attribute:NSLayoutAttributeHeight
+                                   relatedBy:NSLayoutRelationEqual
+                                      toItem:nil
+                                   attribute:NSLayoutAttributeNotAnAttribute
+                                  multiplier:1.0
+                                    constant:NSHeight(self.main_view.frame)];
+    [self.main_view addConstraint:self.content_height_constraint];
+  }
+  if (height > NSHeight(_search_controller.search_box_view.frame))
+  {
+    search_mode = YES;
+    [self.main_view removeConstraint:self.search_note_contraint];
+  }
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
-    [self.search_constraint.animator setConstant:height];
+    [self.search_constraint setConstant:height];
+    if (search_mode)
+    {
+      [self.content_height_constraint.animator setConstant:height];
+      [self.note_view.animator setAlphaValue:0.0];
+      [self.files_view.animator setAlphaValue:0.0];
+    }
+    else
+    {
+      [self.content_height_constraint.animator setConstant:content_height];
+      self.note_view.hidden = NO;
+      self.files_view.hidden = NO;
+      [self.note_view.animator setAlphaValue:1.0];
+      [self.files_view.animator setAlphaValue:1.0];
+    }
   }
                       completionHandler:^
   {
+    self.note_view.hidden = search_mode;
+    self.files_view.hidden = search_mode;
+    CGFloat alpha = search_mode ? 0.0 : 1.0;
+    self.note_view.alphaValue = alpha;
+    self.files_view.alphaValue = alpha;
+    self.search_constraint.constant = height;
+    self.content_height_constraint.constant = search_mode ? height : content_height;
+    if (!search_mode && self.search_note_contraint == nil)
+    {
+      self.search_note_contraint = [NSLayoutConstraint constraintWithItem:self.search_view
+                                                                attribute:NSLayoutAttributeBottom
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.note_view
+                                                                attribute:NSLayoutAttributeTop
+                                                               multiplier:1.0
+                                                                 constant:0.0];
+      [self.main_view addConstraint:self.search_note_contraint];
+    }
   }];
-}
-
-- (BOOL)searchViewWantsIfGotFile:(IAUserSearchViewController*)sender
-{
-  if ([[_delegate sendViewWantsFileList:self] count] > 0)
-    return YES;
-  return NO;
 }
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender
 {
   [self.view.window makeFirstResponder:_note_controller.note_field];
   [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
-}
-
-- (void)searchView:(IAUserSearchViewController*)sender
- wantsAddFavourite:(IAUser*)user
-{
-  [_delegate sendView:self wantsAddFavourite:user];
-}
-
-- (void)searchView:(IAUserSearchViewController*)sender
-wantsRemoveFavourite:(IAUser*)user
-{
-  [_delegate sendView:self wantsRemoveFavourite:user];
 }
 
 - (void)searchViewInputsChanged:(IAUserSearchViewController*)sender
@@ -787,56 +826,27 @@ wantsRemoveFavourite:(IAUser*)user
     [self doSend];
 }
 
-- (NSArray*)searchViewWantsFriendsByLastInteraction:(IAUserSearchViewController*)sender
-{
-  return [_delegate sendViewWantsFriendsByLastInteraction:self];
-}
-
 //- User Link Protocol -----------------------------------------------------------------------------
 
 - (void)gotUserClick:(InfinitSendUserLinkView*)sender
 {
-  if (![self.search_view.subviews containsObject:_search_controller.view])
-  {
-    [self.search_view addSubview:_search_controller.view];
-    [self.search_view addConstraints:[NSLayoutConstraint
-                                      constraintsWithVisualFormat:@"V:|[search_view]|"
-                                      options:0
-                                      metrics:nil
-                                      views:@{@"search_view": _search_controller.view}]];
-  }
   [self.user_link_view setMode:INFINIT_USER_MODE];
-  self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
-  self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-   {
-     context.duration = 0.15;
-     [self.search_constraint.animator setConstant:_last_search_height];
-   }
-                      completionHandler:^
-   {
-     [self.view.window makeFirstResponder:_search_controller.search_field];
-     [_search_controller.search_field.currentEditor moveToEndOfLine:nil];
-     [self setSendButtonState];
-   }];
+  self.send_button.attributedTitle = _send_str;
+  self.send_button.toolTip = NSLocalizedString(@"Send", nil);
+  _search_controller.link_mode = NO;
+  [self.view.window makeFirstResponder:_search_controller.search_field];
+  [self setSendButtonState];
 }
 
 - (void)gotLinkClick:(InfinitSendUserLinkView*)sender
 {
   [self.user_link_view setMode:INFINIT_LINK_MODE];
-  self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
-  self.send_button.toolTip = NSLocalizedString(@"Send", nil);
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-  {
-    context.duration = 0.15;
-    [self.search_constraint.animator setConstant:0.0];
-  }
-                      completionHandler:^
-  {
-    [self.view.window makeFirstResponder:_note_controller.note_field];
-    [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
-    [self setSendButtonState];
-  }];
+  self.send_button.attributedTitle = _link_str;
+  self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
+  _search_controller.link_mode = YES;
+  [self.view.window makeFirstResponder:_note_controller.note_field];
+  [_note_controller.note_field.currentEditor moveToEndOfLine:nil];
+  [self setSendButtonState];
 }
 
 //- Drop View Protocol -----------------------------------------------------------------------------

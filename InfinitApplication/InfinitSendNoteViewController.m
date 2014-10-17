@@ -32,7 +32,7 @@
 {
   [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 1.0,
+  NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0,
                                                                    NSWidth(self.bounds), 1.0)];
   [IA_GREY_COLOUR(230) set];
   [line fill];
@@ -71,7 +71,7 @@
     right_aligned.alignment = NSRightTextAlignment;
     _norm_characters_attrs = [IAFunctions textStyleWithFont:small_font
                                              paragraphStyle:right_aligned
-                                                     colour:IA_GREY_COLOUR(205)
+                                                     colour:IA_GREY_COLOUR(209)
                                                      shadow:nil];
 
     _done_characters_attrs = [IAFunctions textStyleWithFont:small_font
@@ -85,17 +85,17 @@
 - (void)awakeFromNib
 {
   // WORKAROUND older versions of OS X don't handle setting of placeholder string well.
-  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
+  if ([IAFunctions osxVersion] >= INFINIT_OS_X_VERSION_10_9)
   {
-    NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+    NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue"
                                                               traits:NSUnboldFontMask
                                                               weight:3
                                                                 size:12.0];
     NSDictionary* attrs = [IAFunctions textStyleWithFont:font
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                  colour:IA_GREY_COLOUR(190)
+                                                  colour:IA_GREY_COLOUR(209)
                                                   shadow:nil];
-    NSString* add_str = NSLocalizedString(@"Optional message...", nil);
+    NSString* add_str = NSLocalizedString(@"Optional note...", nil);
     NSAttributedString* add_note = [[NSAttributedString alloc] initWithString:add_str
                                                                    attributes:attrs];
     [self.note_field.cell setPlaceholderAttributedString:add_note];

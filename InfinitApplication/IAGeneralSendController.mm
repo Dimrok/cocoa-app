@@ -167,7 +167,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 - (void)sendViewWantsCancel:(InfinitSendViewController*)sender
 {
   _files = nil;
-  [_delegate sendControllerWantsClose:self];
+  [_delegate sendControllerWantsBack:self];
 }
 
 - (NSArray*)sendViewWantsFileList:(InfinitSendViewController*)sender
@@ -179,7 +179,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   wantsRemoveFileAtIndex:(NSInteger)index
 {
   [_files removeObjectAtIndex:index];
-  [sender filesUpdated];
 }
 
 - (void)sendViewWantsOpenFileDialogBox:(InfinitSendViewController*)sender
@@ -207,20 +206,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   return [_delegate sendController:self
                    wantsCreateLink:files
                        withMessage:message];
-}
-
-- (void)sendView:(InfinitSendViewController*)sender
-       wantsAddFavourite:(IAUser*)user
-{
-  [_delegate sendController:self
-          wantsAddFavourite:user];
-}
-
-- (void)sendView:(InfinitSendViewController*)sender
-wantsRemoveFavourite:(IAUser*)user
-{
-  [_delegate sendController:self
-       wantsRemoveFavourite:user];
 }
 
 - (void)sendView:(InfinitSendViewController*)sender

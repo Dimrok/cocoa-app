@@ -27,6 +27,7 @@
     _email = email;
     _fullname = fullname;
     _user = user;
+    _hover = NO;
   }
   return self;
 }
@@ -65,26 +66,25 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  [IA_GREY_COLOUR(255) set];
+  if (_link_mode)
+    [IA_GREY_COLOUR(248) set];
+  else
+    [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  if (!_loading)
-  {
-    NSBezierPath* line =
-      [NSBezierPath bezierPathWithRect:NSMakeRect(20.0, 0.0, NSWidth(self.bounds) - 40.0, 1.0)];
-    [IA_GREY_COLOUR(229) set];
-    [line fill];
-  }
-}
-
-- (void)setLoading:(BOOL)loading
-{
-  _loading = loading;
-  [self setNeedsDisplay:YES];
+  NSRect line = NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 1.0);
+  [IA_GREY_COLOUR(229) set];
+  NSRectFill(line);
 }
 
 - (NSSize)intrinsicContentSize
 {
-  return self.bounds.size;
+  return self.frame.size;
+}
+
+- (void)setLink_mode:(BOOL)link_mode
+{
+  _link_mode = link_mode;
+  [self setNeedsDisplay:YES];
 }
 
 @end
@@ -100,20 +100,13 @@
   NSUInteger _token_count;
   
   BOOL _no_results;
-  NSAttributedString* _add_file_str;
-  NSAttributedString* _invite_msg_str;
-  NSAttributedString* _no_result_msg_str;
   
   CGFloat _row_height;
   NSInteger _max_rows_shown;
   
-  NSImage* _static_image;
-  
   InfinitSearchController* _search_controller;
   NSString* _last_search;
   NSInteger _hover_row;
-
-  NSMutableArray* _favourites_swaggers;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -127,31 +120,9 @@
     _max_rows_shown = 4;
     _delegate = nil;
     _token_count = 0;
-    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    para.alignment = NSCenterTextAlignment;
-    
-    NSFont* no_result_msg_font = [[NSFontManager sharedFontManager]
-                                  fontWithFamily:@"Helvetica"
-                                  traits:NSUnboldFontMask
-                                  weight:5
-                                  size:13.0];
-    NSDictionary* no_result_msg_style = [IAFunctions textStyleWithFont:no_result_msg_font
-                                                        paragraphStyle:para
-                                                                colour:IA_GREY_COLOUR(32.0)
-                                                                shadow:nil];
-    _no_result_msg_str = [[NSAttributedString alloc] initWithString:
-                          NSLocalizedString(@"No results. Send to an email instead.", nil)
-                                                         attributes:no_result_msg_style];
-    _invite_msg_str = [[NSAttributedString alloc] initWithString:
-                       NSLocalizedString(@"Click the envelope to send the file.", nil)
-                                                      attributes:no_result_msg_style];
-    _add_file_str = [[NSAttributedString alloc] initWithString:
-                     NSLocalizedString(@"Don't forget to add a file.", nil)
-                                                    attributes:no_result_msg_style];
-    _static_image = [IAFunctions imageNamed:@"icon-search"];
-    
     _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
     _last_search = @"";
+    _no_results = NO;
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarCallback:)
                                                name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -198,12 +169,11 @@
                                                name:NSViewBoundsDidChangeNotification
                                              object:self.table_view.enclosingScrollView.contentView];
 
-  self.search_image.image = _static_image;
   self.search_spinner.hidden = YES;
   [self.search_spinner setIndeterminate:YES];
   
   // WORKAROUND: Place holder text has been fixed in 10.9
-  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
+  if ([IAFunctions osxVersion] >= INFINIT_OS_X_VERSION_10_9)
   {
     NSFont* search_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                      traits:NSUnboldFontMask
@@ -213,53 +183,41 @@
     NSDictionary* search_attrs =
       [IAFunctions textStyleWithFont:search_font
                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                              colour:IA_GREY_COLOUR(190)
+                              colour:IA_GREY_COLOUR(209)
                               shadow:nil];
-    NSString* placeholder_str = NSLocalizedString(@"Search or select a user", nil);
+    NSString* placeholder_str = NSLocalizedString(@"Send by email or search your contacts...", nil);
     NSAttributedString* search_placeholder =
       [[NSAttributedString alloc] initWithString:placeholder_str attributes:search_attrs];
     [self.search_field.cell setPlaceholderAttributedString:search_placeholder];
   }
-  self.no_results_message.attributedStringValue = _no_result_msg_str;
   self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
 }
 
 - (void)loadView
 {
   [super loadView];
-  if (_favourites_swaggers == nil)
-  {
-    _favourites_swaggers =
-      [NSMutableArray arrayWithArray:[_delegate searchViewWantsFriendsByLastInteraction:self]];
-  }
+  _no_results = NO;
   [self updateResultsTable];
-  [self setNoResultsHidden:YES];
-  [self.view setFrameSize:NSMakeSize(NSWidth(self.view.frame),
-                                     NSHeight(self.search_box_view.frame) + [self tableHeight])];
 }
 
 //- General Functions ------------------------------------------------------------------------------
 
-- (void)checkInputs
+- (void)setLink_mode:(BOOL)link_mode
 {
-  if ([_delegate searchViewWantsIfGotFile:self])
-  {
-    if ([self.no_results_message.stringValue isEqualToString:_add_file_str.string])
-      self.no_results_message.attributedStringValue = _invite_msg_str;
-  }
-  else
-  {
-    if ([self.no_results_message.stringValue isEqualToString:_invite_msg_str.string])
-      self.no_results_message.attributedStringValue = _add_file_str;
-  }
-}
-
-- (void)setNoResultsHidden:(BOOL)hidden
-{
-  [self.no_results_message setHidden:hidden];
-  // WORKAROUND: message rendering behind scroll view on 10.9
-  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_9)
-    [self.table_view.enclosingScrollView setHidden:!hidden];
+  _link_mode = link_mode;
+  [self.search_spinner stopAnimation:nil];
+  self.search_spinner.hidden = YES;
+  self.search_field.enabled = !_link_mode;
+  self.link_icon.hidden = !_link_mode;
+  self.link_text.hidden = !_link_mode;
+  self.search_box_view.link_mode = _link_mode;
+  self.search_field.hidden = _link_mode;
+  self.search_label.hidden = _link_mode;
+  self.table_view.hidden = _link_mode;
+  CGFloat height = NSHeight(self.search_box_view.frame);
+  if (!_link_mode)
+    height += [self tableHeight];
+  [_delegate searchView:self changedToHeight:height];
 }
 
 - (void)addUser:(IAUser*)user
@@ -313,13 +271,13 @@
   NSView* clip_view = self.search_field.subviews[0];
   if ([self.search_field.objectValue count] == 0)
   {
-    [clip_view setFrame:NSMakeRect(0.0, 5.0, clip_view.frame.size.width, 17.0)];
-    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26.0)];
+    [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 17.0)];
+    [self.search_field setFrame:NSMakeRect(35.0, 3.0, 265.0, 26.0)];
   }
   else
   {
     [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 26.0)];
-    [self.search_field setFrame:NSMakeRect(42.0, 7.0, 261.0, 26.0)];
+    [self.search_field setFrame:NSMakeRect(35.0, 7.0, 265.0, 26.0)];
   }
 }
 
@@ -338,7 +296,6 @@
   if (row != NSNotFound)
   {
     element.selected = YES;
-    [[self.table_view viewAtColumn:0 row:row makeIfNecessary:NO] setSelected:YES];
   }
   [self.search_field setObjectValue:temp];
 
@@ -347,6 +304,7 @@
 
   [self fixClipView];
   [_delegate searchViewInputsChanged:self];
+  [self clearResults];
 }
 
 - (void)removeElement:(InfinitSearchElement*)element
@@ -358,7 +316,6 @@
   if (row != NSNotFound)
   {
     element.selected = NO;
-    [[self.table_view viewAtColumn:0 row:row makeIfNecessary:NO] setSelected:NO];
   }
   [temp removeObject:element];
   [self.search_field setObjectValue:temp];
@@ -382,7 +339,7 @@
 
 - (void)searchLoading:(BOOL)loading
 {
-  self.search_image.hidden = loading;
+  self.search_label.hidden = loading;
   self.search_spinner.hidden = !loading;
   if (loading)
     [self.search_spinner startAnimation:nil];
@@ -399,14 +356,14 @@
 {
   [self performSelector:@selector(doSearchNow:)
              withObject:search_string
-             afterDelay:0.3];
+             afterDelay:0.2];
   [self searchLoading:YES];
 }
 
 - (void)doSearchNow:(NSString*)search_string
 {
   [self cancelLastSearchOperation];
-  [_search_controller searchString:search_string];
+  [_search_controller searchWithString:search_string];
 }
 
 //- Search Field -----------------------------------------------------------------------------------
@@ -458,6 +415,7 @@
   }
   else
   {
+    [self clearResults];
     [self searchLoading:NO];
     [self updateResultsTable];
     [self fixClipView];
@@ -501,9 +459,7 @@ doCommandBySelector:(SEL)commandSelector
     if (row > -1 && row < _search_results.count)
     {
       InfinitSearchElement* element = _search_results[row];
-      if ([self.search_field.objectValue containsObject:element])
-        [self removeElement:element];
-      else
+      if (![self.search_field.objectValue containsObject:element])
         [self addElement:element];
       // WORKAROUND: can only move the cursor once the token is in place so put a delay of 0.
       [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0];
@@ -539,6 +495,8 @@ doCommandBySelector:(SEL)commandSelector
   else if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
   {
     [_delegate searchViewWantsLoseFocus:self];
+    [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
+    [self fixClipView];
     return YES;
   }
   return NO;
@@ -630,85 +588,82 @@ writeRepresentedObjects:(NSArray*)objects
 - (void)clearResults
 {
   [self searchLoading:NO];
-  [self setNoResultsHidden:YES];
+  _no_results = NO;
   _search_results = nil;
-  self.search_box_view.loading = YES;
-  [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
+  if (self.currentSearchString.length == 0)
+    [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
 
   // WORKAROUND: Centre placeholder text when field is empty.
   if ([self.search_field.objectValue count] == 0)
     [self.view.window makeFirstResponder:self.search_field];
 }
 
-- (void)fillSearchResultsWithFriends
-{
-  _search_results = [NSMutableArray array];
-  for (IAUser* user in _favourites_swaggers)
-  {
-    if (!user.deleted)
-    {
-      InfinitSearchElement* element =
-        [[InfinitSearchElement alloc] initWithAvatar:[IAAvatarManager getAvatarForUser:user]
-                                               email:nil
-                                            fullname:user.fullname
-                                                user:user];
-      [_search_results addObject:element];
-    }
-  }
-}
-
 - (void)updateResultsTable
 {
-  CGFloat new_height;
   if (_search_results.count == 0 && self.currentSearchString.length > 0) // No results so show message
   {
-    self.search_box_view.loading = NO;
+    _no_results = YES;
     [self.table_view reloadData];
-    [self setNoResultsHidden:NO];
-    new_height =
-      NSHeight(self.search_box_view.frame) + NSHeight(self.no_results_message.frame) + 20.0;
-    [_delegate searchView:self changedToHeight:new_height];
+    [_delegate searchView:self changedToHeight:self.height];
     return;
   }
-  else if (self.currentSearchString.length == 0)
-  {
-    [self fillSearchResultsWithFriends];
-  }
-  self.search_box_view.loading = NO;
   _hover_row = 0;
   if (_search_results.count > 0)
-    [[_search_results objectAtIndex:0] setHover:YES];
-  for (InfinitSearchElement* element in self.search_field.objectValue)
   {
-    NSInteger i = [_search_results indexOfObject:element];
-    if (i != NSNotFound)
-      [[_search_results objectAtIndex:i] setSelected:YES];
+    InfinitSearchElement* element = [_search_results objectAtIndex:0];
+    element.hover = YES;
   }
+  _no_results = NO;
   [self.table_view reloadData];
-  [self setNoResultsHidden:YES];
-  new_height = NSHeight(self.search_box_view.frame) + [self tableHeight];
   [self.table_view scrollRowToVisible:0];
-  [_delegate searchView:self changedToHeight:new_height];
+  [_delegate searchView:self changedToHeight:self.height];
+}
+
+- (CGFloat)height
+{
+  return NSHeight(self.search_box_view.frame) + [self tableHeight];
+}
+
+- (void)showResults
+{
+  [_delegate searchView:self changedToHeight:self.height];
 }
 
 - (CGFloat)tableHeight
 {
+  if (_search_results.count == 0 && _no_results)
+  {
+    if (_search_controller.include_infinit_results)
+      return 108.0;
+    else
+      return 153.0;
+  }
   CGFloat total_height = _search_results.count * _row_height;
   CGFloat max_height = _row_height * _max_rows_shown;
   if (total_height > max_height)
-    return max_height - 2.0;
+    return max_height;
   else
-    return total_height - 2.0;
+    return total_height;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
-  return _search_results.count;
+  if (_search_results.count == 0 && _no_results)
+    return 1;
+  else
+    return _search_results.count;
 }
 
 - (CGFloat)tableView:(NSTableView*)tableView
          heightOfRow:(NSInteger)row
 {
+  if (_search_results.count == 0 && _no_results)
+  {
+    if (_search_controller.include_infinit_results)
+      return 108.0;
+    else
+      return 153.0;
+  }
   return _row_height;
 }
 
@@ -716,36 +671,42 @@ writeRepresentedObjects:(NSArray*)objects
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
 {
-  InfinitSearchElement* element = _search_results[row];
-  if (element == nil)
-    return nil;
-  
-  IASearchResultsCellView* cell;
-  cell = [tableView makeViewWithIdentifier:@"infinit_search_cell"
-                                     owner:self];
-  [cell setDelegate:self];
-
-  if (element.user != nil)
+  if (_search_results.count == 0 && _no_results)
   {
-    [cell setUserFullname:element.fullname withDomain:@""];
-    [cell setUserFavourite:element.user.favourite];
+    InfinitSearchNoResultsCellView* cell;
+    if (_search_controller.include_infinit_results)
+      cell = [tableView makeViewWithIdentifier:@"infinit_no_results_b" owner:self];
+    else
+      cell = [tableView makeViewWithIdentifier:@"infinit_no_results_a" owner:self];
+
+    cell.delegate = self;
+    cell.search_string = [self currentSearchString];
+    return cell;
   }
   else
   {
-    NSString* domain =
-      [element.email substringFromIndex:([element.email rangeOfString:@"@"].location + 1)];
-    [cell setUserFullname:element.fullname withDomain:domain];
+    InfinitSearchElement* element = _search_results[row];
+    if (element == nil)
+      return nil;
+    
+    IASearchResultsCellView* cell = [tableView makeViewWithIdentifier:@"infinit_search_cell"
+                                                                owner:self];
+    [cell setDelegate:self];
+
+    if (element.user != nil)
+      [cell setUserFullname:element.fullname withEmail:@""];
+    else
+      [cell setUserFullname:element.fullname withEmail:element.email];
+    
+    NSImage* avatar = [IAFunctions makeRoundAvatar:element.avatar
+                                        ofDiameter:24.0
+                             withBorderOfThickness:0.0
+                                          inColour:IA_GREY_COLOUR(255.0)
+                                 andShadowOfRadius:0.0];
+    [cell setUserAvatar:avatar];
+    cell.hover = element.hover;
+    return cell;
   }
-  
-  NSImage* avatar = [IAFunctions makeRoundAvatar:element.avatar
-                                      ofDiameter:24.0
-                           withBorderOfThickness:0.0
-                                        inColour:IA_GREY_COLOUR(255.0)
-                               andShadowOfRadius:0.0];
-  [cell setUserAvatar:avatar];
-  cell.selected = element.selected;
-  cell.hover = element.hover;
-  return cell;
 }
 
 //- User Interactions With Table -------------------------------------------------------------------
@@ -753,13 +714,17 @@ writeRepresentedObjects:(NSArray*)objects
 - (void)setHover:(BOOL)hover
           forRow:(NSInteger)row
 {
-  [[_search_results objectAtIndex:row] setHover:hover];
-  [[self.table_view viewAtColumn:0 row:row makeIfNecessary:NO] setHover:hover];
+  if (_search_results.count == 0)
+    return;
+  InfinitSearchElement* element = _search_results[row];
+  element.hover = hover;
+  IASearchResultsCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+  cell.hover = hover;
 }
 
 - (void)tableDidScroll:(NSNotification*)notification
 {
-  if (!CGCursorIsVisible())
+  if (!CGCursorIsVisible() || _search_results.count == 0)
     return;
   NSPoint mouse_loc = self.table_view.window.mouseLocationOutsideOfEventStream;
   mouse_loc = [self.table_view convertPoint:mouse_loc fromView:nil];
@@ -785,10 +750,10 @@ writeRepresentedObjects:(NSArray*)objects
 
 - (void)actionForRow:(NSUInteger)row
 {
+  if (_search_results.count == 0)
+    return;
   InfinitSearchElement* element = _search_results[row];
-  if ([self.search_field.objectValue containsObject:element])
-    [self removeElement:element];
-  else
+  if (![self.search_field.objectValue containsObject:element])
     [self addElement:element];
 
   [self.view.window makeFirstResponder:self.search_field];
@@ -864,20 +829,12 @@ writeRepresentedObjects:(NSArray*)objects
   if (search_string.length == 0)
   {
     [_search_controller clearResults];
-    [self fillSearchResultsWithFriends];
     return;
   }
   
   _search_results = [NSMutableArray array];
   
-  if (sender.result_list.count == 0)
-  {
-    if ([_delegate searchViewWantsIfGotFile:self])
-      self.no_results_message.attributedStringValue = _invite_msg_str;
-    else
-      self.no_results_message.attributedStringValue = _add_file_str;
-  }
-  else
+  if (!sender.result_list.count == 0)
   {
     InfinitSearchPersonResult* person = sender.result_list[0];
     InfinitSearchElement* element =
@@ -904,10 +861,8 @@ writeRepresentedObjects:(NSArray*)objects
   if (search_string.length == 0)
   {
     [_search_controller clearResults];
-    [self fillSearchResultsWithFriends];
     return;
   }
-  self.no_results_message.attributedStringValue = _no_result_msg_str;
   
   _search_results = [NSMutableArray array];
   
@@ -957,25 +912,6 @@ writeRepresentedObjects:(NSArray*)objects
 
 //- Search Result Cell Protocol --------------------------------------------------------------------
 
-- (void)searchResultCellWantsAddFavourite:(IASearchResultsCellView*)sender
-{
-  NSUInteger row = [self.table_view rowForView:sender];
-  InfinitSearchElement* element = [_search_results objectAtIndex:row];
-  if (element.user == nil)
-    return;
-  [_delegate searchView:self wantsAddFavourite:element.user];
-  
-}
-
-- (void)searchResultCellWantsRemoveFavourite:(IASearchResultsCellView*)sender;
-{
-  NSUInteger row = [self.table_view rowForView:sender];
-  InfinitSearchElement* element = [_search_results objectAtIndex:row];
-  if (element.user == nil)
-    return;
-  [_delegate searchView:self wantsRemoveFavourite:element.user];
-}
-
 - (void)searchResultCell:(IASearchResultsCellView*)sender
                 gotHover:(BOOL)hover
 {
@@ -993,7 +929,8 @@ writeRepresentedObjects:(NSArray*)objects
   {
     for (NSUInteger row = range.location; row < range.length; row++)
     {
-      if ([[_search_results objectAtIndex:row] hover])
+      InfinitSearchElement* element = _search_results[row];
+      if (element.hover)
       {
         [self setHover:NO forRow:row];
         return;
@@ -1004,8 +941,7 @@ writeRepresentedObjects:(NSArray*)objects
   }
 }
 
-- (void)searchResultCell:(IASearchResultsCellView*)sender
-             gotSelected:(BOOL)selected
+- (void)searchResultCellGotSelected:(IASearchResultsCellView*)sender
 {
   [self actionForRow:[self.table_view rowForView:sender]];
 }
@@ -1064,6 +1000,17 @@ writeRepresentedObjects:(NSArray*)objects
     }
     row++;
   }
+}
+
+//- No Results Cell Protocol -----------------------------------------------------------------------
+
+- (void)cellWantsSearchInfinit:(InfinitSearchNoResultsCellView*)sender
+{
+  _search_controller.include_infinit_results = YES;
+  [self.table_view beginUpdates];
+  [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:0]
+                             columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+  [self.table_view endUpdates];
 }
 
 @end

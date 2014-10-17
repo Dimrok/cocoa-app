@@ -40,7 +40,7 @@
 - (NSImage*)icon
 {
   if (self.add_files_placeholder)
-    return [IAFunctions imageNamed:@"icon-add-file"];
+    return [IAFunctions imageNamed:@"send-icon-add-file"];
   if (_preview != nil)
     return _preview;
   BOOL is_dir;
@@ -128,6 +128,9 @@
 @private
   NSArray* _icons;
   NSTrackingArea* _tracking_area;
+  NSMutableAttributedString* _drop_str;
+  NSMutableAttributedString* _click_str;
+  NSArray* _drag_types;
 }
 
 static CGFloat _radius = 150.0;
@@ -136,12 +139,65 @@ static CGFloat _radius = 150.0;
 {
   if (self = [super initWithFrame:frameRect])
   {
-    _icons = @[[IAFunctions imageNamed:@"icon-media-picture"],
-               [IAFunctions imageNamed:@"icon-media-folder"],
-               [IAFunctions imageNamed:@"icon-media-ps"],
-               [IAFunctions imageNamed:@"icon-media-video"]];
+    _icons = @[[IAFunctions imageNamed:@"send-icon-media-picture"],
+               [IAFunctions imageNamed:@"send-icon-media-folder"],
+               [IAFunctions imageNamed:@"send-icon-media-ps"],
+               [IAFunctions imageNamed:@"send-icon-media-video"]];
+
+    NSFont* drop_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Montserrat"
+                                                                   traits:(NSUnboldFontMask|NSUnitalicFontMask)
+                                                                   weight:3
+                                                                     size:12.0];
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSCenterTextAlignment;
+    NSDictionary* drop_attrs = [IAFunctions textStyleWithFont:drop_font
+                                               paragraphStyle:para
+                                                       colour:IA_RGB_COLOUR(81, 81, 73)
+                                                       shadow:nil];
+    _drop_str =
+      [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"DROP FILES HERE", nil)
+                                             attributes:drop_attrs];
+    [_drop_str addAttribute:NSKernAttributeName value:@1.1 range:NSMakeRange(0, _drop_str.length)];
+    NSFont* click_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue"
+                                                                    traits:(NSUnboldFontMask|NSUnitalicFontMask)
+                                                                    weight:1
+                                                                      size:12.0];
+    NSDictionary* click_attrs = [IAFunctions textStyleWithFont:click_font
+                                                paragraphStyle:para
+                                                        colour:IA_GREY_COLOUR(209)
+                                                        shadow:nil];
+    _click_str =
+      [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"or click to add files...", nil)
+                                             attributes:click_attrs];
+    [_click_str addAttribute:NSKernAttributeName value:@1.1 range:NSMakeRange(0, _click_str.length)];
+    _drag_types = @[NSFilenamesPboardType];
+    [self registerForDraggedTypes:_drag_types];
   }
   return self;
+}
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
+{
+  NSPasteboard* paste_board = sender.draggingPasteboard;
+  if ([paste_board availableTypeFromArray:_drag_types])
+  {
+    return NSDragOperationCopy;
+  }
+  return NSDragOperationNone;
+}
+
+- (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
+{
+  NSPasteboard* paste_board = sender.draggingPasteboard;
+  if (![paste_board availableTypeFromArray:_drag_types])
+    return NO;
+
+  NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
+
+  if (files.count > 0)
+    [_delegate sendFilesView:self gotFilesDropped:files];
+
+  return YES;
 }
 
 - (BOOL)isOpaque
@@ -228,7 +284,7 @@ static CGFloat _radius = 150.0;
   if (self.rows == 0)
   {
     CGFloat bg_diff = (255 - 248) * _hover;
-    [IA_RGB_COLOUR(248 - bg_diff, 248 - bg_diff, 248 + bg_diff) set];
+    [IA_RGB_COLOUR(248 + bg_diff, 248 + bg_diff, 248 + bg_diff) set];
     NSRectFill(self.bounds);
     CGFloat border = 15.0;
     NSBezierPath* path =
@@ -265,6 +321,8 @@ static CGFloat _radius = 150.0;
 
       [image_rotation invert];
       [image_rotation concat];
+      [_drop_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - _drop_str.size.width) / 2.0, 65.0)];
+      [_click_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - _click_str.size.width) / 2.0, 45.0)];
     }
   }
   else
@@ -285,6 +343,10 @@ static CGFloat _radius = 150.0;
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
+  if (theEvent.clickCount == 1 && self.rows == 0)
+  {
+    [_delegate sendFilesViewWantsAddFiles:self];
+  }
 }
 
 - (void)createTrackingArea
@@ -323,6 +385,16 @@ static CGFloat _radius = 150.0;
    } completionHandler:^{
      self.hover = 0.0;
    }];
+}
+
+- (void)resetCursorRects
+{
+  [super resetCursorRects];
+  if (self.rows == 0)
+  {
+    NSCursor* cursor = [NSCursor pointingHandCursor];
+    [self addCursorRect:self.bounds cursor:cursor];
+  }
 }
 
 + (id)defaultAnimationForKey:(NSString*)key
@@ -369,7 +441,7 @@ static NSDictionary* _info_attrs = nil;
       para.alignment = NSRightTextAlignment;
       _info_attrs = [IAFunctions textStyleWithFont:font
                                     paragraphStyle:para
-                                            colour:IA_GREY_COLOUR(190)
+                                            colour:IA_GREY_COLOUR(209)
                                             shadow:nil];
     }
     _operation_queue = [[NSOperationQueue alloc] init];
@@ -391,6 +463,12 @@ static NSDictionary* _info_attrs = nil;
   self.info.hidden = YES;
 }
 
+- (void)loadView
+{
+  [super loadView];
+  self.view.delegate = self;
+}
+
 - (void)stopCalculatingFileSize
 {
   if (_operation_queue.operationCount > 0)
@@ -401,7 +479,7 @@ static NSDictionary* _info_attrs = nil;
 {
   if (_file_list.count > 1)
   {
-    NSString* calculating = NSLocalizedString(@"Calculating...", nil);
+    NSString* calculating = NSLocalizedString(@"Calculating size...", nil);
     self.info.attributedStringValue = [[NSAttributedString alloc] initWithString:calculating
                                                                       attributes:_info_attrs];
     __unsafe_unretained InfinitSendFilesViewController* weak_self = self;
@@ -568,6 +646,19 @@ static NSDictionary* _info_attrs = nil;
 {
   _file_list = file_list;
   [self filesChanged];
+}
+
+//- Subview Protocol -------------------------------------------------------------------------------
+
+- (void)sendFilesViewWantsAddFiles:(InfinitSendFilesView*)sender
+{
+  [_delegate fileListGotAddFilesClicked:self];
+}
+
+- (void)sendFilesView:(InfinitSendFilesView*)sender
+      gotFilesDropped:(NSArray*)files
+{
+  [_delegate fileList:self gotFilesDropped:files];
 }
 
 @end

@@ -15,12 +15,13 @@
 @interface InfinitSearchController : NSObject <InfinitSearchPersonResultProtocol>
 
 @property (atomic, readonly) NSMutableArray* result_list;
+@property (nonatomic, readwrite) BOOL include_infinit_results;
 
 - (id)initWithDelegate:(id<InfinitSearchControllerProtocol>)delegate;
 
 - (void)clearResults;
 
-- (void)searchString:(NSString*)search_string;
+- (void)searchWithString:(NSString*)search_string;
 
 - (void)cancelCallbacks;
 

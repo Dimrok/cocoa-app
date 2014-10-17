@@ -11,6 +11,7 @@
 #import "IASearchResultsCellView.h"
 #import "IAHoverButton.h"
 #import "InfinitSearchController.h"
+#import "InfinitSearchNoResultsCellView.h"
 
 #import "OEXTokenField.h"
 
@@ -19,7 +20,7 @@
 @protocol IAUserSearchViewProtocol;
 
 @interface IASearchBoxView : NSView
-@property (nonatomic, readwrite, setter = setLoading:) BOOL loading;
+@property (nonatomic, readwrite) BOOL link_mode;
 @end
 
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
@@ -27,17 +28,19 @@
                                                           NSTextViewDelegate,
                                                           OEXTokenFieldDelegate,
                                                           IASearchResultsCellProtocol,
-                                                          InfinitSearchControllerProtocol>
+                                                          InfinitSearchControllerProtocol,
+                                                          InfinitSearchNoResultsProcotol>
 
 @property (nonatomic, weak) IBOutlet NSScrollView* results_view;
 @property (nonatomic, weak) IBOutlet IASearchBoxView* search_box_view;
 @property (nonatomic, weak) IBOutlet OEXTokenField* search_field;
-@property (nonatomic, weak) IBOutlet NSImageView* search_image;
+@property (nonatomic, weak) IBOutlet NSTextField* search_label;
+@property (nonatomic, weak) IBOutlet NSImageView* link_icon;
+@property (nonatomic, weak) IBOutlet NSTextField* link_text;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator* search_spinner;
-@property (nonatomic, weak) IBOutlet NSTextField* no_results_message;
 @property (nonatomic, weak) IBOutlet NSTableView* table_view;
 
-- (id)init;
+@property (nonatomic, readwrite) BOOL link_mode;
 
 - (void)setDelegate:(id<IAUserSearchViewProtocol>)delegate;
 
@@ -49,9 +52,9 @@
 
 - (NSArray*)recipientList;
 
-- (void)checkInputs;
-
 - (void)aboutToChangeView;
+
+- (void)showResults;
 
 @end
 
@@ -60,22 +63,11 @@
 - (void)searchView:(IAUserSearchViewController*)sender
    changedToHeight:(CGFloat)height;
 
-- (BOOL)searchViewWantsIfGotFile:(IAUserSearchViewController*)sender;
-
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
-
-- (void)searchView:(IAUserSearchViewController*)sender
- wantsAddFavourite:(IAUser*)user;
-
-- (void)searchView:(IAUserSearchViewController*)sender
- wantsRemoveFavourite:(IAUser*)user;
 
 - (void)searchViewInputsChanged:(IAUserSearchViewController*)sender;
 
 - (void)searchViewGotWantsSend:(IAUserSearchViewController*)sender;
-
-- (NSArray*)searchViewWantsFriendsByLastInteraction:(IAUserSearchViewController*)sender;
-
 
 @end
 

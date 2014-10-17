@@ -133,7 +133,7 @@ isInfinitUser:(IAUser*)user
 
 - (BOOL)userIsSwagger
 {
-  NSArray* swaggers = [[IAGapState instance] swaggers_list];
+  NSArray* swaggers = [IAUserManager swaggerList];
   if ([swaggers containsObject:_user])
     return YES;
   else

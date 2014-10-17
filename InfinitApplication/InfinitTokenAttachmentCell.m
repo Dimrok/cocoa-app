@@ -10,8 +10,7 @@
 
 @implementation InfinitTokenAttachmentCell
 
-static NSDictionary* _norm_attrs;
-static NSDictionary* _sel_attrs;
+static NSDictionary* _norm_attrs = nil;
 
 - (id)init
 {
@@ -25,13 +24,8 @@ static NSDictionary* _sel_attrs;
                                                                        size:12.5];
       _norm_attrs = [IAFunctions textStyleWithFont:token_font
                                     paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:IA_RGB_COLOUR(72.0, 86.0, 92.0)
+                                            colour:IA_GREY_COLOUR(255)
                                             shadow:nil];
-      
-      _sel_attrs = [IAFunctions textStyleWithFont:token_font
-                                   paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                           colour:IA_RGB_COLOUR(59.0, 76.0, 83.0)
-                                           shadow:nil];
     }
   }
   return self;
@@ -62,51 +56,29 @@ static NSDictionary* _sel_attrs;
   bg.lineWidth = 1.0;
   if (self.tokenDrawingMode == OEXTokenDrawingModeSelected)
   {
-    [IA_RGB_COLOUR(222.0, 234.0, 238.0) set];
+    [IA_RGB_COLOUR(45, 209, 205) set];
     [bg fill];
-    [IA_RGB_COLOUR(185.0, 197.0, 202.0) set];
+    [IA_RGB_COLOUR(17, 154, 151) set];
     [bg stroke];
     self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
-                                                                 attributes:_sel_attrs];
+                                                                 attributes:_norm_attrs];
   }
   else if (self.tokenDrawingMode == OEXTokenDrawingModeHighlighted)
   {
-    [IA_RGB_COLOUR(235, 242, 244) set];
+    [IA_RGB_COLOUR(45, 209, 205) set];
     [bg fill];
-    [IA_RGB_COLOUR(188.0, 202.0, 208.0) set];
     [bg stroke];
     self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
                                                                  attributes:_norm_attrs];
   }
   else
   {
-    [IA_RGB_COLOUR(239.0, 245.0, 247.0) set];
+    [IA_RGB_COLOUR(78, 185, 179) set];
     [bg fill];
-    [IA_RGB_COLOUR(202.0, 216.0, 221.0) set];
     [bg stroke];
     self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
                                                                  attributes:_norm_attrs];
   }
-  [IA_GREY_COLOUR(255.0) set];
-  NSBezierPath* top_line;
-  // WORKAROUND Retina has an extra pixel under the avatar
-  if ([[NSScreen mainScreen] backingScaleFactor] == 2.0)
-  {
-    top_line =
-      [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + corner_radius,
-                                                  0.5,
-                                                  token_rect.size.width - (2 * corner_radius),
-                                                  1.0)];
-  }
-  else
-  {
-    top_line =
-      [NSBezierPath bezierPathWithRect:NSMakeRect(token_rect.origin.x + corner_radius,
-                                                  1.0,
-                                                  token_rect.size.width - (2 * corner_radius),
-                                                  1.0)];
-  }
-  [top_line fill];
   
   NSRect text_rect = {
     .origin = NSMakePoint(token_rect.origin.x + 30.0, token_rect.origin.y + 3.0),

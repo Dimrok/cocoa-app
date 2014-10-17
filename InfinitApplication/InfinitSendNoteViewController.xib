@@ -17,13 +17,13 @@
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY" customClass="InfinitSendNoteView">
             <rect key="frame" x="0.0" y="0.0" width="317" height="65"/>
             <subviews>
-                <textField focusRingType="none" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="InfinitSendNoteField">
+                <textField focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="InfinitSendNoteField">
                     <rect key="frame" x="15" y="7" width="287" height="53"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="317" id="xmr-Lg-fRE"/>
+                        <constraint firstAttribute="width" constant="287" id="xmr-Lg-fRE"/>
                     </constraints>
-                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Optional message..." drawsBackground="YES" id="c6a-77-PBl">
-                        <font key="font" size="12" name="Helvetica-Light"/>
+                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Optional note..." drawsBackground="YES" id="c6a-77-PBl">
+                        <font key="font" size="12" name="HelveticaNeue"/>
                         <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -40,6 +40,12 @@
                     </textFieldCell>
                 </textField>
             </subviews>
+            <constraints>
+                <constraint firstItem="X6z-c8-QKQ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="5" id="9Ig-cM-wcO"/>
+                <constraint firstAttribute="trailing" secondItem="X6z-c8-QKQ" secondAttribute="trailing" constant="15" id="U7L-fk-zQA"/>
+                <constraint firstItem="X6z-c8-QKQ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="15" id="nTc-Y0-P06"/>
+                <constraint firstAttribute="bottom" secondItem="X6z-c8-QKQ" secondAttribute="bottom" constant="7" id="nU3-up-4SQ"/>
+            </constraints>
         </customView>
     </objects>
 </document>
