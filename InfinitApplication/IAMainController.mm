@@ -992,6 +992,11 @@ hadClickNotificationForLinkId:(NSNumber*)transaction_id
   [self closeNotificationWindow];
 }
 
+- (void)sendControllerWantsBack:(IAGeneralSendController*)sender
+{
+  [self showNotifications];
+}
+
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender
 {
   return [self statusBarIconMiddle];
