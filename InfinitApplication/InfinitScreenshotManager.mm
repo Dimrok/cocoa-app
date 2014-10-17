@@ -57,6 +57,13 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
       else
         _first_screenshot = NO;
     }
+    else if ([[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"1"] &&
+             [version isEqualToString:@"v2"])
+    {
+      ELLE_LOG("%s: watching for screenshots", self.description.UTF8String);
+      _watch = YES;
+      _first_screenshot = NO;
+    }
     else
     {
       ELLE_LOG("%s: not watching for screenshots", self.description.UTF8String);
