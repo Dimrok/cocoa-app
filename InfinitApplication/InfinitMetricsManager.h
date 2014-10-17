@@ -45,4 +45,7 @@ InfinitMetricType;
 
 + (void)sendMetric:(InfinitMetricType)metric;
 
++ (void)sendMetric:(InfinitMetricType)metric
+    withDictionary:(NSDictionary*)dict;
+
 @end

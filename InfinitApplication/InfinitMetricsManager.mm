@@ -240,6 +240,7 @@ static InfinitMetricsManager* _shared_instance = nil;
 //- Send Metric ------------------------------------------------------------------------------------
 
 - (void)_sendMetric:(InfinitMetricType)metric
+      withDictioary:(NSDictionary*)dict
 {
   if (!_send_metrics)
     return;
@@ -256,6 +257,8 @@ static InfinitMetricsManager* _shared_instance = nil;
       @"os_version": [IAFunctions osVersionString],
       @"timestamp": timestamp
     }];
+  if (dict != nil && dict.allKeys.count > 0)
+    [metric_dict addEntriesFromDictionary:dict];
   if ([[InfinitFeatureManager sharedInstance] features] != nil)
     metric_dict[@"features"] = [[InfinitFeatureManager sharedInstance] features];
   else
@@ -283,7 +286,13 @@ static InfinitMetricsManager* _shared_instance = nil;
 
 + (void)sendMetric:(InfinitMetricType)metric
 {
-  [[InfinitMetricsManager sharedInstance] _sendMetric:metric];
+  [[InfinitMetricsManager sharedInstance] _sendMetric:metric withDictioary:nil];
+}
+
++ (void)sendMetric:(InfinitMetricType)metric
+    withDictionary:(NSDictionary*)dict
+{
+  [[InfinitMetricsManager sharedInstance] _sendMetric:metric withDictioary:dict];
 }
 
 //- NSURLConnectionDelegate ------------------------------------------------------------------------
