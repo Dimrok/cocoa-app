@@ -37,6 +37,7 @@
 @protocol InfinitSendNoteViewProtocol <NSObject>
 
 - (void)noteViewWantsLoseFocus:(InfinitSendNoteViewController*)sender;
+- (void)noteViewGotFocus:(InfinitSendNoteViewController*)sender;
 
 - (void)noteView:(InfinitSendNoteViewController*)sender
  gotFilesDropped:(NSArray*)files;

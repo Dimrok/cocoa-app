@@ -185,6 +185,7 @@ doCommandBySelector:(SEL)commandSelector
 
 - (void)gotFocus:(InfinitSendNoteField*)sender
 {
+  [_delegate noteViewGotFocus:self];
   self.characters_label.hidden = NO;
 }
 
