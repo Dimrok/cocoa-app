@@ -61,6 +61,9 @@ static
 void on_deleted_favorite(uint32_t const user_id);
 
 static
+void on_new_swagger(uint32_t const user_id);
+
+static
 void on_deleted_swagger(uint32_t const user_id);
 
 void on_link_transaction_update(surface::gap::LinkTransaction const& transaction_);
@@ -974,6 +977,22 @@ static void on_deleted_favorite(uint32_t const user_id)
   @catch (NSException* exception)
   {
     ELLE_WARN("on_deleted_favorite exception: %s", exception.reason.UTF8String);
+  }
+}
+
+static void on_new_swagger(uint32_t const user_id)
+{
+  ELLE_TRACE("on_new_swagger: %d", user_id);
+  @try
+  {
+    NSMutableDictionary* msg = [[NSMutableDictionary alloc] init];
+    if (user_id != 0)
+      [msg setValue:[NSNumber numberWithUnsignedInt:user_id] forKey:@"user_id"];
+    [IAGap sendNotif:IA_GAP_EVENT_NEW_SWAGGER withInfo:msg];
+  }
+  @catch (NSException* exception)
+  {
+    ELLE_WARN("on_new_swagger exception: %s", exception.reason.UTF8String);
   }
 }
 
