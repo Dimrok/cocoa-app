@@ -287,6 +287,14 @@
   return [super drawTitle:title withFrame:frame inView:controlView];
 }
 
+- (void)drawBezelWithFrame:(NSRect)frame
+                    inView:(NSView*)controlView
+{
+  [IA_RGB_COLOUR(196, 54, 55) set];
+  NSRect line = NSMakeRect(frame.origin.x, 0.0, 1.0, NSHeight(frame));
+  NSRectFill(line);
+}
+
 @end
 
 //- Controller -------------------------------------------------------------------------------------
@@ -406,6 +414,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
     _search_controller.link_mode = YES;
     [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
+    self.button_width.constant = _link_str.size.width + 40.0;
   }
   else
   {
@@ -414,6 +423,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     self.send_button.toolTip = NSLocalizedString(@"Send to someone", nil);
     _search_controller.link_mode = NO;
     [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
+    self.button_width.constant = _send_str.size.width + 40.0;
   }
   // Onboarding
   InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
@@ -635,11 +645,22 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 
 - (IBAction)cancelButtonClicked:(NSButton*)sender
 {
+  CGFloat min_search_height = NSHeight(_search_controller.search_box_view.frame);
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
-    [self.files_constraint.animator setConstant:50.0];
-    [self.note_constraint.animator setConstant:20.0];
+    if (self.search_constraint.constant > min_search_height)
+    {
+      [self.content_height_constraint.animator setConstant:min_search_height];
+      [self.search_constraint.animator setConstant:min_search_height];
+    }
+    else
+    {
+      [self.main_view removeConstraint:self.content_height_constraint];
+      self.content_height_constraint = nil;
+      [self.files_constraint.animator setConstant:50.0];
+      [self.note_constraint.animator setConstant:20.0];
+    }
   } completionHandler:^{
     [_delegate sendViewWantsCancel:self];
   }];
@@ -667,6 +688,12 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
  gotFilesDropped:(NSArray*)files
 {
   [_delegate sendView:self hadFilesDropped:files];
+}
+
+- (void)noteViewGotFocus:(InfinitSendNoteViewController*)sender
+{
+  if (self.user_link_view.mode == INFINIT_USER_MODE)
+    [_search_controller fixClipView];
 }
 
 //- Files Protocol ---------------------------------------------------------------------------------
@@ -832,6 +859,7 @@ wantsChangeHeight:(CGFloat)height
 {
   [self.user_link_view setMode:INFINIT_USER_MODE];
   self.send_button.attributedTitle = _send_str;
+  self.button_width.constant = _send_str.size.width + 40.0;
   self.send_button.toolTip = NSLocalizedString(@"Send", nil);
   _search_controller.link_mode = NO;
   [self.view.window makeFirstResponder:_search_controller.search_field];
@@ -842,6 +870,7 @@ wantsChangeHeight:(CGFloat)height
 {
   [self.user_link_view setMode:INFINIT_LINK_MODE];
   self.send_button.attributedTitle = _link_str;
+  self.button_width.constant = _link_str.size.width + 40.0;
   self.send_button.toolTip = NSLocalizedString(@"Get a Link", nil);
   _search_controller.link_mode = YES;
   [self.view.window makeFirstResponder:_note_controller.note_field];

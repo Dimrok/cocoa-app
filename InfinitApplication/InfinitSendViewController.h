@@ -58,6 +58,7 @@ typedef enum _InfinitUserLinkMode
 @property (nonatomic, weak) IBOutlet NSView* note_view;
 @property (nonatomic, weak) IBOutlet NSView* files_view;
 @property (nonatomic, weak) IBOutlet NSButton* send_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* button_width;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* search_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* search_note_contraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* note_constraint;
@@ -90,12 +91,6 @@ wantsRemoveFileAtIndex:(NSInteger)index;
 - (NSNumber*)sendView:(InfinitSendViewController*)sender
       wantsCreateLink:(NSArray*)files
           withMessage:(NSString*)message;
-
-- (void)sendView:(InfinitSendViewController*)sender
-wantsAddFavourite:(IAUser*)user;
-
-- (void)sendView:(InfinitSendViewController*)sender
-wantsRemoveFavourite:(IAUser*)user;
 
 - (void)sendView:(InfinitSendViewController*)sender
  hadFilesDropped:(NSArray*)files;

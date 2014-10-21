@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitSendViewController">
             <connections>
+                <outlet property="button_width" destination="cTm-yl-IVA" id="85d-Rp-5MZ"/>
                 <outlet property="content_height_constraint" destination="2HL-Pa-xeH" id="JCu-fS-vaa"/>
                 <outlet property="files_constraint" destination="f4z-F8-7gq" id="HPI-F3-7x0"/>
                 <outlet property="files_view" destination="c1o-0q-VeA" id="Ppe-Pd-Y9b"/>
@@ -70,8 +71,11 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bg-main-button" id="48W-IY-K8J"/>
                         </imageView>
                         <button toolTip="Send a file" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KpR-OD-X5s">
-                            <rect key="frame" x="267" y="11" width="41" height="17"/>
-                            <buttonCell key="cell" type="square" title="SEND" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="dZc-QC-YS9" customClass="InfinitSendButtonCell">
+                            <rect key="frame" x="247" y="1" width="70" height="38"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="70" id="cTm-yl-IVA"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" title="SEND" bezelStyle="shadowlessSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dZc-QC-YS9" customClass="InfinitSendButtonCell">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                                 <string key="keyEquivalent" base64-UTF8="YES">
@@ -98,8 +102,7 @@ Gw
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="KpR-OD-X5s" secondAttribute="trailing" constant="9" id="Xad-vS-EMR"/>
-                        <constraint firstAttribute="centerY" secondItem="KpR-OD-X5s" secondAttribute="centerY" id="cdl-8l-JUu"/>
+                        <constraint firstAttribute="trailing" secondItem="KpR-OD-X5s" secondAttribute="trailing" id="Khv-d4-Msv"/>
                     </constraints>
                 </customView>
                 <customView autoresizesSubviews="NO" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="feD-Dd-K1b" customClass="InfinitWhiteView">
@@ -139,7 +142,7 @@ Gw
                 <constraint firstItem="XLL-4c-Odh" firstAttribute="top" secondItem="feD-Dd-K1b" secondAttribute="bottom" id="JE2-z7-r7Q"/>
                 <constraint firstAttribute="bottom" secondItem="XLL-4c-Odh" secondAttribute="bottom" id="e7g-PN-haj"/>
             </constraints>
-            <point key="canvasLocation" x="253.5" y="168"/>
+            <point key="canvasLocation" x="224.5" y="168"/>
         </customView>
     </objects>
     <resources>
