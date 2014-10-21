@@ -123,33 +123,31 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oIi-0B-io6" customClass="InfinitSearchInfinitView">
+                                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oIi-0B-io6" customClass="InfinitSearchInfinitView">
                                                         <rect key="frame" x="0.0" y="0.0" width="317" height="45"/>
                                                         <subviews>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9C7-rA-fYo">
-                                                                <rect key="frame" x="18" y="12" width="281" height="20"/>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9C7-rA-fYo">
+                                                                <rect key="frame" x="18" y="13" width="281" height="18"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="277" id="XKV-le-njO"/>
+                                                                    <constraint firstAttribute="width" constant="277" id="P7e-1d-rMo"/>
                                                                 </constraints>
-                                                                <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Label" id="13u-cN-4Dq">
+                                                                <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="13u-cN-4Dq">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
+                                                            <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="LIg-T2-Kei">
+                                                                <rect key="frame" x="150" y="14" width="16" height="16"/>
+                                                            </progressIndicator>
                                                         </subviews>
-                                                        <constraints>
-                                                            <constraint firstAttribute="trailing" secondItem="9C7-rA-fYo" secondAttribute="trailing" constant="20" id="9FN-KB-N9x"/>
-                                                            <constraint firstItem="9C7-rA-fYo" firstAttribute="leading" secondItem="oIi-0B-io6" secondAttribute="leading" constant="20" id="Zro-CE-OLc"/>
-                                                            <constraint firstItem="9C7-rA-fYo" firstAttribute="top" secondItem="oIi-0B-io6" secondAttribute="top" constant="13" id="dN1-Wo-Wyg"/>
-                                                            <constraint firstAttribute="bottom" secondItem="9C7-rA-fYo" secondAttribute="bottom" constant="12" id="z27-Fc-gg4"/>
-                                                        </constraints>
                                                     </customView>
                                                 </subviews>
                                                 <connections>
                                                     <outlet property="no_results_msg" destination="Jwr-t8-0RF" id="eXS-Vb-Jl7"/>
                                                     <outlet property="search_infinit_msg" destination="9C7-rA-fYo" id="ne3-L1-FQ9"/>
                                                     <outlet property="search_infinit_view" destination="oIi-0B-io6" id="Bww-ca-kaX"/>
+                                                    <outlet property="spinner" destination="LIg-T2-Kei" id="b1w-8x-D0J"/>
                                                 </connections>
                                             </tableCellView>
                                             <tableCellView identifier="infinit_no_results_b" focusRingType="none" placeholderIntrinsicWidth="317" placeholderIntrinsicHeight="153" id="cxc-E3-TRk" customClass="InfinitSearchNoResultsCellView">
