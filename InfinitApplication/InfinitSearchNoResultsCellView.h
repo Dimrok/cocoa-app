@@ -21,6 +21,7 @@
 @property (nonatomic, weak) IBOutlet InfinitSearchInfinitView* search_infinit_view;
 @property (nonatomic, weak) IBOutlet NSTextField* search_infinit_msg;
 @property (nonatomic, readwrite) NSString* search_string;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator* spinner;
 
 - (void)gotWantsSearchInfinit;
 

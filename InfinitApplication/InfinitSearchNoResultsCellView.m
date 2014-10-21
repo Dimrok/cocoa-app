@@ -86,6 +86,13 @@
    }];
 }
 
+- (void)resetCursorRects
+{
+  [super resetCursorRects];
+  NSCursor* cursor = [NSCursor pointingHandCursor];
+  [self addCursorRect:self.bounds cursor:cursor];
+}
+
 @end
 
 @implementation InfinitSearchNoResultsCellView
@@ -94,6 +101,11 @@ static NSDictionary* _attrs = nil;
 static NSDictionary* _bold_attrs = nil;
 static NSAttributedString* _no_results_str = nil;
 static NSAttributedString* _search_infinit_str = nil;
+
+- (void)dealloc
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
 
 - (void)setup
 {
@@ -118,19 +130,19 @@ static NSAttributedString* _search_infinit_str = nil;
                                           colour:IA_GREY_COLOUR(60)
                                           shadow:nil];
     NSMutableAttributedString* temp =
-    [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"No results. ", nil)
-                                           attributes:_bold_attrs];
+      [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"No results. ", nil)
+                                             attributes:_bold_attrs];
     [temp appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Send to an email address instead.", nil)
                                                                  attributes:_attrs]];
     _no_results_str = temp;
     _search_infinit_str =
-    [[NSAttributedString alloc] initWithString:NSLocalizedString(@"or search for  on Infinit", nil)
-                                    attributes:_attrs];
-    self.no_results_msg.attributedStringValue = _no_results_str;
-    [self.no_results_msg.cell setLineBreakMode:NSLineBreakByTruncatingMiddle];
-    [self.no_results_msg.cell setTruncatesLastVisibleLine:YES];
-    [self.no_results_msg.cell setFocusRingType:NSFocusRingTypeNone];
+      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"or search for  on Infinit", nil)
+                                      attributes:_attrs];
   }
+  [self.spinner stopAnimation:nil];
+  self.spinner.hidden = YES;
+  self.no_results_msg.attributedStringValue = _no_results_str;
+  self.search_infinit_msg.hidden = NO;
 }
 
 - (void)setDelegate:(id<InfinitSearchNoResultsProcotol>)delegate
@@ -155,6 +167,14 @@ static NSAttributedString* _search_infinit_str = nil;
 }
 
 - (void)gotWantsSearchInfinit
+{
+  [self performSelector:@selector(delayedGotWantsSearchInfinit) withObject:nil afterDelay:1.0];
+  [self.spinner startAnimation:nil];
+  self.search_infinit_msg.hidden = YES;
+  self.spinner.hidden = NO;
+}
+
+- (void)delayedGotWantsSearchInfinit
 {
   [_delegate cellWantsSearchInfinit:self];
 }
