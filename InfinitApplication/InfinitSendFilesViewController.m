@@ -653,12 +653,14 @@ static NSDictionary* _info_attrs = nil;
 - (void)sendFilesViewWantsAddFiles:(InfinitSendFilesView*)sender
 {
   [_delegate fileListGotAddFilesClicked:self];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
 }
 
 - (void)sendFilesView:(InfinitSendFilesView*)sender
       gotFilesDropped:(NSArray*)files
 {
   [_delegate fileList:self gotFilesDropped:files];
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_ADD_FILES];
 }
 
 @end
