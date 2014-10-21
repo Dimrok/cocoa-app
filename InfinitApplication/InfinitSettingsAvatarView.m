@@ -101,10 +101,14 @@
 
 - (void)setImage:(NSImage*)image
 {
-  _image = [self squareCrop:image];
-  _round_image = [IAFunctions makeRoundAvatar:_image.copy
+  if (image.size.width / image.size.height == 1.0)
+    _image = image;
+  else
+    _image = [self squareCrop:image];
+  _round_image = [IAFunctions makeRoundAvatar:[_image copy]
                                    ofDiameter:self.bounds.size.width
-                        withBorderOfThickness:2.0 inColour:IA_GREY_COLOUR(255)
+                        withBorderOfThickness:2.0
+                                     inColour:IA_GREY_COLOUR(255)
                             andShadowOfRadius:1.0];
   [self setNeedsDisplay:YES];
 }
