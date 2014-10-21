@@ -163,7 +163,7 @@ static NSDictionary* _email_style = nil;
 
   if (_hover)
   {
-    NSRect hover = NSMakeRect(12.0, 1.0, NSWidth(self.bounds) - 32.0, NSHeight(self.bounds) - 1.0);
+    NSRect hover = NSMakeRect(0.0, 0.0, NSWidth(self.bounds), NSHeight(self.bounds));
     [IA_RGB_COLOUR(240, 252, 251) set];
     NSRectFill(hover);
   }
