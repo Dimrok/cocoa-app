@@ -11,6 +11,7 @@
 #import "IAUserSearchViewController.h"
 #import "IAAvatarManager.h"
 #import "InfinitTokenAttachmentCell.h"
+#import "InfinitFeatureManager.h"
 
 //- Search View Element ----------------------------------------------------------------------------
 
@@ -64,6 +65,11 @@
   return YES;
 }
 
+- (BOOL)isFlipped
+{
+  return NO;
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
   if (_link_mode)
@@ -107,6 +113,7 @@
   InfinitSearchController* _search_controller;
   NSString* _last_search;
   NSInteger _hover_row;
+  BOOL _allow_search_infinit;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -123,6 +130,11 @@
     _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
     _last_search = @"";
     _no_results = NO;
+    _allow_search_infinit = YES;
+//    if ([[[[InfinitFeatureManager sharedInstance] features] objectForKey:@"search_on_infinit"] isEqualToString:@"1"])
+//      _allow_search_infinit = YES;
+//    else
+//      _allow_search_infinit = NO;
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarCallback:)
                                                name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -218,6 +230,8 @@
   if (!_link_mode)
     height += [self tableHeight];
   [_delegate searchView:self changedToHeight:height];
+  if (!_link_mode)
+    [self fixClipView];
 }
 
 - (void)addUser:(IAUser*)user
@@ -269,15 +283,16 @@
   if (self.search_field.subviews.count == 0)
     return;
   NSView* clip_view = self.search_field.subviews[0];
-  if ([self.search_field.objectValue count] == 0)
+  if ([self.search_field.objectValue count] == 0 ||
+      [[self.search_field.objectValue objectAtIndex:0] isKindOfClass:NSString.class])
   {
-    [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 17.0)];
-    [self.search_field setFrame:NSMakeRect(35.0, 3.0, 265.0, 26.0)];
+    [self.search_field setFrame:NSMakeRect(35.0, 13.0, 265.0, 18.0)];
+    [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 18.0)];
   }
   else
   {
+    [self.search_field setFrame:NSMakeRect(35.0, 9.0, 265.0, 26.0)];
     [clip_view setFrame:NSMakeRect(0.0, 0.0, clip_view.frame.size.width, 26.0)];
-    [self.search_field setFrame:NSMakeRect(35.0, 7.0, 265.0, 26.0)];
   }
 }
 
@@ -409,9 +424,15 @@
   {
     if (search_string.length < _last_search.length || _last_search.length == 0)
       [self clearResults];
-    [self doDelayedSearch:search_string];
     if ([IAFunctions stringIsValidEmail:search_string])
+    {
+      [_search_controller searchForEmailString:search_string];
       [_delegate searchViewInputsChanged:self];
+    }
+    else
+    {
+      [self doDelayedSearch:search_string];
+    }
   }
   else
   {
@@ -494,9 +515,9 @@ doCommandBySelector:(SEL)commandSelector
   }
   else if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
   {
+    [self fixClipView];
     [_delegate searchViewWantsLoseFocus:self];
     [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
-    [self fixClipView];
     return YES;
   }
   return NO;
@@ -610,7 +631,9 @@ writeRepresentedObjects:(NSArray*)objects
   _hover_row = 0;
   if (_search_results.count > 0)
   {
-    InfinitSearchElement* element = [_search_results objectAtIndex:0];
+    for (InfinitSearchElement* other in _search_results)
+      other.hover = NO;
+    InfinitSearchElement* element = _search_results[0];
     element.hover = YES;
   }
   _no_results = NO;
@@ -674,13 +697,17 @@ writeRepresentedObjects:(NSArray*)objects
   if (_search_results.count == 0 && _no_results)
   {
     InfinitSearchNoResultsCellView* cell;
-    if (_search_controller.include_infinit_results)
+    if (_search_controller.include_infinit_results || !_allow_search_infinit)
+    {
       cell = [tableView makeViewWithIdentifier:@"infinit_no_results_b" owner:self];
+    }
     else
+    {
       cell = [tableView makeViewWithIdentifier:@"infinit_no_results_a" owner:self];
+      cell.search_string = [self currentSearchString];
+    }
 
     cell.delegate = self;
-    cell.search_string = [self currentSearchString];
     return cell;
   }
   else
@@ -834,9 +861,9 @@ writeRepresentedObjects:(NSArray*)objects
   
   _search_results = [NSMutableArray array];
   
-  if (!sender.result_list.count == 0)
+  if (!_search_controller.result_list.count == 0)
   {
-    InfinitSearchPersonResult* person = sender.result_list[0];
+    InfinitSearchPersonResult* person = _search_controller.result_list[0];
     InfinitSearchElement* element =
       [[InfinitSearchElement alloc] initWithAvatar:person.avatar
                                              email:nil
@@ -866,7 +893,7 @@ writeRepresentedObjects:(NSArray*)objects
   
   _search_results = [NSMutableArray array];
   
-  for (InfinitSearchPersonResult* person in sender.result_list)
+  for (InfinitSearchPersonResult* person in _search_controller.result_list)
   {
     if (person.infinit_user != nil)
     {
@@ -1007,10 +1034,6 @@ writeRepresentedObjects:(NSArray*)objects
 - (void)cellWantsSearchInfinit:(InfinitSearchNoResultsCellView*)sender
 {
   _search_controller.include_infinit_results = YES;
-  [self.table_view beginUpdates];
-  [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:0]
-                             columnIndexes:[NSIndexSet indexSetWithIndex:0]];
-  [self.table_view endUpdates];
 }
 
 @end

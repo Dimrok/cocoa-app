@@ -56,6 +56,8 @@
 
 - (void)showResults;
 
+- (void)fixClipView;
+
 @end
 
 @protocol IAUserSearchViewProtocol <NSObject>
