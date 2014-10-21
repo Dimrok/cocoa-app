@@ -22,6 +22,7 @@
 - (void)clearResults;
 
 - (void)searchWithString:(NSString*)search_string;
+- (void)searchForEmailString:(NSString*)email;
 
 - (void)cancelCallbacks;
 
