@@ -132,8 +132,9 @@
     _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
     _last_search = @"";
     _no_results = NO;
-    _search_used = NO;
+    _metric_search_used = NO;
     _allow_search_infinit = YES;
+    _search_results = [NSMutableArray array];
 //    if ([[[[InfinitFeatureManager sharedInstance] features] objectForKey:@"search_on_infinit"] isEqualToString:@"1"])
 //      _allow_search_infinit = YES;
 //    else
@@ -246,7 +247,11 @@
   if ([temp.lastObject isKindOfClass:NSString.class])
     [temp removeObject:temp.lastObject];
 
-  InfinitSearchElement* element;
+  InfinitSearchElement* element =
+    [[InfinitSearchElement alloc] initWithAvatar:[IAAvatarManager getAvatarForUser:user]
+                                           email:nil 
+                                        fullname:user.fullname
+                                            user:user];
   for (InfinitSearchElement* other in _search_results)
   {
     if ([other.user isEqual:user])
