@@ -14,6 +14,54 @@
 ELLE_LOG_COMPONENT("OSX.NotLoggedInViewController");
 
 @interface IANotLoggedInViewController ()
+@end
+
+@interface NSButtonCell()
+- (void)_updateMouseTracking;
+@end
+
+@implementation InfinitNotLoggedInButtonCell
+{
+@private
+  BOOL _hover;
+}
+
+// Override private mouse tracking function to ensure that we get mouseEntered/Exited events.
+- (void)_updateMouseTracking
+{
+  [super _updateMouseTracking];
+  if (self.controlView != nil && [self.controlView respondsToSelector:@selector(_setMouseTrackingForCell:)])
+  {
+    [self.controlView performSelector:@selector(_setMouseTrackingForCell:) withObject:self];
+  }
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+  _hover = YES;
+  [self.controlView setNeedsDisplay:YES];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+  _hover = NO;
+  [self.controlView setNeedsDisplay:YES];
+}
+
+- (void)drawImage:(NSImage*)image
+        withFrame:(NSRect)frame
+           inView:(NSView*)controlView
+{
+  [super drawImage:image withFrame:frame inView:controlView];
+  NSBezierPath* bg = [IAFunctions roundedBottomBezierWithRect:frame cornerRadius:3.0];
+  if ([self isEnabled] && _hover && ![self isHighlighted])
+    [IA_RGBA_COLOUR(255, 255, 255, 0.1) set];
+  else if ([self isEnabled] && [self isHighlighted])
+    [IA_RGBA_COLOUR(0, 0, 0, 0.1) set];
+  else
+    [[NSColor clearColor] set];
+  [bg fill];
+}
 
 @end
 
@@ -153,7 +201,7 @@ ELLE_LOG_COMPONENT("OSX.NotLoggedInViewController");
 
 //- User Interaction -------------------------------------------------------------------------------
 
-- (IBAction)bottomButtonClicked:(IABottomButton*)sender
+- (IBAction)bottomButtonClicked:(NSButton*)sender
 {
     [_delegate notLoggedInViewWantsQuit:self];
 }

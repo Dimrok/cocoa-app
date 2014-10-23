@@ -11,7 +11,6 @@
 
 #import "IAViewController.h"
 
-#import "IABottomButton.h"
 #import "IAHoverButton.h"
 
 typedef enum __IANotLoggedInViewMode
@@ -21,12 +20,15 @@ typedef enum __IANotLoggedInViewMode
     INFINIT_WAITING_FOR_CONNECTION = 2,
 } IANotLoggedInViewMode;
 
+@interface InfinitNotLoggedInButtonCell : NSButtonCell
+@end;
+
 @protocol IANotLoggedInViewProtocol;
 
 @interface IANotLoggedInViewController : IAViewController
 
 @property (nonatomic, strong) IBOutlet NSTextField* not_logged_message;
-@property (nonatomic, strong) IBOutlet IABottomButton* bottom_button;
+@property (nonatomic, strong) IBOutlet NSButton* bottom_button;
 @property (nonatomic, setter = setMode:) IANotLoggedInViewMode mode;
 @property (nonatomic, strong) IBOutlet IAHoverButton* problem_button;
 @property (nonatomic, strong) IBOutlet NSProgressIndicator* spinner;
