@@ -27,8 +27,8 @@ static NSDictionary* _email_style = nil;
 
 - (void)prepareForReuse
 {
-  self.hover = NO;
   [self removeTrackingArea:_tracking_area];
+  _hover = NO;
   [super prepareForReuse];
 }
 
@@ -47,7 +47,7 @@ static NSDictionary* _email_style = nil;
 {
   if (_fullname_style == nil)
   {
-    NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue"
+    NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
                                                                    weight:3
                                                                      size:12.0];
@@ -55,9 +55,9 @@ static NSDictionary* _email_style = nil;
                                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                               colour:IA_RGB_COLOUR(37, 47, 51)
                                               shadow:nil];
-    NSFont* email_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue"
+    NSFont* email_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                     traits:NSUnboldFontMask
-                                                                    weight:2
+                                                                    weight:3
                                                                       size:11.0];
     _email_style = [IAFunctions textStyleWithFont:email_font
                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
@@ -110,12 +110,16 @@ static NSDictionary* _email_style = nil;
 
 - (void)mouseEntered:(NSEvent*)theEvent
 {
+  if (!CGCursorIsVisible())
+    return;
   _hover = YES;
   [self setExternalHover:YES];
 }
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
+  if (!CGCursorIsVisible())
+    return;
   _hover = NO;
   [self setExternalHover:NO];
 }
