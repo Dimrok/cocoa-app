@@ -77,6 +77,7 @@ typedef enum _InfinitUserLinkMode
 - (NSArray*)sendViewWantsFileList:(InfinitSendViewController*)sender;
 
 - (void)sendViewWantsCancel:(InfinitSendViewController*)sender;
+- (void)sendViewWantsClose:(InfinitSendViewController*)sender;
 
 - (void)sendView:(InfinitSendViewController*)sender
 wantsRemoveFileAtIndex:(NSInteger)index;

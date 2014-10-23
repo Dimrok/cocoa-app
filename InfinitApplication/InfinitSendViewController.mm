@@ -35,10 +35,7 @@
 
 - (void)setupViewForMode:(InfinitUserLinkMode)mode
 {
-  NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Montserrat"
-                                                            traits:NSBoldFontMask
-                                                            weight:3
-                                                              size:11.0];
+  NSFont* font = [NSFont fontWithName:@"Montserrat" size:11.0];
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   para.alignment = NSCenterTextAlignment;
   NSDictionary* norm_attrs = [IAFunctions textStyleWithFont:font
@@ -271,7 +268,37 @@
 
 //- Infinit Send Button Cell -----------------------------------------------------------------------
 
+@interface NSButtonCell()
+- (void)_updateMouseTracking;
+@end
+
 @implementation InfinitSendButtonCell
+{
+@private
+  BOOL _hover;
+}
+
+// Override private mouse tracking function to ensure that we get mouseEntered/Exited events.
+- (void)_updateMouseTracking
+{
+  [super _updateMouseTracking];
+  if (self.controlView != nil && [self.controlView respondsToSelector:@selector(_setMouseTrackingForCell:)])
+  {
+    [self.controlView performSelector:@selector(_setMouseTrackingForCell:) withObject:self];
+  }
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+  _hover = YES;
+  [self.controlView setNeedsDisplay:YES];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+  _hover = NO;
+  [self.controlView setNeedsDisplay:YES];
+}
 
 - (NSRect)drawTitle:(NSAttributedString*)title
           withFrame:(NSRect)frame
@@ -287,9 +314,35 @@
   return [super drawTitle:title withFrame:frame inView:controlView];
 }
 
+- (NSBezierPath*)buttonBezierForFrame:(NSRect)frame
+{
+  CGFloat corner_rad = 3.0;
+  NSBezierPath* res = [NSBezierPath bezierPath];
+  [res moveToPoint:NSMakePoint(0.0, 0.0)];
+  [res lineToPoint:NSMakePoint(frame.size.width, 0.0)];
+  [res lineToPoint:NSMakePoint(frame.size.width, frame.size.height - corner_rad)];
+  [res lineToPoint:NSMakePoint(frame.size.width - corner_rad, frame.size.height)];
+  [res appendBezierPathWithArcWithCenter:NSMakePoint(frame.size.width - corner_rad, frame.size.width - corner_rad)
+                                  radius:corner_rad
+                              startAngle:90.0
+                                endAngle:270.0
+                               clockwise:YES];
+  [res lineToPoint:NSMakePoint(0.0, frame.size.height)];
+  [res closePath];
+  return res;
+}
+
 - (void)drawBezelWithFrame:(NSRect)frame
                     inView:(NSView*)controlView
 {
+  NSBezierPath* bg = [self buttonBezierForFrame:frame];
+  if ([self isEnabled] && _hover && ![self isHighlighted])
+    [IA_RGBA_COLOUR(255, 255, 255, 0.1) set];
+  else if ([self isEnabled] && [self isHighlighted])
+    [IA_RGBA_COLOUR(0, 0, 0, 0.1) set];
+  else
+    [[NSColor clearColor] set];
+  [bg fill];
   [IA_RGB_COLOUR(196, 54, 55) set];
   NSRect line = NSMakeRect(frame.origin.x, 0.0, 1.0, NSHeight(frame));
   NSRectFill(line);
@@ -525,7 +578,17 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 - (void)filesUpdated
 {
   NSArray* files = [_delegate sendViewWantsFileList:self];
-  [_files_controller updateWithFiles:files];
+  if (self.search_constraint.constant > NSHeight(_search_controller.search_box_view.frame))
+  {
+    [self searchView:_search_controller
+     changedToHeight:NSHeight(_search_controller.search_box_view.frame)];
+    // Only add files once animation is complete. Dirty.
+    [_files_controller performSelector:@selector(updateWithFiles:) withObject:files afterDelay:0.3];
+  }
+  else
+  {
+    [_files_controller updateWithFiles:files];
+  }
   [self setSendButtonState];
 
   if (files.count > 0)
@@ -851,6 +914,24 @@ wantsChangeHeight:(CGFloat)height
 {
   if ([self inputsGood])
     [self doSend];
+}
+
+- (void)delayedClose
+{
+  [_delegate sendViewWantsClose:self];
+}
+
+- (BOOL)searchViewGotEscapePressedShrink:(IAUserSearchViewController*)sender
+{
+  if (self.search_constraint.constant == NSHeight(_search_controller.search_box_view.frame))
+  {
+    [self performSelector:@selector(delayedClose) withObject:nil afterDelay:0.0];
+    return NO;
+  }
+  else
+  {
+    return YES;
+  }
 }
 
 //- User Link Protocol -----------------------------------------------------------------------------
