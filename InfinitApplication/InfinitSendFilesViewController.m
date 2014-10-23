@@ -439,7 +439,7 @@ static NSDictionary* _info_attrs = nil;
       NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                 traits:NSUnboldFontMask
                                                                 weight:3
-                                                                  size:12.0];
+                                                                  size:11.0];
       NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
       para.alignment = NSRightTextAlignment;
       _info_attrs = [IAFunctions textStyleWithFont:font
