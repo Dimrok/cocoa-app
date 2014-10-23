@@ -170,6 +170,12 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   [_delegate sendControllerWantsBack:self];
 }
 
+- (void)sendViewWantsClose:(InfinitSendViewController*)sender
+{
+  _files = nil;
+  [_delegate sendControllerWantsClose:self];
+}
+
 - (NSArray*)sendViewWantsFileList:(InfinitSendViewController*)sender
 {
   return [NSArray arrayWithArray:_files];
