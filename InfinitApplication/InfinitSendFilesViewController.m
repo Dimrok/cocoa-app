@@ -135,6 +135,11 @@
 
 static CGFloat _radius = 150.0;
 
+- (BOOL)isOpaque
+{
+  return YES;
+}
+
 - (id)initWithFrame:(NSRect)frameRect
 {
   if (self = [super initWithFrame:frameRect])
@@ -145,8 +150,8 @@ static CGFloat _radius = 150.0;
                [IAFunctions imageNamed:@"send-icon-media-video"]];
 
     NSFont* drop_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Montserrat"
-                                                                   traits:(NSUnboldFontMask|NSUnitalicFontMask)
-                                                                   weight:3
+                                                                   traits:NSUnboldFontMask
+                                                                   weight:15
                                                                      size:12.0];
     NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     para.alignment = NSCenterTextAlignment;
@@ -157,19 +162,17 @@ static CGFloat _radius = 150.0;
     _drop_str =
       [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"DROP FILES HERE", nil)
                                              attributes:drop_attrs];
-    [_drop_str addAttribute:NSKernAttributeName value:@1.1 range:NSMakeRange(0, _drop_str.length)];
-    NSFont* click_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue"
-                                                                    traits:(NSUnboldFontMask|NSUnitalicFontMask)
-                                                                    weight:1
+    NSFont* click_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                    traits:NSUnboldFontMask
+                                                                    weight:3
                                                                       size:12.0];
     NSDictionary* click_attrs = [IAFunctions textStyleWithFont:click_font
                                                 paragraphStyle:para
-                                                        colour:IA_GREY_COLOUR(209)
+                                                        colour:IA_GREY_COLOUR(164)
                                                         shadow:nil];
     _click_str =
       [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"or click to add files...", nil)
                                              attributes:click_attrs];
-    [_click_str addAttribute:NSKernAttributeName value:@1.1 range:NSMakeRange(0, _click_str.length)];
     _drag_types = @[NSFilenamesPboardType];
     [self registerForDraggedTypes:_drag_types];
   }
@@ -197,11 +200,6 @@ static CGFloat _radius = 150.0;
   if (files.count > 0)
     [_delegate sendFilesView:self gotFilesDropped:files];
 
-  return YES;
-}
-
-- (BOOL)isOpaque
-{
   return YES;
 }
 
@@ -281,11 +279,10 @@ static CGFloat _radius = 150.0;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+  [IA_GREY_COLOUR(248) set];
+  NSRectFill(self.bounds);
   if (self.rows == 0)
   {
-    CGFloat bg_diff = (255 - 248) * _hover;
-    [IA_RGB_COLOUR(248 + bg_diff, 248 + bg_diff, 248 + bg_diff) set];
-    NSRectFill(self.bounds);
     CGFloat border = 15.0;
     NSBezierPath* path =
       [NSBezierPath bezierPathWithRect:NSMakeRect(border,
@@ -297,6 +294,14 @@ static CGFloat _radius = 150.0;
     path.lineWidth = 1.0;
     [IA_GREY_COLOUR(215) set];
     [path stroke];
+    CGFloat bg_diff = (255 - 248) * _hover;
+    [IA_RGB_COLOUR(248 + bg_diff, 248 + bg_diff, 248 + bg_diff) set];
+    NSRectFill(NSMakeRect(border + 1.0,
+                          border + 1.0,
+                          NSWidth(self.bounds) - (2 * border) - 2.0,
+                          NSHeight(self.bounds) - (2 * border) - 2.0));
+    [_drop_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - _drop_str.size.width) / 2.0, 65.0)];
+    [_click_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - _click_str.size.width) / 2.0, 45.0)];
     for (NSUInteger i = 0; i < _icons.count; i++)
     {
       NSImage* image = _icons[i];
@@ -314,21 +319,19 @@ static CGFloat _radius = 150.0;
       [image_rotation rotateByDegrees:rot_angle];
       [image_rotation concat];
 
+      [NSGraphicsContext saveGraphicsState];
+      [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+
       [image drawAtPoint:NSMakePoint(0.0, 0.0)
                 fromRect:NSZeroRect
                operation:NSCompositeSourceOver
                 fraction:1.0];
 
+      [NSGraphicsContext restoreGraphicsState];
+
       [image_rotation invert];
       [image_rotation concat];
-      [_drop_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - _drop_str.size.width) / 2.0, 65.0)];
-      [_click_str drawAtPoint:NSMakePoint((NSWidth(self.bounds) - _click_str.size.width) / 2.0, 45.0)];
     }
-  }
-  else
-  {
-    [IA_GREY_COLOUR(248) set];
-    NSRectFill(self.bounds);
   }
 }
 
@@ -337,7 +340,7 @@ static CGFloat _radius = 150.0;
   if (self.rows == 0)
     return NSMakeSize(317.0, 197.0);
 
-  CGFloat height = self.rows * 100.0 + 45.0;
+  CGFloat height = self.rows * 88.0 + 45.0;
   return NSMakeSize(317.0, height);
 }
 
@@ -441,7 +444,7 @@ static NSDictionary* _info_attrs = nil;
       para.alignment = NSRightTextAlignment;
       _info_attrs = [IAFunctions textStyleWithFont:font
                                     paragraphStyle:para
-                                            colour:IA_GREY_COLOUR(209)
+                                            colour:IA_GREY_COLOUR(190)
                                             shadow:nil];
     }
     _operation_queue = [[NSOperationQueue alloc] init];
@@ -459,6 +462,10 @@ static NSDictionary* _info_attrs = nil;
 
 - (void)awakeFromNib
 {
+  // WORKAROUND: Stop 15" Macbook Pro always rendering scroll bars
+  // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
+  [self.collection_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
+  [self.collection_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
   self.view.rows = 0;
   self.info.hidden = YES;
 }
