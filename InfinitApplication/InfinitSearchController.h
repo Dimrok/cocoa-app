@@ -25,6 +25,7 @@
 - (void)searchForEmailString:(NSString*)email;
 
 - (void)cancelCallbacks;
+- (void)cancelRunningSearches;
 
 @end
 
