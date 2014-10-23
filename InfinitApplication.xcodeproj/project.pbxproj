@@ -238,8 +238,6 @@
 		837B2A7F19DD966400A3CDE1 /* sound_sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A7E19DD966400A3CDE1 /* sound_sent.aiff */; };
 		837B2A8219DD966E00A3CDE1 /* sound_finished.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A8019DD966E00A3CDE1 /* sound_finished.aiff */; };
 		837B2A8319DD966E00A3CDE1 /* sound_incoming.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A8119DD966E00A3CDE1 /* sound_incoming.aiff */; };
-		837B2A8819DD96AD00A3CDE1 /* bg-main-button-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A8419DD96AD00A3CDE1 /* bg-main-button-disabled.png */; };
-		837B2A8919DD96AD00A3CDE1 /* bg-main-button-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A8519DD96AD00A3CDE1 /* bg-main-button-disabled@2x.png */; };
 		837B2A8A19DD96AD00A3CDE1 /* bg-main-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A8619DD96AD00A3CDE1 /* bg-main-button.png */; };
 		837B2A8B19DD96AD00A3CDE1 /* bg-main-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A8719DD96AD00A3CDE1 /* bg-main-button@2x.png */; };
 		837B2A9419DD96DF00A3CDE1 /* bg-header-top-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2A8C19DD96DF00A3CDE1 /* bg-header-top-gray.png */; };
@@ -265,8 +263,6 @@
 		837B2ABA19DD98DF00A3CDE1 /* main-icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2AB819DD98DF00A3CDE1 /* main-icon-error.png */; };
 		837B2ABB19DD98DF00A3CDE1 /* main-icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2AB919DD98DF00A3CDE1 /* main-icon-error@2x.png */; };
 		837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */; };
-		838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7317D73261009083D4 /* IASimpleSendButton.m */; };
-		838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838AAC7A17D73734009083D4 /* IABottomButton.m */; };
 		838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0B717DA097C004160DB /* IAHoverButton.m */; };
 		8392497218D7B49400EE72C7 /* CrashReporter.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
 		8392497318D7B6D900EE72C7 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
@@ -874,8 +870,6 @@
 		837B2A7E19DD966400A3CDE1 /* sound_sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = sound_sent.aiff; path = "../../../../fist-resources/sounds/sound_sent.aiff"; sourceTree = "<group>"; };
 		837B2A8019DD966E00A3CDE1 /* sound_finished.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = sound_finished.aiff; path = "../../../../fist-resources/sounds/sound_finished.aiff"; sourceTree = "<group>"; };
 		837B2A8119DD966E00A3CDE1 /* sound_incoming.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = sound_incoming.aiff; path = "../../../../fist-resources/sounds/sound_incoming.aiff"; sourceTree = "<group>"; };
-		837B2A8419DD96AD00A3CDE1 /* bg-main-button-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-main-button-disabled.png"; path = "../../../../fist-resources/slices/mac/main/bg-main-button-disabled.png"; sourceTree = "<group>"; };
-		837B2A8519DD96AD00A3CDE1 /* bg-main-button-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-main-button-disabled@2x.png"; path = "../../../../fist-resources/slices/mac/main/bg-main-button-disabled@2x.png"; sourceTree = "<group>"; };
 		837B2A8619DD96AD00A3CDE1 /* bg-main-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-main-button.png"; path = "../../../../fist-resources/slices/mac/main/bg-main-button.png"; sourceTree = "<group>"; };
 		837B2A8719DD96AD00A3CDE1 /* bg-main-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-main-button@2x.png"; path = "../../../../fist-resources/slices/mac/main/bg-main-button@2x.png"; sourceTree = "<group>"; };
 		837B2A8C19DD96DF00A3CDE1 /* bg-header-top-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg-header-top-gray.png"; path = "../../../../fist-resources/slices/mac/main/bg-header-top-gray.png"; sourceTree = "<group>"; };
@@ -902,10 +896,6 @@
 		837B2AB919DD98DF00A3CDE1 /* main-icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "main-icon-error@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/main-icon-error@2x.png"; sourceTree = "<group>"; };
 		837DE2C518E10DBB003A63A8 /* InfinitFileListScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileListScrollView.h; sourceTree = "<group>"; };
 		837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileListScrollView.m; sourceTree = "<group>"; };
-		838AAC7217D73261009083D4 /* IASimpleSendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASimpleSendButton.h; sourceTree = "<group>"; };
-		838AAC7317D73261009083D4 /* IASimpleSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASimpleSendButton.m; sourceTree = "<group>"; };
-		838AAC7917D73734009083D4 /* IABottomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IABottomButton.h; sourceTree = "<group>"; };
-		838AAC7A17D73734009083D4 /* IABottomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IABottomButton.m; sourceTree = "<group>"; };
 		838FE0B617DA097C004160DB /* IAHoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAHoverButton.h; sourceTree = "<group>"; };
 		838FE0B717DA097C004160DB /* IAHoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAHoverButton.m; sourceTree = "<group>"; };
 		8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrashReporter.xcodeproj; path = ../plcrashreporter/CrashReporter.xcodeproj; sourceTree = "<group>"; };
@@ -1258,8 +1248,6 @@
 			children = (
 				8364920119DB12CA004F911D /* icon.icns */,
 				83059E0A19213B42008DA14A /* Montserrat.ttf */,
-				837B2A8419DD96AD00A3CDE1 /* bg-main-button-disabled.png */,
-				837B2A8519DD96AD00A3CDE1 /* bg-main-button-disabled@2x.png */,
 				837B2A8619DD96AD00A3CDE1 /* bg-main-button.png */,
 				837B2A8719DD96AD00A3CDE1 /* bg-main-button@2x.png */,
 				837B2A8C19DD96DF00A3CDE1 /* bg-header-top-gray.png */,
@@ -1600,8 +1588,6 @@
 		8398834717A6A580009409B3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				838AAC7917D73734009083D4 /* IABottomButton.h */,
-				838AAC7A17D73734009083D4 /* IABottomButton.m */,
 				8398835317A6AA9D009409B3 /* IAUserPrefs.h */,
 				8398835417A6AA9D009409B3 /* IAUserPrefs.m */,
 				8398834D17A6A5AE009409B3 /* IAAutoStartup.h */,
@@ -1931,8 +1917,6 @@
 				83F1148217AE63E700DCF662 /* IAUserSearchViewController.h */,
 				83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */,
 				83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */,
-				838AAC7217D73261009083D4 /* IASimpleSendButton.h */,
-				838AAC7317D73261009083D4 /* IASimpleSendButton.m */,
 				831B0248190719EA00018B7C /* InfinitSearchTokenFieldCell.h */,
 				831B0249190719EA00018B7C /* InfinitSearchTokenFieldCell.m */,
 				8337673C19088E910073A621 /* InfinitTokenAttachmentCell.h */,
@@ -2327,7 +2311,6 @@
 				836EADCA1988F1F90053BE85 /* icon-transfer.png in Resources */,
 				837B2A9B19DD96DF00A3CDE1 /* bg-triangle-top-white@2x.png in Resources */,
 				836EACEE1988EE300053BE85 /* icon-delete-hover@2x.png in Resources */,
-				837B2A8819DD96AD00A3CDE1 /* bg-main-button-disabled.png in Resources */,
 				83C25B7219F010EE009752F1 /* send-icon-back@2x.png in Resources */,
 				836EAE081988F42D0053BE85 /* icon-menu-bar-clicked.png in Resources */,
 				836EAD8A1988EEC70053BE85 /* conversation-icon-bufferised.png in Resources */,
@@ -2348,7 +2331,6 @@
 				83C25B5E19EEBC8F009752F1 /* send-icon-media-video@2x.png in Resources */,
 				836EAE561988F4500053BE85 /* icon-menu-bar-animated-black-17.png in Resources */,
 				836EAE461988F4500053BE85 /* icon-menu-bar-animated-black-1.png in Resources */,
-				837B2A8919DD96AD00A3CDE1 /* bg-main-button-disabled@2x.png in Resources */,
 				836EAD941988EEC70053BE85 /* conversation-icon-hide-files.png in Resources */,
 				83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */,
 				836EAD151988EE3B0053BE85 /* illustrator.png in Resources */,
@@ -2625,14 +2607,12 @@
 				831E22D9183E565300F0623C /* InfinitSearchPersonResult.mm in Sources */,
 				83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */,
 				83E73FA519A5DD0E00B7E8EF /* InfinitSettingsWindow.m in Sources */,
-				838AAC7417D73261009083D4 /* IASimpleSendButton.m in Sources */,
 				83A67AB419AB19C900A69E35 /* InfinitSettingsGeneralView.m in Sources */,
 				834F136319214B9F00BF36A4 /* InfinitSendNoteViewController.m in Sources */,
 				83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */,
 				833B59D418D774C400A43339 /* InfinitConversationCellView.mm in Sources */,
 				834F136D19217E9600BF36A4 /* InfinitTransactionCellView.m in Sources */,
 				8321BE7A18E0D33600237252 /* InfinitConversationFileCellView.m in Sources */,
-				838AAC7B17D73734009083D4 /* IABottomButton.m in Sources */,
 				837B2A6919DD962B00A3CDE1 /* InfinitFeatureManager.m in Sources */,
 				83F77AF219E4199F00982F64 /* InfinitDownloadDestinationManager.mm in Sources */,
 			);
