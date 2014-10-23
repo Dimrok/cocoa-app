@@ -71,7 +71,7 @@
     right_aligned.alignment = NSRightTextAlignment;
     _norm_characters_attrs = [IAFunctions textStyleWithFont:small_font
                                              paragraphStyle:right_aligned
-                                                     colour:IA_GREY_COLOUR(209)
+                                                     colour:IA_GREY_COLOUR(164)
                                                      shadow:nil];
 
     _done_characters_attrs = [IAFunctions textStyleWithFont:small_font
@@ -93,7 +93,7 @@
                                                                 size:12.0];
     NSDictionary* attrs = [IAFunctions textStyleWithFont:font
                                           paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                  colour:IA_GREY_COLOUR(209)
+                                                  colour:IA_GREY_COLOUR(164)
                                                   shadow:nil];
     NSString* add_str = NSLocalizedString(@"Optional note...", nil);
     NSAttributedString* add_note = [[NSAttributedString alloc] initWithString:add_str
