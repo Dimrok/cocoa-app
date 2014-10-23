@@ -12,6 +12,7 @@
 #import "IAAvatarManager.h"
 #import "InfinitTokenAttachmentCell.h"
 #import "InfinitFeatureManager.h"
+#import "InfinitMetricsManager.h"
 
 //- Search View Element ----------------------------------------------------------------------------
 
@@ -114,6 +115,7 @@
   NSString* _last_search;
   NSInteger _hover_row;
   BOOL _allow_search_infinit;
+  BOOL _metric_search_used;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -130,6 +132,7 @@
     _search_controller = [[InfinitSearchController alloc] initWithDelegate:self];
     _last_search = @"";
     _no_results = NO;
+    _search_used = NO;
     _allow_search_infinit = YES;
 //    if ([[[[InfinitFeatureManager sharedInstance] features] objectForKey:@"search_on_infinit"] isEqualToString:@"1"])
 //      _allow_search_infinit = YES;
@@ -419,6 +422,12 @@
 - (void)handleInputFieldChange
 {
   [self cancelLastSearchOperation];
+
+  if (!_metric_search_used)
+  {
+    _metric_search_used = YES;
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_INPUT];
+  }
 
   NSString* search_string = [self currentSearchString];
 
