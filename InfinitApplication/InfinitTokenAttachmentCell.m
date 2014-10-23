@@ -58,15 +58,6 @@ static NSDictionary* _norm_attrs = nil;
   {
     [IA_RGB_COLOUR(45, 209, 205) set];
     [bg fill];
-    [IA_RGB_COLOUR(17, 154, 151) set];
-    [bg stroke];
-    self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
-                                                                 attributes:_norm_attrs];
-  }
-  else if (self.tokenDrawingMode == OEXTokenDrawingModeHighlighted)
-  {
-    [IA_RGB_COLOUR(45, 209, 205) set];
-    [bg fill];
     [bg stroke];
     self.attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue
                                                                  attributes:_norm_attrs];
