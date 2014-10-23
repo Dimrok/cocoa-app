@@ -1684,18 +1684,6 @@ hadConnectionStateChange:(gap_UserStatus)status
   [self updateStatusBarIcon];
 }
 
-- (void)transactionManager:(IATransactionManager*)sender
-   wantsShowInvitedMessage:(NSString*)message
-{
-  if (_tooltip_controller == nil)
-    _tooltip_controller = [[InfinitTooltipViewController alloc] init];
-  [_tooltip_controller showPopoverForView:_status_bar_icon
-                       withArrowDirection:INPopoverArrowDirectionUp
-                              withMessage:message
-                         withPopAnimation:YES
-                                  forTime:5.0];
-}
-
 - (void)transactionManagerHadFileSent:(IATransactionManager*)sender
 {
   [_sent_sound play];
