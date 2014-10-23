@@ -71,6 +71,8 @@
 
 - (void)searchViewGotWantsSend:(IAUserSearchViewController*)sender;
 
+- (BOOL)searchViewGotEscapePressedShrink:(IAUserSearchViewController*)sender;
+
 @end
 
 @interface InfinitSearchElement : NSObject

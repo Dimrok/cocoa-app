@@ -195,14 +195,15 @@
     NSDictionary* search_attrs =
       [IAFunctions textStyleWithFont:search_font
                       paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                              colour:IA_GREY_COLOUR(209)
+                              colour:IA_GREY_COLOUR(164)
                               shadow:nil];
     NSString* placeholder_str = NSLocalizedString(@"Send by email or search your contacts...", nil);
     NSAttributedString* search_placeholder =
       [[NSAttributedString alloc] initWithString:placeholder_str attributes:search_attrs];
     [self.search_field.cell setPlaceholderAttributedString:search_placeholder];
   }
-  self.search_field.tokenizingCharacterSet = [NSCharacterSet newlineCharacterSet];
+  NSMutableCharacterSet* tokenising_set = [NSMutableCharacterSet newlineCharacterSet];
+  self.search_field.tokenizingCharacterSet = tokenising_set;
 }
 
 - (void)loadView
@@ -364,6 +365,7 @@
 
 - (void)cancelLastSearchOperation
 {
+  [_search_controller cancelRunningSearches];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
@@ -397,7 +399,7 @@
 - (NSString*)currentSearchString
 {
   NSArray* tokens = self.search_field.objectValue;
-  
+
   NSString* search_string;
   if ([tokens.lastObject isKindOfClass:NSString.class])
     search_string = [self trimLeadingWhitespace:tokens.lastObject];
@@ -420,13 +422,26 @@
 
   NSString* search_string = [self currentSearchString];
 
+  if ([IAFunctions stringIsValidEmail:search_string] && [_last_search isEqualToString:search_string])
+  {
+    InfinitSearchElement* element =
+      [[InfinitSearchElement alloc] initWithAvatar:[IAFunctions makeAvatarFor:@"@"]
+                                             email:search_string
+                                          fullname:search_string
+                                              user:nil];
+    [self addElement:element];
+    _last_search = @"";
+    return;
+  }
+
   if (search_string.length > 0)
   {
     if (search_string.length < _last_search.length || _last_search.length == 0)
       [self clearResults];
     if ([IAFunctions stringIsValidEmail:search_string])
     {
-      [_search_controller searchForEmailString:search_string];
+      [self clearResults];
+      [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
       [_delegate searchViewInputsChanged:self];
     }
     else
@@ -515,9 +530,26 @@ doCommandBySelector:(SEL)commandSelector
   }
   else if (commandSelector == @selector(insertTab:) || commandSelector == @selector(insertBacktab:))
   {
-    [self fixClipView];
+    NSInteger row = _hover_row;
+    if (row > -1 && row < _search_results.count)
+    {
+      InfinitSearchElement* element = _search_results[row];
+      if (![self.search_field.objectValue containsObject:element])
+        [self addElement:element];
+    }
     [_delegate searchViewWantsLoseFocus:self];
     [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
+    [self performSelector:@selector(fixClipView) withObject:nil afterDelay:0];
+    return YES;
+  }
+  else if (commandSelector == @selector(cancelOperation:))
+  {
+    if ([_delegate searchViewGotEscapePressedShrink:self])
+    {
+      [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
+      [self clearResults];
+      [self fixClipView];
+    }
     return YES;
   }
   return NO;
