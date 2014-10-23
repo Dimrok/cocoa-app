@@ -8,6 +8,8 @@
 
 #import "InfinitSearchNoResultsCellView.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation InfinitSearchInfinitView
 {
   NSTrackingArea* _tracking_area;
@@ -24,10 +26,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  CGFloat colour_diff = 0;
-  if (_hover > 0)
-    colour_diff = (255 - 248) * _hover;
-  [IA_RGB_COLOUR(248 - colour_diff, 248 - colour_diff, 248 + colour_diff) set];
+  [IA_RGB_COLOUR(248 - (8 * _hover), 248 + (4 * _hover), 248 + (3 * _hover)) set];
   NSRectFill(self.bounds);
   NSRect top_line = NSMakeRect(0.0, NSHeight(self.bounds) - 1.0, NSWidth(self.bounds), 1.0);
   [IA_GREY_COLOUR(229) set];
@@ -91,6 +90,14 @@
   [super resetCursorRects];
   NSCursor* cursor = [NSCursor pointingHandCursor];
   [self addCursorRect:self.bounds cursor:cursor];
+}
+
++ (id)defaultAnimationForKey:(NSString*)key
+{
+  if ([key isEqualToString:@"hover"])
+    return [CABasicAnimation animation];
+
+  return [super defaultAnimationForKey:key];
 }
 
 @end
