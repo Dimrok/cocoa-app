@@ -23,6 +23,71 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 @interface InfinitLoginViewController ()
 @end
 
+// - Login Button Cell -----------------------------------------------------------------------------
+
+@interface NSButtonCell()
+- (void)_updateMouseTracking;
+@end
+
+@implementation InfinitLoginButtonCell
+{
+@private
+  BOOL _hover;
+}
+
+// Override private mouse tracking function to ensure that we get mouseEntered/Exited events.
+- (void)_updateMouseTracking
+{
+  [super _updateMouseTracking];
+  if (self.controlView != nil && [self.controlView respondsToSelector:@selector(_setMouseTrackingForCell:)])
+  {
+    [self.controlView performSelector:@selector(_setMouseTrackingForCell:) withObject:self];
+  }
+}
+
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+  _hover = YES;
+  [self.controlView setNeedsDisplay:YES];
+}
+
+- (void)mouseExited:(NSEvent*)theEvent
+{
+  _hover = NO;
+  [self.controlView setNeedsDisplay:YES];
+}
+
+- (NSRect)drawTitle:(NSAttributedString*)title
+          withFrame:(NSRect)frame
+             inView:(NSView*)controlView
+{
+  if (![self isEnabled])
+  {
+    return [super drawTitle:[[NSAttributedString alloc] initWithString:self.attributedTitle.string
+                                                            attributes:self.disabled_attrs]
+                  withFrame:frame inView:controlView];
+  }
+
+  return [super drawTitle:title withFrame:frame inView:controlView];
+}
+
+- (void)drawImage:(NSImage*)image
+        withFrame:(NSRect)frame
+           inView:(NSView*)controlView
+{
+  [super drawImage:image withFrame:frame inView:controlView];
+  NSBezierPath* bg = [IAFunctions roundedBottomBezierWithRect:frame cornerRadius:3.0];
+  if ([self isEnabled] && _hover && ![self isHighlighted])
+    [IA_RGBA_COLOUR(255, 255, 255, 0.1) set];
+  else if ([self isEnabled] && [self isHighlighted])
+    [IA_RGBA_COLOUR(0, 0, 0, 0.1) set];
+  else
+    [[NSColor clearColor] set];
+  [bg fill];
+}
+
+@end
+
 //- Login View -------------------------------------------------------------------------------------
 
 @interface InfinitLoginView : IAMainView
@@ -54,6 +119,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   
   NSAttributedString* _version_str;
   NSDictionary* _button_attrs;
+  NSDictionary* _button_disabled_attrs;
   NSDictionary* _link_attrs;
   NSDictionary* _link_hover_attrs;
   NSDictionary* _link_right_attrs;
@@ -95,16 +161,26 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
                                                 [NSString stringWithUTF8String:INFINIT_VERSION]]
                                                     attributes:version_style];
 
+    NSFont* action_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Montserrat"
+                                                                     traits:NSUnboldFontMask
+                                                                     weight:3
+                                                                       size:13.0];
+
     NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.alignment = NSCenterTextAlignment;
     NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
                                           blurRadius:1.0
                                               colour:[NSColor blackColor]];
 
-    _button_attrs = [IAFunctions textStyleWithFont:[NSFont boldSystemFontOfSize:13.0]
+    _button_attrs = [IAFunctions textStyleWithFont:action_font
                                     paragraphStyle:style
                                             colour:[NSColor whiteColor]
                                             shadow:shadow];
+
+    _button_disabled_attrs = [IAFunctions textStyleWithFont:action_font
+                                             paragraphStyle:style
+                                                     colour:IA_RGBA_COLOUR(255, 255, 255, 0.5)
+                                                     shadow:shadow];
 
     NSFont* link_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
@@ -202,7 +278,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [self configureForMode];
   
   self.version.attributedStringValue = _version_str;
-  self.action_button.hand_cursor = YES;
+  [self.action_button.cell setImageDimsWhenDisabled:NO];
+  [self.action_button.cell setDisabled_attrs:_button_disabled_attrs];
   self.got_account.normal_attrs = _link_attrs;
   self.got_account.hover_attrs = _link_hover_attrs;
   self.problem_button.normal_attrs = _link_attrs;
@@ -502,7 +579,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   }
 }
 
-- (IBAction)actionButtonClicked:(IABottomButton*)sender
+- (IBAction)actionButtonClicked:(NSButton*)sender
 {
   if (_running)
     return;

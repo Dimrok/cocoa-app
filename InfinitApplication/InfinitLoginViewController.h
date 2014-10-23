@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IABottomButton.h"
 #import "IAHoverButton.h"
 #import "IAViewController.h"
 
@@ -18,12 +17,15 @@ typedef enum __InfinitLoginViewMode
 } InfinitLoginViewMode;
 
 @class InfinitLoginView;
+@interface InfinitLoginButtonCell : NSButtonCell
+@property (nonatomic, readwrite) NSDictionary* disabled_attrs;
+@end
 
 @protocol InfinitLoginViewControllerProtocol;
 
 @interface InfinitLoginViewController : IAViewController
 
-@property (nonatomic, weak) IBOutlet IABottomButton* action_button;
+@property (nonatomic, weak) IBOutlet NSButton* action_button;
 @property (nonatomic, weak) IBOutlet NSTextField* action_text;
 @property (nonatomic, weak) IBOutlet IAHoverButton* close_button;
 @property (nonatomic, weak) IBOutlet NSTextField* email_address;
