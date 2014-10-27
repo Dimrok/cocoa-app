@@ -355,7 +355,10 @@
   [self fixClipView];
   [_delegate searchViewInputsChanged:self];
   if (_quick_results)
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_QUICK_SELECT];
+  {
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_QUICK_SELECT
+                       withDictionary:@{@"position": [NSNumber numberWithInteger:row]}];
+  }
 }
 
 - (void)removeElement:(OldInfinitSearchElement*)element
