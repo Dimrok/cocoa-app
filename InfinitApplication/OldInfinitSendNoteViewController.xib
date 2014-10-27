@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A388a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="OldInfinitSendNoteViewController">
+            <connections>
+                <outlet property="characters_label" destination="G5o-bC-fko" id="St6-vx-QSV"/>
+                <outlet property="note_field" destination="X6z-c8-QKQ" id="g7b-HC-bjD"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY" customClass="OldInfinitSendNoteView">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="42"/>
+            <subviews>
+                <textField focusRingType="none" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6z-c8-QKQ" customClass="OldInfinitSendNoteField">
+                    <rect key="frame" x="38" y="11" width="231" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="231" id="xmr-Lg-fRE"/>
+                    </constraints>
+                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" placeholderString="Optional message..." drawsBackground="YES" id="c6a-77-PBl">
+                        <font key="font" size="12" name="Helvetica-Light"/>
+                        <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="Xet-ZM-Ht1"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G5o-bC-fko">
+                    <rect key="frame" x="278" y="14" width="23" height="13"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="100" id="vht-Q4-WMb">
+                        <font key="font" metaFont="system" size="10"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pBM-kj-4ef">
+                    <rect key="frame" x="16" y="13" width="14" height="14"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="old-icon-note" id="ppf-kE-zVi"/>
+                </imageView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="G5o-bC-fko" firstAttribute="leading" secondItem="X6z-c8-QKQ" secondAttribute="trailing" constant="5" id="DQn-UG-JvX"/>
+                <constraint firstItem="X6z-c8-QKQ" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="13" id="Dsz-9x-YlY"/>
+                <constraint firstAttribute="bottom" secondItem="X6z-c8-QKQ" secondAttribute="bottom" constant="11" id="KTy-hl-0KF"/>
+                <constraint firstItem="pBM-kj-4ef" firstAttribute="centerY" secondItem="X6z-c8-QKQ" secondAttribute="centerY" id="XQI-es-Qcb"/>
+                <constraint firstItem="pBM-kj-4ef" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="17" id="eUa-Qg-aqL"/>
+                <constraint firstItem="X6z-c8-QKQ" firstAttribute="leading" secondItem="pBM-kj-4ef" secondAttribute="trailing" constant="8" id="oC8-QP-giD"/>
+            </constraints>
+        </customView>
+    </objects>
+    <resources>
+        <image name="old-icon-note" width="17" height="14"/>
+    </resources>
+</document>

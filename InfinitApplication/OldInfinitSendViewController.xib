@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A388a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="OldInfinitSendViewController">
+            <connections>
+                <outlet property="drop_view" destination="feD-Dd-K1b" id="XXm-93-WO6"/>
+                <outlet property="files_constraint" destination="f4z-F8-7gq" id="HPI-F3-7x0"/>
+                <outlet property="files_view" destination="c1o-0q-VeA" id="Ppe-Pd-Y9b"/>
+                <outlet property="footer_view" destination="XLL-4c-Odh" id="pBE-Hm-g8S"/>
+                <outlet property="header_view" destination="c30-a5-bOa" id="PYe-2o-pRE"/>
+                <outlet property="main_view" destination="feD-Dd-K1b" id="7JP-B7-c25"/>
+                <outlet property="note_constraint" destination="ANX-ey-qLd" id="huM-bf-sks"/>
+                <outlet property="note_view" destination="fJT-dD-ENS" id="F99-iN-FaB"/>
+                <outlet property="search_constraint" destination="si2-aA-Iv3" id="UXz-DP-DoW"/>
+                <outlet property="search_view" destination="Zgr-KS-V0i" id="2b6-EG-AVq"/>
+                <outlet property="send_button" destination="KpR-OD-X5s" id="I0w-cu-BRd"/>
+                <outlet property="user_link_view" destination="qLK-IL-qyT" id="iZc-Tq-AuR"/>
+                <outlet property="view" destination="y7O-sV-29x" id="CLG-bN-Bzz"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView autoresizesSubviews="NO" verticalHuggingPriority="750" verticalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="y7O-sV-29x">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="219"/>
+            <subviews>
+                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c30-a5-bOa" customClass="IAHeaderView">
+                    <rect key="frame" x="0.0" y="169" width="317" height="50"/>
+                    <subviews>
+                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oz2-Se-dsN">
+                            <rect key="frame" x="0.0" y="42" width="317" height="8"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bg-triangle-top-white" id="Vy3-lX-xUO"/>
+                        </imageView>
+                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qLK-IL-qyT" customClass="OldInfinitSendUserLinkView">
+                            <rect key="frame" x="0.0" y="0.0" width="317" height="42"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yAi-G2-8d0">
+                                    <rect key="frame" x="28" y="16" width="102" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="PEOPLE" id="dN6-U1-fhH">
+                                        <font key="font" size="11" name="Helvetica"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4A-gY-zEl">
+                                    <rect key="frame" x="191" y="16" width="102" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="LINKS" id="jdQ-14-los">
+                                        <font key="font" size="11" name="Helvetica"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <connections>
+                                <outlet property="link_text" destination="O4A-gY-zEl" id="3RK-d2-ygL"/>
+                                <outlet property="user_text" destination="yAi-G2-8d0" id="69g-EL-fTL"/>
+                            </connections>
+                        </customView>
+                    </subviews>
+                </customView>
+                <customView autoresizesSubviews="NO" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="feD-Dd-K1b" customClass="OldInfinitSendDropView">
+                    <rect key="frame" x="0.0" y="39" width="317" height="130"/>
+                    <subviews>
+                        <customView verticalHuggingPriority="750" verticalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zgr-KS-V0i" customClass="InfinitWhiteView">
+                            <rect key="frame" x="0.0" y="84" width="317" height="46"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="46" id="si2-aA-Iv3"/>
+                            </constraints>
+                        </customView>
+                        <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fJT-dD-ENS" customClass="InfinitWhiteView">
+                            <rect key="frame" x="0.0" y="42" width="317" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="ANX-ey-qLd"/>
+                            </constraints>
+                        </customView>
+                        <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c1o-0q-VeA" customClass="InfinitWhiteView">
+                            <rect key="frame" x="0.0" y="0.0" width="317" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="42" id="f4z-F8-7gq"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="c1o-0q-VeA" secondAttribute="bottom" id="VxC-xR-Re3"/>
+                        <constraint firstAttribute="bottom" secondItem="c1o-0q-VeA" secondAttribute="bottom" id="Zdv-B9-PJY"/>
+                        <constraint firstItem="Zgr-KS-V0i" firstAttribute="top" secondItem="feD-Dd-K1b" secondAttribute="top" id="aXC-cm-lz2"/>
+                        <constraint firstItem="fJT-dD-ENS" firstAttribute="top" secondItem="Zgr-KS-V0i" secondAttribute="bottom" id="cL6-ce-YGE"/>
+                        <constraint firstItem="fJT-dD-ENS" firstAttribute="top" secondItem="Zgr-KS-V0i" secondAttribute="bottom" id="eeW-WI-f09"/>
+                        <constraint firstItem="c1o-0q-VeA" firstAttribute="top" secondItem="fJT-dD-ENS" secondAttribute="bottom" id="t6O-SD-lye"/>
+                    </constraints>
+                </customView>
+                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLL-4c-Odh" customClass="IAFooterView">
+                    <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bS1-jm-OuR">
+                            <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bg-main-button" id="48W-IY-K8J"/>
+                        </imageView>
+                        <button toolTip="Send a file" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KpR-OD-X5s">
+                            <rect key="frame" x="273" y="7" width="35" height="25"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-transfer" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="dZc-QC-YS9">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="sendButtonClicked:" target="-2" id="bfI-eE-00M"/>
+                            </connections>
+                        </button>
+                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2l-SG-A1n">
+                            <rect key="frame" x="9" y="7" width="25" height="25"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="old-icon-cancel-send" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="DPb-SY-h8O">
+                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                            </buttonCell>
+                            <connections>
+                                <action selector="cancelButtonClicked:" target="-2" id="NsB-08-NQR"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="XLL-4c-Odh" firstAttribute="top" secondItem="feD-Dd-K1b" secondAttribute="bottom" id="EBi-RO-Rtw"/>
+                <constraint firstAttribute="bottom" secondItem="XLL-4c-Odh" secondAttribute="bottom" id="Ro3-SY-E50"/>
+                <constraint firstItem="XLL-4c-Odh" firstAttribute="top" secondItem="c1o-0q-VeA" secondAttribute="bottom" id="Szs-xc-qSh"/>
+                <constraint firstItem="feD-Dd-K1b" firstAttribute="top" secondItem="c30-a5-bOa" secondAttribute="bottom" id="oYt-MA-Odd"/>
+                <constraint firstItem="c30-a5-bOa" firstAttribute="top" secondItem="y7O-sV-29x" secondAttribute="top" id="qwa-3a-hG4"/>
+            </constraints>
+        </customView>
+    </objects>
+    <resources>
+        <image name="bg-main-button" width="317" height="39"/>
+        <image name="bg-triangle-top-white" width="15" height="8"/>
+        <image name="icon-transfer" width="27" height="18"/>
+        <image name="old-icon-cancel-send" width="16" height="18"/>
+    </resources>
+</document>

@@ -46,6 +46,18 @@
 		832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */; };
 		832E26C718366BD800A82DFF /* libc++.1.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
 		832E26C818366BD800A82DFF /* libc++abi.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
+		83312D3119FA69D1007897D4 /* OldInfinitSearchController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3019FA69D1007897D4 /* OldInfinitSearchController.mm */; };
+		83312D3619FA6ABB007897D4 /* OldInfinitSendViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3419FA6ABB007897D4 /* OldInfinitSendViewController.mm */; };
+		83312D3719FA6ABB007897D4 /* OldInfinitSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D3519FA6ABB007897D4 /* OldInfinitSendViewController.xib */; };
+		83312D3F19FA6DB5007897D4 /* OldIASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3B19FA6DB5007897D4 /* OldIASearchResultsCellView.m */; };
+		83312D4019FA6DB5007897D4 /* OldIAUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3D19FA6DB5007897D4 /* OldIAUserSearchViewController.m */; };
+		83312D4119FA6DB5007897D4 /* OldIAUserSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D3E19FA6DB5007897D4 /* OldIAUserSearchViewController.xib */; };
+		83312D4519FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D4419FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m */; };
+		83312D4A19FA7253007897D4 /* OldInfinitSendNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D4819FA7253007897D4 /* OldInfinitSendNoteViewController.m */; };
+		83312D4B19FA7253007897D4 /* OldInfinitSendNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D4919FA7253007897D4 /* OldInfinitSendNoteViewController.xib */; };
+		83312D5219FA736D007897D4 /* OldInfinitSendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D4E19FA736D007897D4 /* OldInfinitSendFileListCellView.m */; };
+		83312D5319FA736D007897D4 /* OldInfinitSendFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D5019FA736D007897D4 /* OldInfinitSendFilesViewController.m */; };
+		83312D5419FA736D007897D4 /* OldInfinitSendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D5119FA736D007897D4 /* OldInfinitSendFilesViewController.xib */; };
 		8333D45D17A976570093942B /* IAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8333D45C17A976570093942B /* IAViewController.m */; };
 		8334C7E117A67D22006028BC /* Gap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
 		8334C7E217A67D2D006028BC /* Gap.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
@@ -284,6 +296,30 @@
 		83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */; };
 		83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.mm */; };
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
+		83BD384A19FE364E003EA0AD /* old-icon-add-file.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383619FE364E003EA0AD /* old-icon-add-file.png */; };
+		83BD384B19FE364E003EA0AD /* old-icon-add-file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383719FE364E003EA0AD /* old-icon-add-file@2x.png */; };
+		83BD384C19FE364E003EA0AD /* old-icon-cancel-send.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383819FE364E003EA0AD /* old-icon-cancel-send.png */; };
+		83BD384D19FE364E003EA0AD /* old-icon-cancel-send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383919FE364E003EA0AD /* old-icon-cancel-send@2x.png */; };
+		83BD384E19FE364E003EA0AD /* old-icon-note.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383A19FE364E003EA0AD /* old-icon-note.png */; };
+		83BD384F19FE364E003EA0AD /* old-icon-note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383B19FE364E003EA0AD /* old-icon-note@2x.png */; };
+		83BD385019FE364E003EA0AD /* old-icon-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383C19FE364E003EA0AD /* old-icon-search.png */; };
+		83BD385119FE364E003EA0AD /* old-icon-search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383D19FE364E003EA0AD /* old-icon-search@2x.png */; };
+		83BD385219FE364E003EA0AD /* old-icon-star-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383E19FE364E003EA0AD /* old-icon-star-selected.png */; };
+		83BD385319FE364E003EA0AD /* old-icon-star-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383F19FE364E003EA0AD /* old-icon-star-selected@2x.png */; };
+		83BD385419FE364E003EA0AD /* old-icon-star@2x 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384019FE364E003EA0AD /* old-icon-star@2x 2.png */; };
+		83BD385519FE364E003EA0AD /* old-icon-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384119FE364E003EA0AD /* old-icon-star@2x.png */; };
+		83BD385619FE364E003EA0AD /* old-send-icon-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384219FE364E003EA0AD /* old-send-icon-delete.png */; };
+		83BD385719FE364E003EA0AD /* old-send-icon-delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384319FE364E003EA0AD /* old-send-icon-delete@2x.png */; };
+		83BD385819FE364E003EA0AD /* old-send-icon-files-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384419FE364E003EA0AD /* old-send-icon-files-hover.png */; };
+		83BD385919FE364E003EA0AD /* old-send-icon-files-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384519FE364E003EA0AD /* old-send-icon-files-hover@2x.png */; };
+		83BD385A19FE364E003EA0AD /* old-send-icon-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384619FE364E003EA0AD /* old-send-icon-files.png */; };
+		83BD385B19FE364E003EA0AD /* old-send-icon-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384719FE364E003EA0AD /* old-send-icon-files@2x.png */; };
+		83BD385C19FE364E003EA0AD /* old-send-icon-show-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384819FE364E003EA0AD /* old-send-icon-show-files.png */; };
+		83BD385D19FE364E003EA0AD /* old-send-icon-show-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384919FE364E003EA0AD /* old-send-icon-show-files@2x.png */; };
+		83BD386019FE36F6003EA0AD /* old-icon-contact-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD385E19FE36F6003EA0AD /* old-icon-contact-checked.png */; };
+		83BD386119FE36F6003EA0AD /* old-icon-contact-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD385F19FE36F6003EA0AD /* old-icon-contact-checked@2x.png */; };
+		83BD386419FE3715003EA0AD /* old-send-icon-hide-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD386219FE3715003EA0AD /* old-send-icon-hide-files.png */; };
+		83BD386519FE3715003EA0AD /* old-send-icon-hide-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD386319FE3715003EA0AD /* old-send-icon-hide-files@2x.png */; };
 		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; };
 		83C25B4919EEBC6C009752F1 /* send-icon-link.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B4719EEBC6C009752F1 /* send-icon-link.png */; };
 		83C25B4A19EEBC6C009752F1 /* send-icon-link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B4819EEBC6C009752F1 /* send-icon-link@2x.png */; };
@@ -649,6 +685,26 @@
 		832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANotLoggedInViewController.xib; sourceTree = "<group>"; };
 		832E26C318366B5200A82DFF /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../Externals/lib/libc++.1.dylib"; sourceTree = "<group>"; };
 		832E26C418366B5200A82DFF /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "../../../Externals/lib/libc++abi.dylib"; sourceTree = "<group>"; };
+		83312D2F19FA69D1007897D4 /* OldInfinitSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSearchController.h; sourceTree = "<group>"; };
+		83312D3019FA69D1007897D4 /* OldInfinitSearchController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OldInfinitSearchController.mm; sourceTree = "<group>"; };
+		83312D3319FA6ABB007897D4 /* OldInfinitSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendViewController.h; sourceTree = "<group>"; };
+		83312D3419FA6ABB007897D4 /* OldInfinitSendViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OldInfinitSendViewController.mm; sourceTree = "<group>"; };
+		83312D3519FA6ABB007897D4 /* OldInfinitSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldInfinitSendViewController.xib; sourceTree = "<group>"; };
+		83312D3A19FA6DB5007897D4 /* OldIASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldIASearchResultsCellView.h; sourceTree = "<group>"; };
+		83312D3B19FA6DB5007897D4 /* OldIASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldIASearchResultsCellView.m; sourceTree = "<group>"; };
+		83312D3C19FA6DB5007897D4 /* OldIAUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldIAUserSearchViewController.h; sourceTree = "<group>"; };
+		83312D3D19FA6DB5007897D4 /* OldIAUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldIAUserSearchViewController.m; sourceTree = "<group>"; };
+		83312D3E19FA6DB5007897D4 /* OldIAUserSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldIAUserSearchViewController.xib; sourceTree = "<group>"; };
+		83312D4319FA71CA007897D4 /* OldInfinitTokenAttachmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitTokenAttachmentCell.h; sourceTree = "<group>"; };
+		83312D4419FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitTokenAttachmentCell.m; sourceTree = "<group>"; };
+		83312D4719FA7253007897D4 /* OldInfinitSendNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendNoteViewController.h; sourceTree = "<group>"; };
+		83312D4819FA7253007897D4 /* OldInfinitSendNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitSendNoteViewController.m; sourceTree = "<group>"; };
+		83312D4919FA7253007897D4 /* OldInfinitSendNoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldInfinitSendNoteViewController.xib; sourceTree = "<group>"; };
+		83312D4D19FA736D007897D4 /* OldInfinitSendFileListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendFileListCellView.h; sourceTree = "<group>"; };
+		83312D4E19FA736D007897D4 /* OldInfinitSendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitSendFileListCellView.m; sourceTree = "<group>"; };
+		83312D4F19FA736D007897D4 /* OldInfinitSendFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendFilesViewController.h; sourceTree = "<group>"; };
+		83312D5019FA736D007897D4 /* OldInfinitSendFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitSendFilesViewController.m; sourceTree = "<group>"; };
+		83312D5119FA736D007897D4 /* OldInfinitSendFilesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldInfinitSendFilesViewController.xib; sourceTree = "<group>"; };
 		8333D45B17A976570093942B /* IAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAViewController.h; sourceTree = "<group>"; };
 		8333D45C17A976570093942B /* IAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAViewController.m; sourceTree = "<group>"; };
 		8334C7EB17A67EB0006028BC /* libcryptography.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptography.dylib; path = ../../../Externals/lib/libcryptography.dylib; sourceTree = "<group>"; };
@@ -802,8 +858,6 @@
 		836EADD11988F2270053BE85 /* icon-upload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-upload@2x.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-upload@2x.png"; sourceTree = "<group>"; };
 		836EADD41988F2BE0053BE85 /* icon-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-back.png"; path = "../../../../fist-resources/slices/mac/view_conversation/icon-back.png"; sourceTree = "<group>"; };
 		836EADD51988F2BE0053BE85 /* icon-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-back@2x.png"; path = "../../../../fist-resources/slices/mac/view_conversation/icon-back@2x.png"; sourceTree = "<group>"; };
-		836EADF41988F3C80053BE85 /* icon-note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-note.png"; path = "../../../../fist-resources/slices/mac/view_send/icon-note.png"; sourceTree = "<group>"; };
-		836EADF51988F3C80053BE85 /* icon-note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-note@2x.png"; path = "../../../../fist-resources/slices/mac/view_send/icon-note@2x.png"; sourceTree = "<group>"; };
 		836EADFC1988F42C0053BE85 /* icon-menu-bar-active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-active.png"; path = "../../../../fist-resources/slices/mac/main/icon-menu-bar-active.png"; sourceTree = "<group>"; };
 		836EADFD1988F42C0053BE85 /* icon-menu-bar-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-active@2x.png"; path = "../../../../fist-resources/slices/mac/main/icon-menu-bar-active@2x.png"; sourceTree = "<group>"; };
 		836EADFE1988F42C0053BE85 /* icon-menu-bar-clicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-clicked.png"; path = "../../../../fist-resources/slices/mac/main/icon-menu-bar-clicked.png"; sourceTree = "<group>"; };
@@ -941,6 +995,30 @@
 		83B8A725182246E500AD775F /* InfinitLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginViewController.h; sourceTree = "<group>"; };
 		83B8A726182246E500AD775F /* InfinitLoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitLoginViewController.mm; sourceTree = "<group>"; };
 		83B8A727182246E500AD775F /* InfinitLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitLoginViewController.xib; sourceTree = "<group>"; };
+		83BD383619FE364E003EA0AD /* old-icon-add-file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-add-file.png"; sourceTree = "<group>"; };
+		83BD383719FE364E003EA0AD /* old-icon-add-file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-add-file@2x.png"; sourceTree = "<group>"; };
+		83BD383819FE364E003EA0AD /* old-icon-cancel-send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-cancel-send.png"; sourceTree = "<group>"; };
+		83BD383919FE364E003EA0AD /* old-icon-cancel-send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-cancel-send@2x.png"; sourceTree = "<group>"; };
+		83BD383A19FE364E003EA0AD /* old-icon-note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-note.png"; sourceTree = "<group>"; };
+		83BD383B19FE364E003EA0AD /* old-icon-note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-note@2x.png"; sourceTree = "<group>"; };
+		83BD383C19FE364E003EA0AD /* old-icon-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-search.png"; sourceTree = "<group>"; };
+		83BD383D19FE364E003EA0AD /* old-icon-search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-search@2x.png"; sourceTree = "<group>"; };
+		83BD383E19FE364E003EA0AD /* old-icon-star-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star-selected.png"; sourceTree = "<group>"; };
+		83BD383F19FE364E003EA0AD /* old-icon-star-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star-selected@2x.png"; sourceTree = "<group>"; };
+		83BD384019FE364E003EA0AD /* old-icon-star@2x 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star@2x 2.png"; sourceTree = "<group>"; };
+		83BD384119FE364E003EA0AD /* old-icon-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star@2x.png"; sourceTree = "<group>"; };
+		83BD384219FE364E003EA0AD /* old-send-icon-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-delete.png"; sourceTree = "<group>"; };
+		83BD384319FE364E003EA0AD /* old-send-icon-delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-delete@2x.png"; sourceTree = "<group>"; };
+		83BD384419FE364E003EA0AD /* old-send-icon-files-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files-hover.png"; sourceTree = "<group>"; };
+		83BD384519FE364E003EA0AD /* old-send-icon-files-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files-hover@2x.png"; sourceTree = "<group>"; };
+		83BD384619FE364E003EA0AD /* old-send-icon-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files.png"; sourceTree = "<group>"; };
+		83BD384719FE364E003EA0AD /* old-send-icon-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files@2x.png"; sourceTree = "<group>"; };
+		83BD384819FE364E003EA0AD /* old-send-icon-show-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-show-files.png"; sourceTree = "<group>"; };
+		83BD384919FE364E003EA0AD /* old-send-icon-show-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-show-files@2x.png"; sourceTree = "<group>"; };
+		83BD385E19FE36F6003EA0AD /* old-icon-contact-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-contact-checked.png"; sourceTree = "<group>"; };
+		83BD385F19FE36F6003EA0AD /* old-icon-contact-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-contact-checked@2x.png"; sourceTree = "<group>"; };
+		83BD386219FE3715003EA0AD /* old-send-icon-hide-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-hide-files.png"; sourceTree = "<group>"; };
+		83BD386319FE3715003EA0AD /* old-send-icon-hide-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-hide-files@2x.png"; sourceTree = "<group>"; };
 		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
 		83C25B4719EEBC6C009752F1 /* send-icon-link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon-link.png"; path = "../../../../fist-resources/slices/mac/view_send/send-icon-link.png"; sourceTree = "<group>"; };
 		83C25B4819EEBC6C009752F1 /* send-icon-link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon-link@2x.png"; path = "../../../../fist-resources/slices/mac/view_send/send-icon-link@2x.png"; sourceTree = "<group>"; };
@@ -1071,6 +1149,7 @@
 		83059E04191EA2AD008DA14A /* Send View */ = {
 			isa = PBXGroup;
 			children = (
+				83312D3219FA6A98007897D4 /* Old */,
 				83C25B6619F01059009752F1 /* Resources */,
 				83059E05191EA2C0008DA14A /* InfinitSendViewController.h */,
 				83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */,
@@ -1107,6 +1186,7 @@
 		831E22D3183E561E00F0623C /* Search Controller */ = {
 			isa = PBXGroup;
 			children = (
+				83312D2E19FA6946007897D4 /* Old */,
 				831E22D4183E563800F0623C /* InfinitSearchController.h */,
 				831E22D5183E563800F0623C /* InfinitSearchController.mm */,
 				831E22D7183E565300F0623C /* InfinitSearchPersonResult.h */,
@@ -1335,6 +1415,61 @@
 				832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */,
 			);
 			name = "Not Logged In View";
+			sourceTree = "<group>";
+		};
+		83312D2E19FA6946007897D4 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				83312D2F19FA69D1007897D4 /* OldInfinitSearchController.h */,
+				83312D3019FA69D1007897D4 /* OldInfinitSearchController.mm */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		83312D3219FA6A98007897D4 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				83312D3319FA6ABB007897D4 /* OldInfinitSendViewController.h */,
+				83312D3419FA6ABB007897D4 /* OldInfinitSendViewController.mm */,
+				83312D3519FA6ABB007897D4 /* OldInfinitSendViewController.xib */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		83312D3919FA6D62007897D4 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				83312D3A19FA6DB5007897D4 /* OldIASearchResultsCellView.h */,
+				83312D3B19FA6DB5007897D4 /* OldIASearchResultsCellView.m */,
+				83312D3C19FA6DB5007897D4 /* OldIAUserSearchViewController.h */,
+				83312D3D19FA6DB5007897D4 /* OldIAUserSearchViewController.m */,
+				83312D3E19FA6DB5007897D4 /* OldIAUserSearchViewController.xib */,
+				83312D4319FA71CA007897D4 /* OldInfinitTokenAttachmentCell.h */,
+				83312D4419FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		83312D4619FA7237007897D4 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				83312D4719FA7253007897D4 /* OldInfinitSendNoteViewController.h */,
+				83312D4819FA7253007897D4 /* OldInfinitSendNoteViewController.m */,
+				83312D4919FA7253007897D4 /* OldInfinitSendNoteViewController.xib */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		83312D4C19FA72E7007897D4 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				83312D4D19FA736D007897D4 /* OldInfinitSendFileListCellView.h */,
+				83312D4E19FA736D007897D4 /* OldInfinitSendFileListCellView.m */,
+				83312D4F19FA736D007897D4 /* OldInfinitSendFilesViewController.h */,
+				83312D5019FA736D007897D4 /* OldInfinitSendFilesViewController.m */,
+				83312D5119FA736D007897D4 /* OldInfinitSendFilesViewController.xib */,
+			);
+			name = Old;
 			sourceTree = "<group>";
 		};
 		8337672F19088A540073A621 /* OEXTokenField */ = {
@@ -1688,6 +1823,37 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		83BD382119FE3637003EA0AD /* Old Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83BD383619FE364E003EA0AD /* old-icon-add-file.png */,
+				83BD383719FE364E003EA0AD /* old-icon-add-file@2x.png */,
+				83BD383819FE364E003EA0AD /* old-icon-cancel-send.png */,
+				83BD383919FE364E003EA0AD /* old-icon-cancel-send@2x.png */,
+				83BD383A19FE364E003EA0AD /* old-icon-note.png */,
+				83BD383B19FE364E003EA0AD /* old-icon-note@2x.png */,
+				83BD383C19FE364E003EA0AD /* old-icon-search.png */,
+				83BD383D19FE364E003EA0AD /* old-icon-search@2x.png */,
+				83BD383E19FE364E003EA0AD /* old-icon-star-selected.png */,
+				83BD383F19FE364E003EA0AD /* old-icon-star-selected@2x.png */,
+				83BD384019FE364E003EA0AD /* old-icon-star@2x 2.png */,
+				83BD384119FE364E003EA0AD /* old-icon-star@2x.png */,
+				83BD384219FE364E003EA0AD /* old-send-icon-delete.png */,
+				83BD384319FE364E003EA0AD /* old-send-icon-delete@2x.png */,
+				83BD384419FE364E003EA0AD /* old-send-icon-files-hover.png */,
+				83BD384519FE364E003EA0AD /* old-send-icon-files-hover@2x.png */,
+				83BD384619FE364E003EA0AD /* old-send-icon-files.png */,
+				83BD384719FE364E003EA0AD /* old-send-icon-files@2x.png */,
+				83BD384819FE364E003EA0AD /* old-send-icon-show-files.png */,
+				83BD384919FE364E003EA0AD /* old-send-icon-show-files@2x.png */,
+				83BD385E19FE36F6003EA0AD /* old-icon-contact-checked.png */,
+				83BD385F19FE36F6003EA0AD /* old-icon-contact-checked@2x.png */,
+				83BD386219FE3715003EA0AD /* old-send-icon-hide-files.png */,
+				83BD386319FE3715003EA0AD /* old-send-icon-hide-files@2x.png */,
+			);
+			name = "Old Resources";
+			sourceTree = "<group>";
+		};
 		83C124B517A7CE9800BE1252 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1733,6 +1899,7 @@
 		83C99DFE17AB8E7300AFF091 /* Send Controller */ = {
 			isa = PBXGroup;
 			children = (
+				83BD382119FE3637003EA0AD /* Old Resources */,
 				83126E4B17BA6986003B2F52 /* Favourites Send View */,
 				83E1B722191E6F52000338A3 /* Files View */,
 				83E1B754191E80C0000338A3 /* Note View */,
@@ -1840,6 +2007,7 @@
 		83E1B722191E6F52000338A3 /* Files View */ = {
 			isa = PBXGroup;
 			children = (
+				83312D4C19FA72E7007897D4 /* Old */,
 				83E1B73F191E781C000338A3 /* Resources */,
 				83E1B737191E6F85000338A3 /* InfinitSendFilesViewController.h */,
 				83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */,
@@ -1870,21 +2038,12 @@
 		83E1B754191E80C0000338A3 /* Note View */ = {
 			isa = PBXGroup;
 			children = (
-				83E1B755191E80C6000338A3 /* Resources */,
+				83312D4619FA7237007897D4 /* Old */,
 				834F136019214B9F00BF36A4 /* InfinitSendNoteViewController.h */,
 				834F136119214B9F00BF36A4 /* InfinitSendNoteViewController.m */,
 				834F136219214B9F00BF36A4 /* InfinitSendNoteViewController.xib */,
 			);
 			name = "Note View";
-			sourceTree = "<group>";
-		};
-		83E1B755191E80C6000338A3 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				836EADF41988F3C80053BE85 /* icon-note.png */,
-				836EADF51988F3C80053BE85 /* icon-note@2x.png */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		83E73FA119A5DCE100B7E8EF /* Settings Window */ = {
@@ -1911,6 +2070,7 @@
 		83F1148117AE5FDB00DCF662 /* Search Results */ = {
 			isa = PBXGroup;
 			children = (
+				83312D3919FA6D62007897D4 /* Old */,
 				83B9BFBE191C337300B34659 /* Resources */,
 				836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */,
 				836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */,
@@ -2287,6 +2447,7 @@
 				8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */,
 				836EAD191988EE3B0053BE85 /* photoshop.png in Resources */,
 				837B2A9419DD96DF00A3CDE1 /* bg-header-top-gray.png in Resources */,
+				83BD384A19FE364E003EA0AD /* old-icon-add-file.png in Resources */,
 				836EADCF1988F2040053BE85 /* icon-gear@2x.png in Resources */,
 				836EAD861988EEC70053BE85 /* conversation-icon-accept.png in Resources */,
 				836D648F19D433B000D77D9B /* InfinitProxyWindow.xib in Resources */,
@@ -2306,6 +2467,7 @@
 				836EAE281988F43E0053BE85 /* icon-menu-bar-animated-red-7.png in Resources */,
 				836EAD901988EEC70053BE85 /* conversation-icon-error.png in Resources */,
 				836EAE231988F43E0053BE85 /* icon-menu-bar-animated-red-2.png in Resources */,
+				83312D5419FA736D007897D4 /* OldInfinitSendFilesViewController.xib in Resources */,
 				836EACF21988EE300053BE85 /* icon-edit-hover@2x.png in Resources */,
 				836EACF71988EE300053BE85 /* link-icon-cancel.png in Resources */,
 				836EADCA1988F1F90053BE85 /* icon-transfer.png in Resources */,
@@ -2324,6 +2486,7 @@
 				834F13881922618200BF36A4 /* InfinitMainViewController.xib in Resources */,
 				836EAD131988EE3B0053BE85 /* folder.png in Resources */,
 				836EAD1F1988EE3B0053BE85 /* video.png in Resources */,
+				83BD386119FE36F6003EA0AD /* old-icon-contact-checked@2x.png in Resources */,
 				836EAE5F1988F5630053BE85 /* icon-clipboard@2x.png in Resources */,
 				836EAD951988EEC70053BE85 /* conversation-icon-hide-files@2x.png in Resources */,
 				836EADC51988F1B80053BE85 /* login-icon-close.png in Resources */,
@@ -2338,6 +2501,7 @@
 				837B2AAE19DD985E00A3CDE1 /* main-icon-download.png in Resources */,
 				83C25B5A19EEBC8F009752F1 /* send-icon-media-picture@2x.png in Resources */,
 				83C25B7519F016E3009752F1 /* send-icon-add-file.png in Resources */,
+				83BD386019FE36F6003EA0AD /* old-icon-contact-checked.png in Resources */,
 				837B2A9F19DD974B00A3CDE1 /* logo@2x.png in Resources */,
 				83C25B4D19EEBC78009752F1 /* send-illustration-no-results.png in Resources */,
 				836EAD0D1988EE3B0053BE85 /* archive.png in Resources */,
@@ -2347,16 +2511,21 @@
 				836EAD911988EEC70053BE85 /* conversation-icon-error@2x.png in Resources */,
 				83C25B5C19EEBC8F009752F1 /* send-icon-media-ps@2x.png in Resources */,
 				836EAD0F1988EE3B0053BE85 /* cat.png in Resources */,
+				83BD384D19FE364E003EA0AD /* old-icon-cancel-send@2x.png in Resources */,
 				83C25B4919EEBC6C009752F1 /* send-icon-link.png in Resources */,
 				83E73FB119A5E2B700B7E8EF /* InfinitSettingsAccountView.xib in Resources */,
 				83A208A51994D31D00C85C47 /* clippy_10.png in Resources */,
+				83312D4B19FA7253007897D4 /* OldInfinitSendNoteViewController.xib in Resources */,
 				836EAD1E1988EE3B0053BE85 /* powerpoint@2x.png in Resources */,
 				83C25B7619F016E3009752F1 /* send-icon-add-file@2x.png in Resources */,
 				837B2ABA19DD98DF00A3CDE1 /* main-icon-error.png in Resources */,
 				836EADA31988EEC70053BE85 /* conversation-icon-reject-hover@2x.png in Resources */,
 				83A67AB519AB19C900A69E35 /* InfinitSettingsGeneralView.xib in Resources */,
+				83BD385519FE364E003EA0AD /* old-icon-star@2x.png in Resources */,
+				83BD385A19FE364E003EA0AD /* old-send-icon-files.png in Resources */,
 				836EADAC1988EEC70053BE85 /* conversation-icon-show-files.png in Resources */,
 				837B2A9719DD96DF00A3CDE1 /* bg-header-top-white@2x.png in Resources */,
+				83BD384F19FE364E003EA0AD /* old-icon-note@2x.png in Resources */,
 				837B2A9619DD96DF00A3CDE1 /* bg-header-top-white.png in Resources */,
 				836EAE501988F4500053BE85 /* icon-menu-bar-animated-black-11.png in Resources */,
 				83C25B5819EEBC8F009752F1 /* send-icon-media-folder@2x.png in Resources */,
@@ -2369,11 +2538,14 @@
 				834F136419214B9F00BF36A4 /* InfinitSendNoteViewController.xib in Resources */,
 				837B2AB719DD98AD00A3CDE1 /* main-icon-finished@2x.png in Resources */,
 				836EAE521988F4500053BE85 /* icon-menu-bar-animated-black-13.png in Resources */,
+				83BD386419FE3715003EA0AD /* old-send-icon-hide-files.png in Resources */,
 				836EADA41988EEC70053BE85 /* conversation-icon-reject.png in Resources */,
+				83BD385819FE364E003EA0AD /* old-send-icon-files-hover.png in Resources */,
 				836EADD21988F2270053BE85 /* icon-upload.png in Resources */,
 				8364920219DB12CA004F911D /* icon.icns in Resources */,
 				836EADB21988EEC70053BE85 /* icon-status-online@2x.png in Resources */,
 				83C25B4A19EEBC6C009752F1 /* send-icon-link@2x.png in Resources */,
+				83BD384E19FE364E003EA0AD /* old-icon-note.png in Resources */,
 				836EADD71988F2BE0053BE85 /* icon-back@2x.png in Resources */,
 				836EAE261988F43E0053BE85 /* icon-menu-bar-animated-red-5.png in Resources */,
 				837B2AB319DD987500A3CDE1 /* main-icon-upload@2x.png in Resources */,
@@ -2383,12 +2555,15 @@
 				836EAE4E1988F4500053BE85 /* icon-menu-bar-animated-black-9.png in Resources */,
 				836EAD9E1988EEC70053BE85 /* conversation-icon-quote.png in Resources */,
 				836EACF31988EE300053BE85 /* icon-edit.png in Resources */,
+				83BD385C19FE364E003EA0AD /* old-send-icon-show-files.png in Resources */,
 				836EAE221988F43E0053BE85 /* icon-menu-bar-animated-red-1.png in Resources */,
 				836EACF41988EE300053BE85 /* icon-edit@2x.png in Resources */,
 				836EAD1A1988EE3B0053BE85 /* photoshop@2x.png in Resources */,
 				836EAD0E1988EE3B0053BE85 /* archive@2x.png in Resources */,
 				836EAE651988F5970053BE85 /* icon-share-hover.png in Resources */,
 				8318E9D419A788E800B765A2 /* settings-icon-check.png in Resources */,
+				83312D4119FA6DB5007897D4 /* OldIAUserSearchViewController.xib in Resources */,
+				83BD384C19FE364E003EA0AD /* old-icon-cancel-send.png in Resources */,
 				836EAD1B1988EE3B0053BE85 /* picture.png in Resources */,
 				83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */,
 				836EADD31988F2270053BE85 /* icon-upload@2x.png in Resources */,
@@ -2404,11 +2579,13 @@
 				836EADC31988F1B80053BE85 /* login-icon-close-hover.png in Resources */,
 				836EAE0D1988F42D0053BE85 /* icon-menu-bar-inactive@2x.png in Resources */,
 				836EAE321988F43E0053BE85 /* icon-menu-bar-animated-red-17.png in Resources */,
+				83BD385019FE364E003EA0AD /* old-icon-search.png in Resources */,
 				837B2AB619DD98AD00A3CDE1 /* main-icon-finished.png in Resources */,
 				837B2A9E19DD974B00A3CDE1 /* logo.png in Resources */,
 				836EACEF1988EE300053BE85 /* icon-delete.png in Resources */,
 				83732B581989418F0030B0F0 /* icon-delete-confirm@2x.png in Resources */,
 				83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */,
+				83312D3719FA6ABB007897D4 /* OldInfinitSendViewController.xib in Resources */,
 				836EAE251988F43E0053BE85 /* icon-menu-bar-animated-red-4.png in Resources */,
 				836EAD171988EE3B0053BE85 /* music.png in Resources */,
 				836EAD851988EEC70053BE85 /* conversation-icon-accept-hover@2x.png in Resources */,
@@ -2417,6 +2594,7 @@
 				83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */,
 				837B2AAB19DD983A00A3CDE1 /* main-icon-unread@2x.png in Resources */,
 				836EAE2D1988F43E0053BE85 /* icon-menu-bar-animated-red-12.png in Resources */,
+				83BD385219FE364E003EA0AD /* old-icon-star-selected.png in Resources */,
 				83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */,
 				836EAE2A1988F43E0053BE85 /* icon-menu-bar-animated-red-9.png in Resources */,
 				83C25B5719EEBC8F009752F1 /* send-icon-media-folder.png in Resources */,
@@ -2424,14 +2602,17 @@
 				836EAE311988F43E0053BE85 /* icon-menu-bar-animated-red-16.png in Resources */,
 				836EAE301988F43E0053BE85 /* icon-menu-bar-animated-red-15.png in Resources */,
 				83E73FA619A5DD0E00B7E8EF /* InfinitSettingsWindow.xib in Resources */,
+				83BD385419FE364E003EA0AD /* old-icon-star@2x 2.png in Resources */,
 				836EAE2C1988F43E0053BE85 /* icon-menu-bar-animated-red-11.png in Resources */,
 				836EAD841988EEC70053BE85 /* conversation-icon-accept-hover.png in Resources */,
+				83BD385D19FE364E003EA0AD /* old-send-icon-show-files@2x.png in Resources */,
 				837B2A9819DD96DF00A3CDE1 /* bg-triangle-top-grey.png in Resources */,
 				836EADAE1988EEC70053BE85 /* conversation-icon-status-offline.png in Resources */,
 				836EAD8B1988EEC70053BE85 /* conversation-icon-bufferised@2x.png in Resources */,
 				836EAE5E1988F5630053BE85 /* icon-clipboard.png in Resources */,
 				837B2AAA19DD983A00A3CDE1 /* main-icon-unread.png in Resources */,
 				836EAE491988F4500053BE85 /* icon-menu-bar-animated-black-4.png in Resources */,
+				83BD385B19FE364E003EA0AD /* old-send-icon-files@2x.png in Resources */,
 				836EACF11988EE300053BE85 /* icon-edit-hover.png in Resources */,
 				837B2A9519DD96DF00A3CDE1 /* bg-header-top-gray@2x.png in Resources */,
 				836EAD101988EE3B0053BE85 /* cat@2x.png in Resources */,
@@ -2444,9 +2625,12 @@
 				836EACF51988EE300053BE85 /* link-icon-cancel-hover.png in Resources */,
 				837B2AB219DD987500A3CDE1 /* main-icon-upload.png in Resources */,
 				836EAE4F1988F4500053BE85 /* icon-menu-bar-animated-black-10.png in Resources */,
+				83BD386519FE3715003EA0AD /* old-send-icon-hide-files@2x.png in Resources */,
+				83BD385919FE364E003EA0AD /* old-send-icon-files-hover@2x.png in Resources */,
 				836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */,
 				833B238C19DA938300D3F104 /* InfinitFirstScreenshotModal.xib in Resources */,
 				836EAD111988EE3B0053BE85 /* document.png in Resources */,
+				83BD385719FE364E003EA0AD /* old-send-icon-delete@2x.png in Resources */,
 				836EAD1C1988EE3B0053BE85 /* picture@2x.png in Resources */,
 				83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */,
 				83F1A37519DEBC400045ADD7 /* screenshot_illustration.png in Resources */,
@@ -2459,14 +2643,18 @@
 				836EAE0B1988F42D0053BE85 /* icon-menu-bar-fire@2x.png in Resources */,
 				836EADA51988EEC70053BE85 /* conversation-icon-reject@2x.png in Resources */,
 				836EAE091988F42D0053BE85 /* icon-menu-bar-clicked@2x.png in Resources */,
+				83BD385119FE364E003EA0AD /* old-icon-search@2x.png in Resources */,
 				833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */,
 				837B2AA619DD981F00A3CDE1 /* main-icon-expand.png in Resources */,
 				836EADA21988EEC70053BE85 /* conversation-icon-reject-hover.png in Resources */,
 				836EADC61988F1B80053BE85 /* login-icon-close@2x.png in Resources */,
 				836EADD61988F2BE0053BE85 /* icon-back.png in Resources */,
+				83BD385319FE364E003EA0AD /* old-icon-star-selected@2x.png in Resources */,
+				83BD384B19FE364E003EA0AD /* old-icon-add-file@2x.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
 				837B2ABB19DD98DF00A3CDE1 /* main-icon-error@2x.png in Resources */,
 				836EAE291988F43E0053BE85 /* icon-menu-bar-animated-red-8.png in Resources */,
+				83BD385619FE364E003EA0AD /* old-send-icon-delete.png in Resources */,
 				836EAE4D1988F4500053BE85 /* icon-menu-bar-animated-black-8.png in Resources */,
 				83C25B5919EEBC8F009752F1 /* send-icon-media-picture.png in Resources */,
 				836EAE5D1988F5630053BE85 /* icon-clipboard-hover@2x.png in Resources */,
@@ -2538,6 +2726,8 @@
 				83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */,
 				83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */,
 				83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */,
+				83312D4A19FA7253007897D4 /* OldInfinitSendNoteViewController.m in Sources */,
+				83312D3619FA6ABB007897D4 /* OldInfinitSendViewController.mm in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,
 				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.mm in Sources */,
@@ -2565,6 +2755,7 @@
 				836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */,
 				834F137D192250E700BF36A4 /* InfinitLinkCellView.mm in Sources */,
 				834F136919216E2B00BF36A4 /* InfinitTransactionViewController.mm in Sources */,
+				83312D5319FA736D007897D4 /* OldInfinitSendFilesViewController.m in Sources */,
 				836D648E19D433B000D77D9B /* InfinitProxyWindow.m in Sources */,
 				8337673B19088A820073A621 /* OEXTokenTextStorage.m in Sources */,
 				83F5FCF018EC61AF0051F010 /* INPopoverParentWindow.m in Sources */,
@@ -2587,17 +2778,22 @@
 				83F1A37819DEBCC70045ADD7 /* InfinitScreenshotTextView.m in Sources */,
 				83E54A6F19ECFDBB00D9DC7D /* InfinitSendFileView.m in Sources */,
 				836D648619D063D300D77D9B /* InfinitReachability.m in Sources */,
+				83312D4019FA6DB5007897D4 /* OldIAUserSearchViewController.m in Sources */,
+				83312D3119FA69D1007897D4 /* OldInfinitSearchController.mm in Sources */,
+				83312D3F19FA6DB5007897D4 /* OldIASearchResultsCellView.m in Sources */,
 				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
 				834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */,
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
+				83312D5219FA736D007897D4 /* OldInfinitSendFileListCellView.m in Sources */,
 				83C25B6519EEBEC6009752F1 /* InfinitSearchNoResultsCellView.m in Sources */,
 				839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */,
 				833C319117CCC85200941C09 /* IADesktopNotifier.mm in Sources */,
 				831AA69F17D0FCC00004AE8D /* IAMeManager.mm in Sources */,
 				8337673819088A820073A621 /* OEXTokenAttachmentCell.m in Sources */,
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
+				83312D4519FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m in Sources */,
 				83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */,
 				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.mm in Sources */,
