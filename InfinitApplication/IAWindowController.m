@@ -8,6 +8,11 @@
 
 #import "IAWindowController.h"
 
+#import "InfinitMetricsManager.h"
+
+#import "OldInfinitSendViewController.h"
+#import "InfinitSendViewController.h"
+
 @interface IAWindowController ()
 @end
 
@@ -273,6 +278,11 @@
 
 - (void)notificationWindowGotEscapePressed:(IANotificationWindow*)sender
 {
+  if ([_current_controller isKindOfClass:InfinitSendViewController.class] ||
+      [_current_controller isKindOfClass:OldInfinitSendViewController.class])
+  {
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
+  }
   [_delegate windowControllerWantsCloseWindow:self];
 }
 
