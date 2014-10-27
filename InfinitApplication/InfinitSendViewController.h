@@ -74,33 +74,41 @@ typedef enum _InfinitUserLinkMode
 
 @protocol InfinitSendViewProtocol <IAViewProtocol>
 
-- (NSArray*)sendViewWantsFileList:(InfinitSendViewController*)sender;
+- (NSArray*)sendViewWantsFileList:(id)sender;
 
-- (void)sendViewWantsCancel:(InfinitSendViewController*)sender;
-- (void)sendViewWantsClose:(InfinitSendViewController*)sender;
+- (void)sendViewWantsCancel:(id)sender;
+- (void)sendViewWantsClose:(id)sender;
 
-- (void)sendView:(InfinitSendViewController*)sender
+- (void)sendView:(id)sender
 wantsRemoveFileAtIndex:(NSInteger)index;
 
-- (void)sendViewWantsOpenFileDialogBox:(InfinitSendViewController*)sender;
+- (void)sendViewWantsOpenFileDialogBox:(id)sender;
 
-- (NSArray*)sendView:(InfinitSendViewController*)sender
+- (NSArray*)sendView:(id)sender
       wantsSendFiles:(NSArray*)files
              toUsers:(NSArray*)users
          withMessage:(NSString*)message;
 
-- (NSNumber*)sendView:(InfinitSendViewController*)sender
+- (NSNumber*)sendView:(id)sender
       wantsCreateLink:(NSArray*)files
           withMessage:(NSString*)message;
 
-- (void)sendView:(InfinitSendViewController*)sender
+- (void)sendView:(id)sender
  hadFilesDropped:(NSArray*)files;
-
-- (NSArray*)sendViewWantsFriendsByLastInteraction:(InfinitSendViewController*)sender;
 
 //- Onboarding -------------------------------------------------------------------------------------
 
-- (void)sendView:(InfinitSendViewController*)sender
+- (void)sendView:(id)sender
 wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
+
+//- Old Send View Only -----------------------------------------------------------------------------
+
+- (NSArray*)sendViewWantsFriendsByLastInteraction:(id)sender;
+
+- (void)sendView:(id)sender
+wantsAddFavourite:(IAUser*)user;
+
+- (void)sendView:(id)sender
+wantsRemoveFavourite:(IAUser*)user;
 
 @end
