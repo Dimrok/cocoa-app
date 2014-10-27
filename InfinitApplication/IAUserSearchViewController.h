@@ -62,7 +62,7 @@
 
 @protocol IAUserSearchViewProtocol <NSObject>
 
-- (void)searchView:(IAUserSearchViewController*)sender
+- (void)searchView:(id)sender
    changedToHeight:(CGFloat)height;
 
 - (void)searchViewWantsLoseFocus:(IAUserSearchViewController*)sender;
