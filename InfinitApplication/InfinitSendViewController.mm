@@ -926,6 +926,7 @@ wantsChangeHeight:(CGFloat)height
   if (self.search_constraint.constant == NSHeight(_search_controller.search_box_view.frame))
   {
     [self performSelector:@selector(delayedClose) withObject:nil afterDelay:0.0];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
     return NO;
   }
   else
