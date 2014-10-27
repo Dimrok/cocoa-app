@@ -11,7 +11,6 @@
 #import "IAUserSearchViewController.h"
 #import "IAAvatarManager.h"
 #import "InfinitTokenAttachmentCell.h"
-#import "InfinitFeatureManager.h"
 #import "InfinitMetricsManager.h"
 
 //- Search View Element ----------------------------------------------------------------------------
@@ -114,7 +113,6 @@
   InfinitSearchController* _search_controller;
   NSString* _last_search;
   NSInteger _hover_row;
-  BOOL _allow_search_infinit;
   BOOL _metric_search_used;
 }
 
@@ -133,12 +131,7 @@
     _last_search = @"";
     _no_results = NO;
     _metric_search_used = NO;
-    _allow_search_infinit = YES;
     _search_results = [NSMutableArray array];
-//    if ([[[[InfinitFeatureManager sharedInstance] features] objectForKey:@"search_on_infinit"] isEqualToString:@"1"])
-//      _allow_search_infinit = YES;
-//    else
-//      _allow_search_infinit = NO;
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarCallback:)
                                                name:IA_AVATAR_MANAGER_AVATAR_FETCHED
@@ -549,7 +542,9 @@ doCommandBySelector:(SEL)commandSelector
     {
       InfinitSearchElement* element = _search_results[row];
       if (![self.search_field.objectValue containsObject:element])
+      {
         [self addElement:element];
+      }
     }
     [_delegate searchViewWantsLoseFocus:self];
     [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
@@ -743,13 +738,13 @@ writeRepresentedObjects:(NSArray*)objects
   if (_search_results.count == 0 && _no_results)
   {
     InfinitSearchNoResultsCellView* cell;
-    if (_search_controller.include_infinit_results || !_allow_search_infinit)
+    if (_search_controller.include_infinit_results)
     {
-      cell = [tableView makeViewWithIdentifier:@"infinit_no_results_b" owner:self];
+      cell = [tableView makeViewWithIdentifier:@"infinit_no_results_no_search" owner:self];
     }
     else
     {
-      cell = [tableView makeViewWithIdentifier:@"infinit_no_results_a" owner:self];
+      cell = [tableView makeViewWithIdentifier:@"infinit_no_results_search" owner:self];
       cell.search_string = [self currentSearchString];
     }
 

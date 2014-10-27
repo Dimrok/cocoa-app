@@ -107,7 +107,7 @@
                                                     <outlet property="result_fullname" destination="1194" id="1202"/>
                                                 </connections>
                                             </tableCellView>
-                                            <tableCellView identifier="infinit_no_results_a" focusRingType="none" placeholderIntrinsicWidth="317" placeholderIntrinsicHeight="153" id="Gpm-qD-T5C" customClass="InfinitSearchNoResultsCellView">
+                                            <tableCellView identifier="infinit_no_results_search" focusRingType="none" placeholderIntrinsicWidth="317" placeholderIntrinsicHeight="153" id="Gpm-qD-T5C" customClass="InfinitSearchNoResultsCellView">
                                                 <rect key="frame" x="0.0" y="38" width="317" height="153"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -150,7 +150,7 @@
                                                     <outlet property="spinner" destination="LIg-T2-Kei" id="b1w-8x-D0J"/>
                                                 </connections>
                                             </tableCellView>
-                                            <tableCellView identifier="infinit_no_results_b" focusRingType="none" placeholderIntrinsicWidth="317" placeholderIntrinsicHeight="153" id="cxc-E3-TRk" customClass="InfinitSearchNoResultsCellView">
+                                            <tableCellView identifier="infinit_no_results_no_search" focusRingType="none" placeholderIntrinsicWidth="317" placeholderIntrinsicHeight="153" id="cxc-E3-TRk" customClass="InfinitSearchNoResultsCellView">
                                                 <rect key="frame" x="0.0" y="191" width="317" height="108"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
