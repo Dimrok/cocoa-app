@@ -137,8 +137,6 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"search input";
     case INFINIT_METRIC_SEND_QUICK_SELECT:
       return @"quick select";
-    case INFINIT_METRIC_SEND_QUICK_DESELECT:
-      return @"quick deselect";
     case INFINIT_METRIC_UPLOAD_SCREENSHOT:
       return @"upload screenshot";
     case INFINIT_METRIC_SCREENSHOT_MODAL_NO:
@@ -208,8 +206,6 @@ static InfinitMetricsManager* _shared_instance = nil;
     case INFINIT_METRIC_SEND_INPUT:
       return @"send view";
     case INFINIT_METRIC_SEND_QUICK_SELECT:
-      return @"send view";
-    case INFINIT_METRIC_SEND_QUICK_DESELECT:
       return @"send view";
     case INFINIT_METRIC_UPLOAD_SCREENSHOT:
       return @"automatic";

@@ -373,8 +373,6 @@
   [self.search_field setObjectValue:temp];
   [self fixClipView];
   [_delegate searchViewInputsChanged:self];
-  if (_quick_results)
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_QUICK_DESELECT];
 }
 
 - (void)cursorAtEndOfSearchBox
