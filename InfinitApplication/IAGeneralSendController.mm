@@ -229,6 +229,8 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   wantsRemoveFileAtIndex:(NSInteger)index
 {
   [_files removeObjectAtIndex:index];
+  if ([sender isKindOfClass:OldInfinitSendViewController.class])
+    [sender filesUpdated];
 }
 
 - (void)sendViewWantsOpenFileDialogBox:(id)sender
