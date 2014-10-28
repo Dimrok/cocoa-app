@@ -180,7 +180,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
     _button_disabled_attrs = [IAFunctions textStyleWithFont:action_font
                                              paragraphStyle:style
-                                                     colour:IA_RGBA_COLOUR(255, 255, 255, 0.5)
+                                                     colour:IA_RGBA_COLOUR(255, 255, 255, 0.0)
                                                      shadow:shadow];
 
     NSFont* link_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"

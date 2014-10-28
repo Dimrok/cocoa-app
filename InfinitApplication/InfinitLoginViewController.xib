@@ -139,9 +139,6 @@
                                 <action selector="helpClicked:" target="-2" id="e40-ch-NBS"/>
                             </connections>
                         </button>
-                        <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="44">
-                            <rect key="frame" x="151" y="9" width="16" height="16"/>
-                        </progressIndicator>
                         <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="45" customClass="IAHoverButton">
                             <rect key="frame" x="36" y="32" width="143" height="15"/>
                             <constraints>
@@ -199,7 +196,6 @@
                         <constraint firstAttribute="bottom" secondItem="39" secondAttribute="bottom" constant="100" id="F5R-5F-UfX"/>
                         <constraint firstAttribute="bottom" secondItem="43" secondAttribute="bottom" constant="32" id="J3B-nO-Yo2"/>
                         <constraint firstItem="434" firstAttribute="top" secondItem="20" secondAttribute="top" constant="18" id="Kok-tu-oZl"/>
-                        <constraint firstAttribute="bottom" secondItem="44" secondAttribute="bottom" constant="9" id="MbS-Ax-PSz"/>
                         <constraint firstItem="42" firstAttribute="top" secondItem="20" secondAttribute="top" constant="192" id="Nxr-W2-WcS"/>
                         <constraint firstAttribute="bottom" secondItem="45" secondAttribute="bottom" constant="32" id="YCt-Ts-Xgt"/>
                         <constraint firstItem="41" firstAttribute="top" secondItem="20" secondAttribute="top" constant="23" id="Yi6-yf-ZZ3"/>
@@ -225,6 +221,9 @@ DQ
                                 <action selector="actionButtonClicked:" target="-2" id="hen-rY-jNH"/>
                             </connections>
                         </button>
+                        <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="44">
+                            <rect key="frame" x="150" y="11" width="16" height="16"/>
+                        </progressIndicator>
                     </subviews>
                 </customView>
             </subviews>
