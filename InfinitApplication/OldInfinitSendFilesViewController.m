@@ -391,8 +391,6 @@ static NSDictionary* _info_attrs = nil;
                       completionHandler:^
    {
      [_delegate fileList:self wantsRemoveFileAtIndex:row];
-     CGFloat height = NSHeight(self.header_view.frame) + [self tableHeight];
-     [_delegate fileList:self wantsChangeHeight:height];
    }];
 }
 
