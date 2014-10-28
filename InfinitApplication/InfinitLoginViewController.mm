@@ -8,6 +8,7 @@
 
 #import "InfinitLoginViewController.h"
 #import "IAKeychainManager.h"
+#import "InfinitMetricsManager.h"
 
 #import <Gap/IAGapState.h>
 #import <version.hh>
@@ -639,9 +640,15 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   _showing_error = NO;
   self.error_message.alphaValue = 0.0;
   if (_mode == INFINIT_LOGIN_VIEW_REGISTER)
+  {
     self.mode = INFINIT_LOGIN_VIEW_NOT_LOGGED_IN;
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_REGISTER_TO_LOGIN];
+  }
   else
+  {
     self.mode = INFINIT_LOGIN_VIEW_REGISTER;
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_LOGIN_TO_REGISTER];
+  }
 }
 
 - (IBAction)helpClicked:(IAHoverButton*)sender
