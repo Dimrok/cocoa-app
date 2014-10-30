@@ -418,6 +418,12 @@ return [NSString stringWithUTF8String:str]; \
   return gap_transaction_concern_device(_state, transaction_id.unsignedIntValue);
 }
 
+- (NSNumber*)transaction_canceler_user_id:(NSNumber*)transaction_id
+{
+  return [NSNumber numberWithUnsignedInteger:gap_transaction_canceler_id(_state,
+                                                                         transaction_id.unsignedIntValue)];
+}
+
 - (gap_Status)poll
 {
   return gap_poll(_state);
