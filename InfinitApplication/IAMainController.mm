@@ -966,6 +966,15 @@ hadClickNotificationForTransactionId:(NSNumber*)transaction_id
 }
 
 - (void)desktopNotifier:(IADesktopNotifier*)sender
+hadAcceptTransaction:(NSNumber*)transaction_id
+{
+  IATransaction* transaction = [_transaction_manager transactionWithId:transaction_id];
+  if (transaction == nil)
+    return;
+  [_transaction_manager acceptTransaction:transaction];
+}
+
+- (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForLinkId:(NSNumber*)transaction_id
 {
   [self showLinks];
