@@ -30,6 +30,8 @@
 
 - (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForTransactionId:(NSNumber*)transaction_id;
+- (void)desktopNotifier:(IADesktopNotifier*)sender
+   hadAcceptTransaction:(NSNumber*)transaction_id;
 
 - (void)desktopNotifier:(IADesktopNotifier*)sender
 hadClickNotificationForLinkId:(NSNumber*)transaction_id;

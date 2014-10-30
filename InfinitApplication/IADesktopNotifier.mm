@@ -16,6 +16,11 @@
 
 ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
+@interface NSUserNotification(Private)
+@property BOOL _showsButtons;
+@property BOOL _persistent;
+@end
+
 @implementation IADesktopNotifier
 {
 @private
@@ -82,10 +87,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
     return nil;
 
   NSUserNotification* res = [[NSUserNotification alloc] init];
+  res.soundName = nil;
   NSString* filename;
-  NSString* message = nil;
-  NSString* sound = nil;
-  NSString* title = nil;
   if (transaction.files_count > 1)
   {
     filename = [NSString stringWithFormat:@"%lu %@", transaction.files_count,
@@ -105,86 +108,99 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
     case TRANSACTION_VIEW_WAITING_ACCEPT:
       if (transaction.from_me)
       {
-        title = NSLocalizedString(@"Sending!", nil);
-        sound = _incoming_sound.name;
-        message = [NSString stringWithFormat:@"%@ %@ %@ %@",
-                   NSLocalizedString(@"Sending", nil),
-                   filename,
-                   NSLocalizedString(@"to", nil),
-                   transaction.recipient.fullname];
+        res.title = NSLocalizedString(@"Now Sending!", nil);
+        res.soundName = _incoming_sound.name;
+        res.informativeText = NSLocalizedString(@"Your transfer is in progress!", nil);
       }
       else
       {
-        title = NSLocalizedString(@"Incoming!", @"incoming!");
-        sound = _incoming_sound.name;
-        message = [NSString stringWithFormat:@"%@ %@ %@ %@", transaction.other_user.fullname,
-                   NSLocalizedString(@"wants to send", @"wants to send"),
-                   filename,
-                   NSLocalizedString(@"to you", @"to you")];
+        res.title = NSLocalizedString(@"Incoming!", @"incoming!");
+        res.soundName = _incoming_sound.name;
+        res.informativeText = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
+                               NSLocalizedString(@"wants to send", nil),
+                               filename,
+                               NSLocalizedString(@"to you", nil)];
+        NSDateComponents* repeat_interval = [[NSDateComponents alloc] init];
+        repeat_interval.hour = 3;
+        res.deliveryRepeatInterval = repeat_interval;
+        res.hasActionButton = YES;
+        res._showsButtons = YES;
+        res._persistent = YES;
+        res.actionButtonTitle = NSLocalizedString(@"Accept", nil);
+        res.otherButtonTitle = NSLocalizedString(@"Snooze", nil);
       }
       break;
       
     case TRANSACTION_VIEW_REJECTED:
       if (!transaction.from_me)
         return nil;
-      title = NSLocalizedString(@"Shenanigans!", @"shenanigans!");
-      message = [NSString stringWithFormat:@"%@ %@", transaction.other_user.fullname,
-                 NSLocalizedString(@"declined your transfer", @"declined your transfer")];
+      res.title = NSLocalizedString(@"Declined!", nil);
+      res.informativeText = [NSString stringWithFormat:@"%@ %@ %@.",
+                             NSLocalizedString(@"Unfortunately", nil),
+                             transaction.other_user.fullname,
+                             NSLocalizedString(@"declined your transfer", nil)];
       break;
       
     case TRANSACTION_VIEW_CANCELLED:
-      title = NSLocalizedString(@"Nuts!", @"nuts!");
-      message = [NSString stringWithFormat:@"%@ %@ %@",
-                 NSLocalizedString(@"Your transfer with", @"your transfer with"),
-                 transaction.other_user.fullname,
-                 NSLocalizedString(@"was cancelled", @"was cancelled")];
+      if (transaction.cancel_user == nil)
+      {
+        res.title = NSLocalizedString(@"Canceled", nil);
+        res.informativeText = NSLocalizedString(@"Your transfer has been canceled", nil);
+      }
+      else if ([transaction.cancel_user.user_id isEqualToNumber:[[IAGapState instance] self_id]])
+      {
+        res.title = NSLocalizedString(@"Canceled", nil);
+        res.informativeText = NSLocalizedString(@"You canceled the transfer", nil);
+      }
+      else if (transaction.from_me)
+      {
+        res.title = NSLocalizedString(@"Declined", nil);
+        res.informativeText = [NSString stringWithFormat:@"%@ %@ %@",
+                               NSLocalizedString(@"Unfortunately", nil),
+                               transaction.cancel_user.fullname,
+                               NSLocalizedString(@"declined your file", nil)];
+      }
+      else
+      {
+        res.title = NSLocalizedString(@"Canceled", nil);
+        res.informativeText = [NSString stringWithFormat:@"%@ %@",
+                               transaction.cancel_user.fullname,
+                               NSLocalizedString(@"canceled the transfer", nil)];
+      }
       break;
       
     case TRANSACTION_VIEW_FAILED:
-      title = NSLocalizedString(@"Oh no!", @"oh no!");
+      res.title = NSLocalizedString(@"Transfer stopped!", nil);
       if (transaction.from_me)
-        message = [NSString stringWithFormat:@"%@ %@ %@", filename,
-                   NSLocalizedString(@"couldn't be sent to", @"couldn't be sent to"),
-                   transaction.other_user.fullname];
-      else
-        message = [NSString stringWithFormat:@"%@ %@ %@", filename,
-                   NSLocalizedString(@"couldn't be received from", @"couldn't be received from"),
-                   transaction.other_user.fullname];
+        res.informativeText =
+          NSLocalizedString(@"Something went wrong. Keep calm and try again.", nil);
       break;
       
     case TRANSACTION_VIEW_FINISHED:
-      title = NSLocalizedString(@"Success!", @"success");
-      sound = _finished_sound.name;
       if (transaction.from_me)
-        message = [NSString stringWithFormat:@"%@ %@ %@", transaction.other_user.fullname,
-                   NSLocalizedString(@"received", @"received"),
-                   filename];
+      res.title = NSLocalizedString(@"Delivered!", nil);
+      res.soundName = _finished_sound.name;
+      if (transaction.from_me)
+        res.informativeText = [NSString stringWithFormat:@"%@ %@.",
+                               NSLocalizedString(@"Voilà, your file has been delivered to", nil),
+                               transaction.other_user.fullname];
       else
-        message = [NSString stringWithFormat:@"%@ %@ %@", filename,
-                   NSLocalizedString(@"received from", @"received from"),
-                   transaction.other_user.fullname];
+        res.informativeText =
+          NSLocalizedString(@"Voilà, your file is available. Open it now!", nil);
       break;
       
     case TRANSACTION_VIEW_CLOUD_BUFFERED:
-      title = NSLocalizedString(@"Uploaded!", nil);
-      sound = _finished_sound.name;
-      message = [NSString stringWithFormat:@"%@ %@ %@",
-                 NSLocalizedString(@"Your transfer with", nil),
-                 transaction.other_user.fullname,
-                 NSLocalizedString(@"is ready to be downloaded", nil)];
+      res.title = NSLocalizedString(@"Sent!", nil);
+      res.soundName = _finished_sound.name;
+      res.informativeText =
+        NSLocalizedString(@"We’ll let you know when your file has been delivered.", nil);
       break;
 
     default:
-      message = nil;
-      break;
+      return nil;
   }
-  
-  if (title == nil)
-    return nil;
-  
-  res.title = title;
-  res.informativeText = message;
-  res.soundName = sound;
+
+  res.deliveryDate = [NSDate date];
   res.userInfo = @{@"transaction_id": transaction.transaction_id,
                    @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
   
@@ -220,16 +236,9 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   switch (link.status)
   {
     case gap_transaction_transferring:
-      title = NSLocalizedString(@"Got link!", nil);
-      message = [NSString stringWithFormat:@"%@ %@ %@", NSLocalizedString(@"Copied link for", nil),
-                 link.name, NSLocalizedString(@"to the clipboard", nil)];
+      title = NSLocalizedString(@"Link copied!", nil);
+      message = NSLocalizedString(@"A link to the file has been copied in your clipboard", nil);
       sound = _incoming_sound.name;
-      break;
-    case gap_transaction_finished:
-      title = NSLocalizedString(@"Success!", nil);
-      message = [NSString stringWithFormat:@"%@ %@",
-                 link.name, NSLocalizedString(@"successfully uploaded", nil)];
-      sound = _finished_sound.name;
       break;
 
     default:
@@ -242,6 +251,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   res.title = title;
   res.informativeText = message;
   res.soundName = sound;
+  res.deliveryDate = [NSDate date];
   res.userInfo = @{@"link_id": link.id_,
                    @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
   return res;
@@ -281,6 +291,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
            transaction.status);
   
   [_notification_centre deliverNotification:user_notification];
+  if (transaction.view_mode == TRANSACTION_VIEW_WAITING_ACCEPT && !transaction.from_me)
+    [_notification_centre scheduleNotification:user_notification];
 }
 
 - (void)desktopNotificationForTransactionAccepted:(IATransaction*)transaction
@@ -306,31 +318,6 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
     return;
 
   NSUserNotification* user_notification;
-  BOOL replaced = NO;
-  
-  for (NSUserNotification* notif in [_notification_centre deliveredNotifications])
-  {
-    if ([notif.userInfo valueForKey:@"link_id"] == link.id_ && link.status == gap_transaction_finished)
-    {
-      ELLE_DEBUG("%s: already have a delivered notification for this link (%d), replace it",
-                 self.description.UTF8String, link.id_.unsignedIntegerValue);
-      user_notification = [[NSUserNotification alloc] init];
-      user_notification.title = NSLocalizedString(@"Uploaded and Got Link!", nil);
-      user_notification.informativeText =
-      [NSString stringWithFormat:@"%@ %@ %@", NSLocalizedString(@"Copied link for", nil), link.name,
-       NSLocalizedString(@"to the clipboard", nil)];
-      user_notification.soundName = nil;
-      user_notification.userInfo =
-      @{@"link_id": link.id_,
-        @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
-      [_notification_centre removeDeliveredNotification:notif];
-      replaced = YES;
-      break;
-    }
-  }
-
-  if (!replaced)
-    user_notification = [self notificationFromLink:link];
 
   if (user_notification == nil)
     return;
@@ -384,6 +371,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
        didActivateNotification:(NSUserNotification*)notification
 {
   NSDictionary* dict = notification.userInfo;
+  [center removeScheduledNotification:notification];
   if ([[dict objectForKey:@"pid"] intValue] != [[NSProcessInfo processInfo] processIdentifier])
     return;
   if ([dict objectForKey:@"transaction_id"] != nil)
@@ -392,7 +380,10 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
     if (transaction_id == nil || transaction_id.unsignedIntValue == 0)
       return;
 
-    [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
+    if (notification.activationType == NSUserNotificationActivationTypeContentsClicked)
+      [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
+    else
+      [_delegate desktopNotifier:self hadAcceptTransaction:transaction_id];
   }
   else if ([dict objectForKey:@"link_id"] != nil)
   {
