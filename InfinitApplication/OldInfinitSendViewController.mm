@@ -617,6 +617,7 @@
         [destinations addObject:element];
       }
     }
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_CREATE_TRANSACTION];
     NSArray* transaction_ids = [_delegate sendView:self
                                     wantsSendFiles:[_delegate sendViewWantsFileList:self]
                                            toUsers:destinations
@@ -629,6 +630,7 @@
   }
   else
   {
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_CREATE_LINK];
     NSNumber* transaction_id = [_delegate sendView:self
                                    wantsCreateLink:[_delegate sendViewWantsFileList:self]
                                        withMessage:_note];
