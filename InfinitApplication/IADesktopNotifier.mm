@@ -236,7 +236,6 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   {
     case gap_transaction_transferring:
       title = NSLocalizedString(@"Link copied!", nil);
-      NSLog(@"xxx desktop manager: %@", link.screenshot ? @"yes" : @"no");
       if (link.screenshot)
       {
         message = NSLocalizedString(@"A link to the screenshot has been copied to your clipboard",
