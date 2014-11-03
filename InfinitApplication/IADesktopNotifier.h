@@ -24,6 +24,8 @@
 
 - (void)desktopNotificationForApplicationUpdated;
 
+- (void)transactionUpdated:(IATransaction*)transaction;
+
 @end
 
 @protocol IADesktopNotifierProtocol <NSObject>

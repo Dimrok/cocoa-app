@@ -18,7 +18,6 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 @interface NSUserNotification(Private)
 @property BOOL _showsButtons;
-@property BOOL _persistent;
 @end
 
 @implementation IADesktopNotifier
@@ -124,8 +123,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
         repeat_interval.hour = 3;
         res.deliveryRepeatInterval = repeat_interval;
         res.hasActionButton = YES;
-        res._showsButtons = YES;
-        res._persistent = YES;
+        if ([IAFunctions osxVersion] > INFINIT_OS_X_VERSION_10_8)
+          res._showsButtons = YES;
         res.actionButtonTitle = NSLocalizedString(@"Accept", nil);
         res.otherButtonTitle = NSLocalizedString(@"Snooze", nil);
       }
@@ -310,6 +309,18 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   [_notification_centre deliverNotification:user_notification];
 }
 
+- (void)transactionUpdated:(IATransaction*)transaction
+{
+  for (NSUserNotification* notification in _notification_centre.scheduledNotifications)
+  {
+    if ([notification.userInfo valueForKey:@"transaction_id"] == transaction.transaction_id)
+    {
+      [_notification_centre removeScheduledNotification:notification];
+      [_notification_centre removeDeliveredNotification:notification];
+    }
+  }
+}
+
 //- Link Handling ----------------------------------------------------------------------------------
 
 - (void)desktopNotificationForLink:(InfinitLinkTransaction*)link
@@ -371,9 +382,9 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
        didActivateNotification:(NSUserNotification*)notification
 {
   NSDictionary* dict = notification.userInfo;
-  [center removeScheduledNotification:notification];
   if ([[dict objectForKey:@"pid"] intValue] != [[NSProcessInfo processInfo] processIdentifier])
     return;
+  [center removeScheduledNotification:notification];
   if ([dict objectForKey:@"transaction_id"] != nil)
   {
     NSNumber* transaction_id = [dict objectForKey:@"transaction_id"];
