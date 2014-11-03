@@ -305,15 +305,17 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     _contextual_link_files = files;
     return;
   }
-  [self createLinkWithFiles:files andMessage:@""];
+  [self createLinkWithFiles:files andMessage:@"" forScreenshot:NO];
   _contextual_link_files = nil;
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONTEXTUAL_LINK];
 }
 
-- (NSNumber*)createLinkWithFiles:(NSArray*)files andMessage:(NSString*)message
+- (NSNumber*)createLinkWithFiles:(NSArray*)files
+                      andMessage:(NSString*)message
+                   forScreenshot:(BOOL)screenshot
 {
   [_sent_sound play];
-  return [_link_manager createLinkWithFiles:files withMessage:message];
+  return [_link_manager createLinkWithFiles:files withMessage:message forScreenshot:screenshot];
 }
 
 //- Handle Views -----------------------------------------------------------------------------------
