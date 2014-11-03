@@ -1658,7 +1658,10 @@ hadConnectionStateChange:(gap_UserStatus)status
   [self markTransactionReadIfNeeded:transaction];
   
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  {
+    [_desktop_notifier transactionUpdated:transaction];
     [_desktop_notifier desktopNotificationForTransaction:transaction];
+  }
   
   if (_onboard_controller.state == INFINIT_ONBOARDING_SEND_FILE_SENDING &&
       _onboard_controller.send_transaction == transaction &&
