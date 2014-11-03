@@ -1026,7 +1026,7 @@ hadClickNotificationForLinkId:(NSNumber*)transaction_id
                 withMessage:(NSString*)message
 {
   [_sent_sound play];
-  return [_link_manager createLinkWithFiles:files withMessage:message];
+  return [_link_manager createLinkWithFiles:files withMessage:message forScreenshot:NO];
 }
 
 - (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender
@@ -1167,9 +1167,6 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   if ([_current_view_controller isKindOfClass:InfinitMainViewController.class])
     [_main_view_controller linkUpdated:link];
 }
-
-- (void)linkManagerCreatedLink:(InfinitLinkManager*)sender
-{}
 
 //- Login Window Protocol --------------------------------------------------------------------------
 
@@ -1566,7 +1563,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)statusBarIconLinkDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files
 {
-  [_link_manager createLinkWithFiles:files withMessage:@""];
+  [_link_manager createLinkWithFiles:files withMessage:@"" forScreenshot:NO];
   [_sent_sound play];
 }
 
@@ -1593,7 +1590,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 {
   if (![[IAGapState instance] logged_in] || [_me_manager connection_status] != gap_user_status_online)
     return;
-  [_link_manager createLinkWithFiles:@[path] withMessage:@""];
+  [_link_manager createLinkWithFiles:@[path] withMessage:@"" forScreenshot:YES];
 }
 
 //- Stay Awake Manager Protocol --------------------------------------------------------------------
