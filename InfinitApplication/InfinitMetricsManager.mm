@@ -107,6 +107,8 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"send";
     case INFINIT_METRIC_DESKTOP_NOTIFICATION:
       return @"desktop notification";
+    case INFINIT_METRIC_DESKTOP_NOTIFICATION_ACCEPT:
+      return @"accept";
     case INFINIT_METRIC_DROP_STATUS_BAR_ICON:
       return @"add files";
     case INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS:
@@ -181,6 +183,8 @@ static InfinitMetricsManager* _shared_instance = nil;
       return @"conversation view";
     case INFINIT_METRIC_DESKTOP_NOTIFICATION:
       return @"click";
+    case INFINIT_METRIC_DESKTOP_NOTIFICATION_ACCEPT:
+      return @"desktop notification";
     case INFINIT_METRIC_DROP_STATUS_BAR_ICON:
       return @"status icon drop";
     case INFINIT_METRIC_HAVE_ADDRESSBOOK_ACCESS:

@@ -328,7 +328,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   if (!link.concerns_this_device)
     return;
 
-  NSUserNotification* user_notification;
+  NSUserNotification* user_notification = [self notificationFromLink:link];
 
   if (user_notification == nil)
     return;
@@ -392,9 +392,14 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       return;
 
     if (notification.activationType == NSUserNotificationActivationTypeContentsClicked)
+    {
       [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
+    }
     else
+    {
       [_delegate desktopNotifier:self hadAcceptTransaction:transaction_id];
+      [InfinitMetricsManager sendMetric:INFINIT_METRIC_DESKTOP_NOTIFICATION_ACCEPT];
+    }
   }
   else if ([dict objectForKey:@"link_id"] != nil)
   {
