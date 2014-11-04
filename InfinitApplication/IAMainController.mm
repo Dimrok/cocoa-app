@@ -30,9 +30,13 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
 @private
   id<IAMainControllerProtocol> _delegate;
-  
-  NSStatusItem* _status_item;
+
+  // Old Status Bar Icon.
+  NSStatusItem* _old_status_item;
   IAStatusBarIcon* _status_bar_icon;
+
+  // New Status Bar Icon (10.10+).
+  InfinitStatusBarIcon* _status_item;
   
   // View controllers
   IAViewController* _current_view_controller;
@@ -96,10 +100,18 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [[IACrashReportManager sharedInstance] setupCrashReporter];
     
     _stay_awake_manager = [InfinitStayAwakeManager setUpInstanceWithDelegate:self];
-    
-    _status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_status_item];
-    _status_item.view = _status_bar_icon;
+
+
+    if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    {
+      _old_status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+      _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_old_status_item];
+      _old_status_item.view = _status_bar_icon;
+    }
+    else
+    {
+      _status_item = [[InfinitStatusBarIcon alloc] initWithDelegate:self];
+    }
     
     _window_controller = [[IAWindowController alloc] initWithDelegate:self];
     _current_view_controller = nil;
@@ -203,7 +215,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   {
     [self openSendViewForLink:link];
   }
-  else if ([action isEqualToString:@"launch"])
+  else if ([action isEqualToString:@"open"])
   {
     [self showNotifications];
   }
@@ -291,7 +303,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
   {
-    [_status_bar_icon setHighlighted:YES];
+    if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+      [_status_bar_icon setHighlighted:YES];
+    else
+      _status_item.open = YES;
     _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
   }
   [_general_send_controller openWithFiles:files forUser:nil];
@@ -322,10 +337,12 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)openOrChangeViewController:(IAViewController*)view_controller
 {
-//  if (view_controller.class != InfinitClippyViewController.class)
-    [_status_bar_icon setHighlighted:YES];
-//  else
-//    [_status_bar_icon setHighlighted:NO];
+//  bool open = view_controller.class != InfinitClippyViewController.class;
+  bool open = YES;
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    [_status_bar_icon setHighlighted:open];
+  else
+    _status_item.open = open;
   if ([_window_controller windowIsOpen])
   {
 //    if (_current_view_controller.class == InfinitClippyViewController.class)
@@ -464,7 +481,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
     [_desktop_notifier clearAllNotifications];
   [_window_controller closeWindow];
-  [_status_bar_icon setHighlighted:NO];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    [_status_bar_icon setHighlighted:NO];
+  else
+    _status_item.open = NO;
 }
 
 - (void)closeNotificationWindowWithoutLosingFocus
@@ -472,7 +492,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
     [_desktop_notifier clearAllNotifications];
   [_window_controller closeWindowWithoutLosingFocus];
-  [_status_bar_icon setHighlighted:NO];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    [_status_bar_icon setHighlighted:NO];
+  else
+    _status_item.open = NO;
 }
 
 //- Login and Logout -------------------------------------------------------------------------------
@@ -481,7 +504,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                  password:(NSString*)password
 {
   _logging_in = YES;
-  [_status_bar_icon setLoggingIn:YES];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  {
+    [_status_bar_icon setLoggingIn:YES];
+  }
   if (_current_view_controller == _not_logged_view_controller)
     [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
 
@@ -560,7 +586,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)loginCallback:(IAGapOperationResult*)result
 {
   _logging_in = NO;
-  [_status_bar_icon setLoggingIn:NO];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  {
+    [_status_bar_icon setLoggingIn:NO];
+  }
   if (result.success)
   {
     [self onSuccessfulLogin];
@@ -773,7 +802,15 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 // Midpoint of status bar icon
 - (NSPoint)statusBarIconMiddle
 {
-  NSRect frame = _status_item.view.window.frame;
+  NSRect frame;
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  {
+    frame = _old_status_item.view.window.frame;
+  }
+  else
+  {
+    frame = _status_item.frame;
+  }
   NSPoint result = NSMakePoint(floor(frame.origin.x + frame.size.width / 2.0),
                                floor(frame.origin.y - 5.0));
   CGFloat x_screen_edge =
@@ -793,7 +830,14 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   _settings_window = nil;
   if (result.success)
   {
-    [_status_bar_icon setNumberOfItems:0];
+    if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    {
+      [_status_bar_icon setNumberOfItems:0];
+    }
+    else
+    {
+      _status_item.number = 0;
+    }
     ELLE_LOG("%s: logged out", self.description.UTF8String);
     [self performSelector:@selector(showLoginViewForLogout) withObject:nil afterDelay:0.3];
   }
@@ -818,8 +862,16 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   _network_manager = nil;
   _screenshot_manager = nil;
 
-  [_status_bar_icon setHighlighted:NO];
-  [_status_bar_icon setHidden:YES];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  {
+    [_status_bar_icon setHighlighted:NO];
+    [_status_bar_icon setHidden:YES];
+  }
+  else
+  {
+    _status_item.open = NO;
+    _status_item.hidden = YES;
+  }
   [_window_controller closeWindowWithAnimation:NO];
 
 
@@ -846,12 +898,19 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)updateStatusBarIcon
 {
-  if ([_transaction_manager hasTransferringTransaction] || [_link_manager hasTransferringLink])
-    [_status_bar_icon setTransferring:YES];
+  BOOL transferring =
+    [_transaction_manager hasTransferringTransaction] || [_link_manager hasTransferringLink];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  {
+    [_status_bar_icon setTransferring:transferring];
+    [_status_bar_icon setNumberOfItems:[_transaction_manager transactionsNeedingAccept]];
+    [_status_bar_icon setFire:[_transaction_manager haveUnreadConversations]];
+  }
   else
-    [_status_bar_icon setTransferring:NO];
-  [_status_bar_icon setNumberOfItems:[_transaction_manager transactionsNeedingAccept]];
-  [_status_bar_icon setFire:[_transaction_manager haveUnreadConversations]];
+  {
+    _status_item.transferring = transferring;
+    _status_item.number = [_transaction_manager transactionsNeedingAccept];
+  }
 }
 
 //- View Logic -------------------------------------------------------------------------------------
@@ -1212,7 +1271,10 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
          withEmail:(NSString*)email
 {
   _username = email;
-  [_status_bar_icon setConnected:gap_user_status_online];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    [_status_bar_icon setConnected:gap_user_status_online];
+  else
+    _status_item.connected = gap_user_status_online;
   [self onSuccessfulLogin];
   [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
@@ -1221,7 +1283,10 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 - (void)alreadyLoggedIn:(InfinitLoginViewController*)sender
 {
   [self updateStatusBarIcon];
-  [_status_bar_icon setConnected:gap_user_status_online];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    [_status_bar_icon setConnected:gap_user_status_online];
+  else
+    _status_item.connected = gap_user_status_online;
   [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
 }
@@ -1320,7 +1385,11 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 - (void)meManager:(IAMeManager*)sender
 hadConnectionStateChange:(gap_UserStatus)status
 {
-  [_status_bar_icon setConnected:status];
+  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    [_status_bar_icon setConnected:status];
+  else
+    _status_item.connected = status;
+
   if ([_current_view_controller isKindOfClass:IANoConnectionViewController.class] &&
       status == gap_user_status_online)
   {
@@ -1500,9 +1569,9 @@ hadConnectionStateChange:(gap_UserStatus)status
   [_delegate mainControllerWantsCheckForUpdate:self];
 }
 
-//- Status Bar Icon Protocol -----------------------------------------------------------------------
+//- Status Bar Icon Protocol (Old) -----------------------------------------------------------------
 
-- (void)statusBarIconClicked:(IAStatusBarIcon*)sender
+- (void)statusBarIconClicked:(id)sender
 {
 //  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION)
 //  {
@@ -1541,7 +1610,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 }
 
 
-- (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
+- (void)statusBarIconDragDrop:(id)sender
                     withFiles:(NSArray*)files
 {
   if (![[IAGapState instance] logged_in])
@@ -1569,7 +1638,7 @@ hadConnectionStateChange:(gap_UserStatus)status
   [_sent_sound play];
 }
 
-- (void)statusBarIconDragEntered:(IAStatusBarIcon*)sender
+- (void)statusBarIconDragEntered:(id)sender
 {
   if (![[IAGapState instance] logged_in] ||
       [_me_manager connection_status] != gap_user_status_online ||
@@ -1711,6 +1780,7 @@ hadConnectionStateChange:(gap_UserStatus)status
     hasNewStatusFor:(IAUser*)user
 {
   [_transaction_manager updateTransactionsForUser:user];
+  
   if (_current_view_controller == nil)
     return;
   [_current_view_controller userUpdated:user];
