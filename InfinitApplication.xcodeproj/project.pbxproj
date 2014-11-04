@@ -293,6 +293,9 @@
 		83A4F684183681A90038AC65 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
 		83A67AB419AB19C900A69E35 /* InfinitSettingsGeneralView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A67AB219AB19C900A69E35 /* InfinitSettingsGeneralView.m */; };
 		83A67AB519AB19C900A69E35 /* InfinitSettingsGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A67AB319AB19C900A69E35 /* InfinitSettingsGeneralView.xib */; };
+		83AA9AE81A07E1F600C5D4BA /* icon-menu-bar-yosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AA9AE61A07E1F600C5D4BA /* icon-menu-bar-yosemite.png */; };
+		83AA9AE91A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AA9AE71A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png */; };
+		83AA9B021A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AA9B011A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m */; };
 		83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */; };
 		83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.mm */; };
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
@@ -354,6 +357,7 @@
 		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F49182A98C1001394B2 /* libmetaclient.dylib */; };
 		83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F60182A990F001394B2 /* libtransaction.dylib */; };
+		83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */; };
 		83DD1B1418F1AB2400F5AEEE /* libarchive.13.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */; };
 		83E1B73A191E6F85000338A3 /* InfinitSendFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */; };
 		83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */; };
@@ -990,6 +994,11 @@
 		83A67AB119AB19C900A69E35 /* InfinitSettingsGeneralView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsGeneralView.h; sourceTree = "<group>"; };
 		83A67AB219AB19C900A69E35 /* InfinitSettingsGeneralView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsGeneralView.m; sourceTree = "<group>"; };
 		83A67AB319AB19C900A69E35 /* InfinitSettingsGeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSettingsGeneralView.xib; sourceTree = "<group>"; };
+		83AA9AE61A07E1F600C5D4BA /* icon-menu-bar-yosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-yosemite.png"; path = "../../../../fist-resources/slices/mac/main/icon-menu-bar-yosemite.png"; sourceTree = "<group>"; };
+		83AA9AE71A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-yosemite@2x.png"; path = "../../../../fist-resources/slices/mac/main/icon-menu-bar-yosemite@2x.png"; sourceTree = "<group>"; };
+		83AA9AFE1A08C04700C5D4BA /* NSStatusBarButtonCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSStatusBarButtonCell.h; sourceTree = "<group>"; };
+		83AA9B001A08C15400C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSStatusBarButtonCell+ForciblyHighlighted.h"; sourceTree = "<group>"; };
+		83AA9B011A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStatusBarButtonCell+ForciblyHighlighted.m"; sourceTree = "<group>"; };
 		83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMetricsManager.h; sourceTree = "<group>"; };
 		83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitMetricsManager.mm; sourceTree = "<group>"; };
 		83B8A725182246E500AD775F /* InfinitLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginViewController.h; sourceTree = "<group>"; };
@@ -1062,6 +1071,8 @@
 		83CD702617A678C5004F55D1 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = ../Gap/Gap.xcodeproj; sourceTree = "<group>"; };
 		83CE1F49182A98C1001394B2 /* libmetaclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetaclient.dylib; path = ../../../Externals/lib/libmetaclient.dylib; sourceTree = "<group>"; };
 		83CE1F60182A990F001394B2 /* libtransaction.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtransaction.dylib; path = ../../../Externals/lib/libtransaction.dylib; sourceTree = "<group>"; };
+		83CF45EF19B5ACD40074A9DA /* InfinitStatusBarIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStatusBarIcon.h; sourceTree = "<group>"; };
+		83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStatusBarIcon.m; sourceTree = "<group>"; };
 		83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libarchive.13.dylib; path = ../../../Externals/lib/libarchive.13.dylib; sourceTree = "<group>"; };
 		83E1B737191E6F85000338A3 /* InfinitSendFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendFilesViewController.h; sourceTree = "<group>"; };
 		83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFilesViewController.m; sourceTree = "<group>"; };
@@ -1363,6 +1374,11 @@
 				832808CC17A2C0C40025B6F8 /* Images */,
 				832808C517A2BBD70025B6F8 /* IAStatusBarIcon.h */,
 				832808C617A2BBD70025B6F8 /* IAStatusBarIcon.mm */,
+				83CF45EF19B5ACD40074A9DA /* InfinitStatusBarIcon.h */,
+				83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */,
+				83AA9AFE1A08C04700C5D4BA /* NSStatusBarButtonCell.h */,
+				83AA9B001A08C15400C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.h */,
+				83AA9B011A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m */,
 			);
 			name = "Status Bar Icon";
 			sourceTree = "<group>";
@@ -1370,6 +1386,8 @@
 		832808CC17A2C0C40025B6F8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				83AA9AE61A07E1F600C5D4BA /* icon-menu-bar-yosemite.png */,
+				83AA9AE71A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png */,
 				836EADFC1988F42C0053BE85 /* icon-menu-bar-active.png */,
 				836EADFD1988F42C0053BE85 /* icon-menu-bar-active@2x.png */,
 				836EADFE1988F42C0053BE85 /* icon-menu-bar-clicked.png */,
@@ -2485,6 +2503,7 @@
 				837B2A7F19DD966400A3CDE1 /* sound_sent.aiff in Resources */,
 				834F13881922618200BF36A4 /* InfinitMainViewController.xib in Resources */,
 				836EAD131988EE3B0053BE85 /* folder.png in Resources */,
+				83AA9AE81A07E1F600C5D4BA /* icon-menu-bar-yosemite.png in Resources */,
 				836EAD1F1988EE3B0053BE85 /* video.png in Resources */,
 				83BD386119FE36F6003EA0AD /* old-icon-contact-checked@2x.png in Resources */,
 				836EAE5F1988F5630053BE85 /* icon-clipboard@2x.png in Resources */,
@@ -2599,6 +2618,7 @@
 				836EAE2A1988F43E0053BE85 /* icon-menu-bar-animated-red-9.png in Resources */,
 				83C25B5719EEBC8F009752F1 /* send-icon-media-folder.png in Resources */,
 				836EAD201988EE3B0053BE85 /* video@2x.png in Resources */,
+				83AA9AE91A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png in Resources */,
 				836EAE311988F43E0053BE85 /* icon-menu-bar-animated-red-16.png in Resources */,
 				836EAE301988F43E0053BE85 /* icon-menu-bar-animated-red-15.png in Resources */,
 				83E73FA619A5DD0E00B7E8EF /* InfinitSettingsWindow.xib in Resources */,
@@ -2740,6 +2760,7 @@
 				832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */,
 				834F13801922522F00BF36A4 /* InfinitLinkClickCountView.m in Sources */,
 				83CC2C4C1923B97E00EBB96E /* InfinitLinkFileIconView.m in Sources */,
+				83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */,
 				832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.mm in Sources */,
 				8337673E19088E910073A621 /* InfinitTokenAttachmentCell.m in Sources */,
 				83CD6FB717A672E5004F55D1 /* IAGap.mm in Sources */,
@@ -2800,6 +2821,7 @@
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */,
 				83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */,
 				834F137119217FA700BF36A4 /* InfinitAvatarBadgeView.m in Sources */,
+				83AA9B021A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m in Sources */,
 				831E22D9183E565300F0623C /* InfinitSearchPersonResult.mm in Sources */,
 				83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */,
 				83E73FA519A5DD0E00B7E8EF /* InfinitSettingsWindow.m in Sources */,
@@ -2975,6 +2997,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
+				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
@@ -3007,6 +3030,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
+				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
@@ -3024,6 +3048,7 @@
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../fist/src $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 $(SRCROOT)/../../../../_build/macosx64/elle/boost/include $(SRCROOT)/../../../../_build/macosx64/fist/src";
 				WRAPPER_EXTENSION = app;
 			};
