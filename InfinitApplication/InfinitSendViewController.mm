@@ -268,7 +268,7 @@
 
 //- Infinit Send Button Cell -----------------------------------------------------------------------
 
-@interface NSButtonCell()
+@interface NSButtonCell(Private)
 - (void)_updateMouseTracking;
 @end
 

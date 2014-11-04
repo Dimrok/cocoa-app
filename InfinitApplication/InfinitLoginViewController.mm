@@ -26,7 +26,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 // - Login Button Cell -----------------------------------------------------------------------------
 
-@interface NSButtonCell()
+@interface NSButtonCell(Private)
 - (void)_updateMouseTracking;
 @end
 

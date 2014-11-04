@@ -16,7 +16,7 @@ ELLE_LOG_COMPONENT("OSX.NotLoggedInViewController");
 @interface IANotLoggedInViewController ()
 @end
 
-@interface NSButtonCell()
+@interface NSButtonCell(Private)
 - (void)_updateMouseTracking;
 @end
 
