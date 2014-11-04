@@ -11,6 +11,8 @@
 #undef check
 #import <elle/log.hh>
 
+#import "InfinitFeatureManager.h"
+
 ELLE_LOG_COMPONENT("OSX.ScreenshotModal");
 
 @interface InfinitFirstScreenshotModal ()
@@ -34,26 +36,33 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotModal");
   [self.window center];
   [super windowDidLoad];
 
-  NSFont* instruction_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue"
+  NSFont* instruction_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                         traits:NSUnboldFontMask
-                                                                        weight:3
-                                                                          size:18.0];
+                                                                        weight:1
+                                                                          size:16.0];
   NSMutableParagraphStyle* information_para =
     [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-  information_para.alignment = NSCenterTextAlignment;
+  information_para.alignment = NSLeftTextAlignment;
   information_para.lineSpacing = 8.0;
   NSDictionary* information_attrs = [IAFunctions textStyleWithFont:instruction_font
                                                     paragraphStyle:information_para
-                                                            colour:IA_RGB_COLOUR(60, 60, 60)
+                                                            colour:IA_GREY_COLOUR(96)
                                                             shadow:nil];
   NSString* info_text =
-    NSLocalizedString(@"Whenever you take a screenshot, we'll upload it and copy a link to your\n\
-clipboard so you can share it in a message, an email or a tweet.", nil);
+    NSLocalizedString(@"Whenever you take a screenshot, we'll upload it and copy a\nlink to your\
+clipboard so you can share it in a message, an\nemail or a tweet.", nil);
   self.information.attributedStringValue =
     [[NSAttributedString alloc] initWithString:info_text attributes:information_attrs];
 
-  self.affirmative.title = NSLocalizedString(@"Help me share my screenshots!", nil);
-  self.negative.title = NSLocalizedString(@"No thanks", nil);
+  NSString* version =
+    [[[InfinitFeatureManager sharedInstance] features] valueForKey:@"screenshot_modal_20141104"];
+  ELLE_TRACE("%s: running test with version: %s", self.description.UTF8String, version.UTF8String);
+  if ([version isEqualToString:@"a"])
+    self.affirmative.title = @"Sure, upload my screenshots!";
+  else
+    self.affirmative.title = @"Help me share my screenshots!";
+
+  self.negative.title = NSLocalizedString(@"No, thanks", nil);
 }
 
 //- Close ------------------------------------------------------------------------------------------
