@@ -33,7 +33,7 @@
 
 @protocol IAStatusBarIconProtocol <NSObject>
 
-- (void)statusBarIconClicked:(IAStatusBarIcon*)sender;
+- (void)statusBarIconClicked:(id)sender;
 - (void)statusBarIconDragDrop:(IAStatusBarIcon*)sender
                     withFiles:(NSArray*)files;
 - (void)statusBarIconLinkDrop:(IAStatusBarIcon*)sender
