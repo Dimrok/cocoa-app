@@ -373,6 +373,8 @@
 		83E73FB119A5E2B700B7E8EF /* InfinitSettingsAccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E73FAF19A5E2B700B7E8EF /* InfinitSettingsAccountView.xib */; };
 		83E77FA718D7774500B09D87 /* InfinitConversationPersonView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83E77FA618D7774500B09D87 /* InfinitConversationPersonView.mm */; };
 		83EC175919AB2DFA0063A3B3 /* InfinitSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EC175819AB2DFA0063A3B3 /* InfinitSettingsViewController.m */; };
+		83EF5C741A0A7AFA00A38D49 /* main-icon-bufferised.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EF5C721A0A7AFA00A38D49 /* main-icon-bufferised.png */; };
+		83EF5C751A0A7AFA00A38D49 /* main-icon-bufferised@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EF5C731A0A7AFA00A38D49 /* main-icon-bufferised@2x.png */; };
 		83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */; };
 		83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */; };
 		83F1A37819DEBCC70045ADD7 /* InfinitScreenshotTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F1A37719DEBCC70045ADD7 /* InfinitScreenshotTextView.m */; };
@@ -1096,6 +1098,8 @@
 		83E77FA618D7774500B09D87 /* InfinitConversationPersonView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitConversationPersonView.mm; sourceTree = "<group>"; };
 		83EC175719AB2DFA0063A3B3 /* InfinitSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsViewController.h; sourceTree = "<group>"; };
 		83EC175819AB2DFA0063A3B3 /* InfinitSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsViewController.m; sourceTree = "<group>"; };
+		83EF5C721A0A7AFA00A38D49 /* main-icon-bufferised.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "main-icon-bufferised.png"; path = "../../../../fist-resources/slices/mac/view_main/main-icon-bufferised.png"; sourceTree = "<group>"; };
+		83EF5C731A0A7AFA00A38D49 /* main-icon-bufferised@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "main-icon-bufferised@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/main-icon-bufferised@2x.png"; sourceTree = "<group>"; };
 		83F1148217AE63E700DCF662 /* IAUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserSearchViewController.h; sourceTree = "<group>"; };
 		83F1148317AE63E700DCF662 /* IAUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAUserSearchViewController.m; sourceTree = "<group>"; };
 		83F1148417AE63E700DCF662 /* IAUserSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAUserSearchViewController.xib; sourceTree = "<group>"; };
@@ -1573,6 +1577,8 @@
 		834F136E19217F1100BF36A4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83EF5C721A0A7AFA00A38D49 /* main-icon-bufferised.png */,
+				83EF5C731A0A7AFA00A38D49 /* main-icon-bufferised@2x.png */,
 				837B2AA419DD981F00A3CDE1 /* main-icon-expand.png */,
 				837B2AA519DD981F00A3CDE1 /* main-icon-expand@2x.png */,
 				837B2AA819DD983A00A3CDE1 /* main-icon-unread.png */,
@@ -2457,6 +2463,7 @@
 				836EAD121988EE3B0053BE85 /* document@2x.png in Resources */,
 				836EAE271988F43E0053BE85 /* icon-menu-bar-animated-red-6.png in Resources */,
 				837B2AA719DD981F00A3CDE1 /* main-icon-expand@2x.png in Resources */,
+				83EF5C741A0A7AFA00A38D49 /* main-icon-bufferised.png in Resources */,
 				836EAE4A1988F4500053BE85 /* icon-menu-bar-animated-black-5.png in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
 				836EADCE1988F2040053BE85 /* icon-gear.png in Resources */,
@@ -2666,6 +2673,7 @@
 				836EAD9D1988EEC70053BE85 /* conversation-icon-quote-right@2x.png in Resources */,
 				836EAE0B1988F42D0053BE85 /* icon-menu-bar-fire@2x.png in Resources */,
 				836EADA51988EEC70053BE85 /* conversation-icon-reject@2x.png in Resources */,
+				83EF5C751A0A7AFA00A38D49 /* main-icon-bufferised@2x.png in Resources */,
 				836EAE091988F42D0053BE85 /* icon-menu-bar-clicked@2x.png in Resources */,
 				83BD385119FE364E003EA0AD /* old-icon-search@2x.png in Resources */,
 				833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */,
