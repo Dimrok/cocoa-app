@@ -41,7 +41,6 @@
     [_status_item.button setButtonType:NSToggleButton];
     _status_item.button.toolTip = NSLocalizedString(@"Offline!", nil);
     _status_item.button.appearsDisabled = YES;
-    _status_item.button.ignoresMultiClick = YES;
     _status_item.button.target = self;
     _status_item.button.action = @selector(iconClicked:);
     _normal_icon = [IAFunctions imageNamed:@"icon-menu-bar-yosemite"];
