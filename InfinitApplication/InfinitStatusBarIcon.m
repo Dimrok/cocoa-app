@@ -142,12 +142,12 @@
   else if (_number < 99)
   {
     _status_item.button.imagePosition = NSImageLeft;
-    _status_item.button.title = [NSString stringWithFormat:@" %lu", _number];
+    _status_item.button.title = [NSString stringWithFormat:@"%lu", _number];
   }
   else
   {
     _status_item.button.imagePosition = NSImageLeft;
-    _status_item.button.title = @" +";
+    _status_item.button.title = @"+";
   }
 }
 
