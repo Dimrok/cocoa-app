@@ -16,7 +16,9 @@
 
 @interface IAMeManager : NSObject
 
-@property (nonatomic, readwrite) gap_UserStatus connection_status;
+@property (nonatomic, readwrite) BOOL connection_status;
+@property (nonatomic, readonly) BOOL still_trying;
+@property (nonatomic, readonly) NSString* last_error;
 
 - (id)initWithDelegate:(id<IAMeManagerProtocol>)delegate;
 
@@ -24,7 +26,7 @@
 
 @protocol IAMeManagerProtocol <NSObject>
 
-- (void)meManager:(IAMeManager*)sender
-hadConnectionStateChange:(gap_UserStatus)status;
+- (void)meManager:(IAMeManager*)sender hadConnectionStateChange:(BOOL)status;
+- (void)meManagerKickedOut:(IAMeManager*)sender;
 
 @end

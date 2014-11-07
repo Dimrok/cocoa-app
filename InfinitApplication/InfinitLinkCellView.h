@@ -41,7 +41,7 @@
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
               andDelegate:(id<InfinitLinkCellProtocol>)delegate
-         withOnlineStatus:(gap_UserStatus)status;
+         withOnlineStatus:(BOOL)status;
 
 - (void)hideControls;
 

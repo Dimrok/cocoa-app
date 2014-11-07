@@ -20,7 +20,7 @@
 
 - (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate
            andLinkList:(NSArray*)list
-         andSelfStatus:(gap_UserStatus)status;
+         andSelfStatus:(BOOL)status;
 
 @property (nonatomic, readwrite) BOOL changing;
 

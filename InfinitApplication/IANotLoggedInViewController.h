@@ -15,9 +15,8 @@
 
 typedef enum __IANotLoggedInViewMode
 {
-    INFINIT_LOGGED_OUT = 0,
-    INFINIT_LOGGING_IN = 1,
-    INFINIT_WAITING_FOR_CONNECTION = 2,
+  INFINIT_LOGGING_IN = 0,
+  INFINIT_WAITING_FOR_CONNECTION = 1,
 } IANotLoggedInViewMode;
 
 @interface InfinitNotLoggedInButtonCell : NSButtonCell

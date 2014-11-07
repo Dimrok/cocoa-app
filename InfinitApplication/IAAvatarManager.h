@@ -19,4 +19,6 @@
 
 + (void)reloadAvatarForUser:(IAUser*)user;
 
++ (void)clearModel;
+
 @end

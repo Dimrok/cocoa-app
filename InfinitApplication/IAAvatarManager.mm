@@ -35,10 +35,6 @@ ELLE_LOG_COMPONENT("OSX.AvatarManager");
                                            selector:@selector(receivedAvatarNotification:)
                                                name:IA_GAP_EVENT_USER_AVATAR_NOTIFICATION
                                              object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(clearModelCallback)
-                                               name:IA_GAP_EVENT_CLEAR_MODEL
-                                             object:nil];
   }
   return self;
 }
@@ -128,7 +124,12 @@ ELLE_LOG_COMPONENT("OSX.AvatarManager");
 
 //- Clear Model ------------------------------------------------------------------------------------
 
-- (void)clearModelCallback
++ (void)clearModel
+{
+  [[IAAvatarManager _instance] clearModel];
+}
+
+- (void)clearModel
 {
   [_cache removeAllObjects];
 }

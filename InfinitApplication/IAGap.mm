@@ -28,9 +28,6 @@ ELLE_LOG_COMPONENT("OSX.Gap");
 static BOOL _callbacks_set = NO;
 
 static
-void clear_model();
-
-static
 void on_user_status(uint32_t const user_id, gap_UserStatus status);
 
 static
@@ -40,10 +37,7 @@ static
 void on_error_callback(gap_Status errcode, char const* reason, uint32_t const transaction_id);
 
 static
-void on_kicked_out();
-
-static
-void on_connection_status(gap_UserStatus status);
+void on_connection_status(bool status, bool still_trying, std::string const& last_error);
 
 static
 void on_received_avatar(uint32_t const user_id);
@@ -226,7 +220,6 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
       (gap_transaction_callback(_state, &on_transaction) != gap_ok) ||
       (gap_connection_callback(_state, &on_connection_status) != gap_ok) ||
       (gap_critical_callback(_state, &on_critical_event) != gap_ok) ||
-      (gap_kicked_out_callback(_state, &on_kicked_out) != gap_ok) ||
       (gap_avatar_available_callback(_state, &on_received_avatar) != gap_ok) ||
       (gap_trophonius_unavailable_callback(_state, &on_trophonius_unavailable) != gap_ok) ||
       (gap_deleted_favorite_callback(_state, &on_deleted_favorite) != gap_ok) ||
@@ -303,7 +296,6 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
 
 - (gap_Status)logout
 {
-  clear_model();
   return gap_logout(_state);
 }
 
@@ -846,14 +838,6 @@ return [NSString stringWithUTF8String:str]; \
 
 //- notif callback implementation -----------------------------------------------------------
 
-static void clear_model()
-{
-  ELLE_DUMP("clearing Cocoa models");
-  [[IAGapState instance] loggedOut];
-  on_connection_status(gap_user_status_offline);
-  [IAGap sendNotif:IA_GAP_EVENT_CLEAR_MODEL withInfo:nil];
-}
-
 static void on_user_status(uint32_t const user_id,
                            gap_UserStatus status)
 {
@@ -875,14 +859,16 @@ static void on_user_status(uint32_t const user_id,
   }
 }
 
-static void on_connection_status(gap_UserStatus status)
+static
+void on_connection_status(bool status, bool still_trying, std::string const& last_error)
 {
   ELLE_DUMP("on_connection_status: %d", status);
   @try
   {
-    NSMutableDictionary* msg = [NSMutableDictionary dictionary];
-    [msg setValue:[NSNumber numberWithInt:status]
-           forKey:@"connection_status"];
+    NSMutableDictionary* msg = [NSMutableDictionary dictionaryWithDictionary:
+                                @{@"connection_status": [NSNumber numberWithBool:status],
+                                  @"still_trying": [NSNumber numberWithBool:still_trying],
+                                  @"last_error": [NSString stringWithUTF8String:last_error.c_str()]}];
     [IAGap sendNotif:IA_GAP_EVENT_CONNECTION_STATUS_NOTIFICATION withInfo:msg];
   }
   @catch (NSException* exception)
@@ -934,17 +920,8 @@ static void on_error_callback(gap_Status errcode, char const* reason, uint32_t c
   }
 }
 
-static void on_kicked_out()
-{
-  ELLE_TRACE("on_kicked_out");
-  // Set not logged in and stop polling
-  clear_model();
-  [IAGap sendNotif:IA_GAP_EVENT_KICKED_OUT withInfo:nil];
-}
-
 static void on_trophonius_unavailable()
 {
-  // This is currently the same as a kick out
   ELLE_DEBUG("on_trophonius_unavailable");
   [IAGap sendNotif:IA_GAP_EVENT_TROPHONIUS_UNAVAILABLE withInfo:nil];
 }

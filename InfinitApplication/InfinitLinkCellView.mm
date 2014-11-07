@@ -209,7 +209,7 @@ namespace
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
               andDelegate:(id<InfinitLinkCellProtocol>)delegate
-         withOnlineStatus:(gap_UserStatus)status
+         withOnlineStatus:(BOOL)status
 {
   _delegate = delegate;
   _transaction_link = link;
@@ -242,15 +242,15 @@ namespace
 
 - (void)setProgress:(CGFloat)progress
 {
-  [self setProgress:progress withAnimation:YES andOnline:gap_user_status_online];
+  [self setProgress:progress withAnimation:YES andOnline:YES];
 }
 
 - (void)setProgress:(CGFloat)progress
       withAnimation:(BOOL)animate
-          andOnline:(gap_UserStatus)status
+          andOnline:(BOOL)status
 {
   NSString* upload_str;
-  if (status == gap_user_status_online)
+  if (status)
   {
     upload_str = [NSString stringWithFormat:@"%@... (%.0f %%)",
                   NSLocalizedString(@"Uploading", nil), 100 * progress];

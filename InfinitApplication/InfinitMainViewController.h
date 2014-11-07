@@ -85,7 +85,7 @@ typedef enum _InfinitTransactionLinkMode
 - (void)deleteLink:(InfinitLinkTransaction*)link;
 - (void)copyLinkToClipboard:(InfinitLinkTransaction*)link;
 
-- (gap_UserStatus)currentSelfStatus:(InfinitMainViewController*)status;
+- (BOOL)currentSelfStatus:(InfinitMainViewController*)status;
 
 //- Gear Menu Handling -----------------------------------------------------------------------------
 

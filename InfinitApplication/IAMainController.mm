@@ -11,6 +11,7 @@
 #import <Gap/IAGapState.h>
 
 #import "IAAutoStartup.h"
+#import "IAAvatarManager.h"
 #import "IACrashReportManager.h"
 #import "IAGap.h"
 #import "IAKeychainManager.h"
@@ -78,7 +79,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   BOOL _new_credentials;
   BOOL _update_credentials;
   NSString* _username;
-  BOOL _autologin_cooling_down;
   CGFloat _login_retry_cooldown;
   CGFloat _login_retry_cooldown_max;
 }
@@ -127,10 +127,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     _infinit_link = nil;
     _contextual_send_files = nil;
     _contextual_link_files = nil;
-
-    _autologin_cooling_down = NO;
-    _login_retry_cooldown = 3.0;
-    _login_retry_cooldown_max = 60.0;
     
     _sent_sound = [NSSound soundNamed:@"sound_sent"];
     
@@ -147,10 +143,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
       // is miscalculated
       [self performSelector:@selector(delayedLoginViewOpen) withObject:nil afterDelay:0.3];
     }
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(kickedOutCallback)
-                                               name:IA_GAP_EVENT_KICKED_OUT
-                                             object:nil];
   }
   return self;
 }
@@ -175,7 +167,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   if ([_delegate applicationUpdating])
     return NO;
-  _autologin_cooling_down = NO;
   NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
   NSString* password = [self getPasswordForUsername:username];
   if (username.length > 0 && password.length > 0)
@@ -196,7 +187,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)handleInfinitLink:(NSURL*)link
 {
   // If we're not logged in, store the link and activate it when we are.
-  if ([_me_manager connection_status] != gap_user_status_online)
+  if (!_me_manager.connection_status)
   {
     _infinit_link = link;
     return;
@@ -287,7 +278,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)handleContextualSendFiles:(NSArray*)files
 {
   // If we're not logged in, store files and open view when we're ready.
-  if ([_me_manager connection_status] != gap_user_status_online)
+  if (!_me_manager.connection_status)
   {
     _contextual_send_files = files;
     return;
@@ -314,7 +305,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)handleContextualCreateLink:(NSArray*)files
 {
-  if ([_me_manager connection_status] != gap_user_status_online)
+  if (!_me_manager.connection_status)
   {
     _contextual_link_files = files;
     return;
@@ -407,7 +398,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)showNotLoggedInView
 {
-  if (_autologin_cooling_down)
+  if (_me_manager.still_trying)
   {
     if (_not_logged_view_controller == nil)
     {
@@ -442,7 +433,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)showSendView:(IAViewController*)controller
 {
-  if ([_me_manager connection_status] != gap_user_status_online)
+  if (!_me_manager.connection_status)
   {
     [self showNotConnectedView];
     return;
@@ -486,6 +477,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)loginWithUsername:(NSString*)username
                  password:(NSString*)password
 {
+  [self clearModels];
   _logging_in = YES;
   if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
   {
@@ -547,8 +539,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   [_link_manager getHistory];
 
   [[IACrashReportManager sharedInstance] sendExistingCrashReports];
-  
-  [[IAGapState instance] startPolling];
 
   [self updateStatusBarIcon];
   _login_view_controller = nil;
@@ -584,29 +574,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     NSString* error;
     switch (result.status)
     {
-      case gap_network_error:
-      case gap_meta_unreachable:
-        if (_new_credentials)
-        {
-          error = [NSString stringWithFormat:@"%@",
-                   NSLocalizedString(@"Connection problem, check Internet connection.",
-                                     @"no route to internet")];
-          break;
-        }
-        else
-        {
-          _autologin_cooling_down = YES;
-          [self performSelector:@selector(tryAutomaticLogin)
-                     withObject:nil
-                     afterDelay:_login_retry_cooldown];
-          _login_retry_cooldown = _login_retry_cooldown * 2;
-          if (_login_retry_cooldown > _login_retry_cooldown_max)
-            _login_retry_cooldown = _login_retry_cooldown_max;
-          if (_current_view_controller == _not_logged_view_controller)
-            [_not_logged_view_controller setMode:INFINIT_WAITING_FOR_CONNECTION];
-          return;
-        }
-        
       case gap_email_password_dont_match:
         error = [NSString stringWithFormat:@"%@",
                  NSLocalizedString(@"Email or password incorrect.",
@@ -642,28 +609,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
         // XXX display actual Meta message
         break;
 
-      case gap_trophonius_unreachable:
-        if (_new_credentials)
-        {
-          error = [NSString stringWithFormat:@"%@",
-                   NSLocalizedString(@"Unable to contact our servers, contact support.",
-                                     @"unable to contact our servers")];
-          break;
-        }
-        else
-        {
-          _autologin_cooling_down = YES;
-          [self performSelector:@selector(tryAutomaticLogin)
-                     withObject:nil
-                     afterDelay:_login_retry_cooldown];
-          _login_retry_cooldown = _login_retry_cooldown * 2;
-          if (_login_retry_cooldown > _login_retry_cooldown_max)
-            _login_retry_cooldown = _login_retry_cooldown_max;
-          if (_current_view_controller == _not_logged_view_controller)
-            [_not_logged_view_controller setMode:INFINIT_WAITING_FOR_CONNECTION];
-          return;
-        }
-        
       default:
         error = [NSString stringWithFormat:@"%@.",
                  NSLocalizedString(@"Unknown login error", @"unknown login error")];
@@ -702,6 +647,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)logoutCallback:(IAGapOperationResult*)result
 {
+  [self clearModels];
   if (result.success)
     ELLE_LOG("%s: logged out", self.description.UTF8String);
   else
@@ -811,6 +757,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)logoutAndShowLoginCallback:(IAGapOperationResult*)result
 {
   _settings_window = nil;
+  [self clearModels];
   if (result.success)
   {
     if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
@@ -936,7 +883,7 @@ wantsMarkTransactionsReadForUser:(IAUser*)user
 - (void)conversationView:(InfinitConversationViewController*)sender
     wantsTransferForUser:(IAUser*)user
 {
-  if ([_me_manager connection_status] != gap_user_status_online)
+  if (!_me_manager.connection_status)
   {
     [self showNotConnectedView];
   }
@@ -1332,20 +1279,20 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
   [_general_send_controller openWithNoFileForLink:YES];
 }
 
-- (gap_UserStatus)currentSelfStatus:(InfinitMainViewController*)status
+- (BOOL)currentSelfStatus:(InfinitMainViewController*)status
 {
-  return [_me_manager connection_status];
+  return _me_manager.connection_status;
 }
 
 //- Me Manager Protocol ----------------------------------------------------------------------------
 
-- (void)meManager:(IAMeManager*)sender
-hadConnectionStateChange:(gap_UserStatus)status
+- (void)meManager:(IAMeManager*)sender hadConnectionStateChange:(BOOL)status
 {
+  gap_UserStatus user_status = (gap_UserStatus)status;
   if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-    [_status_bar_icon setConnected:status];
+    [_status_bar_icon setConnected:user_status];
   else
-    _status_item.connected = status;
+    _status_item.connected = user_status;
 
   if ([_current_view_controller isKindOfClass:IANoConnectionViewController.class] &&
       status == gap_user_status_online)
@@ -1374,7 +1321,12 @@ hadConnectionStateChange:(gap_UserStatus)status
   }
 
   if (_current_view_controller != nil)
-    [_current_view_controller selfStatusChanged:status];
+    [_current_view_controller selfStatusChanged:user_status];
+}
+
+- (void)meManagerKickedOut:(IAMeManager*)sender
+{
+  [self kickedOut];
 }
 
 //- No Connection View Protocol --------------------------------------------------------------------
@@ -1540,7 +1492,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)statusBarIconDragEntered:(id)sender
 {
   if (![[IAGapState instance] logged_in] ||
-      [_me_manager connection_status] != gap_user_status_online ||
+      !_me_manager.connection_status ||
       _current_view_controller.class == InfinitSendViewController.class ||
       [self onboardingState:nil] != INFINIT_ONBOARDING_DONE)
   {
@@ -1558,7 +1510,7 @@ hadConnectionStateChange:(gap_UserStatus)status
 - (void)screenshotManager:(InfinitScreenshotManager*)sender
             gotScreenshot:(NSString*)path
 {
-  if (![[IAGapState instance] logged_in] || [_me_manager connection_status] != gap_user_status_online)
+  if (![[IAGapState instance] logged_in] || !_me_manager.connection_status)
     return;
   [_link_manager createLinkWithFiles:@[path] withMessage:@"" forScreenshot:YES];
 }
@@ -1654,7 +1606,6 @@ hadConnectionStateChange:(gap_UserStatus)status
 {
   if (_current_view_controller == nil)
     return;
-  [_me_manager setConnection_status:gap_user_status_online];
   [self showNotifications];
 }
 
@@ -1727,7 +1678,7 @@ hasCurrentViewController:(IAViewController*)controller
   _current_view_controller = controller;
 }
 
-//- Kicked Out Callback ----------------------------------------------------------------------------
+//- Kicked Out -------------------------------------------------------------------------------------
 
 - (void)delayedRetryLogin
 {
@@ -1740,8 +1691,21 @@ hasCurrentViewController:(IAViewController*)controller
   }
 }
 
-- (void)kickedOutCallback
+- (void)clearModels
 {
+  ELLE_TRACE("%s: clearing models", self.description.UTF8String);
+  [_transaction_manager clearModel];
+  [_link_manager clearModel];
+  [IAUserManager clearModel];
+  [IAAvatarManager clearModel];
+}
+
+- (void)kickedOut
+{
+  ELLE_LOG("%s: user kicked out", self.description.UTF8String);
+  [[IAGapState instance] stopPolling];
+  [self clearModels];
+  [[IAGapState instance] setLoggedIn:NO];
   // Try to automatically login after a couple of seconds
   [self performSelector:@selector(delayedRetryLogin) withObject:nil afterDelay:3.0];
 }

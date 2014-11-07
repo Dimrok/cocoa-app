@@ -31,7 +31,7 @@
   NSTimer* _progress_timer;
   NSMutableArray* _rows_with_progress;
 
-  gap_UserStatus _me_status;
+  BOOL _me_status;
 
   InfinitTooltipViewController* _tooltip_controller;
   NSString * _delete_link_message;
@@ -43,7 +43,7 @@
 
 - (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate
            andLinkList:(NSArray*)list
-         andSelfStatus:(gap_UserStatus)status
+         andSelfStatus:(BOOL)status
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
@@ -218,7 +218,7 @@
 
   NSUInteger row = 0;
 
-  if (_me_status == gap_user_status_online)
+  if (_me_status)
     {
     for (InfinitLinkTransaction* link in _list)
     {
