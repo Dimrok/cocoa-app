@@ -53,7 +53,6 @@ andReceiveTransaction:(IATransaction*)transaction
   _state = state;
   if (state >= INFINIT_ONBOARDING_RECEIVE_DONE)
     _receive_onboarding_done = YES;
-  [_delegate onboardingStateChanged:self toState:_state];
 }
 
 - (BOOL)inSendOnboarding

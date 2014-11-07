@@ -47,7 +47,4 @@ typedef enum __InfinitOnboardingState
 
 @protocol InfinitOnboardingProtocol <NSObject>
 
-- (void)onboardingStateChanged:(InfinitOnboardingController*)sender
-                       toState:(InfinitOnboardingState)state;
-
 @end
