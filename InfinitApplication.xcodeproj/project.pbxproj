@@ -141,10 +141,6 @@
 		836EAD1E1988EE3B0053BE85 /* powerpoint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD0A1988EE3B0053BE85 /* powerpoint@2x.png */; };
 		836EAD1F1988EE3B0053BE85 /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD0B1988EE3B0053BE85 /* video.png */; };
 		836EAD201988EE3B0053BE85 /* video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD0C1988EE3B0053BE85 /* video@2x.png */; };
-		836EAD4D1988EE710053BE85 /* arrow-tooltip-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD491988EE710053BE85 /* arrow-tooltip-onboarding.png */; };
-		836EAD4E1988EE710053BE85 /* arrow-tooltip-onboarding@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD4A1988EE710053BE85 /* arrow-tooltip-onboarding@2x.png */; };
-		836EAD4F1988EE710053BE85 /* btn-onboarding.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD4B1988EE710053BE85 /* btn-onboarding.png */; };
-		836EAD501988EE710053BE85 /* btn-onboarding@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD4C1988EE710053BE85 /* btn-onboarding@2x.png */; };
 		836EAD841988EEC70053BE85 /* conversation-icon-accept-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD531988EEC70053BE85 /* conversation-icon-accept-hover.png */; };
 		836EAD851988EEC70053BE85 /* conversation-icon-accept-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD541988EEC70053BE85 /* conversation-icon-accept-hover@2x.png */; };
 		836EAD861988EEC70053BE85 /* conversation-icon-accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAD551988EEC70053BE85 /* conversation-icon-accept.png */; };
@@ -289,7 +285,6 @@
 		839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */; };
 		83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8368F2BD17F1890C00135C37 /* libcurl.4.dylib */; };
 		83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */; };
-		83A208A51994D31D00C85C47 /* clippy_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A208911994D31D00C85C47 /* clippy_10.png */; };
 		83A208AB1994D43800C85C47 /* libboost_context.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A208A71994D3F200C85C47 /* libboost_context.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83A4F683183681A90038AC65 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
 		83A4F684183681A90038AC65 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
@@ -387,8 +382,6 @@
 		83F5FCF718EC62460051F010 /* InfinitTooltipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCF518EC62460051F010 /* InfinitTooltipViewController.m */; };
 		83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FCF618EC62460051F010 /* InfinitTooltipViewController.xib */; };
 		83F5FCFB18EC99870051F010 /* InfinitOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */; };
-		83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCFE18ECB8DB0051F010 /* InfinitClippyViewController.m */; };
-		83F5FD0118ECB8DB0051F010 /* InfinitClippyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FCFF18ECB8DB0051F010 /* InfinitClippyViewController.xib */; };
 		83F77AF219E4199F00982F64 /* InfinitDownloadDestinationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83F77AF119E4199F00982F64 /* InfinitDownloadDestinationManager.mm */; };
 /* End PBXBuildFile section */
 
@@ -819,10 +812,6 @@
 		836EAD0A1988EE3B0053BE85 /* powerpoint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "powerpoint@2x.png"; path = "../../../../fist-resources/slices/mac/mimetypes/powerpoint@2x.png"; sourceTree = "<group>"; };
 		836EAD0B1988EE3B0053BE85 /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = video.png; path = "../../../../fist-resources/slices/mac/mimetypes/video.png"; sourceTree = "<group>"; };
 		836EAD0C1988EE3B0053BE85 /* video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "video@2x.png"; path = "../../../../fist-resources/slices/mac/mimetypes/video@2x.png"; sourceTree = "<group>"; };
-		836EAD491988EE710053BE85 /* arrow-tooltip-onboarding.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-tooltip-onboarding.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/arrow-tooltip-onboarding.png"; sourceTree = "<group>"; };
-		836EAD4A1988EE710053BE85 /* arrow-tooltip-onboarding@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-tooltip-onboarding@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/arrow-tooltip-onboarding@2x.png"; sourceTree = "<group>"; };
-		836EAD4B1988EE710053BE85 /* btn-onboarding.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-onboarding.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/btn-onboarding.png"; sourceTree = "<group>"; };
-		836EAD4C1988EE710053BE85 /* btn-onboarding@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn-onboarding@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/btn-onboarding@2x.png"; sourceTree = "<group>"; };
 		836EAD531988EEC70053BE85 /* conversation-icon-accept-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-accept-hover.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-accept-hover.png"; sourceTree = "<group>"; };
 		836EAD541988EEC70053BE85 /* conversation-icon-accept-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-accept-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-accept-hover@2x.png"; sourceTree = "<group>"; };
 		836EAD551988EEC70053BE85 /* conversation-icon-accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-accept.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-accept.png"; sourceTree = "<group>"; };
@@ -975,26 +964,6 @@
 		839DDCF018D8C7D50021B826 /* InfinitConversationProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationProgressBar.h; sourceTree = "<group>"; };
 		839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitConversationProgressBar.mm; sourceTree = "<group>"; };
 		83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
-		83A2087F1994D31D00C85C47 /* clippy_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_1.png; path = ../../mac/view_onboarding/clippy/clippy_1.png; sourceTree = "<group>"; };
-		83A208801994D31D00C85C47 /* clippy_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_1@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_1@2x.png"; sourceTree = "<group>"; };
-		83A208811994D31D00C85C47 /* clippy_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_2.png; path = ../../mac/view_onboarding/clippy/clippy_2.png; sourceTree = "<group>"; };
-		83A208821994D31D00C85C47 /* clippy_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_2@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_2@2x.png"; sourceTree = "<group>"; };
-		83A208831994D31D00C85C47 /* clippy_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_3.png; path = ../../mac/view_onboarding/clippy/clippy_3.png; sourceTree = "<group>"; };
-		83A208841994D31D00C85C47 /* clippy_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_3@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_3@2x.png"; sourceTree = "<group>"; };
-		83A208851994D31D00C85C47 /* clippy_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_4.png; path = ../../mac/view_onboarding/clippy/clippy_4.png; sourceTree = "<group>"; };
-		83A208861994D31D00C85C47 /* clippy_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_4@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_4@2x.png"; sourceTree = "<group>"; };
-		83A208871994D31D00C85C47 /* clippy_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_5.png; path = ../../mac/view_onboarding/clippy/clippy_5.png; sourceTree = "<group>"; };
-		83A208881994D31D00C85C47 /* clippy_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_5@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_5@2x.png"; sourceTree = "<group>"; };
-		83A208891994D31D00C85C47 /* clippy_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_6.png; path = ../../mac/view_onboarding/clippy/clippy_6.png; sourceTree = "<group>"; };
-		83A2088A1994D31D00C85C47 /* clippy_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_6@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_6@2x.png"; sourceTree = "<group>"; };
-		83A2088B1994D31D00C85C47 /* clippy_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_7.png; path = ../../mac/view_onboarding/clippy/clippy_7.png; sourceTree = "<group>"; };
-		83A2088C1994D31D00C85C47 /* clippy_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_7@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_7@2x.png"; sourceTree = "<group>"; };
-		83A2088D1994D31D00C85C47 /* clippy_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_8.png; path = ../../mac/view_onboarding/clippy/clippy_8.png; sourceTree = "<group>"; };
-		83A2088E1994D31D00C85C47 /* clippy_8@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_8@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_8@2x.png"; sourceTree = "<group>"; };
-		83A2088F1994D31D00C85C47 /* clippy_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_9.png; path = ../../mac/view_onboarding/clippy/clippy_9.png; sourceTree = "<group>"; };
-		83A208901994D31D00C85C47 /* clippy_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_9@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_9@2x.png"; sourceTree = "<group>"; };
-		83A208911994D31D00C85C47 /* clippy_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clippy_10.png; path = ../../mac/view_onboarding/clippy/clippy_10.png; sourceTree = "<group>"; };
-		83A208921994D31D00C85C47 /* clippy_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clippy_10@2x.png"; path = "../../mac/view_onboarding/clippy/clippy_10@2x.png"; sourceTree = "<group>"; };
 		83A208A71994D3F200C85C47 /* libboost_context.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_context.dylib; path = ../../../Externals/lib/libboost_context.dylib; sourceTree = "<group>"; };
 		83A67AB119AB19C900A69E35 /* InfinitSettingsGeneralView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsGeneralView.h; sourceTree = "<group>"; };
 		83A67AB219AB19C900A69E35 /* InfinitSettingsGeneralView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsGeneralView.m; sourceTree = "<group>"; };
@@ -1122,9 +1091,6 @@
 		83F5FCF618EC62460051F010 /* InfinitTooltipViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitTooltipViewController.xib; sourceTree = "<group>"; };
 		83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOnboardingController.h; sourceTree = "<group>"; };
 		83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOnboardingController.m; sourceTree = "<group>"; };
-		83F5FCFD18ECB8DB0051F010 /* InfinitClippyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitClippyViewController.h; sourceTree = "<group>"; };
-		83F5FCFE18ECB8DB0051F010 /* InfinitClippyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitClippyViewController.m; sourceTree = "<group>"; };
-		83F5FCFF18ECB8DB0051F010 /* InfinitClippyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitClippyViewController.xib; sourceTree = "<group>"; };
 		83F77AF019E4199F00982F64 /* InfinitDownloadDestinationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDownloadDestinationManager.h; sourceTree = "<group>"; };
 		83F77AF119E4199F00982F64 /* InfinitDownloadDestinationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitDownloadDestinationManager.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1281,7 +1247,6 @@
 			children = (
 				8328084017A2B5100025B6F8 /* Common Resources */,
 				83F5FCD418EC61690051F010 /* Third Party */,
-				83F5FCFC18ECB8B40051F010 /* Clippy View */,
 				833B59B518D75D2300A43339 /* Conversation View */,
 				833C318A17CCC81100941C09 /* Desktop Notifier */,
 				833B237319DA930800D3F104 /* First Screenshot Modal */,
@@ -2157,57 +2122,6 @@
 			name = Tooltip;
 			sourceTree = "<group>";
 		};
-		83F5FCFC18ECB8B40051F010 /* Clippy View */ = {
-			isa = PBXGroup;
-			children = (
-				83F5FD0218EDEC3B0051F010 /* Resources */,
-				83F5FCFD18ECB8DB0051F010 /* InfinitClippyViewController.h */,
-				83F5FCFE18ECB8DB0051F010 /* InfinitClippyViewController.m */,
-				83F5FCFF18ECB8DB0051F010 /* InfinitClippyViewController.xib */,
-			);
-			name = "Clippy View";
-			sourceTree = "<group>";
-		};
-		83F5FD0218EDEC3B0051F010 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				836EAD491988EE710053BE85 /* arrow-tooltip-onboarding.png */,
-				836EAD4A1988EE710053BE85 /* arrow-tooltip-onboarding@2x.png */,
-				836EAD4B1988EE710053BE85 /* btn-onboarding.png */,
-				836EAD4C1988EE710053BE85 /* btn-onboarding@2x.png */,
-				83F5FD0718EDEC5E0051F010 /* clippy */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		83F5FD0718EDEC5E0051F010 /* clippy */ = {
-			isa = PBXGroup;
-			children = (
-				83A2087F1994D31D00C85C47 /* clippy_1.png */,
-				83A208801994D31D00C85C47 /* clippy_1@2x.png */,
-				83A208811994D31D00C85C47 /* clippy_2.png */,
-				83A208821994D31D00C85C47 /* clippy_2@2x.png */,
-				83A208831994D31D00C85C47 /* clippy_3.png */,
-				83A208841994D31D00C85C47 /* clippy_3@2x.png */,
-				83A208851994D31D00C85C47 /* clippy_4.png */,
-				83A208861994D31D00C85C47 /* clippy_4@2x.png */,
-				83A208871994D31D00C85C47 /* clippy_5.png */,
-				83A208881994D31D00C85C47 /* clippy_5@2x.png */,
-				83A208891994D31D00C85C47 /* clippy_6.png */,
-				83A2088A1994D31D00C85C47 /* clippy_6@2x.png */,
-				83A2088B1994D31D00C85C47 /* clippy_7.png */,
-				83A2088C1994D31D00C85C47 /* clippy_7@2x.png */,
-				83A2088D1994D31D00C85C47 /* clippy_8.png */,
-				83A2088E1994D31D00C85C47 /* clippy_8@2x.png */,
-				83A2088F1994D31D00C85C47 /* clippy_9.png */,
-				83A208901994D31D00C85C47 /* clippy_9@2x.png */,
-				83A208911994D31D00C85C47 /* clippy_10.png */,
-				83A208921994D31D00C85C47 /* clippy_10@2x.png */,
-			);
-			name = clippy;
-			path = "../../../../fist-resources/slices/view_onboarding/clippy";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2452,7 +2366,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
-				836EAD4D1988EE710053BE85 /* arrow-tooltip-onboarding.png in Resources */,
 				836EADB11988EEC70053BE85 /* icon-status-online.png in Resources */,
 				8318E9D519A788E800B765A2 /* settings-icon-check@2x.png in Resources */,
 				836EAE5C1988F5630053BE85 /* icon-clipboard-hover.png in Resources */,
@@ -2467,7 +2380,6 @@
 				836EAE4A1988F4500053BE85 /* icon-menu-bar-animated-black-5.png in Resources */,
 				8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
 				836EADCE1988F2040053BE85 /* icon-gear.png in Resources */,
-				836EAD4E1988EE710053BE85 /* arrow-tooltip-onboarding@2x.png in Resources */,
 				8328081B17A2B4A60025B6F8 /* Credits.rtf in Resources */,
 				83C25B4E19EEBC78009752F1 /* send-illustration-no-results@2x.png in Resources */,
 				836EAD8D1988EEC70053BE85 /* conversation-icon-canceled@2x.png in Resources */,
@@ -2484,10 +2396,8 @@
 				836EAD9B1988EEC70053BE85 /* conversation-icon-quote-left@2x.png in Resources */,
 				832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */,
 				836EAE541988F4500053BE85 /* icon-menu-bar-animated-black-15.png in Resources */,
-				836EAD501988EE710053BE85 /* btn-onboarding@2x.png in Resources */,
 				837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */,
 				836EADCB1988F1F90053BE85 /* icon-transfer@2x.png in Resources */,
-				836EAD4F1988EE710053BE85 /* btn-onboarding.png in Resources */,
 				83C25B7119F010EE009752F1 /* send-icon-back.png in Resources */,
 				836EAD9F1988EEC70053BE85 /* conversation-icon-quote@2x.png in Resources */,
 				83C25B5B19EEBC8F009752F1 /* send-icon-media-ps.png in Resources */,
@@ -2543,7 +2453,6 @@
 				83BD384D19FE364E003EA0AD /* old-icon-cancel-send@2x.png in Resources */,
 				83C25B4919EEBC6C009752F1 /* send-icon-link.png in Resources */,
 				83E73FB119A5E2B700B7E8EF /* InfinitSettingsAccountView.xib in Resources */,
-				83A208A51994D31D00C85C47 /* clippy_10.png in Resources */,
 				83312D4B19FA7253007897D4 /* OldInfinitSendNoteViewController.xib in Resources */,
 				836EAD1E1988EE3B0053BE85 /* powerpoint@2x.png in Resources */,
 				83C25B7619F016E3009752F1 /* send-icon-add-file@2x.png in Resources */,
@@ -2598,7 +2507,6 @@
 				836EADD31988F2270053BE85 /* icon-upload@2x.png in Resources */,
 				836EAD141988EE3B0053BE85 /* folder@2x.png in Resources */,
 				836EAE061988F42D0053BE85 /* icon-menu-bar-active.png in Resources */,
-				83F5FD0118ECB8DB0051F010 /* InfinitClippyViewController.xib in Resources */,
 				836EAE4C1988F4500053BE85 /* icon-menu-bar-animated-black-7.png in Resources */,
 				836EAE531988F4500053BE85 /* icon-menu-bar-animated-black-14.png in Resources */,
 				837B2A8A19DD96AD00A3CDE1 /* bg-main-button.png in Resources */,
@@ -2827,7 +2735,6 @@
 				8337673819088A820073A621 /* OEXTokenAttachmentCell.m in Sources */,
 				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
 				83312D4519FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m in Sources */,
-				83F5FD0018ECB8DB0051F010 /* InfinitClippyViewController.m in Sources */,
 				83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */,
 				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.mm in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */,
