@@ -258,6 +258,11 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
   return res;
 }
 
+- (void)clean_state
+{
+  gap_clean_state(_state);
+}
+
 - (gap_Status)login:(NSString*)email
            password:(NSString*)hash_password;
 {
