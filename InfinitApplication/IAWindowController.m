@@ -178,7 +178,7 @@
   
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
-     context.duration = 0.15;
+     context.duration = 0.1;
      [(NSWindow*)self.window.animator setAlphaValue:1.0];
    }
                       completionHandler:^
