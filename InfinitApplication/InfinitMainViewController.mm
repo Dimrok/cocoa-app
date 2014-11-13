@@ -19,7 +19,7 @@
 
 ELLE_LOG_COMPONENT("OSX.MainViewController");
 
-#define IA_FEEDBACK_LINK "http://feedback.infinit.io"
+#define IA_FEEDBACK_LINK "http://feedback.infinit.io?utm_source=app&utm_medium=mac"
 
 //- Transaction Link View --------------------------------------------------------------------------
 
