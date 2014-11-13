@@ -122,11 +122,13 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
         NSDateComponents* repeat_interval = [[NSDateComponents alloc] init];
         repeat_interval.hour = 3;
         res.deliveryRepeatInterval = repeat_interval;
-        res.hasActionButton = YES;
         if ([IAFunctions osxVersion] > INFINIT_OS_X_VERSION_10_8)
+        {
+          res.hasActionButton = YES;
           res._showsButtons = YES;
-        res.actionButtonTitle = NSLocalizedString(@"Accept", nil);
-        res.otherButtonTitle = NSLocalizedString(@"Snooze", nil);
+          res.actionButtonTitle = NSLocalizedString(@"Accept", nil);
+          res.otherButtonTitle = NSLocalizedString(@"Snooze", nil);
+        }
       }
       break;
       
