@@ -408,6 +408,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
            onboarding_state == INFINIT_ONBOARDING_SEND_FILE_SENT)
   {
     [_transaction_controller performSelector:@selector(delayedFileSentOnboarding) withObject:nil afterDelay:0.5];
+    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
   }
 }
 
