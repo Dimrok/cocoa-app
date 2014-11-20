@@ -293,8 +293,8 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
   NSMutableDictionary* features = [[NSMutableDictionary alloc] init];
   for (std::pair<std::string, std::string> const& pair: features_)
   {
-    NSString* key = [NSString stringWithFormat:@"%s", pair.first.c_str()];
-    features[key] = [NSString stringWithFormat:@"%s", pair.second.c_str()];
+    NSString* key = [NSString stringWithUTF8String:pair.first.c_str()];
+    features[key] = [NSString stringWithUTF8String:pair.second.c_str()];
   }
   return features;
 }
@@ -493,7 +493,6 @@ return [NSString stringWithUTF8String:str]; \
 
 - (gap_Status)set_avatar:(NSImage*)avatar
 {
-  
   [avatar lockFocus];
   NSBitmapImageRep* bitmapImageRep = [[NSBitmapImageRep alloc]
                                       initWithFocusedViewRect:
