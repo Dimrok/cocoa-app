@@ -158,7 +158,6 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     else if (res == INFINIT_NO_UPLOAD_SCREENSHOTS)
     {
       [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_NO];
-      [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"upload_screenshots"];
       [self setWatch:NO];
       return;
     }
