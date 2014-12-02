@@ -1135,6 +1135,11 @@ hadDataUpdatedForLink:(InfinitLinkTransaction*)link
 
 //- Login Window Protocol --------------------------------------------------------------------------
 
+- (void)clearModelsBeforeRegister:(InfinitLoginViewController*)sender
+{
+  [self clearModels];
+}
+
 - (void)tryLogin:(InfinitLoginViewController*)sender
         username:(NSString*)username
         password:(NSString*)password

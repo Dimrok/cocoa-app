@@ -600,6 +600,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     if ([self registerInputsGood])
     {
       [self hideError];
+      [_delegate clearModelsBeforeRegister:self];
       [[IAGapState instance] register_:self.email_address.stringValue
                           withFullname:self.fullname.stringValue
                            andPassword:self.password.stringValue
