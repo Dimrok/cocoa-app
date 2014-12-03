@@ -35,6 +35,9 @@
   [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
   [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
   [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
+#else
+  [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:NO];
+  [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
 #endif
 }
 
