@@ -808,6 +808,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   if ([NSApp modalWindow] != nil)
     [NSApp abortModal];
   [[IAGapState instance] freeGap];
+  _desktop_notifier = nil;
   [_delegate terminateApplication:self];
 }
 

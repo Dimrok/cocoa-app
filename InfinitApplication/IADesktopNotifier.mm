@@ -53,7 +53,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)dealloc
 {
-  [_notification_centre removeAllDeliveredNotifications];
+  for (NSUserNotification* notification in _notification_centre.scheduledNotifications)
+    [_notification_centre removeScheduledNotification:notification];
 }
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter*)center
