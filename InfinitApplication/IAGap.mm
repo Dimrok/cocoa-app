@@ -62,6 +62,9 @@ void on_deleted_swagger(uint32_t const user_id);
 
 void on_link_transaction_update(surface::gap::LinkTransaction const& transaction_);
 
+static
+void on_recipient_changed(uint32_t const transaction_id, uint32_t const new_user_id);
+
 @interface NotificationForwarder : NSObject
 
 - (id)init:(NSString*)msg withInfo:(NSDictionary*)info;
@@ -224,7 +227,8 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
       (gap_trophonius_unavailable_callback(_state, &on_trophonius_unavailable) != gap_ok) ||
       (gap_deleted_favorite_callback(_state, &on_deleted_favorite) != gap_ok) ||
       (gap_deleted_swagger_callback(_state, &on_deleted_swagger) != gap_ok) ||
-      (gap_link_callback(_state, on_link_transaction_update) != gap_ok))
+      (gap_link_callback(_state, on_link_transaction_update) != gap_ok) ||
+      (gap_transaction_recipient_changed_callback(_state, &on_recipient_changed) != gap_ok))
     // XXX add error callback
     //            (gap_on_error_callback(_state, &on_error_callback) != gap_ok))
   {
@@ -264,27 +268,16 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
 }
 
 - (gap_Status)login:(NSString*)email
-           password:(NSString*)hash_password;
+           password:(NSString*)password;
 {
   if (_callbacks_set == NO)
     [self setCallbacks];
-  gap_Status res = gap_login(_state, email.UTF8String, hash_password.UTF8String);
+  gap_Status res = gap_login(_state, email.UTF8String, password.UTF8String);
   if (res == gap_ok)
   {
     ELLE_DEBUG("%s: login successful", self.description.UTF8String);
   }
   return res;
-}
-
-- (NSString*)hash_password:(NSString*)email
-                  password:(NSString*)password
-{
-  char* hash = gap_hash_password(_state, email.UTF8String, password.UTF8String);
-  if (hash == NULL)
-    return nil;
-  NSString* hash_pass = [NSString stringWithUTF8String:hash];
-  gap_hash_free(hash);
-  return hash_pass;
 }
 
 - (NSDictionary*)fetch_features
@@ -311,14 +304,14 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
 
 - (gap_Status)register_:(NSString*)fullname
                   email:(NSString*)email
-               password:(NSString*)hash_password
+               password:(NSString*)password
 {
   if (_callbacks_set == NO)
     [self setCallbacks];
   gap_Status res = gap_register(_state,
                                 fullname.UTF8String,
                                 email.UTF8String,
-                                hash_password.UTF8String);
+                                password.UTF8String);
   // Successful registration will log the user in.
   return res;
 }
@@ -1007,4 +1000,11 @@ void on_link_transaction_update(surface::gap::LinkTransaction const& transaction
   InfinitLinkTransaction* link = [IAGap objcLinkTransactionFromCpp:transaction_];
   NSMutableDictionary* msg = [NSMutableDictionary dictionaryWithDictionary:@{@"link": link}];
   [IAGap sendNotif:IA_GAP_EVENT_LINK_TRANSACTION_NOTIFICATION withInfo:msg];
+}
+
+static
+void on_recipient_changed(uint32_t const transaction_id, uint32_t const new_user_id)
+{
+  NSDictionary* msg = @{@"transaction_id": @(transaction_id), @"new_recipient": @(new_user_id)};
+  [IAGap sendNotif:IA_GAP_EVENT_RECIPIENT_CHANGED_NOTIFICATION withInfo:[msg mutableCopy]];
 }
