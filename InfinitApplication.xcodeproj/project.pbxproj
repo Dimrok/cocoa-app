@@ -14,6 +14,8 @@
 		83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */; };
 		83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */; };
 		83059E0D19213BD7008DA14A /* Montserrat.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83059E0A19213B42008DA14A /* Montserrat.ttf */; };
+		8311B5C81A8002A400832FDE /* libboost_regex.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8311B5C71A8002A400832FDE /* libboost_regex.dylib */; };
+		8311B5DD1A8002C000832FDE /* libboost_regex.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8311B5C71A8002A400832FDE /* libboost_regex.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8311EA0418C603D200410450 /* libelle.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8334C7EE17A67EB0006028BC /* libelle.dylib */; };
 		83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5217BA69A3003B2F52 /* IAFavouritesSendViewController.m */; };
 		83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */; };
@@ -573,6 +575,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8311B5DD1A8002C000832FDE /* libboost_regex.dylib in Copy Infinit Libraries */,
 				83A208AB1994D43800C85C47 /* libboost_context.dylib in Copy Infinit Libraries */,
 				8337672A19087E8C0073A621 /* libboost_chrono.dylib in Copy Infinit Libraries */,
 				8337672B19087E8C0073A621 /* libboost_date_time.dylib in Copy Infinit Libraries */,
@@ -631,6 +634,7 @@
 		83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitSendViewController.mm; sourceTree = "<group>"; };
 		83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendViewController.xib; sourceTree = "<group>"; };
 		83059E0A19213B42008DA14A /* Montserrat.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Montserrat.ttf; sourceTree = "<group>"; };
+		8311B5C71A8002A400832FDE /* libboost_regex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_regex.dylib; path = ../../../Externals/lib/libboost_regex.dylib; sourceTree = "<group>"; };
 		83126E5117BA69A3003B2F52 /* IAFavouritesSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFavouritesSendViewController.h; sourceTree = "<group>"; };
 		83126E5217BA69A3003B2F52 /* IAFavouritesSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFavouritesSendViewController.m; sourceTree = "<group>"; };
 		83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAFavouritesSendViewController.xib; sourceTree = "<group>"; };
@@ -1104,6 +1108,7 @@
 				83F4F2F219D053670003863C /* SystemConfiguration.framework in Frameworks */,
 				8392497418D7B70100EE72C7 /* QuartzCore.framework in Frameworks */,
 				8392497318D7B6D900EE72C7 /* CrashReporter.framework in Frameworks */,
+				8311B5C81A8002A400832FDE /* libboost_regex.dylib in Frameworks */,
 				8311EA0418C603D200410450 /* libelle.dylib in Frameworks */,
 				83E1E1BB1861A48E00F8DDF9 /* IOKit.framework in Frameworks */,
 				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
@@ -1957,6 +1962,7 @@
 				8337671A19087DFC0073A621 /* libboost_chrono.dylib */,
 				83A208A71994D3F200C85C47 /* libboost_context.dylib */,
 				8337671B19087DFC0073A621 /* libboost_date_time.dylib */,
+				8311B5C71A8002A400832FDE /* libboost_regex.dylib */,
 				8337671E19087DFC0073A621 /* libboost_signals.dylib */,
 				8337671F19087DFC0073A621 /* libboost_system.dylib */,
 				8337672019087DFC0073A621 /* libboost_thread.dylib */,
@@ -2649,7 +2655,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/local/bin/python3;
-			shellScript = "import os\nimport subprocess\nimport sys\n\nlibraries_to_sign = [\n  'libarchive.13.dylib',\n  'libaws.dylib',\n  'libboost_chrono.dylib',\n  'libboost_context.dylib',\n  'libboost_date_time.dylib',\n  'libboost_signals.dylib',\n  'libboost_system.dylib',\n  'libboost_thread.dylib',\n  'libc++.1.dylib',\n  'libc++abi.dylib',\n  'libcrash.dylib',\n  'libcrypto.1.0.0.dylib',\n  'libcryptography.dylib',\n  'libcurl.4.dylib',\n  'libelle.dylib',\n  'libfrete.dylib',\n  'libgap.dylib',\n  'libmetaclient.dylib',\n  'libmetrics.dylib',\n  'libpapier.dylib',\n  'libprotocol.dylib',\n  'libreactor.dylib',\n  'libssl.1.0.0.dylib',\n  'libstation.dylib',\n  'libtransaction.dylib',\n  'libtrophonius-client.dylib',\n  'libz.1.2.8.dylib',\n]\n\nlocation = '%s/%s' % (os.environ['BUILT_PRODUCTS_DIR'],\n                      os.environ['FRAMEWORKS_FOLDER_PATH'])\ncode_sign_flags = os.environ.get('OTHER_CODE_SIGN_FLAGS', None)\nif code_sign_flags:\n  code_sign_flags = code_sign_flags.replace(\"'\", '').replace('`', '')\ncode_sign_identity = os.environ['CODE_SIGN_IDENTITY']\n\ndef code_sign(name):\n  print('signing: %s' % name)\n  args = ['codesign', '--verbose', '--force',\n          '--sign', code_sign_identity, '%s/%s' % (location, name)]\n  if code_sign_flags:\n    args.extend(code_sign_flags.split(' '))\n  cmd(args)\n\ndef cmd(args,\n        cwd = '.',\n        stdout = None,\n        stderr = subprocess.STDOUT,\n        shell = False):\n  try:\n    return subprocess.check_call(args,\n                                 stderr = stderr,\n                                 shell = shell,\n                                 cwd = cwd)\n  except subprocess.CalledProcessError as e:\n    print('command \"%s\" failed' % e.cmd)\n    sys.exit(1)\n  return None\n\nfor library_name in libraries_to_sign:\n  code_sign(library_name)\n";
+			shellScript = "import os\nimport subprocess\nimport sys\n\nlibraries_to_sign = [\n  'libarchive.13.dylib',\n  'libaws.dylib',\n  'libboost_chrono.dylib',\n  'libboost_context.dylib',\n  'libboost_date_time.dylib',\n  'libboost_regex.dylib',\n  'libboost_signals.dylib',\n  'libboost_system.dylib',\n  'libboost_thread.dylib',\n  'libc++.1.dylib',\n  'libc++abi.dylib',\n  'libcrash.dylib',\n  'libcrypto.1.0.0.dylib',\n  'libcryptography.dylib',\n  'libcurl.4.dylib',\n  'libelle.dylib',\n  'libfrete.dylib',\n  'libgap.dylib',\n  'libmetaclient.dylib',\n  'libmetrics.dylib',\n  'libpapier.dylib',\n  'libprotocol.dylib',\n  'libreactor.dylib',\n  'libssl.1.0.0.dylib',\n  'libstation.dylib',\n  'libtransaction.dylib',\n  'libtrophonius-client.dylib',\n  'libz.1.2.8.dylib',\n]\n\nlocation = '%s/%s' % (os.environ['BUILT_PRODUCTS_DIR'],\n                      os.environ['FRAMEWORKS_FOLDER_PATH'])\ncode_sign_flags = os.environ.get('OTHER_CODE_SIGN_FLAGS', None)\nif code_sign_flags:\n  code_sign_flags = code_sign_flags.replace(\"'\", '').replace('`', '')\ncode_sign_identity = os.environ['CODE_SIGN_IDENTITY']\n\ndef code_sign(name):\n  print('signing: %s' % name)\n  args = ['codesign', '--verbose', '--force',\n          '--sign', code_sign_identity, '%s/%s' % (location, name)]\n  if code_sign_flags:\n    args.extend(code_sign_flags.split(' '))\n  cmd(args)\n\ndef cmd(args,\n        cwd = '.',\n        stdout = None,\n        stderr = subprocess.STDOUT,\n        shell = False):\n  try:\n    return subprocess.check_call(args,\n                                 stderr = stderr,\n                                 shell = shell,\n                                 cwd = cwd)\n  except subprocess.CalledProcessError as e:\n    print('command \"%s\" failed' % e.cmd)\n    sys.exit(1)\n  return None\n\nfor library_name in libraries_to_sign:\n  code_sign(library_name)\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
