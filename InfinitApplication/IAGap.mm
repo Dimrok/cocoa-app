@@ -180,8 +180,12 @@ void on_recipient_changed(uint32_t const transaction_id, uint32_t const new_user
 //    setenv("INFINIT_METRICS_INFINIT_HOST", "127.0.0.1", 1);
 //    setenv("INFINIT_METRICS_INFINIT_PORT", "8282", 1);
 
+//    setenv("INFINIT_META_HOST", "preprod.meta.production.infinit.io", 1);
+
     setenv("INFINIT_CRASH_DEST", "chris@infinit.io", 1);
 #endif
+
+    NSString* infinit_home_dir = [NSHomeDirectory() stringByAppendingPathComponent:@".infinit"];
 
     NSString* download_dir =
       [NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES) firstObject];
@@ -204,7 +208,7 @@ void on_recipient_changed(uint32_t const transaction_id, uint32_t const new_user
 
     NSLog(@"Download path set to: %@", download_dir);
 
-    _state = gap_new(production, download_dir.UTF8String);
+    _state = gap_new(production, infinit_home_dir.UTF8String, download_dir.UTF8String);
 
     if (![[[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"] isEqualToString:download_dir])
     {
