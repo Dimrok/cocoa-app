@@ -54,14 +54,7 @@ clipboard so you can share it in a message, an\nemail or a tweet.", nil);
   self.information.attributedStringValue =
     [[NSAttributedString alloc] initWithString:info_text attributes:information_attrs];
 
-  NSString* version =
-    [[[InfinitFeatureManager sharedInstance] features] valueForKey:@"screenshot_modal_20141104"];
-  ELLE_TRACE("%s: running test with version: %s", self.description.UTF8String, version.UTF8String);
-  if ([version isEqualToString:@"a"])
-    self.affirmative.title = @"Sure, upload my screenshots!";
-  else
-    self.affirmative.title = @"Help me share my screenshots!";
-
+  self.affirmative.title = @"Help me share my screenshots!";
   self.negative.title = NSLocalizedString(@"No, thanks", nil);
 }
 

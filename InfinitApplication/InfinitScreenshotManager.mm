@@ -55,29 +55,26 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
         _first_screenshot = YES;
     }
 
+    _last_capture_time = [NSDate date];
+
+    _query.delegate = self;
+    _query.predicate = [NSPredicate predicateWithFormat:@"kMDItemIsScreenCapture = 1"];
+    _query.notificationBatchingInterval = 0.1;
+    _query.searchScopes = @[[self screenCaptureLocation]];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(gotScreenShot:)
                                                  name:NSMetadataQueryDidUpdateNotification
                                                object:_query];
-    _last_capture_time = [NSDate date];
-
-    NSPredicate* main_predicate = [NSPredicate predicateWithFormat:@"kMDItemIsScreenCapture = 1"];
-    NSPredicate* type_predicate =
-      [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'public.image'"];
-    _query.delegate = self;
-    _query.predicate =
-      [NSCompoundPredicate andPredicateWithSubpredicates:@[main_predicate, type_predicate]];
-    _query.notificationBatchingInterval = 0.1;
-    _query.searchScopes = @[[self screenCaptureLocation]];
-
     if (_watch)
       [_query startQuery];
   }
   return self;
 }
 
-- (NSString*)screenCaptureLocation
+- (NSURL*)screenCaptureLocation
 {
+  NSURL* res = nil;
 	NSString* location =
     [[[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.apple.screencapture"] objectForKey:@"location"];
 	if (location)
@@ -87,10 +84,13 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
     {
 			location = [location stringByAppendingString:@"/"];
 		}
-		return location;
+    res = [NSURL fileURLWithPath:location];
 	}
-
-	return [[@"~/Desktop" stringByExpandingTildeInPath] stringByAppendingString:@"/"];
+  else
+  {
+    res = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES) firstObject]];
+  }
+  return res;
 }
 
 - (void)dealloc
@@ -108,6 +108,7 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
   if (_watch == watch)
     return;
 
+  _last_capture_time = [NSDate date];
   _watch = watch;
   _first_screenshot = NO;
   NSString* value = [NSString stringWithFormat:@"%d", _watch];

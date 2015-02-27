@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <development version="5100" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitFirstScreenshotModal">
@@ -19,21 +19,17 @@
         <window title="Infinit" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="651" height="556"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="contentRect" x="196" y="240" width="651" height="567"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="651" height="556"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <rect key="frame" x="0.0" y="0.0" width="651" height="567"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mYA-JJ-NjV" customClass="InfinitScreenshotTextView">
                         <rect key="frame" x="0.0" y="61" width="651" height="126"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gCo-DK-KH6">
-                                <rect key="frame" x="30" y="27" width="115" height="66"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="logo" id="yll-gA-M4B"/>
-                            </imageView>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZW9-jg-Url">
-                                <rect key="frame" x="181" y="20" width="441" height="80"/>
+                                <rect key="frame" x="105" y="23" width="441" height="80"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="HyD-Dm-NxF">
                                     <font key="font" metaFont="system"/>
                                     <string key="title">Whenever you take a screenshot, we'll upload it and copy a link to your
@@ -44,11 +40,11 @@ clipboard so you can share it in a message, an email or a tweet.</string>
                         </subviews>
                     </customView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ha4-cq-9f3">
-                        <rect key="frame" x="0.0" y="187" width="651" height="369"/>
+                        <rect key="frame" x="0.0" y="187" width="651" height="380"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="illustration_screenshots" id="mQZ-Ry-lvz"/>
                     </imageView>
                     <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rde-5I-gpe">
-                        <rect key="frame" x="14" y="13" width="110" height="32"/>
+                        <rect key="frame" x="14" y="17" width="110" height="32"/>
                         <buttonCell key="cell" type="push" title="No, Thanks" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G3I-sg-frX">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -61,7 +57,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViY-Rl-ufb">
-                        <rect key="frame" x="414" y="13" width="223" height="32"/>
+                        <rect key="frame" x="414" y="17" width="223" height="32"/>
                         <buttonCell key="cell" type="push" title="Sure, upload my screenshots!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6P6-np-uB4">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -87,7 +83,6 @@ DQ
         </window>
     </objects>
     <resources>
-        <image name="illustration_screenshots" width="651" height="369"/>
-        <image name="logo" width="164" height="90"/>
+        <image name="illustration_screenshots" width="651" height="380"/>
     </resources>
 </document>
