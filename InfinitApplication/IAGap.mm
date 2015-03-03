@@ -320,14 +320,6 @@ void on_recipient_changed(uint32_t const transaction_id, uint32_t const new_user
   return res;
 }
 
-#define RETURN_CSTRING(expr) \
-do { \
-char const* str = expr; \
-if (str == NULL) return nil; \
-return [NSString stringWithUTF8String:str]; \
-} while (false) \
-/**/
-
 - (NSNumber*)transaction_sender_id:(NSNumber*)transaction_id
 {
   return [NSNumber numberWithUnsignedInt:gap_transaction_sender_id(_state,
@@ -336,12 +328,12 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSString*)transaction_sender_fullname:(NSNumber*)transaction_id
 {
-  RETURN_CSTRING(gap_transaction_sender_fullname(_state, transaction_id.unsignedIntValue));
+  return [self NSStringFrom:gap_transaction_sender_fullname(_state, transaction_id.unsignedIntValue)];
 }
 
 - (NSString*)transaction_sender_device_id:(NSNumber*)transaction_id
 {
-  RETURN_CSTRING(gap_transaction_sender_device_id(_state, transaction_id.unsignedIntValue));
+  return [self NSStringFrom:gap_transaction_sender_device_id(_state, transaction_id.unsignedIntValue)];
 }
 
 - (NSNumber*)transaction_recipient_id:(NSNumber*)transaction_id
@@ -352,12 +344,12 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSString*)transaction_recipient_fullname:(NSNumber*)transaction_id
 {
-  RETURN_CSTRING(gap_transaction_recipient_fullname(_state, transaction_id.unsignedIntValue));
+  return [self NSStringFrom:gap_transaction_recipient_fullname(_state, transaction_id.unsignedIntValue)];
 }
 
 - (NSString*)transaction_recipient_device_id:(NSNumber*)transaction_id
 {
-  RETURN_CSTRING(gap_transaction_recipient_device_id(_state, transaction_id.unsignedIntValue));
+  return [self NSStringFrom:gap_transaction_recipient_device_id(_state, transaction_id.unsignedIntValue)];
 }
 
 - (NSArray*)transaction_files:(NSNumber*)transaction_id
@@ -399,7 +391,7 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSString*)transaction_message:(NSNumber*)transaction_id
 {
-  RETURN_CSTRING(gap_transaction_message(_state, transaction_id.unsignedIntValue));
+  return [self NSStringFrom:gap_transaction_message(_state, transaction_id.unsignedIntValue)];
 }
 
 - (float)transaction_progress:(NSNumber*)transaction_id
@@ -525,12 +517,12 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSString*)user_fullname:(NSNumber*)user_id
 {
-  RETURN_CSTRING(gap_user_fullname(_state, user_id.unsignedIntValue));
+  return [self NSStringFrom:gap_user_fullname(_state, user_id.unsignedIntValue)];
 }
 
 - (NSString*)user_handle:(NSNumber*)user_id
 {
-  RETURN_CSTRING(gap_user_handle(_state, user_id.unsignedIntValue));
+  return [self NSStringFrom:gap_user_handle(_state, user_id.unsignedIntValue)];
 }
 
 - (BOOL)user_ghost:(NSNumber*)user_id
@@ -545,7 +537,7 @@ return [NSString stringWithUTF8String:str]; \
 
 - (NSString*)user_realid:(NSNumber*)user_id
 {
-  RETURN_CSTRING(gap_user_realid(_state, user_id.unsignedIntValue));
+  return [self NSStringFrom:gap_user_realid(_state, user_id.unsignedIntValue)];
 }
 
 - (BOOL)user_is_favorite:(NSNumber*)user_id
@@ -832,6 +824,13 @@ return [NSString stringWithUTF8String:str]; \
   auto transaction_ = gap_link_transaction_by_id(_state, transaction_id.unsignedIntValue);
   InfinitLinkTransaction* transaction = [IAGap objcLinkTransactionFromCpp:transaction_];
   return transaction;
+}
+
+#pragma mark - Helpers
+
+- (NSString*)NSStringFrom:(std::string const&)string
+{
+  return [NSString stringWithUTF8String:string.c_str()];
 }
 
 @end
