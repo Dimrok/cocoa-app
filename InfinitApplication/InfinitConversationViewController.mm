@@ -706,7 +706,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   for (NSInteger index = 0; index < _elements.count; index++)
   {
     InfinitConversationElement* element = _elements[index];
-    if (!element.spacer && element.transaction.sender == user)
+    if (!element.spacer && [element.transaction.sender isEqual:user])
     {
       InfinitConversationCellView* cell =
         [self.table_view viewAtColumn:0 row:index makeIfNecessary:NO];
