@@ -18,6 +18,8 @@
 
 ELLE_LOG_COMPONENT("OSX.AvatarManager");
 
+static IAAvatarManager* _instance = nil;
+
 @implementation IAAvatarManager
 {
 @private
@@ -46,12 +48,9 @@ ELLE_LOG_COMPONENT("OSX.AvatarManager");
 
 + (IAAvatarManager*)_instance
 {
-  static IAAvatarManager* instance = nil;
-  if (instance == nil)
-  {
-    instance = [[IAAvatarManager alloc] init];
-  }
-  return instance;
+  if (_instance == nil)
+    _instance = [[IAAvatarManager alloc] init];
+  return _instance;
 }
 
 //- Fetch Avatar -----------------------------------------------------------------------------------
@@ -126,12 +125,7 @@ ELLE_LOG_COMPONENT("OSX.AvatarManager");
 
 + (void)clearModel
 {
-  [[IAAvatarManager _instance] clearModel];
-}
-
-- (void)clearModel
-{
-  [_cache removeAllObjects];
+  _instance = nil;
 }
 
 @end
