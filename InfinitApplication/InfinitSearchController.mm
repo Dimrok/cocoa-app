@@ -209,20 +209,41 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 //- Swagger Search Handling ------------------------------------------------------------------------
 
+- (BOOL)user:(IAUser*)user containsSearchString:(NSString*)search_string
+{
+  if (!user.deleted &&
+      ([user.fullname rangeOfString:search_string options:NSCaseInsensitiveSearch].location != NSNotFound ||
+       [user.handle.lowercaseString rangeOfString:search_string options:NSCaseInsensitiveSearch].location != NSNotFound))
+    return YES;
+  return NO;
+}
+
 - (void)searchSwaggers:(NSString*)search_string
 {
   [_swagger_results removeAllObjects];
+  BOOL self_result = NO;
+  NSNumber* self_id = [IAGapState instance].self_id;
   NSArray* swaggers = [IAUserManager swaggerList];
   for (IAUser* user in swaggers)
   {
-    if (!user.deleted &&
-        ([user.fullname rangeOfString:search_string options:NSCaseInsensitiveSearch].location != NSNotFound ||
-        [user.handle.lowercaseString rangeOfString:search_string options:NSCaseInsensitiveSearch].location != NSNotFound))
+    if ([self user:user containsSearchString:search_string])
     {
+      if ([user.user_id isEqualTo:self_id])
+        self_result = YES;
       InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user
                                                                                        andDelegate:self];
       [_swagger_results addObject:person];
     }
+  }
+  if (!self_result)
+  {
+    IAUser* self_user = [IAUserManager userWithId:self_id];
+    if ([self user:self_user containsSearchString:search_string])
+    {
+      InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithInfinitPerson:self_user
+                                                                                       andDelegate:self];
+      [_swagger_results addObject:person];
+    }g
   }
 }
 
