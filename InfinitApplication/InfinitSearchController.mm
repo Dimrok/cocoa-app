@@ -243,7 +243,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
       InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithInfinitPerson:self_user
                                                                                        andDelegate:self];
       [_swagger_results addObject:person];
-    }g
+    }
   }
 }
 
