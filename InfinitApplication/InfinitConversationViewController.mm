@@ -10,68 +10,62 @@
 
 #import <surface/gap/enums.hh>
 
-#import "IAAvatarManager.h"
 #import "InfinitConversationElement.h"
 #import "InfinitConversationCellView.h"
+#import "InfinitConversationRowView.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTooltipViewController.h"
+
+#import <Gap/InfinitUser.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitUserManager.h>
 
 #undef check
 #import <elle/log.hh>
 
 ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
-//- Conversation Row View --------------------------------------------------------------------------
+@interface InfinitConversationViewController () <NSTableViewDataSource,
+                                                 NSTableViewDelegate,
+                                                 InfinitConversationPersonViewProtocol,
+                                                 InfinitConversationCellViewProtocol>
 
-@interface InfinitConversationRowView : NSTableRowView
-@end
+@property (nonatomic, weak) IBOutlet NSButton* back_button;
+@property (nonatomic, weak) IBOutlet InfinitConversationPersonView* person_view;
+@property (nonatomic, weak) IBOutlet NSScrollView* scroll_view;
+@property (nonatomic, weak) IBOutlet NSTableView* table_view;
+@property (nonatomic, weak) IBOutlet NSButton* transfer_button;
 
-@implementation InfinitConversationRowView
+@property (atomic, readonly) NSMutableArray* elements;
+@property (atomic, readonly) NSMutableArray* rows_with_progress;
 
-- (BOOL)isOpaque
-{
-  return YES;
-}
-
-@end
-
-//- Conversation View Controller -------------------------------------------------------------------
-
-@interface InfinitConversationViewController ()
 @end
 
 @implementation InfinitConversationViewController
 {
 @private
   __weak id<InfinitConversationViewProtocol> _delegate;
-    
-  NSMutableArray* _elements;
-  IAUser* _user;
+
   CGFloat _max_table_height;
   NSTimer* _progress_timer;
-  NSMutableArray* _rows_with_progress;
   InfinitTooltipViewController* _tooltip;
   BOOL _changing;
+  BOOL _initing;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)initWithDelegate:(id<InfinitConversationViewProtocol>)delegate
-               forUser:(IAUser*)user
-      withTransactions:(NSArray*)transactions
+               forUser:(InfinitUser*)user
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
     _delegate = delegate;
-    _elements = [NSMutableArray arrayWithArray:[self sortTransactionList:transactions]];
     _user = user;
     _max_table_height = 290.0;
-    _rows_with_progress = [[NSMutableArray alloc] init];
     _changing = NO;
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(avatarReceivedCallback:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                             object:nil];
+    _initing = YES;
+    [self fillModel];
   }
   return self;
 }
@@ -81,7 +75,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   _delegate = nil;
   self.table_view.delegate = nil;
   self.table_view.dataSource = nil;
-  [NSNotificationCenter.defaultCenter removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   if (_progress_timer != nil)
   {
@@ -90,45 +84,31 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   }
 }
 
-- (BOOL)closeOnFocusLost
+- (void)fillModel
 {
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE];
-//  }
-  return YES;
-}
-
-- (NSArray*)sortTransactionList:(NSArray*)list
-{
-  NSSortDescriptor* ascending = [NSSortDescriptor sortDescriptorWithKey:nil
-                                                              ascending:YES
-                                                               selector:@selector(compare:)];
-  NSArray* sorted_transactions =
-    [list sortedArrayUsingDescriptors:[NSArray arrayWithObject:ascending]];
-  NSMutableArray* element_list = [[NSMutableArray alloc] init];
-  NSMutableArray* important_elements = [[NSMutableArray alloc] init];
-
-  for (IATransaction* transaction in sorted_transactions)
+  NSArray* transactions =
+    [[InfinitPeerTransactionManager sharedInstance] transactionsInvolvingUser:self.user];
+  if (self.elements == nil)
+    _elements = [NSMutableArray array];
+  else
+    [self.elements removeAllObjects];
+  NSMutableArray* important_elements = [NSMutableArray array];
+  for (InfinitPeerTransaction* transaction in transactions.reverseObjectEnumerator)
   {
     InfinitConversationElement* element =
-      [[InfinitConversationElement alloc] initWithTransaction:transaction];
+      [InfinitConversationElement initWithTransaction:transaction];
     if (element.important)
-    {
       [important_elements addObject:element];
-    }
     else
-    {
-      [element_list addObject:element];
-    }
+      [self.elements addObject:element];
   }
+
   // Add important elements to end of list.
-  [element_list addObjectsFromArray:important_elements];
-  InfinitConversationElement* spacer_element =
-    [[InfinitConversationElement alloc] initWithTransaction:nil];
-  [element_list addObject:spacer_element];
-  [element_list insertObject:spacer_element atIndex:0];
-  return element_list;
+  [self.elements addObjectsFromArray:important_elements];
+  InfinitConversationElement* spacer_element = [InfinitConversationElement initWithTransaction:nil];
+  [self.elements addObject:spacer_element];
+  [self.elements insertObject:spacer_element atIndex:0];
+  _initing = NO;
 }
 
 - (void)configurePersonView
@@ -141,27 +121,27 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
                                         paragraphStyle:para
                                                 colour:IA_GREY_COLOUR(32)
                                                 shadow:nil];
-  if (_user.deleted)
+  if (self.user.deleted)
   {
     NSString* deleted_str = [NSString stringWithFormat:@"%@ (%@)",
-                             _user.fullname, NSLocalizedString(@"deleted", nil)];
+                             self.user.fullname, NSLocalizedString(@"deleted", nil)];
     self.person_view.fullname.attributedStringValue =
       [[NSAttributedString alloc] initWithString:deleted_str attributes:attrs];
   }
   else
   {
     self.person_view.fullname.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:_user.fullname attributes:attrs];
+      [[NSAttributedString alloc] initWithString:self.user.fullname attributes:attrs];
   }
   CGFloat width = [self.person_view.fullname.attributedStringValue size].width;
   if (width > 250)
     width = 250;
   self.person_view.fullname_width.constant = width;
-  if (_user.ghost || _user.deleted)
+  if (self.user.ghost || self.user.deleted)
   {
     self.person_view.online_status.hidden = YES;
   }
-  else if (_user.status == gap_user_status_online)
+  else if (self.user.status)
   {
     self.person_view.online_status.image = [IAFunctions imageNamed:@"icon-status-online"];
     self.person_view.online_status.hidden = NO;
@@ -200,69 +180,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self.table_view reloadData];
   [self resizeContentView];
   [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
-//  if ([[_delegate receiveOnboardingTransaction:self] other_user] == _user)
-//  {
-//    InfinitOnboardingState onboard_state = [_delegate onboardingState:self];
-//    if (onboard_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW ||
-//        onboard_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-//        onboard_state == INFINIT_ONBOARDING_RECEIVE_NO_ACTION ||
-//        onboard_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
-//    {
-//      [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
-//      [self performSelector:@selector(delayedStartOnboarding) withObject:nil afterDelay:0.5];
-//    }
-//  }
-//  else if ([[[_delegate sendOnboardingTransaction:self] other_user] isEqual:_user])
-//  {
-//    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
-//    {
-//      [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
-//      [self performSelector:@selector(delayedStatusOnboarding) withObject:nil afterDelay:0.5];
-//    }
-//  }
   [self updateListOfRowsWithProgress];
 }
-
-//- (void)delayedStartOnboarding
-//{
-//  IATransaction* onboarding_transaction = [_delegate receiveOnboardingTransaction:self];
-//  NSInteger row = [self _rowForTransaction:onboarding_transaction];
-//  if (row == -1)
-//    return;
-//
-//  if (onboarding_transaction.view_mode != TRANSACTION_VIEW_WAITING_ACCEPT)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_DONE];
-//  }
-//
-//  if (_tooltip == nil)
-//    _tooltip = [[InfinitTooltipViewController alloc] init];
-//  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-//  NSString* message = NSLocalizedString(@"Click here to accept", nil);
-//  [_tooltip showPopoverForView:cell.accept_button
-//            withArrowDirection:INPopoverArrowDirectionLeft
-//                   withMessage:message
-//              withPopAnimation:YES
-//                       forTime:5.0];
-//}
-//
-//- (void)delayedStatusOnboarding
-//{
-//  IATransaction* onboarding_transaction = [_delegate sendOnboardingTransaction:self];
-//  NSInteger row = [self _rowForTransaction:onboarding_transaction];
-//  if (row == -1)
-//    return;
-//
-//  if (_tooltip == nil)
-//    _tooltip = [[InfinitTooltipViewController alloc] init];
-//  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-//  NSString* message = NSLocalizedString(@"Hover here for the status", nil);
-//  [_tooltip showPopoverForView:cell.transaction_status_button
-//            withArrowDirection:INPopoverArrowDirectionRight
-//                   withMessage:message
-//              withPopAnimation:YES
-//                       forTime:5.0];
-//}
 
 //- View Functions ---------------------------------------------------------------------------------
 
@@ -283,7 +202,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
    }];
 }
 
-//- Progress Update Functions ----------------------------------------------------------------------
+#pragma mark - Progress Handling
 
 - (void)setUpdatorRunning:(BOOL)is_running
 {
@@ -305,20 +224,19 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (_rows_with_progress == nil)
     _rows_with_progress = [NSMutableArray array];
   else
-    [_rows_with_progress removeAllObjects];
+    [self.rows_with_progress removeAllObjects];
   
   NSUInteger row = 0; // Start with the bottom transaction and work up
   for (InfinitConversationElement* element in _elements)
   {
-    if (!element.spacer &&
-        element.transaction.view_mode == TRANSACTION_VIEW_RUNNING)
+    if (!element.spacer && element.transaction.status == gap_transaction_transferring)
     {
-      [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
+      [self.rows_with_progress addObject:@(row)];
     }
     row++;
   }
-  
-  if (_rows_with_progress.count > 0)
+
+  if (self.rows_with_progress.count > 0)
     [self setUpdatorRunning:YES];
   else
     [self setUpdatorRunning:NO];
@@ -329,7 +247,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   if (_changing)
     return;
 
-  for (NSNumber* row in _rows_with_progress)
+  for (NSNumber* row in self.rows_with_progress)
   {
     if (row.integerValue < _elements.count)
     {
@@ -341,18 +259,18 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   }
 }
 
-//- Table Handling ---------------------------------------------------------------------------------
+#pragma mark - Table Handling
 
 - (CGFloat)tableHeight
 {
-  if ((_elements.count - 2) * 86.0 >= _max_table_height)
+  if ((self.elements.count - 2) * 86.0 >= _max_table_height)
   {
     return _max_table_height;
   }
   else
   {
     CGFloat height = 0.0;
-    for (InfinitConversationElement* element in _elements)
+    for (InfinitConversationElement* element in self.elements)
     {
       height += [InfinitConversationCellView heightOfCellForElement:element];
     }
@@ -366,19 +284,19 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 - (CGFloat)tableView:(NSTableView*)table_view
          heightOfRow:(NSInteger)row
 {
-  return [InfinitConversationCellView heightOfCellForElement:_elements[row]];
+  return [InfinitConversationCellView heightOfCellForElement:self.elements[row]];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
-  return _elements.count;
+  return self.elements.count;
 }
 
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
 {
-  InfinitConversationElement* element = _elements[row];
+  InfinitConversationElement* element = self.elements[row];
 
   if (element.spacer)
     return [self.table_view makeViewWithIdentifier:@"conversation_view_spacer" owner:self];
@@ -408,7 +326,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   return row_view;
 }
 
-//- Button Handling --------------------------------------------------------------------------------
+#pragma mark - Button Handling
 
 - (void)backToNotificationView
 {
@@ -425,23 +343,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (IBAction)backButtonClicked:(NSButton*)sender
 {
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
-//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
-//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
-//  }
   [self backToNotificationView];
 }
 
 - (IBAction)transferButtonClicked:(NSButton*)sender
 {
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE ||
-//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CONVERSATION_VIEW_DONE ||
-//      [_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
-//  }
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
@@ -450,98 +356,43 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
    }
                       completionHandler:^
    {
-     [_delegate conversationView:self wantsTransferForUser:_user];
+     [_delegate conversationView:self wantsTransferForUser:self.user];
      [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_SEND];
    }];
 }
 
-- (NSInteger)_rowForTransaction:(IATransaction*)transaction
+- (NSInteger)_rowForTransaction:(InfinitPeerTransaction*)transaction
 {
   NSInteger row = 0;
-  for (InfinitConversationElement* element in _elements)
+  for (InfinitConversationElement* element in self.elements)
   {
-    if (element.transaction.transaction_id.unsignedIntValue == transaction.transaction_id.unsignedIntValue)
+    if (element.transaction.id_.unsignedIntValue == transaction.id_.unsignedIntValue)
       break;
     row++;
   }
-  if (row == _elements.count)
+  if (row == self.elements.count)
     return -1;
   else
     return row;
 }
 
-//- (void)delayedReceiveOnboardingDoneWithMessage:(NSString*)message
-//{
-//  NSUInteger row =
-//    [self _rowForTransaction:[_delegate receiveOnboardingTransaction:self]];
-//  if (row == -1)
-//    return;
-//
-//  InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-//  [_tooltip showPopoverForView:cell.file_icon
-//            withArrowDirection:INPopoverArrowDirectionRight
-//                   withMessage:message
-//              withPopAnimation:YES
-//                       forTime:5.0];
-//}
-
 - (IBAction)conversationCellViewWantsAccept:(NSButton*)sender
 {
   NSUInteger row = [self.table_view rowForView:sender];
-  InfinitConversationElement* element = _elements[row];
-  [_delegate conversationView:self
-       wantsAcceptTransaction:element.transaction];
+  InfinitConversationElement* element = self.elements[row];
+  [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:element.transaction
+                                                          withError:nil];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
-//      [_delegate receiveOnboardingTransaction:self] == element.transaction)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
-//    [_tooltip close];
-//    NSString* message = NSLocalizedString(@"Click here when it's done to open the file", nil);
-//    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
-//               withObject:message
-//               afterDelay:0.5];
-//  }
-}
-
-- (BOOL)transactionCancellable:(IATransactionViewMode)view_mode
-{
-  switch (view_mode)
-  {
-    case TRANSACTION_VIEW_PENDING_SEND:
-    case TRANSACTION_VIEW_WAITING_ACCEPT:
-    case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
-    case TRANSACTION_VIEW_PREPARING:
-    case TRANSACTION_VIEW_RUNNING:
-    case TRANSACTION_VIEW_CLOUD_BUFFERED:
-    case TRANSACTION_VIEW_OTHER_DEVICE:
-      return YES;
-      
-    default:
-      return NO;
-  }
 }
 
 - (IBAction)conversationCellViewWantsCancel:(NSButton*)sender
 {
   NSUInteger row = [self.table_view rowForView:sender];
-  InfinitConversationElement* element = _elements[row];
-  
-  if (![self transactionCancellable:element.transaction.view_mode])
-    return;
-  
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
-//      [_delegate receiveOnboardingTransaction:self] == element.transaction)
-//  {
-//    [_tooltip close];
-//    NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
-//    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
-//               withObject:message
-//               afterDelay:0.5];
-//  }
+  InfinitConversationElement* element = self.elements[row];
 
-  [_delegate conversationView:self
-       wantsCancelTransaction:element.transaction];
+  if (element.transaction.done)
+    return;
+  [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_CANCEL];
 }
 
@@ -550,41 +401,30 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   NSUInteger row = [self.table_view rowForView:sender];
   InfinitConversationElement* element = _elements[row];
   
-  if (![self transactionCancellable:element.transaction.view_mode])
+  if (element.transaction.status != gap_transaction_waiting_accept)
     return;
-
-  [_delegate conversationView:self
-       wantsRejectTransaction:element.transaction];
+  [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_REJECT];
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW &&
-//      [_delegate receiveOnboardingTransaction:self] == element.transaction)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_ACTION_DONE];
-//    [_tooltip close];
-//    NSString* message = NSLocalizedString(@"Wow, that was harsh!", nil);
-//    [self performSelector:@selector(delayedReceiveOnboardingDoneWithMessage:)
-//               withObject:message
-//               afterDelay:0.5];
-//  }
 }
 
-//- Person View Protocol ---------------------------------------------------------------------------
+#pragma mark - Person View Protocol
 
 - (void)conversationPersonViewGotClick:(InfinitConversationPersonView*)sender
 {
   [self backToNotificationView];
 }
 
-//- Conversation Cell View Protocol ----------------------------------------------------------------
+#pragma mark - Conversation Cell View Protocol
 
 - (void)conversationCellViewWantsShowFiles:(InfinitConversationCellView*)sender
 {
   NSInteger row = [self.table_view rowForView:sender];
-  [_elements[row] setShowing_files:YES];
+  InfinitConversationElement* element = self.elements[row];
+  element.showing_files = YES;
   [sender showFiles];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
   [self resizeContentView];
-  if (row == _elements.count - 2)
+  if (row == self.elements.count - 2)
   {
     [self performSelector:@selector(scrollAfterRowAdd)
                withObject:nil
@@ -595,7 +435,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 - (void)conversationCellViewWantsHideFiles:(InfinitConversationCellView*)sender
 {
   NSInteger row = [self.table_view rowForView:sender];
-  [_elements[row] setShowing_files:NO];
+  InfinitConversationElement* element = self.elements[row];
+  element.showing_files = NO;
   [sender hideFiles];
   [self.table_view noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
   [self resizeContentView];
@@ -603,34 +444,31 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)conversationCellBubbleViewGotClicked:(InfinitConversationCellView*)sender
 {
-//  NSInteger row = [self.table_view rowForView:sender];
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_ACTION_DONE &&
-//      [_delegate receiveOnboardingTransaction:self] == [_elements[row] transaction])
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_VIEW_DOWNLOAD];
-//  }
 }
 
-//- Transaction Callbacks --------------------------------------------------------------------------
+#pragma mark - Transaction Handling
 
 - (void)scrollAfterRowAdd
 {
   [self.table_view scrollRowToVisible:(self.table_view.numberOfRows - 1)];
 }
 
-- (void)transactionAdded:(IATransaction*)transaction
+- (void)transactionAdded:(NSNotification*)notification
 {
   if (_changing)
     return;
 
-  if (![transaction.other_user isEqual:_user])
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+
+  if (![transaction.other_user isEqual:self.user])
     return;
   
-  InfinitConversationElement* element =
-    [[InfinitConversationElement alloc] initWithTransaction:transaction];
+  InfinitConversationElement* element = [InfinitConversationElement initWithTransaction:transaction];
   [self.table_view beginUpdates];
-  NSUInteger list_bottom = _elements.count - 1;
-  [_elements insertObject:element atIndex:list_bottom];
+  NSUInteger list_bottom = self.elements.count - 1;
+  [self.elements insertObject:element atIndex:list_bottom];
   [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:list_bottom]
                          withAnimation:NSTableViewAnimationSlideDown];
   [self.table_view endUpdates];
@@ -644,23 +482,27 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [self updateListOfRowsWithProgress];
 }
 
-- (void)transactionUpdated:(IATransaction*)transaction
+- (void)transactionUpdated:(NSNotification*)notification
 {
   if (_changing)
     return;
+
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
 
   if (![transaction.other_user isEqual:_user])
     return;
   
   NSUInteger count = 0;
-  for (InfinitConversationElement* element in _elements)
+  for (InfinitConversationElement* element in self.elements)
   {
-    if ([element.transaction.transaction_id isEqualToNumber:transaction.transaction_id])
+    if ([element.transaction isEqual:transaction])
       break;
     count++;
   }
   
-  if (count >= _elements.count)
+  if (count >= self.elements.count)
     return;
   
   InfinitConversationCellView* cell = [self.table_view viewAtColumn:0 row:count makeIfNecessary:NO];
@@ -672,38 +514,42 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   
   [self updateListOfRowsWithProgress];
   
-  if (count == _elements.count - 2)
-    [self.table_view scrollRowToVisible:(_elements.count - 1)];
+  if (count == self.elements.count - 2)
+    [self.table_view scrollRowToVisible:(self.elements.count - 1)];
   else
     [self.table_view scrollRowToVisible:count];
 }
 
-//- User Callbacks ---------------------------------------------------------------------------------
+#pragma mark - User Handling
 
-- (void)userUpdated:(IAUser*)user
+- (void)userUpdated:(NSNotification*)notification
 {
-  if (![user isEqual:_user])
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  if (![self.user.id_ isEqual:id_])
     return;
   
   [self configurePersonView];
 }
 
-- (void)userDeleted:(IAUser*)user
+- (void)userDeleted:(NSNotification*)notification
 {
-  if (![user isEqual:_user])
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  if (![self.user.id_ isEqual:id_])
     return;
   [self configurePersonView];
   self.transfer_button.enabled = NO;
   [self.transfer_button setToolTip:NSLocalizedString(@"User no longer on Infinit", nil)];
 }
 
-//- Avatar Callbacks -------------------------------------------------------------------------------
+#pragma mark - Avatar Handling
 
 - (void)avatarReceivedCallback:(NSNotification*)notification
 {
-  IAUser* user = [notification.userInfo objectForKey:@"user"];
-  NSImage* image = [notification.userInfo objectForKey:@"avatar"];
-  for (NSInteger index = 0; index < _elements.count; index++)
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  if (![self.user.id_ isEqual:id_])
+    return;
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
+  for (NSInteger index = 0; index < self.elements.count; index++)
   {
     InfinitConversationElement* element = _elements[index];
     if (!element.spacer && [element.transaction.sender isEqual:user])
@@ -711,22 +557,54 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
       InfinitConversationCellView* cell =
         [self.table_view viewAtColumn:0 row:index makeIfNecessary:NO];
       if (cell != nil)
-        [cell updateAvatarWithImage:image];
+        [cell updateAvatarWithImage:user.avatar];
     }
   }
 }
 
-//- Change View Handling ---------------------------------------------------------------------------
+#pragma mark - IAViewController
+
+- (BOOL)closeOnFocusLost
+{
+  return YES;
+}
+
+- (void)viewActive
+{
+  if (!_initing)
+    [self fillModel];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(avatarReceivedCallback:)
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(userUpdated:)
+                                               name:INFINIT_USER_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(userDeleted:)
+                                               name:INFINIT_USER_DELETED_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionAdded:)
+                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionUpdated:)
+                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
+  [[InfinitPeerTransactionManager sharedInstance] markTransactionsWithUserRead:self.user];
+}
 
 - (void)aboutToChangeView
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   _changing = YES;
   [_tooltip close];
   [_progress_timer invalidate];
   _progress_timer = nil;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [self setUpdatorRunning:NO];
-  [_delegate conversationView:self wantsMarkTransactionsReadForUser:_user];
   if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
   {
     [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];

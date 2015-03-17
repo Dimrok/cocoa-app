@@ -10,50 +10,24 @@
 #import "InfinitConversationPersonView.h"
 #import "InfinitConversationCellView.h"
 
+#import <Gap/InfinitPeerTransaction.h>
+
 @protocol InfinitConversationViewProtocol;
 
-@interface InfinitConversationViewController : IAViewController <NSTableViewDataSource,
-                                                                 NSTableViewDelegate,
-                                                                 InfinitConversationPersonViewProtocol,
-                                                                 InfinitConversationCellViewProtocol>
+@interface InfinitConversationViewController : IAViewController
 
-@property (nonatomic, weak) IBOutlet NSButton* back_button;
-@property (nonatomic, weak) IBOutlet InfinitConversationPersonView* person_view;
-@property (nonatomic, weak) IBOutlet NSScrollView* scroll_view;
-@property (nonatomic, weak) IBOutlet NSTableView* table_view;
-@property (nonatomic, weak) IBOutlet NSButton* transfer_button;
-@property (nonatomic, readonly) IAUser* user;
+@property (nonatomic, readonly) InfinitUser* user;
 
 - (id)initWithDelegate:(id<InfinitConversationViewProtocol>)delegate
-               forUser:(IAUser*)user
-      withTransactions:(NSArray*)transactions;
-
-- (IBAction)backButtonClicked:(NSButton*)sender;
-- (IBAction)transferButtonClicked:(NSButton*)sender;
-
-- (IBAction)conversationCellViewWantsAccept:(NSButton*)sender;
-- (IBAction)conversationCellViewWantsCancel:(NSButton*)sender;
-- (IBAction)conversationCellViewWantsReject:(NSButton*)sender;
+               forUser:(InfinitUser*)user;
 
 @end
 
 @protocol InfinitConversationViewProtocol <IAViewProtocol>
 
 - (void)conversationView:(InfinitConversationViewController*)sender
-wantsMarkTransactionsReadForUser:(IAUser*)user;
-
-- (void)conversationView:(InfinitConversationViewController*)sender
-    wantsTransferForUser:(IAUser*)user;
+    wantsTransferForUser:(InfinitUser*)user;
 
 - (void)conversationViewWantsBack:(InfinitConversationViewController*)sender;
-
-- (void)conversationView:(InfinitConversationViewController*)sender
-  wantsAcceptTransaction:(IATransaction*)transaction;
-
-- (void)conversationView:(InfinitConversationViewController*)sender
-  wantsCancelTransaction:(IATransaction*)transaction;
-
-- (void)conversationView:(InfinitConversationViewController*)sender
-  wantsRejectTransaction:(IATransaction*)transaction;
 
 @end
