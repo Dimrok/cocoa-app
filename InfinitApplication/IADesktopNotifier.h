@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import <Gap/InfinitLinkTransaction.h>
+#import <Gap/InfinitPeerTransaction.h>
+
 @protocol IADesktopNotifierProtocol;
 
 @interface IADesktopNotifier : NSObject <NSUserNotificationCenterDelegate>
@@ -16,27 +19,23 @@
 
 - (void)clearAllNotifications;
 
-- (void)desktopNotificationForTransaction:(IATransaction*)transaction;
-- (void)desktopNotificationForTransactionAccepted:(IATransaction*)transaction;
-- (void)desktopNotificationForLink:(InfinitLinkTransaction*)link;
+- (void)desktopNotificationForTransactionAccepted:(InfinitPeerTransaction*)transaction;
 
 - (void)desktopNotificationForLinkCopied:(InfinitLinkTransaction*)link;
 
 - (void)desktopNotificationForApplicationUpdated;
-
-- (void)transactionUpdated:(IATransaction*)transaction;
 
 @end
 
 @protocol IADesktopNotifierProtocol <NSObject>
 
 - (void)desktopNotifier:(IADesktopNotifier*)sender
-hadClickNotificationForTransactionId:(NSNumber*)transaction_id;
+hadClickNotificationForTransactionId:(NSNumber*)id_;
 - (void)desktopNotifier:(IADesktopNotifier*)sender
-   hadAcceptTransaction:(NSNumber*)transaction_id;
+   hadAcceptTransaction:(NSNumber*)id_;
 
 - (void)desktopNotifier:(IADesktopNotifier*)sender
-hadClickNotificationForLinkId:(NSNumber*)transaction_id;
+hadClickNotificationForLinkId:(NSNumber*)id_;
 
 - (void)desktopNotifierHadClickApplicationUpdatedNotification:(IADesktopNotifier*)sender;
 
