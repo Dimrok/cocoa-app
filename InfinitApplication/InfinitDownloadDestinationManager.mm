@@ -10,6 +10,9 @@
 
 #import "IAUserPrefs.h"
 
+#import <Gap/InfinitDirectoryManager.h>
+#import <Gap/InfinitStateManager.h>
+
 #undef check
 #import <elle/log.hh>
 
@@ -25,7 +28,9 @@ static InfinitDownloadDestinationManager* _instance = nil;
 {
   if (self = [super init])
   {
-    _download_destination = [[IAGapState instance] outputDirectory];
+    _download_destination = [[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"];
+    if (!_download_destination || _download_destination.length == 0)
+      _download_destination = [InfinitDirectoryManager sharedInstance].download_directory;
   }
   return self;
 }
@@ -43,7 +48,7 @@ static InfinitDownloadDestinationManager* _instance = nil;
                    forFallback:(BOOL)fallback
 {
   [[IAUserPrefs sharedInstance] setPref:download_destination forKey:@"download_directory"];
-  [[IAGapState instance] setOutputDirectory:download_destination fallback:fallback];
+  [[InfinitStateManager sharedInstance] setDownloadDirectory:download_destination fallback:fallback];
   _download_destination = download_destination;
 }
 
