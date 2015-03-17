@@ -12,6 +12,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import <Gap/InfinitUserManager.h>
+
 @interface IAFavouritesSendViewController ()
 @end
 
@@ -140,7 +142,7 @@ static NSSize favourites_size = {430.f, 170.f};
 {
   NSRect favourite_rect = NSMakeRect(_start_pos.x, _start_pos.y,
                                      _favourite_size.width, _favourite_size.height);
-  for (IAUser* favourite in favourites)
+  for (InfinitUser* favourite in favourites)
   {
     IAFavouriteView* favourite_view = [[IAFavouriteView alloc] initWithFrame:favourite_rect
                                                                  andDelegate:self.favourites_view
@@ -188,15 +190,15 @@ static NSSize favourites_size = {430.f, 170.f};
     return;
 
   _open = YES;
-  
+
   NSMutableArray* temp_arr =
-    [NSMutableArray arrayWithArray:[_delegate favouritesViewWantsFavourites:self]];
+    [NSMutableArray arrayWithArray:[InfinitUserManager sharedInstance].favorites];
   // If we don't have favourites, add some swaggers
   if (temp_arr.count < 5)
   {
-    NSArray* swaggers = [_delegate favouritesViewWantsSwaggers:self];
+    NSArray* swaggers = [InfinitUserManager sharedInstance].time_ordered_swaggers;
     
-    for (IAUser* swagger in swaggers)
+    for (InfinitUser* swagger in swaggers)
     {
       if (!swagger.deleted && !swagger.ghost && temp_arr.count < 5 && ![temp_arr containsObject:swagger])
         [temp_arr addObject:swagger];
@@ -320,7 +322,7 @@ static NSSize favourites_size = {430.f, 170.f};
 }
 
 - (void)favouriteView:(IAFavouriteView*)sender
-        gotDropOnUser:(IAUser*)user
+        gotDropOnUser:(InfinitUser*)user
             withFiles:(NSArray*)files
 {
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_FAVOURITES_PERSON_DROP];

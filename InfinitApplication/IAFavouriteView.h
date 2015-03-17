@@ -8,15 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import <Gap/InfinitUser.h>
+
 @protocol IAFavouriteViewProtocol;
 
 @interface IAFavouriteView : NSView <NSDraggingDestination>
 
-@property (nonatomic, readonly) IAUser* user;
+@property (nonatomic, readonly) InfinitUser* user;
 
 - (id)initWithFrame:(NSRect)frameRect
         andDelegate:(id<IAFavouriteViewProtocol>)delegate
-            andUser:(IAUser*)user;
+            andUser:(InfinitUser*)user;
 
 @end
 

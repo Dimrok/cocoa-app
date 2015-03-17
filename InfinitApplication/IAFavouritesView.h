@@ -29,7 +29,7 @@
 
 - (void)favouritesViewHadDragExit:(IAFavouritesView*)sender;
 - (void)favouriteView:(IAFavouriteView*)sender
-        gotDropOnUser:(IAUser*)user
+        gotDropOnUser:(InfinitUser*)user
             withFiles:(NSArray*)files;
 - (void)linkViewGotDrop:(InfinitLinkShortcutView*)sender
               withFiles:(NSArray*)files;

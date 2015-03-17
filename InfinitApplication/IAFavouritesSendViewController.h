@@ -34,14 +34,10 @@
 
 @protocol IAFavouritesSendViewProtocol <NSObject>
 
-- (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender;
-
-- (NSArray*)favouritesViewWantsSwaggers:(IAFavouritesSendViewController*)sender;
-
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender;
 
 - (void)favouritesView:(IAFavouritesSendViewController*)sender
-         gotDropOnUser:(IAUser*)user
+         gotDropOnUser:(InfinitUser*)user
              withFiles:(NSArray*)files;
 
 - (void)favouritesView:(IAFavouritesSendViewController*)sender

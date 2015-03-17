@@ -8,13 +8,13 @@
 
 #import "IAFavouriteView.h"
 
-#import "IAAvatarManager.h"
+#import <Gap/InfinitUserManager.h>
 
 @implementation IAFavouriteView
 {
 @private
   __weak id <IAFavouriteViewProtocol> _delegate;
-  IAUser* _user;
+  InfinitUser* _user;
   NSArray* _drag_types;
   BOOL _hovering;
   NSImage* _avatar;
@@ -26,7 +26,7 @@
 
 - (id)initWithFrame:(NSRect)frameRect
         andDelegate:(id<IAFavouriteViewProtocol>)delegate
-            andUser:(IAUser*)user
+            andUser:(InfinitUser*)user
 {
   if (self = [super initWithFrame:frameRect])
   {
@@ -37,9 +37,9 @@
     [self registerForDraggedTypes:_drag_types];
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarReceived:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
-    _avatar = [IAAvatarManager getAvatarForUser:_user];
+    _avatar = user.avatar;
     _current_image = [IAFunctions makeRoundAvatar:_avatar
                                        ofDiameter:self.avatar_diameter
                             withBorderOfThickness:3.0
@@ -81,9 +81,10 @@
 
 - (void)avatarReceived:(NSNotification*)notification
 {
-  IAUser* user = [notification.userInfo objectForKey:@"user"];
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
   if ([user isEqualTo:_user])
-    _avatar = [notification.userInfo objectForKey:@"avatar"];
+    _avatar = user.avatar;
   [self setNeedsDisplay:YES];
 }
 
