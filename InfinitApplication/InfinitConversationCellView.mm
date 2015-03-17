@@ -11,8 +11,11 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "IAAvatarManager.h"
 #import "InfinitDownloadDestinationManager.h"
+
+#import <Gap/InfinitDataSize.h>
+#import <Gap/InfinitTime.h>
+#import <Gap/InfinitUserManager.h>
 
 #undef check
 #import <elle/log.hh>
@@ -234,17 +237,17 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 + (BOOL)hasInformationField:(InfinitConversationElement*)element
 {
-  switch (element.transaction.view_mode)
+  switch (element.transaction.status)
   {
-    case TRANSACTION_VIEW_PENDING_SEND:
-    case TRANSACTION_VIEW_WAITING_ACCEPT:
-    case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
-    case TRANSACTION_VIEW_CLOUD_BUFFERED:
-    case TRANSACTION_VIEW_PREPARING:
-    case TRANSACTION_VIEW_RUNNING:
-    case TRANSACTION_VIEW_OTHER_DEVICE:
-    case TRANSACTION_VIEW_FINISHED:
-      if (element.transaction.concerns_this_device)
+    case gap_transaction_new:
+    case gap_transaction_waiting_accept:
+    case gap_transaction_waiting_data:
+    case gap_transaction_cloud_buffered:
+    case gap_transaction_connecting:
+    case gap_transaction_transferring:
+    case gap_transaction_on_other_device:
+    case gap_transaction_finished:
+      if (element.transaction.from_device || element.transaction.to_device)
         return NO;
       return YES;
 
@@ -260,7 +263,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   CGFloat height = 86.0; // Size without message and file table.
   height += [InfinitConversationCellView heightOfMessage:element.transaction.message];
   if (element.showing_files)
-    height += [InfinitConversationCellView heightOfFilesTable:element.transaction.files_count];
+    height += [InfinitConversationCellView heightOfFilesTable:element.transaction.files.count];
   if ([InfinitConversationCellView hasInformationField:element])
     height += 10;
   return height;
@@ -309,11 +312,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 {
   if (_element == nil)
     return;
-  
-  IAUser* user = [notification.userInfo objectForKey:@"user"];
-  if (user == _element.transaction.sender)
+
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
+  if ([user isEqual:_element.transaction.sender])
   {
-    NSImage* avatar_image = [notification.userInfo objectForKey:@"avatar"];
+    NSImage* avatar_image = user.avatar;
     [self updateAvatarWithImage:avatar_image];
   }
 }
@@ -380,8 +384,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 - (void)onTransactionModeChangeIsNew:(BOOL)is_new
 {
   // If progress hasn't run until the end.
-  if ((_element.transaction.view_mode == TRANSACTION_VIEW_FINISHED ||
-      _element.transaction.view_mode == TRANSACTION_VIEW_CLOUD_BUFFERED) &&
+  if ((_element.transaction.status == gap_transaction_finished ||
+      _element.transaction.status == gap_transaction_cloud_buffered) &&
       is_new && _progress.doubleValue < 1.0)
   {
     [self updateProgress];
@@ -390,11 +394,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
   self.bubble_view.important = _element.important;
   self.time_indicator.stringValue =
-  [IAFunctions relativeDateOf:_element.transaction.last_edit_timestamp longerFormat:NO];
+  [InfinitTime relativeDateOf:_element.transaction.mtime longerFormat:NO];
 
-  switch (_element.transaction.view_mode)
+  switch (_element.transaction.status)
   {
-    case TRANSACTION_VIEW_ACCEPTED_WAITING_ONLINE:
+    case gap_transaction_waiting_data:
       [self setTransactionStatusButtonToCancel];
       [self.progress setIndeterminate:NO];
       self.progress.doubleValue = _element.transaction.progress;
@@ -402,28 +406,28 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       self.information.stringValue = NSLocalizedString(@"Waiting for user to be online...", nil);
       self.information.hidden = NO;
       break;
-    case TRANSACTION_VIEW_CANCELLED:
+    case gap_transaction_canceled:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
-      [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
+      [self.transaction_status_button setToolTip:NSLocalizedString(@"Canceled", nil)];
       self.information.hidden = YES;
       break;
-    case TRANSACTION_VIEW_CLOUD_BUFFERED:
-      if (_element.transaction.from_me)
+    case gap_transaction_cloud_buffered:
+      if (_element.transaction.sender.is_self)
       {
         [self setTransactionStatusButtonToCancel];
         self.information.stringValue = NSLocalizedString(@"Uploaded. Waiting to be downloaded...", nil);
         self.information.hidden = NO;
       }
       break;
-    case TRANSACTION_VIEW_FAILED:
+    case gap_transaction_failed:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-error"];
       [self.transaction_status_button setToolTip:NSLocalizedString(@"Failed", nil)];
       self.information.hidden = YES;
       break;
-    case TRANSACTION_VIEW_FINISHED:
+    case gap_transaction_finished:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-finished"];
       [self.transaction_status_button setToolTip:NSLocalizedString(@"Finished", nil)];
-      if (!_element.transaction.concerns_this_device)
+      if (!_element.transaction.from_device && !_element.transaction.to_device)
       {
         self.information.stringValue = NSLocalizedString(@"Finished on another device.", nil);
         self.information.hidden = NO;
@@ -433,50 +437,50 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
         self.information.hidden = YES;
       }
       break;
-    case TRANSACTION_VIEW_PENDING_SEND:
-    case TRANSACTION_VIEW_PREPARING:
+    case gap_transaction_new:
+    case gap_transaction_connecting:
       [self setTransactionStatusButtonToCancel];
       [self.progress setIndeterminate:YES];
       self.progress.hidden = NO;
       self.information.stringValue = [self dataTransferredForTransaction:_element.transaction];
       self.information.hidden = NO;
       break;
-    case TRANSACTION_VIEW_REJECTED:
+    case gap_transaction_rejected:
       [self setTransactionStatusButtonToStaticImage:@"conversation-icon-canceled"];
-      [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancelled", nil)];
+      [self.transaction_status_button setToolTip:NSLocalizedString(@"Canceled", nil)];
       self.information.hidden = YES;
       break;
-    case TRANSACTION_VIEW_RUNNING:
+    case gap_transaction_transferring:
       [self setTransactionStatusButtonToCancel];
       [self.progress setIndeterminate:NO];
       self.progress.hidden = NO;
       self.progress.doubleValue = _element.transaction.progress;
       self.time_indicator.stringValue =
-        [IAFunctions timeRemainingFrom:_element.transaction.time_remaining];
+        [InfinitTime timeRemainingFrom:_element.transaction.time_remaining];
       self.information.stringValue = [self dataTransferredForTransaction:_element.transaction];
       self.information.hidden = NO;
       break;
-    case TRANSACTION_VIEW_WAITING_ACCEPT:
-      if (_element.transaction.from_me)
-      {
-        [self setTransactionStatusButtonToCancel];
-        if (_element.transaction.to_self)
-          self.information.stringValue = NSLocalizedString(@"Accept on another device.", nil);
-        else
-          self.information.stringValue = NSLocalizedString(@"Waiting for user to accept...", nil);
-      }
-      else
+    case gap_transaction_waiting_accept:
+      if (_element.transaction.receivable)
       {
         [self configureAcceptRejectButtons];
         self.accept_button.hidden = NO;
         self.reject_button.hidden = NO;
         self.transaction_status_button.hidden = YES;
         self.information.stringValue =
-          [IAFunctions fileSizeStringFrom:_element.transaction.total_size];
+        [InfinitDataSize fileSizeStringFrom:_element.transaction.size];
+      }
+      else
+      {
+        [self setTransactionStatusButtonToCancel];
+        if (_element.transaction.recipient.is_self)
+          self.information.stringValue = NSLocalizedString(@"Accept on another device.", nil);
+        else
+          self.information.stringValue = NSLocalizedString(@"Waiting for user to accept...", nil);
       }
       self.information.hidden = NO;
       break;
-    case TRANSACTION_VIEW_OTHER_DEVICE:
+    case gap_transaction_on_other_device:
       [self setTransactionStatusButtonToCancel];
       self.progress.hidden = YES;
       self.information.stringValue = NSLocalizedString(@"Transfer on another device...", nil);
@@ -484,14 +488,14 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       break;
 
     default:
-      ELLE_WARN("%s: unknown transaction view mode: %s",
-                self.description.UTF8String, _element.transaction.view_mode);
+      ELLE_WARN("%s: unknown transaction status: %s",
+                self.description.UTF8String, _element.transaction.status_text);
       break;
   }
-  if (_element.transaction.files_count == 1)
+  if (_element.transaction.files.count == 1)
   {
-    if (!_element.transaction.from_me &&
-        _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+    if (!_element.transaction.to_device &&
+        _element.transaction.status == gap_transaction_finished)
     {
       self.bubble_view.clickable = YES;
     }
@@ -508,8 +512,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)showFiles
 {
-  self.file_list_icon.image = [IAFunctions imageNamed:@"conversation-icon-hide-files"];
-  NSInteger file_count = _element.transaction.files_count;
+  self.file_list_icon.image = [NSImage imageNamed:@"conversation-icon-hide-files"];
+  NSInteger file_count = _element.transaction.files.count;
   CGFloat bubble_height = self.bubble_height.constant;
   self.bubble_view.showing_list = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
@@ -526,7 +530,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)hideFiles
 {
-  self.file_list_icon.image = [IAFunctions imageNamed:@"conversation-icon-show-files"];
+  self.file_list_icon.image = [NSImage imageNamed:@"conversation-icon-show-files"];
   
   CGFloat bubble_height = self.bubble_height.constant;
   self.bubble_view.showing_list = NO;
@@ -547,12 +551,12 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   _element = element;
   _delegate = delegate;
   self.bubble_view.delegate = self;
-  IATransaction* transaction = element.transaction;
+  InfinitPeerTransaction* transaction = element.transaction;
   self.table_height.constant = 0.0;
-  if (transaction.files_count == 1)
+  if (transaction.files.count == 1)
   {
     self.file_name.stringValue = transaction.files[0];
-    if (transaction.is_directory)
+    if (transaction.directory)
     {
       self.file_icon.image = [[NSWorkspace sharedWorkspace] iconForFileType:@"public.directory"];
     }
@@ -584,7 +588,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   else
   {
     NSString* file_str = NSLocalizedString(@"files", nil);
-    self.file_name.stringValue = [NSString stringWithFormat:@"%ld %@", transaction.files_count, file_str];
+    self.file_name.stringValue = [NSString stringWithFormat:@"%ld %@", transaction.files.count, file_str];
     self.file_icon.image = [[NSWorkspace sharedWorkspace] iconForFileType:@"public.directory"];
     self.file_list_icon.hidden = NO;
     NSRect table_frame = NSMakeRect(0.0, 0.0,
@@ -624,7 +628,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     self.message.hidden = YES;
     self.message_height.constant = 0.0;
   }
-  NSImage* avatar_image = [IAAvatarManager getAvatarForUser:transaction.sender];
+  NSImage* avatar_image = transaction.sender.avatar;
   [self updateAvatarWithImage:avatar_image];
   if (_element.showing_files)
       [self showFiles];
@@ -646,7 +650,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
-  return _element.transaction.files_count;
+  return _element.transaction.files.count;
 }
 
 - (NSView*)tableView:(NSTableView*)tableView
@@ -658,7 +662,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
                            35.0);
   InfinitConversationFileCellView* cell;
   cell = [[InfinitConversationFileCellView alloc] initWithFrame:rect onLeft:_element.on_left];
-  if (!_element.transaction.from_me && _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+  if (_element.transaction.to_device && _element.transaction.status == gap_transaction_finished)
     cell.clickable = YES;
   else
     cell.clickable = NO;
@@ -679,8 +683,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 {
   if (_files_table == sender)
   {
-    if (!_element.transaction.from_me && _element.transaction.files_count > 1 &&
-        _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+    if (_element.transaction.to_device && _element.transaction.files.count > 1 &&
+        _element.transaction.status == gap_transaction_finished)
     {
       InfinitConversationFileCellView* cell = [_files_table viewAtColumn:0
                                                                      row:_files_table.clickedRow
@@ -692,11 +696,11 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 //- Update Progress --------------------------------------------------------------------------------
 
-- (NSString*)dataTransferredForTransaction:(IATransaction*)transaction
+- (NSString*)dataTransferredForTransaction:(InfinitPeerTransaction*)transaction
 {
-  NSNumber* transferred = [NSNumber numberWithDouble:(transaction.total_size.doubleValue * transaction.progress)];
-  return [NSString stringWithFormat:@"%@/%@", [IAFunctions fileSizeStringFrom:transferred],
-                                              [IAFunctions fileSizeStringFrom:transaction.total_size]];
+  NSNumber* transferred = [NSNumber numberWithDouble:(transaction.size.doubleValue * transaction.progress)];
+  return [NSString stringWithFormat:@"%@/%@", [InfinitDataSize fileSizeStringFrom:transferred],
+                                              [InfinitDataSize fileSizeStringFrom:transaction.size]];
 }
 
 - (void)updateProgress
@@ -705,7 +709,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
    {
      context.duration = 1.5;
      [self.progress.animator setDoubleValue:_element.transaction.progress];
-     [self.time_indicator.animator setStringValue:[IAFunctions timeRemainingFrom:_element.transaction.time_remaining]];
+     [self.time_indicator.animator setStringValue:[InfinitTime timeRemainingFrom:_element.transaction.time_remaining]];
      [self.information.animator setStringValue:[self dataTransferredForTransaction:_element.transaction]];
    }
                       completionHandler:^
@@ -742,17 +746,17 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)bubbleViewGotClick:(InfinitConversationBubbleView*)sender
 {
-  if (!_element.transaction.from_me &&
-      _element.transaction.view_mode == TRANSACTION_VIEW_FINISHED &&
-      _element.transaction.files_count == 1)
+  if (_element.transaction.to_device &&
+      _element.transaction.status == gap_transaction_finished &&
+      _element.transaction.files.count == 1)
   {
     [self showFileInFinder:_element.transaction.files[0]];
   }
-  else if (_element.transaction.files_count > 1 && _showing_files) // Multiple files
+  else if (_element.transaction.files.count > 1 && _showing_files) // Multiple files
   {
     [_delegate conversationCellViewWantsHideFiles:self];
   }
-  else if (_element.transaction.files_count > 1)
+  else if (_element.transaction.files.count > 1)
   {
     [_delegate conversationCellViewWantsShowFiles:self];
   }
@@ -765,9 +769,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)bubbleViewGotHover:(InfinitConversationBubbleView*)sender
 {
-  IATransaction* transaction = _element.transaction;
-  if (transaction.files_count == 1 &&
-      !transaction.from_me && transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+  InfinitPeerTransaction* transaction = _element.transaction;
+  if (transaction.files.count == 1 &&
+      transaction.to_device && transaction.status == gap_transaction_finished)
   {
     NSAttributedString* hover_string =
       [[NSAttributedString alloc] initWithString:self.file_name.stringValue
@@ -787,9 +791,9 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)bubbleViewGotUnHover:(InfinitConversationBubbleView*)sender
 {
-  IATransaction* transaction = _element.transaction;
-  if (transaction.files_count == 1 &&
-      !transaction.from_me && transaction.view_mode == TRANSACTION_VIEW_FINISHED)
+  InfinitPeerTransaction* transaction = _element.transaction;
+  if (transaction.files.count == 1 &&
+      transaction.to_device && transaction.status == gap_transaction_finished)
   {
     NSAttributedString* unhover_string =
     [[NSAttributedString alloc] initWithString:self.file_name.stringValue
