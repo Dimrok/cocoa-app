@@ -6,12 +6,13 @@
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import <Gap/IAUserManager.h>
-
 #import "IAUserSearchViewController.h"
-#import "IAAvatarManager.h"
+
 #import "InfinitTokenAttachmentCell.h"
 #import "InfinitMetricsManager.h"
+
+#import <Gap/InfinitUserManager.h>
+#import <Gap/NSString+email.h>
 
 //- Search View Element ----------------------------------------------------------------------------
 
@@ -20,7 +21,7 @@
 - (id)initWithAvatar:(NSImage*)avatar
                email:(NSString*)email
             fullname:(NSString*)fullname
-                user:(IAUser*)user
+                user:(InfinitUser*)user
 {
   if (self = [super init])
   {
@@ -134,7 +135,7 @@
     _search_results = [NSMutableArray array];
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarCallback:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
   }
   
@@ -232,7 +233,7 @@
     [self fixClipView];
 }
 
-- (void)addUser:(IAUser*)user
+- (void)addUser:(InfinitUser*)user
 {
   if (user == nil)
     return;
@@ -241,7 +242,7 @@
     [temp removeObject:temp.lastObject];
 
   InfinitSearchElement* element =
-    [[InfinitSearchElement alloc] initWithAvatar:[IAAvatarManager getAvatarForUser:user]
+    [[InfinitSearchElement alloc] initWithAvatar:user.avatar
                                            email:nil 
                                         fullname:user.fullname
                                             user:user];
@@ -262,7 +263,7 @@
   [self performSelector:@selector(cursorAtEndOfSearchBox) withObject:nil afterDelay:0.2];
 }
 
-- (void)removeUser:(IAUser*)user
+- (void)removeUser:(InfinitUser*)user
 {
   NSMutableArray* recipients = [NSMutableArray arrayWithArray:self.search_field.objectValue];
   for (InfinitSearchElement* element in recipients)
@@ -429,7 +430,7 @@
 
   NSString* search_string = [self currentSearchString];
 
-  if ([IAFunctions stringIsValidEmail:search_string] && [_last_search isEqualToString:search_string])
+  if (search_string.isEmail && [_last_search isEqualToString:search_string])
   {
     InfinitSearchElement* element =
       [[InfinitSearchElement alloc] initWithAvatar:[IAFunctions makeAvatarFor:@"@"]
@@ -445,7 +446,7 @@
   {
     if (search_string.length < _last_search.length || _last_search.length == 0)
       [self clearResults];
-    if ([IAFunctions stringIsValidEmail:search_string])
+    if (search_string.isEmail)
     {
       [self clearResults];
       [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
@@ -510,7 +511,7 @@ doCommandBySelector:(SEL)commandSelector
     else if (_search_results.count == 0)
     {
       NSString* search_string = [self currentSearchString];
-      if ([IAFunctions stringIsValidEmail:search_string])
+      if (search_string.isEmail)
       {
         InfinitSearchElement* element =
           [[InfinitSearchElement alloc] initWithAvatar:[IAFunctions makeAvatarFor:@"@"]
@@ -592,7 +593,7 @@ hasMenuForRepresentedObject:(id)representedObject
   for (id object in allowed_tokens)
   {
     if (![object isKindOfClass:[InfinitSearchElement class]] &&
-        !([object isKindOfClass:[NSString class]] && [IAFunctions stringIsValidEmail:object]))
+        !([object isKindOfClass:[NSString class]] && [object isEmail]))
     {
       [allowed_tokens removeObject:object];
     }
@@ -620,7 +621,7 @@ displayStringForRepresentedObject:(id)representedObject
 - (NSTokenStyle)tokenField:(NSTokenField*)tokenField
  styleForRepresentedObject:(id)representedObject
 {
-  if ([representedObject isKindOfClass:NSString.class] && ![IAFunctions stringIsValidEmail:representedObject])
+  if ([representedObject isKindOfClass:NSString.class] && ![representedObject isEmail])
     return NSPlainTextTokenStyle;
   else
     return NSDefaultTokenStyle;
@@ -1028,7 +1029,7 @@ writeRepresentedObjects:(NSArray*)objects
   }
   else
   {
-    if ([IAFunctions stringIsValidEmail:representedObject])
+    if ([representedObject isKindOfClass:NSString.class] && [representedObject isEmail])
       avatar = [IAFunctions makeAvatarFor:@"@"];
     else
       avatar = [IAFunctions makeAvatarFor:representedObject];
@@ -1044,13 +1045,14 @@ writeRepresentedObjects:(NSArray*)objects
 
 - (void)avatarCallback:(NSNotification*)notification
 {
-  IAUser* user = [notification.userInfo objectForKey:@"user"];
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
   NSInteger row = 0;
   for (InfinitSearchElement* element in _search_results)
   {
     if ([element.user isEqual:user])
     {
-      NSImage* image = [notification.userInfo objectForKey:@"avatar"];
+      NSImage* image = user.avatar;
       if (row < self.table_view.numberOfRows)
       {
         IASearchResultsCellView* cell =
@@ -1058,11 +1060,12 @@ writeRepresentedObjects:(NSArray*)objects
         if (image == nil || cell == nil)
           return;
         element.avatar = image;
-        [cell setUserAvatar:[IAFunctions makeRoundAvatar:image
-                                              ofDiameter:24.0
-                                   withBorderOfThickness:0.0
-                                                inColour:IA_GREY_COLOUR(255.0)
-                                       andShadowOfRadius:0.0]];
+        NSImage* round_avatar = [IAFunctions makeRoundAvatar:image
+                                                  ofDiameter:24.0
+                                       withBorderOfThickness:0.0
+                                                    inColour:IA_GREY_COLOUR(255.0)
+                                           andShadowOfRadius:0.0];
+        [cell setUserAvatar:round_avatar];
         return;
       }
     }

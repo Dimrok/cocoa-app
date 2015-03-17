@@ -15,6 +15,8 @@
 
 #import "OEXTokenField.h"
 
+#import <Gap/InfinitUser.h>
+
 //- Controller -------------------------------------------------------------------------------------
 
 @protocol IAUserSearchViewProtocol;
@@ -44,9 +46,9 @@
 
 - (void)setDelegate:(id<IAUserSearchViewProtocol>)delegate;
 
-- (void)addUser:(IAUser*)user;
+- (void)addUser:(InfinitUser*)user;
 
-- (void)removeUser:(IAUser*)user;
+- (void)removeUser:(InfinitUser*)user;
 
 - (void)cursorAtEndOfSearchBox;
 
@@ -80,13 +82,13 @@
 @property (nonatomic, readwrite) NSImage* avatar;
 @property (nonatomic, readwrite) NSString* email;
 @property (nonatomic, readwrite) NSString* fullname;
-@property (nonatomic, readwrite) IAUser* user;
+@property (nonatomic, readwrite) InfinitUser* user;
 @property (nonatomic, readwrite) BOOL hover;
 @property (nonatomic, readwrite) BOOL selected;
 
 - (id)initWithAvatar:(NSImage*)avatar
                email:(NSString*)email
             fullname:(NSString*)fullname
-                user:(IAUser*)user;
+                user:(InfinitUser*)user;
 
 @end
