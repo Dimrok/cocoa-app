@@ -11,7 +11,9 @@
 #import "IAUserPrefs.h"
 #import "InfinitMetricsManager.h"
 
-#import <Gap/IAUserManager.h>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitStateResult.h>
+#import <Gap/InfinitUserManager.h>
 
 #undef check
 #import <elle/log.hh>
@@ -33,9 +35,6 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   InfinitSearchPersonResult* _single_email_result; // Result from a search done with a single email address.
 
   BOOL _got_infinit_results;
-  NSOperation* _current_name_search;
-  NSOperation* _current_emails_search;
-  NSOperation* _current_single_email_search;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -209,7 +208,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 //- Swagger Search Handling ------------------------------------------------------------------------
 
-- (BOOL)user:(IAUser*)user containsSearchString:(NSString*)search_string
+- (BOOL)user:(InfinitUser*)user containsSearchString:(NSString*)search_string
 {
   if (!user.deleted &&
       ([user.fullname rangeOfString:search_string options:NSCaseInsensitiveSearch].location != NSNotFound ||
@@ -221,29 +220,13 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 - (void)searchSwaggers:(NSString*)search_string
 {
   [_swagger_results removeAllObjects];
-  BOOL self_result = NO;
-  NSNumber* self_id = [IAGapState instance].self_id;
-  NSArray* swaggers = [IAUserManager swaggerList];
-  for (IAUser* user in swaggers)
+  NSArray* local_results = [[InfinitUserManager sharedInstance] searchLocalUsers:search_string];
+  for (InfinitUser* user in local_results)
   {
-    if ([self user:user containsSearchString:search_string])
-    {
-      if ([user.user_id isEqualTo:self_id])
-        self_result = YES;
-      InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user
-                                                                                       andDelegate:self];
-      [_swagger_results addObject:person];
-    }
-  }
-  if (!self_result)
-  {
-    IAUser* self_user = [IAUserManager userWithId:self_id];
-    if ([self user:self_user containsSearchString:search_string])
-    {
-      InfinitSearchPersonResult* person = [[InfinitSearchPersonResult alloc] initWithInfinitPerson:self_user
-                                                                                       andDelegate:self];
-      [_swagger_results addObject:person];
-    }
+    InfinitSearchPersonResult* person =
+      [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user
+                                                   andDelegate:self];
+    [_swagger_results addObject:person];
   }
 }
 
@@ -253,32 +236,25 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 {
   if (emails.count == 0)
     return;
-
-  _current_emails_search =
-    [[IAGapState instance] searchUsersByEmails:emails
-                               performSelector:@selector(searchUsersByEmailsCallback:)
-                                      onObject:self];
+  [[InfinitUserManager sharedInstance] searchEmails:emails
+                                    performSelector:@selector(searchUsersByEmailsCallback:)
+                                           onObject:self];
 }
 
-- (void)searchUsersByEmailsCallback:(IAGapOperationResult*)result
+- (void)searchUsersByEmailsCallback:(NSDictionary*)result
 {
-  if (!result.success)
+  for (NSString* email in result.allKeys)
   {
-    ELLE_WARN("%s: searching for emails failed with error: %d", self.description.UTF8String,
-              result.status);
-    return;
-  }
-
-  for (NSString* email in result.data)
-  {
-    [self updatePersonWithEmail:email andInfinitUser:[result.data objectForKey:email]];
+    InfinitUser* user = result[email];
+    if (user != nil)
+      [self updatePersonWithEmail:email andInfinitUser:user];
   }
   
   [self sortAndAggregateResults];
 }
 
 - (void)updatePersonWithEmail:(NSString*)email
-               andInfinitUser:(IAUser*)user
+               andInfinitUser:(InfinitUser*)user
 {
   for (InfinitSearchPersonResult* person in _address_book_results)
   {
@@ -292,16 +268,14 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 - (void)searchForEmailString:(NSString*)email
 {
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
-  NSMutableDictionary* mail_check =
-    [NSMutableDictionary dictionaryWithDictionary:@{@"email": email}];
-  _current_single_email_search =
-    [[IAGapState instance] getUserIdfromEmail:email
-                              performSelector:@selector(singleEmailSearchCallback:)
-                                     onObject:self
-                                     withData:mail_check];
+  NSMutableDictionary* mail_check = [NSMutableDictionary dictionary];
+  [[InfinitStateManager sharedInstance] userByEmail:email
+                                    performSelector:@selector(singleEmailSearchCallback:)
+                                           onObject:self
+                                           withData:mail_check];
 }
 
-- (void)singleEmailSearchCallback:(IAGapOperationResult*)result
+- (void)singleEmailSearchCallback:(InfinitStateResult*)result
 {
   if (!result.success)
   {
@@ -312,35 +286,12 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   NSNumber* user_id = [dict valueForKey:@"user_id"];
   if (user_id.unsignedIntegerValue != 0)
   {
-    IAUser* user = [IAUserManager userWithId:user_id];
+    InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:user_id];
     InfinitSearchPersonResult* new_person =
       [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
     [_result_list addObject:new_person];
   }
   [_delegate searchControllerGotEmailResult:self];
-}
-
-//- Infinit Search Handling ------------------------------------------------------------------------
-
-- (void)infinitSearchResultsCallback:(IAGapOperationResult*)result
-{
-  if (!result.success)
-  {
-    ELLE_WARN("%s: searching for users failed with error: %d", self.description.UTF8String,
-              result.status);
-    return;
-  }
-  
-  NSArray* infinit_results = result.data;
-  [_infinit_name_results removeAllObjects];
-  for (IAUser* user in infinit_results)
-  {
-    InfinitSearchPersonResult* new_person =
-      [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:self];
-    [_infinit_name_results addObject:new_person];
-  }
-  _got_infinit_results = YES;
-  [self sortAndAggregateResults];
 }
 
 
@@ -416,9 +367,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (void)cancelRunningSearches
 {
-  [_current_name_search cancel];
-  [_current_emails_search cancel];
-  [_current_single_email_search cancel];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)searchWithString:(NSString*)search_string
@@ -432,9 +381,6 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   [self searchAddressBookWithString:search_string];
 
   [self sortAndAggregateResults];
-  _current_name_search = [[IAGapState instance] searchUsers:search_string
-                                            performSelector:@selector(infinitSearchResultsCallback:)
-                                                   onObject:self];
 }
 
 //- Result Person Protocol -------------------------------------------------------------------------
