@@ -15,9 +15,12 @@
 #undef check
 #import <elle/log.hh>
 
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitUserManager.h>
+
 ELLE_LOG_COMPONENT("OSX.MetricsManager");
 
-static InfinitMetricsManager* _shared_instance = nil;
+static InfinitMetricsManager* _instance = nil;
 
 @implementation InfinitMetricsManager
 {
@@ -27,48 +30,13 @@ static InfinitMetricsManager* _shared_instance = nil;
   BOOL _send_metrics;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)init
 {
+  NSCAssert(_instance == nil, @"Use sharedInstance");
   if (self = [super init])
   {
-    @try
-    {
-      NSString* metrics_on = [[NSString alloc] initWithUTF8String:getenv("INFINIT_METRICS_INFINIT")];
-      if (metrics_on.length > 0)
-      {
-        NSString* metrics_host = [[NSString alloc] initWithUTF8String:getenv("INFINIT_METRICS_INFINIT_HOST")];
-        NSString* metrics_port = [[NSString alloc] initWithUTF8String:getenv("INFINIT_METRICS_INFINIT_PORT")];
-        if (metrics_host.length > 0 && metrics_port.length > 0)
-        {
-          _send_metrics = YES;
-          NSString* metrics_url =
-            [[NSString alloc] initWithFormat:@"http://%@:%@/ui", metrics_host, metrics_port];
-          ELLE_LOG("%s: will send metrics to: %s", self.description.UTF8String, metrics_url.UTF8String);
-          _metrics_url = [[NSURL alloc] initWithString:metrics_url];
-          NSString* user_agent = [[NSString alloc] initWithFormat:@"Infinit/%s (OS X)", INFINIT_VERSION];
-          _http_headers = @{@"User-Agent": user_agent,
-                            @"Content-Type": @"application/json"};
-        }
-        else
-        {
-          _send_metrics = NO;
-        }
-      }
-      else
-      {
-        _send_metrics = NO;
-      }
-    }
-    @catch (NSException *exception)
-    {
-      _send_metrics = NO;
-    }
-  }
-  if (!_send_metrics)
-  {
-    ELLE_LOG("%s: will not send metrics", self.description.UTF8String);
   }
   return self;
 }
@@ -78,18 +46,35 @@ static InfinitMetricsManager* _shared_instance = nil;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-//- Instance Management ----------------------------------------------------------------------------
-
-+ (InfinitMetricsManager*)sharedInstance
++ (instancetype)sharedInstance
 {
-  if (_shared_instance == nil)
-  {
-    _shared_instance = [[InfinitMetricsManager alloc] init];
-  }
-  return _shared_instance;
+  if (_instance == nil)
+    _instance = [[InfinitMetricsManager alloc] init];
+  return _instance;
 }
 
-//- General Functions ------------------------------------------------------------------------------
+#pragma mark - Public
+
++ (void)sendMetric:(InfinitMetricType)metric
+{
+  [[InfinitMetricsManager sharedInstance] _sendMetric:metric withDictioary:nil];
+}
+
++ (void)sendMetric:(InfinitMetricType)metric
+    withDictionary:(NSDictionary*)dict
+{
+  [[InfinitMetricsManager sharedInstance] _sendMetric:metric withDictioary:dict];
+}
+
+#pragma mark - Helpers
+
+- (void)_sendMetric:(InfinitMetricType)metric
+      withDictioary:(NSDictionary*)dict
+{
+  [[InfinitStateManager sharedInstance] sendMetricEvent:[self _eventName:metric]
+                                             withMethod:[self _eventMethod:metric]
+                                      andAdditionalData:dict];
+}
 
 - (NSString*)_eventName:(InfinitMetricType)metric_type
 {
@@ -241,94 +226,6 @@ static InfinitMetricsManager* _shared_instance = nil;
     default:
       return @"unknown";
   }
-}
-
-- (NSString*)_userId
-{
-  if (![[IAGapState instance] logged_in])
-    return nil;
-  return [IAGapState instance].self_user.real_id;
-}
-
-- (NSString*)_deviceId
-{
-  if (![[IAGapState instance] logged_in])
-    return nil;
-  return [IAGapState instance].self_device_id;
-}
-
-//- Send Metric ------------------------------------------------------------------------------------
-
-- (void)_sendMetric:(InfinitMetricType)metric
-      withDictioary:(NSDictionary*)dict
-{
-  if (!_send_metrics)
-    return;
-  
-  ELLE_DEBUG("%s: send metric of type: %d", self.description.UTF8String, metric);
-  
-  NSDate* now = [NSDate date];
-  NSNumber* timestamp = [NSNumber numberWithDouble:now.timeIntervalSince1970];
-  NSMutableDictionary* metric_dict =
-    [NSMutableDictionary dictionaryWithDictionary:@{
-      @"event": [self _eventName:metric],
-      @"method": [self _eventMethod:metric],
-      @"os": @"OS X",
-      @"os_version": [IAFunctions osVersionString],
-      @"timestamp": timestamp
-    }];
-  if (dict != nil && dict.allKeys.count > 0)
-    [metric_dict addEntriesFromDictionary:dict];
-  if ([[InfinitFeatureManager sharedInstance] features] != nil)
-    metric_dict[@"features"] = [[InfinitFeatureManager sharedInstance] features];
-  else
-    metric_dict[@"features"] = @[];
-  if ([self _userId] != nil)
-    [metric_dict setObject:[self _userId] forKey:@"user"];
-  else
-    [metric_dict setObject:@"unknown" forKey:@"user"];
-  if ([self _deviceId])
-    [metric_dict setObject:[self _deviceId] forKey:@"device_id"];
-  else
-    [metric_dict setObject:@"unknown" forKey:@"device_id"];
-  NSData* json_data = [NSJSONSerialization dataWithJSONObject:metric_dict options:0 error:nil];
-  NSMutableURLRequest* request =
-  [[NSMutableURLRequest alloc] initWithURL:_metrics_url
-                               cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                           timeoutInterval:10.0];
-  request.HTTPMethod = @"POST";
-  request.HTTPBody = json_data;
-  request.HTTPShouldUsePipelining = YES;
-  [request setAllHTTPHeaderFields:_http_headers];
-  NSURLConnection* connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-  [connection start];
-}
-
-+ (void)sendMetric:(InfinitMetricType)metric
-{
-  [[InfinitMetricsManager sharedInstance] _sendMetric:metric withDictioary:nil];
-}
-
-+ (void)sendMetric:(InfinitMetricType)metric
-    withDictionary:(NSDictionary*)dict
-{
-  [[InfinitMetricsManager sharedInstance] _sendMetric:metric withDictioary:dict];
-}
-
-//- NSURLConnectionDelegate ------------------------------------------------------------------------
-
-- (void)connection:(NSURLConnection*)connection
-  didFailWithError:(NSError*)error
-{
-  ELLE_WARN("%s: unable to sent metric: %s", self.description.UTF8String,
-            error.description.UTF8String);
-  // Do nothing
-}
-
-- (void)connection:(NSURLConnection*)connection
-didReceiveResponse:(NSURLResponse*)response
-{
-  // Do nothing
 }
 
 @end
