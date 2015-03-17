@@ -124,48 +124,4 @@
   // Called just before view is changed so that tidy up can occur, overload as needed
 }
 
-//- Transaction and User Update Handling -----------------------------------------------------------
-
-- (void)linkAdded:(InfinitLinkTransaction*)link
-{
-  // Do nothing by default, overload if needed
-  return;
-}
-
-- (void)linkUpdated:(InfinitLinkTransaction*)link
-{
-  // Do nothing by default, overload if needed
-  return;
-}
-
-- (void)transactionAdded:(IATransaction*)transaction
-{
-  // Do nothing by default, overload if needed
-  return;
-}
-
-- (void)transactionUpdated:(IATransaction*)transaction
-{
-  // Do nothing by default, overload if needed
-  return;
-}
-
-- (void)userUpdated:(IAUser*)user
-{
-  // Do nothing by default, overload if needed
-  return;
-}
-
-- (void)userDeleted:(IAUser*)user
-{
-  // Do nothing by default, overload if needed
-  return;
-}
-
-- (void)selfStatusChanged:(gap_UserStatus)status
-{
-  // Do nothing by default, overload if needed
-  return;
-}
-
 @end

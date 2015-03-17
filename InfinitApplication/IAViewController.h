@@ -14,9 +14,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <surface/gap/enums.hh>
-
 #import "InfinitOnboardingController.h"
+
+#import <Gap/InfinitLinkTransaction.h>
+#import <Gap/InfinitPeerTransaction.h>
+#import <Gap/InfinitUser.h>
 
 @interface IAFooterView : NSView
 @end
@@ -41,15 +43,6 @@
 - (void)viewActive;
 - (void)aboutToChangeView;
 
-- (void)linkAdded:(InfinitLinkTransaction*)link;
-- (void)linkUpdated:(InfinitLinkTransaction*)link;
-- (void)transactionAdded:(IATransaction*)transaction;
-- (void)transactionUpdated:(IATransaction*)transaction;
-- (void)userUpdated:(IAUser*)user;
-- (void)userDeleted:(IAUser*)user;
-
-- (void)selfStatusChanged:(gap_UserStatus)status;
-
 @end
 
 
@@ -60,7 +53,7 @@
 
 - (BOOL)onboardingSend:(IAViewController*)sender;
 
-- (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
-- (IATransaction*)sendOnboardingTransaction:(IAViewController*)sender;
+- (InfinitPeerTransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
+- (InfinitPeerTransaction*)sendOnboardingTransaction:(IAViewController*)sender;
 
 @end
