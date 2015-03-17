@@ -10,7 +10,6 @@
 
 #import "InfinitMetricsManager.h"
 
-#import "OldInfinitSendViewController.h"
 #import "InfinitSendViewController.h"
 
 @interface IAWindowController ()
@@ -278,8 +277,7 @@
 
 - (void)notificationWindowGotEscapePressed:(IANotificationWindow*)sender
 {
-  if ([_current_controller isKindOfClass:InfinitSendViewController.class] ||
-      [_current_controller isKindOfClass:OldInfinitSendViewController.class])
+  if ([_current_controller isKindOfClass:InfinitSendViewController.class])
   {
     [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
   }
