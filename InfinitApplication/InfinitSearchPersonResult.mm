@@ -8,8 +8,7 @@
 
 #import "InfinitSearchPersonResult.h"
 
-#import "IAAvatarManager.h"
-#import <Gap/IAUserManager.h>
+#import <Gap/InfinitUserManager.h>
 
 #undef check
 #import <elle/log.hh>
@@ -88,26 +87,25 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
 //- Email User -------------------------------------------------------------------------------------
 
 - (void)email:(NSString*)email
-isInfinitUser:(IAUser*)user
+isInfinitUser:(InfinitUser*)user
 {
   _rank += infinit_match_rank;
   [NSNotificationCenter.defaultCenter addObserver:self
                                          selector:@selector(avatarReceivedCallback:)
-                                             name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                             name:INFINIT_USER_AVATAR_NOTIFICATION
                                            object:nil];
   _user = user;
-  if (_user.favourite)
+  if (_user.favorite)
     _rank += infinit_favourite_rank;
   if ([self userIsSwagger])
     _rank += infinit_swagger_rank;
   _fullname = _user.fullname;
-  NSImage* infinit_avatar = [IAAvatarManager getAvatarForUser:_user];
-  _avatar = infinit_avatar;
+  _avatar = user.avatar;
 }
 
 //- Infinit User -----------------------------------------------------------------------------------
 
-- (id)initWithInfinitPerson:(IAUser*)user
+- (id)initWithInfinitPerson:(InfinitUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 {
   if (self = [super init])
@@ -115,15 +113,15 @@ isInfinitUser:(IAUser*)user
     _rank = infinit_match_rank;
     _delegate = delegate;
     _user = user;
-    if (_user.favourite)
+    if (_user.favorite)
       _rank += infinit_favourite_rank;
     if ([self userIsSwagger])
       _rank += infinit_swagger_rank;
-    _avatar = [IAAvatarManager getAvatarForUser:_user];
+    _avatar = user.avatar;
     _fullname = _user.fullname;
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarReceivedCallback:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
   }
   return self;
@@ -133,7 +131,7 @@ isInfinitUser:(IAUser*)user
 
 - (BOOL)userIsSwagger
 {
-  NSArray* swaggers = [IAUserManager swaggerList];
+  NSArray* swaggers = [InfinitUserManager sharedInstance].alphabetical_swaggers;
   if ([swaggers containsObject:_user])
     return YES;
   else
@@ -144,12 +142,12 @@ isInfinitUser:(IAUser*)user
 {
   if (_user == nil)
     return;
-  
-  IAUser* user = [notification.userInfo objectForKey:@"user"];
-  if (user != _user)
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
+  if (![user isEqual:_user])
     return;
   
-  _avatar = [notification.userInfo objectForKey:@"avatar"];
+  _avatar = user.avatar;
   [_delegate personGotNewAvatar:self];
 }
 

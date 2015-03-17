@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <Gap/InfinitUser.h>
+
 typedef enum __InfinitSearchUserSource
 {
     INFINIT_ADDRESSBOOK_USER = 0,
@@ -27,16 +29,16 @@ static NSInteger infinit_favourite_rank = 10;
 @property (nonatomic, readonly) NSImage* avatar;
 @property (nonatomic, readonly) NSString* fullname;
 @property (nonatomic, readonly) NSMutableArray* emails;
-@property (nonatomic, readonly) IAUser* infinit_user;
+@property (nonatomic, readonly) InfinitUser* infinit_user;
 @property (nonatomic, readwrite) NSInteger rank;
 
 - (id)initWithABPerson:(ABPerson*)person
            andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
-- (id)initWithInfinitPerson:(IAUser*)user
+- (id)initWithInfinitPerson:(InfinitUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 
 - (void)email:(NSString*)email
-isInfinitUser:(IAUser*)user;
+isInfinitUser:(InfinitUser*)user;
 
 - (void)cancelCallbacks;
 
