@@ -8,19 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum
+typedef NS_ENUM(NSUInteger, InfinitFirstScreenshotResponse)
 {
   INFINIT_UPLOAD_SCREENSHOTS,
   INFINIT_NO_UPLOAD_SCREENSHOTS,
-} InfinitFirstScreenshotResponse;
+};
 
 @interface InfinitFirstScreenshotModal : NSWindowController
-
-@property (nonatomic, weak) IBOutlet NSTextField* information;
-@property (nonatomic, weak) IBOutlet NSButton* affirmative;
-@property (nonatomic, weak) IBOutlet NSButton* negative;
-
-- (id)init;
 
 - (void)close;
 

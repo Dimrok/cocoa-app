@@ -16,11 +16,16 @@
 ELLE_LOG_COMPONENT("OSX.ScreenshotModal");
 
 @interface InfinitFirstScreenshotModal ()
+
+@property (nonatomic, weak) IBOutlet NSTextField* information;
+@property (nonatomic, weak) IBOutlet NSButton* affirmative;
+@property (nonatomic, weak) IBOutlet NSButton* negative;
+
 @end
 
 @implementation InfinitFirstScreenshotModal
 
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)init
 {
@@ -58,8 +63,6 @@ clipboard so you can share it in a message, an\nemail or a tweet.", nil);
   self.negative.title = NSLocalizedString(@"No, thanks", nil);
 }
 
-//- Close ------------------------------------------------------------------------------------------
-
 - (void)close
 {
   if (self.window == nil)
@@ -67,7 +70,7 @@ clipboard so you can share it in a message, an\nemail or a tweet.", nil);
   [self.window close];
 }
 
-//- Button Handling --------------------------------------------------------------------------------
+#pragma mark - Button Handling
 
 - (IBAction)yesClicked:(id)sender
 {
