@@ -10,37 +10,10 @@
 
 #import "InfinitLinkViewController.h"
 #import "InfinitMainCounterView.h"
+#import "InfinitMainTransactionLinkView.h"
 #import "InfinitTransactionViewController.h"
 
-//- User Link View ---------------------------------------------------------------------------------
-
-typedef enum _InfinitTransactionLinkMode
-{
-  INFINIT_MAIN_VIEW_TRANSACTION_MODE,
-  INFINIT_MAIN_VIEW_LINK_MODE,
-} InfinitTransactionLinkMode;
-
-@protocol InfinitMainTransactionLinkProtocol;
-
-@interface InfinitMainTransactionLinkView : NSView
-@property (nonatomic, weak) IBOutlet NSTextField* transaction_text;
-@property (nonatomic, weak) IBOutlet NSTextField* link_text;
-@property (nonatomic, weak) IBOutlet InfinitMainCounterView* transaction_counter;
-@property (nonatomic, weak) IBOutlet InfinitMainCounterView* link_counter;
-@property (nonatomic, readwrite) InfinitTransactionLinkMode mode;
-@property (nonatomic, readwrite) CGFloat animate_mode;
-
-- (void)setDelegate:(id<InfinitMainTransactionLinkProtocol>)delegate;
-
-- (void)setLinkCount:(NSUInteger)count;
-- (void)setTransactionCount:(NSUInteger)count;
-
-@end
-
-@protocol InfinitMainTransactionLinkProtocol <NSObject>
-- (void)gotUserClick:(InfinitMainTransactionLinkView*)sender;
-- (void)gotLinkClick:(InfinitMainTransactionLinkView*)sender;
-@end
+#import <Gap/InfinitUser.h>
 
 //- Controller -------------------------------------------------------------------------------------
 
@@ -51,9 +24,7 @@ typedef enum _InfinitTransactionLinkMode
                                                          InfinitTransactionViewProtocol>
 
 - (id)initWithDelegate:(id<InfinitMainViewProtocol>)delegate
-    andTransactionList:(NSArray*)transaction_list
-           andLinkList:(NSArray*)link_list
-            forPeopleView:(BOOL)flag;
+         forPeopleView:(BOOL)flag;
 
 @property (nonatomic, strong) IBOutlet InfinitMainTransactionLinkView* view_selector;
 @property (nonatomic, strong) IBOutlet NSMenu* gear_menu;
@@ -65,27 +36,13 @@ typedef enum _InfinitTransactionLinkMode
 
 @protocol InfinitMainViewProtocol <IAViewProtocol>
 
-- (NSArray*)latestTransactionsByUser:(InfinitMainViewController*)sender;
-- (NSArray*)linkHistory:(InfinitMainViewController*)sender;
+- (BOOL)transferringTransactionsForUser:(InfinitUser*)user;
 
-- (NSUInteger)runningTransactionsForUser:(IAUser*)user;
-- (NSUInteger)notDoneTransactionsForUser:(IAUser*)user;
-- (NSUInteger)unreadTransactionsForUser:(IAUser*)user;
-- (CGFloat)totalProgressForUser:(IAUser*)user;
-
-- (BOOL)transferringTransactionsForUser:(IAUser*)user;
-
-- (void)userGotClicked:(IAUser*)user;
+- (void)userGotClicked:(InfinitUser*)user;
 - (void)sendGotClicked:(InfinitMainViewController*)sender;
 - (void)makeLinkGotClicked:(InfinitMainViewController*)sender;
 
-- (void)markTransactionRead:(IATransaction*)transaction;
-
-- (void)cancelLink:(InfinitLinkTransaction*)link;
-- (void)deleteLink:(InfinitLinkTransaction*)link;
 - (void)copyLinkToClipboard:(InfinitLinkTransaction*)link;
-
-- (BOOL)currentSelfStatus:(InfinitMainViewController*)status;
 
 //- Gear Menu Handling -----------------------------------------------------------------------------
 

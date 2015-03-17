@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A388a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D98g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitMainViewController">
@@ -61,7 +61,7 @@
                                 <outlet property="link_counter" destination="A6R-8M-I4K" id="yew-Gd-dUX"/>
                                 <outlet property="link_text" destination="ilo-sL-unO" id="m5S-g2-0j1"/>
                                 <outlet property="transaction_counter" destination="nvG-SI-aAY" id="8Ls-PP-GH9"/>
-                                <outlet property="transaction_text" destination="HMZ-IT-48i" id="UqA-m8-8Vr"/>
+                                <outlet property="transaction_text" destination="HMZ-IT-48i" id="8HZ-kx-Ixh"/>
                             </connections>
                         </customView>
                     </subviews>

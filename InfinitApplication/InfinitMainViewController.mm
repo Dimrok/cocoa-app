@@ -13,6 +13,11 @@
 #import "InfinitOnboardingController.h"
 #import "InfinitTooltipViewController.h"
 
+#import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitLinkTransactionManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitUserManager.h>
+
 #undef check
 #import <elle/log.hh>
 #import <version.hh>
@@ -21,287 +26,20 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 #define IA_FEEDBACK_LINK "http://feedback.infinit.io?utm_source=app&utm_medium=mac"
 
-//- Transaction Link View --------------------------------------------------------------------------
-
-@implementation InfinitMainTransactionLinkView
-{
-@private
-  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  __unsafe_unretained id<InfinitMainTransactionLinkProtocol> _delegate;
-  NSTrackingArea* _tracking_area;
-
-  NSAttributedString* _link_norm_str;
-  NSAttributedString* _link_hover_str;
-  NSAttributedString* _link_high_str;
-
-  NSAttributedString* _transaction_norm_str;
-  NSAttributedString* _transaction_hover_str;
-  NSAttributedString* _transaction_high_str;
-
-  BOOL _hover;
-}
-
-- (void)setupViewForPeopleView:(BOOL)flag
-{
-  NSFont* font = [NSFont fontWithName:@"Montserrat" size:11.0];
-  NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-  para.alignment = NSCenterTextAlignment;
-  NSDictionary* norm_attrs = [IAFunctions textStyleWithFont:font
-                                             paragraphStyle:para
-                                                     colour:IA_RGB_COLOUR(139, 139, 131)
-                                                     shadow:nil];
-  NSDictionary* high_attrs = [IAFunctions textStyleWithFont:font
-                                             paragraphStyle:para
-                                                     colour:IA_RGB_COLOUR(0, 195, 192)
-                                                     shadow:nil];
-  NSDictionary* hover_attrs = [IAFunctions textStyleWithFont:font
-                                              paragraphStyle:para
-                                                      colour:IA_RGB_COLOUR(81, 81, 73)
-                                                      shadow:nil];
-  NSString* link_str = NSLocalizedString(@"LINKS", nil);
-  NSString* transaction_str = NSLocalizedString(@"PEOPLE", nil);
-
-  _link_norm_str = [[NSAttributedString alloc] initWithString:link_str attributes:norm_attrs];
-  _link_hover_str = [[NSAttributedString alloc] initWithString:link_str attributes:hover_attrs];
-  _link_high_str = [[NSAttributedString alloc] initWithString:link_str attributes:high_attrs];
-
-  _transaction_norm_str = [[NSAttributedString alloc] initWithString:transaction_str
-                                                          attributes:norm_attrs];
-  _transaction_hover_str = [[NSAttributedString alloc] initWithString:transaction_str
-                                                           attributes:hover_attrs];
-  _transaction_high_str = [[NSAttributedString alloc] initWithString:transaction_str
-                                                          attributes:high_attrs];
-  if (flag)
-  {
-    self.transaction_text.attributedStringValue = _transaction_high_str;
-    self.link_text.attributedStringValue = _link_norm_str;
-    self.transaction_counter.highlighted = YES;
-    self.link_counter.highlighted = NO;
-    _mode = INFINIT_MAIN_VIEW_TRANSACTION_MODE;
-    _animate_mode = 0.0;
-  }
-  else
-  {
-    self.transaction_text.attributedStringValue = _transaction_norm_str;
-    self.link_text.attributedStringValue = _link_high_str;
-    self.transaction_counter.highlighted = NO;
-    self.link_counter.highlighted = YES;
-    _mode = INFINIT_MAIN_VIEW_LINK_MODE;
-    _animate_mode = 1.0;
-  }
-}
-
-- (void)setDelegate:(id<InfinitMainTransactionLinkProtocol>)delegate
-{
-  _delegate = delegate;
-}
-
-- (void)setLinkCount:(NSUInteger)count
-{
-  self.link_counter.count = count;
-}
-
-- (void)setTransactionCount:(NSUInteger)count
-{
-  self.transaction_counter.count = count;
-}
-
-- (BOOL)isOpaque
-{
-  return NO;
-}
-
-- (void)dealloc
-{
-  _tracking_area = nil;
-}
-
-- (void)setAnimate_mode:(CGFloat)animate_mode
-{
-  _animate_mode = animate_mode;
-  [self setNeedsDisplay:YES];
-}
-
-- (void)setMode:(InfinitTransactionLinkMode)mode
-{
-  if (_mode == mode)
-    return;
-  _mode = mode;
-  CGFloat val;
-  if (_mode == INFINIT_MAIN_VIEW_TRANSACTION_MODE)
-  {
-    self.transaction_text.attributedStringValue = _transaction_high_str;
-    self.link_text.attributedStringValue = _link_norm_str;
-    self.link_counter.highlighted = NO;
-    self.transaction_counter.highlighted = YES;
-    val = 0.0;
-  }
-  else
-  {
-    self.transaction_text.attributedStringValue = _transaction_norm_str;
-    self.link_text.attributedStringValue = _link_high_str;
-    self.link_counter.highlighted = YES;
-    self.transaction_counter.highlighted = NO;
-    val = 1.0;
-  }
-
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context)
-   {
-     context.duration = 0.2;
-     context.timingFunction =
-       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-     [self.animator setAnimate_mode:val];
-   }
-                      completionHandler:^
-   {
-     _animate_mode = val;
-   }];
-}
-
-//- Animation --------------------------------------------------------------------------------------
-
-+ (id)defaultAnimationForKey:(NSString*)key
-{
-  if ([key isEqualToString:@"animate_mode"])
-    return [CABasicAnimation animation];
-
-  return [super defaultAnimationForKey:key];
-}
-
-//- Mouse Handling ---------------------------------------------------------------------------------
-
-- (void)resetCursorRects
-{
-  [super resetCursorRects];
-  NSCursor* cursor = [NSCursor pointingHandCursor];
-  [self addCursorRect:self.bounds cursor:cursor];
-}
-
-
-- (void)createTrackingArea
-{
-  _tracking_area = [[NSTrackingArea alloc] initWithRect:self.bounds
-                                                options:(NSTrackingMouseEnteredAndExited |
-                                                         NSTrackingMouseMoved |
-                                                         NSTrackingActiveAlways)
-                                                  owner:self
-                                               userInfo:nil];
-
-  [self addTrackingArea:_tracking_area];
-
-  NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
-  mouse_loc = [self convertPoint:mouse_loc fromView:nil];
-  if (NSPointInRect(mouse_loc, self.bounds))
-    [self mouseEntered:nil];
-  else
-    [self mouseExited:nil];
-}
-
-- (void)updateTrackingAreas
-{
-  [self removeTrackingArea:_tracking_area];
-  [self createTrackingArea];
-  [super updateTrackingAreas];
-}
-
-- (void)mouseExited:(NSEvent*)theEvent
-{
-  _hover = NO;
-  if (_mode == INFINIT_MAIN_VIEW_TRANSACTION_MODE)
-  {
-    self.transaction_text.attributedStringValue = _transaction_high_str;
-    self.link_text.attributedStringValue = _link_norm_str;
-  }
-  else
-  {
-    self.transaction_text.attributedStringValue = _transaction_norm_str;
-    self.link_text.attributedStringValue = _link_high_str;
-  }
-  [self setNeedsDisplay:YES];
-}
-
-- (void)mouseMoved:(NSEvent*)theEvent
-{
-  NSPoint loc = theEvent.locationInWindow;
-  if (loc.x < self.bounds.size.width / 2.0)
-  {
-    if (_mode == INFINIT_MAIN_VIEW_LINK_MODE)
-    {
-      self.transaction_text.attributedStringValue = _transaction_hover_str;
-      self.link_text.attributedStringValue = _link_high_str;
-      _hover = YES;
-    }
-    else
-    {
-      self.link_text.attributedStringValue = _link_norm_str;
-      _hover = NO;
-    }
-  }
-  else
-  {
-    if (_mode == INFINIT_MAIN_VIEW_TRANSACTION_MODE)
-    {
-      self.link_text.attributedStringValue = _link_hover_str;
-      self.transaction_text.attributedStringValue = _transaction_high_str;
-      _hover = YES;
-    }
-    else
-    {
-      self.transaction_text.attributedStringValue = _transaction_norm_str;
-      _hover = NO;
-    }
-  }
-  [self setNeedsDisplay:YES];
-}
-
-- (void)mouseDown:(NSEvent*)theEvent
-{
-  _hover = NO;
-  NSPoint click_loc = theEvent.locationInWindow;
-  if (click_loc.x < self.bounds.size.width / 2.0)
-    [_delegate gotUserClick:self];
-  else
-    [_delegate gotLinkClick:self];
-}
-
-//- Drawing ----------------------------------------------------------------------------------------
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-  NSBezierPath* bg = [IAFunctions roundedTopBezierWithRect:self.bounds cornerRadius:6.0];
-  [IA_GREY_COLOUR(255) set];
-  [bg fill];
-  NSBezierPath* light_line =
-  [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0, NSWidth(self.bounds), 2.0)];
-  if (_hover)
-    [IA_RGB_COLOUR(213, 213, 213) set];
-  else
-    [IA_GREY_COLOUR(230) set];
-  [light_line fill];
-  NSRect dark_rect = {
-    .origin = NSMakePoint((NSWidth(self.bounds) / 2.0) * _animate_mode, 0.0),
-    .size = NSMakeSize(NSWidth(self.bounds) / 2.0, 2.0)
-  };
-  NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
-  [IA_RGB_COLOUR(0, 195, 192) set];
-  [dark_line fill];
-}
-
-@end
-
 //- Main Controller --------------------------------------------------------------------------------
 
 @interface InfinitMainViewController ()
+
+@property (nonatomic, weak) NSViewController* current_controller;
+@property (nonatomic, strong) InfinitLinkViewController* link_controller;
+@property (nonatomic, strong) InfinitTransactionViewController* transaction_controller;
+
 @end
 
 @implementation InfinitMainViewController
 {
 @private
   __weak id<InfinitMainViewProtocol> _delegate;
-
-  InfinitTransactionViewController* _transaction_controller;
-  InfinitLinkViewController* _link_controller;
-  NSViewController* _current_controller;
 
   NSString* _version_str;
 
@@ -310,21 +48,19 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   BOOL _for_people_view;
 }
 
+#pragma mark - Init
+
 - (id)initWithDelegate:(id<InfinitMainViewProtocol>)delegate
-    andTransactionList:(NSArray*)transaction_list
-           andLinkList:(NSArray*)link_list
-         forPeopleView:(BOOL)flag
+         forPeopleView:(BOOL)flag;
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
     _for_people_view = flag;
     _delegate = delegate;
     _transaction_controller =
-      [[InfinitTransactionViewController alloc] initWithDelegate:self
-                                              andTransactionList:transaction_list];
+      [[InfinitTransactionViewController alloc] initWithDelegate:self];
     _link_controller =
-      [[InfinitLinkViewController alloc] initWithDelegate:self andLinkList:link_list
-                                            andSelfStatus:[_delegate currentSelfStatus:self]];
+      [[InfinitLinkViewController alloc] initWithDelegate:self];
     if (_for_people_view)
       _current_controller = _transaction_controller;
     else
@@ -350,7 +86,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
                                             options:0
                                             metrics:nil
-                                              views:@{@"view": _current_controller.view}];
+                                              views:@{@"view": self.current_controller.view}];
   [self.main_view addConstraints:contraints];
   _version_item.title = _version_str;
 }
@@ -371,8 +107,8 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [super loadView];
   [self.view_selector setDelegate:self];
   [self.view_selector setupViewForPeopleView:_for_people_view];
-  [self.view_selector setLinkCount:_link_controller.linksRunning];
-  [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
+  [self.view_selector setLinkCount:self.link_controller.linksRunning];
+  [self.view_selector setTransactionCount:self.transaction_controller.unreadRows];
 
   if (_for_people_view)
   {
@@ -389,17 +125,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
   InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
 
-//  if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_NOTIFICATION)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON];
-//    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
-//  }
-//  else if (onboarding_state == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON ||
-//           onboarding_state == INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW)
-//  {
-//    [_transaction_controller performSelector:@selector(delayedStartReceiveOnboarding) withObject:nil afterDelay:0.5];
-//  }
-//  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
   if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
   {
     [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:0.5];
@@ -407,20 +132,14 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILE_SENDING ||
            onboarding_state == INFINIT_ONBOARDING_SEND_FILE_SENT)
   {
-    [_transaction_controller performSelector:@selector(delayedFileSentOnboarding) withObject:nil afterDelay:0.5];
+    [self.transaction_controller performSelector:@selector(delayedFileSentOnboarding)
+                                      withObject:nil
+                                      afterDelay:0.5];
     [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
   }
 }
 
-- (void)viewActive
-{
-  // WORKAROUND stop flashing when changing subview by enabling layer backing. Need to do this once
-  // the view has opened so that we get a shadow during opening animation.
-  self.main_view.wantsLayer = YES;
-  self.main_view.layer.masksToBounds = YES;
-}
-
-//- Onboarding -------------------------------------------------------------------------------------
+#pragma mark - Onboarding
 
 - (void)delayedStartSendOnboarding
 {
@@ -434,81 +153,71 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
                        forTime:5.0];
 }
 
-//- IAViewController -------------------------------------------------------------------------------
-
-- (BOOL)closeOnFocusLost
+- (void)linkAdded:(NSNotification*)notification
 {
-  [_transaction_controller closeToolTips];
-  return YES;
-}
-
-- (void)aboutToChangeView
-{
-  if (_current_controller == _transaction_controller)
-    _transaction_controller.changing = YES;
-  else if (_current_controller == _link_controller)
-    _link_controller.changing = YES;
-  [_tooltip close];
-  [_transaction_controller closeToolTips];
-  [_transaction_controller markTransactionsRead];
-}
-
-- (void)linkAdded:(InfinitLinkTransaction*)link
-{
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  InfinitLinkTransaction* link =
+    [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
   if (_current_controller != _link_controller)
     return;
-  [_link_controller linkAdded:link];
-  [self.view_selector setLinkCount:_link_controller.linksRunning];
+  [self.link_controller linkAdded:link];
+  [self.view_selector setLinkCount:self.link_controller.linksRunning];
 }
 
-- (void)linkUpdated:(InfinitLinkTransaction*)link
+- (void)linkUpdated:(NSNotification*)notification
 {
-  if (_current_controller != _link_controller)
+  if (_current_controller != self.link_controller)
     return;
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  InfinitLinkTransaction* link =
+    [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
   [_link_controller linkUpdated:link];
   [self.view_selector setLinkCount:_link_controller.linksRunning];
 }
 
-- (void)transactionAdded:(IATransaction*)transaction
+- (void)transactionAdded:(NSNotification*)notification
 {
-  if (_current_controller != _transaction_controller)
+  if (self.current_controller != self.transaction_controller)
     return;
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   [_transaction_controller transactionAdded:transaction];
   [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
 }
 
-- (void)transactionUpdated:(IATransaction*)transaction
+- (void)transactionUpdated:(NSNotification*)notification
 {
-  if (_current_controller != _transaction_controller)
+  if (self.current_controller != self.transaction_controller)
     return;
-  [_transaction_controller transactionUpdated:transaction];
-  [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+  [self.transaction_controller transactionUpdated:transaction];
+  [self.view_selector setTransactionCount:self.transaction_controller.unreadRows];
 }
 
-- (void)userUpdated:(IAUser*)user
+#pragma mark - User Handling
+
+- (void)userUpdated:(NSNotification*)notification
 {
-  if (_current_controller != _transaction_controller)
+  if (self.current_controller != self.transaction_controller)
     return;
-  [_transaction_controller userUpdated:user];
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
+  [self.transaction_controller userUpdated:user];
 }
 
-- (void)selfStatusChanged:(gap_UserStatus)status
+#pragma mark - Connection Status Handling
+
+- (void)connectionStatusChanged:(NSNotification*)notification
 {
-  if (_current_controller == _link_controller)
-    [_link_controller selfStatusChanged:status];
+  InfinitConnectionStatus* connection_status = notification.object;
+  if (self.current_controller == self.link_controller)
+    [self.link_controller selfStatusChanged:connection_status.status];
 }
 
-//- Link View Protocol -----------------------------------------------------------------------------
-
-- (void)cancelLink:(InfinitLinkTransaction*)link
-{
-  [_delegate cancelLink:link];
-}
-
-- (void)deleteLink:(InfinitLinkTransaction*)link
-{
-  [_delegate deleteLink:link];
-}
+#pragma mark - Link View Protocol
 
 - (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link
 {
@@ -536,7 +245,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 }
 
 
-//- Peer Transaction Protocol ----------------------------------------------------------------------
+#pragma mark - Peer Transaction Protocol
 
 - (void)transactionsViewResizeToHeight:(CGFloat)height
 {
@@ -553,40 +262,9 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
     self.content_height_constraint.constant = height;
   }];
 }
-
-- (NSUInteger)runningTransactionsForUser:(IAUser*)user
+- (void)userGotClicked:(InfinitUser*)user
 {
-  return [_delegate runningTransactionsForUser:user];
-}
-
-- (NSUInteger)notDoneTransactionsForUser:(IAUser*)user
-{
-  return [_delegate notDoneTransactionsForUser:user];
-}
-
-- (NSUInteger)unreadTransactionsForUser:(IAUser*)user
-{
-  return [_delegate unreadTransactionsForUser:user];
-}
-
-- (CGFloat)totalProgressForUser:(IAUser*)user
-{
-  return [_delegate totalProgressForUser:user];
-}
-
-- (BOOL)transferringTransactionsForUser:(IAUser*)user
-{
-  return [_delegate transferringTransactionsForUser:user];
-}
-
-- (void)userGotClicked:(IAUser*)user
-{
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_CLICKED_ICON &&
-//      [[_delegate receiveOnboardingTransaction:self] other_user] == user)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_RECEIVE_IN_CONVERSATION_VIEW];
-//  }
-  _transaction_controller.changing = YES;
+  self.transaction_controller.changing = YES;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
@@ -598,17 +276,12 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   }];
 }
 
-- (void)markTransactionRead:(IATransaction*)transaction
-{
-  [_delegate markTransactionRead:transaction];
-}
-
-- (IATransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender
+- (InfinitPeerTransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender
 {
   return [_delegate receiveOnboardingTransaction:self];
 }
 
-- (IATransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender
+- (InfinitPeerTransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender
 {
   return [_delegate sendOnboardingTransaction:self];
 }
@@ -625,7 +298,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   self.send_button.image = [IAFunctions imageNamed:@"icon-transfer"];
   self.send_button.toolTip = NSLocalizedString(@"Send a file", nil);
 
-  [_transaction_controller updateModelWithList:[_delegate latestTransactionsByUser:self]];
+  [_transaction_controller updateModel];
   [_transaction_controller.table_view scrollRowToVisible:0];
 
   [self.view_selector setMode:INFINIT_MAIN_VIEW_TRANSACTION_MODE];
@@ -668,29 +341,30 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (void)gotLinkClick:(InfinitMainTransactionLinkView*)sender
 {
-  if (_current_controller == _link_controller)
+  if (self.current_controller == self.link_controller)
     return;
 
   ELLE_LOG("%s: changing to link view", self.description.UTF8String);
 
   [_tooltip close];
-  [_transaction_controller closeToolTips];
-  [_transaction_controller markTransactionsRead];
+  [self.transaction_controller closeToolTips];
+  [self.transaction_controller markTransactionsRead];
 
   self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
   self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
 
-  [_link_controller updateModelWithList:[_delegate linkHistory:self]];
-  [_link_controller.table_view scrollRowToVisible:0];
+  [self.link_controller updateModel];
+  [self.link_controller.table_view scrollRowToVisible:0];
 
   [self.view_selector setMode:INFINIT_MAIN_VIEW_LINK_MODE];
-  _transaction_controller.changing = YES;
+  self.transaction_controller.changing = YES;
   self.main_view.animations = @{@"subviews": [self transitionFromLeft:YES]};
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
-    [self.main_view.animator replaceSubview:_current_controller.view with:_link_controller.view];
-    _current_controller = _link_controller;
+    [self.main_view.animator replaceSubview:self.current_controller.view
+                                       with:self.link_controller.view];
+    _current_controller = self.link_controller;
   }
                       completionHandler:^
   {
@@ -698,29 +372,29 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
                                               options:0
                                               metrics:nil
-                                                views:@{@"view": _current_controller.view}];
+                                                views:@{@"view": self.current_controller.view}];
     [self.main_view addConstraints:constraints];
-    if (self.content_height_constraint.constant != _link_controller.height)
+    if (self.content_height_constraint.constant != self.link_controller.height)
     {
       [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
       {
         context.duration = 0.15;
-        [self.content_height_constraint.animator setConstant:_link_controller.height];
+        [self.content_height_constraint.animator setConstant:self.link_controller.height];
       }
                           completionHandler:^
       {
-        _link_controller.changing = NO;
+        self.link_controller.changing = NO;
       }];
     }
     else
     {
-      _link_controller.changing = NO;
+      self.link_controller.changing = NO;
     }
   }];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_LINKS];
 }
 
-//- Button Handling --------------------------------------------------------------------------------
+#pragma mark - User Interaction
 
 - (IBAction)gearButtonClicked:(NSButton*)sender
 {
@@ -741,10 +415,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (IBAction)sendButtonClicked:(NSButton*)sender
 {
-//  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_RECEIVE_DONE)
-//  {
-//    [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
-//  }
   _transaction_controller.changing = YES;
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_SEND];
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
@@ -784,6 +454,64 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 - (IBAction)onSettingsClick:(NSMenuItem*)sender
 {
   [_delegate settings:self];
+}
+
+#pragma mark - IAViewController
+
+- (BOOL)closeOnFocusLost
+{
+  [self.transaction_controller closeToolTips];
+  return YES;
+}
+
+- (void)viewActive
+{
+  [super viewActive];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(userUpdated:)
+                                               name:INFINIT_USER_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(linkAdded:)
+                                               name:INFINIT_NEW_LINK_TRANSACTION_NOTIFICATION 
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(linkUpdated:)
+                                               name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(linkUpdated:)
+                                               name:INFINIT_LINK_TRANSACTION_DATA_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionAdded:)
+                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionUpdated:)
+                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(connectionStatusChanged:)
+                                               name:INFINIT_CONNECTION_STATUS_CHANGE
+                                             object:nil];
+  // WORKAROUND stop flashing when changing subview by enabling layer backing. Need to do this once
+  // the view has opened so that we get a shadow during opening animation.
+  self.main_view.wantsLayer = YES;
+  self.main_view.layer.masksToBounds = YES;
+}
+
+- (void)aboutToChangeView
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  if (_current_controller == _transaction_controller)
+    _transaction_controller.changing = YES;
+  else if (_current_controller == _link_controller)
+    _link_controller.changing = YES;
+  [_tooltip close];
+  [_transaction_controller closeToolTips];
+  [_transaction_controller markTransactionsRead];
 }
 
 @end
