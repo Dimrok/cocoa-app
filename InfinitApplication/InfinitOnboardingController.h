@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <Gap/InfinitPeerTransaction.h>
+
 typedef enum __InfinitOnboardingState
 {
   INFINIT_ONBOARDING_RECEIVE_NOTIFICATION, // start of onboarding: desktop notification receieved
@@ -32,12 +34,12 @@ typedef enum __InfinitOnboardingState
 @interface InfinitOnboardingController : NSObject
 
 @property (nonatomic, readwrite) InfinitOnboardingState state;
-@property (nonatomic, readonly) IATransaction* receive_transaction;
-@property (nonatomic, readwrite) IATransaction* send_transaction;
+@property (nonatomic, readonly) InfinitPeerTransaction* receive_transaction;
+@property (nonatomic, readwrite) InfinitPeerTransaction* send_transaction;
 @property (nonatomic, readonly) BOOL receive_onboarding_done;
 
 - (id)initWithDelegate:(id<InfinitOnboardingProtocol>)delegate
-       andReceiveTransaction:(IATransaction*)transaction;
+       andReceiveTransaction:(InfinitPeerTransaction*)transaction;
 
 - (id)initForSendOnboardingWithDelegate:(id<InfinitOnboardingProtocol>)delegate;
 

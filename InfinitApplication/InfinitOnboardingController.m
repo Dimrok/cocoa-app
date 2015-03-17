@@ -20,7 +20,7 @@
 @synthesize receive_onboarding_done = _receive_onboarding_done;
 
 - (id)initWithDelegate:(id<InfinitOnboardingProtocol>)delegate
-andReceiveTransaction:(IATransaction*)transaction
+ andReceiveTransaction:(InfinitPeerTransaction*)transaction
 {
   if (self = [super init])
   {
