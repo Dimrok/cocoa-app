@@ -33,8 +33,6 @@ typedef enum __INFINIT_OS_X_VERSION
 
 + (NSImage*)imageNamed:(NSString*)imageName;
 
-+ (BOOL)stringIsValidEmail:(NSString*)str;
-
 + (NSDictionary*)textStyleWithFont:(NSFont*)font
                     paragraphStyle:(NSParagraphStyle*)paragraph_style
                             colour:(NSColor*)colour
@@ -50,25 +48,14 @@ typedef enum __INFINIT_OS_X_VERSION
                    inColour:(NSColor*)colour
           andShadowOfRadius:(CGFloat)shadow_radius;
 
-+ (NSString*)fileSizeStringFrom:(NSNumber*)file_size;
-
 + (NSString*)numberInUnits:(NSNumber*)num;
 
-+ (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left;
-
 + (NSImage*)addressBookUserAvatar;
-
-+ (NSString*)relativeDateOf:(NSTimeInterval)timestamp
-               longerFormat:(BOOL)longer;
 
 + (NSImage*)makeAvatarFor:(NSString*)fullname;
 
 + (NSString*)osVersionString;
 
 + (INFINIT_OS_X_VERSION)osxVersion;
-
-+ (NSString*)printFrame:(NSRect)rect;
-
-+ (NSString*)printPoint:(NSPoint)point;
 
 @end

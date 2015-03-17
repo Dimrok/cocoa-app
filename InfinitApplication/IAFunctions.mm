@@ -116,20 +116,6 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   return img;
 }
 
-+ (BOOL)stringIsValidEmail:(NSString*)str
-{
-  NSString* email_regex =
-  @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
-  @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
-  @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
-  @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
-  @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
-  @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
-  @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-  NSPredicate* email_test = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", email_regex];
-  return [email_test evaluateWithObject:str];
-}
-
 + (NSDictionary*)textStyleWithFont:(NSFont*)font
                     paragraphStyle:(NSParagraphStyle*)paragraph_style
                             colour:(NSColor*)colour
@@ -221,26 +207,6 @@ ELLE_LOG_COMPONENT("OSX.Functions");
   return res;
 }
 
-// Do not confuse MB and MiB. Apple use MB, GB, etc for their file and storage sizes.
-+ (NSString*)fileSizeStringFrom:(NSNumber*)file_size
-{
-  NSString* res;
-  CGFloat size = file_size.doubleValue;
-
-  if (size < pow(10.0, 3.0))
-    res = [NSString stringWithFormat:@"%.0f B", size];
-  else if (size < pow(10.0, 6.0))
-    res = [NSString stringWithFormat:@"%.0f KB", size / pow(10.0, 3.0)];
-  else if (size < pow(10.0, 9.0))
-    res = [NSString stringWithFormat:@"%.1f MB", size / pow(10.0, 6.0)];
-  else if (size < pow(10.0, 12.0))
-    res = [NSString stringWithFormat:@"%.2f GB", size / pow(10.0, 9.0)];
-  else
-    res = [NSString stringWithFormat:@"%.3f TB", size / pow(10.0, 12.0)];
-
-  return res;
-}
-
 + (NSString*)numberInUnits:(NSNumber*)num
 {
   NSString* res;
@@ -254,35 +220,6 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     res = [NSString stringWithFormat:@"%.2f M", real_num / pow(10.0, 6.0)];
   else
     res = [NSString stringWithFormat:@"%.3f G", real_num / pow(10.0, 9.0)];
-
-  return res;
-}
-
-+ (NSString*)timeRemainingFrom:(NSTimeInterval)seconds_left
-{
-  NSString* res;
-
-  if (seconds_left < 10)
-    res = NSLocalizedString(@"less than 10 s", @"less than 10 s");
-  else if (seconds_left < 60)
-    res = NSLocalizedString(@"less than 1 min", @"less than 1 min");
-  else if (seconds_left < 90)
-    res = NSLocalizedString(@"about 1 min", @"about 1 min");
-  else if (seconds_left < 3600)
-    res = [NSString stringWithFormat:@"%.0f min", seconds_left / 60];
-  else if (seconds_left < 86400)
-    res = [NSString stringWithFormat:@"%.0f h", seconds_left / 3600];
-  else if (seconds_left < 172800)
-  {
-    double days = seconds_left / 86400;
-    double hours = days - floor(days);
-    days = floor(days);
-    res = [NSString stringWithFormat:@"%.0f d %.1f h", days, hours];
-  }
-  else
-  {
-    res = NSLocalizedString(@"more than two days", @"more than two days");
-  }
 
   return res;
 }
@@ -359,83 +296,6 @@ ELLE_LOG_COMPONENT("OSX.Functions");
 	return result;
 }
 
-+ (BOOL)isToday:(NSDate*)date
-{
-  NSDate* today = [NSDate date];
-  NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
-  NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-  NSDateComponents* today_components = [gregorian components:components
-                                                    fromDate:today];
-  NSDateComponents* date_components = [gregorian components:components
-                                                   fromDate:date];
-  if ([date_components isEqual:today_components])
-    return YES;
-  else
-    return NO;
-}
-
-+ (BOOL)isInLastWeek:(NSDate*)date
-{
-  NSDate* now = [NSDate date];
-  NSCalendar* gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-  NSInteger components = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
-  NSDateComponents* today_components = [gregorian components:components
-                                                    fromDate:now];
-  NSDate* today = [gregorian dateFromComponents:today_components];
-  NSDateComponents* minus_six_days = [[NSDateComponents alloc] init];
-  minus_six_days.day = -6;
-  NSDate* six_days_ago = [gregorian dateByAddingComponents:minus_six_days
-                                                    toDate:today
-                                                   options:0];
-  if ([[date earlierDate:now] isEqualToDate:date] &&
-      [[date laterDate:six_days_ago] isEqualToDate:date])
-  {
-    return YES;
-  }
-  return NO;
-}
-
-+ (NSString*)relativeDateOf:(NSTimeInterval)timestamp
-               longerFormat:(BOOL)longer
-{
-  NSDate* transaction_date = [NSDate dateWithTimeIntervalSince1970:timestamp];
-  NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-  NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-  formatter.locale = [NSLocale currentLocale];
-  NSString* res;
-  if (timestamp < now && timestamp > (now - 3 * 60.0)) // 3 min ago
-  {
-    res = NSLocalizedString(@"Now", nil);
-  }
-  else if (timestamp < now && timestamp > (now - 60 * 60.0)) // an hour ago
-  {
-    CGFloat time_ago = floor((now - timestamp) / 60.0);
-    res = [NSString stringWithFormat:@"%.0f %@", time_ago, NSLocalizedString(@"min ago", nil)];
-  }
-  else if ([IAFunctions isToday:transaction_date])
-  {
-    formatter.timeStyle = NSDateFormatterShortStyle;
-    res = [formatter stringFromDate:transaction_date];
-  }
-  else if ([IAFunctions isInLastWeek:transaction_date])
-  {
-    if (longer)
-      formatter.dateFormat = @"EEEE";
-    else
-      formatter.dateFormat = @"EEE";
-    res = [[formatter stringFromDate:transaction_date] capitalizedString];
-  }
-  else
-  {
-    if (longer)
-      formatter.dateFormat = @"d MMMM";
-    else
-      formatter.dateFormat = @"d MMM";
-    res = [[formatter stringFromDate:transaction_date] capitalizedString];;
-  }
-  return res;
-}
-
 + (NSString*)osVersionString
 {
   NSNumber* major_version = [IAFunctions osMajorVersion];
@@ -502,17 +362,6 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     default:
       return INFINIT_OS_X_VERSION_UNKNOWN;
   }
-}
-
-+ (NSString*)printFrame:(NSRect)rect
-{
-  return [NSString stringWithFormat:@"frame: (%f, %f) (%f x %f)", rect.origin.x, rect.origin.y,
-          rect.size.width, rect.size.height];
-}
-
-+ (NSString*)printPoint:(NSPoint)point
-{
-  return [NSString stringWithFormat:@"point: (%f, %f)", point.x, point.y];
 }
 
 @end
