@@ -7,10 +7,16 @@
 //
 
 #import "InfinitLoginViewController.h"
-#import "IAKeychainManager.h"
-#import "InfinitMetricsManager.h"
 
-#import <Gap/IAGapState.h>
+#import "IAUserPrefs.h"
+#import "InfinitKeychain.h"
+#import "InfinitMetricsManager.h"
+#import "InfinitNetworkManager.h"
+
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitStateResult.h>
+#import <Gap/NSString+email.h>
+
 #import <version.hh>
 
 #define INFINIT_HELP_URL "https://infinit.io/faq?utm_source=app&utm_medium=mac&utm_campaign=help"
@@ -22,6 +28,22 @@
 ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 @interface InfinitLoginViewController ()
+
+@property (nonatomic, weak) IBOutlet NSButton* action_button;
+@property (nonatomic, weak) IBOutlet NSTextField* action_text;
+@property (nonatomic, weak) IBOutlet IAHoverButton* close_button;
+@property (nonatomic, weak) IBOutlet NSTextField* email_address;
+@property (nonatomic, weak) IBOutlet NSTextField* error_message;
+@property (nonatomic, weak) IBOutlet NSTextField* fullname;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* fullname_pos;
+@property (nonatomic, weak) IBOutlet IAHoverButton* got_account;
+@property (nonatomic, weak) IBOutlet IAHoverButton* help_button;
+@property (nonatomic, weak) IBOutlet NSTextField* password;
+@property (nonatomic, weak) IBOutlet IAHoverButton* problem_button;
+@property (nonatomic, readwrite) BOOL running;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator* spinner;
+@property (nonatomic, weak) IBOutlet NSTextField* version;
+
 @end
 
 // - Login Button Cell -----------------------------------------------------------------------------
@@ -40,7 +62,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 - (void)_updateMouseTracking
 {
   [super _updateMouseTracking];
-  if (self.controlView != nil && [self.controlView respondsToSelector:@selector(_setMouseTrackingForCell:)])
+  if (self.controlView != nil &&
+      [self.controlView respondsToSelector:@selector(_setMouseTrackingForCell:)])
   {
     [self.controlView performSelector:@selector(_setMouseTrackingForCell:) withObject:self];
   }
@@ -62,7 +85,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
           withFrame:(NSRect)frame
              inView:(NSView*)controlView
 {
-  if (![self isEnabled])
+  if (!self.isEnabled)
   {
     return [super drawTitle:[[NSAttributedString alloc] initWithString:self.attributedTitle.string
                                                             attributes:self.disabled_attrs]
@@ -128,12 +151,12 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   NSDictionary* _action_attrs;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)initWithDelegate:(id<InfinitLoginViewControllerProtocol>)delegate
               withMode:(InfinitLoginViewMode)mode
 {
-  if (self = [super initWithNibName:[self className] bundle:nil])
+  if (self = [super initWithNibName:self.className bundle:nil])
   {
     _delegate = delegate;
     _mode = mode;
@@ -256,11 +279,6 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
                                                                      attributes:_link_attrs];
   self.problem_button.attributedTitle = [[NSAttributedString alloc] initWithString:problem
                                                                         attributes:_link_attrs];
-}
-
-- (void)viewActive
-{
-  [self performSelector:@selector(setFocus) withObject:nil afterDelay:0.3];
 }
 
 - (void)setFocus
@@ -479,7 +497,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 {
   self.email_address.stringValue =
     [self.email_address.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  if (![IAFunctions stringIsValidEmail:self.email_address.stringValue])
+  if (!self.email_address.stringValue.isEmail)
   {
     NSString* error = NSLocalizedString(@"Please enter a valid email address.", nil);
     [self showError:error];
@@ -522,7 +540,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   return [self loginInputsGood];
 }
 
-- (void)registerCallback:(IAGapOperationResult*)result
+- (void)registerCallback:(InfinitStateResult*)result
 {
   self.running = NO;
   [self.spinner stopAnimation:nil];
@@ -530,9 +548,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   {
     ELLE_LOG("%s: Successfully registered as: %s",
              self.description.UTF8String, self.email_address.stringValue.UTF8String);
-    [[IAKeychainManager sharedInstance] addPasswordKeychain:self.email_address.stringValue
-                                                   password:self.password.stringValue];
-    [_delegate registered:self withEmail:self.email_address.stringValue];
+    [self onSuccessfulLogin];
   }
   else
   {
@@ -540,44 +556,56 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     self.fullname.enabled = YES;
     self.email_address.enabled = YES;
     self.password.enabled = YES;
-    NSString* error;
-    switch (result.status)
+    NSString* error = [self _errorFromStatus:result.status];
+    if (result.status == gap_already_logged_in)
     {
-      case gap_already_logged_in:
-        [[IAGapState instance] setLoggedIn:YES];
-        [_delegate alreadyLoggedIn:self];
-        return;
-      case gap_email_already_registered:
-        error = NSLocalizedString(@"This email has already been registered.", nil);
-        break;
-      case gap_email_not_valid:
-        error = NSLocalizedString(@"Email not valid.", nil);
-        break;
-      case gap_password_not_valid:
-        error = NSLocalizedString(@"Password not valid.", nil);
-        break;
-      case gap_fullname_not_valid:
-        error = NSLocalizedString(@"Full name not valid.", nil);
-        break;
-      case gap_network_error:
-      case gap_meta_unreachable:
-        error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"Connection problem, check Internet connection.",
-                                   @"no route to internet")];
-        break;
-      case gap_deprecated:
-        error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"Please update Infinit.", @"please update infinit.")];
-        [_delegate loginViewWantsCheckForUpdate:self];
-        break;
-
-      default:
-        error = [NSString stringWithFormat:@"%@: %d", NSLocalizedString(@"Unknown error", nil),
-                 result.status];
-        break;
+      [_delegate loginViewDoneLogin:self];
+      return;
     }
     [self showError:error];
   }
+}
+
+- (void)loginCallback:(InfinitStateResult*)result
+{
+  self.running = NO;
+  [self.spinner stopAnimation:nil];
+  if (result.success)
+  {
+    ELLE_LOG("%s: Successfully logged in as: %s",
+             self.description.UTF8String, self.email_address.stringValue.UTF8String);
+    [self onSuccessfulLogin];
+  }
+  else
+  {
+    self.action_button.enabled = YES;
+    self.fullname.enabled = YES;
+    self.email_address.enabled = YES;
+    self.password.enabled = YES;
+    NSString* error = [self _errorFromStatus:result.status];
+    if (result.status == gap_already_logged_in)
+    {
+      [_delegate loginViewDoneLogin:self];
+      return;
+    }
+    [self showError:error];
+  }
+}
+
+- (void)onSuccessfulLogin
+{
+  InfinitKeychain* manager = [InfinitKeychain sharedInstance];
+  NSString* account = self.email_address.stringValue;
+  NSString* password = self.password.stringValue;
+  if ([manager credentialsForAccountInKeychain:self.email_address.stringValue])
+    [manager updatePassword:password forAccount:account];
+  else
+    [manager addPassword:password forAccount:account];
+  password = @"";
+  self.password.stringValue = @"";
+  self.email_address.stringValue = @"";
+  [[IAUserPrefs sharedInstance] setPref:account forKey:@"user:email"];
+  [_delegate loginViewDoneLogin:self];
 }
 
 - (IBAction)actionButtonClicked:(NSButton*)sender
@@ -600,12 +628,11 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     if ([self registerInputsGood])
     {
       [self hideError];
-      [_delegate clearModelsBeforeRegister:self];
-      [[IAGapState instance] register_:self.email_address.stringValue
-                          withFullname:self.fullname.stringValue
-                           andPassword:self.password.stringValue
-                       performSelector:@selector(registerCallback:)
-                              onObject:self];
+      [[InfinitStateManager sharedInstance] registerFullname:self.fullname.stringValue
+                                                       email:self.email_address.stringValue
+                                                    password:self.password.stringValue
+                                             performSelector:@selector(registerCallback:)
+                                                    onObject:self];
     }
   }
   else
@@ -613,9 +640,10 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     if ([self loginInputsGood])
     {
       [self hideError];
-      [_delegate tryLogin:self
-                 username:self.email_address.stringValue
-                 password:self.password.stringValue];
+      [[InfinitStateManager sharedInstance] login:self.email_address.stringValue
+                                         password:self.password.stringValue
+                                  performSelector:@selector(loginCallback:)
+                                         onObject:self];
     }
   }
 }
@@ -661,5 +689,46 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [self closeLoginView];
 }
 
+#pragma mark - IAViewController
+
+- (void)viewActive
+{
+  [self performSelector:@selector(setFocus) withObject:nil afterDelay:0.3];
+}
+
+#pragma mark - Helpers
+
+- (NSString*)_errorFromStatus:(gap_Status)status
+{
+  switch (status)
+  {
+    case gap_already_logged_in:
+      return NSLocalizedString(@"You're already logged in.", nil);
+    case gap_deprecated:
+      return NSLocalizedString(@"Please update Infinit.", nil);
+    case gap_email_already_registered:
+      return NSLocalizedString(@"Email already registered.", nil);
+    case gap_email_not_confirmed:
+      return NSLocalizedString(@"Your email has not been confirmed.", nil);
+    case gap_email_not_valid:
+      return NSLocalizedString(@"Email not valid.", nil);
+    case gap_email_password_dont_match:
+      return NSLocalizedString(@"Login/Password don't match.", nil);
+    case gap_fullname_not_valid:
+      return NSLocalizedString(@"Fullname not valid.", nil);
+    case gap_handle_already_registered:
+      return NSLocalizedString(@"This handle has already been taken.", nil);
+    case gap_handle_not_valid:
+      return NSLocalizedString(@"Handle not valid", nil);
+    case gap_meta_down_with_message:
+      return NSLocalizedString(@"Our Server is down. Thanks for being patient.", nil);
+    case gap_password_not_valid:
+      return NSLocalizedString(@"Password not valid.", nil);
+
+    default:
+      return [NSString stringWithFormat:@"%@: %d", NSLocalizedString(@"Unknown login error", nil),
+              status];
+  }
+}
 
 @end
