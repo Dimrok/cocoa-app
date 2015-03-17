@@ -8,8 +8,11 @@
 
 #import "IAGeneralSendController.h"
 
-#import "InfinitFeatureManager.h"
-#import "OldInfinitSendViewController.h"
+#import "InfinitSendViewController.h"
+
+#import <Gap/InfinitLinkTransactionManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitUserManager.h>
 
 #undef check
 #import <elle/log.hh>
@@ -25,16 +28,12 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   // Send views
   IAFavouritesSendViewController* _favourites_send_controller;
   InfinitSendViewController* _send_controller;
-  OldInfinitSendViewController* _old_send_controller;
 
   // Search Controller
   IAUserSearchViewController* _user_search_controller;
-  // Old Search Controller
-  OldIAUserSearchViewController* _old_user_search_controller;
 
   NSMutableArray* _files;
   BOOL _send_view_open;
-  BOOL _new_send_view;
 }
 
 //- Initialisation ---------------------------------------------------------------------------------
@@ -46,11 +45,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
     _delegate = delegate;
     _files = [NSMutableArray array];
     _send_view_open = NO;
-    if ([[[[InfinitFeatureManager sharedInstance] features] valueForKey:@"send_view_20141027"] isEqualToString:@"a"])
-      _new_send_view = YES;
-    else
-      _new_send_view = NO;
-    ELLE_TRACE("%s: using %s send view", self.description.UTF8String, _new_send_view ? "new" : "old");
   }
   return self;
 }
@@ -59,8 +53,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
   [_user_search_controller setDelegate:nil];
   _user_search_controller = nil;
-  [_old_user_search_controller setDelegate:nil];
-  _old_user_search_controller = nil;
   [_favourites_send_controller hideFavourites];
   [_favourites_send_controller setDelegate:nil];
   _favourites_send_controller = nil;
@@ -89,7 +81,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 
 - (void)openFileDialogForView:(id)sender
 {
-  if (sender != _send_controller && sender != _old_send_controller)
+  if (sender != _send_controller)
     return;
   
   ELLE_TRACE("%s: open file diaglog for: %s", self.description.UTF8String,
@@ -118,28 +110,16 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 {
   _send_view_open = YES;
   [_favourites_send_controller hideFavourites];
-  if (_new_send_view)
-  {
-    _user_search_controller = [[IAUserSearchViewController alloc] init];
-    _send_controller =
-      [[InfinitSendViewController alloc] initWithDelegate:self
-                                     withSearchController:_user_search_controller
-                                                  forLink:for_link];
-    [_delegate sendController:self wantsActiveController:_send_controller];
-  }
-  else
-  {
-    _old_user_search_controller = [[OldIAUserSearchViewController alloc] init];
-    _old_send_controller =
-      [[OldInfinitSendViewController alloc] initWithDelegate:self
-                                        withSearchController:_old_user_search_controller
-                                                     forLink:for_link];
-    [_delegate sendController:self wantsActiveController:_old_send_controller];
-  }
+  _user_search_controller = [[IAUserSearchViewController alloc] init];
+  _send_controller =
+    [[InfinitSendViewController alloc] initWithDelegate:self
+                                   withSearchController:_user_search_controller
+                                                forLink:for_link];
+  [_delegate sendController:self wantsActiveController:_send_controller];
 }
 
 - (void)openWithFiles:(NSArray*)files
-              forUser:(IAUser*)user
+              forUser:(InfinitUser*)user
 {
   if (user != nil)
   {
@@ -161,33 +141,17 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   }
   if (_send_controller == nil)
   {
-    if (_new_send_view)
-    {
-      if (_user_search_controller == nil)
-        _user_search_controller = [[IAUserSearchViewController alloc] init];
-      _send_controller = [[InfinitSendViewController alloc] initWithDelegate:self
-                                                        withSearchController:_user_search_controller
-                                                                     forLink:NO];
-      [_delegate sendController:self wantsActiveController:_send_controller];
-      [_user_search_controller addUser:user];
-    }
-    else
-    {
-      if (_old_user_search_controller == nil)
-        _old_user_search_controller = [[OldIAUserSearchViewController alloc] init];
-      _old_send_controller =
-        [[OldInfinitSendViewController alloc] initWithDelegate:self
-                                          withSearchController:_old_user_search_controller
-                                                       forLink:NO];
-      [_delegate sendController:self wantsActiveController:_old_send_controller];
-    }
+    if (_user_search_controller == nil)
+      _user_search_controller = [[IAUserSearchViewController alloc] init];
+    _send_controller = [[InfinitSendViewController alloc] initWithDelegate:self
+                                                      withSearchController:_user_search_controller
+                                                                   forLink:NO];
+    [_delegate sendController:self wantsActiveController:_send_controller];
+    [_user_search_controller addUser:user];
   }
   else
   {
-    if (_new_send_view)
-      [_send_controller filesUpdated];
-    else
-      [_old_send_controller filesUpdated];
+    [_send_controller filesUpdated];
   }
 }
 
@@ -229,8 +193,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   wantsRemoveFileAtIndex:(NSInteger)index
 {
   [_files removeObjectAtIndex:index];
-  if ([sender isKindOfClass:OldInfinitSendViewController.class])
-    [sender filesUpdated];
 }
 
 - (void)sendViewWantsOpenFileDialogBox:(id)sender
@@ -244,10 +206,9 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
          withMessage:(NSString*)message
 {
   [_delegate sendControllerWantsClose:self];
-  return [_delegate sendController:self
-                    wantsSendFiles:files
-                           toUsers:users
-                       withMessage:message];
+  return [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                      toRecipients:users
+                                                       withMessage:message];
 }
 
 - (NSNumber*)sendView:(id)sender
@@ -255,9 +216,8 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
           withMessage:(NSString*)message
 {
   [_delegate sendControllerWantsClose:self];
-  return [_delegate sendController:self
-                   wantsCreateLink:files
-                       withMessage:message];
+  return [[InfinitLinkTransactionManager sharedInstance] createLinkWithFiles:files 
+                                                                 withMessage:message];
 }
 
 - (void)sendView:(id)sender
@@ -278,36 +238,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   [sender filesUpdated];
 }
 
-//- Old Send View Only -----------------------------------------------------------------------------
-
-- (NSArray*)sendViewWantsFriendsByLastInteraction:(id)sender
-{
-  return [_delegate sendControllerWantsFriendsByLastInteraction:self];
-}
-
-- (void)sendView:(id)sender
-wantsAddFavourite:(IAUser*)user
-{
-  [_delegate sendController:self wantsAddFavourite:user];
-}
-
-- (void)sendView:(id)sender
-wantsRemoveFavourite:(IAUser*)user
-{
-  [_delegate sendController:self wantsRemoveFavourite:user];
-}
-
 //- Favourites Send View Protocol ------------------------------------------------------------------
-
-- (NSArray*)favouritesViewWantsFavourites:(IAFavouritesSendViewController*)sender
-{
-  return [_delegate sendControllerWantsFavourites:self];
-}
-
-- (NSArray*)favouritesViewWantsSwaggers:(IAFavouritesSendViewController*)sender
-{
-  return [_delegate sendControllerWantsSwaggers:self];
-}
 
 - (NSPoint)favouritesViewWantsMidpoint:(IAFavouritesSendViewController*)sender
 {
@@ -315,13 +246,14 @@ wantsRemoveFavourite:(IAUser*)user
 }
 
 - (void)favouritesView:(IAFavouritesSendViewController*)sender
-         gotDropOnUser:(IAUser*)user
+         gotDropOnUser:(InfinitUser*)user
              withFiles:(NSArray*)files
 {
   if (files.count > 0)
   {
-    NSArray* res =
-      [_delegate sendController:self wantsSendFiles:files toUsers:@[user] withMessage:@""];
+    NSArray* res = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                                toRecipients:@[user]
+                                                                 withMessage:@""];
     [_delegate sendController:self wantsSetOnboardingSendTransactionId:res[0]];
     [_delegate sendControllerGotDropOnFavourite:self];
   }
@@ -338,7 +270,7 @@ wantsRemoveFavourite:(IAUser*)user
   [_favourites_send_controller hideFavourites];
   if (files.count > 0)
   {
-    [_delegate sendController:self wantsCreateLink:files withMessage:@""];
+    [[InfinitLinkTransactionManager sharedInstance] createLinkWithFiles:files withMessage:@""];
   }
 }
 
@@ -359,12 +291,12 @@ wantsRemoveFavourite:(IAUser*)user
   [_delegate setOnboardingState:state];
 }
 
-- (IATransaction*)receiveOnboardingTransaction:(IAViewController*)sender
+- (InfinitPeerTransaction*)receiveOnboardingTransaction:(IAViewController*)sender
 {
   return [_delegate receiveOnboardingTransaction:sender];
 }
 
-- (IATransaction*)sendOnboardingTransaction:(IAViewController*)sender
+- (InfinitPeerTransaction*)sendOnboardingTransaction:(IAViewController*)sender
 {
   return [_delegate sendOnboardingTransaction:sender];
 }

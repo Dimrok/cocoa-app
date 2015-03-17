@@ -24,7 +24,7 @@
 
 - (void)openWithNoFileForLink:(BOOL)for_link;
 - (void)openWithFiles:(NSArray*)files
-              forUser:(IAUser*)user;
+              forUser:(InfinitUser*)user;
 - (void)filesOverStatusBarIcon;
 
 @end
@@ -39,25 +39,6 @@
 - (void)sendControllerWantsBack:(IAGeneralSendController*)sender;
 
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender;
-
-- (NSArray*)sendController:(IAGeneralSendController*)sender
-            wantsSendFiles:(NSArray*)files
-                   toUsers:(NSArray*)users
-               withMessage:(NSString*)message;
-
-- (NSNumber*)sendController:(IAGeneralSendController*)sender
-            wantsCreateLink:(NSArray*)files
-                withMessage:(NSString*)message;
-
-- (NSArray*)sendControllerWantsFavourites:(IAGeneralSendController*)sender;
-
-- (NSArray*)sendControllerWantsSwaggers:(IAGeneralSendController*)sender;
-
-- (void)sendController:(IAGeneralSendController*)sender
-     wantsAddFavourite:(IAUser*)user;
-
-- (void)sendController:(IAGeneralSendController*)sender
-  wantsRemoveFavourite:(IAUser*)user;
 
 - (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender;
 
