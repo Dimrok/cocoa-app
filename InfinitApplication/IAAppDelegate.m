@@ -10,7 +10,6 @@
 
 #import <Sparkle/Sparkle.h>
 
-#import "IALogFileManager.h"
 #import "IAUserPrefs.h"
 
 //- Automatic Relaunching --------------------------------------------------------------------------
@@ -18,7 +17,6 @@
 @implementation IAAppDelegate
 {
 @private
-  IALogFileManager* _log_manager;
   BOOL _updating;
   NSInvocation* _update_invocation;
   
@@ -102,7 +100,6 @@ immediateInstallationInvocation:(NSInvocation*)invocation
   if (self = [super init])
   {
     // Log manager must be initialised here, before the new log file is written.
-    _log_manager = [IALogFileManager sharedInstance];
     _updating = NO;
     _infinit_url = nil;
     _contextual_send_files = nil;
