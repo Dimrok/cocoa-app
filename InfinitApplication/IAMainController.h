@@ -12,52 +12,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import <Gap/IATransactionManager.h>
-#import <Gap/IAUserManager.h>
-#import <Gap/InfinitLinkManager.h>
-
-#import "IADesktopNotifier.h"
-#import "IAGeneralSendController.h"
-#import "IAMeManager.h"
-#import "IANoConnectionViewController.h"
-#import "IANotLoggedInViewController.h"
-#import "IAReportProblemWindowController.h"
-#import "IAStatusBarIcon.h"
-#import "IAViewController.h"
-#import "IAWindowController.h"
-#import "InfinitConversationViewController.h"
-#import "InfinitLoginViewController.h"
-#import "InfinitMainViewController.h"
-#import "InfinitNetworkManager.h"
-#import "InfinitOnboardingController.h"
-#import "InfinitScreenshotManager.h"
-#import "InfinitSettingsWindow.h"
-#import "InfinitStatusBarIcon.h"
-#import "InfinitStayAwakeManager.h"
-
 @protocol IAMainControllerProtocol;
 
-@interface IAMainController : NSObject <IADesktopNotifierProtocol,
-                                        IAGeneralSendControllerProtocol,
-                                        IAMeManagerProtocol,
-                                        IANoConnectionViewProtocol,
-                                        IANotLoggedInViewProtocol,
-                                        IAReportProblemProtocol,
-                                        IAStatusBarIconProtocol,
-                                        IATransactionManagerProtocol,
-                                        IAUserManagerProtocol,
-                                        IAViewProtocol,
-                                        IAWindowControllerProtocol,
-                                        InfinitConversationViewProtocol,
-                                        InfinitLinkManagerProtocol,
-                                        InfinitLoginViewControllerProtocol,
-                                        InfinitMainViewProtocol,
-                                        InfinitNetworkManagerProtocol,
-                                        InfinitOnboardingProtocol,
-                                        InfinitScreenshotManagerProtocol,
-                                        InfinitSettingsProtocol,
-                                        InfinitStatusBarIconProtocol,
-                                        InfinitStayAwakeProtocol>
+@interface IAMainController : NSObject
 
 - (id)initWithDelegate:(id<IAMainControllerProtocol>)delegate;
 
