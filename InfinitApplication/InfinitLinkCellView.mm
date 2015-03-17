@@ -11,6 +11,8 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitLinkIconManager.h"
 
+#import <Gap/InfinitTime.h>
+
 #import <QuartzCore/QuartzCore.h>
 
 #import <algorithm>
@@ -229,7 +231,7 @@ namespace
   else
   {
     self.progress_indicator.hidden = YES;
-    self.information.stringValue = [IAFunctions relativeDateOf:link.modification_time
+    self.information.stringValue = [InfinitTime relativeDateOf:link.mtime
                                                   longerFormat:YES];
   }
   if (link.status == gap_transaction_transferring || link.status == gap_transaction_on_other_device)
@@ -287,7 +289,7 @@ namespace
 
 - (IBAction)linkClicked:(NSButton*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_transaction_link.url_link]];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_transaction_link.link]];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_OPEN_LINK];
 }
 
@@ -295,7 +297,7 @@ namespace
 {
   NSPasteboard* paste_board = [NSPasteboard generalPasteboard];
   [paste_board declareTypes:@[NSStringPboardType] owner:nil];
-  [paste_board setString:_transaction_link.url_link forType:NSStringPboardType];
+  [paste_board setString:_transaction_link.link forType:NSStringPboardType];
   [_delegate linkCell:self gotCopyToClipboardForLink:_transaction_link];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_COPY_LINK];
 }
