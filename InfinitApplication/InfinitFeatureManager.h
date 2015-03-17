@@ -10,11 +10,9 @@
 
 @interface InfinitFeatureManager : NSObject
 
-+ (instancetype)sharedInstance;
+@property (nonatomic, readonly) NSDictionary* features;
 
-- (void)fetchFeatures;
-- (NSDictionary*)features;
-- (NSString*)featuresString;
++ (instancetype)sharedInstance;
 
 - (NSString*)valueForFeature:(NSString*)feature;
 

@@ -8,6 +8,9 @@
 
 #import "InfinitFeatureManager.h"
 
+#import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitStateManager.h>
+
 static InfinitFeatureManager* _instance = nil;
 
 @implementation InfinitFeatureManager
@@ -15,15 +18,25 @@ static InfinitFeatureManager* _instance = nil;
   NSDictionary* _features;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)init
 {
+  NSCAssert(_instance == nil, @"Use sharedInstance");
   if (self = [super init])
   {
     _features = nil;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectionStatusChanged:)
+                                                 name:INFINIT_CONNECTION_STATUS_CHANGE 
+                                               object:nil];
   }
   return self;
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 + (instancetype)sharedInstance
@@ -33,34 +46,25 @@ static InfinitFeatureManager* _instance = nil;
   return _instance;
 }
 
-//- General Functions ------------------------------------------------------------------------------
+#pragma mark - General
 
-- (void)fetchFeatures
+- (void)updateFeatures
 {
-  _features = [[IAGapState instance] fetchFeatures];
-}
-
-- (NSDictionary*)features
-{
-  return _features;
-}
-
-- (NSString*)featuresString
-{
-  NSMutableString* res = [[NSMutableString alloc] init];
-  for (NSString* key in _features)
-  {
-    [res appendString:[NSString stringWithFormat:@"%@=%@;", key, _features[key]]];
-  }
-  if (res.length > 0)
-    return [res substringToIndex:(res.length - 1)];
-  else
-    return res;
+  _features = [[[InfinitStateManager sharedInstance] features] copy];
 }
 
 - (NSString*)valueForFeature:(NSString*)feature
 {
   return _features[feature];
+}
+
+#pragma mark - Connection Status Changed
+
+- (void)connectionStatusChanged:(NSNotification*)notification
+{
+  InfinitConnectionStatus* connection_status = notification.object;
+  if (connection_status.status)
+    [self updateFeatures];
 }
 
 @end
