@@ -6,12 +6,15 @@
 //  Copyright (c) 2014 Infinit. All rights reserved.
 //
 
-#import <QuickLook/QuickLook.h>
-#import <QuartzCore/QuartzCore.h>
-
 #import "InfinitSendFilesViewController.h"
+
 #import "InfinitMetricsManager.h"
 #import "InfinitSendFileView.h"
+
+#import <Gap/InfinitDataSize.h>
+
+#import <QuickLook/QuickLook.h>
+#import <QuartzCore/QuartzCore.h>
 
 //- File Model -------------------------------------------------------------------------------------
 
@@ -581,14 +584,14 @@ static NSDictionary* _info_attrs = nil;
       {
         info_str = [NSString stringWithFormat:@"1 %@ (%@)",
                     NSLocalizedString(@"file", nil),
-                    [IAFunctions fileSizeStringFrom:total_size]];
+                    [InfinitDataSize fileSizeStringFrom:total_size]];
       }
       else
       {
         info_str = [NSString stringWithFormat:@"%ld %@ (%@)",
                     weak_file_list.count - 1,
                     NSLocalizedString(@"files", nil),
-                    [IAFunctions fileSizeStringFrom:total_size]];
+                    [InfinitDataSize fileSizeStringFrom:total_size]];
       }
       if (weak_self != nil)
       {
