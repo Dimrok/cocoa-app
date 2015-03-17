@@ -8,6 +8,8 @@
 
 #import "IAReportProblemWindowController.h"
 
+#import <Gap/InfinitStateManager.h>
+
 @interface IAReportProblemWindowController ()
 @end
 
@@ -119,7 +121,7 @@ doCommandBySelector:(SEL)commandSelector
 
 - (IBAction)cancelClicked:(NSButton*)sender
 {
-  [_delegate reportProblemControllerWantsCancel:self];
+  [_delegate reportProblemControllerDone:self];
 }
 
 - (IBAction)sendClicked:(NSButton*)sender
@@ -131,9 +133,11 @@ doCommandBySelector:(SEL)commandSelector
     _message = [self.user_message.stringValue substringToIndex:_max_chars];
   if (_file_path == nil)
     _file_path = @"";
-  [_delegate reportProblemController:self
-                    wantsSendMessage:_message
-                             andFile:_file_path];
+  [[InfinitStateManager sharedInstance] reportAProblem:_message
+                                               andFile:_file_path
+                                       performSelector:NULL 
+                                              onObject:nil];
+  [_delegate reportProblemControllerDone:self];
 }
 
 @end

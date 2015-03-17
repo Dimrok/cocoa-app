@@ -25,10 +25,6 @@
 
 @protocol IAReportProblemProtocol <NSObject>
 
-- (void)reportProblemControllerWantsCancel:(IAReportProblemWindowController*)sender;
-
-- (void)reportProblemController:(IAReportProblemWindowController*)sender
-               wantsSendMessage:(NSString*)message
-                        andFile:(NSString*)file_path;
+- (void)reportProblemControllerDone:(IAReportProblemWindowController*)sender;
 
 @end
