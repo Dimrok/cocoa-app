@@ -8,18 +8,24 @@
 
 #import "InfinitSettingsAccountView.h"
 
-#import <Gap/IAGapState.h>
-#import "IAAvatarManager.h"
-#import "IAKeychainManager.h"
+#import "InfinitKeychain.h"
+
+#import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitStateResult.h>
+#import <Gap/InfinitUserManager.h>
+#import <Gap/NSString+email.h>
 
 #undef check
 #import <elle/log.hh>
 
-#define IA_PROFILE_LINK "https://infinit.io/account?utm_source=app&utm_medium=mac"
+#define INFINIT_PROFILE_LINK @"https://infinit.io/account?utm_source=app&utm_medium=mac"
 
 ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 @interface InfinitSettingsAccountView ()
+
+@property (atomic, readonly) BOOL online;
 
 @end
 
@@ -27,7 +33,6 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 {
 @private
   __unsafe_unretained id<InfinitSettingsAccountProtocol> _delegate;
-  __weak IAGapState* _instance;
 
   NSImage* _start_avatar_image;
   NSString* _start_name;
@@ -44,10 +49,9 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   if (self = [super initWithNibName:self.className bundle:nil])
   {
     _delegate = delegate;
-    _instance = [IAGapState instance];
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(gotAvatar:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
     _avatar_size_limit = 2 * 1024 * 1024;
   }
@@ -62,25 +66,26 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (void)gotAvatar:(NSNotification*)notification
 {
-  IAUser* user = notification.userInfo[@"user"];
-  if ([user isEqualTo:_instance.self_user])
-    self.avatar.image = [IAAvatarManager getAvatarForUser:_instance.self_user];
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitUserManager* manager = [InfinitUserManager sharedInstance];
+  InfinitUser* user = [manager userWithId:id_];
+  if ([user isEqualTo:manager.me])
+    self.avatar.image = user.avatar;
 }
 
 - (void)loadData
 {
-  _start_avatar_image = [IAAvatarManager getAvatarForUser:[_instance self_user]];
-  if (_start_avatar_image == nil)
-    _start_avatar_image = [IAFunctions makeAvatarFor:[_instance selfFullname]];
+  InfinitUser* me = [InfinitUserManager sharedInstance].me;
+  _start_avatar_image = me.avatar;
 
-  _start_name = [_instance selfFullname];
-  _start_handle = [_instance selfHandle];
+  _start_name = me.fullname;
+  _start_handle = me.handle;
 
   self.avatar.delegate = self;
   self.avatar.image = _start_avatar_image;
   self.name.stringValue = _start_name;
   self.handle.stringValue = _start_handle;
-  self.email.stringValue = [_instance selfEmail];
+  self.email.stringValue = [[InfinitStateManager sharedInstance] selfEmail];
   self.fullname_check.hidden = YES;
   self.handle_check.hidden = YES;
   self.avatar_error.hidden = YES;
@@ -152,7 +157,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changeAvatar:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
   NSOpenPanel* file_dialog = [NSOpenPanel openPanel];
   file_dialog.canChooseFiles = YES;
@@ -187,7 +192,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)saveAvatar:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
   self.change_avatar.enabled = NO;
   self.change_avatar.hidden = YES;
@@ -196,12 +201,12 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   self.avatar.uploading = YES;
   self.avatar_progress.hidden = NO;
   [self.avatar_progress startAnimation:nil];
-  [_instance setAvatar:self.avatar.image
-       performSelector:@selector(changeAvatarCallback:)
-              onObject:self];
+  [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar.image
+                                      performSelector:@selector(changeAvatarCallback:)
+                                             onObject:self];
 }
 
-- (void)changeAvatarCallback:(IAGapOperationResult*)result
+- (void)changeAvatarCallback:(InfinitStateResult*)result
 {
   self.change_avatar.enabled = YES;
   self.change_avatar.hidden = NO;
@@ -211,7 +216,6 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   if (result.success)
   {
     ELLE_LOG("%s: changed avatar", self.description.UTF8String);
-    [IAAvatarManager reloadAvatarForUser:_instance.self_user];
   }
   else
   {
@@ -221,19 +225,19 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)saveFullname:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
   self.save_fullname.enabled = NO;
   self.name.enabled = NO;
   self.save_fullname.hidden = YES;
   self.fullname_progress.hidden = NO;
   [self.fullname_progress startAnimation:nil];
-  [_instance setSelfFullname:self.name.stringValue
-             performSelector:@selector(saveFullnameCallback:)
-                    onObject:self];
+  [[InfinitStateManager sharedInstance] setSelfFullname:self.name.stringValue
+                                        performSelector:@selector(saveFullnameCallback:)
+                                               onObject:self];
 }
 
-- (void)saveFullnameCallback:(IAGapOperationResult*)result
+- (void)saveFullnameCallback:(InfinitStateResult*)result
 {
   self.name.enabled = YES;
   [self.fullname_progress stopAnimation:nil];
@@ -267,19 +271,19 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)saveHandle:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
   self.save_handle.enabled = NO;
   self.handle.enabled = NO;
   self.save_handle.hidden = YES;
   self.handle_progress.hidden = NO;
   [self.handle_progress startAnimation:nil];
-  [_instance setSelfHandle:self.handle.stringValue
-           performSelector:@selector(saveHandleCallback:)
-                  onObject:self];
+  [[InfinitStateManager sharedInstance] setSelfHandle:self.handle.stringValue
+                                      performSelector:@selector(saveHandleCallback:)
+                                             onObject:self];
 }
 
-- (void)saveHandleCallback:(IAGapOperationResult*)result
+- (void)saveHandleCallback:(InfinitStateResult*)result
 {
   self.handle.enabled = YES;
   [self.handle_progress stopAnimation:nil];
@@ -316,7 +320,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changeEmail:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
   self.change_email_error.hidden = YES;
   self.change_email_field.stringValue = @"";
@@ -330,7 +334,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)changePassword:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
   self.password_error.hidden = YES;
   self.change_password_field.stringValue = @"";
@@ -344,17 +348,16 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)webProfile:(NSButton*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:
-                                          [NSString stringWithUTF8String:IA_PROFILE_LINK]]];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_PROFILE_LINK]];
 }
 
 //- Change Email Panel -----------------------------------------------------------------------------
 
 - (IBAction)confirmChangeEmail:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
-  if ([IAFunctions stringIsValidEmail:self.change_email_field.stringValue])
+  if (self.change_email_field.stringValue.isEmail)
   {
     if (self.change_email_password.stringValue.length > 2)
     {
@@ -364,10 +367,10 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
       self.change_email_progress.hidden = NO;
       self.change_email_field.enabled = NO;
       self.change_email_password.enabled = NO;
-      [_instance setSelfEmail:self.change_email_field.stringValue
-                 withPassword:self.change_email_password.stringValue
-              performSelector:@selector(changeEmailCallback:)
-                     onObject:self];
+      [[InfinitStateManager sharedInstance] setSelfEmail:self.change_email_field.stringValue
+                                                password:self.change_email_password.stringValue
+                                         performSelector:@selector(changeEmailCallback:)
+                                                onObject:self];
     }
     else
     {
@@ -383,7 +386,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   }
 }
 
-- (void)changeEmailCallback:(IAGapOperationResult*)result
+- (void)changeEmailCallback:(InfinitStateResult*)result
 {
   self.confirm_change_email.enabled = YES;
   [self.change_email_progress stopAnimation:nil];
@@ -447,7 +450,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)confirmChangePassword:(NSButton*)sender
 {
-  if (!_instance.logged_in)
+  if (!self.online)
     return;
   if (self.change_password_field.stringValue.length > 2)
   {
@@ -455,10 +458,10 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
     [self.change_password_progress startAnimation:nil];
     self.change_password_progress.hidden = NO;
     self.confirm_change_password.enabled = NO;
-    [_instance changePassword:self.old_password_field.stringValue
-                   toPassword:self.change_password_field.stringValue
-              performSelector:@selector(changePasswordCallback:)
-                     onObject:self];
+    [[InfinitStateManager sharedInstance] changeFromPassword:self.old_password_field.stringValue
+                                                  toPassword:self.change_password_field.stringValue
+                                             performSelector:@selector(changePasswordCallback:)
+                                                    onObject:self];
   }
   else
   {
@@ -467,7 +470,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   }
 }
 
-- (void)changePasswordCallback:(IAGapOperationResult*)result
+- (void)changePasswordCallback:(InfinitStateResult*)result
 {
   self.password_error.hidden = YES;
   [self.change_password_progress stopAnimation:nil];
@@ -478,8 +481,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
     ELLE_LOG("%s: changed password", self.description.UTF8String);
     [_delegate closeSettingsWindow:self];
     self.password_error.hidden = YES;
-    [[IAKeychainManager sharedInstance] changeUser:_start_email
-                                          password:self.change_password_field.stringValue];
+    [[InfinitKeychain sharedInstance] updatePassword:self.change_password_field.stringValue
+                                          forAccount:_start_email];
     [NSApp endSheet:self.change_password_panel];
     [self.change_password_panel orderOut:nil];
     self.old_password_field.stringValue = @"";
@@ -525,6 +528,13 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 - (unsigned long long)maxAvatarSize
 {
   return _avatar_size_limit;
+}
+
+#pragma mark - Helpers
+
+- (BOOL)online
+{
+  return [InfinitConnectionManager sharedInstance].connected;
 }
 
 @end

@@ -124,6 +124,7 @@
 {
   if (_uploading)
     return NSDragOperationNone;
+  NSDragOperation res = NSDragOperationNone;
   NSPasteboard* paste_board = sender.draggingPasteboard;
   if ([paste_board availableTypeFromArray:@[NSFilenamesPboardType]])
   {
@@ -135,17 +136,17 @@
     {
       _hover = YES;
       [self setNeedsDisplay:YES];
-      CFRelease(file_uti);
-      return NSDragOperationCopy;
+      res = NSDragOperationCopy;
     }
+    CFRelease(file_uti);
   }
   else if ([paste_board availableTypeFromArray:@[NSTIFFPboardType]])
   {
     _hover = YES;
     [self setNeedsDisplay:YES];
-    return NSDragOperationCopy;
+    res = NSDragOperationCopy;
   }
-  return NSDragOperationNone;
+  return res;
 }
 
 - (void)draggingExited:(id<NSDraggingInfo>)sender
@@ -163,6 +164,7 @@
   NSPasteboard* paste_board = sender.draggingPasteboard;
   if ([paste_board availableTypeFromArray:@[NSFilenamesPboardType]])
   {
+    BOOL res = NO;
     NSString* file = [paste_board propertyListForType:NSFilenamesPboardType][0];
     CFStringRef file_ext = (__bridge CFStringRef)file.pathExtension;
     CFStringRef file_uti =
@@ -179,14 +181,12 @@
         if (file_properties.fileSize <= [_delegate maxAvatarSize])
         {
           self.image = image;
-          return YES;
-        }
-        else
-        {
-          return NO;
+          res = YES;
         }
       }
     }
+    CFRelease(file_uti);
+    return res;
   }
   else if ([paste_board availableTypeFromArray:@[NSTIFFPboardType]])
   {

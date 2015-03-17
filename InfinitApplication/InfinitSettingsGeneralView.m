@@ -8,8 +8,6 @@
 
 #import "InfinitSettingsGeneralView.h"
 
-#import <Gap/IAGapState.h>
-
 #import "InfinitDownloadDestinationManager.h"
 
 @interface InfinitSettingsGeneralView ()
