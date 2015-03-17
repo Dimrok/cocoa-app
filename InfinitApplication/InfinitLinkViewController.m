@@ -7,9 +7,12 @@
 //
 
 #import "InfinitLinkViewController.h"
-#import "InfinitTooltipViewController.h"
 
 #import "InfinitMetricsManager.h"
+#import "InfinitTooltipViewController.h"
+
+#import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitLinkTransactionManager.h>
 
 #import <surface/gap/enums.hh>
 
@@ -42,16 +45,14 @@
 //- Init -------------------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate
-           andLinkList:(NSArray*)list
-         andSelfStatus:(BOOL)status
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
     _delegate = delegate;
-    _list = [NSMutableArray arrayWithArray:list];
+    [self updateModel];
     _max_rows = 4;
     _row_height = 72.0;
-    _me_status = status;
+    _me_status = [InfinitConnectionManager sharedInstance].connected;
     _tooltip_controller = nil;
     _delete_link_message = NSLocalizedString(@"Click again to delete", nil);
   }
@@ -91,14 +92,14 @@
                                              object:self.table_view.enclosingScrollView.contentView];
 }
 
-- (void)updateModelWithList:(NSArray*)list
+- (void)updateModel
 {
-  _list = [NSMutableArray arrayWithArray:list];
+  _list = [[InfinitLinkTransactionManager sharedInstance].transactions mutableCopy];
   [self.table_view reloadData];
   [self updateListOfRowsWithProgress];
 }
 
-- (void)selfStatusChanged:(gap_UserStatus)status
+- (void)selfStatusChanged:(BOOL)status
 {
   [self.table_view reloadData];
   _me_status = status;
@@ -345,7 +346,7 @@ gotCancelForLink:(InfinitLinkTransaction*)link
                            withAnimation:NSTableViewAnimationSlideRight];
   }
   [self.table_view endUpdates];
-  [_delegate cancelLink:link];
+  [[InfinitLinkTransactionManager sharedInstance] cancelTransaction:link];
   [_delegate linksViewResizeToHeight:self.height];
   [self updateListOfRowsWithProgress];
 }
@@ -383,7 +384,7 @@ gotDeleteForLink:(InfinitLinkTransaction*)link
       [self.table_view reloadData];
     [self updateListOfRowsWithProgress];
     [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_DELETE_LINK];
-    [_delegate deleteLink:link];
+    [[InfinitLinkTransactionManager sharedInstance] deleteTransaction:link];
   }
 }
 

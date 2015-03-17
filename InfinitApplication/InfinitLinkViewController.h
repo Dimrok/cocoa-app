@@ -18,13 +18,11 @@
 
 @property (nonatomic, weak) IBOutlet NSTableView* table_view;
 
-- (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate
-           andLinkList:(NSArray*)list
-         andSelfStatus:(BOOL)status;
+- (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate;
 
 @property (nonatomic, readwrite) BOOL changing;
 
-- (void)updateModelWithList:(NSArray*)list;
+- (void)updateModel;
 
 - (void)linkAdded:(InfinitLinkTransaction*)link;
 - (void)linkUpdated:(InfinitLinkTransaction*)link;
@@ -35,14 +33,12 @@
 
 - (void)resizeComplete;
 
-- (void)selfStatusChanged:(gap_UserStatus)status;
+- (void)selfStatusChanged:(BOOL)status;
 
 @end
 
 @protocol InfinitLinkViewProtocol <NSObject>
 
-- (void)cancelLink:(InfinitLinkTransaction*)link;
-- (void)deleteLink:(InfinitLinkTransaction*)link;
 - (void)copyLinkToPasteBoard:(InfinitLinkTransaction*)link;
 - (void)linksViewResizeToHeight:(CGFloat)height;
 
