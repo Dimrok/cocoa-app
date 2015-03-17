@@ -10,16 +10,10 @@
 
 #import "InfinitProxyWindow.h"
 
-@protocol InfinitNetworkManagerProtocol;
-
 @interface InfinitNetworkManager : NSObject <InfinitProxyWindowProtocol>
 
-- (id)initWithDelegate:(id<InfinitNetworkManagerProtocol>)delegate;
++ (instancetype)sharedInstance;
 
 - (void)checkProxySettings;
-
-@end
-
-@protocol InfinitNetworkManagerProtocol <NSObject>
 
 @end

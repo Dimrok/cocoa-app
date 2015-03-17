@@ -8,9 +8,11 @@
 
 #import "InfinitNetworkManager.h"
 
-#import "InfinitReachability.h"
-#import "IAKeychainManager.h"
 #import "IAUserPrefs.h"
+#import "InfinitKeychain.h"
+
+#import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitStateManager.h>
 
 #import <SystemConfiguration/SystemConfiguration.h>
 
@@ -55,11 +57,10 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
 
 @end
 
+static InfinitNetworkManager* _instance = nil;
+
 @implementation InfinitNetworkManager
 {
-  __weak id<InfinitNetworkManagerProtocol> _delegate;
-  InfinitReachability* _reachability;
-
   // Proxies
   InfinitProxy* _http_proxy;
   InfinitProxy* _https_proxy;
@@ -74,29 +75,32 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
   BOOL _checking_for_proxy;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
-- (id)initWithDelegate:(id<InfinitNetworkManagerProtocol>)delegate
+- (id)init
 {
+  NSCAssert(_instance == nil, @"Use sharedInstance");
   if (self = [super init])
   {
-    _delegate = delegate;
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(connectionChanged:)
-                                                 name:kReachabilityChangedNotification
+                                             selector:@selector(connectionChanged:) 
+                                                 name:INFINIT_CONNECTION_TYPE_CHANGE
                                                object:nil];
-    _reachability = [InfinitReachability reachabilityForInternetConnection];
-    [_reachability startNotifier];
     _checking_for_proxy = NO;
     [self checkProxySettings];
   }
   return self;
 }
 
++ (instancetype)sharedInstance
+{
+  if (_instance == nil)
+    _instance = [[InfinitNetworkManager alloc] init];
+  return _instance;
+}
+
 - (void)dealloc
 {
-  [_reachability stopNotifier];
-  _reachability = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
@@ -105,25 +109,18 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
 
 - (void)connectionChanged:(NSNotification*)notification
 {
-  if (_reachability.currentReachabilityStatus == InfinitNotReachable)
+  InfinitNetworkStatuses connection_type =
+    (InfinitNetworkStatuses)[notification.userInfo[@"connection_type"] unsignedIntegerValue];
+  if (connection_type == InfinitNetworkStatusNotReachable)
   {
     ELLE_TRACE("%s: lost internet connection", self.description.UTF8String);
-    [[IAGapState instance] setInternetConnection:NO
-                                 performSelector:@selector(setInternetConnectionCallback:)
-                                        onObject:self];
   }
-  else if (_reachability.currentReachabilityStatus == InfinitReachable)
+  else if (connection_type == InfinitNetworkStatusReachableViaLAN)
   {
     ELLE_TRACE("%s: got internet connection", self.description.UTF8String);
     [self checkProxySettings];
-    [[IAGapState instance] setInternetConnection:YES
-                                 performSelector:@selector(setInternetConnectionCallback:)
-                                        onObject:self];
   }
 }
-
-- (void)setInternetConnectionCallback:(IAGapOperationResult*)result
-{}
 
 - (NSString*)proxy:(NSString*)proxy_type withStr:(NSString*)str
 {
@@ -159,9 +156,6 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
         if ([proxy_configs valueForKey:[self proxy:proxy_type withStr:@"User"]])
         {
           proxy.username = [proxy_configs valueForKey:[self proxy:proxy_type withStr:@"User"]];
-          void* pwd_ptr = NULL;
-          UInt32 pwd_len = 0;
-          OSStatus status;
           if (![[[IAUserPrefs sharedInstance] prefsForKey:@"asked_proxy_permission"] isEqualToString:@"1"])
           {
             NSAlert* permission_popup = [[NSAlert alloc] init];
@@ -174,21 +168,14 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
             [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"asked_proxy_permission"];
           }
 
-          status = [[IAKeychainManager sharedInstance] fetchInternetPassword:proxy.host
-                                                                      onPort:proxy.port
-                                                             serviceProtocol:kSecProtocolTypeAny
-                                                          authenticationType:kSecAuthenticationTypeAny
-                                                                withUsername:proxy.username
-                                                                passwordData:&pwd_ptr
-                                                              passwordLength:&pwd_len
-                                                                     itemRef:nil];
-          if (status == noErr)
+          NSString* password =
+            [[InfinitKeychain sharedInstance] passwordForInternetAccount:proxy.username
+                                                                protocol:proxy_type 
+                                                                    host:proxy.host
+                                                                    port:proxy.port];
+          if (password != nil)
           {
-            proxy.password = [[NSString alloc] initWithBytes:pwd_ptr
-                                                      length:pwd_len
-                                                    encoding:NSUTF8StringEncoding];
-            free(pwd_ptr);
-            pwd_len = 0;
+            proxy.password = password;
           }
           else
           {
@@ -237,15 +224,15 @@ ELLE_LOG_COMPONENT("OSX.NetworkManager");
       }
       if (proxy.host.length > 0 && proxy.port > 0)
       {
-        [[IAGapState instance] setProxy:gap_proxy_type
-                                   host:proxy.host
-                                   port:proxy.port
-                               username:proxy.username
-                               password:proxy.password];
+        [[InfinitStateManager sharedInstance] setProxy:gap_proxy_type
+                                                  host:proxy.host
+                                                  port:proxy.port
+                                              username:proxy.username
+                                              password:proxy.password];
       }
       else
       {
-        [[IAGapState instance] unsetProxy:gap_proxy_type];
+        [[InfinitStateManager sharedInstance] unsetProxy:gap_proxy_type];
       }
     }
     CFRelease(proxies);
