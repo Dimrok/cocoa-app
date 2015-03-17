@@ -14,20 +14,15 @@
 		83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */; };
 		83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */; };
 		83059E0D19213BD7008DA14A /* Montserrat.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83059E0A19213B42008DA14A /* Montserrat.ttf */; };
-		8311EA0418C603D200410450 /* libelle.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8334C7EE17A67EB0006028BC /* libelle.dylib */; };
 		83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5217BA69A3003B2F52 /* IAFavouritesSendViewController.m */; };
 		83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */; };
 		83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */; };
-		831667D717F3721900C79DD7 /* libcrash.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831667C117F371F700C79DD7 /* libcrash.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83167CA319A7213600341068 /* InfinitSettingsAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83167CA219A7213600341068 /* InfinitSettingsAvatarView.m */; };
 		8318E9D419A788E800B765A2 /* settings-icon-check.png in Resources */ = {isa = PBXBuildFile; fileRef = 8318E9D219A788E800B765A2 /* settings-icon-check.png */; };
 		8318E9D519A788E800B765A2 /* settings-icon-check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8318E9D319A788E800B765A2 /* settings-icon-check@2x.png */; };
-		831AA69F17D0FCC00004AE8D /* IAMeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831AA69E17D0FCC00004AE8D /* IAMeManager.mm */; };
 		831B024A190719EA00018B7C /* InfinitSearchTokenFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 831B0249190719EA00018B7C /* InfinitSearchTokenFieldCell.m */; };
-		831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 831B757117DDC3FB0082A068 /* libfrete.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		831E22D6183E563800F0623C /* InfinitSearchController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831E22D5183E563800F0623C /* InfinitSearchController.mm */; };
 		831E22D9183E565300F0623C /* InfinitSearchPersonResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831E22D8183E565300F0623C /* InfinitSearchPersonResult.mm */; };
-		831FB21E17A8FE1700696604 /* IAAvatarManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831FB21D17A8FE1700696604 /* IAAvatarManager.mm */; };
 		8321BE7A18E0D33600237252 /* InfinitConversationFileCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */; };
 		8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328080A17A2B4A60025B6F8 /* Cocoa.framework */; };
 		8328081517A2B4A60025B6F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8328081317A2B4A60025B6F8 /* InfoPlist.strings */; };
@@ -44,37 +39,7 @@
 		832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808D117A2C9E40025B6F8 /* IAMainController.mm */; };
 		832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808E617A2E5C10025B6F8 /* IANotLoggedInViewController.mm */; };
 		832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */; };
-		832E26C718366BD800A82DFF /* libc++.1.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		832E26C818366BD800A82DFF /* libc++abi.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		83312D3119FA69D1007897D4 /* OldInfinitSearchController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3019FA69D1007897D4 /* OldInfinitSearchController.mm */; };
-		83312D3619FA6ABB007897D4 /* OldInfinitSendViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3419FA6ABB007897D4 /* OldInfinitSendViewController.mm */; };
-		83312D3719FA6ABB007897D4 /* OldInfinitSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D3519FA6ABB007897D4 /* OldInfinitSendViewController.xib */; };
-		83312D3F19FA6DB5007897D4 /* OldIASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3B19FA6DB5007897D4 /* OldIASearchResultsCellView.m */; };
-		83312D4019FA6DB5007897D4 /* OldIAUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D3D19FA6DB5007897D4 /* OldIAUserSearchViewController.m */; };
-		83312D4119FA6DB5007897D4 /* OldIAUserSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D3E19FA6DB5007897D4 /* OldIAUserSearchViewController.xib */; };
-		83312D4519FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D4419FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m */; };
-		83312D4A19FA7253007897D4 /* OldInfinitSendNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D4819FA7253007897D4 /* OldInfinitSendNoteViewController.m */; };
-		83312D4B19FA7253007897D4 /* OldInfinitSendNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D4919FA7253007897D4 /* OldInfinitSendNoteViewController.xib */; };
-		83312D5219FA736D007897D4 /* OldInfinitSendFileListCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D4E19FA736D007897D4 /* OldInfinitSendFileListCellView.m */; };
-		83312D5319FA736D007897D4 /* OldInfinitSendFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83312D5019FA736D007897D4 /* OldInfinitSendFilesViewController.m */; };
-		83312D5419FA736D007897D4 /* OldInfinitSendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83312D5119FA736D007897D4 /* OldInfinitSendFilesViewController.xib */; };
 		8333D45D17A976570093942B /* IAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8333D45C17A976570093942B /* IAViewController.m */; };
-		8334C7E117A67D22006028BC /* Gap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
-		8334C7E217A67D2D006028BC /* Gap.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 83CD702C17A678C6004F55D1 /* Gap.framework */; };
-		8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; };
-		8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EB17A67EB0006028BC /* libcryptography.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7EE17A67EB0006028BC /* libelle.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F017A67EB0006028BC /* libgap.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8334C83317A692BD006028BC /* libmetrics.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F517A67EB0006028BC /* libmetrics.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8334C83517A692BD006028BC /* libpapier.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F717A67EB0006028BC /* libpapier.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7F917A67EB0006028BC /* libprotocol.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FA17A67EB0006028BC /* libreactor.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8337672A19087E8C0073A621 /* libboost_chrono.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337671A19087DFC0073A621 /* libboost_chrono.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8337672B19087E8C0073A621 /* libboost_date_time.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337671B19087DFC0073A621 /* libboost_date_time.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8337672C19087E8C0073A621 /* libboost_signals.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337671E19087DFC0073A621 /* libboost_signals.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8337672D19087E8C0073A621 /* libboost_system.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337671F19087DFC0073A621 /* libboost_system.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8337672E19087E8C0073A621 /* libboost_thread.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8337672019087DFC0073A621 /* libboost_thread.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8337673819088A820073A621 /* OEXTokenAttachmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673119088A820073A621 /* OEXTokenAttachmentCell.m */; };
 		8337673919088A820073A621 /* OEXTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673319088A820073A621 /* OEXTokenField.m */; };
 		8337673A19088A820073A621 /* OEXTokenFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8337673519088A820073A621 /* OEXTokenFieldCell.m */; };
@@ -101,11 +66,10 @@
 		834F13831922532D00BF36A4 /* InfinitLinkProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 834F13821922532D00BF36A4 /* InfinitLinkProgressIndicator.m */; };
 		834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 834F13851922618200BF36A4 /* InfinitMainViewController.mm */; };
 		834F13881922618200BF36A4 /* InfinitMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834F13861922618200BF36A4 /* InfinitMainViewController.xib */; };
-		8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8364316717DDC39B00572726 /* libstation.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		836406001AB88E21005CC50C /* InfinitKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 836405FF1AB88E21005CC50C /* InfinitKeychain.m */; };
 		8364920219DB12CA004F911D /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 8364920119DB12CA004F911D /* icon.icns */; };
 		836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 836A679318D790D600A15677 /* InfinitConversationElement.m */; };
 		836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */; };
-		836D648619D063D300D77D9B /* InfinitReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D648519D063D300D77D9B /* InfinitReachability.m */; };
 		836D648919D0667D00D77D9B /* InfinitNetworkManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */; };
 		836D648E19D433B000D77D9B /* InfinitProxyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D648C19D433B000D77D9B /* InfinitProxyWindow.m */; };
 		836D648F19D433B000D77D9B /* InfinitProxyWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836D648D19D433B000D77D9B /* InfinitProxyWindow.xib */; };
@@ -237,9 +201,11 @@
 		836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE621988F5970053BE85 /* icon-share-hover@2x.png */; };
 		836EAE671988F5970053BE85 /* icon-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE631988F5970053BE85 /* icon-share.png */; };
 		836EAE681988F5970053BE85 /* icon-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE641988F5970053BE85 /* icon-share@2x.png */; };
+		8372B1711AB32C2000F1B8B8 /* Gap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F5647D1AB31B6300056A9F /* Gap.framework */; };
+		8372B1721AB32C4200F1B8B8 /* Gap.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 83F5647D1AB31B6300056A9F /* Gap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8372B3351AB3448A00F1B8B8 /* InfinitConversationRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8372B3341AB3448A00F1B8B8 /* InfinitConversationRowView.m */; };
 		83732B571989418F0030B0F0 /* icon-delete-confirm.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B551989418F0030B0F0 /* icon-delete-confirm.png */; };
 		83732B581989418F0030B0F0 /* icon-delete-confirm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83732B561989418F0030B0F0 /* icon-delete-confirm@2x.png */; };
-		8379844A18C4928B0083E284 /* libaws.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8379844918C4928B0083E284 /* libaws.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */; };
 		837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */; };
 		837B2A6919DD962B00A3CDE1 /* InfinitFeatureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 837B2A6819DD962B00A3CDE1 /* InfinitFeatureManager.m */; };
@@ -270,56 +236,55 @@
 		837B2AB719DD98AD00A3CDE1 /* main-icon-finished@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2AB519DD98AD00A3CDE1 /* main-icon-finished@2x.png */; };
 		837B2ABA19DD98DF00A3CDE1 /* main-icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2AB819DD98DF00A3CDE1 /* main-icon-error.png */; };
 		837B2ABB19DD98DF00A3CDE1 /* main-icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2AB919DD98DF00A3CDE1 /* main-icon-error@2x.png */; };
-		837DB9C41A9E05B300549914 /* libboost_regex.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 837DB9C31A9E05B300549914 /* libboost_regex.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */; };
 		838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0B717DA097C004160DB /* IAHoverButton.m */; };
-		8392497218D7B49400EE72C7 /* CrashReporter.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
-		8392497318D7B6D900EE72C7 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8391EA7017D1EEF2001A73BE /* CrashReporter.framework */; };
 		8392497418D7B70100EE72C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867517ECA30300D7202C /* QuartzCore.framework */; };
 		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
-		8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835117A6A5BB009409B3 /* IAKeychainManager.m */; };
 		8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398835417A6AA9D009409B3 /* IAUserPrefs.m */; };
 		8398835717A6AC96009409B3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8398835617A6AC95009409B3 /* Security.framework */; };
 		8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */; };
 		839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */; };
-		83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 8368F2BD17F1890C00135C37 /* libcurl.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		83A208AB1994D43800C85C47 /* libboost_context.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83A208A71994D3F200C85C47 /* libboost_context.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83A67AB419AB19C900A69E35 /* InfinitSettingsGeneralView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A67AB219AB19C900A69E35 /* InfinitSettingsGeneralView.m */; };
 		83A67AB519AB19C900A69E35 /* InfinitSettingsGeneralView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A67AB319AB19C900A69E35 /* InfinitSettingsGeneralView.xib */; };
+		83A947F91AB7073B00FD0803 /* InfinitMainTransactionLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A947F81AB7073B00FD0803 /* InfinitMainTransactionLinkView.m */; };
 		83AA9AE81A07E1F600C5D4BA /* icon-menu-bar-yosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AA9AE61A07E1F600C5D4BA /* icon-menu-bar-yosemite.png */; };
 		83AA9AE91A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AA9AE71A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png */; };
 		83AA9B021A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AA9B011A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m */; };
-		83B025681A9E113400019F3A /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C318366B5200A82DFF /* libc++.1.dylib */; };
-		83B025691A9E113400019F3A /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 832E26C418366B5200A82DFF /* libc++abi.dylib */; };
 		83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */; };
+		83B4BBE61AB80FB7004B8E76 /* libarchive.13.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBC91AB80FB5004B8E76 /* libarchive.13.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBE71AB80FB7004B8E76 /* libaws.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBCA1AB80FB5004B8E76 /* libaws.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBE81AB80FB8004B8E76 /* libboost_atomic.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBCB1AB80FB5004B8E76 /* libboost_atomic.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBE91AB80FB8004B8E76 /* libboost_chrono.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBCC1AB80FB6004B8E76 /* libboost_chrono.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBEA1AB80FB8004B8E76 /* libboost_context.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBCD1AB80FB6004B8E76 /* libboost_context.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBEB1AB80FB8004B8E76 /* libboost_date_time.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBCE1AB80FB6004B8E76 /* libboost_date_time.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBEC1AB80FB8004B8E76 /* libboost_regex.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBCF1AB80FB6004B8E76 /* libboost_regex.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBED1AB80FB8004B8E76 /* libboost_signals.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD01AB80FB6004B8E76 /* libboost_signals.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBEE1AB80FB8004B8E76 /* libboost_system.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD11AB80FB6004B8E76 /* libboost_system.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBEF1AB80FB8004B8E76 /* libboost_thread.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD21AB80FB6004B8E76 /* libboost_thread.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF01AB80FB8004B8E76 /* libc++.1.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD31AB80FB6004B8E76 /* libc++.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF11AB80FB8004B8E76 /* libc++abi.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD41AB80FB6004B8E76 /* libc++abi.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF21AB80FB8004B8E76 /* libcrash.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD51AB80FB6004B8E76 /* libcrash.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF31AB80FB8004B8E76 /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD61AB80FB6004B8E76 /* libcrypto.1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF41AB80FB8004B8E76 /* libcryptography.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD71AB80FB6004B8E76 /* libcryptography.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF51AB80FB8004B8E76 /* libcurl.4.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD81AB80FB6004B8E76 /* libcurl.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF61AB80FB8004B8E76 /* libelle.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBD91AB80FB6004B8E76 /* libelle.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF71AB80FB8004B8E76 /* libfrete.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBDA1AB80FB7004B8E76 /* libfrete.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF81AB80FB8004B8E76 /* libgap.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBDB1AB80FB7004B8E76 /* libgap.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBF91AB80FB8004B8E76 /* libmetaclient.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBDC1AB80FB7004B8E76 /* libmetaclient.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBFA1AB80FB8004B8E76 /* libmetrics.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBDD1AB80FB7004B8E76 /* libmetrics.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBFB1AB80FB9004B8E76 /* libpapier.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBDE1AB80FB7004B8E76 /* libpapier.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBFC1AB80FB9004B8E76 /* libprotocol.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBDF1AB80FB7004B8E76 /* libprotocol.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBFD1AB80FB9004B8E76 /* libreactor.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBE01AB80FB7004B8E76 /* libreactor.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBFE1AB80FB9004B8E76 /* libssl.1.0.0.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBE11AB80FB7004B8E76 /* libssl.1.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BBFF1AB80FB9004B8E76 /* libstation.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBE21AB80FB7004B8E76 /* libstation.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BC001AB80FB9004B8E76 /* libtransaction.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBE31AB80FB7004B8E76 /* libtransaction.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BC011AB80FB9004B8E76 /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBE41AB80FB7004B8E76 /* libtrophonius-client.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BC021AB80FB9004B8E76 /* libz.1.2.8.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83B4BBE51AB80FB7004B8E76 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83B4BC031AB81067004B8E76 /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B4BBD31AB80FB6004B8E76 /* libc++.1.dylib */; };
+		83B4BC041AB81067004B8E76 /* libc++abi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B4BBD41AB80FB6004B8E76 /* libc++abi.dylib */; };
+		83B4BC051AB8106D004B8E76 /* libelle.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B4BBD91AB80FB6004B8E76 /* libelle.dylib */; };
 		83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83B8A726182246E500AD775F /* InfinitLoginViewController.mm */; };
 		83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B8A727182246E500AD775F /* InfinitLoginViewController.xib */; };
-		83BD384A19FE364E003EA0AD /* old-icon-add-file.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383619FE364E003EA0AD /* old-icon-add-file.png */; };
-		83BD384B19FE364E003EA0AD /* old-icon-add-file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383719FE364E003EA0AD /* old-icon-add-file@2x.png */; };
-		83BD384C19FE364E003EA0AD /* old-icon-cancel-send.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383819FE364E003EA0AD /* old-icon-cancel-send.png */; };
-		83BD384D19FE364E003EA0AD /* old-icon-cancel-send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383919FE364E003EA0AD /* old-icon-cancel-send@2x.png */; };
-		83BD384E19FE364E003EA0AD /* old-icon-note.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383A19FE364E003EA0AD /* old-icon-note.png */; };
-		83BD384F19FE364E003EA0AD /* old-icon-note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383B19FE364E003EA0AD /* old-icon-note@2x.png */; };
-		83BD385019FE364E003EA0AD /* old-icon-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383C19FE364E003EA0AD /* old-icon-search.png */; };
-		83BD385119FE364E003EA0AD /* old-icon-search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383D19FE364E003EA0AD /* old-icon-search@2x.png */; };
-		83BD385219FE364E003EA0AD /* old-icon-star-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383E19FE364E003EA0AD /* old-icon-star-selected.png */; };
-		83BD385319FE364E003EA0AD /* old-icon-star-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD383F19FE364E003EA0AD /* old-icon-star-selected@2x.png */; };
-		83BD385419FE364E003EA0AD /* old-icon-star@2x 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384019FE364E003EA0AD /* old-icon-star@2x 2.png */; };
-		83BD385519FE364E003EA0AD /* old-icon-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384119FE364E003EA0AD /* old-icon-star@2x.png */; };
-		83BD385619FE364E003EA0AD /* old-send-icon-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384219FE364E003EA0AD /* old-send-icon-delete.png */; };
-		83BD385719FE364E003EA0AD /* old-send-icon-delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384319FE364E003EA0AD /* old-send-icon-delete@2x.png */; };
-		83BD385819FE364E003EA0AD /* old-send-icon-files-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384419FE364E003EA0AD /* old-send-icon-files-hover.png */; };
-		83BD385919FE364E003EA0AD /* old-send-icon-files-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384519FE364E003EA0AD /* old-send-icon-files-hover@2x.png */; };
-		83BD385A19FE364E003EA0AD /* old-send-icon-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384619FE364E003EA0AD /* old-send-icon-files.png */; };
-		83BD385B19FE364E003EA0AD /* old-send-icon-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384719FE364E003EA0AD /* old-send-icon-files@2x.png */; };
-		83BD385C19FE364E003EA0AD /* old-send-icon-show-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384819FE364E003EA0AD /* old-send-icon-show-files.png */; };
-		83BD385D19FE364E003EA0AD /* old-send-icon-show-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD384919FE364E003EA0AD /* old-send-icon-show-files@2x.png */; };
-		83BD386019FE36F6003EA0AD /* old-icon-contact-checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD385E19FE36F6003EA0AD /* old-icon-contact-checked.png */; };
-		83BD386119FE36F6003EA0AD /* old-icon-contact-checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD385F19FE36F6003EA0AD /* old-icon-contact-checked@2x.png */; };
-		83BD386419FE3715003EA0AD /* old-send-icon-hide-files.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD386219FE3715003EA0AD /* old-send-icon-hide-files.png */; };
-		83BD386519FE3715003EA0AD /* old-send-icon-hide-files@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83BD386319FE3715003EA0AD /* old-send-icon-hide-files@2x.png */; };
-		83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83BEC56418605A8500EB277E /* libtrophonius-client.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83C25B4919EEBC6C009752F1 /* send-icon-link.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B4719EEBC6C009752F1 /* send-icon-link.png */; };
 		83C25B4A19EEBC6C009752F1 /* send-icon-link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B4819EEBC6C009752F1 /* send-icon-link@2x.png */; };
 		83C25B4D19EEBC78009752F1 /* send-illustration-no-results.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B4B19EEBC78009752F1 /* send-illustration-no-results.png */; };
@@ -341,22 +306,15 @@
 		83C30A411933EA5100D07D2C /* InfinitLinkShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A401933EA5100D07D2C /* InfinitLinkShortcutView.m */; };
 		83C6164F1AA0CB2400F68C94 /* illustration_screenshots.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83C6164D1AA0CB2400F68C94 /* illustration_screenshots.jpg */; };
 		83C616501AA0CB2400F68C94 /* illustration_screenshots@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83C6164E1AA0CB2400F68C94 /* illustration_screenshots@2x.jpg */; };
-		83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83C709851822E22C00F530C4 /* libz.1.2.8.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C7598F17AA428700BE6CD5 /* IAWindowController.m */; };
 		83C7599217AA428700BE6CD5 /* IAWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C7599017AA428700BE6CD5 /* IAWindowController.xib */; };
 		83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C99E0017AB8EAC00AFF091 /* IAGeneralSendController.mm */; };
 		83CC2C4C1923B97E00EBB96E /* InfinitLinkFileIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CC2C4B1923B97E00EBB96E /* InfinitLinkFileIconView.m */; };
-		83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD106817D48D9700AA0A19 /* IALogFileManager.m */; };
-		83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83CD107F17D49D7E00AA0A19 /* IACrashReportManager.mm */; };
 		83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83CD108717D4F95200AA0A19 /* IANoConnectionViewController.mm */; };
 		83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */; };
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
-		83CD6FB717A672E5004F55D1 /* IAGap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83CD6FB417A672E5004F55D1 /* IAGap.mm */; };
-		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
-		83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F49182A98C1001394B2 /* libmetaclient.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83CE1F60182A990F001394B2 /* libtransaction.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */; };
-		83DD1B1418F1AB2400F5AEEE /* libarchive.13.dylib in Copy Infinit Libraries */ = {isa = PBXBuildFile; fileRef = 83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83E1B73A191E6F85000338A3 /* InfinitSendFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */; };
 		83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */; };
 		83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */; };
@@ -429,110 +387,12 @@
 			remoteGlobalIDString = 55C14BB7136EEF1500649790;
 			remoteInfo = finish_installation;
 		};
-		8334C81E17A681CB006028BC /* PBXContainerItemProxy */ = {
+		8372B1691AB32C1100F1B8B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+			containerPortal = 83F564751AB31B6300056A9F /* Gap.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 83CD6F4117A65EDA004F55D1;
-			remoteInfo = Gap;
-		};
-		8391EA6D17D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05E731F30EFA1AAB005EDFB7;
-			remoteInfo = "CrashReporter-MacOSX-Static";
-		};
-		8391EA6F17D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = "CrashReporter-MacOSX";
-		};
-		8391EA7117D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 058812B91040582D009128FB;
-			remoteInfo = "CrashReporter-iOS";
-		};
-		8391EA7317D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05CD31520EE936A9000FDE88;
-			remoteInfo = "CrashReporter-iOS-Device";
-		};
-		8391EA7517D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05CD31630EE93905000FDE88;
-			remoteInfo = "CrashReporter-iOS-Simulator";
-		};
-		8391EA7717D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05E731E30EFA1A3E005EDFB7;
-			remoteInfo = plcrashutil;
-		};
-		8391EA7917D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05CD32690EE93DC3000FDE88;
-			remoteInfo = "Tests-MacOSX";
-		};
-		8391EA7B17D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05CD32A90EE94062000FDE88;
-			remoteInfo = "Tests-iOS-Simulator";
-		};
-		8391EA7D17D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05CD33240EE94439000FDE88;
-			remoteInfo = "Tests-iOS-Device";
-		};
-		8391EA7F17D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05F40CE70EF7AB80008050CF;
-			remoteInfo = DemoCrash;
-		};
-		8391EA8117D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 052A45CF136353FB00987004;
-			remoteInfo = "DemoCrash-iOS-Device";
-		};
-		8391EA8317D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 052A464F136355FD00987004;
-			remoteInfo = "DemoCrash-iOS-Simulator";
-		};
-		8391EA8517D1EEF2001A73BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 050DE24D0F61B80B00152ED3;
-			remoteInfo = "Fuzz Testing";
-		};
-		8392497018D7B47200EE72C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = CrashReporter;
+			remoteGlobalIDString = 8372B2971AB3343100F1B8B8;
+			remoteInfo = "Gap-OSX";
 		};
 		83CD6F7C17A65F51004F55D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -541,19 +401,19 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Sparkle;
 		};
-		83CD702B17A678C6004F55D1 /* PBXContainerItemProxy */ = {
+		83F5647A1AB31B6300056A9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+			containerPortal = 83F564751AB31B6300056A9F /* Gap.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 83CD6F4217A65EDA004F55D1;
-			remoteInfo = Gap;
+			remoteGlobalIDString = 83568D791A136D7700766DA3;
+			remoteInfo = "Gap-iOS";
 		};
-		83CD702D17A678C6004F55D1 /* PBXContainerItemProxy */ = {
+		83F5647C1AB31B6300056A9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+			containerPortal = 83F564751AB31B6300056A9F /* Gap.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 83CD6F5A17A65EDA004F55D1;
-			remoteInfo = GapTests;
+			remoteGlobalIDString = 83F35D1F1A1D02EE00DF7F35;
+			remoteInfo = "Gap-OSX";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -574,34 +434,35 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				837DB9C41A9E05B300549914 /* libboost_regex.dylib in Copy Infinit Libraries */,
-				83A208AB1994D43800C85C47 /* libboost_context.dylib in Copy Infinit Libraries */,
-				8337672A19087E8C0073A621 /* libboost_chrono.dylib in Copy Infinit Libraries */,
-				8337672B19087E8C0073A621 /* libboost_date_time.dylib in Copy Infinit Libraries */,
-				8337672C19087E8C0073A621 /* libboost_signals.dylib in Copy Infinit Libraries */,
-				8337672D19087E8C0073A621 /* libboost_system.dylib in Copy Infinit Libraries */,
-				8337672E19087E8C0073A621 /* libboost_thread.dylib in Copy Infinit Libraries */,
-				83DD1B1418F1AB2400F5AEEE /* libarchive.13.dylib in Copy Infinit Libraries */,
-				8379844A18C4928B0083E284 /* libaws.dylib in Copy Infinit Libraries */,
-				83BEC56618605A9D00EB277E /* libtrophonius-client.dylib in Copy Infinit Libraries */,
-				832E26C718366BD800A82DFF /* libc++.1.dylib in Copy Infinit Libraries */,
-				832E26C818366BD800A82DFF /* libc++abi.dylib in Copy Infinit Libraries */,
-				83CE1F62182A9922001394B2 /* libtransaction.dylib in Copy Infinit Libraries */,
-				83CE1F5F182A98EA001394B2 /* libmetaclient.dylib in Copy Infinit Libraries */,
-				83C709871822E23E00F530C4 /* libz.1.2.8.dylib in Copy Infinit Libraries */,
-				831667D717F3721900C79DD7 /* libcrash.dylib in Copy Infinit Libraries */,
-				83A0EAD317F199270090330F /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */,
-				83A0EAD117F198EC0090330F /* libcurl.4.dylib in Copy Infinit Libraries */,
-				831B758717DDC4060082A068 /* libfrete.dylib in Copy Infinit Libraries */,
-				8364317D17DDC3B200572726 /* libstation.dylib in Copy Infinit Libraries */,
-				8334C82917A692BD006028BC /* libcryptography.dylib in Copy Infinit Libraries */,
-				8334C82C17A692BD006028BC /* libelle.dylib in Copy Infinit Libraries */,
-				8334C82E17A692BD006028BC /* libgap.dylib in Copy Infinit Libraries */,
-				8334C83317A692BD006028BC /* libmetrics.dylib in Copy Infinit Libraries */,
-				8334C83517A692BD006028BC /* libpapier.dylib in Copy Infinit Libraries */,
-				8334C83717A692BD006028BC /* libprotocol.dylib in Copy Infinit Libraries */,
-				8334C83817A692BD006028BC /* libreactor.dylib in Copy Infinit Libraries */,
-				8334C83917A692BD006028BC /* libssl.1.0.0.dylib in Copy Infinit Libraries */,
+				83B4BBE61AB80FB7004B8E76 /* libarchive.13.dylib in Copy Infinit Libraries */,
+				83B4BBE71AB80FB7004B8E76 /* libaws.dylib in Copy Infinit Libraries */,
+				83B4BBE81AB80FB8004B8E76 /* libboost_atomic.dylib in Copy Infinit Libraries */,
+				83B4BBE91AB80FB8004B8E76 /* libboost_chrono.dylib in Copy Infinit Libraries */,
+				83B4BBEA1AB80FB8004B8E76 /* libboost_context.dylib in Copy Infinit Libraries */,
+				83B4BBEB1AB80FB8004B8E76 /* libboost_date_time.dylib in Copy Infinit Libraries */,
+				83B4BBEC1AB80FB8004B8E76 /* libboost_regex.dylib in Copy Infinit Libraries */,
+				83B4BBED1AB80FB8004B8E76 /* libboost_signals.dylib in Copy Infinit Libraries */,
+				83B4BBEE1AB80FB8004B8E76 /* libboost_system.dylib in Copy Infinit Libraries */,
+				83B4BBEF1AB80FB8004B8E76 /* libboost_thread.dylib in Copy Infinit Libraries */,
+				83B4BBF01AB80FB8004B8E76 /* libc++.1.dylib in Copy Infinit Libraries */,
+				83B4BBF11AB80FB8004B8E76 /* libc++abi.dylib in Copy Infinit Libraries */,
+				83B4BBF21AB80FB8004B8E76 /* libcrash.dylib in Copy Infinit Libraries */,
+				83B4BBF31AB80FB8004B8E76 /* libcrypto.1.0.0.dylib in Copy Infinit Libraries */,
+				83B4BBF41AB80FB8004B8E76 /* libcryptography.dylib in Copy Infinit Libraries */,
+				83B4BBF51AB80FB8004B8E76 /* libcurl.4.dylib in Copy Infinit Libraries */,
+				83B4BBF61AB80FB8004B8E76 /* libelle.dylib in Copy Infinit Libraries */,
+				83B4BBF71AB80FB8004B8E76 /* libfrete.dylib in Copy Infinit Libraries */,
+				83B4BBF81AB80FB8004B8E76 /* libgap.dylib in Copy Infinit Libraries */,
+				83B4BBF91AB80FB8004B8E76 /* libmetaclient.dylib in Copy Infinit Libraries */,
+				83B4BBFA1AB80FB8004B8E76 /* libmetrics.dylib in Copy Infinit Libraries */,
+				83B4BBFB1AB80FB9004B8E76 /* libpapier.dylib in Copy Infinit Libraries */,
+				83B4BBFC1AB80FB9004B8E76 /* libprotocol.dylib in Copy Infinit Libraries */,
+				83B4BBFD1AB80FB9004B8E76 /* libreactor.dylib in Copy Infinit Libraries */,
+				83B4BBFE1AB80FB9004B8E76 /* libssl.1.0.0.dylib in Copy Infinit Libraries */,
+				83B4BBFF1AB80FB9004B8E76 /* libstation.dylib in Copy Infinit Libraries */,
+				83B4BC001AB80FB9004B8E76 /* libtransaction.dylib in Copy Infinit Libraries */,
+				83B4BC011AB80FB9004B8E76 /* libtrophonius-client.dylib in Copy Infinit Libraries */,
+				83B4BC021AB80FB9004B8E76 /* libz.1.2.8.dylib in Copy Infinit Libraries */,
 			);
 			name = "Copy Infinit Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -612,8 +473,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8392497218D7B49400EE72C7 /* CrashReporter.framework in Copy Frameworks */,
-				8334C7E217A67D2D006028BC /* Gap.framework in Copy Frameworks */,
+				8372B1721AB32C4200F1B8B8 /* Gap.framework in Copy Frameworks */,
 				83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -638,22 +498,16 @@
 		83126E5317BA69A3003B2F52 /* IAFavouritesSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAFavouritesSendViewController.xib; sourceTree = "<group>"; };
 		83126E5A17BAA8D9003B2F52 /* IAFavouriteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAFavouriteView.h; sourceTree = "<group>"; };
 		83126E5B17BAA8D9003B2F52 /* IAFavouriteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAFavouriteView.m; sourceTree = "<group>"; };
-		831667C117F371F700C79DD7 /* libcrash.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrash.dylib; path = ../../../Externals/lib/libcrash.dylib; sourceTree = "<group>"; };
 		83167CA119A7213600341068 /* InfinitSettingsAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsAvatarView.h; sourceTree = "<group>"; };
 		83167CA219A7213600341068 /* InfinitSettingsAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsAvatarView.m; sourceTree = "<group>"; };
 		8318E9D219A788E800B765A2 /* settings-icon-check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-icon-check.png"; path = "../../../../fist-resources/slices/mac/view_settings/settings-icon-check.png"; sourceTree = "<group>"; };
 		8318E9D319A788E800B765A2 /* settings-icon-check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-icon-check@2x.png"; path = "../../../../fist-resources/slices/mac/view_settings/settings-icon-check@2x.png"; sourceTree = "<group>"; };
-		831AA69D17D0FCC00004AE8D /* IAMeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAMeManager.h; sourceTree = "<group>"; };
-		831AA69E17D0FCC00004AE8D /* IAMeManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAMeManager.mm; sourceTree = "<group>"; };
 		831B0248190719EA00018B7C /* InfinitSearchTokenFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSearchTokenFieldCell.h; sourceTree = "<group>"; };
 		831B0249190719EA00018B7C /* InfinitSearchTokenFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSearchTokenFieldCell.m; sourceTree = "<group>"; };
-		831B757117DDC3FB0082A068 /* libfrete.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfrete.dylib; path = ../../../Externals/lib/libfrete.dylib; sourceTree = "<group>"; };
 		831E22D4183E563800F0623C /* InfinitSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSearchController.h; sourceTree = "<group>"; };
 		831E22D5183E563800F0623C /* InfinitSearchController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitSearchController.mm; sourceTree = "<group>"; };
 		831E22D7183E565300F0623C /* InfinitSearchPersonResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSearchPersonResult.h; sourceTree = "<group>"; };
 		831E22D8183E565300F0623C /* InfinitSearchPersonResult.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitSearchPersonResult.mm; sourceTree = "<group>"; };
-		831FB21C17A8FE1700696604 /* IAAvatarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAvatarManager.h; sourceTree = "<group>"; };
-		831FB21D17A8FE1700696604 /* IAAvatarManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAAvatarManager.mm; sourceTree = "<group>"; };
 		8321BE7818E0D33600237252 /* InfinitConversationFileCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationFileCellView.h; sourceTree = "<group>"; };
 		8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationFileCellView.m; sourceTree = "<group>"; };
 		8328080717A2B4A60025B6F8 /* InfinitApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinitApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -685,43 +539,8 @@
 		832808E517A2E5C10025B6F8 /* IANotLoggedInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANotLoggedInViewController.h; sourceTree = "<group>"; };
 		832808E617A2E5C10025B6F8 /* IANotLoggedInViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IANotLoggedInViewController.mm; sourceTree = "<group>"; };
 		832808E717A2E5C10025B6F8 /* IANotLoggedInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANotLoggedInViewController.xib; sourceTree = "<group>"; };
-		832E26C318366B5200A82DFF /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../Externals/lib/libc++.1.dylib"; sourceTree = "<group>"; };
-		832E26C418366B5200A82DFF /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "../../../Externals/lib/libc++abi.dylib"; sourceTree = "<group>"; };
-		83312D2F19FA69D1007897D4 /* OldInfinitSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSearchController.h; sourceTree = "<group>"; };
-		83312D3019FA69D1007897D4 /* OldInfinitSearchController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OldInfinitSearchController.mm; sourceTree = "<group>"; };
-		83312D3319FA6ABB007897D4 /* OldInfinitSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendViewController.h; sourceTree = "<group>"; };
-		83312D3419FA6ABB007897D4 /* OldInfinitSendViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OldInfinitSendViewController.mm; sourceTree = "<group>"; };
-		83312D3519FA6ABB007897D4 /* OldInfinitSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldInfinitSendViewController.xib; sourceTree = "<group>"; };
-		83312D3A19FA6DB5007897D4 /* OldIASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldIASearchResultsCellView.h; sourceTree = "<group>"; };
-		83312D3B19FA6DB5007897D4 /* OldIASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldIASearchResultsCellView.m; sourceTree = "<group>"; };
-		83312D3C19FA6DB5007897D4 /* OldIAUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldIAUserSearchViewController.h; sourceTree = "<group>"; };
-		83312D3D19FA6DB5007897D4 /* OldIAUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldIAUserSearchViewController.m; sourceTree = "<group>"; };
-		83312D3E19FA6DB5007897D4 /* OldIAUserSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldIAUserSearchViewController.xib; sourceTree = "<group>"; };
-		83312D4319FA71CA007897D4 /* OldInfinitTokenAttachmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitTokenAttachmentCell.h; sourceTree = "<group>"; };
-		83312D4419FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitTokenAttachmentCell.m; sourceTree = "<group>"; };
-		83312D4719FA7253007897D4 /* OldInfinitSendNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendNoteViewController.h; sourceTree = "<group>"; };
-		83312D4819FA7253007897D4 /* OldInfinitSendNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitSendNoteViewController.m; sourceTree = "<group>"; };
-		83312D4919FA7253007897D4 /* OldInfinitSendNoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldInfinitSendNoteViewController.xib; sourceTree = "<group>"; };
-		83312D4D19FA736D007897D4 /* OldInfinitSendFileListCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendFileListCellView.h; sourceTree = "<group>"; };
-		83312D4E19FA736D007897D4 /* OldInfinitSendFileListCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitSendFileListCellView.m; sourceTree = "<group>"; };
-		83312D4F19FA736D007897D4 /* OldInfinitSendFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OldInfinitSendFilesViewController.h; sourceTree = "<group>"; };
-		83312D5019FA736D007897D4 /* OldInfinitSendFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OldInfinitSendFilesViewController.m; sourceTree = "<group>"; };
-		83312D5119FA736D007897D4 /* OldInfinitSendFilesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OldInfinitSendFilesViewController.xib; sourceTree = "<group>"; };
 		8333D45B17A976570093942B /* IAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAViewController.h; sourceTree = "<group>"; };
 		8333D45C17A976570093942B /* IAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAViewController.m; sourceTree = "<group>"; };
-		8334C7EB17A67EB0006028BC /* libcryptography.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptography.dylib; path = ../../../Externals/lib/libcryptography.dylib; sourceTree = "<group>"; };
-		8334C7EE17A67EB0006028BC /* libelle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libelle.dylib; path = ../../../Externals/lib/libelle.dylib; sourceTree = "<group>"; };
-		8334C7F017A67EB0006028BC /* libgap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgap.dylib; path = ../../../Externals/lib/libgap.dylib; sourceTree = "<group>"; };
-		8334C7F517A67EB0006028BC /* libmetrics.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetrics.dylib; path = ../../../Externals/lib/libmetrics.dylib; sourceTree = "<group>"; };
-		8334C7F717A67EB0006028BC /* libpapier.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpapier.dylib; path = ../../../Externals/lib/libpapier.dylib; sourceTree = "<group>"; };
-		8334C7F917A67EB0006028BC /* libprotocol.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotocol.dylib; path = ../../../Externals/lib/libprotocol.dylib; sourceTree = "<group>"; };
-		8334C7FA17A67EB0006028BC /* libreactor.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreactor.dylib; path = ../../../Externals/lib/libreactor.dylib; sourceTree = "<group>"; };
-		8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../Externals/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
-		8337671A19087DFC0073A621 /* libboost_chrono.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_chrono.dylib; path = ../../../Externals/lib/libboost_chrono.dylib; sourceTree = "<group>"; };
-		8337671B19087DFC0073A621 /* libboost_date_time.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_date_time.dylib; path = ../../../Externals/lib/libboost_date_time.dylib; sourceTree = "<group>"; };
-		8337671E19087DFC0073A621 /* libboost_signals.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_signals.dylib; path = ../../../Externals/lib/libboost_signals.dylib; sourceTree = "<group>"; };
-		8337671F19087DFC0073A621 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../Externals/lib/libboost_system.dylib; sourceTree = "<group>"; };
-		8337672019087DFC0073A621 /* libboost_thread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_thread.dylib; path = ../../../Externals/lib/libboost_thread.dylib; sourceTree = "<group>"; };
 		8337673019088A820073A621 /* OEXTokenAttachmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXTokenAttachmentCell.h; sourceTree = "<group>"; };
 		8337673119088A820073A621 /* OEXTokenAttachmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXTokenAttachmentCell.m; sourceTree = "<group>"; };
 		8337673219088A820073A621 /* OEXTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXTokenField.h; sourceTree = "<group>"; };
@@ -768,15 +587,13 @@
 		834F13841922618200BF36A4 /* InfinitMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMainViewController.h; sourceTree = "<group>"; };
 		834F13851922618200BF36A4 /* InfinitMainViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitMainViewController.mm; sourceTree = "<group>"; };
 		834F13861922618200BF36A4 /* InfinitMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitMainViewController.xib; sourceTree = "<group>"; };
-		8364316717DDC39B00572726 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../Externals/lib/libstation.dylib; sourceTree = "<group>"; };
+		836405FE1AB88E21005CC50C /* InfinitKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitKeychain.h; path = "../../../../objcpp-gap/Gap/InfinitKeychain.h"; sourceTree = "<group>"; };
+		836405FF1AB88E21005CC50C /* InfinitKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfinitKeychain.m; path = "../../../../objcpp-gap/Gap/InfinitKeychain.m"; sourceTree = "<group>"; };
 		8364920119DB12CA004F911D /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = "../../../../fist-resources/slices/mac/icon/icon.icns"; sourceTree = "<group>"; };
-		8368F2BD17F1890C00135C37 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../Externals/lib/libcurl.4.dylib; sourceTree = "<group>"; };
 		836A679218D790D600A15677 /* InfinitConversationElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationElement.h; sourceTree = "<group>"; };
 		836A679318D790D600A15677 /* InfinitConversationElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationElement.m; sourceTree = "<group>"; };
 		836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASearchResultsCellView.h; sourceTree = "<group>"; };
 		836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASearchResultsCellView.m; sourceTree = "<group>"; };
-		836D648419D063D300D77D9B /* InfinitReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitReachability.h; sourceTree = "<group>"; };
-		836D648519D063D300D77D9B /* InfinitReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitReachability.m; sourceTree = "<group>"; };
 		836D648719D0667D00D77D9B /* InfinitNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitNetworkManager.h; sourceTree = "<group>"; };
 		836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitNetworkManager.mm; sourceTree = "<group>"; };
 		836D648B19D433B000D77D9B /* InfinitProxyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitProxyWindow.h; sourceTree = "<group>"; };
@@ -911,9 +728,10 @@
 		836EAE631988F5970053BE85 /* icon-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-share.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-share.png"; sourceTree = "<group>"; };
 		836EAE641988F5970053BE85 /* icon-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-share@2x.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-share@2x.png"; sourceTree = "<group>"; };
 		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8372B3331AB3448A00F1B8B8 /* InfinitConversationRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationRowView.h; sourceTree = "<group>"; };
+		8372B3341AB3448A00F1B8B8 /* InfinitConversationRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationRowView.m; sourceTree = "<group>"; };
 		83732B551989418F0030B0F0 /* icon-delete-confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete-confirm.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete-confirm.png"; sourceTree = "<group>"; };
 		83732B561989418F0030B0F0 /* icon-delete-confirm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete-confirm@2x.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete-confirm@2x.png"; sourceTree = "<group>"; };
-		8379844918C4928B0083E284 /* libaws.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaws.dylib; path = ../../../Externals/lib/libaws.dylib; sourceTree = "<group>"; };
 		837A7F6F17FC072300600ACD /* IAReportProblemWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAReportProblemWindowController.h; sourceTree = "<group>"; };
 		837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAReportProblemWindowController.m; sourceTree = "<group>"; };
 		837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAReportProblemWindowController.xib; sourceTree = "<group>"; };
@@ -946,16 +764,12 @@
 		837B2AB519DD98AD00A3CDE1 /* main-icon-finished@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "main-icon-finished@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/main-icon-finished@2x.png"; sourceTree = "<group>"; };
 		837B2AB819DD98DF00A3CDE1 /* main-icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "main-icon-error.png"; path = "../../../../fist-resources/slices/mac/view_main/main-icon-error.png"; sourceTree = "<group>"; };
 		837B2AB919DD98DF00A3CDE1 /* main-icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "main-icon-error@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/main-icon-error@2x.png"; sourceTree = "<group>"; };
-		837DB9C31A9E05B300549914 /* libboost_regex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_regex.dylib; path = ../../../Externals/lib/libboost_regex.dylib; sourceTree = "<group>"; };
 		837DE2C518E10DBB003A63A8 /* InfinitFileListScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileListScrollView.h; sourceTree = "<group>"; };
 		837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileListScrollView.m; sourceTree = "<group>"; };
 		838FE0B617DA097C004160DB /* IAHoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAHoverButton.h; sourceTree = "<group>"; };
 		838FE0B717DA097C004160DB /* IAHoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAHoverButton.m; sourceTree = "<group>"; };
-		8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrashReporter.xcodeproj; path = ../plcrashreporter/CrashReporter.xcodeproj; sourceTree = "<group>"; };
 		8398834D17A6A5AE009409B3 /* IAAutoStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAutoStartup.h; sourceTree = "<group>"; };
 		8398834E17A6A5AE009409B3 /* IAAutoStartup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAAutoStartup.m; sourceTree = "<group>"; };
-		8398835017A6A5BB009409B3 /* IAKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAKeychainManager.h; sourceTree = "<group>"; };
-		8398835117A6A5BB009409B3 /* IAKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAKeychainManager.m; sourceTree = "<group>"; };
 		8398835317A6AA9D009409B3 /* IAUserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAUserPrefs.h; sourceTree = "<group>"; };
 		8398835417A6AA9D009409B3 /* IAUserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAUserPrefs.m; sourceTree = "<group>"; };
 		8398835617A6AC95009409B3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -964,11 +778,11 @@
 		8398836917A6FDE7009409B3 /* IACentredTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredTextFieldCell.m; sourceTree = "<group>"; };
 		839DDCF018D8C7D50021B826 /* InfinitConversationProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationProgressBar.h; sourceTree = "<group>"; };
 		839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = InfinitConversationProgressBar.mm; sourceTree = "<group>"; };
-		83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../Externals/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
-		83A208A71994D3F200C85C47 /* libboost_context.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_context.dylib; path = ../../../Externals/lib/libboost_context.dylib; sourceTree = "<group>"; };
 		83A67AB119AB19C900A69E35 /* InfinitSettingsGeneralView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsGeneralView.h; sourceTree = "<group>"; };
 		83A67AB219AB19C900A69E35 /* InfinitSettingsGeneralView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsGeneralView.m; sourceTree = "<group>"; };
 		83A67AB319AB19C900A69E35 /* InfinitSettingsGeneralView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSettingsGeneralView.xib; sourceTree = "<group>"; };
+		83A947F71AB7073B00FD0803 /* InfinitMainTransactionLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMainTransactionLinkView.h; sourceTree = "<group>"; };
+		83A947F81AB7073B00FD0803 /* InfinitMainTransactionLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMainTransactionLinkView.m; sourceTree = "<group>"; };
 		83AA9AE61A07E1F600C5D4BA /* icon-menu-bar-yosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-yosemite.png"; path = "../../../../fist-resources/slices/mac/main/icon-menu-bar-yosemite.png"; sourceTree = "<group>"; };
 		83AA9AE71A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-menu-bar-yosemite@2x.png"; path = "../../../../fist-resources/slices/mac/main/icon-menu-bar-yosemite@2x.png"; sourceTree = "<group>"; };
 		83AA9AFE1A08C04700C5D4BA /* NSStatusBarButtonCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSStatusBarButtonCell.h; sourceTree = "<group>"; };
@@ -976,34 +790,38 @@
 		83AA9B011A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStatusBarButtonCell+ForciblyHighlighted.m"; sourceTree = "<group>"; };
 		83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMetricsManager.h; sourceTree = "<group>"; };
 		83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitMetricsManager.mm; sourceTree = "<group>"; };
+		83B4BBC91AB80FB5004B8E76 /* libarchive.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libarchive.13.dylib; path = ../../../../../_build/macosx64/lib/libarchive.13.dylib; sourceTree = "<group>"; };
+		83B4BBCA1AB80FB5004B8E76 /* libaws.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libaws.dylib; path = ../../../../../_build/macosx64/lib/libaws.dylib; sourceTree = "<group>"; };
+		83B4BBCB1AB80FB5004B8E76 /* libboost_atomic.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_atomic.dylib; path = ../../../../../_build/macosx64/lib/libboost_atomic.dylib; sourceTree = "<group>"; };
+		83B4BBCC1AB80FB6004B8E76 /* libboost_chrono.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_chrono.dylib; path = ../../../../../_build/macosx64/lib/libboost_chrono.dylib; sourceTree = "<group>"; };
+		83B4BBCD1AB80FB6004B8E76 /* libboost_context.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_context.dylib; path = ../../../../../_build/macosx64/lib/libboost_context.dylib; sourceTree = "<group>"; };
+		83B4BBCE1AB80FB6004B8E76 /* libboost_date_time.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_date_time.dylib; path = ../../../../../_build/macosx64/lib/libboost_date_time.dylib; sourceTree = "<group>"; };
+		83B4BBCF1AB80FB6004B8E76 /* libboost_regex.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_regex.dylib; path = ../../../../../_build/macosx64/lib/libboost_regex.dylib; sourceTree = "<group>"; };
+		83B4BBD01AB80FB6004B8E76 /* libboost_signals.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_signals.dylib; path = ../../../../../_build/macosx64/lib/libboost_signals.dylib; sourceTree = "<group>"; };
+		83B4BBD11AB80FB6004B8E76 /* libboost_system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_system.dylib; path = ../../../../../_build/macosx64/lib/libboost_system.dylib; sourceTree = "<group>"; };
+		83B4BBD21AB80FB6004B8E76 /* libboost_thread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_thread.dylib; path = ../../../../../_build/macosx64/lib/libboost_thread.dylib; sourceTree = "<group>"; };
+		83B4BBD31AB80FB6004B8E76 /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "../../../../../_build/macosx64/lib/libc++.1.dylib"; sourceTree = "<group>"; };
+		83B4BBD41AB80FB6004B8E76 /* libc++abi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++abi.dylib"; path = "../../../../../_build/macosx64/lib/libc++abi.dylib"; sourceTree = "<group>"; };
+		83B4BBD51AB80FB6004B8E76 /* libcrash.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrash.dylib; path = ../../../../../_build/macosx64/lib/libcrash.dylib; sourceTree = "<group>"; };
+		83B4BBD61AB80FB6004B8E76 /* libcrypto.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.0.dylib; path = ../../../../../_build/macosx64/lib/libcrypto.1.0.0.dylib; sourceTree = "<group>"; };
+		83B4BBD71AB80FB6004B8E76 /* libcryptography.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcryptography.dylib; path = ../../../../../_build/macosx64/lib/libcryptography.dylib; sourceTree = "<group>"; };
+		83B4BBD81AB80FB6004B8E76 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../../../_build/macosx64/lib/libcurl.4.dylib; sourceTree = "<group>"; };
+		83B4BBD91AB80FB6004B8E76 /* libelle.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libelle.dylib; path = ../../../../../_build/macosx64/lib/libelle.dylib; sourceTree = "<group>"; };
+		83B4BBDA1AB80FB7004B8E76 /* libfrete.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfrete.dylib; path = ../../../../../_build/macosx64/lib/libfrete.dylib; sourceTree = "<group>"; };
+		83B4BBDB1AB80FB7004B8E76 /* libgap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libgap.dylib; path = ../../../../../_build/macosx64/lib/libgap.dylib; sourceTree = "<group>"; };
+		83B4BBDC1AB80FB7004B8E76 /* libmetaclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetaclient.dylib; path = ../../../../../_build/macosx64/lib/libmetaclient.dylib; sourceTree = "<group>"; };
+		83B4BBDD1AB80FB7004B8E76 /* libmetrics.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetrics.dylib; path = ../../../../../_build/macosx64/lib/libmetrics.dylib; sourceTree = "<group>"; };
+		83B4BBDE1AB80FB7004B8E76 /* libpapier.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpapier.dylib; path = ../../../../../_build/macosx64/lib/libpapier.dylib; sourceTree = "<group>"; };
+		83B4BBDF1AB80FB7004B8E76 /* libprotocol.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libprotocol.dylib; path = ../../../../../_build/macosx64/lib/libprotocol.dylib; sourceTree = "<group>"; };
+		83B4BBE01AB80FB7004B8E76 /* libreactor.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreactor.dylib; path = ../../../../../_build/macosx64/lib/libreactor.dylib; sourceTree = "<group>"; };
+		83B4BBE11AB80FB7004B8E76 /* libssl.1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.0.dylib; path = ../../../../../_build/macosx64/lib/libssl.1.0.0.dylib; sourceTree = "<group>"; };
+		83B4BBE21AB80FB7004B8E76 /* libstation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libstation.dylib; path = ../../../../../_build/macosx64/lib/libstation.dylib; sourceTree = "<group>"; };
+		83B4BBE31AB80FB7004B8E76 /* libtransaction.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtransaction.dylib; path = ../../../../../_build/macosx64/lib/libtransaction.dylib; sourceTree = "<group>"; };
+		83B4BBE41AB80FB7004B8E76 /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../../../_build/macosx64/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
+		83B4BBE51AB80FB7004B8E76 /* libz.1.2.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.8.dylib; path = ../../../../../_build/macosx64/lib/libz.1.2.8.dylib; sourceTree = "<group>"; };
 		83B8A725182246E500AD775F /* InfinitLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginViewController.h; sourceTree = "<group>"; };
 		83B8A726182246E500AD775F /* InfinitLoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitLoginViewController.mm; sourceTree = "<group>"; };
 		83B8A727182246E500AD775F /* InfinitLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitLoginViewController.xib; sourceTree = "<group>"; };
-		83BD383619FE364E003EA0AD /* old-icon-add-file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-add-file.png"; sourceTree = "<group>"; };
-		83BD383719FE364E003EA0AD /* old-icon-add-file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-add-file@2x.png"; sourceTree = "<group>"; };
-		83BD383819FE364E003EA0AD /* old-icon-cancel-send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-cancel-send.png"; sourceTree = "<group>"; };
-		83BD383919FE364E003EA0AD /* old-icon-cancel-send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-cancel-send@2x.png"; sourceTree = "<group>"; };
-		83BD383A19FE364E003EA0AD /* old-icon-note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-note.png"; sourceTree = "<group>"; };
-		83BD383B19FE364E003EA0AD /* old-icon-note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-note@2x.png"; sourceTree = "<group>"; };
-		83BD383C19FE364E003EA0AD /* old-icon-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-search.png"; sourceTree = "<group>"; };
-		83BD383D19FE364E003EA0AD /* old-icon-search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-search@2x.png"; sourceTree = "<group>"; };
-		83BD383E19FE364E003EA0AD /* old-icon-star-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star-selected.png"; sourceTree = "<group>"; };
-		83BD383F19FE364E003EA0AD /* old-icon-star-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star-selected@2x.png"; sourceTree = "<group>"; };
-		83BD384019FE364E003EA0AD /* old-icon-star@2x 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star@2x 2.png"; sourceTree = "<group>"; };
-		83BD384119FE364E003EA0AD /* old-icon-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-star@2x.png"; sourceTree = "<group>"; };
-		83BD384219FE364E003EA0AD /* old-send-icon-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-delete.png"; sourceTree = "<group>"; };
-		83BD384319FE364E003EA0AD /* old-send-icon-delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-delete@2x.png"; sourceTree = "<group>"; };
-		83BD384419FE364E003EA0AD /* old-send-icon-files-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files-hover.png"; sourceTree = "<group>"; };
-		83BD384519FE364E003EA0AD /* old-send-icon-files-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files-hover@2x.png"; sourceTree = "<group>"; };
-		83BD384619FE364E003EA0AD /* old-send-icon-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files.png"; sourceTree = "<group>"; };
-		83BD384719FE364E003EA0AD /* old-send-icon-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-files@2x.png"; sourceTree = "<group>"; };
-		83BD384819FE364E003EA0AD /* old-send-icon-show-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-show-files.png"; sourceTree = "<group>"; };
-		83BD384919FE364E003EA0AD /* old-send-icon-show-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-show-files@2x.png"; sourceTree = "<group>"; };
-		83BD385E19FE36F6003EA0AD /* old-icon-contact-checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-contact-checked.png"; sourceTree = "<group>"; };
-		83BD385F19FE36F6003EA0AD /* old-icon-contact-checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-icon-contact-checked@2x.png"; sourceTree = "<group>"; };
-		83BD386219FE3715003EA0AD /* old-send-icon-hide-files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-hide-files.png"; sourceTree = "<group>"; };
-		83BD386319FE3715003EA0AD /* old-send-icon-hide-files@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "old-send-icon-hide-files@2x.png"; sourceTree = "<group>"; };
-		83BEC56418605A8500EB277E /* libtrophonius-client.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libtrophonius-client.dylib"; path = "../../../Externals/lib/libtrophonius-client.dylib"; sourceTree = "<group>"; };
 		83C25B4719EEBC6C009752F1 /* send-icon-link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon-link.png"; path = "../../../../fist-resources/slices/mac/view_send/send-icon-link.png"; sourceTree = "<group>"; };
 		83C25B4819EEBC6C009752F1 /* send-icon-link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon-link@2x.png"; path = "../../../../fist-resources/slices/mac/view_send/send-icon-link@2x.png"; sourceTree = "<group>"; };
 		83C25B4B19EEBC78009752F1 /* send-illustration-no-results.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-illustration-no-results.png"; path = "../../../../fist-resources/slices/mac/view_send/send-illustration-no-results.png"; sourceTree = "<group>"; };
@@ -1028,7 +846,6 @@
 		83C30A401933EA5100D07D2C /* InfinitLinkShortcutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkShortcutView.m; sourceTree = "<group>"; };
 		83C6164D1AA0CB2400F68C94 /* illustration_screenshots.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = illustration_screenshots.jpg; path = "../../../../fist-resources/slices/mac/other/illustration_screenshots.jpg"; sourceTree = "<group>"; };
 		83C6164E1AA0CB2400F68C94 /* illustration_screenshots@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "illustration_screenshots@2x.jpg"; path = "../../../../fist-resources/slices/mac/other/illustration_screenshots@2x.jpg"; sourceTree = "<group>"; };
-		83C709851822E22C00F530C4 /* libz.1.2.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.8.dylib; path = ../../../Externals/lib/libz.1.2.8.dylib; sourceTree = "<group>"; };
 		83C7598E17AA428700BE6CD5 /* IAWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAWindowController.h; sourceTree = "<group>"; };
 		83C7598F17AA428700BE6CD5 /* IAWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAWindowController.m; sourceTree = "<group>"; };
 		83C7599017AA428700BE6CD5 /* IAWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAWindowController.xib; sourceTree = "<group>"; };
@@ -1036,21 +853,11 @@
 		83C99E0017AB8EAC00AFF091 /* IAGeneralSendController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAGeneralSendController.mm; sourceTree = "<group>"; };
 		83CC2C4A1923B97E00EBB96E /* InfinitLinkFileIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkFileIconView.h; sourceTree = "<group>"; };
 		83CC2C4B1923B97E00EBB96E /* InfinitLinkFileIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkFileIconView.m; sourceTree = "<group>"; };
-		83CD106717D48D9700AA0A19 /* IALogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IALogFileManager.h; sourceTree = "<group>"; };
-		83CD106817D48D9700AA0A19 /* IALogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IALogFileManager.m; sourceTree = "<group>"; };
-		83CD107E17D49D7E00AA0A19 /* IACrashReportManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACrashReportManager.h; sourceTree = "<group>"; };
-		83CD107F17D49D7E00AA0A19 /* IACrashReportManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IACrashReportManager.mm; sourceTree = "<group>"; };
 		83CD108617D4F95200AA0A19 /* IANoConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IANoConnectionViewController.h; sourceTree = "<group>"; };
 		83CD108717D4F95200AA0A19 /* IANoConnectionViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IANoConnectionViewController.mm; sourceTree = "<group>"; };
 		83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANoConnectionViewController.xib; sourceTree = "<group>"; };
-		83CD6FB317A672E5004F55D1 /* IAGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAGap.h; sourceTree = "<group>"; };
-		83CD6FB417A672E5004F55D1 /* IAGap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IAGap.mm; sourceTree = "<group>"; };
-		83CD702617A678C5004F55D1 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = ../Gap/Gap.xcodeproj; sourceTree = "<group>"; };
-		83CE1F49182A98C1001394B2 /* libmetaclient.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmetaclient.dylib; path = ../../../Externals/lib/libmetaclient.dylib; sourceTree = "<group>"; };
-		83CE1F60182A990F001394B2 /* libtransaction.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libtransaction.dylib; path = ../../../Externals/lib/libtransaction.dylib; sourceTree = "<group>"; };
 		83CF45EF19B5ACD40074A9DA /* InfinitStatusBarIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStatusBarIcon.h; sourceTree = "<group>"; };
 		83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStatusBarIcon.m; sourceTree = "<group>"; };
-		83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libarchive.13.dylib; path = ../../../Externals/lib/libarchive.13.dylib; sourceTree = "<group>"; };
 		83E1B737191E6F85000338A3 /* InfinitSendFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendFilesViewController.h; sourceTree = "<group>"; };
 		83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFilesViewController.m; sourceTree = "<group>"; };
 		83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendFilesViewController.xib; sourceTree = "<group>"; };
@@ -1078,6 +885,7 @@
 		83F1A37619DEBCC70045ADD7 /* InfinitScreenshotTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitScreenshotTextView.h; sourceTree = "<group>"; };
 		83F1A37719DEBCC70045ADD7 /* InfinitScreenshotTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitScreenshotTextView.m; sourceTree = "<group>"; };
 		83F4F2F119D053670003863C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		83F564751AB31B6300056A9F /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = "../../../objcpp-gap/Gap/Gap.xcodeproj"; sourceTree = "<group>"; };
 		83F5FCD118EB3E2E0051F010 /* InfinitSizedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSizedTextField.h; sourceTree = "<group>"; };
 		83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSizedTextField.m; sourceTree = "<group>"; };
 		83F5FCE618EC61AF0051F010 /* INPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INPopoverController.h; sourceTree = "<group>"; };
@@ -1103,20 +911,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83B025681A9E113400019F3A /* libc++.1.dylib in Frameworks */,
-				83B025691A9E113400019F3A /* libc++abi.dylib in Frameworks */,
+				8372B1711AB32C2000F1B8B8 /* Gap.framework in Frameworks */,
 				83E54A5819EC14C500D9DC7D /* QuickLook.framework in Frameworks */,
 				83F4F2F219D053670003863C /* SystemConfiguration.framework in Frameworks */,
 				8392497418D7B70100EE72C7 /* QuartzCore.framework in Frameworks */,
-				8392497318D7B6D900EE72C7 /* CrashReporter.framework in Frameworks */,
-				8311EA0418C603D200410450 /* libelle.dylib in Frameworks */,
 				83E1E1BB1861A48E00F8DDF9 /* IOKit.framework in Frameworks */,
 				83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */,
 				83014AC417BB6E2E00ECDE96 /* AddressBook.framework in Frameworks */,
 				8398835717A6AC96009409B3 /* Security.framework in Frameworks */,
 				8328080B17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
-				8334C80C17A67EB0006028BC /* libgap.dylib in Frameworks */,
-				8334C7E117A67D22006028BC /* Gap.framework in Frameworks */,
+				83B4BC031AB81067004B8E76 /* libc++.1.dylib in Frameworks */,
+				83B4BC041AB81067004B8E76 /* libc++abi.dylib in Frameworks */,
+				83B4BC051AB8106D004B8E76 /* libelle.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,7 +941,6 @@
 		83059E04191EA2AD008DA14A /* Send View */ = {
 			isa = PBXGroup;
 			children = (
-				83312D3219FA6A98007897D4 /* Old */,
 				83C25B6619F01059009752F1 /* Resources */,
 				83059E05191EA2C0008DA14A /* InfinitSendViewController.h */,
 				83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */,
@@ -1172,7 +977,6 @@
 		831E22D3183E561E00F0623C /* Search Controller */ = {
 			isa = PBXGroup;
 			children = (
-				83312D2E19FA6946007897D4 /* Old */,
 				831E22D4183E563800F0623C /* InfinitSearchController.h */,
 				831E22D5183E563800F0623C /* InfinitSearchController.mm */,
 				831E22D7183E565300F0623C /* InfinitSearchPersonResult.h */,
@@ -1185,6 +989,8 @@
 			isa = PBXGroup;
 			children = (
 				8355259C19301B3A0034CEA2 /* Resources */,
+				83A947F71AB7073B00FD0803 /* InfinitMainTransactionLinkView.h */,
+				83A947F81AB7073B00FD0803 /* InfinitMainTransactionLinkView.m */,
 				834F13841922618200BF36A4 /* InfinitMainViewController.h */,
 				834F13851922618200BF36A4 /* InfinitMainViewController.mm */,
 				834F13861922618200BF36A4 /* InfinitMainViewController.xib */,
@@ -1204,8 +1010,7 @@
 				8328082D17A2B4A60025B6F8 /* InfinitApplicationTests */,
 				8328080917A2B4A60025B6F8 /* Frameworks */,
 				8328080817A2B4A60025B6F8 /* Products */,
-				8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */,
-				83CD702617A678C5004F55D1 /* Gap.xcodeproj */,
+				83F564751AB31B6300056A9F /* Gap.xcodeproj */,
 				8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */,
 			);
 			sourceTree = "<group>";
@@ -1253,7 +1058,6 @@
 				833B59B518D75D2300A43339 /* Conversation View */,
 				833C318A17CCC81100941C09 /* Desktop Notifier */,
 				833B237319DA930800D3F104 /* First Screenshot Modal */,
-				83CD6FB217A672C7004F55D1 /* Gap */,
 				83B8A7241822466F00AD775F /* Login View */,
 				832808D317A2D5E80025B6F8 /* Main Controller */,
 				831FB22217A90BB700696604 /* Main View */,
@@ -1409,61 +1213,6 @@
 			name = "Not Logged In View";
 			sourceTree = "<group>";
 		};
-		83312D2E19FA6946007897D4 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				83312D2F19FA69D1007897D4 /* OldInfinitSearchController.h */,
-				83312D3019FA69D1007897D4 /* OldInfinitSearchController.mm */,
-			);
-			name = Old;
-			sourceTree = "<group>";
-		};
-		83312D3219FA6A98007897D4 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				83312D3319FA6ABB007897D4 /* OldInfinitSendViewController.h */,
-				83312D3419FA6ABB007897D4 /* OldInfinitSendViewController.mm */,
-				83312D3519FA6ABB007897D4 /* OldInfinitSendViewController.xib */,
-			);
-			name = Old;
-			sourceTree = "<group>";
-		};
-		83312D3919FA6D62007897D4 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				83312D3A19FA6DB5007897D4 /* OldIASearchResultsCellView.h */,
-				83312D3B19FA6DB5007897D4 /* OldIASearchResultsCellView.m */,
-				83312D3C19FA6DB5007897D4 /* OldIAUserSearchViewController.h */,
-				83312D3D19FA6DB5007897D4 /* OldIAUserSearchViewController.m */,
-				83312D3E19FA6DB5007897D4 /* OldIAUserSearchViewController.xib */,
-				83312D4319FA71CA007897D4 /* OldInfinitTokenAttachmentCell.h */,
-				83312D4419FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m */,
-			);
-			name = Old;
-			sourceTree = "<group>";
-		};
-		83312D4619FA7237007897D4 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				83312D4719FA7253007897D4 /* OldInfinitSendNoteViewController.h */,
-				83312D4819FA7253007897D4 /* OldInfinitSendNoteViewController.m */,
-				83312D4919FA7253007897D4 /* OldInfinitSendNoteViewController.xib */,
-			);
-			name = Old;
-			sourceTree = "<group>";
-		};
-		83312D4C19FA72E7007897D4 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				83312D4D19FA736D007897D4 /* OldInfinitSendFileListCellView.h */,
-				83312D4E19FA736D007897D4 /* OldInfinitSendFileListCellView.m */,
-				83312D4F19FA736D007897D4 /* OldInfinitSendFilesViewController.h */,
-				83312D5019FA736D007897D4 /* OldInfinitSendFilesViewController.m */,
-				83312D5119FA736D007897D4 /* OldInfinitSendFilesViewController.xib */,
-			);
-			name = Old;
-			sourceTree = "<group>";
-		};
 		8337672F19088A540073A621 /* OEXTokenField */ = {
 			isa = PBXGroup;
 			children = (
@@ -1495,20 +1244,16 @@
 		833B59B518D75D2300A43339 /* Conversation View */ = {
 			isa = PBXGroup;
 			children = (
+				83C50F9A1AB34844009EBB44 /* Model */,
+				8372B3321AB3447000F1B8B8 /* Cells */,
 				8392496F18D7B0F200EE72C7 /* Resources */,
 				833B59CA18D75D4800A43339 /* InfinitConversationViewController.h */,
 				833B59CB18D75D4800A43339 /* InfinitConversationViewController.mm */,
 				833B59CC18D75D4800A43339 /* InfinitConversationViewController.xib */,
-				833B59D218D774C400A43339 /* InfinitConversationCellView.h */,
-				833B59D318D774C400A43339 /* InfinitConversationCellView.mm */,
 				83E77FA518D7774500B09D87 /* InfinitConversationPersonView.h */,
 				83E77FA618D7774500B09D87 /* InfinitConversationPersonView.mm */,
-				836A679218D790D600A15677 /* InfinitConversationElement.h */,
-				836A679318D790D600A15677 /* InfinitConversationElement.m */,
 				839DDCF018D8C7D50021B826 /* InfinitConversationProgressBar.h */,
 				839DDCF118D8C7D50021B826 /* InfinitConversationProgressBar.mm */,
-				8321BE7818E0D33600237252 /* InfinitConversationFileCellView.h */,
-				8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */,
 				837DE2C518E10DBB003A63A8 /* InfinitFileListScrollView.h */,
 				837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */,
 			);
@@ -1649,6 +1394,19 @@
 			name = "MIME types";
 			sourceTree = "<group>";
 		};
+		8372B3321AB3447000F1B8B8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8372B3331AB3448A00F1B8B8 /* InfinitConversationRowView.h */,
+				8372B3341AB3448A00F1B8B8 /* InfinitConversationRowView.m */,
+				8321BE7818E0D33600237252 /* InfinitConversationFileCellView.h */,
+				8321BE7918E0D33600237252 /* InfinitConversationFileCellView.m */,
+				833B59D218D774C400A43339 /* InfinitConversationCellView.h */,
+				833B59D318D774C400A43339 /* InfinitConversationCellView.mm */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		837A7F5A17FC070600600ACD /* Report Problem Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -1657,26 +1415,6 @@
 				837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */,
 			);
 			name = "Report Problem Window";
-			sourceTree = "<group>";
-		};
-		8391EA5B17D1EEF1001A73BE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8391EA6E17D1EEF2001A73BE /* libCrashReporter-MacOSX-Static.a */,
-				8391EA7017D1EEF2001A73BE /* CrashReporter.framework */,
-				8391EA7217D1EEF2001A73BE /* CrashReporter.framework */,
-				8391EA7417D1EEF2001A73BE /* libCrashReporter-iphoneos.a */,
-				8391EA7617D1EEF2001A73BE /* libCrashReporter-iphonesimulator.a */,
-				8391EA7817D1EEF2001A73BE /* plcrashutil */,
-				8391EA7A17D1EEF2001A73BE /* Tests-MacOSX.octest */,
-				8391EA7C17D1EEF2001A73BE /* Tests-iOS-Simulator.app */,
-				8391EA7E17D1EEF2001A73BE /* Tests-iOS-Device.app */,
-				8391EA8017D1EEF2001A73BE /* DemoCrash.app */,
-				8391EA8217D1EEF2001A73BE /* DemoCrash-iOS-Device.app */,
-				8391EA8417D1EEF2001A73BE /* DemoCrash-iOS-Simulator.app */,
-				8391EA8617D1EEF2001A73BE /* Fuzz Testing */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		8392496F18D7B0F200EE72C7 /* Resources */ = {
@@ -1817,62 +1555,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		83BD382119FE3637003EA0AD /* Old Resources */ = {
-			isa = PBXGroup;
-			children = (
-				83BD383619FE364E003EA0AD /* old-icon-add-file.png */,
-				83BD383719FE364E003EA0AD /* old-icon-add-file@2x.png */,
-				83BD383819FE364E003EA0AD /* old-icon-cancel-send.png */,
-				83BD383919FE364E003EA0AD /* old-icon-cancel-send@2x.png */,
-				83BD383A19FE364E003EA0AD /* old-icon-note.png */,
-				83BD383B19FE364E003EA0AD /* old-icon-note@2x.png */,
-				83BD383C19FE364E003EA0AD /* old-icon-search.png */,
-				83BD383D19FE364E003EA0AD /* old-icon-search@2x.png */,
-				83BD383E19FE364E003EA0AD /* old-icon-star-selected.png */,
-				83BD383F19FE364E003EA0AD /* old-icon-star-selected@2x.png */,
-				83BD384019FE364E003EA0AD /* old-icon-star@2x 2.png */,
-				83BD384119FE364E003EA0AD /* old-icon-star@2x.png */,
-				83BD384219FE364E003EA0AD /* old-send-icon-delete.png */,
-				83BD384319FE364E003EA0AD /* old-send-icon-delete@2x.png */,
-				83BD384419FE364E003EA0AD /* old-send-icon-files-hover.png */,
-				83BD384519FE364E003EA0AD /* old-send-icon-files-hover@2x.png */,
-				83BD384619FE364E003EA0AD /* old-send-icon-files.png */,
-				83BD384719FE364E003EA0AD /* old-send-icon-files@2x.png */,
-				83BD384819FE364E003EA0AD /* old-send-icon-show-files.png */,
-				83BD384919FE364E003EA0AD /* old-send-icon-show-files@2x.png */,
-				83BD385E19FE36F6003EA0AD /* old-icon-contact-checked.png */,
-				83BD385F19FE36F6003EA0AD /* old-icon-contact-checked@2x.png */,
-				83BD386219FE3715003EA0AD /* old-send-icon-hide-files.png */,
-				83BD386319FE3715003EA0AD /* old-send-icon-hide-files@2x.png */,
-			);
-			name = "Old Resources";
-			sourceTree = "<group>";
-		};
 		83C124B517A7CE9800BE1252 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				831FB21C17A8FE1700696604 /* IAAvatarManager.h */,
-				831FB21D17A8FE1700696604 /* IAAvatarManager.mm */,
-				83CD107E17D49D7E00AA0A19 /* IACrashReportManager.h */,
-				83CD107F17D49D7E00AA0A19 /* IACrashReportManager.mm */,
-				8398835017A6A5BB009409B3 /* IAKeychainManager.h */,
-				8398835117A6A5BB009409B3 /* IAKeychainManager.m */,
-				83CD106717D48D9700AA0A19 /* IALogFileManager.h */,
-				83CD106817D48D9700AA0A19 /* IALogFileManager.m */,
-				831AA69D17D0FCC00004AE8D /* IAMeManager.h */,
-				831AA69E17D0FCC00004AE8D /* IAMeManager.mm */,
 				83F77AF019E4199F00982F64 /* InfinitDownloadDestinationManager.h */,
 				83F77AF119E4199F00982F64 /* InfinitDownloadDestinationManager.mm */,
 				837B2A6719DD962B00A3CDE1 /* InfinitFeatureManager.h */,
 				837B2A6819DD962B00A3CDE1 /* InfinitFeatureManager.m */,
+				836405FE1AB88E21005CC50C /* InfinitKeychain.h */,
+				836405FF1AB88E21005CC50C /* InfinitKeychain.m */,
 				83B4AE94189FF6AA0011BD43 /* InfinitMetricsManager.h */,
 				83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */,
 				836D648719D0667D00D77D9B /* InfinitNetworkManager.h */,
 				836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */,
 				83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */,
 				83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */,
-				836D648419D063D300D77D9B /* InfinitReachability.h */,
-				836D648519D063D300D77D9B /* InfinitReachability.m */,
 				83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */,
 				83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */,
 				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
@@ -1890,10 +1587,18 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		83C50F9A1AB34844009EBB44 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				836A679218D790D600A15677 /* InfinitConversationElement.h */,
+				836A679318D790D600A15677 /* InfinitConversationElement.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		83C99DFE17AB8E7300AFF091 /* Send Controller */ = {
 			isa = PBXGroup;
 			children = (
-				83BD382119FE3637003EA0AD /* Old Resources */,
 				83126E4B17BA6986003B2F52 /* Favourites Send View */,
 				83E1B722191E6F52000338A3 /* Files View */,
 				83E1B754191E80C0000338A3 /* Note View */,
@@ -1945,64 +1650,46 @@
 			name = "No Connection View";
 			sourceTree = "<group>";
 		};
-		83CD6FB217A672C7004F55D1 /* Gap */ = {
-			isa = PBXGroup;
-			children = (
-				83CD6FB317A672E5004F55D1 /* IAGap.h */,
-				83CD6FB417A672E5004F55D1 /* IAGap.mm */,
-			);
-			name = Gap;
-			sourceTree = "<group>";
-		};
 		83CD6FB917A67398004F55D1 /* Infinit Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8337671A19087DFC0073A621 /* libboost_chrono.dylib */,
-				83A208A71994D3F200C85C47 /* libboost_context.dylib */,
-				8337671B19087DFC0073A621 /* libboost_date_time.dylib */,
-				837DB9C31A9E05B300549914 /* libboost_regex.dylib */,
-				8337671E19087DFC0073A621 /* libboost_signals.dylib */,
-				8337671F19087DFC0073A621 /* libboost_system.dylib */,
-				8337672019087DFC0073A621 /* libboost_thread.dylib */,
-				83DD1AFE18F1AACF00F5AEEE /* libarchive.13.dylib */,
-				8379844918C4928B0083E284 /* libaws.dylib */,
-				832E26C318366B5200A82DFF /* libc++.1.dylib */,
-				832E26C418366B5200A82DFF /* libc++abi.dylib */,
-				83CE1F60182A990F001394B2 /* libtransaction.dylib */,
-				83CE1F49182A98C1001394B2 /* libmetaclient.dylib */,
-				831B757117DDC3FB0082A068 /* libfrete.dylib */,
-				8364316717DDC39B00572726 /* libstation.dylib */,
-				831667C117F371F700C79DD7 /* libcrash.dylib */,
-				83A0EAD217F199270090330F /* libcrypto.1.0.0.dylib */,
-				8334C7EB17A67EB0006028BC /* libcryptography.dylib */,
-				8368F2BD17F1890C00135C37 /* libcurl.4.dylib */,
-				8334C7EE17A67EB0006028BC /* libelle.dylib */,
-				8334C7F017A67EB0006028BC /* libgap.dylib */,
-				8334C7F517A67EB0006028BC /* libmetrics.dylib */,
-				83BEC56418605A8500EB277E /* libtrophonius-client.dylib */,
-				8334C7F717A67EB0006028BC /* libpapier.dylib */,
-				8334C7F917A67EB0006028BC /* libprotocol.dylib */,
-				8334C7FA17A67EB0006028BC /* libreactor.dylib */,
-				8334C7FB17A67EB0006028BC /* libssl.1.0.0.dylib */,
-				83C709851822E22C00F530C4 /* libz.1.2.8.dylib */,
+				83B4BBC91AB80FB5004B8E76 /* libarchive.13.dylib */,
+				83B4BBCA1AB80FB5004B8E76 /* libaws.dylib */,
+				83B4BBCB1AB80FB5004B8E76 /* libboost_atomic.dylib */,
+				83B4BBCC1AB80FB6004B8E76 /* libboost_chrono.dylib */,
+				83B4BBCD1AB80FB6004B8E76 /* libboost_context.dylib */,
+				83B4BBCE1AB80FB6004B8E76 /* libboost_date_time.dylib */,
+				83B4BBCF1AB80FB6004B8E76 /* libboost_regex.dylib */,
+				83B4BBD01AB80FB6004B8E76 /* libboost_signals.dylib */,
+				83B4BBD11AB80FB6004B8E76 /* libboost_system.dylib */,
+				83B4BBD21AB80FB6004B8E76 /* libboost_thread.dylib */,
+				83B4BBD31AB80FB6004B8E76 /* libc++.1.dylib */,
+				83B4BBD41AB80FB6004B8E76 /* libc++abi.dylib */,
+				83B4BBD51AB80FB6004B8E76 /* libcrash.dylib */,
+				83B4BBD61AB80FB6004B8E76 /* libcrypto.1.0.0.dylib */,
+				83B4BBD71AB80FB6004B8E76 /* libcryptography.dylib */,
+				83B4BBD81AB80FB6004B8E76 /* libcurl.4.dylib */,
+				83B4BBD91AB80FB6004B8E76 /* libelle.dylib */,
+				83B4BBDA1AB80FB7004B8E76 /* libfrete.dylib */,
+				83B4BBDB1AB80FB7004B8E76 /* libgap.dylib */,
+				83B4BBDC1AB80FB7004B8E76 /* libmetaclient.dylib */,
+				83B4BBDD1AB80FB7004B8E76 /* libmetrics.dylib */,
+				83B4BBDE1AB80FB7004B8E76 /* libpapier.dylib */,
+				83B4BBDF1AB80FB7004B8E76 /* libprotocol.dylib */,
+				83B4BBE01AB80FB7004B8E76 /* libreactor.dylib */,
+				83B4BBE11AB80FB7004B8E76 /* libssl.1.0.0.dylib */,
+				83B4BBE21AB80FB7004B8E76 /* libstation.dylib */,
+				83B4BBE31AB80FB7004B8E76 /* libtransaction.dylib */,
+				83B4BBE41AB80FB7004B8E76 /* libtrophonius-client.dylib */,
+				83B4BBE51AB80FB7004B8E76 /* libz.1.2.8.dylib */,
 			);
 			name = "Infinit Libraries";
 			path = InfinitApplication;
 			sourceTree = "<group>";
 		};
-		83CD702717A678C5004F55D1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				83CD702C17A678C6004F55D1 /* Gap.framework */,
-				83CD702E17A678C6004F55D1 /* GapTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		83E1B722191E6F52000338A3 /* Files View */ = {
 			isa = PBXGroup;
 			children = (
-				83312D4C19FA72E7007897D4 /* Old */,
 				83E1B73F191E781C000338A3 /* Resources */,
 				83E1B737191E6F85000338A3 /* InfinitSendFilesViewController.h */,
 				83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */,
@@ -2033,7 +1720,6 @@
 		83E1B754191E80C0000338A3 /* Note View */ = {
 			isa = PBXGroup;
 			children = (
-				83312D4619FA7237007897D4 /* Old */,
 				834F136019214B9F00BF36A4 /* InfinitSendNoteViewController.h */,
 				834F136119214B9F00BF36A4 /* InfinitSendNoteViewController.m */,
 				834F136219214B9F00BF36A4 /* InfinitSendNoteViewController.xib */,
@@ -2065,7 +1751,6 @@
 		83F1148117AE5FDB00DCF662 /* Search Results */ = {
 			isa = PBXGroup;
 			children = (
-				83312D3919FA6D62007897D4 /* Old */,
 				83B9BFBE191C337300B34659 /* Resources */,
 				836AAF6A17AE7B12001ECF2E /* IASearchResultsCellView.h */,
 				836AAF6B17AE7B12001ECF2E /* IASearchResultsCellView.m */,
@@ -2089,6 +1774,15 @@
 				83C6164E1AA0CB2400F68C94 /* illustration_screenshots@2x.jpg */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		83F564761AB31B6300056A9F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83F5647B1AB31B6300056A9F /* libGap-iOS.a */,
+				83F5647D1AB31B6300056A9F /* Gap.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		83F5FCD418EC61690051F010 /* Third Party */ = {
@@ -2133,7 +1827,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8328083817A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplication" */;
 			buildPhases = (
-				83CD6F7E17A65FA7004F55D1 /* ShellScript */,
 				83CD6FF217A67418004F55D1 /* Copy Infinit Libraries */,
 				8328080317A2B4A60025B6F8 /* Sources */,
 				8328080517A2B4A60025B6F8 /* Resources */,
@@ -2144,8 +1837,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8392497118D7B47200EE72C7 /* PBXTargetDependency */,
-				8334C81F17A681CB006028BC /* PBXTargetDependency */,
+				8372B16A1AB32C1100F1B8B8 /* PBXTargetDependency */,
 				83CD6F7D17A65F51004F55D1 /* PBXTargetDependency */,
 			);
 			name = InfinitApplication;
@@ -2200,12 +1892,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 8391EA5B17D1EEF1001A73BE /* Products */;
-					ProjectRef = 8391EA5A17D1EEF1001A73BE /* CrashReporter.xcodeproj */;
-				},
-				{
-					ProductGroup = 83CD702717A678C5004F55D1 /* Products */;
-					ProjectRef = 83CD702617A678C5004F55D1 /* Gap.xcodeproj */;
+					ProductGroup = 83F564761AB31B6300056A9F /* Products */;
+					ProjectRef = 83F564751AB31B6300056A9F /* Gap.xcodeproj */;
 				},
 				{
 					ProductGroup = 8328084417A2B6BE0025B6F8 /* Products */;
@@ -2256,109 +1944,18 @@
 			remoteRef = 8328085317A2B6BE0025B6F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8391EA6E17D1EEF2001A73BE /* libCrashReporter-MacOSX-Static.a */ = {
+		83F5647B1AB31B6300056A9F /* libGap-iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libCrashReporter-MacOSX-Static.a";
-			remoteRef = 8391EA6D17D1EEF2001A73BE /* PBXContainerItemProxy */;
+			path = "libGap-iOS.a";
+			remoteRef = 83F5647A1AB31B6300056A9F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8391EA7017D1EEF2001A73BE /* CrashReporter.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CrashReporter.framework;
-			remoteRef = 8391EA6F17D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA7217D1EEF2001A73BE /* CrashReporter.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CrashReporter.framework;
-			remoteRef = 8391EA7117D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA7417D1EEF2001A73BE /* libCrashReporter-iphoneos.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libCrashReporter-iphoneos.a";
-			remoteRef = 8391EA7317D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA7617D1EEF2001A73BE /* libCrashReporter-iphonesimulator.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libCrashReporter-iphonesimulator.a";
-			remoteRef = 8391EA7517D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA7817D1EEF2001A73BE /* plcrashutil */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = plcrashutil;
-			remoteRef = 8391EA7717D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA7A17D1EEF2001A73BE /* Tests-MacOSX.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Tests-MacOSX.octest";
-			remoteRef = 8391EA7917D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA7C17D1EEF2001A73BE /* Tests-iOS-Simulator.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Tests-iOS-Simulator.app";
-			remoteRef = 8391EA7B17D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA7E17D1EEF2001A73BE /* Tests-iOS-Device.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Tests-iOS-Device.app";
-			remoteRef = 8391EA7D17D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA8017D1EEF2001A73BE /* DemoCrash.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DemoCrash.app;
-			remoteRef = 8391EA7F17D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA8217D1EEF2001A73BE /* DemoCrash-iOS-Device.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "DemoCrash-iOS-Device.app";
-			remoteRef = 8391EA8117D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA8417D1EEF2001A73BE /* DemoCrash-iOS-Simulator.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "DemoCrash-iOS-Simulator.app";
-			remoteRef = 8391EA8317D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8391EA8617D1EEF2001A73BE /* Fuzz Testing */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "Fuzz Testing";
-			remoteRef = 8391EA8517D1EEF2001A73BE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83CD702C17A678C6004F55D1 /* Gap.framework */ = {
+		83F5647D1AB31B6300056A9F /* Gap.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Gap.framework;
-			remoteRef = 83CD702B17A678C6004F55D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83CD702E17A678C6004F55D1 /* GapTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = GapTests.octest;
-			remoteRef = 83CD702D17A678C6004F55D1 /* PBXContainerItemProxy */;
+			remoteRef = 83F5647C1AB31B6300056A9F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2390,7 +1987,6 @@
 				8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */,
 				836EAD191988EE3B0053BE85 /* photoshop.png in Resources */,
 				837B2A9419DD96DF00A3CDE1 /* bg-header-top-gray.png in Resources */,
-				83BD384A19FE364E003EA0AD /* old-icon-add-file.png in Resources */,
 				836EADCF1988F2040053BE85 /* icon-gear@2x.png in Resources */,
 				836EAD861988EEC70053BE85 /* conversation-icon-accept.png in Resources */,
 				836D648F19D433B000D77D9B /* InfinitProxyWindow.xib in Resources */,
@@ -2408,7 +2004,6 @@
 				836EAE281988F43E0053BE85 /* icon-menu-bar-animated-red-7.png in Resources */,
 				836EAD901988EEC70053BE85 /* conversation-icon-error.png in Resources */,
 				836EAE231988F43E0053BE85 /* icon-menu-bar-animated-red-2.png in Resources */,
-				83312D5419FA736D007897D4 /* OldInfinitSendFilesViewController.xib in Resources */,
 				836EACF21988EE300053BE85 /* icon-edit-hover@2x.png in Resources */,
 				836EACF71988EE300053BE85 /* link-icon-cancel.png in Resources */,
 				836EADCA1988F1F90053BE85 /* icon-transfer.png in Resources */,
@@ -2430,7 +2025,6 @@
 				836EAD131988EE3B0053BE85 /* folder.png in Resources */,
 				83AA9AE81A07E1F600C5D4BA /* icon-menu-bar-yosemite.png in Resources */,
 				836EAD1F1988EE3B0053BE85 /* video.png in Resources */,
-				83BD386119FE36F6003EA0AD /* old-icon-contact-checked@2x.png in Resources */,
 				836EAE5F1988F5630053BE85 /* icon-clipboard@2x.png in Resources */,
 				836EAD951988EEC70053BE85 /* conversation-icon-hide-files@2x.png in Resources */,
 				836EADC51988F1B80053BE85 /* login-icon-close.png in Resources */,
@@ -2445,7 +2039,6 @@
 				837B2AAE19DD985E00A3CDE1 /* main-icon-download.png in Resources */,
 				83C25B5A19EEBC8F009752F1 /* send-icon-media-picture@2x.png in Resources */,
 				83C25B7519F016E3009752F1 /* send-icon-add-file.png in Resources */,
-				83BD386019FE36F6003EA0AD /* old-icon-contact-checked.png in Resources */,
 				837B2A9F19DD974B00A3CDE1 /* logo@2x.png in Resources */,
 				83C25B4D19EEBC78009752F1 /* send-illustration-no-results.png in Resources */,
 				836EAD0D1988EE3B0053BE85 /* archive.png in Resources */,
@@ -2455,20 +2048,15 @@
 				836EAD911988EEC70053BE85 /* conversation-icon-error@2x.png in Resources */,
 				83C25B5C19EEBC8F009752F1 /* send-icon-media-ps@2x.png in Resources */,
 				836EAD0F1988EE3B0053BE85 /* cat.png in Resources */,
-				83BD384D19FE364E003EA0AD /* old-icon-cancel-send@2x.png in Resources */,
 				83C25B4919EEBC6C009752F1 /* send-icon-link.png in Resources */,
 				83E73FB119A5E2B700B7E8EF /* InfinitSettingsAccountView.xib in Resources */,
-				83312D4B19FA7253007897D4 /* OldInfinitSendNoteViewController.xib in Resources */,
 				836EAD1E1988EE3B0053BE85 /* powerpoint@2x.png in Resources */,
 				83C25B7619F016E3009752F1 /* send-icon-add-file@2x.png in Resources */,
 				837B2ABA19DD98DF00A3CDE1 /* main-icon-error.png in Resources */,
 				836EADA31988EEC70053BE85 /* conversation-icon-reject-hover@2x.png in Resources */,
 				83A67AB519AB19C900A69E35 /* InfinitSettingsGeneralView.xib in Resources */,
-				83BD385519FE364E003EA0AD /* old-icon-star@2x.png in Resources */,
-				83BD385A19FE364E003EA0AD /* old-send-icon-files.png in Resources */,
 				836EADAC1988EEC70053BE85 /* conversation-icon-show-files.png in Resources */,
 				837B2A9719DD96DF00A3CDE1 /* bg-header-top-white@2x.png in Resources */,
-				83BD384F19FE364E003EA0AD /* old-icon-note@2x.png in Resources */,
 				837B2A9619DD96DF00A3CDE1 /* bg-header-top-white.png in Resources */,
 				836EAE501988F4500053BE85 /* icon-menu-bar-animated-black-11.png in Resources */,
 				83C25B5819EEBC8F009752F1 /* send-icon-media-folder@2x.png in Resources */,
@@ -2481,14 +2069,11 @@
 				834F136419214B9F00BF36A4 /* InfinitSendNoteViewController.xib in Resources */,
 				837B2AB719DD98AD00A3CDE1 /* main-icon-finished@2x.png in Resources */,
 				836EAE521988F4500053BE85 /* icon-menu-bar-animated-black-13.png in Resources */,
-				83BD386419FE3715003EA0AD /* old-send-icon-hide-files.png in Resources */,
 				836EADA41988EEC70053BE85 /* conversation-icon-reject.png in Resources */,
-				83BD385819FE364E003EA0AD /* old-send-icon-files-hover.png in Resources */,
 				836EADD21988F2270053BE85 /* icon-upload.png in Resources */,
 				8364920219DB12CA004F911D /* icon.icns in Resources */,
 				836EADB21988EEC70053BE85 /* icon-status-online@2x.png in Resources */,
 				83C25B4A19EEBC6C009752F1 /* send-icon-link@2x.png in Resources */,
-				83BD384E19FE364E003EA0AD /* old-icon-note.png in Resources */,
 				836EADD71988F2BE0053BE85 /* icon-back@2x.png in Resources */,
 				836EAE261988F43E0053BE85 /* icon-menu-bar-animated-red-5.png in Resources */,
 				837B2AB319DD987500A3CDE1 /* main-icon-upload@2x.png in Resources */,
@@ -2498,15 +2083,12 @@
 				836EAE4E1988F4500053BE85 /* icon-menu-bar-animated-black-9.png in Resources */,
 				836EAD9E1988EEC70053BE85 /* conversation-icon-quote.png in Resources */,
 				836EACF31988EE300053BE85 /* icon-edit.png in Resources */,
-				83BD385C19FE364E003EA0AD /* old-send-icon-show-files.png in Resources */,
 				836EAE221988F43E0053BE85 /* icon-menu-bar-animated-red-1.png in Resources */,
 				836EACF41988EE300053BE85 /* icon-edit@2x.png in Resources */,
 				836EAD1A1988EE3B0053BE85 /* photoshop@2x.png in Resources */,
 				836EAD0E1988EE3B0053BE85 /* archive@2x.png in Resources */,
 				836EAE651988F5970053BE85 /* icon-share-hover.png in Resources */,
 				8318E9D419A788E800B765A2 /* settings-icon-check.png in Resources */,
-				83312D4119FA6DB5007897D4 /* OldIAUserSearchViewController.xib in Resources */,
-				83BD384C19FE364E003EA0AD /* old-icon-cancel-send.png in Resources */,
 				836EAD1B1988EE3B0053BE85 /* picture.png in Resources */,
 				83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */,
 				836EADD31988F2270053BE85 /* icon-upload@2x.png in Resources */,
@@ -2521,13 +2103,11 @@
 				836EADC31988F1B80053BE85 /* login-icon-close-hover.png in Resources */,
 				836EAE0D1988F42D0053BE85 /* icon-menu-bar-inactive@2x.png in Resources */,
 				836EAE321988F43E0053BE85 /* icon-menu-bar-animated-red-17.png in Resources */,
-				83BD385019FE364E003EA0AD /* old-icon-search.png in Resources */,
 				837B2AB619DD98AD00A3CDE1 /* main-icon-finished.png in Resources */,
 				837B2A9E19DD974B00A3CDE1 /* logo.png in Resources */,
 				836EACEF1988EE300053BE85 /* icon-delete.png in Resources */,
 				83732B581989418F0030B0F0 /* icon-delete-confirm@2x.png in Resources */,
 				83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */,
-				83312D3719FA6ABB007897D4 /* OldInfinitSendViewController.xib in Resources */,
 				836EAE251988F43E0053BE85 /* icon-menu-bar-animated-red-4.png in Resources */,
 				836EAD171988EE3B0053BE85 /* music.png in Resources */,
 				836EAD851988EEC70053BE85 /* conversation-icon-accept-hover@2x.png in Resources */,
@@ -2536,7 +2116,6 @@
 				83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */,
 				837B2AAB19DD983A00A3CDE1 /* main-icon-unread@2x.png in Resources */,
 				836EAE2D1988F43E0053BE85 /* icon-menu-bar-animated-red-12.png in Resources */,
-				83BD385219FE364E003EA0AD /* old-icon-star-selected.png in Resources */,
 				83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */,
 				836EAE2A1988F43E0053BE85 /* icon-menu-bar-animated-red-9.png in Resources */,
 				83C25B5719EEBC8F009752F1 /* send-icon-media-folder.png in Resources */,
@@ -2545,17 +2124,14 @@
 				836EAE311988F43E0053BE85 /* icon-menu-bar-animated-red-16.png in Resources */,
 				836EAE301988F43E0053BE85 /* icon-menu-bar-animated-red-15.png in Resources */,
 				83E73FA619A5DD0E00B7E8EF /* InfinitSettingsWindow.xib in Resources */,
-				83BD385419FE364E003EA0AD /* old-icon-star@2x 2.png in Resources */,
 				836EAE2C1988F43E0053BE85 /* icon-menu-bar-animated-red-11.png in Resources */,
 				836EAD841988EEC70053BE85 /* conversation-icon-accept-hover.png in Resources */,
-				83BD385D19FE364E003EA0AD /* old-send-icon-show-files@2x.png in Resources */,
 				837B2A9819DD96DF00A3CDE1 /* bg-triangle-top-grey.png in Resources */,
 				836EADAE1988EEC70053BE85 /* conversation-icon-status-offline.png in Resources */,
 				836EAD8B1988EEC70053BE85 /* conversation-icon-bufferised@2x.png in Resources */,
 				836EAE5E1988F5630053BE85 /* icon-clipboard.png in Resources */,
 				837B2AAA19DD983A00A3CDE1 /* main-icon-unread.png in Resources */,
 				836EAE491988F4500053BE85 /* icon-menu-bar-animated-black-4.png in Resources */,
-				83BD385B19FE364E003EA0AD /* old-send-icon-files@2x.png in Resources */,
 				836EACF11988EE300053BE85 /* icon-edit-hover.png in Resources */,
 				837B2A9519DD96DF00A3CDE1 /* bg-header-top-gray@2x.png in Resources */,
 				836EAD101988EE3B0053BE85 /* cat@2x.png in Resources */,
@@ -2568,12 +2144,9 @@
 				836EACF51988EE300053BE85 /* link-icon-cancel-hover.png in Resources */,
 				837B2AB219DD987500A3CDE1 /* main-icon-upload.png in Resources */,
 				836EAE4F1988F4500053BE85 /* icon-menu-bar-animated-black-10.png in Resources */,
-				83BD386519FE3715003EA0AD /* old-send-icon-hide-files@2x.png in Resources */,
-				83BD385919FE364E003EA0AD /* old-send-icon-files-hover@2x.png in Resources */,
 				836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */,
 				833B238C19DA938300D3F104 /* InfinitFirstScreenshotModal.xib in Resources */,
 				836EAD111988EE3B0053BE85 /* document.png in Resources */,
-				83BD385719FE364E003EA0AD /* old-send-icon-delete@2x.png in Resources */,
 				836EAD1C1988EE3B0053BE85 /* picture@2x.png in Resources */,
 				83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */,
 				834F136A19216E2B00BF36A4 /* InfinitTransactionViewController.xib in Resources */,
@@ -2586,18 +2159,14 @@
 				836EADA51988EEC70053BE85 /* conversation-icon-reject@2x.png in Resources */,
 				83EF5C751A0A7AFA00A38D49 /* main-icon-bufferised@2x.png in Resources */,
 				836EAE091988F42D0053BE85 /* icon-menu-bar-clicked@2x.png in Resources */,
-				83BD385119FE364E003EA0AD /* old-icon-search@2x.png in Resources */,
 				833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */,
 				837B2AA619DD981F00A3CDE1 /* main-icon-expand.png in Resources */,
 				836EADA21988EEC70053BE85 /* conversation-icon-reject-hover.png in Resources */,
 				836EADC61988F1B80053BE85 /* login-icon-close@2x.png in Resources */,
 				836EADD61988F2BE0053BE85 /* icon-back.png in Resources */,
-				83BD385319FE364E003EA0AD /* old-icon-star-selected@2x.png in Resources */,
-				83BD384B19FE364E003EA0AD /* old-icon-add-file@2x.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
 				837B2ABB19DD98DF00A3CDE1 /* main-icon-error@2x.png in Resources */,
 				836EAE291988F43E0053BE85 /* icon-menu-bar-animated-red-8.png in Resources */,
-				83BD385619FE364E003EA0AD /* old-send-icon-delete.png in Resources */,
 				836EAE4D1988F4500053BE85 /* icon-menu-bar-animated-black-8.png in Resources */,
 				83C25B5919EEBC8F009752F1 /* send-icon-media-picture.png in Resources */,
 				836EAE5D1988F5630053BE85 /* icon-clipboard-hover@2x.png in Resources */,
@@ -2628,19 +2197,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-		83CD6F7E17A65FA7004F55D1 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# To setup an infinit build directory just launch the following commands:\n# $ defaults write ~/.MacOSX/environment INFINIT_BUILD_DIR -string \"$HOME/sandbox/infinit/build\"\n# $ defaults write ~/.MacOSX/environment INFINIT_SOURCE_DIR -string \"$HOME/sandbox/infinit\"\n# $ plutil -convert xml1 ~/.MacOSX/environment.plist\n# Note: You need to logout\n\nset -e -x\n\nINFINIT_SOURCE_DIR=$SRCROOT/../../../..\nINFINIT_BUILD_DIR=\"${INFINIT_BUILD_DIR-${INFINIT_SOURCE_DIR}/_build/macosx64}\"\n\necho \"INFINIT SOURCE DIRECTORY = ${INFINIT_SOURCE_DIR}\"\n\n[ ! -d \"${INFINIT_SOURCE_DIR}\" ] && exit 0\n\nEXTERNALS_DIR=$SRCROOT/../../Externals\nmkdir -p \"${EXTERNALS_DIR}/lib\"\nmkdir -p \"${EXTERNALS_DIR}/include\"\n\ncopy_and_fix_library_id()\n{\n    cp -fv \"$1\" \"${EXTERNALS_DIR}/lib\"\n    chmod u+w \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n    install_name_tool -id \"@rpath/$(basename $1)\" \"${EXTERNALS_DIR}/lib/$(basename $1)\"\n}\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2656,8 +2212,6 @@
 				83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */,
 				83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */,
 				83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */,
-				83312D4A19FA7253007897D4 /* OldInfinitSendNoteViewController.m in Sources */,
-				83312D3619FA6ABB007897D4 /* OldInfinitSendViewController.mm in Sources */,
 				8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */,
 				837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */,
 				832808C717A2BBD70025B6F8 /* IAStatusBarIcon.mm in Sources */,
@@ -2667,26 +2221,24 @@
 				83EC175919AB2DFA0063A3B3 /* InfinitSettingsViewController.m in Sources */,
 				83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */,
 				832808CF17A2C1480025B6F8 /* IAFunctions.mm in Sources */,
+				83A947F91AB7073B00FD0803 /* InfinitMainTransactionLinkView.m in Sources */,
 				832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */,
 				834F13801922522F00BF36A4 /* InfinitLinkClickCountView.m in Sources */,
 				83CC2C4C1923B97E00EBB96E /* InfinitLinkFileIconView.m in Sources */,
 				83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */,
 				832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.mm in Sources */,
 				8337673E19088E910073A621 /* InfinitTokenAttachmentCell.m in Sources */,
-				83CD6FB717A672E5004F55D1 /* IAGap.mm in Sources */,
 				8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */,
-				8398835217A6A5BB009409B3 /* IAKeychainManager.m in Sources */,
 				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
+				836406001AB88E21005CC50C /* InfinitKeychain.m in Sources */,
 				834F137919224FCF00BF36A4 /* InfinitLinkViewController.m in Sources */,
 				8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */,
 				83F5FCF118EC61AF0051F010 /* INPopoverWindow.m in Sources */,
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
 				831B024A190719EA00018B7C /* InfinitSearchTokenFieldCell.m in Sources */,
-				831FB21E17A8FE1700696604 /* IAAvatarManager.mm in Sources */,
 				836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */,
 				834F137D192250E700BF36A4 /* InfinitLinkCellView.mm in Sources */,
 				834F136919216E2B00BF36A4 /* InfinitTransactionViewController.mm in Sources */,
-				83312D5319FA736D007897D4 /* OldInfinitSendFilesViewController.m in Sources */,
 				836D648E19D433B000D77D9B /* InfinitProxyWindow.m in Sources */,
 				8337673B19088A820073A621 /* OEXTokenTextStorage.m in Sources */,
 				83F5FCF018EC61AF0051F010 /* INPopoverParentWindow.m in Sources */,
@@ -2708,24 +2260,15 @@
 				83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */,
 				83F1A37819DEBCC70045ADD7 /* InfinitScreenshotTextView.m in Sources */,
 				83E54A6F19ECFDBB00D9DC7D /* InfinitSendFileView.m in Sources */,
-				836D648619D063D300D77D9B /* InfinitReachability.m in Sources */,
-				83312D4019FA6DB5007897D4 /* OldIAUserSearchViewController.m in Sources */,
-				83312D3119FA69D1007897D4 /* OldInfinitSearchController.mm in Sources */,
-				83312D3F19FA6DB5007897D4 /* OldIASearchResultsCellView.m in Sources */,
 				836AAF6C17AE7B12001ECF2E /* IASearchResultsCellView.m in Sources */,
 				834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */,
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
-				83312D5219FA736D007897D4 /* OldInfinitSendFileListCellView.m in Sources */,
 				83C25B6519EEBEC6009752F1 /* InfinitSearchNoResultsCellView.m in Sources */,
 				839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */,
 				833C319117CCC85200941C09 /* IADesktopNotifier.mm in Sources */,
-				831AA69F17D0FCC00004AE8D /* IAMeManager.mm in Sources */,
 				8337673819088A820073A621 /* OEXTokenAttachmentCell.m in Sources */,
-				83CD106917D48D9700AA0A19 /* IALogFileManager.m in Sources */,
-				83312D4519FA71CA007897D4 /* OldInfinitTokenAttachmentCell.m in Sources */,
-				83CD108017D49D7E00AA0A19 /* IACrashReportManager.mm in Sources */,
 				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.mm in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */,
 				83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */,
@@ -2735,6 +2278,7 @@
 				83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */,
 				83E73FA519A5DD0E00B7E8EF /* InfinitSettingsWindow.m in Sources */,
 				83A67AB419AB19C900A69E35 /* InfinitSettingsGeneralView.m in Sources */,
+				8372B3351AB3448A00F1B8B8 /* InfinitConversationRowView.m in Sources */,
 				834F136319214B9F00BF36A4 /* InfinitSendNoteViewController.m in Sources */,
 				83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */,
 				833B59D418D774C400A43339 /* InfinitConversationCellView.mm in Sources */,
@@ -2761,15 +2305,10 @@
 			target = 8328080617A2B4A60025B6F8 /* InfinitApplication */;
 			targetProxy = 8328082B17A2B4A60025B6F8 /* PBXContainerItemProxy */;
 		};
-		8334C81F17A681CB006028BC /* PBXTargetDependency */ = {
+		8372B16A1AB32C1100F1B8B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Gap;
-			targetProxy = 8334C81E17A681CB006028BC /* PBXContainerItemProxy */;
-		};
-		8392497118D7B47200EE72C7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CrashReporter;
-			targetProxy = 8392497018D7B47200EE72C7 /* PBXContainerItemProxy */;
+			name = "Gap-OSX";
+			targetProxy = 8372B1691AB32C1100F1B8B8 /* PBXContainerItemProxy */;
 		};
 		83CD6F7D17A65F51004F55D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2849,6 +2388,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -2888,6 +2431,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -2902,8 +2449,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Christopher Crone (9E27AS8W64)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -2919,13 +2466,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../Externals/lib",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
+					/Users/chris/sandbox/infinit/_build/macosx64/lib,
 				);
+				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../fist/src $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 $(SRCROOT)/../../../../_build/macosx64/elle/boost/include $(SRCROOT)/../../../../_build/macosx64/fist/src $(SRCROOT)/../Gap";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../fist/src $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 $(SRCROOT)/../../../../_build/macosx64/elle/boost/include $(SRCROOT)/../../../../_build/macosx64/fist/src";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2935,8 +2485,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Christopher Crone (9E27AS8W64)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -2952,13 +2502,16 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../Externals/lib",
+					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
+					/Users/chris/sandbox/infinit/_build/macosx64/lib,
 				);
+				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../fist/src $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 $(SRCROOT)/../../../../_build/macosx64/elle/boost/include $(SRCROOT)/../../../../_build/macosx64/fist/src $(SRCROOT)/../Gap";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../fist/src $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 $(SRCROOT)/../../../../_build/macosx64/elle/boost/include $(SRCROOT)/../../../../_build/macosx64/fist/src";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
