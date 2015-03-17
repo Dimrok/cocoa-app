@@ -8,9 +8,11 @@
 
 #import "InfinitTransactionViewController.h"
 
-#import "IAAvatarManager.h"
 #import "InfinitOnboardingController.h"
 #import "InfinitTooltipViewController.h"
+
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitUserManager.h>
 
 @interface InfinitTransactionViewController ()
 @end
@@ -35,19 +37,18 @@
 //- Init -------------------------------------------------------------------------------------------
 
 - (id)initWithDelegate:(id<InfinitTransactionViewProtocol>)delegate
-    andTransactionList:(NSArray*)transaction_list
 {
   if (self = [super initWithNibName:self.className bundle:nil])
   {
     _delegate = delegate;
-    _list = [NSMutableArray arrayWithArray:transaction_list];
+    [self updateModel];
     _max_rows = 4;
     _row_height = 72.0;
 
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(avatarCallback:)
-                                               name:IA_AVATAR_MANAGER_AVATAR_FETCHED
-                                             object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(avatarCallback:)
+                                                 name:INFINIT_USER_AVATAR_NOTIFICATION
+                                               object:nil];
   }
   return self;
 }
@@ -82,9 +83,9 @@
   [self updateListOfRowsWithProgress];
 }
 
-- (void)updateModelWithList:(NSArray*)list
+- (void)updateModel
 {
-  _list = [NSMutableArray arrayWithArray:list];
+  _list = [[[InfinitPeerTransactionManager sharedInstance] latestTransactionPerSwagger] mutableCopy];
   [self.table_view reloadData];
   [self updateListOfRowsWithProgress];
 }
@@ -154,10 +155,12 @@
     [_rows_with_progress removeAllObjects];
 
   NSUInteger row = 0;
+  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
 
-  for (IATransaction* transaction in _list)
+  for (InfinitPeerTransaction* transaction in _list)
   {
-    if ([_delegate transferringTransactionsForUser:transaction.other_user])
+    NSUInteger running = [manager transferringTransactionsWithUser:transaction.other_user];
+    if (running > 0)
     {
       [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
     }
@@ -183,8 +186,9 @@
       InfinitTransactionCellView* cell = [self.table_view viewAtColumn:0
                                                                    row:row
                                                        makeIfNecessary:NO];
-      IATransaction* transaction = _list[row];
-      cell.progress = [_delegate totalProgressForUser:transaction.other_user];
+      InfinitPeerTransaction* transaction = _list[row];
+      cell.progress =
+        [[InfinitPeerTransactionManager sharedInstance] progressWithUser:transaction.other_user];
     }
   }
 }
@@ -194,9 +198,11 @@
 - (NSUInteger)unreadRows
 {
   NSUInteger res = 0;
-  for (IATransaction* transaction in _list)
+  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
+  for (InfinitPeerTransaction* transaction in _list)
   {
-    if ([_delegate unreadTransactionsForUser:transaction.other_user] > 0)
+    NSUInteger unread = [manager unreadTransactionsWithUser:transaction.other_user];
+    if (unread > 0)
       res++;
   }
   return res;
@@ -225,13 +231,14 @@
 
   InfinitTransactionCellView* cell = [self.table_view makeViewWithIdentifier:@"transaction_cell"
                                                                        owner:self];
-  IATransaction* transaction = _list[row];
-  IAUser* user = transaction.other_user;
+  InfinitPeerTransaction* transaction = _list[row];
+  InfinitUser* user = transaction.other_user;
+  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
   [cell setupCellWithTransaction:transaction
-         withRunningTransactions:[_delegate runningTransactionsForUser:user]
-          andNotDoneTransactions:[_delegate notDoneTransactionsForUser:user]
-           andUnreadTransactions:[_delegate unreadTransactionsForUser:user]
-                     andProgress:[_delegate totalProgressForUser:user]];
+         withRunningTransactions:[manager transferringTransactionsWithUser:user]
+          andNotDoneTransactions:[manager incompleteTransactionsWithUser:user]
+           andUnreadTransactions:[manager unreadTransactionsWithUser:user]
+                     andProgress:[manager progressWithUser:user]];
   if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_9)
   {
     cell.identifier = nil;
@@ -248,7 +255,7 @@
   [_progress_timer invalidate];
   NSInteger row = self.table_view.clickedRow;
 
-  IATransaction* transaction = _list[row];
+  InfinitPeerTransaction* transaction = _list[row];
   NSMutableIndexSet* other_rows =
     [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _list.count)];
   [other_rows removeIndex:row];
@@ -262,7 +269,7 @@
 
 //- Transaction Added/Updated ----------------------------------------------------------------------
 
-- (void)transactionAdded:(IATransaction*)transaction
+- (void)transactionAdded:(InfinitPeerTransaction*)transaction
 {
   if (_changing)
     return;
@@ -273,7 +280,7 @@
   BOOL found = NO;
 
   // Check for exisiting transaction for this user
-  for (IATransaction* existing_transaction in _list)
+  for (InfinitPeerTransaction* existing_transaction in _list)
   {
     if ([existing_transaction.other_user isEqual:transaction.other_user])
     {
@@ -310,17 +317,18 @@
   }
 
   InfinitTransactionCellView* cell = [self.table_view viewAtColumn:0 row:0 makeIfNecessary:NO];
-  [cell setBadgeCount:[_delegate notDoneTransactionsForUser:transaction.other_user]];
+  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
+  [cell setBadgeCount:[manager incompleteTransactionsWithUser:transaction.other_user]];
 
   [self resizeView];
 }
 
-- (void)transactionUpdated:(IATransaction*)transaction
+- (void)transactionUpdated:(InfinitPeerTransaction*)transaction
 {
   if (_changing)
     return;
 
-  for (IATransaction* existing_transaction in _list)
+  for (InfinitPeerTransaction* existing_transaction in _list)
   {
     if (existing_transaction.other_user == transaction.other_user)
     {
@@ -334,7 +342,8 @@
                              withAnimation:NSTableViewAnimationEffectNone];
       [self.table_view endUpdates];
       InfinitTransactionCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
-      [cell setBadgeCount:[_delegate notDoneTransactionsForUser:transaction.other_user]];
+      InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
+      [cell setBadgeCount:[manager incompleteTransactionsWithUser:transaction.other_user]];
       break;
     }
   }
@@ -343,11 +352,11 @@
 
 //- User Status Changed ----------------------------------------------------------------------------
 
-- (void)userUpdated:(IAUser*)user
+- (void)userUpdated:(InfinitUser*)user
 {
-  for (IATransaction* transaction in _list)
+  for (InfinitPeerTransaction* transaction in _list)
   {
-    if (transaction.other_user == user)
+    if ([transaction.other_user isEqual:user])
     {
       NSUInteger row = [_list indexOfObject:transaction];
       [self.table_view beginUpdates];
@@ -365,19 +374,17 @@
   if (_changing)
     return;
 
-  IAUser* user = [notification.userInfo objectForKey:@"user"];
-  for (IATransaction* transaction in _list)
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
+  for (InfinitPeerTransaction* transaction in _list)
   {
     if ([transaction.other_user isEqual:user])
     {
-      NSImage* image = [notification.userInfo objectForKey:@"avatar"];
       InfinitTransactionCellView* cell =
-        [self.table_view viewAtColumn:0
-                                  row:[_list indexOfObject:transaction]
-                      makeIfNecessary:NO];
-      if (image == nil || cell == nil)
+        [self.table_view viewAtColumn:0 row:[_list indexOfObject:transaction] makeIfNecessary:NO];
+      if (user.avatar == nil || cell == nil)
         return;
-      [cell loadAvatarImage:image];
+      [cell loadAvatarImage:user.avatar];
     }
   }
 }
@@ -414,14 +421,13 @@
 
 - (void)markTransactionsRead
 {
-  for (IATransaction* transaction in _list)
+  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
+  for (InfinitPeerTransaction* transaction in _list)
   {
-    NSUInteger active = [_delegate runningTransactionsForUser:transaction.other_user];
-    NSUInteger unread = [_delegate unreadTransactionsForUser:transaction.other_user];
+    NSUInteger active = [manager transferringTransactionsWithUser:transaction.other_user];
+    NSUInteger unread = [manager unreadTransactionsWithUser:transaction.other_user];;
     if ((active == 0 && unread == 1) || (active == 1 && unread == 0))
-    {
-      [_delegate markTransactionRead:transaction];
-    }
+      [manager markTransactionRead:transaction];
   }
 }
 

@@ -10,6 +10,9 @@
 
 #import "InfinitTransactionCellView.h"
 
+#import <Gap/InfinitPeerTransaction.h>
+#import <Gap/InfinitUser.h>
+
 @protocol InfinitTransactionViewProtocol;
 
 @interface InfinitTransactionViewController : NSViewController <NSTableViewDelegate,
@@ -19,15 +22,14 @@
 
 @property (nonatomic, readwrite) BOOL changing;
 
-- (id)initWithDelegate:(id<InfinitTransactionViewProtocol>)delegate
-    andTransactionList:(NSArray*)transaction_list;
+- (id)initWithDelegate:(id<InfinitTransactionViewProtocol>)delegate;
 
-- (void)updateModelWithList:(NSArray*)list;
+- (void)updateModel;
 
-- (void)transactionAdded:(IATransaction*)transaction;
-- (void)transactionUpdated:(IATransaction*)transaction;
+- (void)transactionAdded:(InfinitPeerTransaction*)transaction;
+- (void)transactionUpdated:(InfinitPeerTransaction*)transaction;
 
-- (void)userUpdated:(IAUser*)user;
+- (void)userUpdated:(InfinitUser*)user;
 
 - (CGFloat)height;
 
@@ -43,20 +45,11 @@
 
 - (void)transactionsViewResizeToHeight:(CGFloat)height;
 
-- (NSUInteger)runningTransactionsForUser:(IAUser*)user;
-- (NSUInteger)notDoneTransactionsForUser:(IAUser*)user;
-- (NSUInteger)unreadTransactionsForUser:(IAUser*)user;
-- (CGFloat)totalProgressForUser:(IAUser*)user;
-
-- (BOOL)transferringTransactionsForUser:(IAUser*)user;
-
-- (void)userGotClicked:(IAUser*)user;
-
-- (void)markTransactionRead:(IATransaction*)transaction;
+- (void)userGotClicked:(InfinitUser*)user;
 
 //- Onboarding -------------------------------------------------------------------------------------
 
-- (IATransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender;
-- (IATransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender;
+- (InfinitPeerTransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender;
+- (InfinitPeerTransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender;
 
 @end
