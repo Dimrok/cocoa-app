@@ -101,14 +101,4 @@ wantsRemoveFileAtIndex:(NSInteger)index;
 - (void)sendView:(id)sender
 wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
-//- Old Send View Only -----------------------------------------------------------------------------
-
-- (NSArray*)sendViewWantsFriendsByLastInteraction:(id)sender;
-
-- (void)sendView:(id)sender
-wantsAddFavourite:(IAUser*)user;
-
-- (void)sendView:(id)sender
-wantsRemoveFavourite:(IAUser*)user;
-
 @end

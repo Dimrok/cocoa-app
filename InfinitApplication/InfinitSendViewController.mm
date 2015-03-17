@@ -11,6 +11,8 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitTooltipViewController.h"
 
+#import <Gap/NSString+email.h>
+
 #import <QuartzCore/QuartzCore.h>
 
 //- User Link View ---------------------------------------------------------------------------------
@@ -643,8 +645,8 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 
     for (id object in _recipient_list)
     {
-      if ([object isKindOfClass:NSString.class] && ![IAFunctions stringIsValidEmail:object] &&
-          ![object isKindOfClass:IAUser.class])
+      if ([object isKindOfClass:NSString.class] && ![object isEmail] &&
+          ![object isKindOfClass:InfinitUser.class])
       {
         return NO;
       }
