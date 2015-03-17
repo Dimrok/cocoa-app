@@ -10,12 +10,7 @@
 
 @implementation InfinitConversationElement
 
-@synthesize transaction = _transaction;
-@synthesize important = _important;
-@synthesize spacer = _spacer;
-@synthesize on_left = _on_left;
-
-- (id)initWithTransaction:(IATransaction*)transaction
+- (id)initWithTransaction:(InfinitPeerTransaction*)transaction
 {
   if (self = [super init])
   {
@@ -28,16 +23,23 @@
     else
       _spacer = NO;
     _transaction = transaction;
-    if (transaction.from_me)
+    if (transaction.sender.is_self && transaction.recipient.is_self)
+      _on_left = transaction.to_device;
+    else if (transaction.sender.is_self)
       _on_left = NO;
     else
       _on_left = YES;
-    if (transaction.is_active || transaction.is_new || transaction.needs_action)
+    if (!transaction.done)
       _important = YES;
     else
       _important = NO;
   }
   return self;
+}
+
++ (id)initWithTransaction:(InfinitPeerTransaction*)transaction
+{
+  return [[InfinitConversationElement alloc] initWithTransaction:transaction];
 }
 
 @end
