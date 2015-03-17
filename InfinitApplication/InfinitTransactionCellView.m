@@ -7,11 +7,13 @@
 //
 
 #import "InfinitTransactionCellView.h"
-#import "IAAvatarManager.h"
+
+#import <Gap/InfinitTime.h>
+#import <Gap/InfinitUserManager.h>
 
 @implementation InfinitTransactionCellView
 {
-  IAUser* _user;
+  InfinitUser* _user;
   NSTrackingArea* _tracking_area;
   BOOL _hover;
   NSUInteger _unread;
@@ -92,9 +94,9 @@
   self.badge.count = count;
 }
 
-- (void)setAvatarFromAvatarManagerForUser:(IAUser*)user
+- (void)setAvatarFromAvatarManagerForUser:(InfinitUser*)user
 {
-  [self loadAvatarImage:[IAAvatarManager getAvatarForUser:user]];
+  [self loadAvatarImage:user.avatar];
 }
 
 - (void)loadAvatarImage:(NSImage*)image
@@ -122,12 +124,12 @@
   self.indicator_text.stringValue = _last_indicator_text;
 }
 
-- (void)setStatusIndicatorForTransaction:(IATransaction*)transaction
+- (void)setStatusIndicatorForTransaction:(InfinitPeerTransaction*)transaction
 {
-  switch (transaction.view_mode)
+  switch (transaction.status)
   {
-    case TRANSACTION_VIEW_WAITING_ACCEPT:
-      if (!transaction.from_me)
+    case gap_transaction_waiting_accept:
+      if (transaction.receivable)
       {
         self.indicator.image = [IAFunctions imageNamed:@"main-icon-unread"];
         self.indicator.hidden = NO;
@@ -138,8 +140,9 @@
       }
       break;
 
-    case TRANSACTION_VIEW_RUNNING:
-      if (transaction.from_me)
+    case gap_transaction_connecting:
+    case gap_transaction_transferring:
+      if (transaction.sender.is_self)
       {
         self.indicator.image = [IAFunctions imageNamed:@"main-icon-upload"];
         self.indicator.toolTip = @"Uploading";
@@ -152,13 +155,13 @@
       self.indicator.hidden = NO;
       break;
 
-    case TRANSACTION_VIEW_FAILED:
+    case gap_transaction_failed:
       self.indicator.image = [IAFunctions imageNamed:@"main-icon-error"];
       self.indicator.toolTip = @"Failed";
       self.indicator.hidden = NO;
       break;
 
-    case TRANSACTION_VIEW_CLOUD_BUFFERED:
+    case gap_transaction_cloud_buffered:
       self.indicator.image = [IAFunctions imageNamed:@"main-icon-bufferised"];
       self.indicator.toolTip = @"Uploaded";
       self.indicator.hidden = NO;
@@ -190,7 +193,7 @@
   }
 }
 
-- (void)setupCellWithTransaction:(IATransaction*)transaction
+- (void)setupCellWithTransaction:(InfinitPeerTransaction*)transaction
          withRunningTransactions:(NSUInteger)running_transactions
           andNotDoneTransactions:(NSUInteger)not_done_transactions
            andUnreadTransactions:(NSUInteger)unread
@@ -198,7 +201,7 @@
 {
   _unread = unread;
   self.indicator.toolTip = @"";
-  if (transaction.from_me)
+  if (transaction.sender.is_self)
     _user = transaction.recipient;
   else
     _user = transaction.sender;
@@ -240,19 +243,19 @@
   }
   else
   {
-    if (transaction.files_count == 1)
+    if (transaction.files.count == 1)
     {
       self.information.stringValue = transaction.files[0];
     }
     else
     {
-      self.information.stringValue = [NSString stringWithFormat:@"%ld %@", transaction.files_count,
+      self.information.stringValue = [NSString stringWithFormat:@"%ld %@", transaction.files.count,
                                       NSLocalizedString(@"files", @"files")];
     }
     [self setStatusIndicatorForTransaction:transaction];
   }
 
-  self.indicator_text.stringValue = [IAFunctions relativeDateOf:transaction.last_edit_timestamp
+  self.indicator_text.stringValue = [InfinitTime relativeDateOf:transaction.mtime
                                                    longerFormat:NO];
 
   _last_indicator_image = self.indicator.image;

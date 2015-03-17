@@ -11,6 +11,8 @@
 #import "InfinitAvatarView.h"
 #import "InfinitAvatarBadgeView.h"
 
+#import <Gap/InfinitPeerTransaction.h>
+
 @interface InfinitTransactionCellView : NSTableCellView
 
 @property (nonatomic, weak) IBOutlet InfinitAvatarView* avatar_view;
@@ -23,7 +25,7 @@
 
 @property (nonatomic, readwrite) CGFloat progress;
 
-- (void)setupCellWithTransaction:(IATransaction*)transaction
+- (void)setupCellWithTransaction:(InfinitPeerTransaction*)transaction
          withRunningTransactions:(NSUInteger)running_transactions
           andNotDoneTransactions:(NSUInteger)not_done_transactions
            andUnreadTransactions:(NSUInteger)unread
