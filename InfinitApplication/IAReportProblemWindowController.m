@@ -131,8 +131,6 @@ doCommandBySelector:(SEL)commandSelector
     _message = @"No message";
   if (_message.length > _max_chars)
     _message = [self.user_message.stringValue substringToIndex:_max_chars];
-  if (_file_path == nil)
-    _file_path = @"";
   [[InfinitStateManager sharedInstance] reportAProblem:_message
                                                andFile:_file_path
                                        performSelector:NULL 
