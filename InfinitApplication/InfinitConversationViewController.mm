@@ -13,6 +13,7 @@
 #import "InfinitConversationElement.h"
 #import "InfinitConversationCellView.h"
 #import "InfinitConversationRowView.h"
+#import "InfinitDownloadDestinationManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTooltipViewController.h"
 
@@ -380,6 +381,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 {
   NSUInteger row = [self.table_view rowForView:sender];
   InfinitConversationElement* element = self.elements[row];
+  [[InfinitDownloadDestinationManager sharedInstance] ensureDownloadDestination];
   [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:element.transaction
                                                           withError:nil];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
