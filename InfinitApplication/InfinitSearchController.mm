@@ -283,7 +283,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     return;
   }
   NSDictionary* dict = result.data;
-  NSNumber* user_id = [dict valueForKey:@"user_id"];
+  NSNumber* user_id = dict[kInfinitUserId];
   if (user_id.unsignedIntegerValue != 0)
   {
     InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:user_id];
