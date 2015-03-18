@@ -85,7 +85,16 @@
 
 - (void)updateModel
 {
-  _list = [[[InfinitPeerTransactionManager sharedInstance] latestTransactionPerSwagger] mutableCopy];
+  NSArray* transactions =
+    [[InfinitPeerTransactionManager sharedInstance] latestTransactionPerSwagger];
+  NSMutableOrderedSet* set = [NSMutableOrderedSet orderedSet];
+  for (InfinitPeerTransaction* transaction in transactions)
+  {
+    if (!transaction.done)
+      [set addObject:transaction];
+  }
+  [set addObjectsFromArray:transactions];
+  _list = [[set array] mutableCopy];
   [self.table_view reloadData];
   [self updateListOfRowsWithProgress];
 }
