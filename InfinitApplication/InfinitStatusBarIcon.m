@@ -12,7 +12,20 @@
 
 #import "NSStatusBarButtonCell+ForciblyHighlighted.h"
 
+#import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitLinkTransactionManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
+
 #import <QuartzCore/QuartzCore.h>
+
+@interface InfinitStatusBarIcon ()
+
+@property (nonatomic, readwrite) BOOL connected;
+@property (nonatomic, readwrite) NSUInteger number;
+@property (nonatomic, readwrite) BOOL transferring;
+
+@end
 
 @implementation InfinitStatusBarIcon
 {
@@ -29,7 +42,7 @@
   NSArray* _drag_types;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)initWithDelegate:(id)delegate
 {
@@ -58,18 +71,44 @@
       image.template = YES;
       [_animated_icon addObject:image];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectionStatusChanged:)
+                                                 name:INFINIT_CONNECTION_STATUS_CHANGE
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(linkTransactionUpdated:)
+                                                 name:INFINIT_NEW_LINK_TRANSACTION_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(linkTransactionUpdated:)
+                                                 name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(peerTransactionUpdated:)
+                                                 name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(peerTransactionUpdated:)
+                                                 name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(willLogout)
+                                                 name:INFINIT_WILL_LOGOUT_NOTIFICATION
+                                               object:nil];
   }
   return self;
 }
 
 - (void)dealloc
 {
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [_animation_timer invalidate];
   _animation_timer = nil;
   [_status_item.button.window unregisterDraggedTypes];
 }
 
-//- Drag Operations --------------------------------------------------------------------------------
+#pragma mark - Drag Operations
 
 - (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
@@ -101,12 +140,12 @@
   return YES;
 }
 
-//- General Functions ------------------------------------------------------------------------------
+#pragma mark - General
 
-- (void)setConnected:(gap_UserStatus)connected
+- (void)setConnected:(BOOL)connected
 {
   _connected = connected;
-  if (_connected == gap_user_status_online)
+  if (_connected)
   {
     _status_item.button.appearsDisabled = NO;
     _status_item.button.toolTip = NSLocalizedString(@"Online, send something!", nil);
@@ -208,12 +247,76 @@
   return _status_item.button;
 }
 
-//- User Actions -----------------------------------------------------------------------------------
+#pragma mark - User Actions
 
 - (void)iconClicked:(id)sender
 {
   self.open = !self.open;
   [_delegate statusBarIconClicked:self];
+}
+
+#pragma mark - Model Handling
+
+- (void)delayedStatusUpdate
+{
+  self.number = [InfinitPeerTransactionManager sharedInstance].receivable_transaction_count;
+  self.transferring = [InfinitPeerTransactionManager sharedInstance].running_transactions ||
+                      [InfinitLinkTransactionManager sharedInstance].running_transactions;
+}
+
+- (void)connectionStatusChanged:(NSNotification*)notification
+{
+  InfinitConnectionStatus* connection_status = notification.object;
+  self.connected = connection_status.status;
+  if (connection_status.status)
+  {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^
+    {
+      [self delayedStatusUpdate];
+    });
+  }
+  else if (!connection_status.status && !connection_status.still_trying)
+  {
+    self.number = 0;
+  }
+}
+
+- (void)linkTransactionUpdated:(NSNotification*)notification
+{
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitLinkTransaction* transaction =
+    [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
+  if (transaction.status == gap_transaction_transferring)
+  {
+    self.transferring = YES;
+  }
+  else if (transaction.done)
+  {
+    self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
+  }
+}
+
+- (void)peerTransactionUpdated:(NSNotification*)notification
+{
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+  self.number = [InfinitPeerTransactionManager sharedInstance].receivable_transaction_count;
+  if (transaction.status == gap_transaction_transferring)
+  {
+    self.transferring = YES;
+  }
+  else if (transaction.done)
+  {
+    self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
+  }
+}
+
+- (void)willLogout
+{
+  self.number = 0;
+  self.connected = NO;
 }
 
 @end

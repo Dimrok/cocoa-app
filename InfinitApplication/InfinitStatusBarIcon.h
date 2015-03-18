@@ -8,19 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import <surface/gap/enums.hh>
-
 @protocol InfinitStatusBarIconProtocol;
 @protocol InfinitStatusBarDragDropProtocol;
 
 @interface InfinitStatusBarIcon : NSObject <NSDraggingDestination, NSWindowDelegate>
 
-@property (nonatomic, readwrite) gap_UserStatus connected;
 @property (nonatomic, readonly) NSRect frame;
 @property (nonatomic, readwrite) BOOL hidden;
-@property (nonatomic, readwrite) NSUInteger number;
 @property (nonatomic, readwrite) BOOL open;
-@property (nonatomic, readwrite) BOOL transferring;
 @property (nonatomic, readonly) NSView* view;
 
 - (id)initWithDelegate:(id<InfinitStatusBarIconProtocol>)delegate;
