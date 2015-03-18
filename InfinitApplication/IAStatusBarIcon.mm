@@ -13,6 +13,12 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitLinkTransactionManager.h>
+#import <Gap/infinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitUserManager.h>
+
 #import <algorithm>
 
 namespace
@@ -38,6 +44,15 @@ typedef enum __InfinitStatusBarIconColour
   STATUS_BAR_ICON_COLOUR_RED = 1,
 } InfinitStatusBarIconColour;
 
+@interface IAStatusBarIcon ()
+
+@property (nonatomic, readwrite) BOOL connected;
+@property (nonatomic, readwrite) BOOL fire;
+@property (nonatomic, readwrite) NSUInteger number;
+@property (nonatomic, readwrite) BOOL transferring;
+
+@end
+
 @implementation IAStatusBarIcon
 {
 @private
@@ -46,8 +61,7 @@ typedef enum __InfinitStatusBarIconColour
   NSImage* _icon[8];
   NSImageView* _icon_view;
   BOOL _is_highlighted;
-  gap_UserStatus _connected;
-  NSInteger _number_of_items;
+  BOOL _connected;
   NSStatusItem* _status_item;
   CGFloat _length;
   
@@ -63,10 +77,8 @@ typedef enum __InfinitStatusBarIconColour
   NSTimer* _animation_timer;
   BOOL _animating;
 }
-@synthesize isFire = _is_fire;
+
 @synthesize isHighlighted = _is_highlighted;
-@synthesize isLoggingIn = _logging_in;
-@synthesize isTransferring = _is_transferring;
 
 static NSDictionary* _red_style;
 static NSDictionary* _black_style;
@@ -81,9 +93,6 @@ static NSDictionary* _grey_style;
   {
     [self addSubview:_icon_view];
     _drag_types = @[NSFilenamesPboardType];
-    _number_of_items = 0;
-    _connected = gap_user_status_offline;
-    _is_transferring = NO;
     _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
     [self registerForDraggedTypes:_drag_types];
     [self setWantsLayer:YES];
@@ -93,6 +102,8 @@ static NSDictionary* _grey_style;
 
 - (void)dealloc
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
   _tracking_area = nil;
   [self unregisterDraggedTypes];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -172,6 +183,30 @@ static NSDictionary* _grey_style;
     }
     _tooltip = [[InfinitTooltipViewController alloc] init];
     _animating = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectionStatusChanged:)
+                                                 name:INFINIT_CONNECTION_STATUS_CHANGE
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(linkTransactionUpdated:)
+                                                 name:INFINIT_NEW_LINK_TRANSACTION_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(linkTransactionUpdated:)
+                                                 name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(peerTransactionUpdated:)
+                                                 name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(peerTransactionUpdated:)
+                                                 name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(willLogout)
+                                                 name:INFINIT_WILL_LOGOUT_NOTIFICATION
+                                               object:nil];
   }
   return self;
 }
@@ -226,14 +261,14 @@ static NSDictionary* _grey_style;
   }
   
   CGFloat x;
-  if (_number_of_items == 0)
+  if (self.number == 0)
     x = roundf((NSWidth(self.bounds) - NSWidth(_icon_view.frame)) / 2);
   else
     x = round((NSWidth(self.bounds) - NSWidth(_icon_view.frame) - _notifications_str.size.width) / 2.0 - 2.0);
   CGFloat y = roundf((NSHeight(self.bounds) - NSHeight(_icon_view.frame)) / 2.0);
   [_icon_view setFrameOrigin:NSMakePoint(x, y)];
   
-  if (_number_of_items > 0)
+  if (self.number > 0)
   {
     [_notifications_str drawAtPoint:NSMakePoint(_length - _notifications_str.size.width - 5.0, 2.0)];
   }
@@ -330,19 +365,15 @@ static NSDictionary* _grey_style;
   {
     _current_mode = STATUS_BAR_ICON_CLICKED;
   }
-  else if (_logging_in)
-  {
-    _current_mode = STATUS_BAR_ICON_LOGGING_IN;
-  }
   else if (_show_link)
   {
     _current_mode = STATUS_BAR_ICON_LINK;
   }
-  else if (_connected == gap_user_status_offline)
+  else if (!self.connected)
   {
     _current_mode = STATUS_BAR_ICON_NO_CONNECTION;
   }
-  else if (_is_transferring && _is_fire)
+  else if (self.transferring && self.fire)
   {
     if (_current_mode != STATUS_BAR_ICON_FIRE_ANIMATED)
     {
@@ -350,11 +381,11 @@ static NSDictionary* _grey_style;
       [self showAnimatedIconForMode:STATUS_BAR_ICON_FIRE_ANIMATED];
     }
   }
-  else if (!_is_transferring && _is_fire)
+  else if (!self.transferring && self.fire)
   {
     _current_mode = STATUS_BAR_ICON_FIRE;
   }
-  else if (_is_transferring && !_is_fire)
+  else if (self.transferring && !self.fire)
   {
     if (_current_mode != STATUS_BAR_ICON_ANIMATED)
     {
@@ -371,25 +402,19 @@ static NSDictionary* _grey_style;
     [self setNeedsDisplay:YES];
 }
 
-- (void)setConnected:(gap_UserStatus)connected
+- (void)setConnected:(BOOL)connected
 {
   [_tooltip close];
   _connected = connected;
   _icon_view.alphaValue = 1.0;
   NSString* message;
-  if (_connected == gap_user_status_online)
+  if (_connected)
     message = NSLocalizedString(@"Online, send something!", nil);
   else
     message = NSLocalizedString(@"Offline!", nil);
   [self performSelector:@selector(delayedShowPopoverWithMessage:)
              withObject:message
              afterDelay:0.5];
-  [self determineCurrentMode];
-}
-
-- (void)setFire:(BOOL)fire
-{
-  _is_fire = fire;
   [self determineCurrentMode];
 }
 
@@ -402,16 +427,6 @@ static NSDictionary* _grey_style;
   // Only send metric when the panel is opened
 }
 
-- (void)setLoggingIn:(BOOL)isLoggingIn
-{
-  _logging_in = isLoggingIn;
-  if (_logging_in && !_is_highlighted)
-    _icon_view.alphaValue = 0.67;
-  else
-    _icon_view.alphaValue = 1.0;
-  [self determineCurrentMode];
-}
-
 - (void)setNotificationString
 {
   NSDictionary* style;
@@ -419,41 +434,42 @@ static NSDictionary* _grey_style;
   {
     style = _white_style;
   }
-  else if (_connected == gap_user_status_online && _is_fire)
+  else if (self.connected && self.fire)
   {
     style = _red_style;
   }
-  else if (_connected == gap_user_status_online && !_is_fire)
+  else if (self.connected && !self.fire)
   {
     style = _black_style;
   }
-  else if (_connected != gap_user_status_online)
+  else if (!self.connected)
   {
     style = _grey_style;
   }
   NSString* number_str =
-  _number_of_items > 99 ? @"+" : [[NSNumber numberWithInteger:_number_of_items] stringValue];
+  self.number > 99 ? @"+" : [@(self.number) stringValue];
   _notifications_str = [[NSAttributedString alloc] initWithString:number_str
                                                        attributes:style];
 }
 
-- (void)setNumberOfItems:(NSInteger)number_of_items
+- (void)setNumber:(NSUInteger)number
 {
-  _number_of_items = number_of_items;
+  _fire = (number > 0);
+  _number = number;
   _length = _icon[STATUS_BAR_ICON_NORMAL].size.width + 15.0;
   [self setNotificationString];
-  if (_number_of_items > 9)
+  if (self.number > 9)
     _length += _notifications_str.length + 20.0;
-  else if (_number_of_items > 0)
+  else if (self.number > 0)
     _length += _notifications_str.length + 10.0;
   self.frame = NSMakeRect(0.0, 0.0, _length, [[NSStatusBar systemStatusBar] thickness]);
   [self setNeedsDisplay:YES];
 }
 
-- (void)setTransferring:(BOOL)isTransferring
+- (void)setTransferring:(BOOL)transferring
 {
-  _animating = isTransferring;
-  _is_transferring = isTransferring;
+  _animating = transferring;
+  _transferring = transferring;
   _icon_view.alphaValue = 1.0;
   [self determineCurrentMode];
 }
@@ -489,9 +505,9 @@ static NSDictionary* _grey_style;
     [self determineCurrentMode];
   }
   NSString* message;
-  if (_connected == gap_user_status_online && _show_link)
+  if (_connected && _show_link)
     message = NSLocalizedString(@"Hold \u2325 and drop files to get a link!", nil);
-  else if (_connected == gap_user_status_online)
+  else if (_connected)
     message = NSLocalizedString(@"Online, send something!", nil);
   else
     message = NSLocalizedString(@"Offline!", nil);
@@ -566,6 +582,70 @@ static NSDictionary* _grey_style;
   }
   
   return YES;
+}
+
+#pragma mark - Model Handling
+
+- (void)delayedStatusUpdate
+{
+  self.number = [InfinitPeerTransactionManager sharedInstance].receivable_transaction_count;
+  self.transferring = [InfinitPeerTransactionManager sharedInstance].running_transactions ||
+                      [InfinitLinkTransactionManager sharedInstance].running_transactions;
+}
+
+- (void)connectionStatusChanged:(NSNotification*)notification
+{
+  InfinitConnectionStatus* connection_status = notification.object;
+  self.connected = connection_status.status;
+  if (connection_status.status)
+  {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^
+     {
+       [self delayedStatusUpdate];
+     });
+  }
+  else if (!connection_status.status && !connection_status.still_trying)
+  {
+    self.number = 0;
+  }
+}
+
+- (void)linkTransactionUpdated:(NSNotification*)notification
+{
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitLinkTransaction* transaction =
+  [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
+  if (transaction.status == gap_transaction_transferring)
+  {
+    self.transferring = YES;
+  }
+  else if (transaction.done)
+  {
+    self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
+  }
+}
+
+- (void)peerTransactionUpdated:(NSNotification*)notification
+{
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  InfinitPeerTransaction* transaction =
+  [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+  self.number = [InfinitPeerTransactionManager sharedInstance].receivable_transaction_count;
+  if (transaction.status == gap_transaction_transferring)
+  {
+    self.transferring = YES;
+  }
+  else if (transaction.done)
+  {
+    self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
+  }
+}
+
+- (void)willLogout
+{
+  self.number = 0;
+  self.connected = NO;
 }
 
 @end

@@ -9,24 +9,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <surface/gap/enums.hh>
-
 @protocol IAStatusBarIconProtocol;
 
 @interface IAStatusBarIcon : NSView <NSDraggingDestination>
 
-@property (nonatomic, readwrite, setter = setFire:) BOOL isFire;
 @property (nonatomic, readwrite, setter = setHighlighted:) BOOL isHighlighted;
-@property (nonatomic, readwrite, setter = setLoggingIn:) BOOL isLoggingIn;
-@property (nonatomic, readwrite, setter = setTransferring:) BOOL isTransferring;
 @property (nonatomic, readonly) BOOL show_link;
 
 - (id)initWithDelegate:(id <IAStatusBarIconProtocol>)delegate
             statusItem:(NSStatusItem*)status_item;
-
-- (void)setConnected:(gap_UserStatus)connected;
-
-- (void)setNumberOfItems:(NSInteger)number_of_items;
 
 @end
 
