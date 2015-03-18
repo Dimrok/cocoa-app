@@ -243,94 +243,90 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 //- Handle Infinit Link ----------------------------------------------------------------------------
 
-//- (void)handleInfinitLink:(NSURL*)link
-//{
-//  // If we're not logged in, store the link and activate it when we are.
-//  if (!_me_manager.connection_status)
-//  {
-//    _infinit_link = link;
-//    return;
-//  }
-//
-//  NSString* scheme = link.scheme;
-//  if (![scheme isEqualToString:@"infinit"])
-//  {
-//    ELLE_WARN("%s: unknown scheme in link: %s", self.description.UTF8String,
-//              link.description.UTF8String);
-//    return;
-//  }
-//  NSString* action = link.host;
-//  if ([action isEqualToString:@"send"])
-//  {
-//    [self openSendViewForLink:link];
-//  }
-//  else if ([action isEqualToString:@"open"])
-//  {
-//    [self showNotifications];
-//  }
-//  else
-//  {
-//    ELLE_WARN("%s: unknown action in link: %s", self.description.UTF8String,
-//              link.description.UTF8String);
-//    return;
-//  }
-//}
-//
-//- (void)linkHandleUserCallback:(InfinitStateResult*)result
-//{
-//  if (!result.success)
-//  {
-//    ELLE_WARN("%s: problem checking for link user id", self.description.UTF8String);
-//    return;
-//  }
-//  NSDictionary* dict = result.data;
-//  NSNumber* user_id = [dict valueForKey:@"user_id"];
-//  
-//  if (user_id.integerValue != 0 &&
-//      user_id.integerValue != [[[IAGapState instance] self_id] integerValue])
-//  {
-//    IAUser* user = [IAUserManager userWithId:user_id];
-//    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-//    [_general_send_controller openWithFiles:nil forUser:user];
-//  }
-//  else if (user_id.integerValue == 0)
-//  {
-//    ELLE_WARN("%s: link user not on Infinit: %s", self.description.UTF8String,
-//              [[dict valueForKey:@"handle"] description].UTF8String);
-//  }
-//}
-//
-//- (void)openSendViewForLink:(NSURL*)link
-//{
-//  NSMutableArray* components = [NSMutableArray arrayWithArray:[link pathComponents]];
-//  NSArray* temp = [NSArray arrayWithArray:components];
-//  for (NSString* component in temp)
-//  {
-//    if ([component isEqualToString:@"/"])
-//      [components removeObject:component];
-//  }
-//  if (components.count != 2)
-//  {
-//    ELLE_WARN("%s: unknown link type: %s", self.description.UTF8String,
-//              link.description.UTF8String);
-//    return;
-//  }
-//  NSString* destination = components[0];
-//  if (![destination isEqualToString:@"user"])
-//  {
-//    ELLE_WARN("%s: unknown destination in link: %s", self.description.UTF8String,
-//              link.description.UTF8String);
-//    return;
-//  }
-//  NSString* handle = components[1];
-//  NSMutableDictionary* handle_check = [NSMutableDictionary
-//                                       dictionaryWithDictionary:@{@"handle": handle}];
-//  [[IAGapState instance] getUserIdfromHandle:handle
-//                             performSelector:@selector(linkHandleUserCallback:)
-//                                    onObject:self
-//                                    withData:handle_check];
-//  _infinit_link = nil;
-//}
+- (void)handleInfinitLink:(NSURL*)link
+{
+  // If we're not logged in, store the link and activate it when we are.
+  if (![InfinitConnectionManager sharedInstance].connected)
+  {
+    _infinit_link = link;
+    return;
+  }
+
+  NSString* scheme = link.scheme;
+  if (![scheme isEqualToString:@"infinit"])
+  {
+    ELLE_WARN("%s: unknown scheme in link: %s", self.description.UTF8String,
+              link.description.UTF8String);
+    return;
+  }
+  NSString* action = link.host;
+  if ([action isEqualToString:@"send"])
+  {
+    [self openSendViewForLink:link];
+  }
+  else if ([action isEqualToString:@"open"])
+  {
+    [self showNotifications];
+  }
+  else
+  {
+    ELLE_WARN("%s: unknown action in link: %s", self.description.UTF8String,
+              link.description.UTF8String);
+    return;
+  }
+}
+
+- (void)linkHandleUserCallback:(InfinitStateResult*)result
+{
+  if (!result.success)
+  {
+    ELLE_WARN("%s: problem checking for link user id", self.description.UTF8String);
+    return;
+  }
+  NSDictionary* dict = result.data;
+  NSNumber* user_id = dict[kInfinitUserId];
+  if (user_id.unsignedIntValue == 0)
+  {
+    ELLE_WARN("%s: link user not on Infinit: %s", self.description.UTF8String,
+              [[dict valueForKey:@"handle"] description].UTF8String);
+    return;
+  }
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:user_id];
+
+  _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  [_general_send_controller openWithFiles:nil forUser:user];
+}
+
+- (void)openSendViewForLink:(NSURL*)link
+{
+  NSMutableArray* components = [NSMutableArray arrayWithArray:[link pathComponents]];
+  NSArray* temp = [NSArray arrayWithArray:components];
+  for (NSString* component in temp)
+  {
+    if ([component isEqualToString:@"/"])
+      [components removeObject:component];
+  }
+  if (components.count != 2)
+  {
+    ELLE_WARN("%s: unknown link type: %s", self.description.UTF8String,
+              link.description.UTF8String);
+    return;
+  }
+  NSString* destination = components[0];
+  if (![destination isEqualToString:@"user"])
+  {
+    ELLE_WARN("%s: unknown destination in link: %s", self.description.UTF8String,
+              link.description.UTF8String);
+    return;
+  }
+  NSString* handle = components[1];
+  NSMutableDictionary* handle_check = [NSMutableDictionary dictionary];
+  [[InfinitStateManager sharedInstance] userByHandle:handle
+                                     performSelector:@selector(linkHandleUserCallback:)
+                                            onObject:self
+                                            withData:handle_check];
+  _infinit_link = nil;
+}
 
 //- Handle Contextual ------------------------------------------------------------------------------
 
@@ -528,10 +524,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                  password:(NSString*)password
 {
   _logging_in = YES;
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-  {
-    [_status_bar_icon setLoggingIn:YES];
-  }
   if (_current_view_controller == _not_logged_view_controller)
     [_not_logged_view_controller setMode:INFINIT_LOGGING_IN];
 
@@ -565,14 +557,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [_desktop_notifier desktopNotificationForApplicationUpdated];
   }
 
-  [self updateStatusBarIcon];
-  
-  // XXX We must find a better way to manage fetching of history per user
-  [InfinitLinkTransactionManager sharedInstance];
-  [InfinitPeerTransactionManager sharedInstance];
-  [InfinitUserManager sharedInstance];
-
-  [self updateStatusBarIcon];
   _login_view_controller = nil;
 
   if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"4"])
@@ -591,10 +575,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)loginCallback:(InfinitStateResult*)result
 {
   _logging_in = NO;
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-  {
-    [_status_bar_icon setLoggingIn:NO];
-  }
   if (result.success)
   {
     [self onSuccessfulLogin];
@@ -723,14 +703,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   _settings_window = nil;
   if (result.success)
   {
-    if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-    {
-      [_status_bar_icon setNumberOfItems:0];
-    }
-    else
-    {
-      _status_item.number = 0;
-    }
     ELLE_LOG("%s: logged out", self.description.UTF8String);
     [self performSelector:@selector(showLoginViewForLogout) withObject:nil afterDelay:0.3];
   }
@@ -744,7 +716,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   [_settings_window close];
   [self closeNotificationWindow];
-  [self updateStatusBarIcon];
   [[InfinitStateManager sharedInstance] logoutPerformSelector:@selector(logoutAndShowLoginCallback:)
                                                      onObject:self];
 }
@@ -794,23 +765,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   {
     ELLE_LOG("%s: preventing update", self.description.UTF8String);
     return NO;
-  }
-}
-
-- (void)updateStatusBarIcon
-{
-  BOOL transferring = [self transfersInProgress];
-  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-  {
-    [_status_bar_icon setTransferring:transferring];
-    [_status_bar_icon setNumberOfItems:manager.receivable_transaction_count];
-    [_status_bar_icon setFire:manager.unread_transactions];
-  }
-  else
-  {
-    _status_item.transferring = transferring;
-    _status_item.number = manager.receivable_transaction_count;
   }
 }
 
@@ -884,6 +838,7 @@ hadAcceptTransaction:(NSNumber*)id_
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   if (transaction == nil)
     return;
+  [[InfinitDownloadDestinationManager sharedInstance] ensureDownloadDestination];
   [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:transaction withError:nil];
 }
 
@@ -988,7 +943,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitLinkTransaction* link =
     [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
-  [self updateStatusBarIcon];
   if (link.status == gap_transaction_transferring)
     [self _copyLinkToClipboard:link withNotification:NO];
 }
@@ -998,7 +952,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitLinkTransaction* link =
     [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
-  [self updateStatusBarIcon];
   if (link.status == gap_transaction_transferring)
     [self _copyLinkToClipboard:link withNotification:NO];
 }
@@ -1044,10 +997,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
          withEmail:(NSString*)email
 {
   _username = email;
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-    [_status_bar_icon setConnected:gap_user_status_online];
-  else
-    _status_item.connected = gap_user_status_online;
   [self onSuccessfulLogin];
   [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
@@ -1055,11 +1004,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
 
 - (void)alreadyLoggedIn:(InfinitLoginViewController*)sender
 {
-  [self updateStatusBarIcon];
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-    [_status_bar_icon setConnected:gap_user_status_online];
-  else
-    _status_item.connected = gap_user_status_online;
   [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
 }
@@ -1119,13 +1063,8 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
     return;
   }
   BOOL status = connection_status.status;
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
-    [_status_bar_icon setConnected:status];
-  else
-    _status_item.connected = status;
 
-  if ([_current_view_controller isKindOfClass:IANoConnectionViewController.class] &&
-      status)
+  if ([_current_view_controller isKindOfClass:IANoConnectionViewController.class] && status)
   {
     [self showNotifications];
   }
@@ -1404,17 +1343,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
     [_desktop_notifier desktopNotificationForTransactionAccepted:transaction];
   }
 }
-
-// XXX merge
-//- (void)transactionManagerUpdatedReadTransactions:(IATransactionManager*)sender
-//{
-//  [self updateStatusBarIcon];
-//}
-
-//- (void)transactionManagerWantsEnsureDownloadDestination:(IATransactionManager*)sender
-//{
-//  [[InfinitDownloadDestinationManager sharedInstance] ensureDownloadDestination];
-//}
 
 //- View Controller Protocol -----------------------------------------------------------------------
 
