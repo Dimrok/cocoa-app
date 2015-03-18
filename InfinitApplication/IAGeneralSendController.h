@@ -42,8 +42,6 @@
 
 - (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender;
 
-- (NSArray*)sendControllerWantsFriendsByLastInteraction:(IAGeneralSendController*)sender;
-
 //- Onboarding -------------------------------------------------------------------------------------
 
 - (void)sendController:(IAGeneralSendController*)sender
