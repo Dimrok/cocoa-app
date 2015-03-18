@@ -169,10 +169,10 @@ static InfinitNetworkManager* _instance = nil;
           }
 
           NSString* password =
-            [[InfinitKeychain sharedInstance] passwordForInternetAccount:proxy.username
-                                                                protocol:proxy_type 
-                                                                    host:proxy.host
-                                                                    port:proxy.port];
+            [[InfinitKeychain sharedInstance] passwordForProxyAccount:proxy.username
+                                                             protocol:proxy_type
+                                                                 host:proxy.host
+                                                                 port:proxy.port];
           if (password != nil)
           {
             proxy.password = password;
