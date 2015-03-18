@@ -36,8 +36,6 @@
 
 @protocol InfinitMainViewProtocol <IAViewProtocol>
 
-- (BOOL)transferringTransactionsForUser:(InfinitUser*)user;
-
 - (void)userGotClicked:(InfinitUser*)user;
 - (void)sendGotClicked:(InfinitMainViewController*)sender;
 - (void)makeLinkGotClicked:(InfinitMainViewController*)sender;
