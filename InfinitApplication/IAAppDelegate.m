@@ -99,7 +99,6 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 {
   if (self = [super init])
   {
-    // Log manager must be initialised here, before the new log file is written.
     _updating = NO;
     _infinit_url = nil;
     _contextual_send_files = nil;
