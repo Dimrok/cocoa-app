@@ -41,19 +41,8 @@
 @property (nonatomic, weak) IBOutlet NSTextField* avatar_error;
 @property (nonatomic, weak) IBOutlet NSTextField* handle_error;
 
+@property (nonatomic, weak) IBOutlet IAHoverButton* manage_emails_link;
 @property (nonatomic, weak) IBOutlet IAHoverButton* web_profile_link;
-
-// Change email panel
-@property (nonatomic, assign) IBOutlet NSPanel* change_email_panel;
-@property (nonatomic, weak) IBOutlet NSTextField* change_email_field;
-@property (nonatomic, weak) IBOutlet NSSecureTextField* change_email_password;
-@property (nonatomic, weak) IBOutlet NSTextField* change_email_error;
-@property (nonatomic, weak) IBOutlet NSButton* cancel_change_email;
-@property (nonatomic, weak) IBOutlet NSButton* confirm_change_email;
-@property (nonatomic, weak) IBOutlet NSProgressIndicator* change_email_progress;
-
-// Changed email panel
-@property (nonatomic, assign) IBOutlet NSPanel* changed_email_panel;
 
 // Change password panel
 @property (nonatomic, assign) IBOutlet NSPanel* change_password_panel;

@@ -19,7 +19,7 @@
 #undef check
 #import <elle/log.hh>
 
-#define INFINIT_PROFILE_LINK @"https://infinit.io/account?utm_source=app&utm_medium=mac"
+#define INFINIT_PROFILE_LINK @"https://infinit.io/account?utm_source=app&utm_medium=mac&utm_campaign=settings"
 
 ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
@@ -104,6 +104,9 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
                                         paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                 colour:IA_RGB_COLOUR(0, 146, 207)
                                                 shadow:nil];
+  self.manage_emails_link.normal_attrs = attrs;
+  self.manage_emails_link.hover_attrs = attrs;
+  self.manage_emails_link.hand_cursor = YES;
   self.web_profile_link.normal_attrs = attrs;
   self.web_profile_link.hover_attrs = attrs;
   self.web_profile_link.hand_cursor = YES;
@@ -150,7 +153,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0, 320.0);
+  return NSMakeSize(480.0, 380.0);
 }
 
 //- Button Handling --------------------------------------------------------------------------------
@@ -318,20 +321,6 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   }
 }
 
-- (IBAction)changeEmail:(NSButton*)sender
-{
-  if (!self.online)
-    return;
-  self.change_email_error.hidden = YES;
-  self.change_email_field.stringValue = @"";
-  self.change_email_password.stringValue = @"";
-  [NSApp beginSheet:self.change_email_panel
-     modalForWindow:[_delegate getWindow:self]
-      modalDelegate:self
-     didEndSelector:nil
-        contextInfo:nil];
-}
-
 - (IBAction)changePassword:(NSButton*)sender
 {
   if (!self.online)
@@ -349,95 +338,6 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 - (IBAction)webProfile:(NSButton*)sender
 {
   [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_PROFILE_LINK]];
-}
-
-//- Change Email Panel -----------------------------------------------------------------------------
-
-- (IBAction)confirmChangeEmail:(NSButton*)sender
-{
-  if (!self.online)
-    return;
-  if (self.change_email_field.stringValue.isEmail)
-  {
-    if (self.change_email_password.stringValue.length > 2)
-    {
-      self.change_email_error.hidden = YES;
-      self.confirm_change_email.enabled = NO;
-      [self.change_email_progress startAnimation:nil];
-      self.change_email_progress.hidden = NO;
-      self.change_email_field.enabled = NO;
-      self.change_email_password.enabled = NO;
-      [[InfinitStateManager sharedInstance] setSelfEmail:self.change_email_field.stringValue
-                                                password:self.change_email_password.stringValue
-                                         performSelector:@selector(changeEmailCallback:)
-                                                onObject:self];
-    }
-    else
-    {
-      self.change_email_error.stringValue = NSLocalizedString(@"Please enter your password", nil);
-      self.change_email_error.hidden = NO;
-    }
-  }
-  else
-  {
-    self.change_email_error.stringValue =
-      NSLocalizedString(@"Enter a valid email address", nil);
-    self.change_email_error.hidden = NO;
-  }
-}
-
-- (void)changeEmailCallback:(InfinitStateResult*)result
-{
-  self.confirm_change_email.enabled = YES;
-  [self.change_email_progress stopAnimation:nil];
-  self.change_email_progress.hidden = YES;
-  self.change_email_field.enabled = YES;
-  self.change_email_password.enabled = YES;
-  if (result.success)
-  {
-    ELLE_LOG("%s: changed email address", self.description.UTF8String);
-    self.change_email_error.hidden = YES;
-    [NSApp endSheet:self.change_email_panel];
-    [self.change_email_panel orderOut:nil];
-    [NSApp beginSheet:self.changed_email_panel
-       modalForWindow:[_delegate getWindow:self]
-        modalDelegate:self
-       didEndSelector:nil
-          contextInfo:nil];
-    self.change_email_field.stringValue = @"";
-    self.change_email_password.stringValue = @"";
-  }
-  else
-  {
-    switch (result.status)
-    {
-      case gap_email_already_registered:
-        self.change_email_error.stringValue =
-        NSLocalizedString(@"This email is already taken", nil);
-        break;
-
-      case gap_email_password_dont_match:
-        self.change_email_error.stringValue = NSLocalizedString(@"Password incorrect", nil);
-        break;
-
-      default:
-        self.change_email_error.stringValue = NSLocalizedString(@"Unknown error", nil);
-        break;
-    }
-    self.change_email_error.hidden = NO;
-  }
-}
-
-- (IBAction)cancelChangeEmail:(NSButton*)sender
-{
-  [NSApp endSheet:self.change_email_panel];
-  [self.change_email_panel orderOut:sender];
-}
-
-- (IBAction)changedEmailConfirm:(NSButton*)sender
-{
-  [NSApp endSheet:self.changed_email_panel];
-  [self.changed_email_panel orderOut:sender];
 }
 
 //- Change Password Panel --------------------------------------------------------------------------
@@ -502,7 +402,6 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
         self.password_error.stringValue = NSLocalizedString(@"Unknown error", nil);
         break;
     }
-    self.change_email_error.hidden = NO;
   }
 }
 
