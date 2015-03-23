@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.WebKitIBPlugin" version="6751"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="InfinitFacebookWindowController">
+            <connections>
+                <outlet property="web_view" destination="i6r-EU-0Yr" id="4OK-Vv-jAB"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Facebook Connect" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="623" height="375"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="623" height="375"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <webView translatesAutoresizingMaskIntoConstraints="NO" id="i6r-EU-0Yr">
+                        <rect key="frame" x="0.0" y="0.0" width="623" height="375"/>
+                        <webPreferences key="preferences" defaultFontSize="12" defaultFixedFontSize="12" plugInsEnabled="NO" javaEnabled="NO"/>
+                        <connections>
+                            <outlet property="resourceLoadDelegate" destination="-2" id="5I4-Km-9BS"/>
+                        </connections>
+                    </webView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="i6r-EU-0Yr" secondAttribute="trailing" id="Th0-LF-tZ1"/>
+                    <constraint firstItem="i6r-EU-0Yr" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="VB1-Uy-qSh"/>
+                    <constraint firstAttribute="bottom" secondItem="i6r-EU-0Yr" secondAttribute="bottom" id="bOm-ud-3Bt"/>
+                    <constraint firstItem="i6r-EU-0Yr" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="mrb-Ea-MU5"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="478.5" y="279.5"/>
+        </window>
+    </objects>
+</document>

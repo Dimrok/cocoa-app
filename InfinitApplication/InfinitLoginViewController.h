@@ -11,15 +11,12 @@
 
 typedef NS_ENUM(NSUInteger, InfinitLoginViewMode)
 {
-  INFINIT_LOGIN_VIEW_REGISTER,
-  INFINIT_LOGIN_VIEW_NOT_LOGGED_IN,
-  INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS,
+  InfinitLoginViewModeRegister,
+  InfinitLoginViewModeLogin,
+  InfinitLoginViewModeLoginCredentials,
 };
 
 @class InfinitLoginView;
-@interface InfinitLoginButtonCell : NSButtonCell
-@property (nonatomic, readwrite) NSDictionary* disabled_attrs;
-@end
 
 @protocol InfinitLoginViewControllerProtocol;
 
@@ -39,6 +36,7 @@ typedef NS_ENUM(NSUInteger, InfinitLoginViewMode)
 @protocol InfinitLoginViewControllerProtocol <NSObject>
 
 - (void)loginViewDoneLogin:(InfinitLoginViewController*)sender;
+- (void)loginViewDoneRegister:(InfinitLoginViewController*)sender;
 
 - (void)loginViewWantsClose:(InfinitLoginViewController*)sender;
 

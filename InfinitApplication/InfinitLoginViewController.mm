@@ -9,146 +9,64 @@
 #import "InfinitLoginViewController.h"
 
 #import "IAUserPrefs.h"
+#import "InfinitFacebookWindowController.h"
 #import "InfinitKeychain.h"
+#import "InfinitLoginButton.h"
+#import "InfinitLoginView.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitNetworkManager.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 #import <Gap/NSString+email.h>
 
 #import <version.hh>
 
-#define INFINIT_HELP_URL "https://infinit.io/faq?utm_source=app&utm_medium=mac&utm_campaign=help"
-#define INFINIT_FORGOT_PASSWORD_URL "https://infinit.io/forgot_password?utm_source=app&utm_medium=mac&utm_campaign=forgot_password"
+#define INFINIT_HELP_URL @"https://infinit.io/faq?utm_source=app&utm_medium=mac&utm_campaign=help"
+#define INFINIT_FORGOT_PASSWORD_URL @"https://infinit.io/forgot_password?utm_source=app&utm_medium=mac&utm_campaign=forgot_password"
 
 #undef check
 #import <elle/log.hh>
 
 ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
-@interface InfinitLoginViewController ()
+@interface InfinitLoginViewController () <InfinitFacebookWindowProtocol>
 
-@property (nonatomic, weak) IBOutlet NSButton* action_button;
-@property (nonatomic, weak) IBOutlet NSTextField* action_text;
+@property (nonatomic, weak) IBOutlet InfinitLoginButton* action_button;
+@property (nonatomic, weak) IBOutlet InfinitLoginButton* facebook_button;
+@property (nonatomic, strong) InfinitFacebookWindowController* facebook_window;
+@property (nonatomic, weak) IBOutlet InfinitLoginView* main_view;
 @property (nonatomic, weak) IBOutlet IAHoverButton* close_button;
 @property (nonatomic, weak) IBOutlet NSTextField* email_address;
 @property (nonatomic, weak) IBOutlet NSTextField* error_message;
 @property (nonatomic, weak) IBOutlet NSTextField* fullname;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* fullname_pos;
-@property (nonatomic, weak) IBOutlet IAHoverButton* got_account;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* fullname_height;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* or_bottom_dh;
 @property (nonatomic, weak) IBOutlet IAHoverButton* help_button;
-@property (nonatomic, weak) IBOutlet NSTextField* password;
 @property (nonatomic, weak) IBOutlet IAHoverButton* problem_button;
+@property (nonatomic, weak) IBOutlet IAHoverButton* forgot_password_button;
+@property (nonatomic, weak) IBOutlet NSButton* register_tab;
+@property (nonatomic, weak) IBOutlet NSButton* login_tab;
+@property (nonatomic, weak) IBOutlet NSTextField* password;
 @property (nonatomic, readwrite) BOOL running;
+@property (nonatomic, readwrite) BOOL facebook_connect;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator* spinner;
 @property (nonatomic, weak) IBOutlet NSTextField* version;
 
 @end
-
-// - Login Button Cell -----------------------------------------------------------------------------
-
-@interface NSButtonCell(Private)
-- (void)_updateMouseTracking;
-@end
-
-@implementation InfinitLoginButtonCell
-{
-@private
-  BOOL _hover;
-}
-
-// Override private mouse tracking function to ensure that we get mouseEntered/Exited events.
-- (void)_updateMouseTracking
-{
-  [super _updateMouseTracking];
-  if (self.controlView != nil &&
-      [self.controlView respondsToSelector:@selector(_setMouseTrackingForCell:)])
-  {
-    [self.controlView performSelector:@selector(_setMouseTrackingForCell:) withObject:self];
-  }
-}
-
-- (void)mouseEntered:(NSEvent*)theEvent
-{
-  _hover = YES;
-  [self.controlView setNeedsDisplay:YES];
-}
-
-- (void)mouseExited:(NSEvent*)theEvent
-{
-  _hover = NO;
-  [self.controlView setNeedsDisplay:YES];
-}
-
-- (NSRect)drawTitle:(NSAttributedString*)title
-          withFrame:(NSRect)frame
-             inView:(NSView*)controlView
-{
-  if (!self.isEnabled)
-  {
-    return [super drawTitle:[[NSAttributedString alloc] initWithString:self.attributedTitle.string
-                                                            attributes:self.disabled_attrs]
-                  withFrame:frame inView:controlView];
-  }
-
-  return [super drawTitle:title withFrame:frame inView:controlView];
-}
-
-- (void)drawImage:(NSImage*)image
-        withFrame:(NSRect)frame
-           inView:(NSView*)controlView
-{
-  [super drawImage:image withFrame:frame inView:controlView];
-  NSBezierPath* bg = [IAFunctions roundedBottomBezierWithRect:frame cornerRadius:3.0];
-  if ([self isEnabled] && _hover && ![self isHighlighted])
-    [IA_RGBA_COLOUR(255, 255, 255, 0.1) set];
-  else if ([self isEnabled] && [self isHighlighted])
-    [IA_RGBA_COLOUR(0, 0, 0, 0.1) set];
-  else
-    [[NSColor clearColor] set];
-  [bg fill];
-}
-
-@end
-
-//- Login View -------------------------------------------------------------------------------------
-
-@interface InfinitLoginView : IAMainView
-@end
-
-@implementation InfinitLoginView
-
-- (BOOL)isOpaque
-{
-  return YES;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-  [IA_GREY_COLOUR(248.0) set];
-  NSRectFill(self.bounds);
-}
-
-@end
-
-//- Login View Controller --------------------------------------------------------------------------
 
 @implementation InfinitLoginViewController
 {
 @private
   id<InfinitLoginViewControllerProtocol> _delegate;
   NSDictionary* _error_attrs;
-  BOOL _showing_error;
   
   NSAttributedString* _version_str;
-  NSDictionary* _button_attrs;
-  NSDictionary* _button_disabled_attrs;
   NSDictionary* _link_attrs;
   NSDictionary* _link_hover_attrs;
-  NSDictionary* _link_right_attrs;
-  NSDictionary* _link_right_hover_attrs;
-  NSDictionary* _action_attrs;
+  NSDictionary* _tab_light_attrs;
+  NSDictionary* _tab_dark_attrs;
 }
 
 #pragma mark - Init
@@ -174,10 +92,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
                                                                       traits:NSUnboldFontMask
                                                                       weight:2
                                                                         size:10.0];
-    NSMutableParagraphStyle* version_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    version_para.alignment = NSRightTextAlignment;
     NSDictionary* version_style = [IAFunctions textStyleWithFont:version_font
-                                                  paragraphStyle:version_para
+                                                  paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
                                                           colour:IA_GREY_COLOUR(206.0)
                                                           shadow:nil];
 
@@ -185,56 +101,32 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
                                                 [NSString stringWithUTF8String:INFINIT_VERSION]]
                                                     attributes:version_style];
 
-    NSFont* action_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Montserrat"
-                                                                     traits:NSUnboldFontMask
-                                                                     weight:3
-                                                                       size:13.0];
-
-    NSMutableParagraphStyle* style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    style.alignment = NSCenterTextAlignment;
-    NSShadow* shadow = [IAFunctions shadowWithOffset:NSMakeSize(0.0, -1.0)
-                                          blurRadius:1.0
-                                              colour:[NSColor blackColor]];
-
-    _button_attrs = [IAFunctions textStyleWithFont:action_font
-                                    paragraphStyle:style
-                                            colour:[NSColor whiteColor]
-                                            shadow:shadow];
-
-    _button_disabled_attrs = [IAFunctions textStyleWithFont:action_font
-                                             paragraphStyle:style
-                                                     colour:IA_RGBA_COLOUR(255, 255, 255, 0.0)
-                                                     shadow:shadow];
-
     NSFont* link_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                    traits:NSUnboldFontMask
                                                                    weight:0
                                                                      size:12.0];
+    NSMutableParagraphStyle* right_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    right_para.alignment = NSRightTextAlignment;
     _link_attrs = [IAFunctions textStyleWithFont:link_font
-                                  paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                  paragraphStyle:right_para
                                           colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
                                           shadow:nil];
     _link_hover_attrs = [IAFunctions textStyleWithFont:link_font
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                        paragraphStyle:right_para
                                                 colour:IA_RGB_COLOUR(11.0, 117.0, 162)
                                                 shadow:nil];
-    NSMutableParagraphStyle* link_right = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    link_right.alignment = NSRightTextAlignment;
-    _link_right_attrs = [IAFunctions textStyleWithFont:link_font
-                                        paragraphStyle:link_right
-                                                colour:IA_RGB_COLOUR(103.0, 181.0, 214.0)
-                                                shadow:nil];
-    _link_right_hover_attrs = [IAFunctions textStyleWithFont:link_font
-                                              paragraphStyle:link_right
-                                                      colour:IA_RGB_COLOUR(11.0, 117.0, 162)
-                                                      shadow:nil];
-    
-    _action_attrs = [IAFunctions textStyleWithFont:[NSFont fontWithName:@"Montserrat" size:12.0]
-                                    paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                            colour:IA_RGB_COLOUR(60, 60, 60)
-                                            shadow:nil];
-
-    _showing_error = NO;
+    NSFont* tab_font = [NSFont fontWithName:@"Source Sans Pro Bold" size:12.0f];
+    NSMutableParagraphStyle* center_para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    center_para.alignment = NSCenterTextAlignment;
+    _tab_light_attrs = [IAFunctions textStyleWithFont:tab_font
+                                       paragraphStyle:center_para
+                                               colour:[InfinitColor colorWithGray:186]
+                                               shadow:nil];
+    _tab_dark_attrs = [IAFunctions textStyleWithFont:tab_font
+                                      paragraphStyle:center_para
+                                              colour:[InfinitColor colorWithRed:81 green:81 blue:73]
+                                              shadow:nil];
+    _facebook_connect = NO;
   }
   return self;
 }
@@ -244,46 +136,48 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-- (BOOL)closeOnFocusLost
-{
-  if (_running)
-    return YES;
-  else
-    return NO;
-}
-
 - (void)setupButtonsForMode:(InfinitLoginViewMode)mode
 {
-  NSString* action_button_text;
-  NSString* got_account_text;
-  NSString* problem = NSLocalizedString(@"Problem?", nil);
-  if (mode == INFINIT_LOGIN_VIEW_REGISTER)
+  if (mode == InfinitLoginViewModeRegister)
   {
-    action_button_text = NSLocalizedString(@"REGISTER", nil);
-    got_account_text = NSLocalizedString(@"Already have an account?", nil);
-    self.action_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"CREATE AN ACCOUNT", nil)
-                                      attributes:_action_attrs];
+    self.action_button.text = NSLocalizedString(@"SIGN UP", nil);
+    self.main_view.selector = InfinitLoginSelectorLeft;
+    self.facebook_button.text = NSLocalizedString(@"SIGN UP WITH FACEBOOK", nil);
   }
   else
   {
-    action_button_text = NSLocalizedString(@"LOGIN", nil);
-    got_account_text = NSLocalizedString(@"Need an account?", nil);
-    self.action_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LOGIN", nil)
-                                      attributes:_action_attrs];
+    self.main_view.selector = InfinitLoginSelectorRight;
+    self.action_button.text = NSLocalizedString(@"LOGIN", nil);
+    self.facebook_button.text = NSLocalizedString(@"SIGN IN WITH FACEBOOK", nil);
   }
-  self.action_button.attributedTitle = [[NSAttributedString alloc] initWithString:action_button_text
-                                                                       attributes:_button_attrs];
-  self.got_account.attributedTitle = [[NSAttributedString alloc] initWithString:got_account_text
-                                                                     attributes:_link_attrs];
-  self.problem_button.attributedTitle = [[NSAttributedString alloc] initWithString:problem
-                                                                        attributes:_link_attrs];
+  [self tabButtonsForMode:mode];
+}
+
+- (void)tabButtonsForMode:(InfinitLoginViewMode)mode
+{
+  NSDictionary* register_attrs = nil;
+  NSDictionary* login_attrs = nil;
+  if (mode == InfinitLoginViewModeRegister)
+  {
+    register_attrs = _tab_dark_attrs;
+    login_attrs = _tab_light_attrs;
+  }
+  else
+  {
+    register_attrs = _tab_light_attrs;
+    login_attrs = _tab_dark_attrs;
+  }
+  self.register_tab.attributedTitle =
+  [[NSAttributedString alloc] initWithString:NSLocalizedString(@"REGISTER", nil)
+                                  attributes:register_attrs];
+  self.login_tab.attributedTitle =
+  [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LOGIN", nil)
+                                  attributes:login_attrs];
 }
 
 - (void)setFocus
 {
-  if (_mode == INFINIT_LOGIN_VIEW_REGISTER)
+  if (self.mode == InfinitLoginViewModeRegister)
     [self.view.window makeFirstResponder:self.fullname];
   else
     [self.view.window makeFirstResponder:self.email_address];
@@ -298,79 +192,72 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   
   self.version.attributedStringValue = _version_str;
   [self.action_button.cell setImageDimsWhenDisabled:NO];
-  [self.action_button.cell setDisabled_attrs:_button_disabled_attrs];
-  self.got_account.normal_attrs = _link_attrs;
-  self.got_account.hover_attrs = _link_hover_attrs;
-  self.problem_button.normal_attrs = _link_attrs;
-  self.problem_button.hover_attrs = _link_hover_attrs;
-  self.help_button.normal_attrs = _link_right_attrs;
-  self.help_button.hover_attrs = _link_right_hover_attrs;
-  [self.problem_button setToolTip:NSLocalizedString(@"Click to tell us!", nil)];
+  self.help_button.normal_attrs = _link_attrs;
+  self.help_button.hover_attrs = _link_hover_attrs;
+  self.facebook_button.color = [InfinitColor colorWithRed:79 green:108 blue:214];
+  self.action_button.color = [InfinitColor colorWithRed:255 green:70 blue:75];
+  self.help_button.attributedTitle =
+    [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Help", nil)
+                                    attributes:_link_attrs];
 }
 
 - (void)loadView
 {
   ELLE_TRACE("%s: loadview with mode: %d", self.description.UTF8String, _mode);
   [super loadView];
-  if (_mode != INFINIT_LOGIN_VIEW_REGISTER)
+  if (self.mode != InfinitLoginViewModeRegister)
   {
-    self.action_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"LOGIN", nil)
-                                      attributes:_action_attrs];
-     self.fullname.alphaValue = 0.0;
-     self.fullname.hidden = YES;
-     self.content_height_constraint.constant = 333.0;
-     [self.view.window makeFirstResponder:self.email_address];
+    self.fullname.alphaValue = 0.0;
+    self.fullname.hidden = YES;
+    self.fullname_height.constant = 0.0f;
+    self.or_bottom_dh.constant = 0.0f;
+    self.content_height_constraint.constant = 415.0f;
+    [self.view.window makeFirstResponder:self.email_address];
   }
-  else
-  {
-    self.action_text.attributedStringValue =
-      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"CREATE AN ACCOUNT", nil)
-                                      attributes:_action_attrs];
-  }
+  [self setupButtonsForMode:self.mode];
 }
 
-//- General ----------------------------------------------------------------------------------------
+#pragma mark - General
 
 - (void)configureForMode
 {
   [self.spinner stopAnimation:nil];
-  self.got_account.hidden = NO;
   self.action_button.enabled = YES;
   self.email_address.enabled = YES;
   self.password.enabled = YES;
-  NSString* help_str;
-  switch (_mode)
+  switch (self.mode)
   {
-    case INFINIT_LOGIN_VIEW_REGISTER:
+    case InfinitLoginViewModeRegister:
       self.fullname.enabled = YES;
       self.fullname.hidden = NO;
       self.error_message.stringValue = @"";
       self.error_message.hidden = YES;
-      help_str = NSLocalizedString(@"Help", nil);
+      self.main_view.selector = InfinitLoginSelectorLeft;
+      self.forgot_password_button.hidden = YES;
       break;
 
-    case INFINIT_LOGIN_VIEW_NOT_LOGGED_IN:
+    case InfinitLoginViewModeLogin:
       self.fullname.enabled = NO;
       self.fullname.hidden = YES;
       self.error_message.stringValue = @"";
       self.error_message.hidden = YES;
-      help_str = NSLocalizedString(@"Forgot password?", nil);
+      self.main_view.selector = InfinitLoginSelectorRight;
+      self.forgot_password_button.hidden = NO;
       break;
       
-    case INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS:
+    case InfinitLoginViewModeLoginCredentials:
       self.fullname.enabled = NO;
       self.fullname.hidden = YES;
-      help_str = NSLocalizedString(@"Forgot password?", nil);
+      self.main_view.selector = InfinitLoginSelectorRight;
+      self.forgot_password_button.hidden = NO;
       break;
       
     default:
       ELLE_WARN("%s: unknown login view mode", self.description.UTF8String);
       break;
   }
-  self.help_button.attributedTitle = [[NSAttributedString alloc] initWithString:help_str
-                                                                     attributes:_link_right_attrs];
-  [self setupButtonsForMode:_mode];
+  [self tabButtonsForMode:self.mode];
+  [self setupButtonsForMode:self.mode];
 }
 
 - (void)closeLoginView
@@ -394,39 +281,46 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [self configureForMode];
   if (_mode == last_mode)
     return;
-  if (_mode == INFINIT_LOGIN_VIEW_REGISTER)
+  if (_mode == InfinitLoginViewModeRegister)
   {
-    self.fullname_pos.constant = 317.0;
+    self.fullname_height.constant = 0.0f;
+    self.or_bottom_dh.constant = 0.0f;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
       context.duration = 0.15;
       self.fullname.hidden = NO;
-      [self.fullname_pos.animator setConstant:26.0];
+      self.fullname_height.animator.constant = 35.0f;
+      self.or_bottom_dh.animator.constant = 10.0f;
       [self.fullname.animator setAlphaValue:1.0];
-      [self.content_height_constraint.animator setConstant:378.0];
+      [self.content_height_constraint.animator setConstant:460.0f];
     }
                         completionHandler:^
      {
        self.fullname.hidden = NO;
        self.fullname.alphaValue = 1.0;
-       self.fullname_pos.constant = 26.0;
-       self.content_height_constraint.constant = 378.0;
+       self.fullname_height.constant = 35.0f;
+       self.or_bottom_dh.constant = 10.0f;
+       self.content_height_constraint.constant = 460.0f;
        [self.view.window makeFirstResponder:self.fullname];
      }];
   }
-  else if (last_mode == INFINIT_LOGIN_VIEW_REGISTER)
+  else if (last_mode == InfinitLoginViewModeRegister)
   {
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
      {
        context.duration = 0.15;
        [self.fullname.animator setAlphaValue:0.0];
-       [self.content_height_constraint.animator setConstant:333.0];
+       self.fullname_height.animator.constant = 0.0f;
+       self.or_bottom_dh.animator.constant = 0.0f;
+       self.content_height_constraint.animator.constant = 415.0f;
      }
                         completionHandler:^
      {
        self.fullname.alphaValue = 0.0;
+       self.fullname_height.constant = 0.0f;
+       self.or_bottom_dh.constant = 0.0f;
        self.fullname.hidden = YES;
-       self.content_height_constraint.constant = 333.0;
+       self.content_height_constraint.constant = 415.0f;
        [self.view.window makeFirstResponder:self.email_address];
      }];
   }
@@ -436,7 +330,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
              username:(NSString*)username
           andPassword:(NSString*)password
 {
-  self.mode = INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS;
+  self.mode = InfinitLoginViewModeLoginCredentials;
   self.running = NO;
   [self.spinner stopAnimation:nil];
   if (username.length > 0 && password.length > 0)
@@ -454,44 +348,18 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 {
   [self.spinner stopAnimation:nil];
   self.error_message.attributedStringValue =
-    [[NSAttributedString alloc] initWithString:error
-                                    attributes:_error_attrs];
-  self.problem_button.hidden = NO;
+    [[NSAttributedString alloc] initWithString:error attributes:_error_attrs];
   self.version.hidden = NO;
-  if (!_showing_error)
-  {
-    _showing_error = YES;
-    self.error_message.alphaValue = 0.0;
-    self.error_message.hidden = NO;
-    CGFloat height = self.content_height_constraint.constant;
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-    {
-      context.duration = 0.1;
-      [self.error_message.animator setAlphaValue:1.0];
-      [self.content_height_constraint.animator setConstant:(height + 20.0)];
-    }
-                        completionHandler:^
-     {
-       self.error_message.alphaValue = 1.0;
-       self.content_height_constraint.constant = height + 20.0;
-     }];
-  }
+  self.error_message.hidden = NO;
 }
 
 - (void)hideError
 {
-  if (!_showing_error)
-    return;
-  self.problem_button.hidden = YES;
   self.version.hidden = YES;
-  CGFloat height = self.content_height_constraint.constant;
-  _showing_error = NO;
-  self.error_message.alphaValue = 0.0;
   self.error_message.hidden = YES;
-  self.content_height_constraint.constant = height - 20.0;
 }
 
-//- Action Handling --------------------------------------------------------------------------------
+#pragma mark - User Interaction
 
 - (BOOL)loginInputsGood
 {
@@ -549,21 +417,22 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     ELLE_LOG("%s: Successfully registered as: %s",
              self.description.UTF8String, self.email_address.stringValue.UTF8String);
     [self onSuccessfulLogin];
+    [_delegate loginViewDoneRegister:self];
   }
   else
   {
-    self.action_button.enabled = YES;
-    self.fullname.enabled = YES;
-    self.email_address.enabled = YES;
-    self.password.enabled = YES;
     NSString* error = [self _errorFromStatus:result.status];
     if (result.status == gap_already_logged_in)
     {
-      [_delegate loginViewDoneLogin:self];
+      [_delegate loginViewDoneRegister:self];
       return;
     }
     [self showError:error];
   }
+  self.action_button.enabled = YES;
+  self.fullname.enabled = YES;
+  self.email_address.enabled = YES;
+  self.password.enabled = YES;
 }
 
 - (void)loginCallback:(InfinitStateResult*)result
@@ -575,13 +444,10 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     ELLE_LOG("%s: Successfully logged in as: %s",
              self.description.UTF8String, self.email_address.stringValue.UTF8String);
     [self onSuccessfulLogin];
+    [_delegate loginViewDoneLogin:self];
   }
   else
   {
-    self.action_button.enabled = YES;
-    self.fullname.enabled = YES;
-    self.email_address.enabled = YES;
-    self.password.enabled = YES;
     NSString* error = [self _errorFromStatus:result.status];
     if (result.status == gap_already_logged_in)
     {
@@ -590,28 +456,42 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     }
     [self showError:error];
   }
+  self.action_button.enabled = YES;
+  self.fullname.enabled = YES;
+  self.email_address.enabled = YES;
+  self.password.enabled = YES;
 }
 
 - (void)onSuccessfulLogin
 {
-  InfinitKeychain* manager = [InfinitKeychain sharedInstance];
-  NSString* account = self.email_address.stringValue;
-  NSString* password = self.password.stringValue;
-  if ([manager credentialsForAccountInKeychain:self.email_address.stringValue])
-    [manager updatePassword:password forAccount:account];
+  if (!self.facebook_connect)
+  {
+    InfinitKeychain* manager = [InfinitKeychain sharedInstance];
+    NSString* account = self.email_address.stringValue;
+    NSString* password = self.password.stringValue;
+    if ([manager credentialsForAccountInKeychain:self.email_address.stringValue])
+      [manager updatePassword:password forAccount:account];
+    else
+      [manager addPassword:password forAccount:account];
+    password = @"";
+    self.password.stringValue = @"";
+    self.email_address.stringValue = @"";
+    [[IAUserPrefs sharedInstance] setPref:account forKey:@"user:email"];
+    [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"facebook_connect"];
+  }
   else
-    [manager addPassword:password forAccount:account];
-  password = @"";
-  self.password.stringValue = @"";
-  self.email_address.stringValue = @"";
-  [[IAUserPrefs sharedInstance] setPref:account forKey:@"user:email"];
-  [_delegate loginViewDoneLogin:self];
+  {
+    [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"facebook_connect"];
+  }
 }
 
 - (IBAction)actionButtonClicked:(NSButton*)sender
 {
   if (_running)
     return;
+
+  self.facebook_connect = NO;
+  [self hideError];
 
   self.running = YES;
   [self.spinner startAnimation:nil];
@@ -623,7 +503,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   self.password.stringValue = self.password.stringValue;
   self.password.enabled = NO;
 
-  if (_mode == INFINIT_LOGIN_VIEW_REGISTER)
+  if (_mode == InfinitLoginViewModeRegister)
   {
     if ([self registerInputsGood])
     {
@@ -662,31 +542,46 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [_delegate loginViewWantsReportProblem:self];
 }
 
-- (IBAction)changeModeClicked:(IAHoverButton*)sender
+- (IBAction)loginTabClicked:(id)sender
 {
-  if (_running)
+  if (self.mode == InfinitLoginViewModeLogin || self.mode == InfinitLoginViewModeLoginCredentials ||
+      _running)
+  {
     return;
-  _showing_error = NO;
-  self.error_message.alphaValue = 0.0;
-  if (_mode == INFINIT_LOGIN_VIEW_REGISTER)
-  {
-    self.mode = INFINIT_LOGIN_VIEW_NOT_LOGGED_IN;
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_REGISTER_TO_LOGIN];
   }
-  else
-  {
-    self.mode = INFINIT_LOGIN_VIEW_REGISTER;
-    [InfinitMetricsManager sendMetric:INFINIT_METRIC_LOGIN_TO_REGISTER];
-  }
+  [self hideError];
+  self.mode = InfinitLoginViewModeLogin;
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_REGISTER_TO_LOGIN];
+}
+
+- (IBAction)registerTabClicked:(id)sender
+{
+  if (_running || self.mode == InfinitLoginViewModeRegister)
+    return;
+  [self hideError];
+  self.mode = InfinitLoginViewModeRegister;
+  [InfinitMetricsManager sendMetric:INFINIT_METRIC_LOGIN_TO_REGISTER];
 }
 
 - (IBAction)helpClicked:(IAHoverButton*)sender
 {
-  if (_mode == INFINIT_LOGIN_VIEW_REGISTER)
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:INFINIT_HELP_URL]]];
-  else
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithUTF8String:INFINIT_FORGOT_PASSWORD_URL]]];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_HELP_URL]];
   [self closeLoginView];
+}
+
+- (IBAction)forgotPasswordClicked:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_FORGOT_PASSWORD_URL]];
+  [self closeLoginView];
+}
+
+- (IBAction)facebookClicked:(id)sender
+{
+  self.facebook_button.enabled = NO;
+  self.action_button.enabled = NO;
+  self.facebook_connect = YES;
+  self.facebook_window = [[InfinitFacebookWindowController alloc] initWithDelegate:self];
+  [self.facebook_window showWindow:self];
 }
 
 #pragma mark - IAViewController
@@ -694,6 +589,64 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 - (void)viewActive
 {
   [self performSelector:@selector(setFocus) withObject:nil afterDelay:0.3];
+}
+
+- (BOOL)closeOnFocusLost
+{
+  if (_running)
+    return YES;
+  else
+    return NO;
+}
+
+#pragma mark - Facebook Window Protocol
+
+- (void)facebookWindow:(InfinitFacebookWindowController*)sender
+              gotError:(NSString*)error
+{
+  self.facebook_button.enabled = YES;
+  self.action_button.enabled = YES;
+  NSAlert* alert =
+    [NSAlert alertWithMessageText:NSLocalizedString(@"Unable to login with Facebook.", nil)
+                    defaultButton:NSLocalizedString(@"OK", nil)
+                  alternateButton:nil
+                      otherButton:nil
+        informativeTextWithFormat:NSLocalizedString(@"Ensure that you give Infinit permission to use your Facebook account.", nil)];
+  [alert runModal];
+}
+
+- (void)facebookWindow:(InfinitFacebookWindowController*)sender
+              gotToken:(NSString*)token
+{
+  [self gotFacebookAccess:token];
+}
+
+#pragma mark - Facebook Handling
+
+- (void)gotFacebookAccess:(NSString*)token
+{
+  [self.spinner startAnimation:nil];
+  [[InfinitStateManager sharedInstance] facebookConnect:token
+                                           emailAddress:nil
+                                        performSelector:@selector(facebookLoginRegisterCallback:)
+                                               onObject:self];
+}
+
+- (void)facebookLoginRegisterCallback:(InfinitStateResult*)result
+{
+  [self.spinner stopAnimation:nil];
+  self.facebook_button.enabled = YES;
+  self.action_button.enabled = YES;
+  if (result.success)
+  {
+    [self onSuccessfulLogin];
+    [_delegate loginViewDoneRegister:self];
+  }
+  else
+  {
+    if (result.status == gap_email_already_registered)
+      [self showError:NSLocalizedString(@"Login with your email address.", nil)];
+  }
 }
 
 #pragma mark - Helpers
@@ -730,5 +683,6 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
               status];
   }
 }
+
 
 @end
