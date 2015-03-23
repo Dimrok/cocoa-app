@@ -20,7 +20,9 @@
 #import "IAWindowController.h"
 #import "InfinitConversationViewController.h"
 #import "InfinitDownloadDestinationManager.h"
+#import "InfinitFacebookWindowController.h"
 #import "InfinitFeatureManager.h"
+#import "InfinitInvitationCodeView.h"
 #import "InfinitKeychain.h"
 #import "InfinitLoginViewController.h"
 #import "InfinitMainViewController.h"
@@ -56,6 +58,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                 IAViewProtocol,
                                 IAWindowControllerProtocol,
                                 InfinitConversationViewProtocol,
+                                InfinitFacebookWindowProtocol,
+                                InfinitInvitationCodeViewProtocol,
                                 InfinitLoginViewControllerProtocol,
                                 InfinitMainViewProtocol,
                                 InfinitOnboardingProtocol,
@@ -93,6 +97,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   IAWindowController* _window_controller;
   InfinitMainViewController* _main_view_controller;
   InfinitTooltipViewController* _tooltip_controller;
+  InfinitInvitationCodeView* _invitation_view_controller;
+
+  // Facebook Window
+  InfinitFacebookWindowController* _facebook_window;
   
   // Infinit Link Handling
   NSURL* _infinit_link;
@@ -219,8 +227,11 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)delayedLoginViewOpen
 {
   if (_login_view_controller == nil)
-    _login_view_controller = [[InfinitLoginViewController alloc] initWithDelegate:self
-                                                                         withMode:INFINIT_LOGIN_VIEW_REGISTER];
+  {
+    _login_view_controller =
+      [[InfinitLoginViewController alloc] initWithDelegate:self
+                                                  withMode:InfinitLoginViewModeRegister];
+  }
   [self openOrChangeViewController:_login_view_controller];
 }
 
@@ -228,15 +239,24 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   if ([_delegate applicationUpdating])
     return NO;
-  NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
-  NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:username];
-  if (username && username.length > 0 && password && password.length > 0)
+  if ([[[IAUserPrefs sharedInstance] prefsForKey:@"facebook_connect"] isEqualToString:@"1"])
   {
-    _logging_in = YES;
-    [self loginWithUsername:username password:password];
-    password = @"";
-    password = nil;
+    _facebook_window = [[InfinitFacebookWindowController alloc] initWithDelegate:self];
+    [_facebook_window showWindow:self];
     return YES;
+  }
+  else
+  {
+    NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+    NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:username];
+    if (username && username.length > 0 && password && password.length > 0)
+    {
+      _logging_in = YES;
+      [self loginWithUsername:username password:password];
+      password = @"";
+      password = nil;
+      return YES;
+    }
   }
   return NO;
 }
@@ -429,7 +449,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)showLoginView
 {
-  [self showLoginViewForMode:INFINIT_LOGIN_VIEW_REGISTER];
+  [self showLoginViewForMode:InfinitLoginViewModeRegister];
 }
 
 - (void)showLoginViewForMode:(InfinitLoginViewMode)mode
@@ -473,7 +493,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   }
   else
   {
-    [self showLoginViewForMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN];
+    [self showLoginViewForMode:InfinitLoginViewModeLogin];
   }
 }
 
@@ -572,6 +592,83 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   }
 }
 
+- (void)onUnsuccessfulLogin:(InfinitStateResult*)result
+{
+  ELLE_ERR("%s: couldn't login with status: %d", self.description.UTF8String, result.status);
+  NSString* error;
+  switch (result.status)
+  {
+    case gap_email_password_dont_match:
+      error = [NSString stringWithFormat:@"%@",
+               NSLocalizedString(@"Email or password incorrect.",
+                                 @"email or password wrong")];
+
+      if ([[[IAUserPrefs sharedInstance] prefsForKey:@"user:email"] isEqualToString:_username])
+        _update_credentials = YES;
+
+      break;
+
+    case gap_already_logged_in:
+      if (_current_view_controller == _login_view_controller)
+        [self closeNotificationWindow];
+      _login_view_controller = nil;
+      return;
+
+    case gap_deprecated:
+      error = [NSString stringWithFormat:@"%@",
+               NSLocalizedString(@"Please update Infinit.", @"please update infinit.")];
+      [_delegate mainControllerWantsCheckForUpdate:self];
+      break;
+
+    case gap_email_not_confirmed:
+      error = [NSString stringWithFormat:@"%@",
+               NSLocalizedString(@"You need to confirm your email, check your inbox.", nil)];
+      break;
+
+    case gap_meta_down_with_message:
+      error = [NSString stringWithFormat:@"%@",
+               NSLocalizedString(@"Infinit is currently unavailable.",
+                                 @"infinit is currently unavailable")];
+      // XXX display actual Meta message
+      break;
+
+    default:
+      error = [NSString stringWithFormat:@"%@.",
+               NSLocalizedString(@"Unknown login error", @"unknown login error")];
+      break;
+  }
+
+
+  if (_login_view_controller == nil)
+  {
+    _login_view_controller =
+      [[InfinitLoginViewController alloc] initWithDelegate:self
+                                                  withMode:InfinitLoginViewModeLoginCredentials];
+  }
+  else
+  {
+    _login_view_controller.mode = InfinitLoginViewModeLoginCredentials;
+  }
+
+  NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+  NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:username];
+
+  if (username == nil)
+    username = @"";
+  if (password == nil)
+    password = @"";
+
+  if (_current_view_controller != _login_view_controller)
+    [self showLoginViewForMode:InfinitLoginViewModeLoginCredentials];
+
+  [_login_view_controller showWithError:error
+                               username:username
+                            andPassword:password];
+
+  password = @"";
+  password = nil;
+}
+
 - (void)loginCallback:(InfinitStateResult*)result
 {
   _logging_in = NO;
@@ -582,77 +679,21 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   }
   else
   {
-    ELLE_ERR("%s: couldn't login with status: %d", self.description.UTF8String, result.status);
-    NSString* error;
-    switch (result.status)
-    {
-      case gap_email_password_dont_match:
-        error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"Email or password incorrect.",
-                                   @"email or password wrong")];
-        
-        if ([[[IAUserPrefs sharedInstance] prefsForKey:@"user:email"] isEqualToString:_username])
-          _update_credentials = YES;
-        
-        break;
-        
-      case gap_already_logged_in:
-        if (_current_view_controller == _login_view_controller)
-          [self closeNotificationWindow];
-        _login_view_controller = nil;
-        return;
-        
-      case gap_deprecated:
-        error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"Please update Infinit.", @"please update infinit.")];
-        [_delegate mainControllerWantsCheckForUpdate:self];
-        break;
+    [self onUnsuccessfulLogin:result];
+  }
+}
 
-      case gap_email_not_confirmed:
-        error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"You need to confirm your email, check your inbox.", nil)];
-        break;
-
-      case gap_meta_down_with_message:
-        error = [NSString stringWithFormat:@"%@",
-                 NSLocalizedString(@"Infinit is currently unavailable.",
-                                   @"infinit is currently unavailable")];
-        // XXX display actual Meta message
-        break;
-
-      default:
-        error = [NSString stringWithFormat:@"%@.",
-                 NSLocalizedString(@"Unknown login error", @"unknown login error")];
-        break;
-    }
-    
-    
-    if (_login_view_controller == nil)
-    {
-      _login_view_controller =
-        [[InfinitLoginViewController alloc] initWithDelegate:self
-                                                    withMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
-    }
-    else
-    {
-      _login_view_controller.mode = INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS;
-    }
-    
-    NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
-    NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:username];
-    
-    if (password == nil)
-      password = @"";
-    
-    if (_current_view_controller != _login_view_controller)
-      [self showLoginViewForMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN_WITH_CREDENTIALS];
-    
-    [_login_view_controller showWithError:error
-                                 username:username
-                              andPassword:password];
-    
-    password = @"";
-    password = nil;
+- (void)facebookConnectCallback:(InfinitStateResult*)result
+{
+  _logging_in = NO;
+  if (result.success)
+  {
+    [self onSuccessfulLogin];
+    [_delegate mainControllerWantsBackgroundUpdateChecks:self];
+  }
+  else
+  {
+    [self onUnsuccessfulLogin:result];
   }
 }
 
@@ -695,7 +736,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)showLoginViewForLogout
 {
-  [self showLoginViewForMode:INFINIT_LOGIN_VIEW_NOT_LOGGED_IN];
+  [self showLoginViewForMode:InfinitLoginViewModeLogin];
 }
 
 - (void)logoutAndShowLoginCallback:(InfinitStateResult*)result
@@ -714,6 +755,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)handleLogout
 {
+  [[IAUserPrefs sharedInstance] setPref:@"facebook_connect" forKey:@"0"];
   [_settings_window close];
   [self closeNotificationWindow];
   [[InfinitStateManager sharedInstance] logoutPerformSelector:@selector(logoutAndShowLoginCallback:)
@@ -968,6 +1010,14 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   [self onSuccessfulLogin];
 }
 
+- (void)loginViewDoneRegister:(InfinitLoginViewController*)sender
+{
+  _invitation_view_controller =
+    [[InfinitInvitationCodeView alloc] initWithDelegate:self
+                                                   mode:InfinitInvitationCodeModeRegister];
+  [self openOrChangeViewController:_invitation_view_controller];
+}
+
 - (void)loginViewWantsClose:(InfinitLoginViewController*)sender
 {
   [self closeNotificationWindow];
@@ -1006,6 +1056,16 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
 {
   [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
+}
+
+#pragma mark - Invitation Code Delegate
+
+- (void)invitationCodeViewDone:(InfinitInvitationCodeView*)sender
+{
+  if (sender.mode == InfinitInvitationCodeModeRegister)
+    [self onSuccessfulLogin];
+  else
+    [self showNotifications];
 }
 
 //- Main View Protocol -----------------------------------------------------------------------------
@@ -1165,6 +1225,15 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
                   to:(BOOL)value
 {
   [InfinitStayAwakeManager setStayAwake:value];
+}
+
+- (void)enterCode:(InfinitSettingsWindow*)sender
+{
+  _invitation_view_controller =
+    [[InfinitInvitationCodeView alloc] initWithDelegate:self
+                                                   mode:InfinitInvitationCodeModeSettings];
+  [self openOrChangeViewController:_invitation_view_controller];
+  [_settings_window close];
 }
 
 - (void)checkForUpdate:(InfinitSettingsWindow*)sender
@@ -1395,6 +1464,24 @@ hasCurrentViewController:(IAViewController*)controller
   ELLE_LOG("%s: user kicked out", self.description.UTF8String);
   // Try to automatically login after a couple of seconds
   [self performSelector:@selector(delayedRetryLogin) withObject:nil afterDelay:3.0];
+}
+
+#pragma mark - Facebook Window Delegate
+
+- (void)facebookWindow:(InfinitFacebookWindowController*)sender
+              gotError:(NSString*)error
+{
+
+}
+
+- (void)facebookWindow:(InfinitFacebookWindowController*)sender
+              gotToken:(NSString*)token
+{
+  _logging_in = YES;
+  [[InfinitStateManager sharedInstance] facebookConnect:token
+                                           emailAddress:nil
+                                        performSelector:@selector(facebookConnectCallback:)
+                                               onObject:self];
 }
 
 @end
