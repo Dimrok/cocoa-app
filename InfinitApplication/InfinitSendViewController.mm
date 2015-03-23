@@ -667,12 +667,9 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     NSMutableArray* destinations = [NSMutableArray array];
     for (id element in _recipient_list)
     {
-      if ([element isKindOfClass:InfinitSearchElement.class])
+      if ([element isKindOfClass:InfinitSearchRowModel.class])
       {
-        if ([element user] == nil)
-          [destinations addObject:[element email]];
-        else
-          [destinations addObject:[element user]];
+        [destinations addObject:[element destination]];
       }
       else if ([element isKindOfClass:NSString.class])
       {
@@ -802,13 +799,15 @@ wantsChangeHeight:(CGFloat)height
 //- Search Protocol --------------------------------------------------------------------------------
 
 - (void)searchView:(IAUserSearchViewController*)sender
-   changedToHeight:(CGFloat)height
+   changedToHeight:(CGFloat)search_height
 {
-  if (_last_search_height == height)
+  if (_last_search_height == search_height)
     return;
-  _last_search_height = height;
+
+  _last_search_height = search_height;
   BOOL search_mode = NO;
-  CGFloat content_height = height + self.note_constraint.constant + self.files_constraint.constant;
+  CGFloat content_height =
+    search_height + self.note_constraint.constant + self.files_constraint.constant;
   if (self.content_height_constraint == nil)
   {
     self.content_height_constraint =
@@ -821,7 +820,7 @@ wantsChangeHeight:(CGFloat)height
                                     constant:NSHeight(self.main_view.frame)];
     [self.main_view addConstraint:self.content_height_constraint];
   }
-  if (height > NSHeight(_search_controller.search_box_view.frame))
+  if (search_height > NSHeight(_search_controller.search_box_view.frame))
   {
     search_mode = YES;
     [self.main_view removeConstraint:self.search_note_contraint];
@@ -829,30 +828,28 @@ wantsChangeHeight:(CGFloat)height
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
-    [self.search_constraint setConstant:height];
+    [self.search_constraint setConstant:search_height];
     if (search_mode)
     {
-      [self.content_height_constraint.animator setConstant:height];
-      [self.note_view.animator setAlphaValue:0.0];
-      [self.files_view.animator setAlphaValue:0.0];
+      CGFloat height = search_height + self.files_constraint.constant;
+      self.content_height_constraint.animator.constant = height;
+      self.note_view.animator.alphaValue =  0.0f;
     }
     else
     {
       [self.content_height_constraint.animator setConstant:content_height];
       self.note_view.hidden = NO;
       self.files_view.hidden = NO;
-      [self.note_view.animator setAlphaValue:1.0];
-      [self.files_view.animator setAlphaValue:1.0];
+      self.note_view.animator.alphaValue = 1.0f;
     }
   }
                       completionHandler:^
   {
     self.note_view.hidden = search_mode;
-    self.files_view.hidden = search_mode;
     CGFloat alpha = search_mode ? 0.0 : 1.0;
     self.note_view.alphaValue = alpha;
-    self.files_view.alphaValue = alpha;
-    self.search_constraint.constant = height;
+    self.search_constraint.constant = search_height;
+    CGFloat height = search_height + self.files_constraint.constant;
     self.content_height_constraint.constant = search_mode ? height : content_height;
     if (!search_mode && self.search_note_contraint == nil)
     {

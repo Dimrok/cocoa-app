@@ -22,15 +22,7 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
   __unsafe_unretained id<InfinitSearchPersonResultProtocol> _delegate;
 }
 
-//- Initialisation ---------------------------------------------------------------------------------
-
-@synthesize avatar = _avatar;
-@synthesize emails = _emails;
-@synthesize fullname = _fullname;
-@synthesize infinit_user = _user;
-@synthesize rank = _rank;
-
-//- Addressbook User -------------------------------------------------------------------------------
+#pragma mark - Infinit
 
 - (void)dealloc
 {
@@ -44,6 +36,14 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
   [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
+#pragma mark - Address Book User
+
++ (instancetype)personWithABPerson:(ABPerson*)person
+                       andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate
+{
+  return [[InfinitSearchPersonResult alloc] initWithABPerson:person andDelegate:delegate];
+}
+
 - (id)initWithABPerson:(ABPerson*)person
            andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
 {
@@ -51,7 +51,8 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
   {
     _rank = address_book_match_rank;
     _delegate = delegate;
-    _user = nil;
+    _device = nil;
+    _infinit_user = nil;
     ABMultiValue* emails = [person valueForProperty:kABEmailProperty];
     _emails = [NSMutableArray array];
     if (emails.count > 0)
@@ -62,17 +63,17 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
         // Remove Facebook mails.
         if ([email rangeOfString:@"@facebook.com"].location == NSNotFound)
         {
-          [_emails addObject:email];
+          [self.emails addObject:email];
         }
       }
     }
     NSString* first_name = [person valueForProperty:kABFirstNameProperty];
     NSString* last_name = [person valueForProperty:kABLastNameProperty];
-    if (first_name.length > 0 &&  last_name > 0)
+    if (first_name.length && last_name.length)
       _fullname = [[NSString alloc] initWithFormat:@"%@ %@", first_name, last_name];
-    else if (first_name > 0)
+    else if (first_name.length)
       _fullname = [[NSString alloc] initWithFormat:@"%@", first_name];
-    else if (last_name > 0)
+    else if (last_name.length)
       _fullname = [[NSString alloc] initWithFormat:@"%@", last_name];
     else
       _fullname = @"Unknown";
@@ -84,7 +85,7 @@ ELLE_LOG_COMPONENT("OSX.SearchPersonResult");
   return self;
 }
 
-//- Email User -------------------------------------------------------------------------------------
+#pragma mark - Email User
 
 - (void)email:(NSString*)email
 isInfinitUser:(InfinitUser*)user
@@ -94,16 +95,22 @@ isInfinitUser:(InfinitUser*)user
                                          selector:@selector(avatarReceivedCallback:)
                                              name:INFINIT_USER_AVATAR_NOTIFICATION
                                            object:nil];
-  _user = user;
-  if (_user.favorite)
+  _infinit_user = user;
+  if (self.infinit_user.favorite)
     _rank += infinit_favourite_rank;
-  if ([self userIsSwagger])
+  if (self.infinit_user.swagger)
     _rank += infinit_swagger_rank;
-  _fullname = _user.fullname;
-  _avatar = user.avatar;
+  _fullname = self.infinit_user.fullname;
+  _avatar = self.infinit_user.avatar;
 }
 
-//- Infinit User -----------------------------------------------------------------------------------
+#pragma mark - Infinit User
+
++ (instancetype)personWithInfinitUser:(InfinitUser*)user
+                          andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate
+{
+  return [[InfinitSearchPersonResult alloc] initWithInfinitPerson:user andDelegate:delegate];
+}
 
 - (id)initWithInfinitPerson:(InfinitUser*)user
                 andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate;
@@ -112,13 +119,16 @@ isInfinitUser:(InfinitUser*)user
   {
     _rank = infinit_match_rank;
     _delegate = delegate;
-    _user = user;
-    if (_user.favorite)
+    _device = nil;
+    _infinit_user = user;
+    if (self.infinit_user.favorite)
       _rank += infinit_favourite_rank;
-    if ([self userIsSwagger])
+    if (self.infinit_user.swagger)
       _rank += infinit_swagger_rank;
-    _avatar = user.avatar;
-    _fullname = _user.fullname;
+    else
+      _rank += infinit_match_rank;
+    _avatar = self.infinit_user.avatar;
+    _fullname = self.infinit_user.fullname;
     [NSNotificationCenter.defaultCenter addObserver:self
                                            selector:@selector(avatarReceivedCallback:)
                                                name:INFINIT_USER_AVATAR_NOTIFICATION
@@ -127,24 +137,58 @@ isInfinitUser:(InfinitUser*)user
   return self;
 }
 
-//- General Functions ------------------------------------------------------------------------------
+#pragma mark - Device
 
-- (BOOL)userIsSwagger
++ (instancetype)personWithDevice:(InfinitDevice*)device
+                     andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate
 {
-  NSArray* swaggers = [InfinitUserManager sharedInstance].alphabetical_swaggers;
-  if ([swaggers containsObject:_user])
-    return YES;
-  else
-    return NO;
+  return [[InfinitSearchPersonResult alloc] initWithDevice:device andDelegate:delegate];
 }
+
+- (id)initWithDevice:(InfinitDevice*)device
+         andDelegate:(id<InfinitSearchPersonResultProtocol>)delegate
+{
+  if (self = [super init])
+  {
+    _rank = infinit_device_rank;
+    _delegate = delegate;
+    _device = device;
+    _emails = nil;
+    _fullname = self.device.friendly_name;
+    _infinit_user = [InfinitUserManager sharedInstance].me;
+    switch (self.device.type)
+    {
+      case InfinitDeviceTypeAndroid:
+        _avatar = [NSImage imageNamed:@"send-icon-device-android-avatar"];
+        break;
+      case InfinitDeviceTypeiPhone:
+        _avatar = [NSImage imageNamed:@"send-icon-device-ios-avatar"];
+        break;
+      case InfinitDeviceTypeMacLaptop:
+        _avatar = [NSImage imageNamed:@"send-icon-device-mac-avatar"];
+        break;
+      case InfinitDeviceTypePCWindows:
+        _avatar = [NSImage imageNamed:@"send-icon-device-windows-avatar"];
+        break;
+      case InfinitDeviceTypePCLinux:
+      case InfinitDeviceTypeUnknown:
+      default:
+        _avatar = [NSImage imageNamed:@"send-icon-device-default-avatar"];
+        break;
+    }
+  }
+  return self;
+}
+
+#pragma mark - General
 
 - (void)avatarReceivedCallback:(NSNotification*)notification
 {
-  if (_user == nil)
+  if (!self.infinit_user)
     return;
   NSNumber* id_ = notification.userInfo[kInfinitUserId];
   InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
-  if (![user isEqual:_user])
+  if (![user isEqual:self.infinit_user])
     return;
   
   _avatar = user.avatar;
@@ -165,10 +209,10 @@ isInfinitUser:(InfinitUser*)user
 {
   return [NSString stringWithFormat:@"<InfinitSearchPersonResult %p> name: %@\nuser: %@\nemails: %@\nrank: %ld",
           self,
-          _fullname,
-          _user,
-          _emails,
-          _rank];
+          self.fullname,
+          self.infinit_user,
+          self.emails,
+          self.rank];
 }
 
 - (BOOL)isEqual:(id)object
@@ -176,8 +220,12 @@ isInfinitUser:(InfinitUser*)user
   if (![object isKindOfClass:InfinitSearchPersonResult.class])
     return NO;
   
-  if (self.infinit_user != nil && [object infinit_user] != nil &&
-      self.infinit_user == [object infinit_user])
+  if (self.infinit_user && [object infinit_user] &&
+      [self.infinit_user isEqual:[object infinit_user]])
+  {
+    return YES;
+  }
+  else if (self.device && [object device] && [self.device isEqual:[object device]])
   {
     return YES;
   }

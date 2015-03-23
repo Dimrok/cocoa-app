@@ -8,9 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "IASearchResultsCellView.h"
+#import "InfinitSearchBoxView.h"
 #import "IAHoverButton.h"
 #import "InfinitSearchController.h"
+#import "InfinitSearchResultCell.h"
 #import "InfinitSearchNoResultsCellView.h"
 
 #import "OEXTokenField.h"
@@ -21,20 +22,15 @@
 
 @protocol IAUserSearchViewProtocol;
 
-@interface IASearchBoxView : NSView
-@property (nonatomic, readwrite) BOOL link_mode;
-@end
-
 @interface IAUserSearchViewController : NSViewController <NSTableViewDataSource,
                                                           NSTableViewDelegate,
                                                           NSTextViewDelegate,
                                                           OEXTokenFieldDelegate,
-                                                          IASearchResultsCellProtocol,
-                                                          InfinitSearchControllerProtocol,
-                                                          InfinitSearchNoResultsProcotol>
+                                                          InfinitSearchResultCellProtocol,
+                                                          InfinitSearchControllerProtocol>
 
 @property (nonatomic, weak) IBOutlet NSScrollView* results_view;
-@property (nonatomic, weak) IBOutlet IASearchBoxView* search_box_view;
+@property (nonatomic, weak) IBOutlet InfinitSearchBoxView* search_box_view;
 @property (nonatomic, weak) IBOutlet OEXTokenField* search_field;
 @property (nonatomic, weak) IBOutlet NSTextField* search_label;
 @property (nonatomic, weak) IBOutlet NSImageView* link_icon;
@@ -74,21 +70,5 @@
 - (void)searchViewGotWantsSend:(IAUserSearchViewController*)sender;
 
 - (BOOL)searchViewGotEscapePressedShrink:(IAUserSearchViewController*)sender;
-
-@end
-
-@interface InfinitSearchElement : NSObject
-
-@property (nonatomic, readwrite) NSImage* avatar;
-@property (nonatomic, readwrite) NSString* email;
-@property (nonatomic, readwrite) NSString* fullname;
-@property (nonatomic, readwrite) InfinitUser* user;
-@property (nonatomic, readwrite) BOOL hover;
-@property (nonatomic, readwrite) BOOL selected;
-
-- (id)initWithAvatar:(NSImage*)avatar
-               email:(NSString*)email
-            fullname:(NSString*)fullname
-                user:(InfinitUser*)user;
 
 @end

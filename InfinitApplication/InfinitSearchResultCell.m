@@ -1,25 +1,27 @@
 //
-//  IASearchResultsCellView.m
+//  InfinitSearchResultCell.m
 //  InfinitApplication
 //
 //  Created by Christopher Crone on 8/4/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IASearchResultsCellView.h"
+#import "InfinitSearchResultCell.h"
 
-//- Set Cell Values --------------------------------------------------------------------------------
+#import <Gap/InfinitColor.h>
+#import <Gap/NSString+email.h>
 
-@implementation IASearchResultsCellView
+@interface InfinitSearchResultCell ()
+
+@property (nonatomic, weak) IBOutlet NSImageView* result_avatar;
+@property (nonatomic, weak) IBOutlet NSTextField* result_fullname;
+@property (nonatomic, weak) IBOutlet NSImageView* result_type;
+
+@end
+
+@implementation InfinitSearchResultCell
 {
-  BOOL _infinit_user;
-  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  __unsafe_unretained id<IASearchResultsCellProtocol> _delegate;
-
   NSTrackingArea* _tracking_area;
-
-  NSAttributedString* _fullname_norm;
-  NSAttributedString* _fullname_selected;
 }
 
 static NSDictionary* _fullname_style = nil;
@@ -30,6 +32,7 @@ static NSDictionary* _email_style = nil;
   [self removeTrackingArea:_tracking_area];
   _hover = NO;
   [super prepareForReuse];
+  self.result_type.image = nil;
 }
 
 - (void)dealloc
@@ -37,14 +40,9 @@ static NSDictionary* _email_style = nil;
   _tracking_area = nil;
 }
 
-- (void)setDelegate:(id<IASearchResultsCellProtocol>)delegate
+- (void)setModel:(InfinitSearchRowModel*)model
 {
-  _delegate = delegate;
-}
-
-- (void)setUserFullname:(NSString*)fullname
-             withEmail:(NSString *)email
-{
+  _model = model;
   if (_fullname_style == nil)
   {
     NSFont* name_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
@@ -65,30 +63,57 @@ static NSDictionary* _email_style = nil;
                                            shadow:nil];
   }
   NSMutableAttributedString* fullname_norm_str =
-    [[NSMutableAttributedString alloc] initWithString:fullname attributes:_fullname_style];
-  if (email.length > 0)
+    [[NSMutableAttributedString alloc] initWithString:self.model.fullname
+                                           attributes:_fullname_style];
+  if ([self.model.destination isKindOfClass:NSString.class] && [self.model.destination isEmail] > 0)
   {
-    _infinit_user = NO;
     NSAttributedString* email_str =
-      [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  (%@)", email]
+      [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  (%@)", self.model.destination]
                                       attributes:_email_style];
     [fullname_norm_str appendAttributedString:email_str];
   }
-  else
+  else if ([self.model.destination isKindOfClass:InfinitUser.class])
   {
-    _infinit_user = YES;
+    InfinitUser* user = self.model.destination;
+    if (user.favorite || user.is_self)
+      self.result_type.image = [NSImage imageNamed:@"send-icon-favorite"];
+
+    if (user.is_self)
+    {
+      fullname_norm_str =
+        [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Me (my other devices)", nil)
+                                               attributes:_fullname_style];
+    }
   }
+  else if ([self.model.destination isKindOfClass:InfinitDevice.class])
+  {
+    InfinitDevice* device = self.model.destination;
+    switch (device.type)
+    {
+      case InfinitDeviceTypeAndroid:
+        self.result_type.image = [NSImage imageNamed:@"send-icon-device-android"];
+        break;
+      case InfinitDeviceTypeiPhone:
+        self.result_type.image = [NSImage imageNamed:@"send-icon-device-ios"];
+        break;
+      case InfinitDeviceTypeMacLaptop:
+        self.result_type.image = [NSImage imageNamed:@"send-icon-device-mac"];
+        break;
 
+      default:
+        self.result_type.image = [NSImage imageNamed:@"send-icon-device-windows"];
+        break;
+    }
+  }
+  self.result_avatar.image = [IAFunctions makeRoundAvatar:self.model.avatar
+                                               ofDiameter:24.0
+                                    withBorderOfThickness:0.0
+                                                 inColour:IA_GREY_COLOUR(255.0)
+                                        andShadowOfRadius:0.0];
   self.result_fullname.attributedStringValue = fullname_norm_str;
-  _fullname_norm = fullname_norm_str;
 }
 
-- (void)setUserAvatar:(NSImage*)image
-{
-  self.result_avatar.image = image;
-}
-
-//- Mouse Handling ---------------------------------------------------------------------------------
+#pragma mark - Mouse Handling
 
 - (void)updateTrackingAreas
 {
@@ -140,10 +165,10 @@ static NSDictionary* _email_style = nil;
 {
   _hover = hover;
   [self setNeedsDisplay:YES];
-}
+}  
 
 
-//- Drawing ----------------------------------------------------------------------------------------
+#pragma mark - Drawing
 
 - (BOOL)isOpaque
 {
@@ -153,7 +178,7 @@ static NSDictionary* _email_style = nil;
 - (void)drawRect:(NSRect)dirtyRect
 {
   // Background
-  [IA_GREY_COLOUR(255) set];
+  [[NSColor whiteColor] set];
   NSRectFill(self.bounds);
 
   // Dark line
@@ -162,15 +187,16 @@ static NSDictionary* _email_style = nil;
                                 NSWidth(self.bounds) - 70.0,
                                 1.0);
   NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
-  [IA_GREY_COLOUR(244) set];
+  [[InfinitColor colorWithGray:244] set];
   [dark_line fill];
 
-  if (_hover)
+  if (self.hover)
   {
     NSRect hover = NSMakeRect(0.0, 0.0, NSWidth(self.bounds), NSHeight(self.bounds));
-    [IA_RGB_COLOUR(240, 252, 251) set];
+    [InfinitColor colorWithRed:240 green:252 blue:251];
     NSRectFill(hover);
   }
 }
+
 
 @end
