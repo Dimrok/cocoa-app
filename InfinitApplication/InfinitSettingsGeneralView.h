@@ -37,6 +37,8 @@
 - (void)setStayAwake:(InfinitSettingsGeneralView*)sender
                   to:(BOOL)value;
 
+- (void)enterCode:(InfinitSettingsGeneralView*)sender;
+
 - (void)checkForUpdate:(InfinitSettingsGeneralView*)sender;
 
 @end

@@ -42,6 +42,8 @@
 - (void)setStayAwake:(InfinitSettingsWindow*)sender
                   to:(BOOL)value;
 
+- (void)enterCode:(InfinitSettingsWindow*)sender;
+
 - (void)checkForUpdate:(InfinitSettingsWindow*)sender;
 
 @end

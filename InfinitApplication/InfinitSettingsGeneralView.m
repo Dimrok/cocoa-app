@@ -70,7 +70,7 @@
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0, 220.0);
+  return NSMakeSize(480.0, 280.0);
 }
 
 //- Toggle Handling --------------------------------------------------------------------------------
@@ -127,6 +127,11 @@ shouldEnableURL:(NSURL*)url
       [[InfinitDownloadDestinationManager sharedInstance] setDownloadDestination:download_dir];
     }
   }];
+}
+
+- (IBAction)enterCodeClicked:(id)sender
+{
+  [_delegate enterCode:self];
 }
 
 - (IBAction)checkForUpdates:(NSButton*)sender
