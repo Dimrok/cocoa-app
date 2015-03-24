@@ -360,6 +360,8 @@
 		83C25B7219F010EE009752F1 /* send-icon-back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B7019F010EE009752F1 /* send-icon-back@2x.png */; };
 		83C25B7519F016E3009752F1 /* send-icon-add-file.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B7319F016E3009752F1 /* send-icon-add-file.png */; };
 		83C25B7619F016E3009752F1 /* send-icon-add-file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83C25B7419F016E3009752F1 /* send-icon-add-file@2x.png */; };
+		83C2AF5E1AC1B557002C78FE /* libc++.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83B4BBD31AB80FB6004B8E76 /* libc++.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83C2AF5F1AC1B557002C78FE /* libc++abi.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83B4BBD41AB80FB6004B8E76 /* libc++abi.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83C30A2A193298BF00D07D2C /* InfinitScreenshotManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */; };
 		83C30A411933EA5100D07D2C /* InfinitLinkShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C30A401933EA5100D07D2C /* InfinitLinkShortcutView.m */; };
 		83C6164F1AA0CB2400F68C94 /* illustration_screenshots.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83C6164D1AA0CB2400F68C94 /* illustration_screenshots.jpg */; };
@@ -484,6 +486,17 @@
 			files = (
 				8373D9AA1ABABCB80054B0D3 /* SourceSansPro-Bold.otf in CopyFiles */,
 				83059E0D19213BD7008DA14A /* Montserrat.ttf in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83C2AF5D1AC1B531002C78FE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = usr/lib;
+			dstSubfolderSpec = 10;
+			files = (
+				83C2AF5E1AC1B557002C78FE /* libc++.1.dylib in CopyFiles */,
+				83C2AF5F1AC1B557002C78FE /* libc++abi.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2052,6 +2065,7 @@
 				83CD6FF217A67418004F55D1 /* Copy Infinit Libraries */,
 				8328080317A2B4A60025B6F8 /* Sources */,
 				8328080517A2B4A60025B6F8 /* Resources */,
+				83C2AF5D1AC1B531002C78FE /* CopyFiles */,
 				83059E0C19213BC2008DA14A /* CopyFiles */,
 				83CD701117A6754A004F55D1 /* Copy Frameworks */,
 				8328080417A2B4A60025B6F8 /* Frameworks */,
