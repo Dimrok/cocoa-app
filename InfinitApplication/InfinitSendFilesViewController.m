@@ -11,6 +11,7 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitSendFileView.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitDataSize.h>
 
 #import <QuickLook/QuickLook.h>
@@ -160,7 +161,7 @@ static CGFloat _radius = 150.0;
     para.alignment = NSCenterTextAlignment;
     NSDictionary* drop_attrs = [IAFunctions textStyleWithFont:drop_font
                                                paragraphStyle:para
-                                                       colour:IA_RGB_COLOUR(81, 81, 73)
+                                                       colour:[InfinitColor colorWithRed:81 green:81 blue:73]
                                                        shadow:nil];
     _drop_str =
       [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"DROP FILES HERE", nil)
@@ -282,8 +283,10 @@ static CGFloat _radius = 150.0;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  [IA_GREY_COLOUR(248) set];
+  [[InfinitColor colorWithGray:248] set];
   NSRectFill(self.bounds);
+  [[InfinitColor colorWithGray:224] set];
+  NSRectFill(NSMakeRect(0.0f, self.bounds.size.height - 1.0f, self.bounds.size.width, 1.0f));
   if (self.rows == 0)
   {
     CGFloat border = 15.0;
@@ -295,7 +298,7 @@ static CGFloat _radius = 150.0;
     CGFloat pattern[2] = {10.0, 5.0};
     [path setLineDash:pattern count:2 phase:0.0];
     path.lineWidth = 1.0;
-    [IA_GREY_COLOUR(215) set];
+    [[InfinitColor colorWithGray:215] set];
     [path stroke];
     CGFloat bg_diff = (255 - 248) * _hover;
     [IA_RGB_COLOUR(248 + bg_diff, 248 + bg_diff, 248 + bg_diff) set];
