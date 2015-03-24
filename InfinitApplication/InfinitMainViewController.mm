@@ -30,7 +30,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 @interface InfinitMainViewController ()
 
-@property (nonatomic, weak) NSViewController* current_controller;
+@property (nonatomic, unsafe_unretained) NSViewController* current_controller;
 @property (nonatomic, strong) InfinitLinkViewController* link_controller;
 @property (nonatomic, strong) InfinitTransactionViewController* transaction_controller;
 
