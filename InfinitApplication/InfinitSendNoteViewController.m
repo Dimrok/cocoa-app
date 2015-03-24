@@ -32,10 +32,6 @@
 {
   [IA_GREY_COLOUR(255) set];
   NSRectFill(self.bounds);
-  NSBezierPath* line = [NSBezierPath bezierPathWithRect:NSMakeRect(0.0, 0.0,
-                                                                   NSWidth(self.bounds), 1.0)];
-  [IA_GREY_COLOUR(230) set];
-  [line fill];
 }
 
 @end
