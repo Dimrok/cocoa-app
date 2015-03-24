@@ -494,7 +494,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   }
   if (_element.transaction.files.count == 1)
   {
-    if (!_element.transaction.to_device &&
+    if (_element.transaction.to_device &&
         _element.transaction.status == gap_transaction_finished)
     {
       self.bubble_view.clickable = YES;
