@@ -24,7 +24,7 @@
       _spacer = NO;
     _transaction = transaction;
     if (transaction.sender.is_self && transaction.recipient.is_self)
-      _on_left = transaction.to_device;
+      _on_left = !transaction.from_device;
     else if (transaction.sender.is_self)
       _on_left = NO;
     else
