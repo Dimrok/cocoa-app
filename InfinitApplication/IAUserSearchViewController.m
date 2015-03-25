@@ -829,7 +829,8 @@ writeRepresentedObjects:(NSArray*)objects
     if (person.infinit_user != nil)
     {
       InfinitSearchRowModel* model = [InfinitSearchRowModel rowModelWithSearchPersonResult:person];
-      [_search_results addObject:model];
+      if (![self.recipientList containsObject:model])
+        [self.search_results addObject:model];
     }
     else // Address book user
     {
@@ -837,7 +838,8 @@ writeRepresentedObjects:(NSArray*)objects
       {
         InfinitSearchRowModel* model = [InfinitSearchRowModel rowModelWithSearchPersonResult:person
                                                                                   emailIndex:i];
-        [self.search_results addObject:model];
+        if (![self.recipientList containsObject:model])
+          [self.search_results addObject:model];
       }
     }
   }
