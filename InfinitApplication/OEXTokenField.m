@@ -48,6 +48,12 @@
     return nil;
 }
 
+- (BOOL)becomeFirstResponder
+{
+  [self.delegate tokenFieldWillBecomeFirstResponder:self];
+  return [super becomeFirstResponder];
+}
+
 #pragma mark - NSTextViewDelegate
 
 - (void)textView:(NSTextView *)aTextView clickedOnCell:(id <NSTextAttachmentCell>)cell inRect:(NSRect)cellFrame atIndex:(NSUInteger)charIndex

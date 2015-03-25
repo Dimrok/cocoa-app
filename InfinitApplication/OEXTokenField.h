@@ -42,4 +42,6 @@
  */
 - (NSTextAttachmentCell *)tokenField:(OEXTokenField *)tokenField attachmentCellForRepresentedObject:(id)representedObject;
 
+- (void)tokenFieldWillBecomeFirstResponder:(OEXTokenField*)tokenField;
+
 @end
