@@ -392,7 +392,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   NSUInteger row = [self.table_view rowForView:sender];
   InfinitConversationElement* element = self.elements[row];
 
-  if (element.transaction.done)
+  if (element.transaction.done && element.transaction.status != gap_transaction_cloud_buffered)
     return;
   [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:element.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_CANCEL];
