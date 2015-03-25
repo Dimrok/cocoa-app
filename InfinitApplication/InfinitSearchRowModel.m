@@ -83,4 +83,16 @@
   return self;
 }
 
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)object
+{
+  if (![object isKindOfClass:self.class])
+    return NO;
+  InfinitSearchRowModel* other = (InfinitSearchRowModel*)object;
+  if ([self.destination isEqual:other.destination])
+    return YES;
+  return NO;
+}
+
 @end
