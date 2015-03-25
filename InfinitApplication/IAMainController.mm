@@ -468,9 +468,9 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   {
     if (_not_logged_view_controller == nil)
     {
-      _not_logged_view_controller = [[IANotLoggedInViewController alloc]
-                                     initWithMode:INFINIT_WAITING_FOR_CONNECTION
-                                     andDelegate:self];
+      _not_logged_view_controller =
+        [[IANotLoggedInViewController alloc] initWithMode:INFINIT_WAITING_FOR_CONNECTION
+                                              andDelegate:self];
     }
     else
     {
@@ -482,8 +482,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   {
     if (_not_logged_view_controller == nil)
     {
-      _not_logged_view_controller = [[IANotLoggedInViewController alloc]
-                                     initWithMode:INFINIT_LOGGING_IN andDelegate:self];
+      _not_logged_view_controller =
+        [[IANotLoggedInViewController alloc] initWithMode:INFINIT_LOGGING_IN andDelegate:self];
     }
     else
     {
@@ -814,7 +814,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)selectView
 {
-  if (![InfinitConnectionManager sharedInstance].connected)
+  if (![InfinitConnectionManager sharedInstance].was_logged_in)
   {
     [self showNotLoggedInView];
     return;
