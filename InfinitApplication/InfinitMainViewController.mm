@@ -484,6 +484,10 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
                                                name:INFINIT_LINK_TRANSACTION_DATA_NOTIFICATION
                                              object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(linkUpdated:)
+                                               name:INFINIT_LINK_TRANSACTION_DELETED_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(transactionAdded:)
                                                name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
                                              object:nil];
