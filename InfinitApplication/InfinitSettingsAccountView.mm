@@ -136,8 +136,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
       self.handle_check.hidden = YES;
       self.handle_error.hidden = YES;
       if (![self.handle.stringValue isEqualToString:_start_handle] &&
-          self.name.stringValue.length > 2 &&
-          self.name.stringValue.length < 31)
+          self.handle.stringValue.length > 2 &&
+          self.handle.stringValue.length < 31)
       {
         self.save_handle.hidden = NO;
       }
