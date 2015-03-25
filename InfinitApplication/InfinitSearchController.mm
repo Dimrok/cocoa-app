@@ -38,10 +38,9 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 @private
   // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
   __unsafe_unretained id<InfinitSearchControllerProtocol> _delegate;
-  
-  ABAddressBook* _addressbook;
 
   BOOL _searching_email;
+  BOOL _has_searched;
 }
 
 #pragma mark - Init
@@ -78,16 +77,16 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (BOOL)accessToAddressBook
 {
-  _addressbook = [ABAddressBook addressBook];
-  if (_addressbook == nil)
+  if ([ABAddressBook sharedAddressBook] == nil)
   {
     ELLE_LOG("%s: no access to addressbook", self.description.UTF8String);
+    return NO;
   }
   else
   {
     ELLE_DEBUG("%s: addressbook accessible", self.description.UTF8String);
+    return YES;
   }
-  return _addressbook == nil ? NO : YES;
 }
 
 - (void)firstAddressbookAccess
@@ -98,9 +97,8 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     [InfinitMetricsManager sendMetric:INFINIT_METRIC_NO_ADRESSBOOK_ACCESS];
   else
   {
-    _addressbook = [ABAddressBook sharedAddressBook];
     NSInteger count = 0;
-    for (ABPerson* person in [_addressbook people])
+    for (ABPerson* person in [[ABAddressBook sharedAddressBook] people])
     {
       ABMultiValue* emails = [person valueForProperty:kABEmailProperty];
       if (emails.count > 0)
@@ -113,30 +111,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (void)cacheInitialResults
 {
-  if (![[[IAUserPrefs sharedInstance] prefsForKey:@"accessed_addressbook"] isEqualToString:@"1"])
-  {
-    [self firstAddressbookAccess];
-  }
-  if (![self accessToAddressBook])
-  {
-    _all_address_book = @[];
-    return;
-  }
-  NSMutableArray* temp_ab = [NSMutableArray array];
-  for (ABPerson* person in _addressbook.people)
-  {
-    InfinitSearchPersonResult* result = [InfinitSearchPersonResult personWithABPerson:person 
-                                                                          andDelegate:self];
-    if (result.emails.count > 0)
-      [temp_ab addObject:result];
-  }
-  NSSortDescriptor* descriptor =
-    [NSSortDescriptor sortDescriptorWithKey:@"fullname"
-                                  ascending:YES
-                                   selector:@selector(caseInsensitiveCompare:)];
-  [temp_ab sortUsingDescriptors:@[descriptor]];
-  _all_address_book = temp_ab;
-  _address_book_results = [self.all_address_book mutableCopy];
+  _has_searched = NO;
   NSMutableArray* temp_swaggers = [NSMutableArray array];
   for (InfinitUser* user in [InfinitUserManager sharedInstance].favorites)
   {
@@ -164,16 +139,54 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   if (temp_devices.count == 0)
   {
     InfinitSearchPersonResult* me =
-      [InfinitSearchPersonResult personWithInfinitUser:[InfinitUserManager sharedInstance].me
-                                           andDelegate:self];
+    [InfinitSearchPersonResult personWithInfinitUser:[InfinitUserManager sharedInstance].me
+                                         andDelegate:self];
     if (![self.all_swaggers containsObject:me])
       [temp_devices addObject:me];
   }
   _all_devices = temp_devices;
   _device_results = [self.all_devices mutableCopy];
+  _all_address_book = @[];
+  _address_book_results = [self.address_book_results mutableCopy];
+
   [self performSelectorOnMainThread:@selector(sortAndAggregateResults)
                          withObject:nil
                       waitUntilDone:NO];
+
+  if (![[[IAUserPrefs sharedInstance] prefsForKey:@"accessed_addressbook"] isEqualToString:@"1"])
+  {
+    [self firstAddressbookAccess];
+  }
+  if (![self accessToAddressBook])
+  {
+    _all_address_book = @[];
+    _address_book_results = [self.address_book_results mutableCopy];
+  }
+  else
+  {
+    NSMutableArray* temp_ab = [NSMutableArray array];
+    for (ABPerson* person in [ABAddressBook sharedAddressBook].people)
+    {
+      InfinitSearchPersonResult* result = [InfinitSearchPersonResult personWithABPerson:person 
+                                                                            andDelegate:self];
+      if (result.emails.count > 0)
+      {
+        [temp_ab addObject:result];
+      }
+    }
+    NSSortDescriptor* descriptor =
+      [NSSortDescriptor sortDescriptorWithKey:@"fullname"
+                                    ascending:YES
+                                     selector:@selector(caseInsensitiveCompare:)];
+    [temp_ab sortUsingDescriptors:@[descriptor]];
+    _all_address_book = temp_ab;
+    if (_has_searched)
+      return;
+    _address_book_results = [self.all_address_book mutableCopy];
+    [self performSelectorOnMainThread:@selector(sortAndAggregateResults)
+                           withObject:nil
+                        waitUntilDone:NO];
+  }
 }
 
 - (void)searchAddressBookWithString:(NSString*)search_string
@@ -221,7 +234,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   NSMutableArray* all_results = [NSMutableArray array];
   for (ABSearchElement* search_element in search_elements)
   {
-    [all_results addObjectsFromArray:[_addressbook recordsMatchingSearchElement:search_element]];
+    [all_results addObjectsFromArray:[[ABAddressBook sharedAddressBook] recordsMatchingSearchElement:search_element]];
   }
   
   NSMutableArray* filtered_results = [NSMutableArray array];
@@ -438,6 +451,7 @@ containsSearchString:(NSString*)search_string
 
 - (void)searchWithString:(NSString*)search_string
 {
+  _has_searched = YES;
   _searching_email = NO;
   [self cancelRunningSearches];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
