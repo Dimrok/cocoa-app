@@ -60,10 +60,10 @@
     _metric_search_used = NO;
     _search_email = NO;
     _search_results = [NSMutableArray array];
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(avatarCallback:)
-                                               name:INFINIT_USER_AVATAR_NOTIFICATION
-                                             object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(avatarCallback:)
+                                                 name:INFINIT_USER_AVATAR_NOTIFICATION
+                                               object:nil];
   }
   
   return self;
@@ -258,7 +258,10 @@
   [temp removeObject:model];
   [self.search_field setObjectValue:temp];
   [self fixClipView];
-  [_delegate searchViewInputsChanged:self];
+  if ([self.search_field.objectValue count] == 0)
+    [_search_controller emptyResults];
+  else
+    [_delegate searchViewInputsChanged:self];
 }
 
 - (void)cursorAtEndOfSearchBox
@@ -328,6 +331,15 @@
   else
     search_string = @"";
   return search_string;
+}
+
+- (void)tokenFieldWillBecomeFirstResponder:(OEXTokenField*)tokenField
+{
+  id object = self.search_field.objectValue;
+  if ([object isEqual:@""] || [object isEqual:@[]])
+  {
+    [_search_controller emptyResults];
+  }
 }
 
 - (void)controlTextDidChange:(NSNotification*)notification
@@ -469,7 +481,10 @@ doCommandBySelector:(SEL)commandSelector
     if ([_delegate searchViewGotEscapePressedShrink:self])
     {
       [_delegate searchView:self changedToHeight:NSHeight(self.search_box_view.frame)];
-      [self clearResults];
+      [self searchLoading:NO];
+      _no_results = NO;
+      _search_results = nil;
+      [self.search_field resignFirstResponder];
       [self fixClipView];
     }
     return YES;
