@@ -438,23 +438,46 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 {
   [self.send_button.cell setDisabled_attrs:_send_btn_disabled_attrs];
   [self.search_view addSubview:_search_controller.view];
-  [self.search_view addConstraints:[NSLayoutConstraint
-                                    constraintsWithVisualFormat:@"V:|[search_view]|"
-                                    options:0
-                                    metrics:nil
-                                    views:@{@"search_view": _search_controller.view}]];
+  NSMutableArray* search_constraints =
+    [NSMutableArray arrayWithArray:
+     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[search_view]|"
+                                             options:0
+                                             metrics:nil
+                                               views:@{@"search_view": _search_controller.view}]];
+  [search_constraints addObjectsFromArray:
+   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[search_view]|"
+                                           options:0
+                                           metrics:nil 
+                                             views:@{@"search_view": _search_controller.view}]];
+  [self.search_view addConstraints:search_constraints];
+
   [self.note_view addSubview:_note_controller.view];
-  [self.note_view addConstraints:[NSLayoutConstraint
-                                  constraintsWithVisualFormat:@"V:|[note_view]|"
-                                  options:0
-                                  metrics:nil
-                                  views:@{@"note_view": _note_controller.view}]];
+  NSMutableArray* note_constraints =
+    [NSMutableArray arrayWithArray:
+     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[note_view]|"
+                                             options:0
+                                             metrics:nil
+                                               views:@{@"note_view": _note_controller.view}]];
+  [note_constraints addObjectsFromArray:
+   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[note_view]|"
+                                           options:0
+                                           metrics:nil
+                                             views:@{@"note_view": _note_controller.view}]];
+  [self.note_view addConstraints:note_constraints];
+
   [self.files_view addSubview:_files_controller.view];
-  [self.files_view addConstraints:[NSLayoutConstraint
-                                   constraintsWithVisualFormat:@"V:|[files_view]|"
-                                   options:0
-                                   metrics:nil
-                                   views:@{@"files_view": _files_controller.view}]];
+  NSMutableArray* files_constraints =
+    [NSMutableArray arrayWithArray:
+     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[files_view]|"
+                                             options:0
+                                             metrics:nil
+                                               views:@{@"files_view": _files_controller.view}]];
+  [files_constraints addObjectsFromArray:
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[files_view]|"
+                                            options:0
+                                            metrics:nil
+                                              views:@{@"files_view": _files_controller.view}]];
+  [self.files_view addConstraints:files_constraints];
 }
 
 - (void)loadView
@@ -498,6 +521,13 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
   {
     [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
   }
+  // Ensure constraints are respected when drop on icon
+  [_files_controller updateWithFiles:@[]];
+  [self performSelector:@selector(delayedLoadFiles) withObject:nil afterDelay:0.4f];
+}
+
+- (void)delayedLoadFiles
+{
   [_files_controller updateWithFiles:[_delegate sendViewWantsFileList:self]];
 }
 
@@ -763,6 +793,12 @@ wantsChangeHeight:(CGFloat)height
     return;
   CGFloat content_h = (height - _last_files_height) + self.content_height_constraint.constant;
   _last_files_height = height;
+  BOOL search_closed = NO;
+  if (self.search_constraint.constant == NSHeight(_search_controller.search_box_view.frame))
+  {
+    search_closed = YES;
+    [self.main_view removeConstraint:self.search_note_contraint];
+  }
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
@@ -773,6 +809,17 @@ wantsChangeHeight:(CGFloat)height
    {
      self.content_height_constraint.constant = content_h;
      self.files_constraint.constant = height;
+     if (search_closed && self.search_note_contraint == nil)
+     {
+       self.search_note_contraint = [NSLayoutConstraint constraintWithItem:self.search_view
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.note_view
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0
+                                                                  constant:0.0];
+       [self.main_view addConstraint:self.search_note_contraint];
+     }
    }];
 }
 
@@ -794,54 +841,36 @@ wantsChangeHeight:(CGFloat)height
 {
   if (_last_search_height == search_height)
     return;
-
   _last_search_height = search_height;
   BOOL search_mode = NO;
-  CGFloat content_height =
-    search_height + self.note_constraint.constant + self.files_constraint.constant;
-  if (self.content_height_constraint == nil)
-  {
-    self.content_height_constraint =
-      [NSLayoutConstraint constraintWithItem:self.main_view
-                                   attribute:NSLayoutAttributeHeight
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:nil
-                                   attribute:NSLayoutAttributeNotAnAttribute
-                                  multiplier:1.0
-                                    constant:NSHeight(self.main_view.frame)];
-    [self.main_view addConstraint:self.content_height_constraint];
-  }
+  CGFloat content_height = search_height + self.files_constraint.constant;
   if (search_height > NSHeight(_search_controller.search_box_view.frame))
   {
     search_mode = YES;
     [self.main_view removeConstraint:self.search_note_contraint];
   }
+  else
+  {
+    content_height += self.note_constraint.constant;
+  }
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.15;
-    [self.search_constraint setConstant:search_height];
-    if (search_mode)
+    if (!search_mode)
     {
-      CGFloat height = search_height + self.files_constraint.constant;
-      self.content_height_constraint.animator.constant = height;
-      self.note_view.animator.alphaValue =  0.0f;
-    }
-    else
-    {
-      [self.content_height_constraint.animator setConstant:content_height];
       self.note_view.hidden = NO;
       self.files_view.hidden = NO;
-      self.note_view.animator.alphaValue = 1.0f;
     }
+    self.search_constraint.animator.constant = search_height;
+    self.content_height_constraint.animator.constant = content_height;
+    self.note_view.animator.alphaValue = search_mode ? 0.0f : 1.0f;
   }
                       completionHandler:^
   {
     self.note_view.hidden = search_mode;
-    CGFloat alpha = search_mode ? 0.0 : 1.0;
-    self.note_view.alphaValue = alpha;
+    self.note_view.alphaValue = search_mode ? 0.0f : 1.0f;
     self.search_constraint.constant = search_height;
-    CGFloat height = search_height + self.files_constraint.constant;
-    self.content_height_constraint.constant = search_mode ? height : content_height;
+    self.content_height_constraint.constant = content_height;
     if (!search_mode && self.search_note_contraint == nil)
     {
       self.search_note_contraint = [NSLayoutConstraint constraintWithItem:self.search_view

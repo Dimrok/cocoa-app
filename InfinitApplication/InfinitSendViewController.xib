@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A388a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitSendViewController">
@@ -29,7 +29,7 @@
         <customView autoresizesSubviews="NO" verticalHuggingPriority="750" verticalCompressionResistancePriority="200" translatesAutoresizingMaskIntoConstraints="NO" id="y7O-sV-29x">
             <rect key="frame" x="0.0" y="0.0" width="317" height="396"/>
             <subviews>
-                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c30-a5-bOa" customClass="IAHeaderView">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="c30-a5-bOa" customClass="IAHeaderView">
                     <rect key="frame" x="0.0" y="346" width="317" height="50"/>
                     <subviews>
                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oz2-Se-dsN">
@@ -62,15 +62,54 @@
                             </connections>
                         </customView>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="IUD-E4-kP9"/>
+                    </constraints>
                 </customView>
-                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLL-4c-Odh" customClass="IAFooterView">
+                <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="feD-Dd-K1b" customClass="InfinitWhiteView">
+                    <rect key="frame" x="0.0" y="39" width="317" height="307"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="c1o-0q-VeA" customClass="InfinitWhiteView">
+                            <rect key="frame" x="0.0" y="0.0" width="317" height="197"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="197" id="f4z-F8-7gq"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="fJT-dD-ENS" customClass="InfinitWhiteView">
+                            <rect key="frame" x="0.0" y="197" width="317" height="65"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="65" id="ANX-ey-qLd"/>
+                            </constraints>
+                        </customView>
+                        <customView autoresizesSubviews="NO" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Zgr-KS-V0i" customClass="InfinitWhiteView">
+                            <rect key="frame" x="0.0" y="262" width="317" height="45"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="45" id="si2-aA-Iv3"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="307" id="2HL-Pa-xeH"/>
+                        <constraint firstItem="c1o-0q-VeA" firstAttribute="leading" secondItem="feD-Dd-K1b" secondAttribute="leading" id="4y2-cy-EK6"/>
+                        <constraint firstItem="fJT-dD-ENS" firstAttribute="top" secondItem="Zgr-KS-V0i" secondAttribute="bottom" id="Izf-95-CMG"/>
+                        <constraint firstAttribute="trailing" secondItem="c1o-0q-VeA" secondAttribute="trailing" id="T2H-gg-BSv"/>
+                        <constraint firstAttribute="bottom" secondItem="c1o-0q-VeA" secondAttribute="bottom" id="VxC-xR-Re3"/>
+                        <constraint firstItem="Zgr-KS-V0i" firstAttribute="top" secondItem="feD-Dd-K1b" secondAttribute="top" id="aXC-cm-lz2"/>
+                        <constraint firstAttribute="trailing" secondItem="fJT-dD-ENS" secondAttribute="trailing" id="g7z-FM-fOe"/>
+                        <constraint firstItem="Zgr-KS-V0i" firstAttribute="leading" secondItem="feD-Dd-K1b" secondAttribute="leading" id="iXh-NX-eHj"/>
+                        <constraint firstAttribute="trailing" secondItem="Zgr-KS-V0i" secondAttribute="trailing" id="oVC-Ic-RIq"/>
+                        <constraint firstItem="c1o-0q-VeA" firstAttribute="top" secondItem="fJT-dD-ENS" secondAttribute="bottom" id="s4v-Ue-36T"/>
+                        <constraint firstItem="fJT-dD-ENS" firstAttribute="leading" secondItem="feD-Dd-K1b" secondAttribute="leading" id="uuZ-hm-H6c"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="XLL-4c-Odh" customClass="IAFooterView">
                     <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bS1-jm-OuR">
                             <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bg-main-button" id="48W-IY-K8J"/>
                         </imageView>
-                        <button toolTip="Send a file" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KpR-OD-X5s">
+                        <button toolTip="Send a file" translatesAutoresizingMaskIntoConstraints="NO" id="KpR-OD-X5s">
                             <rect key="frame" x="247" y="0.0" width="70" height="39"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="70" id="cTm-yl-IVA"/>
@@ -103,44 +142,24 @@ Gw
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="KpR-OD-X5s" secondAttribute="trailing" id="Khv-d4-Msv"/>
-                    </constraints>
-                </customView>
-                <customView autoresizesSubviews="NO" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="feD-Dd-K1b" customClass="InfinitWhiteView">
-                    <rect key="frame" x="0.0" y="39" width="317" height="307"/>
-                    <subviews>
-                        <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c1o-0q-VeA" customClass="InfinitWhiteView">
-                            <rect key="frame" x="0.0" y="0.0" width="317" height="197"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="197" id="f4z-F8-7gq"/>
-                            </constraints>
-                        </customView>
-                        <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fJT-dD-ENS" customClass="InfinitWhiteView">
-                            <rect key="frame" x="0.0" y="197" width="317" height="65"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="65" id="ANX-ey-qLd"/>
-                            </constraints>
-                        </customView>
-                        <customView autoresizesSubviews="NO" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zgr-KS-V0i" customClass="InfinitWhiteView">
-                            <rect key="frame" x="0.0" y="262" width="317" height="45"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="45" id="si2-aA-Iv3"/>
-                            </constraints>
-                        </customView>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="307" id="2HL-Pa-xeH"/>
-                        <constraint firstItem="fJT-dD-ENS" firstAttribute="top" secondItem="Zgr-KS-V0i" secondAttribute="bottom" id="Izf-95-CMG"/>
-                        <constraint firstAttribute="bottom" secondItem="c1o-0q-VeA" secondAttribute="bottom" id="VxC-xR-Re3"/>
-                        <constraint firstItem="Zgr-KS-V0i" firstAttribute="top" secondItem="feD-Dd-K1b" secondAttribute="top" id="aXC-cm-lz2"/>
-                        <constraint firstItem="c1o-0q-VeA" firstAttribute="top" secondItem="fJT-dD-ENS" secondAttribute="bottom" id="s4v-Ue-36T"/>
+                        <constraint firstAttribute="trailing" secondItem="KpR-OD-X5s" secondAttribute="trailing" id="Yt5-GK-11U"/>
+                        <constraint firstAttribute="bottom" secondItem="KpR-OD-X5s" secondAttribute="bottom" id="bOM-yo-cMT"/>
+                        <constraint firstItem="KpR-OD-X5s" firstAttribute="top" secondItem="XLL-4c-Odh" secondAttribute="top" id="cZ6-fE-j6Q"/>
+                        <constraint firstAttribute="height" constant="39" id="s9K-e6-sn8"/>
                     </constraints>
                 </customView>
             </subviews>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="XLL-4c-Odh" secondAttribute="trailing" id="7uF-Js-GD1"/>
                 <constraint firstItem="c30-a5-bOa" firstAttribute="top" secondItem="y7O-sV-29x" secondAttribute="top" id="Cl5-XY-zEe"/>
                 <constraint firstItem="feD-Dd-K1b" firstAttribute="top" secondItem="c30-a5-bOa" secondAttribute="bottom" id="Eqh-sy-S1W"/>
+                <constraint firstAttribute="trailing" secondItem="feD-Dd-K1b" secondAttribute="trailing" id="Hgd-Mr-2io"/>
                 <constraint firstItem="XLL-4c-Odh" firstAttribute="top" secondItem="feD-Dd-K1b" secondAttribute="bottom" id="JE2-z7-r7Q"/>
+                <constraint firstItem="c30-a5-bOa" firstAttribute="leading" secondItem="y7O-sV-29x" secondAttribute="leading" id="Qap-nE-KaQ"/>
+                <constraint firstItem="feD-Dd-K1b" firstAttribute="leading" secondItem="y7O-sV-29x" secondAttribute="leading" id="Z8f-LS-92T"/>
                 <constraint firstAttribute="bottom" secondItem="XLL-4c-Odh" secondAttribute="bottom" id="e7g-PN-haj"/>
+                <constraint firstAttribute="trailing" secondItem="c30-a5-bOa" secondAttribute="trailing" id="hKj-Qf-3yY"/>
+                <constraint firstItem="XLL-4c-Odh" firstAttribute="leading" secondItem="y7O-sV-29x" secondAttribute="leading" id="qAd-pS-klb"/>
             </constraints>
             <point key="canvasLocation" x="224.5" y="168"/>
         </customView>
