@@ -20,7 +20,10 @@
 
 @interface IAUserSearchViewController ()
 
-@property (atomic, readonly) NSMutableArray* search_results;
+@property (nonatomic, readonly) NSMutableArray* search_results;
+
+@property (nonatomic, readonly) NSUInteger last_device;
+@property (nonatomic, readonly) NSUInteger last_user;
 
 @end
 
@@ -387,7 +390,7 @@
   }
   else
   {
-    [self clearResults];
+    [_search_controller emptyResults];
     [self searchLoading:NO];
     [self updateResultsTable];
     [self fixClipView];
@@ -678,6 +681,10 @@ writeRepresentedObjects:(NSArray*)objects
     cell.delegate = self;
     cell.model = model;
     cell.hover = model.hover;
+    if (row == self.last_device || row == self.last_user)
+      cell.line = YES;
+    else
+      cell.line = NO;
     return cell;
   }
 }
@@ -838,14 +845,22 @@ writeRepresentedObjects:(NSArray*)objects
     _search_results = [NSMutableArray array];
   else
     [self.search_results removeAllObjects];
-  
+
+  NSUInteger count = 0;
+  _last_device = NSNotFound;
+  _last_user = NSNotFound;
   for (InfinitSearchPersonResult* person in _search_controller.result_list)
   {
+    if (person.device != nil)
+      _last_device = count;
     if (person.infinit_user != nil)
     {
       InfinitSearchRowModel* model = [InfinitSearchRowModel rowModelWithSearchPersonResult:person];
       if (![self.recipientList containsObject:model])
+      {
+        _last_user = count;
         [self.search_results addObject:model];
+      }
     }
     else // Address book user
     {
@@ -857,7 +872,10 @@ writeRepresentedObjects:(NSArray*)objects
           [self.search_results addObject:model];
       }
     }
+    count++;
   }
+  if (self.last_device == 0)
+    _last_device = 1;
   [self updateResultsTable];
 }
 
