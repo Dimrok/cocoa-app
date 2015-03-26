@@ -16,6 +16,7 @@
 
 @property (nonatomic, unsafe_unretained, readwrite) id<InfinitSearchResultCellProtocol> delegate;
 @property (nonatomic, readwrite) BOOL hover;
+@property (nonatomic, readwrite) BOOL line;
 @property (nonatomic, readwrite) InfinitSearchRowModel* model;
 
 @end

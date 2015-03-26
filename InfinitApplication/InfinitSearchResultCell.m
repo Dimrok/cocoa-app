@@ -31,6 +31,7 @@ static NSDictionary* _email_style = nil;
 {
   [self removeTrackingArea:_tracking_area];
   _hover = NO;
+  _line = NO;
   [super prepareForReuse];
   self.result_type.image = nil;
 }
@@ -177,23 +178,20 @@ static NSDictionary* _email_style = nil;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-  // Background
   [[NSColor whiteColor] set];
   NSRectFill(self.bounds);
 
-  // Dark line
-  NSRect dark_rect = NSMakeRect(50.0,
-                                0.0,
-                                NSWidth(self.bounds) - 70.0,
-                                1.0);
-  NSBezierPath* dark_line = [NSBezierPath bezierPathWithRect:dark_rect];
-  [[InfinitColor colorWithGray:244] set];
-  [dark_line fill];
+  if (self.line)
+  {
+    NSRect dark_rect = NSMakeRect(50.0f, 0.0f, self.bounds.size.width - 70.0f, 1.0f);
+    [[InfinitColor colorWithGray:244] set];
+    NSRectFill(dark_rect);
+  }
 
   if (self.hover)
   {
-    NSRect hover = NSMakeRect(0.0, 0.0, NSWidth(self.bounds), NSHeight(self.bounds));
-    [InfinitColor colorWithRed:240 green:252 blue:251];
+    NSRect hover = NSMakeRect(0.0f, 0.0f, self.bounds.size.width, self.bounds.size.height);
+    [[InfinitColor colorWithRed:240 green:252 blue:251] set];
     NSRectFill(hover);
   }
 }
