@@ -580,17 +580,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 - (void)filesUpdated
 {
   NSArray* files = [_delegate sendViewWantsFileList:self];
-  if (self.search_constraint.constant > NSHeight(_search_controller.search_box_view.frame))
-  {
-    [self searchView:_search_controller
-     changedToHeight:NSHeight(_search_controller.search_box_view.frame)];
-    // Only add files once animation is complete. Dirty.
-    [_files_controller performSelector:@selector(updateWithFiles:) withObject:files afterDelay:0.3];
-  }
-  else
-  {
-    [_files_controller updateWithFiles:files];
-  }
+  [_files_controller updateWithFiles:files];
   [self setSendButtonState];
 
   if (files.count > 0)
@@ -771,16 +761,17 @@ wantsChangeHeight:(CGFloat)height
 {
   if (height == _last_files_height)
     return;
+  CGFloat content_h = (height - _last_files_height) + self.content_height_constraint.constant;
   _last_files_height = height;
-  [self.main_view removeConstraint:self.content_height_constraint];
-  self.content_height_constraint = nil;
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
-     [self.files_constraint.animator setConstant:height];
+     self.content_height_constraint.animator.constant = content_h;
+     self.files_constraint.animator.constant = height;
    }
                       completionHandler:^
    {
+     self.content_height_constraint.constant = content_h;
      self.files_constraint.constant = height;
    }];
 }

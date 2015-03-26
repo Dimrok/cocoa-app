@@ -611,7 +611,7 @@ static NSDictionary* _info_attrs = nil;
   if (_operation_queue.operationCount > 0)
     [_operation_queue cancelAllOperations];
 
-  NSMutableArray* temp_arr = [[NSMutableArray alloc] init];
+  NSMutableArray* temp_arr = [NSMutableArray array];
   for (NSString* path in files)
     [temp_arr addObject:[[InfinitSendFileModel alloc] initWithPath:[path copy]]];
   [temp_arr addObject:[[InfinitSendFileModel alloc] initAddFilesPlaceholder]];
