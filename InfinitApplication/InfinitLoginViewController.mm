@@ -194,6 +194,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   [self.action_button.cell setImageDimsWhenDisabled:NO];
   self.help_button.normal_attrs = _link_attrs;
   self.help_button.hover_attrs = _link_hover_attrs;
+  self.problem_button.normal_attrs = _link_attrs;
+  self.problem_button.hover_attrs = _link_hover_attrs;
   self.facebook_button.color = [InfinitColor colorWithRed:79 green:108 blue:214];
   self.action_button.color = [InfinitColor colorWithRed:255 green:70 blue:75];
   self.help_button.attributedTitle =
@@ -211,7 +213,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
     self.fullname.hidden = YES;
     self.fullname_height.constant = 0.0f;
     self.or_bottom_dh.constant = 0.0f;
-    self.content_height_constraint.constant = 415.0f;
+    self.content_height_constraint.constant = 405.0f;
     [self.view.window makeFirstResponder:self.email_address];
   }
   [self setupButtonsForMode:self.mode];
@@ -292,7 +294,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
       self.fullname_height.animator.constant = 35.0f;
       self.or_bottom_dh.animator.constant = 10.0f;
       [self.fullname.animator setAlphaValue:1.0];
-      [self.content_height_constraint.animator setConstant:460.0f];
+      self.content_height_constraint.animator.constant = 450.0f;;
     }
                         completionHandler:^
      {
@@ -300,7 +302,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
        self.fullname.alphaValue = 1.0;
        self.fullname_height.constant = 35.0f;
        self.or_bottom_dh.constant = 10.0f;
-       self.content_height_constraint.constant = 460.0f;
+       self.content_height_constraint.constant = 450.0f;
        [self.view.window makeFirstResponder:self.fullname];
      }];
   }
@@ -312,7 +314,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
        [self.fullname.animator setAlphaValue:0.0];
        self.fullname_height.animator.constant = 0.0f;
        self.or_bottom_dh.animator.constant = 0.0f;
-       self.content_height_constraint.animator.constant = 415.0f;
+       self.content_height_constraint.animator.constant = 405.0f;
      }
                         completionHandler:^
      {
@@ -320,7 +322,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
        self.fullname_height.constant = 0.0f;
        self.or_bottom_dh.constant = 0.0f;
        self.fullname.hidden = YES;
-       self.content_height_constraint.constant = 415.0f;
+       self.content_height_constraint.constant = 405.0f;
        [self.view.window makeFirstResponder:self.email_address];
      }];
   }
