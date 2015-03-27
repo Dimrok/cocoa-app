@@ -756,6 +756,9 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)handleLogout
 {
   [[IAUserPrefs sharedInstance] setPref:@"facebook_connect" forKey:@"0"];
+  NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
+  if (username.length)
+    [[InfinitKeychain sharedInstance] removeAccount:username];
   [_settings_window close];
   [self closeNotificationWindow];
   [[InfinitStateManager sharedInstance] logoutPerformSelector:@selector(logoutAndShowLoginCallback:)
