@@ -290,11 +290,9 @@
   if (transaction.status == gap_transaction_transferring)
   {
     self.transferring = YES;
+    return;
   }
-  else if (transaction.done)
-  {
-    self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
-  }
+  self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
 }
 
 - (void)peerTransactionUpdated:(NSNotification*)notification
@@ -306,11 +304,9 @@
   if (transaction.status == gap_transaction_transferring)
   {
     self.transferring = YES;
+    return;
   }
-  else if (transaction.done)
-  {
-    self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
-  }
+  self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
 }
 
 - (void)willLogout
