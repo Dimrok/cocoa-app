@@ -1122,7 +1122,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   InfinitConnectionStatus* connection_status = notification.object;
   if (!connection_status.status && !connection_status.still_trying)
   {
-    [self kickedOut];
+    [self performSelectorOnMainThread:@selector(kickedOut) withObject:nil waitUntilDone:YES];
     return;
   }
   BOOL status = connection_status.status;
