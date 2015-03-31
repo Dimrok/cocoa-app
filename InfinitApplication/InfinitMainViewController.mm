@@ -24,7 +24,7 @@
 
 ELLE_LOG_COMPONENT("OSX.MainViewController");
 
-#define IA_FEEDBACK_LINK "http://feedback.infinit.io?utm_source=app&utm_medium=mac"
+#define IA_FEEDBACK_LINK "http://help.infinit.io?utm_source=app&utm_medium=mac"
 
 //- Main Controller --------------------------------------------------------------------------------
 
