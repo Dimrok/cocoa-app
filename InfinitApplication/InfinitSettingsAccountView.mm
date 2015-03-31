@@ -78,6 +78,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   InfinitUser* me = [InfinitUserManager sharedInstance].me;
   _start_avatar_image = me.avatar;
 
+  _start_email = [[InfinitStateManager sharedInstance] selfEmail];
   _start_name = me.fullname;
   _start_handle = me.handle;
 
