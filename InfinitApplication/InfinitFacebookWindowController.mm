@@ -37,6 +37,12 @@ ELLE_LOG_COMPONENT("OSX.FacebookWindowController");
   return self;
 }
 
+- (void)dealloc
+{
+  [self.web_view close];
+  _delegate = nil;
+}
+
 - (void)windowDidLoad
 {
   [super windowDidLoad];
