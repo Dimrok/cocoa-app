@@ -129,10 +129,6 @@ isInfinitUser:(InfinitUser*)user
       _rank += infinit_match_rank;
     _avatar = self.infinit_user.avatar;
     _fullname = self.infinit_user.fullname;
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(avatarReceivedCallback:)
-                                               name:INFINIT_USER_AVATAR_NOTIFICATION
-                                             object:nil];
   }
   return self;
 }
