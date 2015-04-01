@@ -114,7 +114,9 @@
     _scrolling = YES;
     for (NSUInteger i = 0; i < self.table_view.numberOfRows; i++)
     {
-      [[self.table_view viewAtColumn:0 row:i makeIfNecessary:NO] hideControls];
+      NSTableCellView* cell = [self.table_view viewAtColumn:0 row:i makeIfNecessary:NO];
+      if ([cell isKindOfClass:InfinitLinkCellView.class])
+        [(InfinitLinkCellView*)cell hideControls];
     }
   }
   [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scrollDone) object:nil];
@@ -404,7 +406,9 @@ gotDeleteForLink:(InfinitLinkTransaction*)link
   {
     if (i != row)
     {
-      [[self.table_view viewAtColumn:0 row:i makeIfNecessary:NO] hideControls];
+      NSTableCellView* cell = [self.table_view viewAtColumn:0 row:i makeIfNecessary:NO];
+      if ([cell isKindOfClass:InfinitLinkCellView.class])
+        [(InfinitLinkCellView*)cell hideControls];
     }
   }
 }
