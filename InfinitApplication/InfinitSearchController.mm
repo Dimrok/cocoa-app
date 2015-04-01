@@ -59,7 +59,6 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (void)dealloc
 {
-  [self cancelRunningSearches];
   [self cancelCallbacks];
 }
 
@@ -442,11 +441,6 @@ containsSearchString:(NSString*)search_string
   _swagger_results = [self.all_swaggers mutableCopy];
   _device_results = [self.all_devices mutableCopy];
   [self sortAndAggregateResults];
-}
-
-- (void)cancelRunningSearches
-{
-  [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)searchWithString:(NSString*)search_string
