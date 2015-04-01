@@ -134,60 +134,66 @@
 
 - (void)linkAdded:(InfinitLinkTransaction*)link
 {
-  [_list insertObject:link atIndex:0];
-  [self.table_view beginUpdates];
-  if (_list.count == 1) // First transaction.
+  @synchronized(self)
   {
-    [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                           withAnimation:NSTableViewAnimationSlideRight];
-    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                           withAnimation:NSTableViewAnimationSlideRight];
+    [_list insertObject:link atIndex:0];
+    [self.table_view beginUpdates];
+    if (_list.count == 1) // First transaction.
+    {
+      [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                             withAnimation:NSTableViewAnimationSlideRight];
+      [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                             withAnimation:NSTableViewAnimationSlideRight];
+    }
+    else
+    {
+      [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                             withAnimation:NSTableViewAnimationSlideDown];
+    }
+    [self.table_view endUpdates];
+    [self updateListOfRowsWithProgress];
   }
-  else
-  {
-    [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
-                           withAnimation:NSTableViewAnimationSlideDown];
-  }
-  [self.table_view endUpdates];
-  [self updateListOfRowsWithProgress];
 }
 
 - (void)linkUpdated:(InfinitLinkTransaction*)link
 {
-  NSUInteger row = 0;
-  for (InfinitLinkTransaction* existing in _list)
+  @synchronized(self)
   {
-    if (existing.id_.unsignedIntegerValue == link.id_.unsignedIntegerValue)
+    NSUInteger row = 0;
+    for (InfinitLinkTransaction* existing in _list)
     {
-      if (link.status == gap_transaction_failed ||
-          link.status == gap_transaction_canceled ||
-          link.status == gap_transaction_deleted)
+      if (existing.id_.unsignedIntegerValue == link.id_.unsignedIntegerValue)
       {
-        [self.table_view beginUpdates];
-        [_list removeObject:link];
-        [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
-                               withAnimation:NSTableViewAnimationSlideRight];
-        if (_list.count == 0)
+        if (link.status == gap_transaction_failed ||
+            link.status == gap_transaction_canceled ||
+            link.status == gap_transaction_deleted)
         {
-          [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+          [self.table_view beginUpdates];
+          [_list removeObject:link];
+          [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
                                  withAnimation:NSTableViewAnimationSlideRight];
+          if (_list.count == 0)
+          {
+            [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
+                                   withAnimation:NSTableViewAnimationSlideRight];
+          }
+          [self.table_view endUpdates];
+          [_delegate linksViewResizeToHeight:self.height];
         }
-        [self.table_view endUpdates];
-        [_delegate linksViewResizeToHeight:self.height];
+        else
+        {
+          [_list replaceObjectAtIndex:row withObject:link];
+          [self.table_view beginUpdates];
+          [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
+                                     columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+          [self.table_view endUpdates];
+        }
+        break;
       }
-      else
-      {
-        [_list replaceObjectAtIndex:row withObject:link];
-        [self.table_view beginUpdates];
-        [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
-                                   columnIndexes:[NSIndexSet indexSetWithIndex:0]];
-        [self.table_view endUpdates];
-      }
-      break;
+      row++;
     }
-    row++;
+    [self updateListOfRowsWithProgress];
   }
-  [self updateListOfRowsWithProgress];
 }
 
 //- Progress Handling ------------------------------------------------------------------------------
