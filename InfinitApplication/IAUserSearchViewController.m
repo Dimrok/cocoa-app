@@ -293,7 +293,6 @@
 
 - (void)cancelLastSearchOperation
 {
-  [_search_controller cancelRunningSearches];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 

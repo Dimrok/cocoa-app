@@ -447,7 +447,6 @@ containsSearchString:(NSString*)search_string
 {
   _has_searched = YES;
   _searching_email = NO;
-  [self cancelRunningSearches];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [self searchDevices:search_string];
   [self searchSwaggers:search_string];
