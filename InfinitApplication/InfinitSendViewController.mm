@@ -394,6 +394,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     _last_files_height = 197.0;
 
     _search_controller = search_controller;
+    _search_controller.link_mode = for_link;
     [_search_controller setDelegate:self];
     _note_controller = [[InfinitSendNoteViewController alloc] initWithDelegate:self];
     _files_controller = [[InfinitSendFilesViewController alloc] initWithDelegate:self];
@@ -665,7 +666,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 
     for (id object in _recipient_list)
     {
-      if ([object isKindOfClass:NSString.class] && ![object isEmail] &&
+      if ([object isKindOfClass:NSString.class] && ![object infinit_isEmail] &&
           ![object isKindOfClass:InfinitUser.class])
       {
         return NO;
