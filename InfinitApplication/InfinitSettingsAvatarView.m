@@ -166,12 +166,11 @@
   {
     BOOL res = NO;
     NSString* file = [paste_board propertyListForType:NSFilenamesPboardType][0];
-    CFStringRef file_ext = (__bridge CFStringRef)file.pathExtension;
+    CFStringRef file_ext = (__bridge_retained CFStringRef)file.pathExtension;
     CFStringRef file_uti =
     UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, file_ext, NULL);
     if (UTTypeConformsTo(file_uti, kUTTypeImage))
     {
-      CFRelease(file_uti);
       NSDictionary* file_properties = [[NSFileManager defaultManager] attributesOfItemAtPath:file
                                                                                        error:NULL];
       NSImage* image = [[NSImage alloc] initWithContentsOfFile:file];
@@ -186,6 +185,7 @@
       }
     }
     CFRelease(file_uti);
+    CFRelease(file_ext);
     return res;
   }
   else if ([paste_board availableTypeFromArray:@[NSTIFFPboardType]])
