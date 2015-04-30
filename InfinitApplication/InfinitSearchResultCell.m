@@ -66,7 +66,7 @@ static NSDictionary* _email_style = nil;
   NSMutableAttributedString* fullname_norm_str =
     [[NSMutableAttributedString alloc] initWithString:self.model.fullname
                                            attributes:_fullname_style];
-  if ([self.model.destination isKindOfClass:NSString.class] && [self.model.destination isEmail] > 0)
+  if ([self.model.destination isKindOfClass:NSString.class] && [self.model.destination infinit_isEmail] > 0)
   {
     NSAttributedString* email_str =
       [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"  (%@)", self.model.destination]

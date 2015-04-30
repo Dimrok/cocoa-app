@@ -131,6 +131,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   _all_swaggers = temp_swaggers;
   _swagger_results = [self.all_swaggers mutableCopy];
   NSMutableArray* temp_devices = [NSMutableArray array];
+  [[InfinitDeviceManager sharedInstance] updateDevices];
   for (InfinitDevice* device in [InfinitDeviceManager sharedInstance].other_devices)
   {
     [temp_devices addObject:[InfinitSearchPersonResult personWithDevice:device andDelegate:self]];
@@ -291,7 +292,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
     [self.device_results removeAllObjects];
   for (InfinitDevice* device in devices)
   {
-    if ([self string:device.friendly_name containsString:search_string])
+    if ([self string:device.name containsString:search_string])
     {
       InfinitSearchPersonResult* result = [InfinitSearchPersonResult personWithDevice:device
                                                                           andDelegate:self];
@@ -328,27 +329,6 @@ containsSearchString:(NSString*)search_string
 }
 
 #pragma mark - Email Search
-
-- (void)searchEmails:(NSArray*)emails
-{
-  if (emails.count == 0)
-    return;
-  [[InfinitUserManager sharedInstance] searchEmails:emails
-                                    performSelector:@selector(searchUsersByEmailsCallback:)
-                                           onObject:self];
-}
-
-- (void)searchUsersByEmailsCallback:(NSDictionary*)result
-{
-  for (NSString* email in result.allKeys)
-  {
-    InfinitUser* user = result[email];
-    if (user != nil)
-      [self updatePersonWithEmail:email andInfinitUser:user];
-  }
-  
-  [self sortAndAggregateResults];
-}
 
 - (void)updatePersonWithEmail:(NSString*)email
                andInfinitUser:(InfinitUser*)user

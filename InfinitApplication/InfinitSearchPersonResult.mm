@@ -150,7 +150,7 @@ isInfinitUser:(InfinitUser*)user
     _delegate = delegate;
     _device = device;
     _emails = nil;
-    _fullname = self.device.friendly_name;
+    _fullname = self.device.name;
     _infinit_user = [InfinitUserManager sharedInstance].me;
     switch (self.device.type)
     {
@@ -158,11 +158,13 @@ isInfinitUser:(InfinitUser*)user
         _avatar = [NSImage imageNamed:@"send-icon-device-android-avatar"];
         break;
       case InfinitDeviceTypeiPhone:
+      case InfinitDeviceTypeiPad:
         _avatar = [NSImage imageNamed:@"send-icon-device-ios-avatar"];
         break;
       case InfinitDeviceTypeMacLaptop:
         _avatar = [NSImage imageNamed:@"send-icon-device-mac-avatar"];
         break;
+      case InfinitDeviceTypeMacDesktop:
       case InfinitDeviceTypePCWindows:
         _avatar = [NSImage imageNamed:@"send-icon-device-windows-avatar"];
         break;
