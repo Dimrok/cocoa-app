@@ -142,6 +142,7 @@
 
     case gap_transaction_connecting:
     case gap_transaction_transferring:
+    case gap_transaction_paused:
       if (transaction.sender.is_self)
       {
         self.indicator.image = [IAFunctions imageNamed:@"main-icon-upload"];
