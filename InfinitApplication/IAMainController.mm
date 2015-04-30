@@ -1466,6 +1466,7 @@ hasCurrentViewController:(IAViewController*)controller
 {
   ELLE_LOG("%s: user kicked out", self.description.UTF8String);
   // Try to automatically login after a couple of seconds
+  [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"facebook_connect"];
   [self performSelector:@selector(delayedRetryLogin) withObject:nil afterDelay:3.0];
 }
 
