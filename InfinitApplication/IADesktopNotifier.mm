@@ -366,7 +366,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       break;
 
     case gap_transaction_finished:
-      if (transaction.sender.is_self)
+      if (transaction.sender.is_self && transaction.from_device)
       {
         res.title = NSLocalizedString(@"Delivered!", nil);
         res.informativeText = [NSString stringWithFormat:@"%@ %@.",
