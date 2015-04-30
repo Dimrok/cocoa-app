@@ -364,7 +364,7 @@
 
   NSString* search_string = [self currentSearchString];
 
-  if (search_string.isEmail && [_last_search isEqualToString:search_string])
+  if (search_string.infinit_isEmail && [_last_search isEqualToString:search_string])
   {
     InfinitSearchRowModel* model = [InfinitSearchRowModel rowModelWithEmail:search_string];
     [self addElement:model];
@@ -374,7 +374,7 @@
 
   if (search_string.length > 0)
   {
-    if (search_string.isEmail)
+    if (search_string.infinit_isEmail)
     {
       _search_email = YES;
       [self searchLoading:NO];
@@ -433,7 +433,7 @@ doCommandBySelector:(SEL)commandSelector
     if (_search_email)
     {
       NSString* search_string = [self currentSearchString];
-      if (search_string.isEmail)
+      if (search_string.infinit_isEmail)
       {
         InfinitSearchRowModel* model = [InfinitSearchRowModel rowModelWithEmail:search_string];
         [self addElement:model];
@@ -522,7 +522,7 @@ hasMenuForRepresentedObject:(id)representedObject
   for (id object in allowed_tokens)
   {
     if (![object isKindOfClass:InfinitSearchRowModel.class] &&
-        !([object isKindOfClass:NSString.class] && [object isEmail]))
+        !([object isKindOfClass:NSString.class] && [object infinit_isEmail]))
     {
       [allowed_tokens removeObject:object];
     }
@@ -550,7 +550,7 @@ displayStringForRepresentedObject:(id)representedObject
 - (NSTokenStyle)tokenField:(NSTokenField*)tokenField
  styleForRepresentedObject:(id)representedObject
 {
-  if ([representedObject isKindOfClass:NSString.class] && ![representedObject isEmail])
+  if ([representedObject isKindOfClass:NSString.class] && ![representedObject infinit_isEmail])
     return NSPlainTextTokenStyle;
   else
     return NSDefaultTokenStyle;
@@ -938,7 +938,7 @@ writeRepresentedObjects:(NSArray*)objects
   }
   else
   {
-    if ([representedObject isKindOfClass:NSString.class] && [representedObject isEmail])
+    if ([representedObject isKindOfClass:NSString.class] && [representedObject infinit_isEmail])
       avatar = [IAFunctions makeAvatarFor:@"@"];
     else
       avatar = [IAFunctions makeAvatarFor:representedObject];

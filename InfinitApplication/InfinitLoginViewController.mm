@@ -367,7 +367,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 {
   self.email_address.stringValue =
     [self.email_address.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-  if (!self.email_address.stringValue.isEmail)
+  if (!self.email_address.stringValue.infinit_isEmail)
   {
     NSString* error = NSLocalizedString(@"Please enter a valid email address.", nil);
     [self showError:error];
