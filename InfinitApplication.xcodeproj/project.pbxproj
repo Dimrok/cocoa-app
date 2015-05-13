@@ -378,6 +378,9 @@
 		83E0F6651B01E3B20057B91E /* InfinitQuotaWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */; };
 		83E0F6661B01E3B20057B91E /* InfinitQuotaWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */; };
 		83E0F6681B01F1C90057B91E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E0F6671B01F1C90057B91E /* Carbon.framework */; };
+		83E0F67A1B034F3B0057B91E /* icon-quota-full.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E0F6781B034F3B0057B91E /* icon-quota-full.png */; };
+		83E0F67B1B034F3B0057B91E /* icon-quota-full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E0F6791B034F3B0057B91E /* icon-quota-full@2x.png */; };
+		83E0F67F1B0370320057B91E /* GetBSDProcessList.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E0F67D1B0370320057B91E /* GetBSDProcessList.m */; };
 		83E1B73A191E6F85000338A3 /* InfinitSendFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */; };
 		83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */; };
 		83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */; };
@@ -1006,6 +1009,10 @@
 		83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitQuotaWindowController.m; sourceTree = "<group>"; };
 		83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitQuotaWindowController.xib; sourceTree = "<group>"; };
 		83E0F6671B01F1C90057B91E /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		83E0F6781B034F3B0057B91E /* icon-quota-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-quota-full.png"; path = "../../../../fist-resources/slices/mac/other/icon-quota-full.png"; sourceTree = "<group>"; };
+		83E0F6791B034F3B0057B91E /* icon-quota-full@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-quota-full@2x.png"; path = "../../../../fist-resources/slices/mac/other/icon-quota-full@2x.png"; sourceTree = "<group>"; };
+		83E0F67D1B0370320057B91E /* GetBSDProcessList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetBSDProcessList.m; sourceTree = "<group>"; };
+		83E0F67E1B0370320057B91E /* GetBSDProcessList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBSDProcessList.h; sourceTree = "<group>"; };
 		83E1B737191E6F85000338A3 /* InfinitSendFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendFilesViewController.h; sourceTree = "<group>"; };
 		83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFilesViewController.m; sourceTree = "<group>"; };
 		83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendFilesViewController.xib; sourceTree = "<group>"; };
@@ -1673,6 +1680,8 @@
 				838FE0B717DA097C004160DB /* IAHoverButton.m */,
 				83F5FCD118EB3E2E0051F010 /* InfinitSizedTextField.h */,
 				83F5FCD218EB3E2E0051F010 /* InfinitSizedTextField.m */,
+				83E0F67E1B0370320057B91E /* GetBSDProcessList.h */,
+				83E0F67D1B0370320057B91E /* GetBSDProcessList.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1929,11 +1938,21 @@
 		83E0F6571B01E3690057B91E /* Quota Window */ = {
 			isa = PBXGroup;
 			children = (
+				83E0F6771B034F2F0057B91E /* Resources */,
 				83E0F6621B01E3B20057B91E /* InfinitQuotaWindowController.h */,
 				83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */,
 				83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */,
 			);
 			name = "Quota Window";
+			sourceTree = "<group>";
+		};
+		83E0F6771B034F2F0057B91E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83E0F6781B034F3B0057B91E /* icon-quota-full.png */,
+				83E0F6791B034F3B0057B91E /* icon-quota-full@2x.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		83E1B722191E6F52000338A3 /* Files View */ = {
@@ -2256,6 +2275,7 @@
 				836EAE071988F42D0053BE85 /* icon-menu-bar-active@2x.png in Resources */,
 				836EAD9C1988EEC70053BE85 /* conversation-icon-quote-right.png in Resources */,
 				8314456C1ABC23690032958B /* send-icon-device-mac-avatar@2x.png in Resources */,
+				83E0F67B1B034F3B0057B91E /* icon-quota-full@2x.png in Resources */,
 				8373D99F1ABABCAE0054B0D3 /* SourceSansPro-BlackIt.otf in Resources */,
 				836EAD9B1988EEC70053BE85 /* conversation-icon-quote-left@2x.png in Resources */,
 				832808E917A2E5C10025B6F8 /* IANotLoggedInViewController.xib in Resources */,
@@ -2436,6 +2456,7 @@
 				836EACED1988EE300053BE85 /* icon-delete-hover.png in Resources */,
 				836EAE2F1988F43E0053BE85 /* icon-menu-bar-animated-red-14.png in Resources */,
 				836EACF51988EE300053BE85 /* link-icon-cancel-hover.png in Resources */,
+				83E0F67A1B034F3B0057B91E /* icon-quota-full.png in Resources */,
 				837B2AB219DD987500A3CDE1 /* main-icon-upload.png in Resources */,
 				836EAE4F1988F4500053BE85 /* icon-menu-bar-animated-black-10.png in Resources */,
 				836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */,
@@ -2559,6 +2580,7 @@
 				836D648919D0667D00D77D9B /* InfinitNetworkManager.mm in Sources */,
 				83C7599117AA428700BE6CD5 /* IAWindowController.m in Sources */,
 				834F13831922532D00BF36A4 /* InfinitLinkProgressIndicator.m in Sources */,
+				83E0F67F1B0370320057B91E /* GetBSDProcessList.m in Sources */,
 				833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */,
 				83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.mm in Sources */,
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
@@ -2765,6 +2787,7 @@
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
