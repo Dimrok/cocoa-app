@@ -29,6 +29,7 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitNetworkManager.h"
 #import "InfinitOnboardingController.h"
+#import "InfinitQuotaWindowController.h"
 #import "InfinitScreenshotManager.h"
 #import "InfinitSettingsWindow.h"
 #import "InfinitStatusBarIcon.h"
@@ -63,12 +64,12 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                 InfinitLoginViewControllerProtocol,
                                 InfinitMainViewProtocol,
                                 InfinitOnboardingProtocol,
-                                InfinitScreenshotManagerProtocol,
                                 InfinitSettingsProtocol,
                                 InfinitStatusBarIconProtocol,
                                 InfinitStayAwakeProtocol>
 
 @property (nonatomic, readonly) InfinitConnectionManager* connection_manager;
+@property (nonatomic, readonly) InfinitQuotaWindowController* quota_window;
 
 @end
 
@@ -111,7 +112,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   
   // Managers
   InfinitStayAwakeManager* _stay_awake_manager;
-  InfinitScreenshotManager* _screenshot_manager;
   
   // Other
   IADesktopNotifier* _desktop_notifier;
@@ -170,6 +170,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionAccepted:)
                                                  name:INFINIT_PEER_TRANSACTION_ACCEPTED_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(quotaExceeded)
+                                                 name:INFINIT_LINK_QUOTA_EXCEEDED
                                                object:nil];
 
     _connection_manager = [InfinitConnectionManager sharedInstance];
@@ -565,11 +569,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)onSuccessfulLogin
 {
   ELLE_LOG("%s: completed login", self.description.UTF8String);
-
-  // Instantiate screenshot manager after we've got the features as we're AB testing the first
-  // screenshot modal.
-  if (_screenshot_manager == nil)
-    _screenshot_manager = [[InfinitScreenshotManager alloc] initWithDelegate:self];
+  [InfinitScreenshotManager sharedInstance];
 
   if ([[[IAUserPrefs sharedInstance] prefsForKey:@"updated"] isEqualToString:@"1"])
   {
@@ -768,7 +768,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)handleQuit
 {
   _stay_awake_manager = nil;
-  _screenshot_manager = nil;
 
   if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
   {
@@ -1208,17 +1207,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   }
 }
 
-- (BOOL)uploadsScreenshots:(InfinitSettingsWindow*)sender
-{
-  return _screenshot_manager.watch;
-}
-
-- (void)setUploadsScreenshots:(InfinitSettingsWindow*)sender
-                           to:(BOOL)value
-{
-  _screenshot_manager.watch = value;
-}
-
 - (BOOL)stayAwake:(InfinitSettingsWindow*)sender
 {
   return [InfinitStayAwakeManager stayAwake];
@@ -1320,16 +1308,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
     _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
     [_general_send_controller filesOverStatusBarIcon];
   }
-}
-
-//- Screenshot Manager Protocol --------------------------------------------------------------------
-
-- (void)screenshotManager:(InfinitScreenshotManager*)sender
-            gotScreenshot:(NSString*)path
-{
-  if (![InfinitConnectionManager sharedInstance].connected)
-    return;
-  [self createLinkWithFiles:@[path] andMessage:@"" forScreenshot:YES];
 }
 
 //- Stay Awake Manager Protocol --------------------------------------------------------------------
@@ -1486,6 +1464,15 @@ hasCurrentViewController:(IAViewController*)controller
                                            emailAddress:nil
                                         performSelector:@selector(facebookConnectCallback:)
                                                onObject:self];
+}
+
+#pragma mark - Quota
+
+- (void)quotaExceeded
+{
+  NSString* class_name = NSStringFromClass(InfinitQuotaWindowController.class);
+  _quota_window = [[InfinitQuotaWindowController alloc] initWithWindowNibName:class_name];
+  [self.quota_window showWindow:self];
 }
 
 @end
