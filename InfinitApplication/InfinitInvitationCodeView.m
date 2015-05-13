@@ -69,26 +69,26 @@
   self.next_button.enabled = NO;
   self.skip_button.enabled = NO;
   [self.activity_indicator startAnimation:nil];
+  __unsafe_unretained InfinitInvitationCodeView* weak_self = self;
   [[InfinitStateManager sharedInstance] useGhostCode:self.code_field.stringValue
-                                     performSelector:@selector(codeCallback:)
-                                            onObject:self];
-}
-
-- (void)codeCallback:(InfinitStateResult*)result
-{
-  [self.activity_indicator stopAnimation:nil];
-  if (result.success || result.status == gap_ghost_code_already_used)
+                                             wasLink:NO 
+                                     completionBlock:^(InfinitStateResult* result)
   {
-    [_delegate invitationCodeViewDone:self];
-  }
-  else
-  {
-    self.error_label.stringValue = NSLocalizedString(@"Invalid code.", nil);
-    self.error_label.hidden = NO;
-  }
-  self.code_field.enabled = YES;
-  self.next_button.enabled = YES;
-  self.skip_button.enabled = YES;
+    InfinitInvitationCodeView* strong_self = weak_self;
+    [strong_self.activity_indicator stopAnimation:nil];
+    if (result.success || result.status == gap_ghost_code_already_used)
+    {
+      [strong_self.delegate invitationCodeViewDone:self];
+    }
+    else
+    {
+      strong_self.error_label.stringValue = NSLocalizedString(@"Invalid code.", nil);
+      strong_self.error_label.hidden = NO;
+    }
+    strong_self.code_field.enabled = YES;
+    strong_self.next_button.enabled = YES;
+    strong_self.skip_button.enabled = YES;
+  }];
 }
 
 #pragma mark - Textfield Delegate
