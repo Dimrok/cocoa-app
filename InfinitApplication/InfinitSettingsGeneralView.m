@@ -9,6 +9,7 @@
 #import "InfinitSettingsGeneralView.h"
 
 #import "InfinitDownloadDestinationManager.h"
+#import "InfinitScreenshotManager.h"
 
 @interface InfinitSettingsGeneralView ()
 
@@ -39,7 +40,7 @@
 - (void)loadData
 {
   _auto_launch = [_delegate infinitInLoginItems:self];
-  _auto_upload_screenshots = [_delegate uploadsScreenshots:self];
+  _auto_upload_screenshots = [InfinitScreenshotManager sharedInstance].watch;
   _auto_stay_awake = [_delegate stayAwake:self];
   _download_dir_str = [[InfinitDownloadDestinationManager sharedInstance] download_destination];
   if (_auto_launch)
@@ -90,7 +91,7 @@
     _auto_upload_screenshots = YES;
   else
     _auto_upload_screenshots = NO;
-  [_delegate setUploadsScreenshots:self to:_auto_upload_screenshots];
+  [InfinitScreenshotManager sharedInstance].watch = _auto_upload_screenshots;
 }
 
 - (IBAction)toggleStayAwake:(NSButton*)sender

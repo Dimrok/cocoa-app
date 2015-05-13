@@ -115,17 +115,6 @@
   [_delegate setInfinitInLoginItems:self to:value];
 }
 
-- (BOOL)uploadsScreenshots:(InfinitSettingsGeneralView*)sender
-{
-  return [_delegate uploadsScreenshots:self];
-}
-
-- (void)setUploadsScreenshots:(InfinitSettingsGeneralView*)sender
-                           to:(BOOL)value
-{
-  [_delegate setUploadsScreenshots:self to:value];
-}
-
 - (BOOL)stayAwake:(InfinitSettingsGeneralView*)sender
 {
   return [_delegate stayAwake:self];

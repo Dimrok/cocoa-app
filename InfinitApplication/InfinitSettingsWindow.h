@@ -34,10 +34,6 @@
 - (void)setInfinitInLoginItems:(InfinitSettingsWindow*)sender
                             to:(BOOL)value;
 
-- (BOOL)uploadsScreenshots:(InfinitSettingsWindow*)sender;
-- (void)setUploadsScreenshots:(InfinitSettingsWindow*)sender
-                           to:(BOOL)value;
-
 - (BOOL)stayAwake:(InfinitSettingsWindow*)sender;
 - (void)setStayAwake:(InfinitSettingsWindow*)sender
                   to:(BOOL)value;
