@@ -382,8 +382,29 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   NSUInteger row = [self.table_view rowForView:sender];
   InfinitConversationElement* element = self.elements[row];
   [[InfinitDownloadDestinationManager sharedInstance] ensureDownloadDestination];
-  [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:element.transaction
-                                                          withError:nil];
+  NSError* error = nil;
+  BOOL success = [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:element.transaction
+                                                                         withError:nil];
+  if (!success || error)
+  {
+    NSAlert* alert = nil;
+    if (error)
+    {
+      alert = [NSAlert alertWithError:error];
+    }
+    else
+    {
+      NSString* message =
+        NSLocalizedString(@"Unable to accept the transaction. "
+                          "Please check you have sufficient free space", nil);
+      alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Unable to accept", nil)
+                              defaultButton:NSLocalizedString(@"OK", nil)
+                            alternateButton:nil
+                                otherButton:nil
+                  informativeTextWithFormat:@"%@", message];
+    }
+    [alert runModal];
+  }
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
 }
 
