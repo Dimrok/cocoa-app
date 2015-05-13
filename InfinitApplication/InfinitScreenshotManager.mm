@@ -12,6 +12,8 @@
 #import "InfinitFirstScreenshotModal.h"
 #import "InfinitMetricsManager.h"
 
+#import "GetBSDProcessList.h"
+
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitThreadSafeDictionary.h>
 
@@ -19,6 +21,7 @@
 #import <elle/log.hh>
 
 #import <Carbon/Carbon.h>
+#import <libproc.h>
 
 ELLE_LOG_COMPONENT("OSX.ScreenshotManager");
 
@@ -26,11 +29,17 @@ static
 OSStatus
 _hot_key_handler(EventHandlerCallRef next_handler, EventRef event, void* user_data);
 
+static
+void NoteExitKQueueCallback(CFFileDescriptorRef f,
+                            CFOptionFlags callBackTypes,
+                            void* info);
+
 typedef NS_ENUM(UInt32, InfinitHotKeyId)
 {
   InfinitHotKeyAppleAreaGrab = 0,
   InfinitHotKeyAppleFullscreenGrab,
   InfinitHotKeyInfinitAreaGrab,
+  InfinitHotKeyInfinitFullscreenGrab,
 };
 
 @interface InfinitScreenshotManager ()
@@ -38,13 +47,14 @@ typedef NS_ENUM(UInt32, InfinitHotKeyId)
 @property (nonatomic, unsafe_unretained) EventHotKeyRef apple_area_ref;
 @property (nonatomic, unsafe_unretained) EventHotKeyRef apple_fullscreen_ref;
 @property (nonatomic, unsafe_unretained) EventHotKeyRef infinit_area_ref;
+@property (nonatomic, unsafe_unretained) EventHotKeyRef infinit_fullscreen_ref;
 
-@property (nonatomic, readonly) NSDate* last_capture_time;
+@property (atomic, readonly) NSDate* last_capture_time;
 @property (nonatomic, readonly) InfinitThreadSafeDictionary* link_map;
 @property (nonatomic, readonly) BOOL first_screenshot;
 @property (nonatomic, readonly) NSString* temporary_dir;
-@property (nonatomic, readonly) NSMetadataQuery* query;
 @property (nonatomic, readonly) NSTask* screencapture_task;
+@property (nonatomic, readonly) NSString* screenshot_location;
 
 @end
 
@@ -71,7 +81,6 @@ static NSDateFormatter* _date_formatter = nil;
   {
     [[NSFileManager defaultManager] removeItemAtPath:self.temporary_dir error:nil];
     _link_map = [InfinitThreadSafeDictionary initWithName:@"ScreenShotLinkMap"];
-    _query = [[NSMetadataQuery alloc] init];
     if ([[[IAUserPrefs sharedInstance] prefsForKey:@"upload_screenshots"] isEqualToString:@"0"])
     {
       ELLE_LOG("%s: not watching for screenshots", self.description.UTF8String);
@@ -89,22 +98,10 @@ static NSDateFormatter* _date_formatter = nil;
     }
 
     _last_capture_time = [NSDate date];
-
-    self.query.delegate = self;
-    self.query.predicate = [NSPredicate predicateWithFormat:@"kMDItemIsScreenCapture = 1"];
-    self.query.notificationBatchingInterval = 0.1;
-    self.query.searchScopes = @[[self screenCaptureLocation]];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(gotScreenShot:)
-                                                 name:NSMetadataQueryDidUpdateNotification
-                                               object:self.query];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(linkUpdated:)
                                                  name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION
                                                object:nil];
-    if (self.watch)
-      [self.query startQuery];
     [self registerHotKeys];
     if (_date_formatter == nil)
     {
@@ -119,12 +116,26 @@ static NSDateFormatter* _date_formatter = nil;
 {
   EventHotKeyID apple_fullscreen_grab_id = [self hotKeyIdFor:InfinitHotKeyAppleFullscreenGrab];
   EventHotKeyID apple_area_grab_id = [self hotKeyIdFor:InfinitHotKeyAppleAreaGrab];
+  EventHotKeyID infinit_fullscreen_grab_id = [self hotKeyIdFor:InfinitHotKeyInfinitFullscreenGrab];
   EventHotKeyID infinit_area_grab_id = [self hotKeyIdFor:InfinitHotKeyInfinitAreaGrab];
   EventTypeSpec event_type = {kEventClassKeyboard, kEventHotKeyPressed};
   InstallApplicationEventHandler(&_hot_key_handler, 1, &event_type, NULL, NULL);
-  [self registerEventRef:self.apple_fullscreen_ref withId:apple_fullscreen_grab_id forHotKey:kVK_ANSI_3];
-  [self registerEventRef:self.apple_area_ref withId:apple_area_grab_id forHotKey:kVK_ANSI_4];
-  [self registerEventRef:self.infinit_area_ref withId:infinit_area_grab_id forHotKey:kVK_ANSI_5];
+  [self registerEventRef:self.apple_fullscreen_ref
+                  withId:apple_fullscreen_grab_id
+               forHotKey:kVK_ANSI_3
+           withModifiers:cmdKey + shiftKey];
+  [self registerEventRef:self.apple_area_ref 
+                  withId:apple_area_grab_id
+               forHotKey:kVK_ANSI_4
+           withModifiers:cmdKey + shiftKey];
+  [self registerEventRef:self.infinit_fullscreen_ref
+                  withId:infinit_fullscreen_grab_id
+               forHotKey:kVK_ANSI_3
+           withModifiers:optionKey + shiftKey];
+  [self registerEventRef:self.infinit_area_ref
+                  withId:infinit_area_grab_id 
+               forHotKey:kVK_ANSI_4
+           withModifiers:optionKey + shiftKey];
 }
 
 - (EventHotKeyID)hotKeyIdFor:(InfinitHotKeyId)id_
@@ -138,8 +149,9 @@ static NSDateFormatter* _date_formatter = nil;
 - (void)registerEventRef:(EventHotKeyRef)ref
                   withId:(EventHotKeyID)id_
                forHotKey:(UInt32)key
+           withModifiers:(UInt32)modifiers
 {
-  RegisterEventHotKey(key, cmdKey + shiftKey, id_, GetApplicationEventTarget(), 0, &ref);
+  RegisterEventHotKey(key, modifiers, id_, GetApplicationEventTarget(), 0, &ref);
 }
 
 - (NSURL*)screenCaptureLocation
@@ -165,8 +177,6 @@ static NSDateFormatter* _date_formatter = nil;
 
 - (void)dealloc
 {
-  self.query.delegate = nil;
-  [self.query stopQuery];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   if (self.apple_area_ref)
@@ -175,9 +185,11 @@ static NSDateFormatter* _date_formatter = nil;
     UnregisterEventHotKey(self.apple_fullscreen_ref);
   if (self.infinit_area_ref)
     UnregisterEventHotKey(self.infinit_area_ref);
+  if (self.infinit_fullscreen_ref)
+    UnregisterEventHotKey(self.infinit_fullscreen_ref);
 }
 
-//- Watching ---------------------------------------------------------------------------------------
+#pragma mark - Watch
 
 - (void)setWatch:(BOOL)watch
 {
@@ -190,64 +202,32 @@ static NSDateFormatter* _date_formatter = nil;
   NSString* value = [NSString stringWithFormat:@"%d", self.watch];
   [[IAUserPrefs sharedInstance] setPref:value forKey:@"upload_screenshots"];
   if (self.watch)
-  {
-    [self.query startQuery];
     ELLE_LOG("%s: start watching for screenshots", self.description.UTF8String);
-  }
   else
-  {
-    [self.query stopQuery];
     ELLE_LOG("%s: stop watching for screenshots", self.description.UTF8String);
-  }
-
 }
 
-//- Screenshot Handling ----------------------------------------------------------------------------
+#pragma mark - Infinit Screen Shot Handling
 
-- (void)gotScreenShot:(NSNotification*)notification
+- (void(^)(NSTask*))screenshotBlockForPath:(NSString*)output_path
 {
-  NSMetadataItem* data_item = [notification.userInfo[@"kMDQueryUpdateAddedItems"] lastObject];
-
-  if (data_item == nil)
-    return;
-
-  NSDate* new_date = [data_item valueForAttribute:NSMetadataItemFSCreationDateKey];
-  
-  if ([new_date compare:_last_capture_time] == NSOrderedAscending)
-    return;
-
-  NSString* screenshot_path = [data_item valueForAttribute:NSMetadataItemPathKey];
-  if (screenshot_path.length == 0)
-    return;
-
-  _last_capture_time = [NSDate date];
-
-  if (_first_screenshot)
+  __weak InfinitScreenshotManager* weak_self = self;
+  return ^(NSTask* task)
   {
-    _first_screenshot = NO;
-    InfinitFirstScreenshotModal* screenshot_modal = [[InfinitFirstScreenshotModal alloc] init];
-    NSInteger res = [NSApp runModalForWindow:screenshot_modal.window];
-    if (res == INFINIT_UPLOAD_SCREENSHOTS)
+    InfinitScreenshotManager* strong_self = weak_self;
+    if (task.terminationReason != NSTaskTerminationReasonExit)
     {
-      [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_YES];
-      [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"upload_screenshots"];
-    }
-    else if (res == INFINIT_NO_UPLOAD_SCREENSHOTS)
-    {
-      [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_NO];
-      [self setWatch:NO];
+      ELLE_ERR("%s: screen area capture failed", strong_self.description.UTF8String);
       return;
     }
-    else
+    if ([[NSFileManager defaultManager] fileExistsAtPath:output_path isDirectory:NULL])
     {
-      return;
+      NSNumber* id_ =
+        [[InfinitLinkTransactionManager sharedInstance] createScreenshotLink:output_path];
+      [strong_self.link_map setObject:output_path forKey:id_];
+      strong_self->_screencapture_task = nil;
     }
-  }
-
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
-  ELLE_LOG("%s: got screenshot with path: %s",
-           self.description.UTF8String, screenshot_path.UTF8String);
-  [[InfinitLinkTransactionManager sharedInstance] createScreenshotLink:screenshot_path];
+  };
 }
 
 - (void)launchScreenAreaGrab
@@ -261,20 +241,22 @@ static NSDateFormatter* _date_formatter = nil;
   _screencapture_task = [[NSTask alloc] init];
   self.screencapture_task.launchPath = @"/usr/sbin/screencapture";
   self.screencapture_task.arguments = @[@"-i", output_path];
-  __weak InfinitScreenshotManager* weak_self = self;
-  self.screencapture_task.terminationHandler = ^(NSTask* task)
-  {
-    InfinitScreenshotManager* strong_self = weak_self;
-    if (task.terminationReason != NSTaskTerminationReasonExit)
-    {
-      ELLE_ERR("%s: screen capture failed", strong_self.description.UTF8String);
-      return;
-    }
-    NSNumber* id_ =
-      [[InfinitLinkTransactionManager sharedInstance] createScreenshotLink:output_path];
-    [strong_self.link_map setObject:output_path forKey:id_];
-    strong_self->_screencapture_task = nil;
-  };
+  self.screencapture_task.terminationHandler = [self screenshotBlockForPath:output_path];
+  [self.screencapture_task launch];
+}
+
+- (void)launchFullScreenGrab
+{
+  if (self.screencapture_task)
+    return;
+  NSString* now_str = [_date_formatter stringFromDate:[NSDate date]];
+  NSString* screenshot_name =
+    [NSString stringWithFormat:NSLocalizedString(@"Screen Shot %@.png", nil), now_str];
+  NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:screenshot_name];
+  _screencapture_task = [[NSTask alloc] init];
+  self.screencapture_task.launchPath = @"/usr/sbin/screencapture";
+  self.screencapture_task.arguments = @[output_path];
+  self.screencapture_task.terminationHandler = [self screenshotBlockForPath:output_path];
   [self.screencapture_task launch];
 }
 
@@ -304,7 +286,138 @@ static NSDateFormatter* _date_formatter = nil;
   return res;
 }
 
+#pragma mark - Apple Screen Shot Handling
+
+- (pid_t)screencapturePID
+{
+  kinfo_proc* proc_list = nullptr;
+  size_t proc_count = 0;
+  GetBSDProcessList(&proc_list, &proc_count);
+  pid_t res = 0;
+  for (int i = 0; i < proc_count; i++)
+  {
+    kinfo_proc* proc = NULL;
+    proc = &proc_list[i];
+    if (proc == NULL)
+      continue;
+    char name_buf[PROC_SELFSET_THREADNAME_SIZE];
+    proc_name(proc->kp_proc.p_pid, name_buf, sizeof(name_buf));
+    if (!name_buf)
+      continue;
+    std::string proc_name(name_buf);
+    if (proc_name == "screencapture")
+    {
+      res = proc->kp_proc.p_pid;
+      break;
+    }
+  }
+  free(proc_list);
+  return res;
+}
+
+- (void)watchScreencaptureExit:(pid_t)pid
+{
+  CFFileDescriptorRef noteExitKQueueRef;
+  int kq;
+  struct kevent changes;
+  CFFileDescriptorContext context = { 0, (__bridge void*)self, NULL, NULL, NULL };
+  CFRunLoopSourceRef rls;
+
+  // Create the kqueue and set it up to watch for SIGCHLD. Use the
+  // new-in-10.5 EV_RECEIPT flag to ensure that we get what we expect.
+
+  kq = kqueue();
+
+  EV_SET(&changes, pid, EVFILT_PROC, EV_ADD | EV_RECEIPT, NOTE_EXIT, 0, NULL);
+  (void) kevent(kq, &changes, 1, &changes, 1, NULL);
+
+  // Wrap the kqueue in a CFFileDescriptor (new in Mac OS X 10.5!). Then
+  // create a run-loop source from the CFFileDescriptor and add that to the
+  // runloop.
+
+  noteExitKQueueRef = CFFileDescriptorCreate(NULL, kq, true, NoteExitKQueueCallback, &context);
+  rls = CFFileDescriptorCreateRunLoopSource(NULL, noteExitKQueueRef, 0);
+  CFRunLoopAddSource(CFRunLoopGetCurrent(), rls, kCFRunLoopDefaultMode);
+  CFRelease(rls);
+
+  CFFileDescriptorEnableCallBacks(noteExitKQueueRef, kCFFileDescriptorReadCallBack);
+
+  // Execution continues in NoteExitKQueueCallback, below.
+}
+
+- (NSString*)screenshot_location
+{
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  NSString* location =
+    [[defaults persistentDomainForName:@"com.apple.screencapture"] objectForKey:@"location"];
+  if (location.length)
+  {
+    location = [location stringByExpandingTildeInPath];
+    if (![location hasSuffix:@"/"])
+    {
+      location = [location stringByAppendingString:@"/"];
+    }
+  }
+  else
+  {
+    location =
+      NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES).firstObject;
+  }
+  return location;
+}
+
+- (void)checkForScreenshot
+{
+  NSFileManager* manager = [NSFileManager defaultManager];
+  NSArray* contents = [manager contentsOfDirectoryAtPath:self.screenshot_location error:nil];
+  for (NSString* filename in contents)
+  {
+    NSString* path = [self.screenshot_location stringByAppendingPathComponent:filename];
+    NSDictionary* attrs = [manager attributesOfItemAtPath:path error:nil];
+    if (attrs[@"NSFileExtendedAttributes"])
+    {
+      if (attrs[@"NSFileExtendedAttributes"][@"com.apple.metadata:kMDItemIsScreenCapture"])
+      {
+        NSDate* c_date = attrs[NSFileCreationDate];
+        if ([c_date compare:self.last_capture_time] == NSOrderedAscending ||
+            [c_date compare:self.last_capture_time] == NSOrderedSame)
+        {
+          continue;
+        }
+        _last_capture_time = c_date;
+        if (_first_screenshot)
+        {
+          _first_screenshot = NO;
+          InfinitFirstScreenshotModal* screenshot_modal = [[InfinitFirstScreenshotModal alloc] init];
+          NSInteger res = [NSApp runModalForWindow:screenshot_modal.window];
+          if (res == INFINIT_UPLOAD_SCREENSHOTS)
+          {
+            [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_YES];
+            [[IAUserPrefs sharedInstance] setPref:@"1" forKey:@"upload_screenshots"];
+          }
+          else if (res == INFINIT_NO_UPLOAD_SCREENSHOTS)
+          {
+            [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_NO];
+            [self setWatch:NO];
+            return;
+          }
+          else
+          {
+            return;
+          }
+        }
+        [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
+        ELLE_LOG("%s: got screenshot with path: %s",
+                 self.description.UTF8String, path.UTF8String);
+        [[InfinitLinkTransactionManager sharedInstance] createScreenshotLink:path];
+      }
+    }
+  }
+}
+
 @end
+
+#pragma mark - Nasty C Functions
 
 static
 OSStatus
@@ -321,15 +434,34 @@ _hot_key_handler(EventHandlerCallRef next_handler, EventRef event, void* user_da
   switch (hot_key_ref.id)
   {
     case InfinitHotKeyAppleAreaGrab:
-      break;
     case InfinitHotKeyAppleFullscreenGrab:
+      if (![InfinitScreenshotManager sharedInstance].watch)
+        break;
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(100 * NSEC_PER_MSEC)),
+                     dispatch_get_main_queue(), ^
+      {
+        pid_t pid = [[InfinitScreenshotManager sharedInstance] screencapturePID];
+        if (pid != 0)
+          [[InfinitScreenshotManager sharedInstance] watchScreencaptureExit:pid];
+      });
       break;
     case InfinitHotKeyInfinitAreaGrab:
       [[InfinitScreenshotManager sharedInstance] launchScreenAreaGrab];
+      break;
+    case InfinitHotKeyInfinitFullscreenGrab:
+      [[InfinitScreenshotManager sharedInstance] launchFullScreenGrab];
       break;
 
     default:
       break;
   }
   return noErr;
+}
+
+static
+void NoteExitKQueueCallback(CFFileDescriptorRef f, CFOptionFlags callBackTypes, void* info)
+{
+  struct kevent event;
+  (void) kevent( CFFileDescriptorGetNativeDescriptor(f), NULL, 0, &event, 1, NULL);
+  [[InfinitScreenshotManager sharedInstance] checkForScreenshot];
 }
