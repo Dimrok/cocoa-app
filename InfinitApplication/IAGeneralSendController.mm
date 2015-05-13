@@ -70,7 +70,7 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
   else
   {
     [self cancelOpenFavourites];
-    [self showFavourites];
+    [self performSelector:@selector(showFavourites) withObject:nil afterDelay:0.4f];
   }
 }
 
