@@ -11,6 +11,7 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitLinkIconManager.h"
 
+#import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitTime.h>
 
 #import <QuartzCore/QuartzCore.h>
@@ -231,8 +232,9 @@ namespace
   else
   {
     self.progress_indicator.hidden = YES;
-    self.information.stringValue = [InfinitTime relativeDateOf:link.mtime
-                                                  longerFormat:YES];
+    NSString* time_str = [InfinitTime relativeDateOf:link.mtime longerFormat:YES];
+    NSString* data_str = [InfinitDataSize fileSizeStringFrom:link.size];
+    self.information.stringValue = [NSString stringWithFormat:@"%@ – %@", data_str, time_str];
   }
   if (link.status == gap_transaction_transferring || link.status == gap_transaction_on_other_device)
     self.cancel.hidden = NO;
