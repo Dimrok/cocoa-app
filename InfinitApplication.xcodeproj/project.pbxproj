@@ -375,6 +375,9 @@
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */; };
+		83E0F6651B01E3B20057B91E /* InfinitQuotaWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */; };
+		83E0F6661B01E3B20057B91E /* InfinitQuotaWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */; };
+		83E0F6681B01F1C90057B91E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E0F6671B01F1C90057B91E /* Carbon.framework */; };
 		83E1B73A191E6F85000338A3 /* InfinitSendFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */; };
 		83E1B73B191E6F85000338A3 /* InfinitSendFilesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */; };
 		83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */; };
@@ -999,6 +1002,10 @@
 		83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANoConnectionViewController.xib; sourceTree = "<group>"; };
 		83CF45EF19B5ACD40074A9DA /* InfinitStatusBarIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStatusBarIcon.h; sourceTree = "<group>"; };
 		83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStatusBarIcon.m; sourceTree = "<group>"; };
+		83E0F6621B01E3B20057B91E /* InfinitQuotaWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitQuotaWindowController.h; sourceTree = "<group>"; };
+		83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitQuotaWindowController.m; sourceTree = "<group>"; };
+		83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitQuotaWindowController.xib; sourceTree = "<group>"; };
+		83E0F6671B01F1C90057B91E /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		83E1B737191E6F85000338A3 /* InfinitSendFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendFilesViewController.h; sourceTree = "<group>"; };
 		83E1B738191E6F85000338A3 /* InfinitSendFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendFilesViewController.m; sourceTree = "<group>"; };
 		83E1B739191E6F85000338A3 /* InfinitSendFilesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendFilesViewController.xib; sourceTree = "<group>"; };
@@ -1052,6 +1059,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83E0F6681B01F1C90057B91E /* Carbon.framework in Frameworks */,
 				8373D9C91ABAFF8A0054B0D3 /* WebKit.framework in Frameworks */,
 				8372B1711AB32C2000F1B8B8 /* Gap.framework in Frameworks */,
 				83E54A5819EC14C500D9DC7D /* QuickLook.framework in Frameworks */,
@@ -1199,6 +1207,7 @@
 		8328080917A2B4A60025B6F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83E0F6671B01F1C90057B91E /* Carbon.framework */,
 				8373D9C81ABAFF8A0054B0D3 /* WebKit.framework */,
 				83E54A5719EC14C500D9DC7D /* QuickLook.framework */,
 				83F4F2F119D053670003863C /* SystemConfiguration.framework */,
@@ -1238,6 +1247,7 @@
 				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
 				836D648A19D41F4500D77D9B /* Proxy View */,
+				83E0F6571B01E3690057B91E /* Quota Window */,
 				837A7F5A17FC070600600ACD /* Report Problem Window */,
 				831E22D3183E561E00F0623C /* Search Controller */,
 				83C99DFE17AB8E7300AFF091 /* Send Controller */,
@@ -1916,6 +1926,16 @@
 			path = InfinitApplication;
 			sourceTree = "<group>";
 		};
+		83E0F6571B01E3690057B91E /* Quota Window */ = {
+			isa = PBXGroup;
+			children = (
+				83E0F6621B01E3B20057B91E /* InfinitQuotaWindowController.h */,
+				83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */,
+				83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */,
+			);
+			name = "Quota Window";
+			sourceTree = "<group>";
+		};
 		83E1B722191E6F52000338A3 /* Files View */ = {
 			isa = PBXGroup;
 			children = (
@@ -2435,6 +2455,7 @@
 				836EADA51988EEC70053BE85 /* conversation-icon-reject@2x.png in Resources */,
 				83EF5C751A0A7AFA00A38D49 /* main-icon-bufferised@2x.png in Resources */,
 				836EAE091988F42D0053BE85 /* icon-menu-bar-clicked@2x.png in Resources */,
+				83E0F6661B01E3B20057B91E /* InfinitQuotaWindowController.xib in Resources */,
 				831445991AC04A2B0032958B /* InfinitInvitationCodeView.xib in Resources */,
 				831445901AC03C9A0032958B /* send-icon-device-windows.png in Resources */,
 				833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */,
@@ -2543,6 +2564,7 @@
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
 				837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */,
 				831445531ABC056B0032958B /* InfinitLineView.m in Sources */,
+				83E0F6651B01E3B20057B91E /* InfinitQuotaWindowController.m in Sources */,
 				83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */,
 				83F1A37819DEBCC70045ADD7 /* InfinitScreenshotTextView.m in Sources */,
 				8373D9B31ABACD910054B0D3 /* InfinitLoginView.m in Sources */,
