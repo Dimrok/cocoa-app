@@ -245,6 +245,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case gap_transaction_cloud_buffered:
     case gap_transaction_connecting:
     case gap_transaction_transferring:
+    case gap_transaction_paused:
     case gap_transaction_on_other_device:
     case gap_transaction_finished:
       if (element.transaction.from_device || element.transaction.to_device)
@@ -458,6 +459,15 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       self.time_indicator.stringValue =
         [InfinitTime timeRemainingFrom:_element.transaction.time_remaining];
       self.information.stringValue = [self dataTransferredForTransaction:_element.transaction];
+      self.information.hidden = NO;
+      break;
+    case gap_transaction_paused:
+      [self setTransactionStatusButtonToCancel];
+      [self.progress setIndeterminate:NO];
+      self.progress.hidden = NO;
+      self.progress.doubleValue = _element.transaction.progress;
+      self.time_indicator.stringValue = @"";
+      self.information.stringValue = NSLocalizedString(@"Transfer paused", nil);
       self.information.hidden = NO;
       break;
     case gap_transaction_waiting_accept:
