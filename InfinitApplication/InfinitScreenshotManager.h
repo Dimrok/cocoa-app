@@ -8,19 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol InfinitScreenshotManagerProtocol;
-
 @interface InfinitScreenshotManager : NSObject <NSMetadataQueryDelegate>
 
 @property (nonatomic, readwrite) BOOL watch;
 
-- (id)initWithDelegate:(id<InfinitScreenshotManagerProtocol>)delegate;
-
-@end
-
-@protocol InfinitScreenshotManagerProtocol <NSObject>
-
-- (void)screenshotManager:(InfinitScreenshotManager*)sender
-            gotScreenshot:(NSString*)path;
++ (instancetype)sharedInstance;
 
 @end
