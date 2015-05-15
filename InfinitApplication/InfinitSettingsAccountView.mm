@@ -338,7 +338,11 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (IBAction)webProfile:(NSButton*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_PROFILE_LINK]];
+  NSMutableString* url_str = [INFINIT_PROFILE_LINK mutableCopy];
+  NSString* session_id = [InfinitStateManager sharedInstance].metaSessionId;
+  if (session_id.length)
+    [url_str appendFormat:@"&session_id=%@", session_id];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
 }
 
 //- Change Password Panel --------------------------------------------------------------------------
