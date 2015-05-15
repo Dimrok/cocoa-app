@@ -11,6 +11,7 @@
 #import <Sparkle/Sparkle.h>
 
 #import "IAUserPrefs.h"
+#import "InfinitCodeManager.h"
 
 //- Automatic Relaunching --------------------------------------------------------------------------
 
@@ -139,6 +140,22 @@ immediateInstallationInvocation:(NSInvocation*)invocation
     [_controller handleInfinitLink:_infinit_url];
   else if (_contextual_send_files != nil) // Infinit was launched to send files
     [_controller handleContextualSendFiles:_contextual_send_files];
+
+  NSString* code = nil;
+  NSArray* arguments = [NSProcessInfo processInfo].arguments;
+  for (int i = 0; i < arguments.count; i++)
+  {
+    NSString* arg = arguments[i];
+    if ([arg isEqualToString:@"code"])
+      code = arguments[i + 1];
+  }
+  if (!code.length)
+    return;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [[InfinitCodeManager sharedInstance] setArgumentCode:code];
+  });
 }
 
 //- Infinit URL Handling ---------------------------------------------------------------------------
@@ -148,6 +165,8 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 {
   NSURL* infinit_url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject]
                                              stringValue]];
+  if ([[InfinitCodeManager sharedInstance] getCodeFromURL:infinit_url])
+    return;
   if (_controller == nil) // We haven't created a controller yet as we're being launched by a link
     _infinit_url = infinit_url;
   else
