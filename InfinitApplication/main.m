@@ -21,12 +21,12 @@ int main(int argc, char *argv[])
       NSString* fallback_path = @"/lib:/usr/lib";
       // Ensure that we fallback to the system paths for libraries. This is crucial because
       // DYLD_FALLBACK_LIBRARY_PATH defaults to $(HOME)/lib:/usr/local/lib:/lib:/usr/lib.
-      // If you have Homebrew installed, it's libraries are at /usr/local/lib. Loading these can
+      // If you have Homebrew installed, its libraries are at /usr/local/lib. Loading these can
       // cause missing symbols.
       setenv("DYLD_FALLBACK_LIBRARY_PATH", fallback_path.UTF8String, 1);
     }
     execvp(argv[0], argv);
   }
 #endif
-  return NSApplicationMain(argc, (const char **)argv);
+  return NSApplicationMain(argc, (const char**)argv);
 }
