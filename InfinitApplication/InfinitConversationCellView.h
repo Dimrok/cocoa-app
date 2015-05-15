@@ -29,8 +29,8 @@
 @property (nonatomic, weak) IBOutlet NSImageView* message_icon;
 @property (nonatomic, weak) IBOutlet NSTextField* time_indicator;
 @property (nonatomic, weak) IBOutlet NSTextField* information;
-@property (nonatomic, weak) IBOutlet IAHoverButton* reject_button;
-@property (nonatomic, weak) IBOutlet IAHoverButton* accept_button;
+@property (nonatomic, weak) IBOutlet IAHoverButton* bottom_button;
+@property (nonatomic, weak) IBOutlet IAHoverButton* top_button;
 @property (nonatomic, weak) IBOutlet IAHoverButton* transaction_status_button;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* bubble_height;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* table_height;

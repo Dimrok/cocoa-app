@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="14A343f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitConversationViewController">
@@ -67,6 +67,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView autoresizesSubviews="NO" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" selectionHighlightStyle="none" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="86" rowSizeStyle="automatic" viewBased="YES" id="1Lg-g7-nsw">
+                                        <rect key="frame" x="0.0" y="0.0" width="317" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -164,7 +165,7 @@
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="conversationCellViewWantsAccept:" target="-2" id="i8A-LQ-CsU"/>
+                                                                    <action selector="conversationCellViewTopButtonClicked:" target="-2" id="Kh3-ne-FL3"/>
                                                                 </connections>
                                                             </button>
                                                             <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggh-5v-QaO" customClass="IAHoverButton">
@@ -179,12 +180,12 @@
                                                             </button>
                                                             <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VIS-ai-mmf" customClass="IAHoverButton">
                                                                 <rect key="frame" x="283" y="16" width="20" height="20"/>
-                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="conversation-icon-reject" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="LS7-qP-Rh9">
+                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="conversation-icon-reject" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="LS7-qP-Rh9">
                                                                     <behavior key="behavior" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="conversationCellViewWantsReject:" target="-2" id="fna-MJ-6UQ"/>
+                                                                    <action selector="conversationCellViewBottomButtonClicked:" target="-2" id="aFg-Yt-Wnz"/>
                                                                 </connections>
                                                             </button>
                                                             <progressIndicator ambiguous="YES" misplaced="YES" maxValue="1" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="P6l-Wh-KnC" customClass="InfinitConversationProgressBar">
@@ -196,7 +197,6 @@
                                                             </imageView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="trailing" secondItem="NIH-zJ-aex" secondAttribute="trailing" constant="12" id="24f-9d-xHh"/>
                                                             <constraint firstItem="ggh-5v-QaO" firstAttribute="top" secondItem="NIH-zJ-aex" secondAttribute="bottom" constant="-9" id="Gc0-Gm-jxN"/>
                                                             <constraint firstAttribute="centerX" secondItem="rgi-55-thC" secondAttribute="centerX" id="KWL-4c-HFz"/>
                                                             <constraint firstAttribute="trailing" secondItem="VIS-ai-mmf" secondAttribute="trailing" constant="14" id="QRo-nR-hke"/>
@@ -211,10 +211,11 @@
                                                             <constraint firstItem="wjQ-Lz-E4C" firstAttribute="top" secondItem="mjJ-u2-llV" secondAttribute="bottom" constant="-15" id="m3n-KA-gBG"/>
                                                             <constraint firstAttribute="trailing" secondItem="7kt-Rr-HnF" secondAttribute="trailing" constant="45" id="mDh-1r-Rg0"/>
                                                             <constraint firstAttribute="trailing" secondItem="ggh-5v-QaO" secondAttribute="trailing" constant="14" id="npb-hJ-Amf"/>
+                                                            <constraint firstItem="NIH-zJ-aex" firstAttribute="centerX" secondItem="VIS-ai-mmf" secondAttribute="centerX" id="nrY-Mn-hfM"/>
                                                         </constraints>
                                                         <connections>
-                                                            <outlet property="accept_button" destination="NIH-zJ-aex" id="RYV-07-HZE"/>
                                                             <outlet property="avatar" destination="wjQ-Lz-E4C" id="TEl-K0-KFy"/>
+                                                            <outlet property="bottom_button" destination="VIS-ai-mmf" id="eEA-mm-0lK"/>
                                                             <outlet property="bubble_height" destination="QsA-Pz-ISP" id="dYR-xQ-zcq"/>
                                                             <outlet property="bubble_view" destination="mjJ-u2-llV" id="4iP-f7-oyt"/>
                                                             <outlet property="file_icon" destination="3ST-y5-YVL" id="hO5-xL-bNQ"/>
@@ -225,15 +226,15 @@
                                                             <outlet property="message_height" destination="xmH-L1-RFe" id="Sum-wZ-wnD"/>
                                                             <outlet property="message_icon" destination="Ugx-V2-Pwj" id="1mm-xU-elM"/>
                                                             <outlet property="progress" destination="P6l-Wh-KnC" id="sJY-ZB-1L8"/>
-                                                            <outlet property="reject_button" destination="VIS-ai-mmf" id="djr-eh-AP4"/>
                                                             <outlet property="table_container" destination="nQm-NP-2S5" id="Ym7-34-nZX"/>
                                                             <outlet property="table_height" destination="Lmz-of-ei6" id="3bz-aQ-MmD"/>
                                                             <outlet property="time_indicator" destination="rgi-55-thC" id="mPx-h0-5B5"/>
+                                                            <outlet property="top_button" destination="NIH-zJ-aex" id="h1Z-mn-BLE"/>
                                                             <outlet property="transaction_status_button" destination="ggh-5v-QaO" id="axK-le-19M"/>
                                                         </connections>
                                                     </tableCellView>
                                                     <tableCellView identifier="conversation_view_right" horizontalHuggingPriority="100" id="UyZ-UL-umc" customClass="InfinitConversationCellView">
-                                                        <rect key="frame" x="0.0" y="86" width="317" height="86"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="317" height="86"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OnJ-TX-YOP" customClass="InfinitFileListScrollView">
@@ -304,14 +305,14 @@
                                                                     <constraint firstItem="Ycz-qa-tZS" firstAttribute="top" secondItem="Z4e-yf-QvE" secondAttribute="top" constant="14" id="l3G-An-1F1"/>
                                                                 </constraints>
                                                             </customView>
-                                                            <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CFe-n6-dWA" customClass="IAHoverButton">
+                                                            <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CFe-n6-dWA" customClass="IAHoverButton">
                                                                 <rect key="frame" x="12" y="46" width="24" height="24"/>
                                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="conversation-icon-accept" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="CRd-5c-tMe">
                                                                     <behavior key="behavior" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="conversationCellViewWantsAccept:" target="-2" id="RJ5-ct-XaK"/>
+                                                                    <action selector="conversationCellViewTopButtonClicked:" target="-2" id="UQM-OY-NRo"/>
                                                                 </connections>
                                                             </button>
                                                             <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vjM-yY-0AJ" customClass="IAHoverButton">
@@ -324,14 +325,14 @@
                                                                     <action selector="conversationCellViewWantsCancel:" target="-2" id="0Pr-RO-Gc6"/>
                                                                 </connections>
                                                             </button>
-                                                            <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NLq-Hc-OJK" customClass="IAHoverButton">
+                                                            <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NLq-Hc-OJK" customClass="IAHoverButton">
                                                                 <rect key="frame" x="14" y="16" width="20" height="20"/>
                                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="conversation-icon-reject" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="77Y-QA-3dN">
                                                                     <behavior key="behavior" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="conversationCellViewWantsReject:" target="-2" id="Y4H-hF-xlw"/>
+                                                                    <action selector="conversationCellViewBottomButtonClicked:" target="-2" id="9lf-dL-z0U"/>
                                                                 </connections>
                                                             </button>
                                                             <progressIndicator ambiguous="YES" misplaced="YES" maxValue="1" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="5TO-gb-k22" customClass="InfinitConversationProgressBar">
@@ -343,22 +344,25 @@
                                                             </imageView>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstItem="NLq-Hc-OJK" firstAttribute="leading" secondItem="UyZ-UL-umc" secondAttribute="leading" constant="14" id="3D9-j3-BHm"/>
                                                             <constraint firstItem="NLq-Hc-OJK" firstAttribute="top" secondItem="vjM-yY-0AJ" secondAttribute="bottom" constant="-1" id="3tA-9m-Eu0"/>
                                                             <constraint firstItem="vjM-yY-0AJ" firstAttribute="top" secondItem="CFe-n6-dWA" secondAttribute="bottom" constant="-9" id="4Kb-Al-gMS"/>
                                                             <constraint firstItem="lue-jM-4zv" firstAttribute="leading" secondItem="UyZ-UL-umc" secondAttribute="leading" constant="42" id="6Gf-yw-bTp"/>
                                                             <constraint firstAttribute="trailing" secondItem="OnJ-TX-YOP" secondAttribute="trailing" constant="18" id="C75-Pe-gXT"/>
                                                             <constraint firstItem="uY0-cm-xjI" firstAttribute="top" secondItem="Z4e-yf-QvE" secondAttribute="bottom" constant="-15" id="Ip6-1w-MUR"/>
+                                                            <constraint firstItem="CFe-n6-dWA" firstAttribute="centerX" secondItem="NLq-Hc-OJK" secondAttribute="centerX" id="Itt-0K-xcw"/>
                                                             <constraint firstAttribute="centerX" secondItem="bxo-DB-2vk" secondAttribute="centerX" id="Jml-oT-mtW"/>
                                                             <constraint firstItem="5TO-gb-k22" firstAttribute="top" secondItem="Z4e-yf-QvE" secondAttribute="bottom" constant="-7" id="VPL-ep-3g0"/>
                                                             <constraint firstItem="lue-jM-4zv" firstAttribute="top" secondItem="OnJ-TX-YOP" secondAttribute="bottom" constant="8" id="Xzv-dR-rYA"/>
                                                             <constraint firstItem="OnJ-TX-YOP" firstAttribute="top" secondItem="Z4e-yf-QvE" secondAttribute="bottom" id="fk7-UQ-yZ2"/>
+                                                            <constraint firstItem="NLq-Hc-OJK" firstAttribute="top" secondItem="CFe-n6-dWA" secondAttribute="bottom" constant="10" id="qwb-qy-u7d"/>
                                                             <constraint firstItem="Z4e-yf-QvE" firstAttribute="top" secondItem="UyZ-UL-umc" secondAttribute="top" constant="19" id="r7C-Qq-we9"/>
                                                             <constraint firstItem="OnJ-TX-YOP" firstAttribute="leading" secondItem="UyZ-UL-umc" secondAttribute="leading" constant="42" id="tNY-C7-hdD"/>
                                                             <constraint firstItem="Z4e-yf-QvE" firstAttribute="centerY" secondItem="vjM-yY-0AJ" secondAttribute="centerY" id="vO1-le-uSL"/>
                                                         </constraints>
                                                         <connections>
-                                                            <outlet property="accept_button" destination="CFe-n6-dWA" id="IpX-yp-b4N"/>
                                                             <outlet property="avatar" destination="uY0-cm-xjI" id="YlR-WH-iuf"/>
+                                                            <outlet property="bottom_button" destination="NLq-Hc-OJK" id="2Df-IY-5wg"/>
                                                             <outlet property="bubble_height" destination="gfH-H0-AMl" id="5eE-wD-gR6"/>
                                                             <outlet property="bubble_view" destination="Z4e-yf-QvE" id="uhD-3H-Zsp"/>
                                                             <outlet property="file_icon" destination="Ycz-qa-tZS" id="MRt-xT-Djx"/>
@@ -369,10 +373,10 @@
                                                             <outlet property="message_height" destination="S4j-ce-PwD" id="fSg-4Q-cpl"/>
                                                             <outlet property="message_icon" destination="XUj-zY-8jK" id="6uU-Qw-VAu"/>
                                                             <outlet property="progress" destination="5TO-gb-k22" id="Ntf-Od-OZg"/>
-                                                            <outlet property="reject_button" destination="NLq-Hc-OJK" id="oBy-fF-rvB"/>
                                                             <outlet property="table_container" destination="OnJ-TX-YOP" id="hkO-QB-HUq"/>
                                                             <outlet property="table_height" destination="exp-UP-2r6" id="5jV-90-SOc"/>
                                                             <outlet property="time_indicator" destination="bxo-DB-2vk" id="IFY-G4-yz2"/>
+                                                            <outlet property="top_button" destination="CFe-n6-dWA" id="Rc8-tm-e8v"/>
                                                             <outlet property="transaction_status_button" destination="vjM-yY-0AJ" id="DhV-jc-sDg"/>
                                                         </connections>
                                                     </tableCellView>

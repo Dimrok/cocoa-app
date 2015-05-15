@@ -377,35 +377,46 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
     return row;
 }
 
-- (IBAction)conversationCellViewWantsAccept:(NSButton*)sender
+- (IBAction)conversationCellViewTopButtonClicked:(NSButton*)sender
 {
   NSUInteger row = [self.table_view rowForView:sender];
   InfinitConversationElement* element = self.elements[row];
-  [[InfinitDownloadDestinationManager sharedInstance] ensureDownloadDestination];
-  NSError* error = nil;
-  BOOL success = [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:element.transaction
-                                                                         withError:nil];
-  if (!success || error)
+  if (element.transaction.status == gap_transaction_waiting_accept)
   {
-    NSAlert* alert = nil;
-    if (error)
+    [[InfinitDownloadDestinationManager sharedInstance] ensureDownloadDestination];
+    NSError* error = nil;
+    BOOL success = [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:element.transaction
+                                                                           withError:nil];
+    if (!success || error)
     {
-      alert = [NSAlert alertWithError:error];
+      NSAlert* alert = nil;
+      if (error)
+      {
+        alert = [NSAlert alertWithError:error];
+      }
+      else
+      {
+        NSString* message =
+          NSLocalizedString(@"Unable to accept the transaction. "
+                            "Please check you have sufficient free space", nil);
+        alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Unable to accept", nil)
+                                defaultButton:NSLocalizedString(@"OK", nil)
+                              alternateButton:nil
+                                  otherButton:nil
+                    informativeTextWithFormat:@"%@", message];
+      }
+      [alert runModal];
     }
-    else
-    {
-      NSString* message =
-        NSLocalizedString(@"Unable to accept the transaction. "
-                          "Please check you have sufficient free space", nil);
-      alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Unable to accept", nil)
-                              defaultButton:NSLocalizedString(@"OK", nil)
-                            alternateButton:nil
-                                otherButton:nil
-                  informativeTextWithFormat:@"%@", message];
-    }
-    [alert runModal];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
   }
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_ACCEPT];
+  else if (element.transaction.status == gap_transaction_paused)
+  {
+    [[InfinitPeerTransactionManager sharedInstance] resumeTransaction:element.transaction];
+  }
+  else
+  {
+    [[InfinitPeerTransactionManager sharedInstance] pauseTransaction:element.transaction];
+  }
 }
 
 - (IBAction)conversationCellViewWantsCancel:(NSButton*)sender
@@ -419,15 +430,20 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_CANCEL];
 }
 
-- (IBAction)conversationCellViewWantsReject:(NSButton*)sender
+- (IBAction)conversationCellViewBottomButtonClicked:(NSButton*)sender
 {
   NSUInteger row = [self.table_view rowForView:sender];
   InfinitConversationElement* element = _elements[row];
-  
-  if (element.transaction.status != gap_transaction_waiting_accept)
-    return;
-  [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:element.transaction];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_REJECT];
+
+  if (element.transaction.status == gap_transaction_waiting_accept)
+  {
+    [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:element.transaction];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_CONVERSATION_REJECT];
+  }
+  else
+  {
+    [self conversationCellViewWantsCancel:sender];
+  }
 }
 
 #pragma mark - Person View Protocol

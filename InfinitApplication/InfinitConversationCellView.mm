@@ -344,20 +344,20 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)configureAcceptRejectButtons
 {
-  self.accept_button.hand_cursor = YES;
-  self.accept_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-accept"];
-  self.accept_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-accept-hover"];
-  self.reject_button.hand_cursor = YES;
-  self.reject_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
-  self.reject_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
-  [self.accept_button setToolTip:NSLocalizedString(@"Accept", nil)];
-  [self.reject_button setToolTip:NSLocalizedString(@"Decline", nil)];
+  self.top_button.hand_cursor = YES;
+  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-accept"];
+  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-accept-hover"];
+  self.bottom_button.hand_cursor = YES;
+  self.bottom_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
+  self.bottom_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
+  [self.top_button setToolTip:NSLocalizedString(@"Accept", nil)];
+  [self.bottom_button setToolTip:NSLocalizedString(@"Decline", nil)];
 }
 
 - (void)setTransactionStatusButtonToStaticImage:(NSString*)image_name
 {
-  self.accept_button.hidden = YES;
-  self.reject_button.hidden = YES;
+  self.top_button.hidden = YES;
+  self.bottom_button.hidden = YES;
   self.progress.hidden = YES;
   [self.transaction_status_button.cell setImageDimsWhenDisabled:NO];
   self.transaction_status_button.enabled = NO;
@@ -370,8 +370,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (void)setTransactionStatusButtonToCancel
 {
-  self.accept_button.hidden = YES;
-  self.reject_button.hidden = YES;
+  self.top_button.hidden = YES;
+  self.bottom_button.hidden = YES;
   self.progress.hidden = YES;
   self.transaction_status_button.enabled = YES;
   self.transaction_status_button.hidden = NO;
@@ -380,6 +380,32 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.transaction_status_button.hover_image =
     [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
   [self.transaction_status_button setToolTip:NSLocalizedString(@"Cancel", nil)];
+}
+
+- (void)showRunningButtons
+{
+  self.top_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-pause"];
+  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-pause"];;
+  self.bottom_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
+  self.bottom_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
+  self.top_button.hidden = NO;
+  self.bottom_button.hidden = NO;
+  self.progress.hidden = NO;
+  self.transaction_status_button.enabled = NO;
+  self.transaction_status_button.hidden = YES;
+}
+
+- (void)showPausedButtons
+{
+  self.top_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-resume"];
+  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-resume"];
+  self.bottom_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
+  self.bottom_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
+  self.top_button.hidden = NO;
+  self.bottom_button.hidden = NO;
+  self.progress.hidden = NO;
+  self.transaction_status_button.enabled = NO;
+  self.transaction_status_button.hidden = YES;
 }
 
 - (void)onTransactionModeChangeIsNew:(BOOL)is_new
@@ -400,7 +426,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   switch (_element.transaction.status)
   {
     case gap_transaction_waiting_data:
-      [self setTransactionStatusButtonToCancel];
+      [self showRunningButtons];
       [self.progress setIndeterminate:NO];
       self.progress.doubleValue = _element.transaction.progress;
       self.progress.hidden = NO;
@@ -440,7 +466,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       break;
     case gap_transaction_new:
     case gap_transaction_connecting:
-      [self setTransactionStatusButtonToCancel];
+      [self showRunningButtons];
       [self.progress setIndeterminate:YES];
       self.progress.hidden = NO;
       self.information.stringValue = [self dataTransferredForTransaction:_element.transaction];
@@ -452,7 +478,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       self.information.hidden = YES;
       break;
     case gap_transaction_transferring:
-      [self setTransactionStatusButtonToCancel];
+      [self showRunningButtons];
       [self.progress setIndeterminate:NO];
       self.progress.hidden = NO;
       self.progress.doubleValue = _element.transaction.progress;
@@ -462,7 +488,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       self.information.hidden = NO;
       break;
     case gap_transaction_paused:
-      [self setTransactionStatusButtonToCancel];
+      [self showPausedButtons];
       [self.progress setIndeterminate:NO];
       self.progress.hidden = NO;
       self.progress.doubleValue = _element.transaction.progress;
@@ -474,8 +500,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       if (_element.transaction.receivable)
       {
         [self configureAcceptRejectButtons];
-        self.accept_button.hidden = NO;
-        self.reject_button.hidden = NO;
+        self.top_button.hidden = NO;
+        self.bottom_button.hidden = NO;
         self.transaction_status_button.hidden = YES;
         self.information.stringValue =
         [InfinitDataSize fileSizeStringFrom:_element.transaction.size];
