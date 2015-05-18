@@ -53,7 +53,7 @@ typedef NS_ENUM(UInt32, InfinitHotKeyId)
 @property (nonatomic, readonly) InfinitThreadSafeDictionary* link_map;
 @property (nonatomic, readonly) BOOL first_screenshot;
 @property (nonatomic, readonly) NSString* temporary_dir;
-@property (nonatomic, readonly) NSTask* screencapture_task;
+@property (atomic, readonly) NSTask* screencapture_task;
 @property (nonatomic, readonly) NSString* screenshot_location;
 
 @end
@@ -211,6 +211,7 @@ static NSDateFormatter* _date_formatter = nil;
   return ^(NSTask* task)
   {
     InfinitScreenshotManager* strong_self = weak_self;
+    strong_self->_screencapture_task = nil;
     if (task.terminationReason != NSTaskTerminationReasonExit)
     {
       ELLE_ERR("%s: screen area capture failed", strong_self.description.UTF8String);
@@ -221,7 +222,6 @@ static NSDateFormatter* _date_formatter = nil;
       NSNumber* id_ =
         [[InfinitLinkTransactionManager sharedInstance] createScreenshotLink:output_path];
       [strong_self.link_map setObject:output_path forKey:id_];
-      strong_self->_screencapture_task = nil;
     }
   };
 }
@@ -229,31 +229,43 @@ static NSDateFormatter* _date_formatter = nil;
 - (void)launchScreenAreaGrab
 {
   if (self.screencapture_task)
+  {
+    ELLE_WARN("%s: screencapture process already running", self.description.UTF8String);
     return;
-  NSString* now_str = [_date_formatter stringFromDate:[NSDate date]];
-  NSString* screenshot_name =
-    [NSString stringWithFormat:NSLocalizedString(@"Screen Shot %@.png", nil), now_str];
-  NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:screenshot_name];
-  _screencapture_task = [[NSTask alloc] init];
-  self.screencapture_task.launchPath = @"/usr/sbin/screencapture";
-  self.screencapture_task.arguments = @[@"-i", output_path];
-  self.screencapture_task.terminationHandler = [self screenshotBlockForPath:output_path];
-  [self.screencapture_task launch];
+  }
+  @synchronized(self)
+  {
+    NSString* now_str = [_date_formatter stringFromDate:[NSDate date]];
+    NSString* screenshot_name =
+      [NSString stringWithFormat:NSLocalizedString(@"Screen Shot %@.png", nil), now_str];
+    NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:screenshot_name];
+    _screencapture_task = [[NSTask alloc] init];
+    self.screencapture_task.launchPath = @"/usr/sbin/screencapture";
+    self.screencapture_task.arguments = @[@"-i", output_path];
+    self.screencapture_task.terminationHandler = [self screenshotBlockForPath:output_path];
+    [self.screencapture_task launch];
+  }
 }
 
 - (void)launchFullScreenGrab
 {
   if (self.screencapture_task)
+  {
+    ELLE_WARN("%s: screencapture process already running", self.description.UTF8String);
     return;
-  NSString* now_str = [_date_formatter stringFromDate:[NSDate date]];
-  NSString* screenshot_name =
-    [NSString stringWithFormat:NSLocalizedString(@"Screen Shot %@.png", nil), now_str];
-  NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:screenshot_name];
-  _screencapture_task = [[NSTask alloc] init];
-  self.screencapture_task.launchPath = @"/usr/sbin/screencapture";
-  self.screencapture_task.arguments = @[output_path];
-  self.screencapture_task.terminationHandler = [self screenshotBlockForPath:output_path];
-  [self.screencapture_task launch];
+  }
+  @synchronized(self)
+  {
+    NSString* now_str = [_date_formatter stringFromDate:[NSDate date]];
+    NSString* screenshot_name =
+      [NSString stringWithFormat:NSLocalizedString(@"Screen Shot %@.png", nil), now_str];
+    NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:screenshot_name];
+    _screencapture_task = [[NSTask alloc] init];
+    self.screencapture_task.launchPath = @"/usr/sbin/screencapture";
+    self.screencapture_task.arguments = @[output_path];
+    self.screencapture_task.terminationHandler = [self screenshotBlockForPath:output_path];
+    [self.screencapture_task launch];
+  }
 }
 
 - (void)linkUpdated:(NSNotification*)notification
@@ -415,6 +427,19 @@ static NSDateFormatter* _date_formatter = nil;
 
 #pragma mark - Nasty C Functions
 
+typedef void(^AppleScreenShotBlock)();
+static
+AppleScreenShotBlock
+_apple_screen_shot_block()
+{
+  return ^
+  {
+    pid_t pid = [[InfinitScreenshotManager sharedInstance] screencapturePID];
+    if (pid != 0)
+      [[InfinitScreenshotManager sharedInstance] watchScreencaptureExit:pid];
+  };
+}
+
 static
 OSStatus
 _hot_key_handler(EventHandlerCallRef next_handler, EventRef event, void* user_data)
@@ -430,21 +455,29 @@ _hot_key_handler(EventHandlerCallRef next_handler, EventRef event, void* user_da
   switch (hot_key_ref.id)
   {
     case InfinitHotKeyAppleAreaGrab:
-    case InfinitHotKeyAppleFullscreenGrab:
+      ELLE_LOG("%s: Apple area screen shot hotkeys",
+               [InfinitScreenshotManager sharedInstance].description.UTF8String);
       if (![InfinitScreenshotManager sharedInstance].watch)
         break;
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(100 * NSEC_PER_MSEC)),
-                     dispatch_get_main_queue(), ^
-      {
-        pid_t pid = [[InfinitScreenshotManager sharedInstance] screencapturePID];
-        if (pid != 0)
-          [[InfinitScreenshotManager sharedInstance] watchScreencaptureExit:pid];
-      });
+                     dispatch_get_main_queue(), _apple_screen_shot_block());
+      break;
+    case InfinitHotKeyAppleFullscreenGrab:
+      ELLE_LOG("%s: Apple fullscreen screen shot hotkeys",
+               [InfinitScreenshotManager sharedInstance].description.UTF8String);
+      if (![InfinitScreenshotManager sharedInstance].watch)
+        break;
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(100 * NSEC_PER_MSEC)),
+                     dispatch_get_main_queue(), _apple_screen_shot_block());
       break;
     case InfinitHotKeyInfinitAreaGrab:
+      ELLE_LOG("%s: Infinit area screen shot hotkeys",
+               [InfinitScreenshotManager sharedInstance].description.UTF8String);
       [[InfinitScreenshotManager sharedInstance] launchScreenAreaGrab];
       break;
     case InfinitHotKeyInfinitFullscreenGrab:
+      ELLE_LOG("%s: Infinit fullscreen screen shot hotkeys",
+               [InfinitScreenshotManager sharedInstance].description.UTF8String);
       [[InfinitScreenshotManager sharedInstance] launchFullScreenGrab];
       break;
 
