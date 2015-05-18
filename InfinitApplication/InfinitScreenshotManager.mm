@@ -114,26 +114,22 @@ static NSDateFormatter* _date_formatter = nil;
 
 - (void)registerHotKeys
 {
-  EventHotKeyID apple_fullscreen_grab_id = [self hotKeyIdFor:InfinitHotKeyAppleFullscreenGrab];
-  EventHotKeyID apple_area_grab_id = [self hotKeyIdFor:InfinitHotKeyAppleAreaGrab];
-  EventHotKeyID infinit_fullscreen_grab_id = [self hotKeyIdFor:InfinitHotKeyInfinitFullscreenGrab];
-  EventHotKeyID infinit_area_grab_id = [self hotKeyIdFor:InfinitHotKeyInfinitAreaGrab];
   EventTypeSpec event_type = {kEventClassKeyboard, kEventHotKeyPressed};
   InstallApplicationEventHandler(&_hot_key_handler, 1, &event_type, NULL, NULL);
   [self registerEventRef:self.apple_fullscreen_ref
-                  withId:apple_fullscreen_grab_id
+                  withId:[self hotKeyIdFor:InfinitHotKeyAppleFullscreenGrab]
                forHotKey:kVK_ANSI_3
            withModifiers:cmdKey + shiftKey];
   [self registerEventRef:self.apple_area_ref 
-                  withId:apple_area_grab_id
+                  withId:[self hotKeyIdFor:InfinitHotKeyAppleAreaGrab]
                forHotKey:kVK_ANSI_4
            withModifiers:cmdKey + shiftKey];
   [self registerEventRef:self.infinit_fullscreen_ref
-                  withId:infinit_fullscreen_grab_id
+                  withId:[self hotKeyIdFor:InfinitHotKeyInfinitFullscreenGrab]
                forHotKey:kVK_ANSI_3
            withModifiers:optionKey + shiftKey];
   [self registerEventRef:self.infinit_area_ref
-                  withId:infinit_area_grab_id 
+                  withId:[self hotKeyIdFor:InfinitHotKeyInfinitAreaGrab]
                forHotKey:kVK_ANSI_4
            withModifiers:optionKey + shiftKey];
 }
