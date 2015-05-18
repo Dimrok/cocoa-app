@@ -2824,8 +2824,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../Externals/lib",
-					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
-					/Users/chris/sandbox/infinit/_build/macosx64/lib,
+					"$(SRCROOT)/../../../../_build/macosx64/lib",
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -2860,8 +2859,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../Externals/lib",
-					/Users/chris/sandbox/infinit/surface/osx/Externals/lib,
-					/Users/chris/sandbox/infinit/_build/macosx64/lib,
+					"$(SRCROOT)/../../../../_build/macosx64/lib",
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
