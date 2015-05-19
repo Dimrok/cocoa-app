@@ -126,11 +126,6 @@
   [_delegate setStayAwake:self to:value];
 }
 
-- (void)enterCode:(InfinitSettingsGeneralView*)sender
-{
-  [_delegate enterCode:self];
-}
-
 - (void)checkForUpdate:(InfinitSettingsGeneralView*)sender
 {
   [_delegate checkForUpdate:self];
