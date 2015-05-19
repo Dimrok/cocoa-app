@@ -95,8 +95,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   if (!transaction.from_device)
     return;
 
-  ELLE_LOG("%s: show desktop notification for transaction (%d) accepted",
-           self.description.UTF8String, transaction.id_);
+  ELLE_LOG("%s: show desktop notification for transaction (%s) accepted",
+           self.description.UTF8String, transaction.meta_id.UTF8String);
   NSUserNotification* user_notification = [self _acceptedNotificationFromTransaction:transaction];
 
   if (user_notification == nil)
@@ -113,8 +113,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   if (!transaction.from_device && !transaction.to_device)
   {
     [self _removeNotificationForTransactionId:id_];
-    ELLE_DEBUG("%s: transaction (%d) for another device, remove existing notifications",
-               self.description.UTF8String, id_.unsignedIntegerValue);
+    ELLE_DEBUG("%s: transaction (%s) for another device, remove existing notifications",
+               self.description.UTF8String, transaction.meta_id.UTF8String);
     return;
   }
 
@@ -125,8 +125,10 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
   [self _removeNotificationForTransactionId:id_];
 
-  ELLE_LOG("%s: show desktop notification for transaction (%d) with status: %d",
-           self.description.UTF8String, transaction.id_.unsignedIntegerValue, transaction.status);
+  ELLE_LOG("%s: show desktop notification for transaction (%s) with status: %s",
+           self.description.UTF8String,
+           transaction.meta_id.UTF8String,
+           transaction.status_text.UTF8String);
 
   [_notification_centre deliverNotification:user_notification];
   if (transaction.status == gap_transaction_waiting_accept && transaction.receivable)
@@ -146,8 +148,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   if (user_notification == nil)
     return;
 
-  ELLE_LOG("%s: show desktop notification for link (%d) with status: %d",
-           self.description.UTF8String, link.id_, link.status);
+  ELLE_LOG("%s: show desktop notification for link (%s) with status: %s",
+           self.description.UTF8String, link.meta_id.UTF8String, link.status_text.UTF8String);
   [_notification_centre deliverNotification:user_notification];
 }
 
@@ -164,8 +166,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
     @{@"link_id": link.id_,
       @"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
 
-  ELLE_LOG("%s: show desktop notification for copy link (%d)",
-           self.description.UTF8String, link.id_);
+  ELLE_LOG("%s: show desktop notification for copy link (%s)",
+           self.description.UTF8String, link.meta_id.UTF8String);
 
   [_notification_centre deliverNotification:user_notification];
 }
