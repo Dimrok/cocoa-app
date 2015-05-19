@@ -22,7 +22,6 @@
 #import "InfinitDownloadDestinationManager.h"
 #import "InfinitFacebookWindowController.h"
 #import "InfinitFeatureManager.h"
-#import "InfinitInvitationCodeView.h"
 #import "InfinitKeychain.h"
 #import "InfinitLoginViewController.h"
 #import "InfinitMainViewController.h"
@@ -60,7 +59,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                 IAWindowControllerProtocol,
                                 InfinitConversationViewProtocol,
                                 InfinitFacebookWindowProtocol,
-                                InfinitInvitationCodeViewProtocol,
                                 InfinitLoginViewControllerProtocol,
                                 InfinitMainViewProtocol,
                                 InfinitOnboardingProtocol,
@@ -98,7 +96,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   IAWindowController* _window_controller;
   InfinitMainViewController* _main_view_controller;
   InfinitTooltipViewController* _tooltip_controller;
-  InfinitInvitationCodeView* _invitation_view_controller;
 
   // Facebook Window
   InfinitFacebookWindowController* _facebook_window;
@@ -134,10 +131,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   if (self = [super init])
   {
     _delegate = delegate;
-    NSString* download_dir =
-      [InfinitDownloadDestinationManager sharedInstance].download_destination;
-    [InfinitStateManager startStateWithDownloadDir:download_dir];
-    [InfinitFeatureManager sharedInstance];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(connectionStatusChanged:)
@@ -1014,10 +1007,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
 
 - (void)loginViewDoneRegister:(InfinitLoginViewController*)sender
 {
-  _invitation_view_controller =
-    [[InfinitInvitationCodeView alloc] initWithDelegate:self
-                                                   mode:InfinitInvitationCodeModeRegister];
-  [self openOrChangeViewController:_invitation_view_controller];
+  [self showNotifications];
 }
 
 - (void)loginViewWantsClose:(InfinitLoginViewController*)sender
@@ -1058,16 +1048,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
 {
   [_delegate mainControllerWantsBackgroundUpdateChecks:self];
   [self performSelector:@selector(showNotifications) withObject:nil afterDelay:0.5];
-}
-
-#pragma mark - Invitation Code Delegate
-
-- (void)invitationCodeViewDone:(InfinitInvitationCodeView*)sender
-{
-  if (sender.mode == InfinitInvitationCodeModeRegister)
-    [self onSuccessfulLogin];
-  else
-    [self showNotifications];
 }
 
 //- Main View Protocol -----------------------------------------------------------------------------
@@ -1216,15 +1196,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
                   to:(BOOL)value
 {
   [InfinitStayAwakeManager setStayAwake:value];
-}
-
-- (void)enterCode:(InfinitSettingsWindow*)sender
-{
-  _invitation_view_controller =
-    [[InfinitInvitationCodeView alloc] initWithDelegate:self
-                                                   mode:InfinitInvitationCodeModeSettings];
-  [self openOrChangeViewController:_invitation_view_controller];
-  [_settings_window close];
 }
 
 - (void)checkForUpdate:(InfinitSettingsWindow*)sender
