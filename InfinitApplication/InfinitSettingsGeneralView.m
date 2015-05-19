@@ -11,22 +11,35 @@
 #import "InfinitDownloadDestinationManager.h"
 #import "InfinitScreenshotManager.h"
 
-@interface InfinitSettingsGeneralView ()
+#import <Gap/InfinitDeviceManager.h>
+
+@interface InfinitSettingsGeneralView () <NSOpenSavePanelDelegate,
+                                          NSTextFieldDelegate>
+
+@property (nonatomic, weak) IBOutlet NSTextField* device_name_field;
+@property (nonatomic, weak) IBOutlet NSButton* launch_at_startup;
+@property (nonatomic, weak) IBOutlet NSButton* stay_awake;
+@property (nonatomic, weak) IBOutlet NSButton* upload_screenshots;
+@property (nonatomic, weak) IBOutlet NSTextField* download_dir;
+
+@property (nonatomic, readonly) BOOL auto_launch;
+@property (nonatomic, readonly) BOOL auto_upload_screenshots;
+@property (nonatomic, readonly) BOOL auto_stay_awake;
+@property (nonatomic, unsafe_unretained) id<InfinitSettingsGeneralProtocol> delegate;
+@property (nonatomic, readonly) NSString* download_dir_str;
 
 @end
 
 @implementation InfinitSettingsGeneralView
-{
-@private
-  __unsafe_unretained id<InfinitSettingsGeneralProtocol> _delegate;
 
-  BOOL _auto_launch;
-  BOOL _auto_upload_screenshots;
-  BOOL _auto_stay_awake;
-  NSString* _download_dir_str;
+#pragma mark - InfinitSettingsViewController
+
+- (NSSize)startSize
+{
+  return NSMakeSize(480.0, 280.0);
 }
 
-//- Initialization ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)initWithDelegate:(id<InfinitSettingsGeneralProtocol>)delegate
 {
@@ -39,26 +52,28 @@
 
 - (void)loadData
 {
-  _auto_launch = [_delegate infinitInLoginItems:self];
+  _auto_launch = [self.delegate infinitInLoginItems:self];
   _auto_upload_screenshots = [InfinitScreenshotManager sharedInstance].watch;
-  _auto_stay_awake = [_delegate stayAwake:self];
-  _download_dir_str = [[InfinitDownloadDestinationManager sharedInstance] download_destination];
-  if (_auto_launch)
+  _auto_stay_awake = [self.delegate stayAwake:self];
+  _download_dir_str = [InfinitDownloadDestinationManager sharedInstance].download_destination;
+  if (self.auto_launch)
     self.launch_at_startup.state = NSOnState;
   else
     self.launch_at_startup.state = NSOffState;
 
-  if (_auto_upload_screenshots)
+  if (self.auto_upload_screenshots)
     self.upload_screenshots.state = NSOnState;
   else
     self.upload_screenshots.state = NSOffState;
 
-  if (_auto_stay_awake)
+  if (self.auto_stay_awake)
     self.stay_awake.state = NSOnState;
   else
     self.stay_awake.state = NSOffState;
 
   self.download_dir.stringValue = _download_dir_str;
+  [[InfinitDeviceManager sharedInstance] updateDevices];
+  self.device_name_field.stringValue = [InfinitDeviceManager sharedInstance].this_device.name;
 }
 
 - (void)loadView
@@ -67,14 +82,7 @@
   [self loadData];
 }
 
-//- General Functions ------------------------------------------------------------------------------
-
-- (NSSize)startSize
-{
-  return NSMakeSize(480.0, 280.0);
-}
-
-//- Toggle Handling --------------------------------------------------------------------------------
+#pragma mark - Toggle Handling
 
 - (IBAction)toggleLaunchAtStartup:(NSButton*)sender
 {
@@ -82,7 +90,7 @@
     _auto_launch = YES;
   else
     _auto_launch = NO;
-  [_delegate setInfinitInLoginItems:self to:_auto_launch];
+  [_delegate setInfinitInLoginItems:self to:self.auto_launch];
 }
 
 - (IBAction)toggleUploadScreenshots:(NSButton*)sender
@@ -91,7 +99,7 @@
     _auto_upload_screenshots = YES;
   else
     _auto_upload_screenshots = NO;
-  [InfinitScreenshotManager sharedInstance].watch = _auto_upload_screenshots;
+  [InfinitScreenshotManager sharedInstance].watch = self.auto_upload_screenshots;
 }
 
 - (IBAction)toggleStayAwake:(NSButton*)sender
@@ -100,10 +108,10 @@
     _auto_stay_awake = YES;
   else
     _auto_stay_awake = NO;
-  [_delegate setStayAwake:self to:_auto_stay_awake];
+  [_delegate setStayAwake:self to:self.auto_stay_awake];
 }
 
-//- Other Button Handling --------------------------------------------------------------------------
+#pragma mark - Button Handling
 
 - (BOOL)panel:(id)sender
 shouldEnableURL:(NSURL*)url
@@ -130,14 +138,23 @@ shouldEnableURL:(NSURL*)url
   }];
 }
 
-- (IBAction)enterCodeClicked:(id)sender
-{
-  [_delegate enterCode:self];
-}
-
 - (IBAction)checkForUpdates:(NSButton*)sender
 {
-  [_delegate checkForUpdate:self];
+  [self.delegate checkForUpdate:self];
+}
+
+#pragma mark - NSTextFieldDelegate
+
+- (BOOL)control:(NSControl*)control
+textShouldEndEditing:(NSText*)fieldEditor
+{
+  NSString* new_name = self.device_name_field.stringValue;
+  if (new_name.length &&
+      ![[InfinitDeviceManager sharedInstance].this_device.name isEqualToString:new_name])
+  {
+    [[InfinitDeviceManager sharedInstance] setThisDeviceName:new_name];
+  }
+  return YES;
 }
 
 @end

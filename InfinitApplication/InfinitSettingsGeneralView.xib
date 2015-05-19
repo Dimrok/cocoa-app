@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitSettingsGeneralView">
             <connections>
+                <outlet property="device_name_field" destination="cJY-bd-c9D" id="QX3-I1-dkq"/>
                 <outlet property="download_dir" destination="LWl-UA-aMd" id="9GD-hf-iGW"/>
                 <outlet property="launch_at_startup" destination="bWW-gG-HyP" id="h7M-1c-eQ0"/>
                 <outlet property="stay_awake" destination="Yh1-fR-oQb" id="AYw-gn-9si"/>
@@ -49,7 +50,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="checkForUpdates:" target="-2" id="gyj-iy-WSS"/>
+                        <action selector="checkForUpdates:" target="-2" id="ixE-eQ-Ngm"/>
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-fR-oQb">
@@ -72,8 +73,8 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YVo-ha-zMh">
-                    <rect key="frame" x="114" y="100" width="194" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Retrieve files from an invitation" id="49g-K1-ILm">
+                    <rect key="frame" x="114" y="98" width="194" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Rename this device to:" id="49g-K1-ILm">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -97,16 +98,17 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TJJ-BI-waC">
-                    <rect key="frame" x="110" y="67" width="107" height="32"/>
-                    <buttonCell key="cell" type="push" title="Enter code" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5ZE-ok-jhx">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cJY-bd-c9D">
+                    <rect key="frame" x="116" y="70" width="208" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="EPY-vh-f3w">
                         <font key="font" metaFont="system"/>
-                    </buttonCell>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
                     <connections>
-                        <action selector="enterCodeClicked:" target="-2" id="jFl-9W-zCR"/>
+                        <outlet property="delegate" destination="-2" id="YZ7-Wq-JYy"/>
                     </connections>
-                </button>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="-88" y="263"/>
         </customView>
