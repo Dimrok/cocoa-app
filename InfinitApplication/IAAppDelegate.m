@@ -11,7 +11,12 @@
 #import <Sparkle/Sparkle.h>
 
 #import "IAUserPrefs.h"
-#import "InfinitCodeManager.h"
+#import "InfinitDownloadDestinationManager.h"
+#import "InfinitFeatureManager.h"
+
+#import <Gap/InfinitGhostCodeManager.h>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitURLParser.h>
 
 //- Automatic Relaunching --------------------------------------------------------------------------
 
@@ -134,6 +139,10 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
   [NSApp setServicesProvider:self];
+  NSString* download_dir =
+    [InfinitDownloadDestinationManager sharedInstance].download_destination;
+  [InfinitStateManager startStateWithDownloadDir:download_dir];
+  [InfinitFeatureManager sharedInstance];
 
   _controller = [[IAMainController alloc] initWithDelegate:self];
   if (_infinit_url != nil) // Infinit was launched with a link
@@ -149,13 +158,8 @@ immediateInstallationInvocation:(NSInvocation*)invocation
     if ([arg isEqualToString:@"code"])
       code = arguments[i + 1];
   }
-  if (!code.length)
-    return;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
-                 dispatch_get_main_queue(), ^
-  {
-    [[InfinitCodeManager sharedInstance] setArgumentCode:code];
-  });
+  if (code.length)
+    [[InfinitStateManager sharedInstance] addFingerprint:code];
 }
 
 //- Infinit URL Handling ---------------------------------------------------------------------------
@@ -163,10 +167,20 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 - (void)getURL:(NSAppleEventDescriptor*)event
 withReplyEvent:(NSAppleEventDescriptor*)reply_event
 {
-  NSURL* infinit_url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject]
-                                             stringValue]];
-  if ([[InfinitCodeManager sharedInstance] getCodeFromURL:infinit_url])
+  NSURL* infinit_url =
+    [NSURL URLWithString:[event paramDescriptorForKeyword:keyDirectObject].stringValue];
+  NSString* invite_code = [InfinitURLParser getGhostCodeFromURL:infinit_url];
+  if (invite_code.length)
+  {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^
+    {
+      [[InfinitGhostCodeManager sharedInstance] setCode:invite_code 
+                                                wasLink:YES 
+                                        completionBlock:nil];
+    });
     return;
+  }
   if (_controller == nil) // We haven't created a controller yet as we're being launched by a link
     _infinit_url = infinit_url;
   else
