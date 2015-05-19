@@ -19,6 +19,7 @@
 ELLE_LOG_COMPONENT("OSX.DownloadDestinationManager");
 
 static InfinitDownloadDestinationManager* _instance = nil;
+static dispatch_once_t _instance_token = 0;
 
 @implementation InfinitDownloadDestinationManager
 
@@ -29,7 +30,7 @@ static InfinitDownloadDestinationManager* _instance = nil;
   if (self = [super init])
   {
     _download_destination = [[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"];
-    if (!_download_destination || _download_destination.length == 0)
+    if (!self.download_destination.length)
       _download_destination = [InfinitDirectoryManager sharedInstance].download_directory;
   }
   return self;
@@ -37,8 +38,10 @@ static InfinitDownloadDestinationManager* _instance = nil;
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
     _instance = [[InfinitDownloadDestinationManager alloc] init];
+  });
   return _instance;
 }
 
