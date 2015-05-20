@@ -385,7 +385,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 - (void)showRunningButtons
 {
   self.top_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-pause"];
-  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-pause"];;
+  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-pause-hover"];;
   self.bottom_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
   self.bottom_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
   self.top_button.hidden = NO;
@@ -398,7 +398,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 - (void)showPausedButtons
 {
   self.top_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-resume"];
-  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-resume"];
+  self.top_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-resume-hover"];
   self.bottom_button.normal_image = [IAFunctions imageNamed:@"conversation-icon-reject"];
   self.bottom_button.hover_image = [IAFunctions imageNamed:@"conversation-icon-reject-hover"];
   self.top_button.hidden = NO;
