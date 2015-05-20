@@ -180,19 +180,17 @@ static NSDictionary* _email_style = nil;
 {
   [[NSColor whiteColor] set];
   NSRectFill(self.bounds);
-
-  if (self.line)
-  {
-    NSRect dark_rect = NSMakeRect(50.0f, 0.0f, self.bounds.size.width - 70.0f, 1.0f);
-    [[InfinitColor colorWithGray:244] set];
-    NSRectFill(dark_rect);
-  }
-
   if (self.hover)
   {
     NSRect hover = NSMakeRect(0.0f, 0.0f, self.bounds.size.width, self.bounds.size.height);
     [[InfinitColor colorWithRed:240 green:252 blue:251] set];
     NSRectFill(hover);
+  }
+  if (self.line)
+  {
+    NSRect dark_rect = NSMakeRect(50.0f, 0.0f, self.bounds.size.width - 70.0f, 1.0f);
+    [[InfinitColor colorWithGray:244] set];
+    NSRectFill(dark_rect);
   }
 }
 
