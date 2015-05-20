@@ -873,8 +873,6 @@ writeRepresentedObjects:(NSArray*)objects
     }
     count++;
   }
-  if (self.last_device == 0)
-    _last_device = 1;
   [self updateResultsTable];
 }
 
