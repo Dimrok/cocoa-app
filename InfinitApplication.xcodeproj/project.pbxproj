@@ -257,6 +257,12 @@
 		8373D9C61ABAFD5A0054B0D3 /* InfinitFacebookWindowController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8373D9C41ABAFD5A0054B0D3 /* InfinitFacebookWindowController.mm */; };
 		8373D9C71ABAFD5A0054B0D3 /* InfinitFacebookWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8373D9C51ABAFD5A0054B0D3 /* InfinitFacebookWindowController.xib */; };
 		8373D9C91ABAFF8A0054B0D3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8373D9C81ABAFF8A0054B0D3 /* WebKit.framework */; };
+		8375C09B1B0CB94F00AE439F /* conversation-icon-pause-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 8375C0951B0CB94F00AE439F /* conversation-icon-pause-hover.png */; };
+		8375C09C1B0CB94F00AE439F /* conversation-icon-pause-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8375C0961B0CB94F00AE439F /* conversation-icon-pause-hover@2x.png */; };
+		8375C09D1B0CB94F00AE439F /* conversation-icon-reject-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 8375C0971B0CB94F00AE439F /* conversation-icon-reject-hover.png */; };
+		8375C09E1B0CB94F00AE439F /* conversation-icon-reject-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8375C0981B0CB94F00AE439F /* conversation-icon-reject-hover@2x.png */; };
+		8375C09F1B0CB94F00AE439F /* conversation-icon-resume-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 8375C0991B0CB94F00AE439F /* conversation-icon-resume-hover.png */; };
+		8375C0A01B0CB94F00AE439F /* conversation-icon-resume-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8375C09A1B0CB94F00AE439F /* conversation-icon-resume-hover@2x.png */; };
 		837A7F7217FC072300600ACD /* IAReportProblemWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */; };
 		837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */; };
 		837B2A6919DD962B00A3CDE1 /* InfinitFeatureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 837B2A6819DD962B00A3CDE1 /* InfinitFeatureManager.m */; };
@@ -861,6 +867,12 @@
 		8373D9C41ABAFD5A0054B0D3 /* InfinitFacebookWindowController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFacebookWindowController.mm; sourceTree = "<group>"; };
 		8373D9C51ABAFD5A0054B0D3 /* InfinitFacebookWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFacebookWindowController.xib; sourceTree = "<group>"; };
 		8373D9C81ABAFF8A0054B0D3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		8375C0951B0CB94F00AE439F /* conversation-icon-pause-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-pause-hover.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-pause-hover.png"; sourceTree = "<group>"; };
+		8375C0961B0CB94F00AE439F /* conversation-icon-pause-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-pause-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-pause-hover@2x.png"; sourceTree = "<group>"; };
+		8375C0971B0CB94F00AE439F /* conversation-icon-reject-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-reject-hover.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-reject-hover.png"; sourceTree = "<group>"; };
+		8375C0981B0CB94F00AE439F /* conversation-icon-reject-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-reject-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-reject-hover@2x.png"; sourceTree = "<group>"; };
+		8375C0991B0CB94F00AE439F /* conversation-icon-resume-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-resume-hover.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-resume-hover.png"; sourceTree = "<group>"; };
+		8375C09A1B0CB94F00AE439F /* conversation-icon-resume-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-resume-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-resume-hover@2x.png"; sourceTree = "<group>"; };
 		837A7F6F17FC072300600ACD /* IAReportProblemWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAReportProblemWindowController.h; sourceTree = "<group>"; };
 		837A7F7017FC072300600ACD /* IAReportProblemWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAReportProblemWindowController.m; sourceTree = "<group>"; };
 		837A7F7117FC072300600ACD /* IAReportProblemWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAReportProblemWindowController.xib; sourceTree = "<group>"; };
@@ -1586,6 +1598,12 @@
 		8392496F18D7B0F200EE72C7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8375C0951B0CB94F00AE439F /* conversation-icon-pause-hover.png */,
+				8375C0961B0CB94F00AE439F /* conversation-icon-pause-hover@2x.png */,
+				8375C0971B0CB94F00AE439F /* conversation-icon-reject-hover.png */,
+				8375C0981B0CB94F00AE439F /* conversation-icon-reject-hover@2x.png */,
+				8375C0991B0CB94F00AE439F /* conversation-icon-resume-hover.png */,
+				8375C09A1B0CB94F00AE439F /* conversation-icon-resume-hover@2x.png */,
 				830BB8A51B06045F00861D5F /* conversation-icon-pause.png */,
 				830BB8A61B06045F00861D5F /* conversation-icon-pause@2x.png */,
 				830BB8A71B06045F00861D5F /* conversation-icon-resume.png */,
@@ -2274,6 +2292,7 @@
 				83AA9AE81A07E1F600C5D4BA /* icon-menu-bar-yosemite.png in Resources */,
 				836EAD1F1988EE3B0053BE85 /* video.png in Resources */,
 				830BB8AB1B06045F00861D5F /* conversation-icon-resume.png in Resources */,
+				8375C09F1B0CB94F00AE439F /* conversation-icon-resume-hover.png in Resources */,
 				836EAE5F1988F5630053BE85 /* icon-clipboard@2x.png in Resources */,
 				836EAD951988EEC70053BE85 /* conversation-icon-hide-files@2x.png in Resources */,
 				836EADC51988F1B80053BE85 /* login-icon-close.png in Resources */,
@@ -2321,6 +2340,7 @@
 				836EAD931988EEC70053BE85 /* conversation-icon-finished@2x.png in Resources */,
 				837B2A8B19DD96AD00A3CDE1 /* bg-main-button@2x.png in Resources */,
 				836EADAD1988EEC70053BE85 /* conversation-icon-show-files@2x.png in Resources */,
+				8375C09E1B0CB94F00AE439F /* conversation-icon-reject-hover@2x.png in Resources */,
 				836EAE0E1988F42D0053BE85 /* icon-menu-bar-link.png in Resources */,
 				836EAD161988EE3B0053BE85 /* illustrator@2x.png in Resources */,
 				834F136419214B9F00BF36A4 /* InfinitSendNoteViewController.xib in Resources */,
@@ -2360,6 +2380,7 @@
 				837B2A8A19DD96AD00A3CDE1 /* bg-main-button.png in Resources */,
 				836EAE551988F4500053BE85 /* icon-menu-bar-animated-black-16.png in Resources */,
 				836EAE471988F4500053BE85 /* icon-menu-bar-animated-black-2.png in Resources */,
+				8375C09D1B0CB94F00AE439F /* conversation-icon-reject-hover.png in Resources */,
 				836EAD181988EE3B0053BE85 /* music@2x.png in Resources */,
 				836EADC31988F1B80053BE85 /* login-icon-close-hover.png in Resources */,
 				836EAE0D1988F42D0053BE85 /* icon-menu-bar-inactive@2x.png in Resources */,
@@ -2390,6 +2411,7 @@
 				836EAE311988F43E0053BE85 /* icon-menu-bar-animated-red-16.png in Resources */,
 				836EAE301988F43E0053BE85 /* icon-menu-bar-animated-red-15.png in Resources */,
 				83E73FA619A5DD0E00B7E8EF /* InfinitSettingsWindow.xib in Resources */,
+				8375C09B1B0CB94F00AE439F /* conversation-icon-pause-hover.png in Resources */,
 				836EAE2C1988F43E0053BE85 /* icon-menu-bar-animated-red-11.png in Resources */,
 				831445701ABC23690032958B /* send-icon-device-ios-avatar@2x.png in Resources */,
 				836EAD841988EEC70053BE85 /* conversation-icon-accept-hover.png in Resources */,
@@ -2405,6 +2427,7 @@
 				836EAD101988EE3B0053BE85 /* cat@2x.png in Resources */,
 				837B2A8219DD966E00A3CDE1 /* sound_finished.aiff in Resources */,
 				836EAE0C1988F42D0053BE85 /* icon-menu-bar-inactive.png in Resources */,
+				8375C0A01B0CB94F00AE439F /* conversation-icon-resume-hover@2x.png in Resources */,
 				837B2A9919DD96DF00A3CDE1 /* bg-triangle-top-grey@2x.png in Resources */,
 				83732B571989418F0030B0F0 /* icon-delete-confirm.png in Resources */,
 				836EACED1988EE300053BE85 /* icon-delete-hover.png in Resources */,
@@ -2426,6 +2449,7 @@
 				836EAE571988F4500053BE85 /* icon-menu-bar-animated-black-18.png in Resources */,
 				836EAE671988F5970053BE85 /* icon-share.png in Resources */,
 				836EAD8C1988EEC70053BE85 /* conversation-icon-canceled.png in Resources */,
+				8375C09C1B0CB94F00AE439F /* conversation-icon-pause-hover@2x.png in Resources */,
 				836EAD9D1988EEC70053BE85 /* conversation-icon-quote-right@2x.png in Resources */,
 				836EAE0B1988F42D0053BE85 /* icon-menu-bar-fire@2x.png in Resources */,
 				836EADA51988EEC70053BE85 /* conversation-icon-reject@2x.png in Resources */,
