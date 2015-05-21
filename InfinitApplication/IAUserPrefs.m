@@ -2,90 +2,98 @@
 
 #import "IAUserPrefs.h"
 
+@interface IAUserPrefs ()
+
+@property (nonatomic, readonly) NSString* dict_path;
+@property (nonatomic, readonly) NSMutableDictionary* values;
+@property (nonatomic, readonly) dispatch_queue_t queue;
+
+@end
+
+static NSString* _dict_path = nil;
+static dispatch_once_t _dict_path_token = 0;
+static IAUserPrefs* _instance = nil;
+static dispatch_once_t _instance_token = 0;
+
 @implementation IAUserPrefs
 
-+ (NSString*)appSupportPath
+#pragma mark - Init
+
+- (id)init
 {
-	static NSString* result = nil;
-	if (result == nil)
-	{
-		NSArray* paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
-                                                             NSUserDomainMask,
-                                                             YES);
-		NSString* path = [paths.count == 1? paths.lastObject :
-                                            nil stringByAppendingPathComponent:@"Infinit"];
-		result = path;
-	}
-	BOOL is_dir = NO;
-	if ([[NSFileManager defaultManager] fileExistsAtPath:result isDirectory:&is_dir] == YES)
-		return is_dir == YES ? result : nil;
-	if ([[NSFileManager defaultManager] createDirectoryAtPath:result
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:NULL] == YES)
-    {
-		return result;
-    }
-	return nil;
+  NSCAssert(_instance == nil, @"Use sharedInstance.");
+  if (self = [super init])
+  {
+    _queue = dispatch_queue_create("io.Infinit.UserPrefs", DISPATCH_QUEUE_SERIAL);
+    _values = [NSMutableDictionary dictionaryWithContentsOfFile:self.dict_path];
+    if (_values == nil)
+      _values = [NSMutableDictionary dictionary];
+  }
+  return self;
 }
 
 + (IAUserPrefs*)sharedInstance
 {
-	static IAUserPrefs* userPrefs = nil;
-	if (userPrefs == nil)
-		userPrefs = [[IAUserPrefs alloc] init];
-	return userPrefs;
-}
-
-- (id)init
-{
-	if (self = [super init])
-	{
-		NSString* path = [[IAUserPrefs appSupportPath]
-                          stringByAppendingPathComponent:@"preferences.plist"];
-		NSDictionary* values = [NSDictionary dictionaryWithContentsOfFile:path];
-		_values = [NSMutableDictionary dictionaryWithDictionary:values];
-	}
-	return self;
+  dispatch_once(&_instance_token, ^
+  {
+    _instance = [[IAUserPrefs alloc] init];
+  });
+	return _instance;
 }
 
 - (void)dealloc
 {
-  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  dispatch_sync(self.queue, ^{ /* Wait for writes */ });
 }
 
 - (id)prefsForKey:(NSString*)key
 {
-	return _values[key];
+  __block id res = nil;
+  dispatch_sync(self.queue, ^
+  {
+    res = self.values[key];
+  });
+  return res;
 }
 
-- (void)setPref:(NSString*)prefs forKey:(NSString*)key
+- (void)setPref:(id<NSCoding>)prefs
+         forKey:(NSString*)key
 {
-	[_values setValue:prefs forKey:key];
-	[NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(synchronizeDelayed)
-                                               object:nil];
-	[self performSelector:@selector(synchronizeDelayed)
-               withObject:nil
-               afterDelay:0.25];
+  dispatch_async(self.queue, ^
+  {
+    [self.values setValue:prefs forKey:key];
+    [self.values writeToFile:self.dict_path atomically:NO];
+  });
 }
 
-- (void)setPrefNow:(NSString*)prefs
+- (void)setPrefNow:(id<NSCoding>)prefs
             forKey:(NSString*)key
 {
-  [_values setValue:prefs forKey:key];
-  [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                           selector:@selector(synchronizeDelayed)
-                                             object:nil];
-  [self synchronizeDelayed];
+  [self.values setValue:prefs forKey:key];
+  [self.values writeToFile:self.dict_path atomically:NO];
 }
 
-- (BOOL)synchronizeDelayed
+#pragma mark - Helpers
+
+- (NSString*)dict_path
 {
-	NSString* path = [[IAUserPrefs appSupportPath]
-                      stringByAppendingPathComponent:@"preferences.plist"];
-	return [_values writeToFile:path
-                     atomically:YES];
+  dispatch_once(&_dict_path_token, ^
+  {
+    NSString* app_support_path =
+      NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
+                                          NSUserDomainMask,
+                                          YES).lastObject;
+    NSString* infinit_path = [app_support_path stringByAppendingPathComponent:@"Infinit"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:infinit_path])
+    {
+      [[NSFileManager defaultManager] createDirectoryAtPath:infinit_path
+                                withIntermediateDirectories:YES
+                                                 attributes:nil
+                                                      error:nil];
+    }
+    _dict_path = [infinit_path stringByAppendingPathComponent:@"preferences.plist"];
+  });
+  return _dict_path;
 }
 
 @end
