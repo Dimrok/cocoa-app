@@ -9,6 +9,7 @@
 #import "InfinitSearchController.h"
 
 #import "IAUserPrefs.h"
+#import "InfinitAddressBookManager.h"
 #import "InfinitMetricsManager.h"
 
 #import <Gap/InfinitDeviceManager.h>
@@ -84,6 +85,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   else
   {
     ELLE_DEBUG("%s: addressbook accessible", self.description.UTF8String);
+    [InfinitAddressBookManager sharedInstance];
     return YES;
   }
 }
