@@ -12,4 +12,7 @@
 
 + (instancetype)sharedInstance;
 
+/// Will only upload contacts if they haven't been yet.
+- (void)uploadContacts;
+
 @end
