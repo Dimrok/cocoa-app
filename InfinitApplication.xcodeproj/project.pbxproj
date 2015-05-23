@@ -81,7 +81,7 @@
 		833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833B59CB18D75D4800A43339 /* InfinitConversationViewController.mm */; };
 		833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 833B59CC18D75D4800A43339 /* InfinitConversationViewController.xib */; };
 		833B59D418D774C400A43339 /* InfinitConversationCellView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833B59D318D774C400A43339 /* InfinitConversationCellView.mm */; };
-		833C319117CCC85200941C09 /* IADesktopNotifier.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833C319017CCC85200941C09 /* IADesktopNotifier.mm */; };
+		833C319117CCC85200941C09 /* InfinitDesktopNotifier.mm in Sources */ = {isa = PBXBuildFile; fileRef = 833C319017CCC85200941C09 /* InfinitDesktopNotifier.mm */; };
 		8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8346314F17A7042A00A7E17F /* IACentredSecureCell.m */; };
 		834F136319214B9F00BF36A4 /* InfinitSendNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 834F136119214B9F00BF36A4 /* InfinitSendNoteViewController.m */; };
 		834F136419214B9F00BF36A4 /* InfinitSendNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834F136219214B9F00BF36A4 /* InfinitSendNoteViewController.xib */; };
@@ -673,8 +673,8 @@
 		833B59CC18D75D4800A43339 /* InfinitConversationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitConversationViewController.xib; sourceTree = "<group>"; };
 		833B59D218D774C400A43339 /* InfinitConversationCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationCellView.h; sourceTree = "<group>"; };
 		833B59D318D774C400A43339 /* InfinitConversationCellView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitConversationCellView.mm; sourceTree = "<group>"; };
-		833C318F17CCC85200941C09 /* IADesktopNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADesktopNotifier.h; sourceTree = "<group>"; };
-		833C319017CCC85200941C09 /* IADesktopNotifier.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IADesktopNotifier.mm; sourceTree = "<group>"; };
+		833C318F17CCC85200941C09 /* InfinitDesktopNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDesktopNotifier.h; sourceTree = "<group>"; };
+		833C319017CCC85200941C09 /* InfinitDesktopNotifier.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitDesktopNotifier.mm; sourceTree = "<group>"; };
 		8346314E17A7042A00A7E17F /* IACentredSecureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACentredSecureCell.h; sourceTree = "<group>"; };
 		8346314F17A7042A00A7E17F /* IACentredSecureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACentredSecureCell.m; sourceTree = "<group>"; };
 		834F136019214B9F00BF36A4 /* InfinitSendNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendNoteViewController.h; sourceTree = "<group>"; };
@@ -1433,8 +1433,8 @@
 			isa = PBXGroup;
 			children = (
 				83B2B2A718465E51004F4E38 /* Resources */,
-				833C318F17CCC85200941C09 /* IADesktopNotifier.h */,
-				833C319017CCC85200941C09 /* IADesktopNotifier.mm */,
+				833C318F17CCC85200941C09 /* InfinitDesktopNotifier.h */,
+				833C319017CCC85200941C09 /* InfinitDesktopNotifier.mm */,
 			);
 			name = "Desktop Notifier";
 			sourceTree = "<group>";
@@ -2578,7 +2578,7 @@
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
 				83C25B6519EEBEC6009752F1 /* InfinitSearchNoResultsCellView.m in Sources */,
 				839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */,
-				833C319117CCC85200941C09 /* IADesktopNotifier.mm in Sources */,
+				833C319117CCC85200941C09 /* InfinitDesktopNotifier.mm in Sources */,
 				8337673819088A820073A621 /* OEXTokenAttachmentCell.m in Sources */,
 				8373D9C61ABAFD5A0054B0D3 /* InfinitFacebookWindowController.mm in Sources */,
 				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.mm in Sources */,
