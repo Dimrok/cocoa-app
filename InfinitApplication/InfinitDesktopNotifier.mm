@@ -1,12 +1,12 @@
 //
-//  IADesktopNotifier.m
+//  InfinitDesktopNotifier.m
 //  InfinitApplication
 //
 //  Created by Christopher Crone on 8/27/13.
 //  Copyright (c) 2013 Infinit. All rights reserved.
 //
 
-#import "IADesktopNotifier.h"
+#import "InfinitDesktopNotifier.h"
 
 #import "InfinitMetricsManager.h"
 
@@ -23,33 +23,38 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 @property BOOL _showsButtons;
 @end
 
-@implementation IADesktopNotifier
-{
-@private
-  __weak id<IADesktopNotifierProtocol> _delegate;
-  NSUserNotificationCenter* _notification_centre;
-  
-  NSSound* _finished_sound;
-  NSSound* _incoming_sound;
-}
+@interface InfinitDesktopNotifier ()
+
+@property (nonatomic, readonly) NSUserNotificationCenter* notification_center;
+@property (nonatomic, readonly) NSSound* transaction_finished_sound;
+@property (nonatomic, readonly) NSSound* transaction_incoming_sound;
+
+@end
+
+static InfinitDesktopNotifier* _instance = nil;
+static dispatch_once_t _instance_token = 0;
+
+@implementation InfinitDesktopNotifier
 
 #pragma mark - Init
 
-- (id)initWithDelegate:(id<IADesktopNotifierProtocol>)delegate
+- (id)init
 {
+  NSCAssert(_instance == nil, @"Use sharedInstance.");
   if (self = [super init])
   {
-    _delegate = delegate;
-    _notification_centre = [NSUserNotificationCenter defaultUserNotificationCenter];
-    [_notification_centre setDelegate:self];
+    _notification_center = [NSUserNotificationCenter defaultUserNotificationCenter];
+    self.notification_center.delegate = self;
     NSString* finished_name = @"sound_finished";
     NSString* incoming_name = @"sound_incoming";
     NSString* finished_path = [[NSBundle mainBundle] pathForSoundResource:finished_name];
     NSString* incoming_path = [[NSBundle mainBundle] pathForSoundResource:incoming_name];
-    _finished_sound = [[NSSound alloc] initWithContentsOfFile:finished_path byReference:YES];
-    _finished_sound.name = finished_name;
-    _incoming_sound = [[NSSound alloc] initWithContentsOfFile:incoming_path byReference:YES];
-    _incoming_sound.name = incoming_name;
+    _transaction_finished_sound = [[NSSound alloc] initWithContentsOfFile:finished_path
+                                                              byReference:YES];
+    self.transaction_finished_sound.name = finished_name;
+    _transaction_incoming_sound = [[NSSound alloc] initWithContentsOfFile:incoming_path
+                                                              byReference:YES];
+    self.transaction_incoming_sound.name = incoming_name;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(linkTransactionUpdated:)
                                                  name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION
@@ -66,11 +71,22 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   return self;
 }
 
++ (instancetype)sharedInstance
+{
+  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
+    return nil;
+  dispatch_once(&_instance_token, ^
+  {
+    _instance = [[InfinitDesktopNotifier alloc] init];
+  });
+  return _instance;
+}
+
 - (void)dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  for (NSUserNotification* notification in _notification_centre.scheduledNotifications)
-    [_notification_centre removeScheduledNotification:notification];
+  for (NSUserNotification* notification in self.notification_center.scheduledNotifications)
+    [self.notification_center removeScheduledNotification:notification];
 }
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter*)center
@@ -83,9 +99,9 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
 - (void)clearAllNotifications
 {
-  [_notification_centre removeAllDeliveredNotifications];
-  for (NSUserNotification* notification in _notification_centre.scheduledNotifications)
-    [_notification_centre removeScheduledNotification:notification];
+  [self.notification_center removeAllDeliveredNotifications];
+  for (NSUserNotification* notification in self.notification_center.scheduledNotifications)
+    [self.notification_center removeScheduledNotification:notification];
 }
 
 #pragma mark - Transaction Handling
@@ -102,7 +118,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   if (user_notification == nil)
     return;
 
-  [_notification_centre deliverNotification:user_notification];
+  [self.notification_center deliverNotification:user_notification];
 }
 
 - (void)peerTransactionUpdated:(NSNotification*)notification
@@ -130,9 +146,9 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
            transaction.meta_id.UTF8String,
            transaction.status_text.UTF8String);
 
-  [_notification_centre deliverNotification:user_notification];
+  [self.notification_center deliverNotification:user_notification];
   if (transaction.status == gap_transaction_waiting_accept && transaction.receivable)
-    [_notification_centre scheduleNotification:user_notification];
+    [self.notification_center scheduleNotification:user_notification];
 }
 
 - (void)linkTransactionUpdated:(NSNotification*)notification
@@ -150,7 +166,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
   ELLE_LOG("%s: show desktop notification for link (%s) with status: %s",
            self.description.UTF8String, link.meta_id.UTF8String, link.status_text.UTF8String);
-  [_notification_centre deliverNotification:user_notification];
+  [self.notification_center deliverNotification:user_notification];
 }
 
 - (void)desktopNotificationForLinkCopied:(InfinitLinkTransaction*)link
@@ -169,7 +185,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   ELLE_LOG("%s: show desktop notification for copy link (%s)",
            self.description.UTF8String, link.meta_id.UTF8String);
 
-  [_notification_centre deliverNotification:user_notification];
+  [self.notification_center deliverNotification:user_notification];
 }
 
 #pragma mark - Application Updated
@@ -188,7 +204,23 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
     @{@"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
   ELLE_LOG("%s: show desktop notification for application updated to %s",
            self.description.UTF8String, version.UTF8String);
-  [_notification_centre deliverNotification:user_notification];
+  [self.notification_center deliverNotification:user_notification];
+}
+
+#pragma mark - Contact Joined
+
+- (void)desktopNotificationForContactJoined:(NSString*)name
+{
+  NSUserNotification* notification = [[NSUserNotification alloc] init];
+  notification.title = [NSString stringWithFormat:NSLocalizedString(@"%@ joined!", nil), name];
+  notification.informativeText =
+    [NSString stringWithFormat:NSLocalizedString(@"%@ just joined Infinit!", nil), name];
+  notification.soundName = nil;
+  notification.userInfo =
+    @{@"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};
+  ELLE_LOG("%s: show desktop notification for contact joined: %s",
+           self.description.UTF8String, name.UTF8String);
+  [self.notification_center deliverNotification:notification];
 }
 
 #pragma mark - NSUserNotificationCenterDelegate
@@ -209,11 +241,11 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
     if (notification.activationType == NSUserNotificationActivationTypeContentsClicked)
     {
-      [_delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
+      [self.delegate desktopNotifier:self hadClickNotificationForTransactionId:transaction_id];
     }
     else
     {
-      [_delegate desktopNotifier:self hadAcceptTransaction:transaction_id];
+      [self.delegate desktopNotifier:self hadAcceptTransaction:transaction_id];
       [InfinitMetricsManager sendMetric:INFINIT_METRIC_DESKTOP_NOTIFICATION_ACCEPT];
     }
   }
@@ -222,11 +254,11 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
     NSNumber* link_id = [dict objectForKey:@"link_id"];
     if (link_id == nil || link_id.unsignedIntValue == 0)
       return;
-    [_delegate desktopNotifier:self hadClickNotificationForLinkId:link_id];
+    [self.delegate desktopNotifier:self hadClickNotificationForLinkId:link_id];
   }
   else
   {
-    [_delegate desktopNotifierHadClickApplicationUpdatedNotification:self];
+    [self.delegate desktopNotifierHadClickApplicationUpdatedNotification:self];
   }
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_DESKTOP_NOTIFICATION];
 }
@@ -277,8 +309,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
   NSString* filename;
   if (transaction.files.count > 1)
   {
-    filename = [NSString stringWithFormat:@"%lu %@", transaction.files.count,
-                NSLocalizedString(@"files", @"files")];
+    filename = [NSString stringWithFormat:NSLocalizedString(@"%lu files", @"files"),
+                transaction.files.count];
   }
   else if ([transaction.files[0] length] > 18)
   {
@@ -295,17 +327,16 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       if (transaction.from_device)
       {
         res.title = NSLocalizedString(@"Now Sending!", nil);
-        res.soundName = _incoming_sound.name;
+        res.soundName = self.transaction_incoming_sound.name;
         res.informativeText = NSLocalizedString(@"Your transfer is in progress!", nil);
       }
       else if (transaction.receivable)
       {
         res.title = NSLocalizedString(@"Incoming!", @"incoming!");
-        res.soundName = _incoming_sound.name;
-        res.informativeText = [NSString stringWithFormat:@"%@ %@ %@", transaction.sender.fullname,
-                               NSLocalizedString(@"wants to send", nil),
-                               filename,
-                               NSLocalizedString(@"to you", nil)];
+        res.soundName = self.transaction_incoming_sound.name;
+        res.informativeText =
+          [NSString stringWithFormat:NSLocalizedString(@"%@ wants to send %@ to you", nil),
+           transaction.sender.fullname, filename];
         if ([IAFunctions osxVersion] > INFINIT_OS_X_VERSION_10_8)
         {
           res.hasActionButton = YES;
@@ -324,10 +355,9 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       if (!transaction.sender.is_self)
         return nil;
       res.title = NSLocalizedString(@"Declined!", nil);
-      res.informativeText = [NSString stringWithFormat:@"%@ %@ %@.",
-                             NSLocalizedString(@"Unfortunately", nil),
-                             transaction.other_user.fullname,
-                             NSLocalizedString(@"declined your transfer", nil)];
+      res.informativeText =
+        [NSString stringWithFormat:NSLocalizedString(@"Unfortunately %@ declined your transfer", nil),
+         transaction.other_user.fullname];
       break;
 
     case gap_transaction_canceled:
@@ -344,17 +374,16 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       else if (transaction.sender.is_self)
       {
         res.title = NSLocalizedString(@"Declined", nil);
-        res.informativeText = [NSString stringWithFormat:@"%@ %@ %@",
-                               NSLocalizedString(@"Unfortunately", nil),
-                               transaction.canceler.fullname,
-                               NSLocalizedString(@"declined your file", nil)];
+        res.informativeText =
+          [NSString stringWithFormat:NSLocalizedString(@"Unfortunately %@ declined your file", nil),
+           transaction.canceler.fullname];
       }
       else
       {
         res.title = NSLocalizedString(@"Canceled", nil);
-        res.informativeText = [NSString stringWithFormat:@"%@ %@",
-                               transaction.canceler.fullname,
-                               NSLocalizedString(@"canceled the transfer", nil)];
+        res.informativeText =
+          [NSString stringWithFormat:NSLocalizedString(@"%@ canceled the transfer", nil),
+           transaction.canceler.fullname];
       }
       break;
 
@@ -363,7 +392,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       if (transaction.sender.is_self)
       {
         res.informativeText =
-        NSLocalizedString(@"Something went wrong. Keep calm and try again.", nil);
+          NSLocalizedString(@"Something went wrong. Keep calm and try again.", nil);
       }
       break;
 
@@ -371,24 +400,24 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       if (transaction.sender.is_self && transaction.from_device)
       {
         res.title = NSLocalizedString(@"Delivered!", nil);
-        res.informativeText = [NSString stringWithFormat:@"%@ %@.",
-                               NSLocalizedString(@"Voilà, your file has been delivered to", nil),
-                               transaction.recipient.fullname];
+        res.informativeText =
+          [NSString stringWithFormat:NSLocalizedString(@"Voilà, your file has been delivered to %@", nil),
+           transaction.recipient.fullname];
       }
       else
       {
         res.title = NSLocalizedString(@"Received!", nil);
         res.informativeText =
-        NSLocalizedString(@"Voilà, your file is available. Open it now!", nil);
+          NSLocalizedString(@"Voilà, your file is available. Open it now!", nil);
       }
-      res.soundName = _finished_sound.name;
+      res.soundName = self.transaction_finished_sound.name;
       break;
 
     case gap_transaction_cloud_buffered:
       res.title = NSLocalizedString(@"Sent!", nil);
-      res.soundName = _finished_sound.name;
+      res.soundName = self.transaction_finished_sound.name;
       res.informativeText =
-      NSLocalizedString(@"We’ll let you know when your file has been delivered.", nil);
+        NSLocalizedString(@"We’ll let you know when your file has been delivered.", nil);
       break;
 
     default:
@@ -439,7 +468,7 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
       {
         message = NSLocalizedString(@"A link to the file has been copied to your clipboard", nil);
       }
-      sound = _incoming_sound.name;
+      sound = self.transaction_incoming_sound.name;
       break;
 
     default:
@@ -460,21 +489,21 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 - (void)_removeNotificationForTransactionId:(NSNumber*)id_
 {
   NSMutableArray* delivered = [NSMutableArray array];
-  for (NSUserNotification* notification in _notification_centre.deliveredNotifications)
+  for (NSUserNotification* notification in self.notification_center.deliveredNotifications)
   {
     if ([notification.userInfo[@"transaction_id"] isEqual:id_])
       [delivered addObject:notification];
   }
   for (NSUserNotification* notification in delivered)
-    [_notification_centre removeDeliveredNotification:notification];
+    [self.notification_center removeDeliveredNotification:notification];
   NSMutableArray* scheduled = [NSMutableArray array];
-  for (NSUserNotification* notification in _notification_centre.scheduledNotifications)
+  for (NSUserNotification* notification in self.notification_center.scheduledNotifications)
   {
     if ([notification.userInfo[@"transaction_id"] isEqual:id_])
       [scheduled addObject:notification];
   }
   for (NSUserNotification* notification in scheduled)
-    [_notification_centre removeScheduledNotification:notification];
+    [self.notification_center removeScheduledNotification:notification];
 }
 
 @end

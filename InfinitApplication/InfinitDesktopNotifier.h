@@ -1,5 +1,5 @@
 //
-//  IADesktopNotifier.h
+//  InfinitDesktopNotifier.h
 //  InfinitApplication
 //
 //  Created by Christopher Crone on 8/27/13.
@@ -11,11 +11,13 @@
 #import <Gap/InfinitLinkTransaction.h>
 #import <Gap/InfinitPeerTransaction.h>
 
-@protocol IADesktopNotifierProtocol;
+@protocol InfinitDesktopNotifierProtocol;
 
-@interface IADesktopNotifier : NSObject <NSUserNotificationCenterDelegate>
+@interface InfinitDesktopNotifier : NSObject <NSUserNotificationCenterDelegate>
 
-- (id)initWithDelegate:(id<IADesktopNotifierProtocol>)delegate;
+@property (nonatomic, weak) id<InfinitDesktopNotifierProtocol> delegate;
+
++ (instancetype)sharedInstance;
 
 - (void)clearAllNotifications;
 
@@ -25,18 +27,20 @@
 
 - (void)desktopNotificationForApplicationUpdated;
 
+- (void)desktopNotificationForContactJoined:(NSString*)name;
+
 @end
 
-@protocol IADesktopNotifierProtocol <NSObject>
+@protocol InfinitDesktopNotifierProtocol <NSObject>
 
-- (void)desktopNotifier:(IADesktopNotifier*)sender
+- (void)desktopNotifier:(InfinitDesktopNotifier*)sender
 hadClickNotificationForTransactionId:(NSNumber*)id_;
-- (void)desktopNotifier:(IADesktopNotifier*)sender
+- (void)desktopNotifier:(InfinitDesktopNotifier*)sender
    hadAcceptTransaction:(NSNumber*)id_;
 
-- (void)desktopNotifier:(IADesktopNotifier*)sender
+- (void)desktopNotifier:(InfinitDesktopNotifier*)sender
 hadClickNotificationForLinkId:(NSNumber*)id_;
 
-- (void)desktopNotifierHadClickApplicationUpdatedNotification:(IADesktopNotifier*)sender;
+- (void)desktopNotifierHadClickApplicationUpdatedNotification:(InfinitDesktopNotifier*)sender;
 
 @end
