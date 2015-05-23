@@ -9,7 +9,6 @@
 #import "IAMainController.h"
 
 #import "IAAutoStartup.h"
-#import "IADesktopNotifier.h"
 #import "IAGeneralSendController.h"
 #import "IANoConnectionViewController.h"
 #import "IANotLoggedInViewController.h"
@@ -18,7 +17,9 @@
 #import "IAUserPrefs.h"
 #import "IAViewController.h"
 #import "IAWindowController.h"
+#import "InfinitAddressBookManager.h"
 #import "InfinitConversationViewController.h"
+#import "InfinitDesktopNotifier.h"
 #import "InfinitDownloadDestinationManager.h"
 #import "InfinitFacebookWindowController.h"
 #import "InfinitFeatureManager.h"
@@ -49,8 +50,7 @@
 
 ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
-@interface IAMainController () <IADesktopNotifierProtocol,
-                                IAGeneralSendControllerProtocol,
+@interface IAMainController () <IAGeneralSendControllerProtocol,
                                 IANoConnectionViewProtocol,
                                 IANotLoggedInViewProtocol,
                                 IAReportProblemProtocol,
@@ -58,6 +58,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                 IAViewProtocol,
                                 IAWindowControllerProtocol,
                                 InfinitConversationViewProtocol,
+                                InfinitDesktopNotifierProtocol,
                                 InfinitFacebookWindowProtocol,
                                 InfinitLoginViewControllerProtocol,
                                 InfinitMainViewProtocol,
@@ -111,7 +112,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   InfinitStayAwakeManager* _stay_awake_manager;
   
   // Other
-  IADesktopNotifier* _desktop_notifier;
   NSSound* _sent_sound;
   
   // Login
@@ -188,7 +188,9 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     _current_view_controller = nil;
     
     if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
-      _desktop_notifier = [[IADesktopNotifier alloc] initWithDelegate:self];
+      [InfinitDesktopNotifier sharedInstance].delegate = self;
+
+    [InfinitAddressBookManager sharedInstance];
     
     _infinit_link = nil;
     _contextual_send_files = nil;
@@ -429,7 +431,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)showNotifications
 {
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
-    [_desktop_notifier clearAllNotifications];
+    [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   _main_view_controller = [[InfinitMainViewController alloc] initWithDelegate:self
                                                                 forPeopleView:YES];
   [self openOrChangeViewController:_main_view_controller];
@@ -438,7 +440,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)showLinks
 {
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
-    [_desktop_notifier clearAllNotifications];
+    [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   _main_view_controller = [[InfinitMainViewController alloc] initWithDelegate:self
                                                                 forPeopleView:NO];
   [self openOrChangeViewController:_main_view_controller];
@@ -516,7 +518,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)closeNotificationWindow
 {
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
-    [_desktop_notifier clearAllNotifications];
+    [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   [_window_controller closeWindow];
   if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
     [_status_bar_icon setHighlighted:NO];
@@ -527,7 +529,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)closeNotificationWindowWithoutLosingFocus
 {
   if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
-    [_desktop_notifier clearAllNotifications];
+    [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   [_window_controller closeWindowWithoutLosingFocus];
   if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
     [_status_bar_icon setHighlighted:NO];
@@ -567,7 +569,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   if ([[[IAUserPrefs sharedInstance] prefsForKey:@"updated"] isEqualToString:@"1"])
   {
     [[IAUserPrefs sharedInstance] setPref:@"0" forKey:@"updated"];
-    [_desktop_notifier desktopNotificationForApplicationUpdated];
+    [[InfinitDesktopNotifier sharedInstance] desktopNotificationForApplicationUpdated];
   }
 
   _login_view_controller = nil;
@@ -778,7 +780,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   if ([NSApp modalWindow] != nil)
     [NSApp abortModal];
   [InfinitStateManager stopState];
-  _desktop_notifier = nil;
   [_delegate terminateApplication:self];
 }
 
@@ -857,7 +858,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 //- Desktop Notifier Protocol ----------------------------------------------------------------------
 
-- (void)desktopNotifier:(IADesktopNotifier*)sender
+- (void)desktopNotifier:(InfinitDesktopNotifier*)sender
 hadClickNotificationForTransactionId:(NSNumber*)id_
 {
   InfinitPeerTransaction* transaction =
@@ -868,7 +869,7 @@ hadClickNotificationForTransactionId:(NSNumber*)id_
   [self showConversationViewForUser:transaction.other_user];
 }
 
-- (void)desktopNotifier:(IADesktopNotifier*)sender
+- (void)desktopNotifier:(InfinitDesktopNotifier*)sender
 hadAcceptTransaction:(NSNumber*)id_
 {
   InfinitPeerTransaction* transaction =
@@ -879,13 +880,13 @@ hadAcceptTransaction:(NSNumber*)id_
   [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:transaction withError:nil];
 }
 
-- (void)desktopNotifier:(IADesktopNotifier*)sender
+- (void)desktopNotifier:(InfinitDesktopNotifier*)sender
 hadClickNotificationForLinkId:(NSNumber*)id_
 {
   [self showLinks];
 }
 
-- (void)desktopNotifierHadClickApplicationUpdatedNotification:(IADesktopNotifier*)sender
+- (void)desktopNotifierHadClickApplicationUpdatedNotification:(InfinitDesktopNotifier*)sender
 {
   [self showNotifications];
 }
@@ -966,7 +967,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   if (notify)
   {
     [self closeNotificationWindow];
-    [_desktop_notifier desktopNotificationForLinkCopied:link];
+    [[InfinitDesktopNotifier sharedInstance] desktopNotificationForLinkCopied:link];
   }
 }
 
@@ -1361,7 +1362,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
     NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
     InfinitPeerTransaction* transaction =
       [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-    [_desktop_notifier desktopNotificationForTransactionAccepted:transaction];
+    [[InfinitDesktopNotifier sharedInstance] desktopNotificationForTransactionAccepted:transaction];
   }
 }
 
