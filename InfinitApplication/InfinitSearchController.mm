@@ -85,7 +85,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   else
   {
     ELLE_DEBUG("%s: addressbook accessible", self.description.UTF8String);
-    [InfinitAddressBookManager sharedInstance];
+    [[InfinitAddressBookManager sharedInstance] uploadContacts];
     return YES;
   }
 }
