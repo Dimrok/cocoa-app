@@ -19,6 +19,12 @@
 		830423211B1091F80059A668 /* MASShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 830423201B1091F80059A668 /* MASShortcutView.m */; };
 		830423241B1092050059A668 /* MASShortcutValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 830423231B1092050059A668 /* MASShortcutValidator.m */; };
 		830423271B10921E0059A668 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 830423261B10921E0059A668 /* MASShortcut.m */; };
+		8304233A1B131DA50059A668 /* arrow-onboarding-send.png in Resources */ = {isa = PBXBuildFile; fileRef = 830423361B131DA50059A668 /* arrow-onboarding-send.png */; };
+		8304233B1B131DA50059A668 /* arrow-onboarding-send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 830423371B131DA50059A668 /* arrow-onboarding-send@2x.png */; };
+		8304233C1B131DA50059A668 /* icon-activity.png in Resources */ = {isa = PBXBuildFile; fileRef = 830423381B131DA50059A668 /* icon-activity.png */; };
+		8304233D1B131DA50059A668 /* icon-activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 830423391B131DA50059A668 /* icon-activity@2x.png */; };
+		830423401B13210C0059A668 /* icon-link.png in Resources */ = {isa = PBXBuildFile; fileRef = 8304233E1B13210C0059A668 /* icon-link.png */; };
+		830423411B13210C0059A668 /* icon-link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8304233F1B13210C0059A668 /* icon-link@2x.png */; };
 		83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */; };
 		83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */; };
 		83059E0D19213BD7008DA14A /* Montserrat.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83059E0A19213B42008DA14A /* Montserrat.ttf */; };
@@ -589,6 +595,12 @@
 		830423251B10921E0059A668 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
 		830423261B10921E0059A668 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
 		830423281B1092740059A668 /* MASKeyCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MASKeyCodes.h; sourceTree = "<group>"; };
+		830423361B131DA50059A668 /* arrow-onboarding-send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-onboarding-send.png"; path = "../../../../fist-resources/slices/mac/view_main/arrow-onboarding-send.png"; sourceTree = "<group>"; };
+		830423371B131DA50059A668 /* arrow-onboarding-send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-onboarding-send@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/arrow-onboarding-send@2x.png"; sourceTree = "<group>"; };
+		830423381B131DA50059A668 /* icon-activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-activity.png"; path = "../../../../fist-resources/slices/mac/view_main/icon-activity.png"; sourceTree = "<group>"; };
+		830423391B131DA50059A668 /* icon-activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-activity@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/icon-activity@2x.png"; sourceTree = "<group>"; };
+		8304233E1B13210C0059A668 /* icon-link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-link.png"; path = "../../../../fist-resources/slices/mac/view_main/icon-link.png"; sourceTree = "<group>"; };
+		8304233F1B13210C0059A668 /* icon-link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-link@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/icon-link@2x.png"; sourceTree = "<group>"; };
 		83059E05191EA2C0008DA14A /* InfinitSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendViewController.h; sourceTree = "<group>"; };
 		83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitSendViewController.mm; sourceTree = "<group>"; };
 		83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendViewController.xib; sourceTree = "<group>"; };
@@ -1531,6 +1543,8 @@
 		834F136E19217F1100BF36A4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				830423381B131DA50059A668 /* icon-activity.png */,
+				830423391B131DA50059A668 /* icon-activity@2x.png */,
 				83EF5C721A0A7AFA00A38D49 /* main-icon-bufferised.png */,
 				83EF5C731A0A7AFA00A38D49 /* main-icon-bufferised@2x.png */,
 				837B2AA419DD981F00A3CDE1 /* main-icon-expand.png */,
@@ -1588,6 +1602,8 @@
 		8355259C19301B3A0034CEA2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				830423361B131DA50059A668 /* arrow-onboarding-send.png */,
+				830423371B131DA50059A668 /* arrow-onboarding-send@2x.png */,
 				836EADD01988F2270053BE85 /* icon-upload.png */,
 				836EADD11988F2270053BE85 /* icon-upload@2x.png */,
 				836EADC81988F1F90053BE85 /* icon-transfer.png */,
@@ -1911,6 +1927,8 @@
 		83CC2C491923B37B00EBB96E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8304233E1B13210C0059A668 /* icon-link.png */,
+				8304233F1B13210C0059A668 /* icon-link@2x.png */,
 				836EAE601988F5670053BE85 /* MIME types */,
 				836EAE581988F5630053BE85 /* icon-clipboard-hover.png */,
 				836EAE591988F5630053BE85 /* icon-clipboard-hover@2x.png */,
@@ -2343,6 +2361,7 @@
 				836EACF71988EE300053BE85 /* link-icon-cancel.png in Resources */,
 				836EADCA1988F1F90053BE85 /* icon-transfer.png in Resources */,
 				837B2A9B19DD96DF00A3CDE1 /* bg-triangle-top-white@2x.png in Resources */,
+				830423411B13210C0059A668 /* icon-link@2x.png in Resources */,
 				83C6164F1AA0CB2400F68C94 /* illustration_screenshots.jpg in Resources */,
 				836EACEE1988EE300053BE85 /* icon-delete-hover@2x.png in Resources */,
 				83C25B7219F010EE009752F1 /* send-icon-back@2x.png in Resources */,
@@ -2350,6 +2369,7 @@
 				836EAD8A1988EEC70053BE85 /* conversation-icon-bufferised.png in Resources */,
 				831445751ABC23690032958B /* send-icon-email-results.png in Resources */,
 				836EAE331988F43E0053BE85 /* icon-menu-bar-animated-red-18.png in Resources */,
+				8304233C1B131DA50059A668 /* icon-activity.png in Resources */,
 				8373D9A61ABABCAE0054B0D3 /* SourceSansPro-LightIt.otf in Resources */,
 				8314456E1ABC23690032958B /* send-icon-device-android-avatar@2x.png in Resources */,
 				830423191B108BB70059A668 /* settings-icon-screenshots.png in Resources */,
@@ -2369,6 +2389,7 @@
 				830BB8AB1B06045F00861D5F /* conversation-icon-resume.png in Resources */,
 				8375C09F1B0CB94F00AE439F /* conversation-icon-resume-hover.png in Resources */,
 				836EAE5F1988F5630053BE85 /* icon-clipboard@2x.png in Resources */,
+				8304233B1B131DA50059A668 /* arrow-onboarding-send@2x.png in Resources */,
 				836EAD951988EEC70053BE85 /* conversation-icon-hide-files@2x.png in Resources */,
 				836EADC51988F1B80053BE85 /* login-icon-close.png in Resources */,
 				837B2AAF19DD985E00A3CDE1 /* main-icon-download@2x.png in Resources */,
@@ -2441,8 +2462,10 @@
 				836EAE221988F43E0053BE85 /* icon-menu-bar-animated-red-1.png in Resources */,
 				836EACF41988EE300053BE85 /* icon-edit@2x.png in Resources */,
 				836EAD1A1988EE3B0053BE85 /* photoshop@2x.png in Resources */,
+				8304233A1B131DA50059A668 /* arrow-onboarding-send.png in Resources */,
 				836EAD0E1988EE3B0053BE85 /* archive@2x.png in Resources */,
 				836EAE651988F5970053BE85 /* icon-share-hover.png in Resources */,
+				830423401B13210C0059A668 /* icon-link.png in Resources */,
 				8314456B1ABC23690032958B /* send-icon-device-mac-avatar.png in Resources */,
 				8318E9D419A788E800B765A2 /* settings-icon-check.png in Resources */,
 				836EAD1B1988EE3B0053BE85 /* picture.png in Resources */,
@@ -2525,6 +2548,7 @@
 				836EAE571988F4500053BE85 /* icon-menu-bar-animated-black-18.png in Resources */,
 				836EAE671988F5970053BE85 /* icon-share.png in Resources */,
 				836EAD8C1988EEC70053BE85 /* conversation-icon-canceled.png in Resources */,
+				8304233D1B131DA50059A668 /* icon-activity@2x.png in Resources */,
 				8375C09C1B0CB94F00AE439F /* conversation-icon-pause-hover@2x.png in Resources */,
 				836EAD9D1988EEC70053BE85 /* conversation-icon-quote-right@2x.png in Resources */,
 				836EAE0B1988F42D0053BE85 /* icon-menu-bar-fire@2x.png in Resources */,
