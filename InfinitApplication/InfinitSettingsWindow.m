@@ -57,6 +57,7 @@
   self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
   [self changeToViewController:self.general_view withAnimation:NO];
   [self.window center];
+  [super showWindow:sender];
 }
 
 - (void)close
