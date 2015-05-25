@@ -355,6 +355,8 @@
 //- Controller -------------------------------------------------------------------------------------
 
 @interface InfinitSendViewController ()
+
+@property (nonatomic, readonly) dispatch_once_t init_token;
 @end
 
 @implementation InfinitSendViewController
@@ -394,7 +396,6 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     _last_files_height = 197.0;
 
     _search_controller = search_controller;
-    _search_controller.link_mode = for_link;
     [_search_controller setDelegate:self];
     _note_controller = [[InfinitSendNoteViewController alloc] initWithDelegate:self];
     _files_controller = [[InfinitSendFilesViewController alloc] initWithDelegate:self];
@@ -437,76 +438,74 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 
 - (void)awakeFromNib
 {
-  [self.send_button.cell setDisabled_attrs:_send_btn_disabled_attrs];
-  [self.search_view addSubview:_search_controller.view];
-  NSMutableArray* search_constraints =
-    [NSMutableArray arrayWithArray:
-     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[search_view]|"
+  [super awakeFromNib];
+  dispatch_once(&_init_token, ^
+  {
+    [self.send_button.cell setDisabled_attrs:_send_btn_disabled_attrs];
+    [self.search_view addSubview:_search_controller.view];
+    NSMutableArray* search_constraints =
+      [NSMutableArray arrayWithArray:
+       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[search_view]|"
+                                               options:0
+                                               metrics:nil
+                                                 views:@{@"search_view": _search_controller.view}]];
+    [search_constraints addObjectsFromArray:
+     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[search_view]|"
                                              options:0
-                                             metrics:nil
+                                             metrics:nil 
                                                views:@{@"search_view": _search_controller.view}]];
-  [search_constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[search_view]|"
-                                           options:0
-                                           metrics:nil 
-                                             views:@{@"search_view": _search_controller.view}]];
-  [self.search_view addConstraints:search_constraints];
+    [self.search_view addConstraints:search_constraints];
 
-  [self.note_view addSubview:_note_controller.view];
-  NSMutableArray* note_constraints =
-    [NSMutableArray arrayWithArray:
-     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[note_view]|"
+    [self.note_view addSubview:_note_controller.view];
+    NSMutableArray* note_constraints =
+      [NSMutableArray arrayWithArray:
+       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[note_view]|"
+                                               options:0
+                                               metrics:nil
+                                                 views:@{@"note_view": _note_controller.view}]];
+    [note_constraints addObjectsFromArray:
+     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[note_view]|"
                                              options:0
                                              metrics:nil
                                                views:@{@"note_view": _note_controller.view}]];
-  [note_constraints addObjectsFromArray:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[note_view]|"
-                                           options:0
-                                           metrics:nil
-                                             views:@{@"note_view": _note_controller.view}]];
-  [self.note_view addConstraints:note_constraints];
+    [self.note_view addConstraints:note_constraints];
 
-  [self.files_view addSubview:_files_controller.view];
-  NSMutableArray* files_constraints =
-    [NSMutableArray arrayWithArray:
-     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[files_view]|"
-                                             options:0
-                                             metrics:nil
-                                               views:@{@"files_view": _files_controller.view}]];
-  [files_constraints addObjectsFromArray:
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[files_view]|"
-                                            options:0
-                                            metrics:nil
-                                              views:@{@"files_view": _files_controller.view}]];
-  [self.files_view addConstraints:files_constraints];
-}
-
-- (void)loadView
-{
-  [super loadView];
-  [self.user_link_view setDelegate:self];
-  [self setSendButtonState];
-  if (_for_link)
-  {
-    [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
-    self.send_button.attributedTitle = _link_str;
-    self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
-    _search_controller.link_mode = YES;
-    [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
-    self.button_width.constant = _link_str.size.width + 40.0;
-  }
-  else
-  {
-    [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
-    self.send_button.attributedTitle = _send_str;
-    self.send_button.toolTip = NSLocalizedString(@"Send to someone", nil);
-    _search_controller.link_mode = NO;
-    [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
-    self.button_width.constant = _send_str.size.width + 40.0;
-  }
-  // Ensure constraints are respected when drop on icon
-  [_files_controller updateWithFiles:@[]];
-  [self performSelector:@selector(delayedLoadFiles) withObject:nil afterDelay:0.4f];
+    [self.files_view addSubview:_files_controller.view];
+    NSMutableArray* files_constraints =
+      [NSMutableArray arrayWithArray:
+       [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[files_view]|"
+                                               options:0
+                                               metrics:nil
+                                                 views:@{@"files_view": _files_controller.view}]];
+    [files_constraints addObjectsFromArray:
+      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[files_view]|"
+                                              options:0
+                                              metrics:nil
+                                                views:@{@"files_view": _files_controller.view}]];
+    [self.files_view addConstraints:files_constraints];
+    [self.user_link_view setDelegate:self];
+    [self setSendButtonState];
+    if (_for_link)
+    {
+      [self.user_link_view setupViewForMode:INFINIT_LINK_MODE];
+      self.send_button.attributedTitle = _link_str;
+      self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
+      [self performSelector:@selector(delayedCursorInNote) withObject:nil afterDelay:0.2];
+      self.button_width.constant = _link_str.size.width + 40.0;
+    }
+    else
+    {
+      [self.user_link_view setupViewForMode:INFINIT_USER_MODE];
+      self.send_button.attributedTitle = _send_str;
+      self.send_button.toolTip = NSLocalizedString(@"Send to someone", nil);
+      [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
+      self.button_width.constant = _send_str.size.width + 40.0;
+    }
+    _search_controller.link_mode = _for_link;
+    // Ensure constraints are respected when drop on icon
+    [_files_controller updateWithFiles:@[]];
+    [self performSelector:@selector(delayedLoadFiles) withObject:nil afterDelay:0.4f];
+  });
 }
 
 - (void)delayedLoadFiles
