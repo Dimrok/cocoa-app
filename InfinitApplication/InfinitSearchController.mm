@@ -124,7 +124,7 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
   }
   for (InfinitUser* user in [InfinitUserManager sharedInstance].time_ordered_swaggers)
   {
-    if (!user.deleted && !user.ghost)
+    if (!user.deleted)
     {
       [temp_swaggers addObject:[InfinitSearchPersonResult personWithInfinitUser:user
                                                                     andDelegate:self]];
