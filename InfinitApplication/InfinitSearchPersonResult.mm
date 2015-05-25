@@ -161,10 +161,10 @@ isInfinitUser:(InfinitUser*)user
       case InfinitDeviceTypeiPad:
         _avatar = [NSImage imageNamed:@"send-icon-device-ios-avatar"];
         break;
+      case InfinitDeviceTypeMacDesktop:
       case InfinitDeviceTypeMacLaptop:
         _avatar = [NSImage imageNamed:@"send-icon-device-mac-avatar"];
         break;
-      case InfinitDeviceTypeMacDesktop:
       case InfinitDeviceTypePCWindows:
         _avatar = [NSImage imageNamed:@"send-icon-device-windows-avatar"];
         break;
