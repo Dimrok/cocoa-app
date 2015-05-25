@@ -11,6 +11,14 @@
 		83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83014AC617BB742700ECDE96 /* IAFavouritesView.m */; };
 		83019CA91925354300423FCA /* InfinitLinkIconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83019CA81925354300423FCA /* InfinitLinkIconManager.m */; };
 		83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83019CD31925629800423FCA /* InfinitMainCounterView.m */; };
+		830423151B108B3A0059A668 /* InfinitSettingsScreenshotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 830423131B108B3A0059A668 /* InfinitSettingsScreenshotView.m */; };
+		830423161B108B3A0059A668 /* InfinitSettingsScreenshotView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 830423141B108B3A0059A668 /* InfinitSettingsScreenshotView.xib */; };
+		830423191B108BB70059A668 /* settings-icon-screenshots.png in Resources */ = {isa = PBXBuildFile; fileRef = 830423171B108BB70059A668 /* settings-icon-screenshots.png */; };
+		8304231A1B108BB70059A668 /* settings-icon-screenshots@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 830423181B108BB70059A668 /* settings-icon-screenshots@2x.png */; };
+		8304231D1B108DF50059A668 /* InfinitSettingsBlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8304231C1B108DF50059A668 /* InfinitSettingsBlackView.m */; };
+		830423211B1091F80059A668 /* MASShortcutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 830423201B1091F80059A668 /* MASShortcutView.m */; };
+		830423241B1092050059A668 /* MASShortcutValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 830423231B1092050059A668 /* MASShortcutValidator.m */; };
+		830423271B10921E0059A668 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 830423261B10921E0059A668 /* MASShortcut.m */; };
 		83059E08191EA2C0008DA14A /* InfinitSendViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */; };
 		83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */; };
 		83059E0D19213BD7008DA14A /* Montserrat.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83059E0A19213B42008DA14A /* Montserrat.ttf */; };
@@ -567,6 +575,20 @@
 		83019CA81925354300423FCA /* InfinitLinkIconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkIconManager.m; sourceTree = "<group>"; };
 		83019CD21925629800423FCA /* InfinitMainCounterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMainCounterView.h; sourceTree = "<group>"; };
 		83019CD31925629800423FCA /* InfinitMainCounterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMainCounterView.m; sourceTree = "<group>"; };
+		830423121B108B3A0059A668 /* InfinitSettingsScreenshotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsScreenshotView.h; sourceTree = "<group>"; };
+		830423131B108B3A0059A668 /* InfinitSettingsScreenshotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsScreenshotView.m; sourceTree = "<group>"; };
+		830423141B108B3A0059A668 /* InfinitSettingsScreenshotView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSettingsScreenshotView.xib; sourceTree = "<group>"; };
+		830423171B108BB70059A668 /* settings-icon-screenshots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-icon-screenshots.png"; path = "../../../../fist-resources/slices/mac/view_settings/settings-icon-screenshots.png"; sourceTree = "<group>"; };
+		830423181B108BB70059A668 /* settings-icon-screenshots@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-icon-screenshots@2x.png"; path = "../../../../fist-resources/slices/mac/view_settings/settings-icon-screenshots@2x.png"; sourceTree = "<group>"; };
+		8304231B1B108DF50059A668 /* InfinitSettingsBlackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsBlackView.h; sourceTree = "<group>"; };
+		8304231C1B108DF50059A668 /* InfinitSettingsBlackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsBlackView.m; sourceTree = "<group>"; };
+		8304231F1B1091F80059A668 /* MASShortcutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcutView.h; sourceTree = "<group>"; };
+		830423201B1091F80059A668 /* MASShortcutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcutView.m; sourceTree = "<group>"; };
+		830423221B1092050059A668 /* MASShortcutValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcutValidator.h; sourceTree = "<group>"; };
+		830423231B1092050059A668 /* MASShortcutValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcutValidator.m; sourceTree = "<group>"; };
+		830423251B10921E0059A668 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
+		830423261B10921E0059A668 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
+		830423281B1092740059A668 /* MASKeyCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MASKeyCodes.h; sourceTree = "<group>"; };
 		83059E05191EA2C0008DA14A /* InfinitSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendViewController.h; sourceTree = "<group>"; };
 		83059E06191EA2C0008DA14A /* InfinitSendViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitSendViewController.mm; sourceTree = "<group>"; };
 		83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendViewController.xib; sourceTree = "<group>"; };
@@ -1092,6 +1114,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8304230F1B108AB10059A668 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				83167CA119A7213600341068 /* InfinitSettingsAvatarView.h */,
+				83167CA219A7213600341068 /* InfinitSettingsAvatarView.m */,
+				83E73FAD19A5E2B700B7E8EF /* InfinitSettingsAccountView.h */,
+				83E73FAE19A5E2B700B7E8EF /* InfinitSettingsAccountView.mm */,
+				83E73FAF19A5E2B700B7E8EF /* InfinitSettingsAccountView.xib */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		830423101B108ABF0059A668 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				83A67AB119AB19C900A69E35 /* InfinitSettingsGeneralView.h */,
+				83A67AB219AB19C900A69E35 /* InfinitSettingsGeneralView.m */,
+				83A67AB319AB19C900A69E35 /* InfinitSettingsGeneralView.xib */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
+		830423111B108AFF0059A668 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				8304231B1B108DF50059A668 /* InfinitSettingsBlackView.h */,
+				8304231C1B108DF50059A668 /* InfinitSettingsBlackView.m */,
+				830423121B108B3A0059A668 /* InfinitSettingsScreenshotView.h */,
+				830423131B108B3A0059A668 /* InfinitSettingsScreenshotView.m */,
+				830423141B108B3A0059A668 /* InfinitSettingsScreenshotView.xib */,
+			);
+			name = Screenshots;
+			sourceTree = "<group>";
+		};
+		8304231E1B1091E70059A668 /* MASShortcut */ = {
+			isa = PBXGroup;
+			children = (
+				830423281B1092740059A668 /* MASKeyCodes.h */,
+				830423251B10921E0059A668 /* MASShortcut.h */,
+				830423261B10921E0059A668 /* MASShortcut.m */,
+				830423221B1092050059A668 /* MASShortcutValidator.h */,
+				830423231B1092050059A668 /* MASShortcutValidator.m */,
+				8304231F1B1091F80059A668 /* MASShortcutView.h */,
+				830423201B1091F80059A668 /* MASShortcutView.m */,
+			);
+			name = MASShortcut;
+			sourceTree = "<group>";
+		};
 		83059E04191EA2AD008DA14A /* Send View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1122,6 +1192,8 @@
 		8318E9BD19A788DE00B765A2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				830423171B108BB70059A668 /* settings-icon-screenshots.png */,
+				830423181B108BB70059A668 /* settings-icon-screenshots@2x.png */,
 				8318E9D219A788E800B765A2 /* settings-icon-check.png */,
 				8318E9D319A788E800B765A2 /* settings-icon-check@2x.png */,
 			);
@@ -1977,17 +2049,12 @@
 			isa = PBXGroup;
 			children = (
 				8318E9BD19A788DE00B765A2 /* Resources */,
+				8304230F1B108AB10059A668 /* Account */,
+				830423101B108ABF0059A668 /* General */,
+				830423111B108AFF0059A668 /* Screenshots */,
 				83E73FA219A5DD0E00B7E8EF /* InfinitSettingsWindow.h */,
 				83E73FA319A5DD0E00B7E8EF /* InfinitSettingsWindow.m */,
 				83E73FA419A5DD0E00B7E8EF /* InfinitSettingsWindow.xib */,
-				83E73FAD19A5E2B700B7E8EF /* InfinitSettingsAccountView.h */,
-				83E73FAE19A5E2B700B7E8EF /* InfinitSettingsAccountView.mm */,
-				83E73FAF19A5E2B700B7E8EF /* InfinitSettingsAccountView.xib */,
-				83167CA119A7213600341068 /* InfinitSettingsAvatarView.h */,
-				83167CA219A7213600341068 /* InfinitSettingsAvatarView.m */,
-				83A67AB119AB19C900A69E35 /* InfinitSettingsGeneralView.h */,
-				83A67AB219AB19C900A69E35 /* InfinitSettingsGeneralView.m */,
-				83A67AB319AB19C900A69E35 /* InfinitSettingsGeneralView.xib */,
 				83EC175719AB2DFA0063A3B3 /* InfinitSettingsViewController.h */,
 				83EC175819AB2DFA0063A3B3 /* InfinitSettingsViewController.m */,
 			);
@@ -2040,6 +2107,7 @@
 		83F5FCD418EC61690051F010 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				8304231E1B1091E70059A668 /* MASShortcut */,
 				8337672F19088A540073A621 /* OEXTokenField */,
 				83F5FCD518EC61750051F010 /* INPopover */,
 			);
@@ -2284,11 +2352,13 @@
 				836EAE331988F43E0053BE85 /* icon-menu-bar-animated-red-18.png in Resources */,
 				8373D9A61ABABCAE0054B0D3 /* SourceSansPro-LightIt.otf in Resources */,
 				8314456E1ABC23690032958B /* send-icon-device-android-avatar@2x.png in Resources */,
+				830423191B108BB70059A668 /* settings-icon-screenshots.png in Resources */,
 				836EAE511988F4500053BE85 /* icon-menu-bar-animated-black-12.png in Resources */,
 				836EAE2E1988F43E0053BE85 /* icon-menu-bar-animated-red-13.png in Resources */,
 				830BB8A91B06045F00861D5F /* conversation-icon-pause.png in Resources */,
 				836EADC41988F1B80053BE85 /* login-icon-close-hover@2x.png in Resources */,
 				836EACF61988EE300053BE85 /* link-icon-cancel-hover@2x.png in Resources */,
+				830423161B108B3A0059A668 /* InfinitSettingsScreenshotView.xib in Resources */,
 				837B2A8319DD966E00A3CDE1 /* sound_incoming.aiff in Resources */,
 				837B2A7F19DD966400A3CDE1 /* sound_sent.aiff in Resources */,
 				834F13881922618200BF36A4 /* InfinitMainViewController.xib in Resources */,
@@ -2424,6 +2494,7 @@
 				836EADAE1988EEC70053BE85 /* conversation-icon-status-offline.png in Resources */,
 				836EAD8B1988EEC70053BE85 /* conversation-icon-bufferised@2x.png in Resources */,
 				831445741ABC23690032958B /* send-icon-device-windows-avatar@2x.png in Resources */,
+				8304231A1B108BB70059A668 /* settings-icon-screenshots@2x.png in Resources */,
 				836EAE5E1988F5630053BE85 /* icon-clipboard.png in Resources */,
 				837B2AAA19DD983A00A3CDE1 /* main-icon-unread.png in Resources */,
 				836EAE491988F4500053BE85 /* icon-menu-bar-animated-black-4.png in Resources */,
@@ -2522,10 +2593,12 @@
 				83167CA319A7213600341068 /* InfinitSettingsAvatarView.m in Sources */,
 				838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */,
 				83C30A411933EA5100D07D2C /* InfinitLinkShortcutView.m in Sources */,
+				830423271B10921E0059A668 /* MASShortcut.m in Sources */,
 				83EC175919AB2DFA0063A3B3 /* InfinitSettingsViewController.m in Sources */,
 				831445871AC01BBB0032958B /* InfinitSearchEmailCell.m in Sources */,
 				83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */,
 				832808CF17A2C1480025B6F8 /* IAFunctions.mm in Sources */,
+				8304231D1B108DF50059A668 /* InfinitSettingsBlackView.m in Sources */,
 				83A947F91AB7073B00FD0803 /* InfinitMainTransactionLinkView.m in Sources */,
 				832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */,
 				834F13801922522F00BF36A4 /* InfinitLinkClickCountView.m in Sources */,
@@ -2561,6 +2634,7 @@
 				834F13831922532D00BF36A4 /* InfinitLinkProgressIndicator.m in Sources */,
 				83E0F67F1B0370320057B91E /* GetBSDProcessList.m in Sources */,
 				833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */,
+				830423241B1092050059A668 /* MASShortcutValidator.m in Sources */,
 				83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.mm in Sources */,
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
 				837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */,
@@ -2574,6 +2648,7 @@
 				836AAF6C17AE7B12001ECF2E /* InfinitSearchResultCell.m in Sources */,
 				834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */,
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
+				830423211B1091F80059A668 /* MASShortcutView.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
 				83C25B6519EEBEC6009752F1 /* InfinitSearchNoResultsCellView.m in Sources */,
@@ -2592,6 +2667,7 @@
 				83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */,
 				83E73FA519A5DD0E00B7E8EF /* InfinitSettingsWindow.m in Sources */,
 				83A67AB419AB19C900A69E35 /* InfinitSettingsGeneralView.m in Sources */,
+				830423151B108B3A0059A668 /* InfinitSettingsScreenshotView.m in Sources */,
 				8372B3351AB3448A00F1B8B8 /* InfinitConversationRowView.m in Sources */,
 				834F136319214B9F00BF36A4 /* InfinitSendNoteViewController.m in Sources */,
 				83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */,
