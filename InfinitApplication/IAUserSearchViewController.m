@@ -24,6 +24,7 @@
 
 @property (nonatomic, readonly) NSUInteger last_device;
 @property (nonatomic, readonly) NSUInteger last_user;
+@property (nonatomic, readonly) dispatch_once_t init_token;
 
 @end
 
@@ -98,40 +99,44 @@
 
 - (void)awakeFromNib
 {
-  // WORKAROUND: Stop 15" Macbook Pro always rendering scroll bars
-  // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
-  [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
-  [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
-
-  [self.table_view.enclosingScrollView.contentView setPostsBoundsChangedNotifications:YES];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(tableDidScroll:)
-                                               name:NSViewBoundsDidChangeNotification
-                                             object:self.table_view.enclosingScrollView.contentView];
-
-  self.search_spinner.hidden = YES;
-  [self.search_spinner setIndeterminate:YES];
-  
-  // WORKAROUND: Place holder text has been fixed in 10.9
-  if ([IAFunctions osxVersion] >= INFINIT_OS_X_VERSION_10_9)
+  [super awakeFromNib];
+  dispatch_once(&_init_token, ^
   {
-    NSFont* search_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
-                                                                     traits:NSUnboldFontMask
-                                                                     weight:3
-                                                                       size:12.0];
+    // WORKAROUND: Stop 15" Macbook Pro always rendering scroll bars
+    // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
+    [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
+    [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
 
-    NSDictionary* search_attrs =
-      [IAFunctions textStyleWithFont:search_font
-                      paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                              colour:IA_GREY_COLOUR(164)
-                              shadow:nil];
-    NSString* placeholder_str = NSLocalizedString(@"Send by email or search your contacts...", nil);
-    NSAttributedString* search_placeholder =
-      [[NSAttributedString alloc] initWithString:placeholder_str attributes:search_attrs];
-    [self.search_field.cell setPlaceholderAttributedString:search_placeholder];
-  }
-  NSMutableCharacterSet* tokenising_set = [NSMutableCharacterSet newlineCharacterSet];
-  self.search_field.tokenizingCharacterSet = tokenising_set;
+    [self.table_view.enclosingScrollView.contentView setPostsBoundsChangedNotifications:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(tableDidScroll:)
+                                                 name:NSViewBoundsDidChangeNotification
+                                               object:self.table_view.enclosingScrollView.contentView];
+
+    self.search_spinner.hidden = YES;
+    [self.search_spinner setIndeterminate:YES];
+    
+    // WORKAROUND: Place holder text has been fixed in 10.9
+    if ([IAFunctions osxVersion] >= INFINIT_OS_X_VERSION_10_9)
+    {
+      NSFont* search_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
+                                                                       traits:NSUnboldFontMask
+                                                                       weight:3
+                                                                         size:12.0];
+
+      NSDictionary* search_attrs =
+        [IAFunctions textStyleWithFont:search_font
+                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                colour:IA_GREY_COLOUR(164)
+                                shadow:nil];
+      NSString* placeholder_str = NSLocalizedString(@"Send by email or search your contacts...", nil);
+      NSAttributedString* search_placeholder =
+        [[NSAttributedString alloc] initWithString:placeholder_str attributes:search_attrs];
+      [self.search_field.cell setPlaceholderAttributedString:search_placeholder];
+    }
+    NSMutableCharacterSet* tokenising_set = [NSMutableCharacterSet newlineCharacterSet];
+    self.search_field.tokenizingCharacterSet = tokenising_set;
+  });
 }
 
 - (void)loadView
@@ -153,14 +158,18 @@
   self.link_text.hidden = !_link_mode;
   self.search_box_view.link_mode = _link_mode;
   self.search_field.hidden = _link_mode;
-  self.search_label.hidden = _link_mode;
   self.table_view.hidden = _link_mode;
+  self.search_label.hidden = _link_mode;
   CGFloat height = NSHeight(self.search_box_view.frame);
-  if (!_link_mode)
-    height += [self tableHeight];
-  [_delegate searchView:self changedToHeight:height];
-  if (!_link_mode)
+  if (_link_mode)
+  {
+    [_delegate searchView:self changedToHeight:height];
+  }
+  else
+  {
+    [self updateResultsTable];
     [self fixClipView];
+  }
 }
 
 - (void)addUser:(InfinitUser*)user
@@ -283,7 +292,7 @@
 
 - (void)searchLoading:(BOOL)loading
 {
-  self.search_label.hidden = loading;
+  self.search_label.hidden = (_link_mode || loading);
   self.search_spinner.hidden = !loading;
   if (loading)
     [self.search_spinner startAnimation:nil];
@@ -591,6 +600,8 @@ writeRepresentedObjects:(NSArray*)objects
 
 - (void)updateResultsTable
 {
+  if (_link_mode)
+    return;
   if (_search_results.count == 0 && self.currentSearchString.length > 0 && !_search_email) // No results so show message
   {
     _no_results = YES;
