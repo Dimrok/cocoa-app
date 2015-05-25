@@ -196,6 +196,10 @@ static NSDictionary* _grey_style;
                                                  name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(linkDeleted) 
+                                                 name:INFINIT_LINK_TRANSACTION_DELETED_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionUpdated:)
                                                  name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
                                                object:nil];
@@ -589,8 +593,7 @@ static NSDictionary* _grey_style;
 - (void)delayedStatusUpdate
 {
   self.number = [InfinitPeerTransactionManager sharedInstance].receivable_transaction_count;
-  self.transferring = [InfinitPeerTransactionManager sharedInstance].running_transactions ||
-                      [InfinitLinkTransactionManager sharedInstance].running_transactions;
+  self.transferring = self.are_running_transfers;
 }
 
 - (void)connectionStatusChanged:(NSNotification*)notification
@@ -621,7 +624,12 @@ static NSDictionary* _grey_style;
     self.transferring = YES;
     return;
   }
-  self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
+  self.transferring = self.are_running_transfers;
+}
+
+- (void)linkDeleted
+{
+  self.transferring = self.are_running_transfers;
 }
 
 - (void)peerTransactionUpdated:(NSNotification*)notification
@@ -635,13 +643,21 @@ static NSDictionary* _grey_style;
     self.transferring = YES;
     return;
   }
-  self.transferring = [InfinitLinkTransactionManager sharedInstance].running_transactions;
+  self.transferring = self.are_running_transfers;
 }
 
 - (void)willLogout
 {
   self.number = 0;
   self.connected = NO;
+}
+
+#pragma mark - Helpers
+
+- (BOOL)are_running_transfers
+{
+  return ([InfinitLinkTransactionManager sharedInstance].running_transactions ||
+          [InfinitPeerTransactionManager sharedInstance].running_transactions);
 }
 
 @end
