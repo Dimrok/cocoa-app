@@ -8,7 +8,6 @@
 
 #import "InfinitTransactionViewController.h"
 
-#import "InfinitOnboardingController.h"
 #import "InfinitTooltipViewController.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -97,41 +96,6 @@
   _list = [[set array] mutableCopy];
   [self.table_view reloadData];
   [self updateListOfRowsWithProgress];
-}
-
-//- Onboarding -------------------------------------------------------------------------------------
-
-- (void)delayedStartReceiveOnboarding
-{
-  NSInteger row = ([_list indexOfObject:[_delegate receiveOnboardingTransaction:self]]);
-  if (row == NSNotFound)
-    return;
-
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSTableRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
-  NSString* message = NSLocalizedString(@"Click here to accept the file", nil);
-  [_tooltip showPopoverForView:row_view
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
-}
-
-- (void)delayedFileSentOnboarding
-{
-  NSInteger row = ([_list indexOfObject:[_delegate sendOnboardingTransaction:self]]);
-  if (row == NSNotFound)
-    return;
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSTableRowView* row_view = [self.table_view rowViewAtRow:row makeIfNecessary:NO];
-  NSString* message = NSLocalizedString(@"Click here to see your history with this person", nil);
-  [_tooltip showPopoverForView:row_view
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
 }
 
 //- Progress Handling ------------------------------------------------------------------------------

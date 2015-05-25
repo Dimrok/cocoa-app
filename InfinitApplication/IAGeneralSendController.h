@@ -17,7 +17,6 @@
 @protocol IAGeneralSendControllerProtocol;
 
 @interface IAGeneralSendController : NSObject <IAFavouritesSendViewProtocol,
-                                               IAViewProtocol,
                                                InfinitSendViewProtocol>
 
 - (id)initWithDelegate:(id<IAGeneralSendControllerProtocol>)delegate;
@@ -29,7 +28,7 @@
 
 @end
 
-@protocol IAGeneralSendControllerProtocol <IAViewProtocol>
+@protocol IAGeneralSendControllerProtocol <NSObject>
 
 - (void)sendController:(IAGeneralSendController*)sender
  wantsActiveController:(IAViewController*)controller;
@@ -41,10 +40,5 @@
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender;
 
 - (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender;
-
-//- Onboarding -------------------------------------------------------------------------------------
-
-- (void)sendController:(IAGeneralSendController*)sender
-wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
 @end

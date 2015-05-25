@@ -420,7 +420,6 @@
 		83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCEE18EC61AF0051F010 /* INPopoverWindowFrame.m */; };
 		83F5FCF718EC62460051F010 /* InfinitTooltipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCF518EC62460051F010 /* InfinitTooltipViewController.m */; };
 		83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F5FCF618EC62460051F010 /* InfinitTooltipViewController.xib */; };
-		83F5FCFB18EC99870051F010 /* InfinitOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */; };
 		83F77AF219E4199F00982F64 /* InfinitDownloadDestinationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83F77AF119E4199F00982F64 /* InfinitDownloadDestinationManager.mm */; };
 /* End PBXBuildFile section */
 
@@ -1086,8 +1085,6 @@
 		83F5FCF418EC62460051F010 /* InfinitTooltipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTooltipViewController.h; sourceTree = "<group>"; };
 		83F5FCF518EC62460051F010 /* InfinitTooltipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTooltipViewController.m; sourceTree = "<group>"; };
 		83F5FCF618EC62460051F010 /* InfinitTooltipViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitTooltipViewController.xib; sourceTree = "<group>"; };
-		83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOnboardingController.h; sourceTree = "<group>"; };
-		83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOnboardingController.m; sourceTree = "<group>"; };
 		83F77AF019E4199F00982F64 /* InfinitDownloadDestinationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDownloadDestinationManager.h; sourceTree = "<group>"; };
 		83F77AF119E4199F00982F64 /* InfinitDownloadDestinationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitDownloadDestinationManager.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1882,8 +1879,6 @@
 				83B4AE95189FF6AA0011BD43 /* InfinitMetricsManager.mm */,
 				836D648719D0667D00D77D9B /* InfinitNetworkManager.h */,
 				836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */,
-				83F5FCF918EC99870051F010 /* InfinitOnboardingController.h */,
-				83F5FCFA18EC99870051F010 /* InfinitOnboardingController.m */,
 				83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */,
 				83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */,
 				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
@@ -2645,7 +2640,6 @@
 				836D648E19D433B000D77D9B /* InfinitProxyWindow.m in Sources */,
 				8337673B19088A820073A621 /* OEXTokenTextStorage.m in Sources */,
 				83F5FCF018EC61AF0051F010 /* INPopoverParentWindow.m in Sources */,
-				83F5FCFB18EC99870051F010 /* InfinitOnboardingController.m in Sources */,
 				83F5FCF718EC62460051F010 /* InfinitTooltipViewController.m in Sources */,
 				8337673919088A820073A621 /* OEXTokenField.m in Sources */,
 				83E77FA718D7774500B09D87 /* InfinitConversationPersonView.mm in Sources */,

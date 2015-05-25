@@ -72,7 +72,7 @@ typedef enum _InfinitUserLinkMode
 
 @end
 
-@protocol InfinitSendViewProtocol <IAViewProtocol>
+@protocol InfinitSendViewProtocol <NSObject>
 
 - (NSArray*)sendViewWantsFileList:(id)sender;
 
@@ -95,10 +95,5 @@ wantsRemoveFileAtIndex:(NSInteger)index;
 
 - (void)sendView:(id)sender
  hadFilesDropped:(NSArray*)files;
-
-//- Onboarding -------------------------------------------------------------------------------------
-
-- (void)sendView:(id)sender
-wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id;
 
 @end

@@ -644,10 +644,6 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
   _progress_timer = nil;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [self setUpdatorRunning:NO];
-  if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILE_SENT)
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
-  }
 }
 
 @end

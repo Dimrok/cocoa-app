@@ -10,7 +10,6 @@
 
 #import "InfinitMainViewController.h"
 #import "InfinitMetricsManager.h"
-#import "InfinitOnboardingController.h"
 #import "InfinitTooltipViewController.h"
 
 #import <Gap/InfinitConnectionManager.h>
@@ -122,35 +121,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
     self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
   }
-
-  InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
-
-  if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
-  {
-    [self performSelector:@selector(delayedStartSendOnboarding) withObject:nil afterDelay:0.5];
-  }
-  else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILE_SENDING ||
-           onboarding_state == INFINIT_ONBOARDING_SEND_FILE_SENT)
-  {
-    [self.transaction_controller performSelector:@selector(delayedFileSentOnboarding)
-                                      withObject:nil
-                                      afterDelay:0.5];
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
-  }
-}
-
-#pragma mark - Onboarding
-
-- (void)delayedStartSendOnboarding
-{
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Click here to send a file", nil);
-  [_tooltip showPopoverForView:self.send_button
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
 }
 
 - (void)linkAdded:(NSNotification*)notification
@@ -274,16 +244,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   {
     [_delegate userGotClicked:user];
   }];
-}
-
-- (InfinitPeerTransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender
-{
-  return [_delegate receiveOnboardingTransaction:self];
-}
-
-- (InfinitPeerTransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender
-{
-  return [_delegate sendOnboardingTransaction:self];
 }
 
 //- Transaction Link Protocol ----------------------------------------------------------------------

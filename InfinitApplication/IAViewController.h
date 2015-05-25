@@ -14,8 +14,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "InfinitOnboardingController.h"
-
 #import <Gap/InfinitLinkTransaction.h>
 #import <Gap/InfinitPeerTransaction.h>
 #import <Gap/InfinitUser.h>
@@ -29,8 +27,6 @@
 @interface IAMainView : NSView
 @end
 
-@protocol IAViewProtocol;
-
 @interface IAViewController : NSViewController
 
 @property (nonatomic, retain) IBOutlet NSLayoutConstraint* content_height_constraint;
@@ -42,18 +38,5 @@
 
 - (void)viewActive;
 - (void)aboutToChangeView;
-
-@end
-
-
-@protocol IAViewProtocol <NSObject>
-
-- (InfinitOnboardingState)onboardingState:(IAViewController*)sender;
-- (void)setOnboardingState:(InfinitOnboardingState)state;
-
-- (BOOL)onboardingSend:(IAViewController*)sender;
-
-- (InfinitPeerTransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
-- (InfinitPeerTransaction*)sendOnboardingTransaction:(IAViewController*)sender;
 
 @end

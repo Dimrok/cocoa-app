@@ -23,7 +23,7 @@
 
 @end
 
-@protocol InfinitConversationViewProtocol <IAViewProtocol>
+@protocol InfinitConversationViewProtocol <NSObject>
 
 - (void)conversationView:(InfinitConversationViewController*)sender
     wantsTransferForUser:(InfinitUser*)user;

@@ -504,24 +504,6 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     [self performSelector:@selector(delayedCursorInSearch) withObject:nil afterDelay:0.2];
     self.button_width.constant = _send_str.size.width + 40.0;
   }
-  // Onboarding
-  InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
-  if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
-  {
-    [self performSelector:@selector(delayedOnboardSendFilesNoDestination) withObject:nil afterDelay:0.5];
-  }
-  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
-  {
-    [self performSelector:@selector(delayedOnboardSendNoFilesNoDestination) withObject:nil afterDelay:0.5];
-  }
-  else if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
-  {
-    [self performSelector:@selector(delayedOnboardSendNoFilesDestination) withObject:nil afterDelay:0.5];
-  }
-  else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
-  {
-    [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
-  }
   // Ensure constraints are respected when drop on icon
   [_files_controller updateWithFiles:@[]];
   [self performSelector:@selector(delayedLoadFiles) withObject:nil afterDelay:0.4f];
@@ -538,54 +520,6 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
   if (_tooltip != nil)
     [_tooltip close];
   [_search_controller aboutToChangeView];
-}
-
-- (void)delayedOnboardSendFilesNoDestination
-{
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Search by name or enter an email address", nil);
-  [_tooltip showPopoverForView:_search_controller.search_field
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
-}
-
-- (void)delayedOnboardSendNoFilesNoDestination
-{
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Search by name or enter an email address", nil);
-  [_tooltip showPopoverForView:_search_controller.search_field
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
-}
-
-- (void)delayedOnboardSendNoFilesDestination
-{
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Add some files", nil);
-  [_tooltip showPopoverForView:_files_controller.view
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
-}
-
-- (void)delayedOnboardSendFilesDestination
-{
-  if (_tooltip == nil)
-    _tooltip = [[InfinitTooltipViewController alloc] init];
-  NSString* message = NSLocalizedString(@"Click here to send", nil);
-  [_tooltip showPopoverForView:self.send_button
-            withArrowDirection:INPopoverArrowDirectionLeft
-                   withMessage:message
-              withPopAnimation:YES
-                       forTime:5.0];
 }
 
 - (void)delayedCursorInSearch
@@ -613,37 +547,6 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
   NSArray* files = [_delegate sendViewWantsFileList:self];
   [_files_controller updateWithFiles:files];
   [self setSendButtonState];
-
-  if (files.count > 0)
-  {
-    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendFilesNoDestination) withObject:nil afterDelay:0.5];
-    }
-    else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
-    }
-  }
-  else
-  {
-    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendNoFilesNoDestination) withObject:nil afterDelay:0.5];
-    }
-    else if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendNoFilesDestination) withObject:nil afterDelay:0.5];
-    }
-  }
 }
 
 - (BOOL)inputsGood
@@ -698,15 +601,10 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
       }
     }
     [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_CREATE_TRANSACTION];
-    NSArray* transaction_ids = [_delegate sendView:self
-                                    wantsSendFiles:[_delegate sendViewWantsFileList:self]
-                                           toUsers:destinations
-                                       withMessage:_note];
-    if ([_delegate onboardingState:self] == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
-    {
-      [_delegate sendView:self wantsSetOnboardingSendTransactionId:transaction_ids[0]];
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILE_SENDING];
-    }
+    [_delegate sendView:self
+         wantsSendFiles:[_delegate sendViewWantsFileList:self]
+                toUsers:destinations
+            withMessage:_note];
   }
   else
   {
@@ -749,10 +647,6 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
   }];
 
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_TRASH];
-  if ([_delegate onboardingSend:self])
-  {
-    [_delegate setOnboardingState:INFINIT_ONBOARDING_DONE];
-  }
 }
 
 //- Note Protocol ----------------------------------------------------------------------------------
@@ -894,39 +788,6 @@ wantsChangeHeight:(CGFloat)height
 
 - (void)searchViewInputsChanged:(IAUserSearchViewController*)sender
 {
-  // Change the onboarding state according to how the recipients have changed.
-  InfinitOnboardingState onboarding_state = [_delegate onboardingState:self];
-  NSArray* recipients = [_search_controller recipientList];
-  if (recipients.count > 0)
-  {
-    if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendNoFilesDestination) withObject:nil afterDelay:0.5];
-    }
-    else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendFilesDestination) withObject:nil afterDelay:0.5];
-    }
-  }
-  else
-  {
-    if (onboarding_state == INFINIT_ONBOARDING_SEND_NO_FILES_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendNoFilesNoDestination) withObject:nil afterDelay:0.5];
-    }
-    else if (onboarding_state == INFINIT_ONBOARDING_SEND_FILES_DESTINATION)
-    {
-      [_delegate setOnboardingState:INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION];
-      [_tooltip close];
-      [self performSelector:@selector(delayedOnboardSendFilesNoDestination) withObject:nil afterDelay:0.5];
-    }
-  }
   [self setSendButtonState];
 }
 

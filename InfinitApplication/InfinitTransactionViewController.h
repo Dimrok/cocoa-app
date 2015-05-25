@@ -47,9 +47,4 @@
 
 - (void)userGotClicked:(InfinitUser*)user;
 
-//- Onboarding -------------------------------------------------------------------------------------
-
-- (InfinitPeerTransaction*)receiveOnboardingTransaction:(InfinitTransactionViewController*)sender;
-- (InfinitPeerTransaction*)sendOnboardingTransaction:(InfinitTransactionViewController*)sender;
-
 @end

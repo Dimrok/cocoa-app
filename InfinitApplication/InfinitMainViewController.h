@@ -34,7 +34,7 @@
 
 @end
 
-@protocol InfinitMainViewProtocol <IAViewProtocol>
+@protocol InfinitMainViewProtocol <NSObject>
 
 - (void)userGotClicked:(InfinitUser*)user;
 - (void)sendGotClicked:(InfinitMainViewController*)sender;

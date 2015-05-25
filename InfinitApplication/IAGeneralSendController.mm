@@ -221,12 +221,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
 }
 
 - (void)sendView:(id)sender
-wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
-{
-  [_delegate sendController:self wantsSetOnboardingSendTransactionId:transaction_id];
-}
-
-- (void)sendView:(id)sender
  hadFilesDropped:(NSArray*)files
 {
   for (NSString* file in files)
@@ -251,10 +245,9 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
 {
   if (files.count > 0)
   {
-    NSArray* res = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
-                                                                toRecipients:@[user]
-                                                                 withMessage:@""];
-    [_delegate sendController:self wantsSetOnboardingSendTransactionId:res[0]];
+    [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                 toRecipients:@[user]
+                                                  withMessage:@""];
     [_delegate sendControllerGotDropOnFavourite:self];
   }
 }
@@ -272,33 +265,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)transaction_id
   {
     [[InfinitLinkTransactionManager sharedInstance] createLinkWithFiles:files withMessage:@""];
   }
-}
-
-//- Onboarding Protocol ----------------------------------------------------------------------------
-
-- (InfinitOnboardingState)onboardingState:(IAViewController*)sender
-{
-  return [_delegate onboardingState:sender];
-}
-
-- (BOOL)onboardingSend:(IAViewController*)sender
-{
-  return [_delegate onboardingSend:sender];
-}
-
-- (void)setOnboardingState:(InfinitOnboardingState)state
-{
-  [_delegate setOnboardingState:state];
-}
-
-- (InfinitPeerTransaction*)receiveOnboardingTransaction:(IAViewController*)sender
-{
-  return [_delegate receiveOnboardingTransaction:sender];
-}
-
-- (InfinitPeerTransaction*)sendOnboardingTransaction:(IAViewController*)sender
-{
-  return [_delegate sendOnboardingTransaction:sender];
 }
 
 @end

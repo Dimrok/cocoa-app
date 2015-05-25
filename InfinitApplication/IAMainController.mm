@@ -28,7 +28,6 @@
 #import "InfinitMainViewController.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitNetworkManager.h"
-#import "InfinitOnboardingController.h"
 #import "InfinitQuotaWindowController.h"
 #import "InfinitScreenshotManager.h"
 #import "InfinitSettingsWindow.h"
@@ -55,14 +54,12 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                 IANotLoggedInViewProtocol,
                                 IAReportProblemProtocol,
                                 IAStatusBarIconProtocol,
-                                IAViewProtocol,
                                 IAWindowControllerProtocol,
                                 InfinitConversationViewProtocol,
                                 InfinitDesktopNotifierProtocol,
                                 InfinitFacebookWindowProtocol,
                                 InfinitLoginViewControllerProtocol,
                                 InfinitMainViewProtocol,
-                                InfinitOnboardingProtocol,
                                 InfinitSettingsProtocol,
                                 InfinitStatusBarIconProtocol,
                                 InfinitStayAwakeProtocol>
@@ -91,7 +88,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   InfinitLoginViewController* _login_view_controller;
   IANoConnectionViewController* _no_connection_view_controller;
   IANotLoggedInViewController* _not_logged_view_controller;
-  InfinitOnboardingController* _onboard_controller;
   IAReportProblemWindowController* _report_problem_controller;
   InfinitSettingsWindow* _settings_window;
   IAWindowController* _window_controller;
@@ -573,14 +569,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
   _login_view_controller = nil;
 
-  if (![[[IAUserPrefs sharedInstance] prefsForKey:@"onboarded"] isEqualToString:@"4"])
-  {
-    [self closeNotificationWindow];
-    [self startOnboarding];
-    [self saveOnboardingDone];
-  }
-  else if (_current_view_controller != nil &&
-           _current_view_controller != _main_view_controller)
+  if (_current_view_controller != nil && _current_view_controller != _main_view_controller)
   {
     [self showNotifications];
   }
@@ -817,23 +806,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   [self showNotifications];
 }
 
-//- Onboarding -------------------------------------------------------------------------------------
-
-- (void)startOnboarding
-{
-  _onboard_controller = [[InfinitOnboardingController alloc] initForSendOnboardingWithDelegate:self];
-}
-
-- (InfinitPeerTransaction*)receiveOnboardingTransaction:(IAViewController*)sender;
-{
-  return _onboard_controller.receive_transaction;
-}
-
-- (InfinitPeerTransaction*)sendOnboardingTransaction:(IAViewController*)sender
-{
-  return _onboard_controller.send_transaction;
-}
-
 //- Conversation View Protocol ---------------------------------------------------------------------
 
 - (void)conversationView:(InfinitConversationViewController*)sender
@@ -914,22 +886,6 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender
 {
   return [self statusBarIconMiddle];
-}
-
-- (void)sendController:(IAGeneralSendController*)sender
-wantsSetOnboardingSendTransactionId:(NSNumber*)id_
-{
-  if (_onboard_controller == nil)
-    return;
-  
-  _onboard_controller.send_transaction =
-    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-}
-
-- (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender
-{
-  if ([_onboard_controller inSendOnboarding])
-    _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILE_SENDING;
 }
 
 //- Login Items ------------------------------------------------------------------------------------
@@ -1140,13 +1096,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   [self handleQuit];
 }
 
-//- Onboarding Protocol ----------------------------------------------------------------------------
-
-- (void)saveOnboardingDone
-{
-  [[IAUserPrefs sharedInstance] setPref:@"4" forKey:@"onboarded"];
-}
-
 //- Report Problem Protocol ------------------------------------------------------------------------
 
 - (void)reportProblemControllerDone:(IAReportProblemWindowController*)sender
@@ -1207,12 +1156,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
 
 - (void)statusBarIconClicked:(id)sender
 {
-  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_DONE)
-  {
-    _onboard_controller.state = INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION;
-    [self showNotifications];
-  }
-  
   if (_tooltip_controller != nil)
   {
     [_tooltip_controller close];
@@ -1243,20 +1186,10 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
 {
   if (![InfinitConnectionManager sharedInstance].connected)
     return;
-  
-  if (_onboard_controller.state == INFINIT_ONBOARDING_RECEIVE_DONE ||
-      _onboard_controller.state == INFINIT_ONBOARDING_SEND_NO_FILES_NO_DESTINATION)
-  {
-    _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILES_NO_DESTINATION;
-    [self closeNotificationWindow];
-    [self performSelector:@selector(delayedOpenSendView:) withObject:files afterDelay:0.4];
-  }
-  else
-  {
-    if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
-      _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
-    [_general_send_controller openWithFiles:files forUser:nil];
-  }
+
+  if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
+    _general_send_controller = [[IAGeneralSendController alloc] initWithDelegate:self];
+  [_general_send_controller openWithFiles:files forUser:nil];
 }
 
 - (void)statusBarIconLinkDrop:(IAStatusBarIcon*)sender
@@ -1269,8 +1202,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
 {
   InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
   if (!manager.connected ||
-      _current_view_controller.class == InfinitSendViewController.class ||
-      [self onboardingState:nil] != INFINIT_ONBOARDING_DONE)
+      _current_view_controller.class == InfinitSendViewController.class)
   {
     return;
   }
@@ -1345,13 +1277,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   [self markTransactionReadIfNeeded:transaction];
-  
-  if (_onboard_controller.state == INFINIT_ONBOARDING_SEND_FILE_SENDING &&
-      _onboard_controller.send_transaction == transaction &&
-      (transaction.done || transaction.status == gap_transaction_cloud_buffered))
-  {
-    _onboard_controller.state = INFINIT_ONBOARDING_SEND_FILE_SENT;
-  }
 }
 
 - (void)peerTransactionAccepted:(NSNotification*)notification
@@ -1363,26 +1288,6 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
       [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
     [[InfinitDesktopNotifier sharedInstance] desktopNotificationForTransactionAccepted:transaction];
   }
-}
-
-//- View Controller Protocol -----------------------------------------------------------------------
-
-- (InfinitOnboardingState)onboardingState:(IAViewController*)sender
-{
-  if (_onboard_controller == nil)
-    return INFINIT_ONBOARDING_DONE;
-  
-  return _onboard_controller.state;
-}
-
-- (BOOL)onboardingSend:(IAViewController*)sender
-{
-  return [_onboard_controller inSendOnboarding];
-}
-
-- (void)setOnboardingState:(InfinitOnboardingState)state
-{
-  _onboard_controller.state = state;
 }
 
 //- Window Controller Protocol ---------------------------------------------------------------------
