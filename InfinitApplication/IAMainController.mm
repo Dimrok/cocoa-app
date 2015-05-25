@@ -189,8 +189,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     
     if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
       [InfinitDesktopNotifier sharedInstance].delegate = self;
-
-    [InfinitAddressBookManager sharedInstance];
     
     _infinit_link = nil;
     _contextual_send_files = nil;
@@ -565,6 +563,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   ELLE_LOG("%s: completed login", self.description.UTF8String);
   [InfinitScreenshotManager sharedInstance];
+  [[InfinitAddressBookManager sharedInstance] uploadContacts];
 
   if ([[[IAUserPrefs sharedInstance] prefsForKey:@"updated"] isEqualToString:@"1"])
   {
@@ -1167,7 +1166,7 @@ wantsSetOnboardingSendTransactionId:(NSNumber*)id_
   if (_settings_window == nil)
     _settings_window = [[InfinitSettingsWindow alloc] initWithDelegate:self];
 
-  [_settings_window show];
+  [_settings_window showWindow:self];
 }
 
 - (BOOL)infinitInLoginItems:(InfinitSettingsWindow*)sender
