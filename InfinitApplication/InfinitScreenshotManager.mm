@@ -365,7 +365,36 @@ static NSString* kInfinitFullscreenShortcutKey = @"fullscreen_screenshot_shortcu
     NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:screenshot_name];
     _screencapture_task = [[NSTask alloc] init];
     self.screencapture_task.launchPath = @"/usr/sbin/screencapture";
-    self.screencapture_task.arguments = @[output_path];
+    NSMutableArray* args = [NSMutableArray array];
+    if ([NSScreen screens].count > 1)
+    {
+      NSRect zero_frame = NSZeroRect;
+      for (NSScreen* screen in [NSScreen screens])
+      {
+        if (NSEqualPoints(screen.frame.origin, NSZeroPoint))
+        {
+          zero_frame = screen.frame;
+          break;
+        }
+      }
+      NSRect frame = [NSScreen mainScreen].frame;
+      if (NSEqualRects(zero_frame, frame))
+      {
+        [args addObject:@"-m"];
+      }
+      else
+      {
+        [args addObject:@"-R"];
+        NSString* frame_str = [NSString stringWithFormat:@"'%ld,%ld,%ld,%ld'",
+                               lround(frame.origin.x),
+                               lround(-(frame.origin.y + frame.size.height - zero_frame.size.height)),
+                               lround(frame.size.width),
+                               lround(frame.size.height)];
+        [args addObject:frame_str];
+      }
+    }
+    [args addObject:output_path];
+    self.screencapture_task.arguments = args;
     self.screencapture_task.terminationHandler = [self screenshotBlockForPath:output_path];
     [self.screencapture_task launch];
   }
