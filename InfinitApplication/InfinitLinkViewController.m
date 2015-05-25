@@ -279,6 +279,14 @@
     return _list.count;
 }
 
+- (CGFloat)tableView:(NSTableView*)tableView
+         heightOfRow:(NSInteger)row
+{
+  if (_list.count == 0)
+    return 278.0f;
+  return _row_height;
+}
+
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
@@ -308,7 +316,7 @@
 - (CGFloat)height
 {
   if (_list.count == 0)
-    return _row_height;
+    return 278.0f;
   CGFloat height = self.table_view.numberOfRows * _row_height;
   if (height > _max_rows * _row_height)
     return (_max_rows * _row_height);
