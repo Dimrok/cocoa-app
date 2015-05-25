@@ -46,6 +46,11 @@ static dispatch_once_t _instance_token = 0;
   dispatch_sync(self.queue, ^{ /* Wait for writes */ });
 }
 
++ (id)prefsForKey:(NSString*)key
+{
+  return [[IAUserPrefs sharedInstance] prefsForKey:key];
+}
+
 - (id)prefsForKey:(NSString*)key
 {
   __block id res = nil;
@@ -56,13 +61,19 @@ static dispatch_once_t _instance_token = 0;
   return res;
 }
 
-- (void)setPref:(id<NSCoding>)prefs
++ (void)setPref:(id<NSCoding>)pref
          forKey:(NSString*)key
+{
+  [[IAUserPrefs sharedInstance] setPref:pref forKey:key];
+}
+
+- (void)setPref:(id<NSCoding>)prefs
+          forKey:(NSString*)key
 {
   dispatch_async(self.queue, ^
   {
     [self.values setValue:prefs forKey:key];
-    [self.values writeToFile:self.dict_path atomically:NO];
+    [self storePrefs];
   });
 }
 
@@ -70,7 +81,7 @@ static dispatch_once_t _instance_token = 0;
             forKey:(NSString*)key
 {
   [self.values setValue:prefs forKey:key];
-  [self.values writeToFile:self.dict_path atomically:NO];
+  [self storePrefs];
 }
 
 #pragma mark - Helpers
@@ -94,6 +105,11 @@ static dispatch_once_t _instance_token = 0;
     _dict_path = [infinit_path stringByAppendingPathComponent:@"preferences.plist"];
   });
   return _dict_path;
+}
+
+- (void)storePrefs
+{
+  [self.values writeToFile:self.dict_path atomically:NO];
 }
 
 @end
