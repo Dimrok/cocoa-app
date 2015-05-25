@@ -248,7 +248,6 @@ ELLE_LOG_COMPONENT("OSX.GeneralSendController");
     [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
                                                  toRecipients:@[user]
                                                   withMessage:@""];
-    [_delegate sendControllerGotDropOnFavourite:self];
   }
 }
 

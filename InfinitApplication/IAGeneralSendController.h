@@ -39,6 +39,4 @@
 
 - (NSPoint)sendControllerWantsMidpoint:(IAGeneralSendController*)sender;
 
-- (void)sendControllerGotDropOnFavourite:(IAGeneralSendController*)sender;
-
 @end
