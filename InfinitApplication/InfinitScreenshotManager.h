@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MASShortcut.h"
+
 @interface InfinitScreenshotManager : NSObject <NSMetadataQueryDelegate>
+
+@property (nonatomic, readwrite) MASShortcut* area_shortcut;
+@property (nonatomic, readwrite) MASShortcut* fullscreen_shortcut;
 
 @property (nonatomic, readwrite) BOOL watch;
 

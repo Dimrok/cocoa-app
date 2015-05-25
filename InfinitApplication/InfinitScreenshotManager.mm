@@ -42,12 +42,42 @@ typedef NS_ENUM(UInt32, InfinitHotKeyId)
   InfinitHotKeyInfinitFullscreenGrab,
 };
 
+@interface MASShortcut (Dictionary)
+
+@property (nonatomic, readonly) NSDictionary* dictionary;
+
++ (instancetype)shortcutWithDictionary:(NSDictionary*)dict;
+
+@end
+
+static NSString* kInfinitShortcutKey = @"shortcut_key";
+static NSString* kInfinitShortcutModifiers = @"modifiers";
+
+@implementation MASShortcut (Dictionary)
+
++ (instancetype)shortcutWithDictionary:(NSDictionary*)dict
+{
+  NSUInteger key_code = [dict[kInfinitShortcutKey] unsignedIntegerValue];
+  NSUInteger modifiers = [dict[kInfinitShortcutModifiers] unsignedIntegerValue];
+  if (key_code == 0 || modifiers == 0)
+    return nil;
+  return [[MASShortcut alloc] initWithKeyCode:key_code modifierFlags:modifiers];
+}
+
+- (NSDictionary*)dictionary
+{
+  return @{kInfinitShortcutKey: @(self.keyCode),
+           kInfinitShortcutModifiers: @(self.modifierFlags)};
+}
+
+@end
+
 @interface InfinitScreenshotManager ()
 
-@property (nonatomic, unsafe_unretained) EventHotKeyRef apple_area_ref;
-@property (nonatomic, unsafe_unretained) EventHotKeyRef apple_fullscreen_ref;
-@property (nonatomic, unsafe_unretained) EventHotKeyRef infinit_area_ref;
-@property (nonatomic, unsafe_unretained) EventHotKeyRef infinit_fullscreen_ref;
+@property (nonatomic) EventHotKeyRef apple_area_ref;
+@property (nonatomic) EventHotKeyRef apple_fullscreen_ref;
+@property (nonatomic) EventHotKeyRef infinit_area_ref;
+@property (nonatomic) EventHotKeyRef infinit_fullscreen_ref;
 
 @property (atomic, readonly) NSDate* last_capture_time;
 @property (nonatomic, readonly) InfinitThreadSafeDictionary* link_map;
@@ -61,6 +91,9 @@ typedef NS_ENUM(UInt32, InfinitHotKeyId)
 static InfinitScreenshotManager* _instance = nil;
 static dispatch_once_t _instance_token = 0;
 static NSDateFormatter* _date_formatter = nil;
+
+static NSString* kInfinitAreaShortcutKey = @"area_screenshot_shortcut";
+static NSString* kInfinitFullscreenShortcutKey = @"fullscreen_screenshot_shortcut";
 
 @implementation InfinitScreenshotManager
 
@@ -116,22 +149,50 @@ static NSDateFormatter* _date_formatter = nil;
 {
   EventTypeSpec event_type = {kEventClassKeyboard, kEventHotKeyPressed};
   InstallApplicationEventHandler(&_hot_key_handler, 1, &event_type, NULL, NULL);
-  [self registerEventRef:self.apple_fullscreen_ref
+  if (![[IAUserPrefs prefsForKey:kInfinitAreaShortcutKey] isEqual:@NO])
+  {
+    _area_shortcut =
+      [MASShortcut shortcutWithDictionary:[IAUserPrefs prefsForKey:kInfinitAreaShortcutKey]];
+    if (!self.area_shortcut)
+    {
+      self.area_shortcut = [MASShortcut shortcutWithKeyCode:kVK_ANSI_4
+                                              modifierFlags:(NSAlternateKeyMask + NSShiftKeyMask)];
+    }
+    else
+    {
+      [self registerEventRef:&self->_infinit_area_ref
+                      withId:[self hotKeyIdFor:InfinitHotKeyInfinitAreaGrab]
+                   forHotKey:self.area_shortcut.carbonKeyCode
+               withModifiers:self.area_shortcut.carbonFlags];
+    }
+  }
+  if (![[IAUserPrefs prefsForKey:kInfinitFullscreenShortcutKey] isEqual:@NO])
+  {
+    _fullscreen_shortcut =
+      [MASShortcut shortcutWithDictionary:[IAUserPrefs prefsForKey:kInfinitFullscreenShortcutKey]];
+    if (!self.fullscreen_shortcut)
+    {
+      self.fullscreen_shortcut =
+        [MASShortcut shortcutWithKeyCode:kVK_ANSI_3
+                           modifierFlags:(NSAlternateKeyMask + NSShiftKeyMask)];
+    }
+    else
+    {
+      [self registerEventRef:&self->_infinit_fullscreen_ref
+                      withId:[self hotKeyIdFor:InfinitHotKeyInfinitFullscreenGrab]
+                   forHotKey:self.fullscreen_shortcut.carbonKeyCode
+               withModifiers:self.fullscreen_shortcut.carbonFlags];
+    }
+  }
+
+  [self registerEventRef:&self->_apple_fullscreen_ref
                   withId:[self hotKeyIdFor:InfinitHotKeyAppleFullscreenGrab]
                forHotKey:kVK_ANSI_3
            withModifiers:cmdKey + shiftKey];
-  [self registerEventRef:self.apple_area_ref 
+  [self registerEventRef:&self->_apple_area_ref
                   withId:[self hotKeyIdFor:InfinitHotKeyAppleAreaGrab]
                forHotKey:kVK_ANSI_4
            withModifiers:cmdKey + shiftKey];
-  [self registerEventRef:self.infinit_fullscreen_ref
-                  withId:[self hotKeyIdFor:InfinitHotKeyInfinitFullscreenGrab]
-               forHotKey:kVK_ANSI_3
-           withModifiers:optionKey + shiftKey];
-  [self registerEventRef:self.infinit_area_ref
-                  withId:[self hotKeyIdFor:InfinitHotKeyInfinitAreaGrab]
-               forHotKey:kVK_ANSI_4
-           withModifiers:optionKey + shiftKey];
 }
 
 - (EventHotKeyID)hotKeyIdFor:(InfinitHotKeyId)id_
@@ -142,19 +203,19 @@ static NSDateFormatter* _date_formatter = nil;
   return res;
 }
 
-- (void)registerEventRef:(EventHotKeyRef)ref
+- (void)registerEventRef:(EventHotKeyRef*)ref
                   withId:(EventHotKeyID)id_
                forHotKey:(UInt32)key
            withModifiers:(UInt32)modifiers
 {
-  RegisterEventHotKey(key, modifiers, id_, GetApplicationEventTarget(), 0, &ref);
+  RegisterEventHotKey(key, modifiers, id_, GetApplicationEventTarget(), 0, ref);
 }
 
 - (NSURL*)screenCaptureLocation
 {
   NSURL* res = nil;
 	NSString* location =
-    [[[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.apple.screencapture"] objectForKey:@"location"];
+    [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"com.apple.screencapture"][@"location"];
 	if (location.length)
   {
 		location = [location stringByExpandingTildeInPath];
@@ -166,7 +227,9 @@ static NSDateFormatter* _date_formatter = nil;
 	}
   else
   {
-    res = [NSURL fileURLWithPath:NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES).firstObject];
+    res = [NSURL fileURLWithPath:NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,
+                                                                     NSUserDomainMask,
+                                                                     YES).firstObject];
   }
   return res;
 }
@@ -175,14 +238,7 @@ static NSDateFormatter* _date_formatter = nil;
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
-  if (self.apple_area_ref)
-    UnregisterEventHotKey(self.apple_area_ref);
-  if (self.apple_fullscreen_ref)
-    UnregisterEventHotKey(self.apple_fullscreen_ref);
-  if (self.infinit_area_ref)
-    UnregisterEventHotKey(self.infinit_area_ref);
-  if (self.infinit_fullscreen_ref)
-    UnregisterEventHotKey(self.infinit_fullscreen_ref);
+  // Do not need to unregister hotkeys on exit. System does this for us.
 }
 
 #pragma mark - Watch
@@ -191,7 +247,6 @@ static NSDateFormatter* _date_formatter = nil;
 {
   if (self.watch == watch)
     return;
-
   _last_capture_time = [NSDate date];
   _watch = watch;
   _first_screenshot = NO;
@@ -201,6 +256,54 @@ static NSDateFormatter* _date_formatter = nil;
     ELLE_LOG("%s: start watching for screenshots", self.description.UTF8String);
   else
     ELLE_LOG("%s: stop watching for screenshots", self.description.UTF8String);
+}
+
+#pragma mark - Change Hotkey
+
+- (void)setArea_shortcut:(MASShortcut*)area_shortcut
+{
+  if ([area_shortcut isEqual:self.area_shortcut])
+    return;
+  _area_shortcut = area_shortcut;
+  UnregisterEventHotKey(self.infinit_area_ref);
+  if (self.area_shortcut)
+  {
+    ELLE_LOG("%s: change area shortcut to: %s", self.description.UTF8String,
+             self.area_shortcut.description.UTF8String)
+    [IAUserPrefs setPref:self.area_shortcut.dictionary forKey:kInfinitAreaShortcutKey];
+    [self registerEventRef:&self->_infinit_area_ref
+                    withId:[self hotKeyIdFor:InfinitHotKeyInfinitAreaGrab]
+                 forHotKey:self.area_shortcut.carbonKeyCode
+             withModifiers:self.area_shortcut.carbonFlags];
+  }
+  else
+  {
+    ELLE_LOG("%s: remove area shortcut", self.description.UTF8String);
+    [IAUserPrefs setPref:@NO forKey:kInfinitAreaShortcutKey];
+  }
+}
+
+- (void)setFullscreen_shortcut:(MASShortcut*)fullscreen_shortcut
+{
+  if ([fullscreen_shortcut isEqual:self.fullscreen_shortcut])
+    return;
+  _fullscreen_shortcut = fullscreen_shortcut;
+  UnregisterEventHotKey(self.infinit_fullscreen_ref);
+  if (self.fullscreen_shortcut)
+  {
+    ELLE_LOG("%s: change fullscreen shortcut to: %s", self.description.UTF8String,
+             self.fullscreen_shortcut.description.UTF8String)
+    [IAUserPrefs setPref:self.fullscreen_shortcut.dictionary forKey:kInfinitFullscreenShortcutKey];
+    [self registerEventRef:&self->_infinit_fullscreen_ref
+                    withId:[self hotKeyIdFor:InfinitHotKeyInfinitFullscreenGrab]
+                 forHotKey:self.fullscreen_shortcut.carbonKeyCode
+             withModifiers:self.fullscreen_shortcut.carbonFlags];
+  }
+  else
+  {
+    ELLE_LOG("%s: remove fullscreen shortcut", self.description.UTF8String);
+    [IAUserPrefs setPref:@NO forKey:kInfinitFullscreenShortcutKey];
+  }
 }
 
 #pragma mark - Infinit Screen Shot Handling
