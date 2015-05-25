@@ -133,13 +133,12 @@ isInfinitUser:(InfinitUser*)user
     {
       ABPerson* person =
         [[InfinitAddressBookManager sharedInstance] personFromContact:user.fullname];
-      if (person.imageData)
-        _avatar = [[NSImage alloc] initWithData:person.imageData];
-      else
-        _avatar = user.avatar;
-      _fullname = user.fullname;
       if (person)
       {
+        if (person.imageData)
+          _avatar = [[NSImage alloc] initWithData:person.imageData];
+        else
+          _avatar = user.avatar;
         NSString* first_name = [person valueForProperty:kABFirstNameProperty];
         NSString* last_name = [person valueForProperty:kABLastNameProperty];
         NSMutableString* name = [[NSMutableString alloc] init];
@@ -149,6 +148,13 @@ isInfinitUser:(InfinitUser*)user
           [name appendFormat:@"%@%@", (first_name.length ? @" " : @""), last_name];
         if (name.length)
           _fullname = name;
+        else
+          _fullname = user.fullname;
+      }
+      else
+      {
+        _avatar = user.avatar;
+        _fullname = user.fullname;
       }
     }
     else
