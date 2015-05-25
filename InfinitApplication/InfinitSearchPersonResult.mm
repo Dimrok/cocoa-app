@@ -8,6 +8,8 @@
 
 #import "InfinitSearchPersonResult.h"
 
+#import "InfinitAddressBookManager.h"
+
 #import <Gap/InfinitUserManager.h>
 
 #undef check
@@ -127,8 +129,33 @@ isInfinitUser:(InfinitUser*)user
       _rank += infinit_swagger_rank;
     else
       _rank += infinit_match_rank;
-    _avatar = self.infinit_user.avatar;
-    _fullname = self.infinit_user.fullname;
+    if (user.ghost)
+    {
+      ABPerson* person =
+        [[InfinitAddressBookManager sharedInstance] personFromContact:user.fullname];
+      if (person.imageData)
+        _avatar = [[NSImage alloc] initWithData:person.imageData];
+      else
+        _avatar = user.avatar;
+      _fullname = user.fullname;
+      if (person)
+      {
+        NSString* first_name = [person valueForProperty:kABFirstNameProperty];
+        NSString* last_name = [person valueForProperty:kABLastNameProperty];
+        NSMutableString* name = [[NSMutableString alloc] init];
+        if (first_name.length)
+          [name appendString:first_name];
+        if (last_name.length)
+          [name appendFormat:@"%@%@", (first_name.length ? @" " : @""), last_name];
+        if (name.length)
+          _fullname = name;
+      }
+    }
+    else
+    {
+      _avatar = self.infinit_user.avatar;
+      _fullname = self.infinit_user.fullname;
+    }
   }
   return self;
 }
