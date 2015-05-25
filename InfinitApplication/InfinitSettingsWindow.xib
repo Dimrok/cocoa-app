@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A379a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitSettingsWindow">
             <connections>
                 <outlet property="account_button" destination="Mh5-bG-Jt9" id="79Z-ih-4Ti"/>
                 <outlet property="general_button" destination="Q89-8l-cmY" id="g7Y-me-Lsn"/>
+                <outlet property="screenshot_button" destination="GaI-M2-xlc" id="Riv-Ec-juY"/>
                 <outlet property="toolbar" destination="fNx-aX-ivm" id="0Ag-zh-HRA"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -35,10 +36,16 @@
                             <action selector="accountClicked:" target="-2" id="Gsq-qu-L8o"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="E8D7C44A-1F36-469C-8C8C-AEF900B8EE6A" label="Screenshots" paletteLabel="Screenshots" tag="-1" image="settings-icon-screenshots" autovalidates="NO" selectable="YES" id="GaI-M2-xlc">
+                        <connections>
+                            <action selector="screenshotsClicked:" target="-2" id="0b1-Lt-8wQ"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="Q89-8l-cmY"/>
                     <toolbarItem reference="Mh5-bG-Jt9"/>
+                    <toolbarItem reference="GaI-M2-xlc"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
@@ -50,5 +57,6 @@
     <resources>
         <image name="NSPreferencesGeneral" width="32" height="32"/>
         <image name="NSUser" width="32" height="32"/>
+        <image name="settings-icon-screenshots" width="36" height="30"/>
     </resources>
 </document>

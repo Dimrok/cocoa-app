@@ -19,4 +19,7 @@
   return NSMakeSize(480.0, 270.0);
 }
 
+- (void)loadData
+{}
+
 @end

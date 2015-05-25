@@ -8,23 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "InfinitSettingsAccountView.h"
-#import "InfinitSettingsGeneralView.h"
-
 @protocol InfinitSettingsProtocol;
 
-@interface InfinitSettingsWindow : NSWindowController <NSWindowDelegate,
-                                                       InfinitSettingsAccountProtocol,
-                                                       InfinitSettingsGeneralProtocol>
-
-@property (nonatomic, weak) IBOutlet NSToolbarItem* account_button;
-@property (nonatomic, weak) IBOutlet NSToolbarItem* general_button;
-@property (nonatomic, weak) IBOutlet NSToolbar* toolbar;
+@interface InfinitSettingsWindow : NSWindowController
 
 - (id)initWithDelegate:(id<InfinitSettingsProtocol>)delegate;
-
-- (void)show;
-- (void)close;
 
 @end
 

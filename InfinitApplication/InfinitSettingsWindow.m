@@ -8,20 +8,29 @@
 
 #import "InfinitSettingsWindow.h"
 
-@interface InfinitSettingsWindow ()
+#import "InfinitSettingsAccountView.h"
+#import "InfinitSettingsGeneralView.h"
+#import "InfinitSettingsScreenshotView.h"
+
+@interface InfinitSettingsWindow () <NSWindowDelegate,
+                                     InfinitSettingsAccountProtocol,
+                                     InfinitSettingsGeneralProtocol>
+
+@property (nonatomic, weak) IBOutlet NSToolbarItem* account_button;
+@property (nonatomic, weak) IBOutlet NSToolbarItem* general_button;
+@property (nonatomic, weak) IBOutlet NSToolbarItem* screenshot_button;
+@property (nonatomic, weak) IBOutlet NSToolbar* toolbar;
+
+@property (nonatomic, weak) id<InfinitSettingsProtocol> delegate;
+@property (nonatomic, readonly) InfinitSettingsAccountView* account_view;
+@property (nonatomic, readonly) InfinitSettingsGeneralView* general_view;
+@property (nonatomic, readonly) InfinitSettingsScreenshotView* screenshot_view;
 
 @end
 
 @implementation InfinitSettingsWindow
-{
-@private
-  __weak id<InfinitSettingsProtocol> _delegate;
 
-  InfinitSettingsAccountView* _account_view;
-  InfinitSettingsGeneralView* _general_view;
-}
-
-//- Initialisation ---------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)initWithDelegate:(id<InfinitSettingsProtocol>)delegate
 {
@@ -30,31 +39,24 @@
     _delegate = delegate;
     _account_view = [[InfinitSettingsAccountView alloc] initWithDelegate:self];
     _general_view = [[InfinitSettingsGeneralView alloc] initWithDelegate:self];
+    NSString* name = NSStringFromClass(InfinitSettingsScreenshotView.class);
+    _screenshot_view = [[InfinitSettingsScreenshotView alloc] initWithNibName:name bundle:nil];
     self.window.level = NSFloatingWindowLevel;
   }
   return self;
 }
 
-- (void)windowDidLoad
-{
-  [self.window center];
-  [super windowDidLoad];
-  self.account_button.enabled = YES;
-  self.general_button.enabled = YES;
-  [self changeToViewController:_general_view withAnimation:NO];
-  self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
-}
+#pragma mark - Public
 
-//- General Functions ------------------------------------------------------------------------------
-
-- (void)show
+- (void)showWindow:(id)sender
 {
   [_account_view loadData];
   self.account_button.enabled = YES;
   self.general_button.enabled = YES;
+  self.screenshot_button.enabled = YES;
   self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
-  [self changeToViewController:_general_view withAnimation:NO];
-  [self showWindow:self];
+  [self changeToViewController:self.general_view withAnimation:NO];
+  [self.window center];
 }
 
 - (void)close
@@ -62,10 +64,10 @@
   if (self.window == nil)
     return;
 
-  [self.window close];
+  [super close];
 }
 
-//- View Change Handling ---------------------------------------------------------------------------
+#pragma mark - Change View
 
 - (void)changeToViewController:(InfinitSettingsViewController*)controller
                  withAnimation:(BOOL)animate
@@ -82,15 +84,20 @@
 
 - (IBAction)accountClicked:(NSToolbarItem*)sender
 {
-  [self changeToViewController:_account_view withAnimation:YES];
+  [self changeToViewController:self.account_view withAnimation:YES];
 }
 
 - (IBAction)generalClicked:(NSToolbarItem*)sender
 {
-  [self changeToViewController:_general_view withAnimation:YES];
+  [self changeToViewController:self.general_view withAnimation:YES];
 }
 
-//- Account View Protocol --------------------------------------------------------------------------
+- (IBAction)screenshotsClicked:(NSToolbarItem*)sender
+{
+  [self changeToViewController:self.screenshot_view withAnimation:YES];
+}
+
+#pragma mark - Account View Protocol
 
 - (NSWindow*)getWindow:(InfinitSettingsAccountView*)sender
 {
@@ -102,11 +109,11 @@
   [self close];
 }
 
-//- General View Protocol --------------------------------------------------------------------------
+#pragma mark - General View Protocol
 
 - (BOOL)infinitInLoginItems:(InfinitSettingsGeneralView*)sender
 {
-  return [_delegate infinitInLoginItems:self];
+  return [self.delegate infinitInLoginItems:self];
 }
 
 - (void)setInfinitInLoginItems:(InfinitSettingsGeneralView*)sender
@@ -117,21 +124,21 @@
 
 - (BOOL)stayAwake:(InfinitSettingsGeneralView*)sender
 {
-  return [_delegate stayAwake:self];
+  return [self.delegate stayAwake:self];
 }
 
 - (void)setStayAwake:(InfinitSettingsGeneralView*)sender
                   to:(BOOL)value
 {
-  [_delegate setStayAwake:self to:value];
+  [self.delegate setStayAwake:self to:value];
 }
 
 - (void)checkForUpdate:(InfinitSettingsGeneralView*)sender
 {
-  [_delegate checkForUpdate:self];
+  [self.delegate checkForUpdate:self];
 }
 
-//- Window Delegate --------------------------------------------------------------------------------
+#pragma mark - Window Delegate
 
 - (BOOL)windowShouldClose:(id)sender
 {

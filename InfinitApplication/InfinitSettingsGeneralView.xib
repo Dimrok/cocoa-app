@@ -11,7 +11,6 @@
                 <outlet property="download_dir" destination="LWl-UA-aMd" id="9GD-hf-iGW"/>
                 <outlet property="launch_at_startup" destination="bWW-gG-HyP" id="h7M-1c-eQ0"/>
                 <outlet property="stay_awake" destination="Yh1-fR-oQb" id="AYw-gn-9si"/>
-                <outlet property="upload_screenshots" destination="Vjt-bv-yIL" id="119-lf-4XS"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -22,25 +21,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bWW-gG-HyP">
-                    <rect key="frame" x="95" y="228" width="290" height="18"/>
+                    <rect key="frame" x="95" y="221" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Launch Infinit at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cuD-cD-L6e">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleLaunchAtStartup:" target="-2" id="MJG-ao-iPJ"/>
-                        <outlet property="nextKeyView" destination="Vjt-bv-yIL" id="Ma7-1a-sUg"/>
-                    </connections>
-                </button>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vjt-bv-yIL">
-                    <rect key="frame" x="95" y="208" width="290" height="18"/>
-                    <buttonCell key="cell" type="check" title="Automatically upload screenshots" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wrR-Ur-Egq">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="toggleUploadScreenshots:" target="-2" id="OJ4-3p-8zR"/>
-                        <outlet property="nextKeyView" destination="Yh1-fR-oQb" id="lkS-Xu-OuG"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRb-0U-vvc">
@@ -54,7 +41,7 @@
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-fR-oQb">
-                    <rect key="frame" x="95" y="188" width="290" height="18"/>
+                    <rect key="frame" x="95" y="197" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Stay awake while transferring on AC power" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qW2-Gc-YZE">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
