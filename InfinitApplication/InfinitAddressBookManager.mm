@@ -115,8 +115,6 @@ static dispatch_once_t _instance_token = 0;
   [[InfinitDesktopNotifier sharedInstance] desktopNotificationForContactJoined:name];
 }
 
-#pragma mark - Helpers
-
 - (ABPerson*)personFromContact:(NSString*)contact
 {
   if (![self accessToAddressBook] || !contact.length)
@@ -136,6 +134,8 @@ static dispatch_once_t _instance_token = 0;
     return res.firstObject;
   return nil;
 }
+
+#pragma mark - Helpers
 
 - (NSDictionary*)dictionaryFromABPerson:(ABPerson*)person
 {

@@ -15,4 +15,6 @@
 /// Will only upload contacts if they haven't been yet.
 - (void)uploadContacts;
 
+- (ABPerson*)personFromContact:(NSString*)contact;
+
 @end
