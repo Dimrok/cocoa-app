@@ -9,6 +9,7 @@
 #import "InfinitSettingsAccountView.h"
 
 #import "InfinitKeychain.h"
+#import "InfinitSettingsWindow.h"
 
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
@@ -343,6 +344,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
   if (session_id.length)
     [url_str appendFormat:@"&session_id=%@", session_id];
   [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
+  [[InfinitSettingsWindow sharedInstance] close];
 }
 
 //- Change Password Panel --------------------------------------------------------------------------

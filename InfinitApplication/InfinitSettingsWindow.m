@@ -12,6 +12,8 @@
 #import "InfinitSettingsGeneralView.h"
 #import "InfinitSettingsScreenshotView.h"
 
+#import <Gap/InfinitStateManager.h>
+
 @interface InfinitSettingsWindow () <NSWindowDelegate,
                                      InfinitSettingsAccountProtocol,
                                      InfinitSettingsGeneralProtocol>
@@ -21,29 +23,50 @@
 @property (nonatomic, weak) IBOutlet NSToolbarItem* screenshot_button;
 @property (nonatomic, weak) IBOutlet NSToolbar* toolbar;
 
-@property (nonatomic, weak) id<InfinitSettingsProtocol> delegate;
 @property (nonatomic, readonly) InfinitSettingsAccountView* account_view;
 @property (nonatomic, readonly) InfinitSettingsGeneralView* general_view;
 @property (nonatomic, readonly) InfinitSettingsScreenshotView* screenshot_view;
 
 @end
 
+static InfinitSettingsWindow* _instance = nil;
+static dispatch_once_t _instance_token = 0;
+
 @implementation InfinitSettingsWindow
 
 #pragma mark - Init
 
-- (id)initWithDelegate:(id<InfinitSettingsProtocol>)delegate
+- (id)init
 {
+  NSCAssert(_instance == nil, @"Use sharedInstance.");
   if (self = [super initWithWindowNibName:self.className])
   {
-    _delegate = delegate;
     _account_view = [[InfinitSettingsAccountView alloc] initWithDelegate:self];
     _general_view = [[InfinitSettingsGeneralView alloc] initWithDelegate:self];
     NSString* name = NSStringFromClass(InfinitSettingsScreenshotView.class);
     _screenshot_view = [[InfinitSettingsScreenshotView alloc] initWithNibName:name bundle:nil];
     self.window.level = NSFloatingWindowLevel;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(willLogout)
+                                                 name:INFINIT_WILL_LOGOUT_NOTIFICATION 
+                                               object:nil];
   }
   return self;
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  _instance_token = 0;
+}
+
++ (instancetype)sharedInstance
+{
+  dispatch_once(&_instance_token, ^
+  {
+    _instance = [[InfinitSettingsWindow alloc] init];
+  });
+  return _instance;
 }
 
 #pragma mark - Public
@@ -144,6 +167,18 @@
 - (BOOL)windowShouldClose:(id)sender
 {
   return YES;
+}
+
+#pragma mark - Will Logout
+
+- (void)willLogout
+{
+  [self close];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    _instance = nil;
+  });
 }
 
 @end

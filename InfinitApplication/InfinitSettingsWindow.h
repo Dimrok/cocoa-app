@@ -12,7 +12,9 @@
 
 @interface InfinitSettingsWindow : NSWindowController
 
-- (id)initWithDelegate:(id<InfinitSettingsProtocol>)delegate;
+@property (nonatomic, weak) id<InfinitSettingsProtocol> delegate;
+
++ (instancetype)sharedInstance;
 
 @end
 
