@@ -89,7 +89,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   IANoConnectionViewController* _no_connection_view_controller;
   IANotLoggedInViewController* _not_logged_view_controller;
   IAReportProblemWindowController* _report_problem_controller;
-  InfinitSettingsWindow* _settings_window;
   IAWindowController* _window_controller;
   InfinitMainViewController* _main_view_controller;
   InfinitTooltipViewController* _tooltip_controller;
@@ -724,7 +723,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)logoutAndShowLoginCallback:(InfinitStateResult*)result
 {
-  _settings_window = nil;
   if (result.success)
   {
     ELLE_LOG("%s: logged out", self.description.UTF8String);
@@ -742,7 +740,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   NSString* username = [[IAUserPrefs sharedInstance] prefsForKey:@"user:email"];
   if (username.length)
     [[InfinitKeychain sharedInstance] removeAccount:username];
-  [_settings_window close];
+  [[InfinitSettingsWindow sharedInstance] close];
   [self closeNotificationWindow];
   [[InfinitStateManager sharedInstance] logoutPerformSelector:@selector(logoutAndShowLoginCallback:)
                                                      onObject:self];
@@ -1112,10 +1110,8 @@ hadClickNotificationForLinkId:(NSNumber*)id_
     return;
 
   [self closeNotificationWindowWithoutLosingFocus];
-  if (_settings_window == nil)
-    _settings_window = [[InfinitSettingsWindow alloc] initWithDelegate:self];
-
-  [_settings_window showWindow:self];
+  [InfinitSettingsWindow sharedInstance].delegate = self;
+  [[InfinitSettingsWindow sharedInstance] showWindow:self];
 }
 
 - (BOOL)infinitInLoginItems:(InfinitSettingsWindow*)sender
