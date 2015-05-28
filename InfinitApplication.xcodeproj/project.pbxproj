@@ -246,6 +246,57 @@
 		836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE621988F5970053BE85 /* icon-share-hover@2x.png */; };
 		836EAE671988F5970053BE85 /* icon-share.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE631988F5970053BE85 /* icon-share.png */; };
 		836EAE681988F5970053BE85 /* icon-share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836EAE641988F5970053BE85 /* icon-share@2x.png */; };
+		836FCB501B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB421B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.m */; };
+		836FCB511B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB431B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.xib */; };
+		836FCB521B1629B5007F5CFC /* IIOnboardingViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB451B1629B5007F5CFC /* IIOnboardingViewController1.m */; };
+		836FCB531B1629B5007F5CFC /* IIOnboardingViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB461B1629B5007F5CFC /* IIOnboardingViewController1.xib */; };
+		836FCB541B1629B5007F5CFC /* IIOnboardingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB481B1629B5007F5CFC /* IIOnboardingViewController2.m */; };
+		836FCB551B1629B5007F5CFC /* IIOnboardingViewController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB4A1B1629B5007F5CFC /* IIOnboardingViewController3.m */; };
+		836FCB561B1629B5007F5CFC /* IIOnboardingViewController4.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB4C1B1629B5007F5CFC /* IIOnboardingViewController4.m */; };
+		836FCB571B1629B5007F5CFC /* IIOnboardingViewController5.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB4E1B1629B5007F5CFC /* IIOnboardingViewController5.m */; };
+		836FCB581B1629B5007F5CFC /* IIOnboardingViewController5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB4F1B1629B5007F5CFC /* IIOnboardingViewController5.xib */; };
+		836FCB5D1B1629D1007F5CFC /* IIOnboardingAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB5A1B1629D1007F5CFC /* IIOnboardingAbstractViewController.m */; };
+		836FCB5E1B1629D1007F5CFC /* IIOnboardingButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB5C1B1629D1007F5CFC /* IIOnboardingButtonCell.m */; };
+		836FCB631B1629DB007F5CFC /* IIVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB601B1629DB007F5CFC /* IIVideoPlayerView.m */; };
+		836FCB641B1629DB007F5CFC /* IIWhiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB621B1629DB007F5CFC /* IIWhiteView.m */; };
+		836FCB6B1B162A10007F5CFC /* accept.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB671B162A10007F5CFC /* accept.mp4 */; };
+		836FCB6C1B162A10007F5CFC /* send-contact.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB681B162A10007F5CFC /* send-contact.mp4 */; };
+		836FCB6D1B162A10007F5CFC /* send-device.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB691B162A10007F5CFC /* send-device.mp4 */; };
+		836FCB6E1B162A10007F5CFC /* send-email.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB6A1B162A10007F5CFC /* send-email.mp4 */; };
+		836FCB721B162A2E007F5CFC /* InfinitOnboardingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB701B162A2E007F5CFC /* InfinitOnboardingWindowController.m */; };
+		836FCB731B162A2E007F5CFC /* InfinitOnboardingWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB711B162A2E007F5CFC /* InfinitOnboardingWindowController.xib */; };
+		836FCB751B162E3A007F5CFC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836FCB741B162E39007F5CFC /* AVFoundation.framework */; };
+		836FCB771B162EAE007F5CFC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836FCB761B162EAE007F5CFC /* CoreMedia.framework */; };
+		836FCB7A1B16341D007F5CFC /* IIOnboardingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCB791B16341D007F5CFC /* IIOnboardingProgressView.m */; };
+		836FCB951B16346A007F5CFC /* onboarding-icon-android-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB7B1B16346A007F5CFC /* onboarding-icon-android-hover.png */; };
+		836FCB961B16346A007F5CFC /* onboarding-icon-android-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB7C1B16346A007F5CFC /* onboarding-icon-android-hover@2x.png */; };
+		836FCB971B16346A007F5CFC /* onboarding-icon-apple-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB7D1B16346A007F5CFC /* onboarding-icon-apple-hover.png */; };
+		836FCB981B16346A007F5CFC /* onboarding-icon-apple-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB7E1B16346A007F5CFC /* onboarding-icon-apple-hover@2x.png */; };
+		836FCB991B16346A007F5CFC /* onboarding-icon-ios-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB7F1B16346A007F5CFC /* onboarding-icon-ios-hover.png */; };
+		836FCB9A1B16346A007F5CFC /* onboarding-icon-ios-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB801B16346A007F5CFC /* onboarding-icon-ios-hover@2x.png */; };
+		836FCB9B1B16346A007F5CFC /* onboarding-icon-windows-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB811B16346A007F5CFC /* onboarding-icon-windows-hover.png */; };
+		836FCB9C1B16346A007F5CFC /* onboarding-icon-windows-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB821B16346A007F5CFC /* onboarding-icon-windows-hover@2x.png */; };
+		836FCB9D1B16346A007F5CFC /* onboarding-icon-android.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB831B16346A007F5CFC /* onboarding-icon-android.png */; };
+		836FCB9E1B16346A007F5CFC /* onboarding-icon-android@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB841B16346A007F5CFC /* onboarding-icon-android@2x.png */; };
+		836FCB9F1B16346A007F5CFC /* onboarding-icon-apple.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB851B16346A007F5CFC /* onboarding-icon-apple.png */; };
+		836FCBA01B16346A007F5CFC /* onboarding-icon-apple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB861B16346A007F5CFC /* onboarding-icon-apple@2x.png */; };
+		836FCBA11B16346A007F5CFC /* onboarding-icon-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB871B16346A007F5CFC /* onboarding-icon-ios.png */; };
+		836FCBA21B16346A007F5CFC /* onboarding-icon-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB881B16346A007F5CFC /* onboarding-icon-ios@2x.png */; };
+		836FCBA31B16346A007F5CFC /* onboarding-icon-windows.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB891B16346A007F5CFC /* onboarding-icon-windows.png */; };
+		836FCBA41B16346A007F5CFC /* onboarding-icon-windows@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB8A1B16346A007F5CFC /* onboarding-icon-windows@2x.png */; };
+		836FCBA51B16346A007F5CFC /* onboarding-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB8B1B16346A007F5CFC /* onboarding-logo.png */; };
+		836FCBA61B16346A007F5CFC /* onboarding-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB8C1B16346A007F5CFC /* onboarding-logo@2x.png */; };
+		836FCBA71B16346A007F5CFC /* onboarding-icon-fast.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB8D1B16346A007F5CFC /* onboarding-icon-fast.png */; };
+		836FCBA81B16346A007F5CFC /* onboarding-icon-fast@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB8E1B16346A007F5CFC /* onboarding-icon-fast@2x.png */; };
+		836FCBA91B16346A007F5CFC /* onboarding-icon-nolimits.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB8F1B16346A007F5CFC /* onboarding-icon-nolimits.png */; };
+		836FCBAA1B16346A007F5CFC /* onboarding-icon-nolimits@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB901B16346A007F5CFC /* onboarding-icon-nolimits@2x.png */; };
+		836FCBAB1B16346A007F5CFC /* onboarding-icon-secure.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB911B16346A007F5CFC /* onboarding-icon-secure.png */; };
+		836FCBAC1B16346A007F5CFC /* onboarding-icon-secure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB921B16346A007F5CFC /* onboarding-icon-secure@2x.png */; };
+		836FCBAD1B16346A007F5CFC /* onboarding-icon-unstoppable.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB931B16346A007F5CFC /* onboarding-icon-unstoppable.png */; };
+		836FCBAE1B16346A007F5CFC /* onboarding-icon-unstoppable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 836FCB941B16346A007F5CFC /* onboarding-icon-unstoppable@2x.png */; };
+		836FCBB11B1634C8007F5CFC /* IIBlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCBB01B1634C8007F5CFC /* IIBlackView.m */; };
+		836FCBB41B1634E2007F5CFC /* IIBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCBB31B1634E2007F5CFC /* IIBorderView.m */; };
+		836FCBBA1B163541007F5CFC /* IIHoverImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCBB91B163541007F5CFC /* IIHoverImageButton.m */; };
 		8372B1711AB32C2000F1B8B8 /* Gap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F5647D1AB31B6300056A9F /* Gap.framework */; };
 		8372B1721AB32C4200F1B8B8 /* Gap.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 83F5647D1AB31B6300056A9F /* Gap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8372B3351AB3448A00F1B8B8 /* InfinitConversationRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8372B3341AB3448A00F1B8B8 /* InfinitConversationRowView.m */; };
@@ -875,6 +926,72 @@
 		836EAE631988F5970053BE85 /* icon-share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-share.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-share.png"; sourceTree = "<group>"; };
 		836EAE641988F5970053BE85 /* icon-share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-share@2x.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-share@2x.png"; sourceTree = "<group>"; };
 		836F867517ECA30300D7202C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		836FCB411B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingVideoAbstractViewController.h; path = ../../../installer/InfinitInstaller/IIOnboardingVideoAbstractViewController.h; sourceTree = "<group>"; };
+		836FCB421B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingVideoAbstractViewController.m; path = ../../../installer/InfinitInstaller/IIOnboardingVideoAbstractViewController.m; sourceTree = "<group>"; };
+		836FCB431B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IIOnboardingVideoAbstractViewController.xib; path = ../../../installer/InfinitInstaller/IIOnboardingVideoAbstractViewController.xib; sourceTree = "<group>"; };
+		836FCB441B1629B5007F5CFC /* IIOnboardingViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingViewController1.h; path = ../../../installer/InfinitInstaller/IIOnboardingViewController1.h; sourceTree = "<group>"; };
+		836FCB451B1629B5007F5CFC /* IIOnboardingViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingViewController1.m; path = ../../../installer/InfinitInstaller/IIOnboardingViewController1.m; sourceTree = "<group>"; };
+		836FCB461B1629B5007F5CFC /* IIOnboardingViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IIOnboardingViewController1.xib; path = ../../../installer/InfinitInstaller/IIOnboardingViewController1.xib; sourceTree = "<group>"; };
+		836FCB471B1629B5007F5CFC /* IIOnboardingViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingViewController2.h; path = ../../../installer/InfinitInstaller/IIOnboardingViewController2.h; sourceTree = "<group>"; };
+		836FCB481B1629B5007F5CFC /* IIOnboardingViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingViewController2.m; path = ../../../installer/InfinitInstaller/IIOnboardingViewController2.m; sourceTree = "<group>"; };
+		836FCB491B1629B5007F5CFC /* IIOnboardingViewController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingViewController3.h; path = ../../../installer/InfinitInstaller/IIOnboardingViewController3.h; sourceTree = "<group>"; };
+		836FCB4A1B1629B5007F5CFC /* IIOnboardingViewController3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingViewController3.m; path = ../../../installer/InfinitInstaller/IIOnboardingViewController3.m; sourceTree = "<group>"; };
+		836FCB4B1B1629B5007F5CFC /* IIOnboardingViewController4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingViewController4.h; path = ../../../installer/InfinitInstaller/IIOnboardingViewController4.h; sourceTree = "<group>"; };
+		836FCB4C1B1629B5007F5CFC /* IIOnboardingViewController4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingViewController4.m; path = ../../../installer/InfinitInstaller/IIOnboardingViewController4.m; sourceTree = "<group>"; };
+		836FCB4D1B1629B5007F5CFC /* IIOnboardingViewController5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingViewController5.h; path = ../../../installer/InfinitInstaller/IIOnboardingViewController5.h; sourceTree = "<group>"; };
+		836FCB4E1B1629B5007F5CFC /* IIOnboardingViewController5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingViewController5.m; path = ../../../installer/InfinitInstaller/IIOnboardingViewController5.m; sourceTree = "<group>"; };
+		836FCB4F1B1629B5007F5CFC /* IIOnboardingViewController5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IIOnboardingViewController5.xib; path = ../../../installer/InfinitInstaller/IIOnboardingViewController5.xib; sourceTree = "<group>"; };
+		836FCB591B1629D1007F5CFC /* IIOnboardingAbstractViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingAbstractViewController.h; path = ../../../installer/InfinitInstaller/IIOnboardingAbstractViewController.h; sourceTree = "<group>"; };
+		836FCB5A1B1629D1007F5CFC /* IIOnboardingAbstractViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingAbstractViewController.m; path = ../../../installer/InfinitInstaller/IIOnboardingAbstractViewController.m; sourceTree = "<group>"; };
+		836FCB5B1B1629D1007F5CFC /* IIOnboardingButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingButtonCell.h; path = ../../../installer/InfinitInstaller/IIOnboardingButtonCell.h; sourceTree = "<group>"; };
+		836FCB5C1B1629D1007F5CFC /* IIOnboardingButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingButtonCell.m; path = ../../../installer/InfinitInstaller/IIOnboardingButtonCell.m; sourceTree = "<group>"; };
+		836FCB5F1B1629DB007F5CFC /* IIVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIVideoPlayerView.h; path = ../../../installer/InfinitInstaller/IIVideoPlayerView.h; sourceTree = "<group>"; };
+		836FCB601B1629DB007F5CFC /* IIVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIVideoPlayerView.m; path = ../../../installer/InfinitInstaller/IIVideoPlayerView.m; sourceTree = "<group>"; };
+		836FCB611B1629DB007F5CFC /* IIWhiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIWhiteView.h; path = ../../../installer/InfinitInstaller/IIWhiteView.h; sourceTree = "<group>"; };
+		836FCB621B1629DB007F5CFC /* IIWhiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIWhiteView.m; path = ../../../installer/InfinitInstaller/IIWhiteView.m; sourceTree = "<group>"; };
+		836FCB671B162A10007F5CFC /* accept.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = accept.mp4; path = "../../../../fist-resources/gifs/mac/accept.mp4"; sourceTree = "<group>"; };
+		836FCB681B162A10007F5CFC /* send-contact.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "send-contact.mp4"; path = "../../../../fist-resources/gifs/mac/send-contact.mp4"; sourceTree = "<group>"; };
+		836FCB691B162A10007F5CFC /* send-device.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "send-device.mp4"; path = "../../../../fist-resources/gifs/mac/send-device.mp4"; sourceTree = "<group>"; };
+		836FCB6A1B162A10007F5CFC /* send-email.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "send-email.mp4"; path = "../../../../fist-resources/gifs/mac/send-email.mp4"; sourceTree = "<group>"; };
+		836FCB6F1B162A2E007F5CFC /* InfinitOnboardingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOnboardingWindowController.h; sourceTree = "<group>"; };
+		836FCB701B162A2E007F5CFC /* InfinitOnboardingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOnboardingWindowController.m; sourceTree = "<group>"; };
+		836FCB711B162A2E007F5CFC /* InfinitOnboardingWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitOnboardingWindowController.xib; sourceTree = "<group>"; };
+		836FCB741B162E39007F5CFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		836FCB761B162EAE007F5CFC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		836FCB781B16341D007F5CFC /* IIOnboardingProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIOnboardingProgressView.h; path = ../../../installer/InfinitInstaller/IIOnboardingProgressView.h; sourceTree = "<group>"; };
+		836FCB791B16341D007F5CFC /* IIOnboardingProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIOnboardingProgressView.m; path = ../../../installer/InfinitInstaller/IIOnboardingProgressView.m; sourceTree = "<group>"; };
+		836FCB7B1B16346A007F5CFC /* onboarding-icon-android-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-android-hover.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-android-hover.png"; sourceTree = "<group>"; };
+		836FCB7C1B16346A007F5CFC /* onboarding-icon-android-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-android-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-android-hover@2x.png"; sourceTree = "<group>"; };
+		836FCB7D1B16346A007F5CFC /* onboarding-icon-apple-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-apple-hover.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-apple-hover.png"; sourceTree = "<group>"; };
+		836FCB7E1B16346A007F5CFC /* onboarding-icon-apple-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-apple-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-apple-hover@2x.png"; sourceTree = "<group>"; };
+		836FCB7F1B16346A007F5CFC /* onboarding-icon-ios-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-ios-hover.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-ios-hover.png"; sourceTree = "<group>"; };
+		836FCB801B16346A007F5CFC /* onboarding-icon-ios-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-ios-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-ios-hover@2x.png"; sourceTree = "<group>"; };
+		836FCB811B16346A007F5CFC /* onboarding-icon-windows-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-windows-hover.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-windows-hover.png"; sourceTree = "<group>"; };
+		836FCB821B16346A007F5CFC /* onboarding-icon-windows-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-windows-hover@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-windows-hover@2x.png"; sourceTree = "<group>"; };
+		836FCB831B16346A007F5CFC /* onboarding-icon-android.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-android.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-android.png"; sourceTree = "<group>"; };
+		836FCB841B16346A007F5CFC /* onboarding-icon-android@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-android@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-android@2x.png"; sourceTree = "<group>"; };
+		836FCB851B16346A007F5CFC /* onboarding-icon-apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-apple.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-apple.png"; sourceTree = "<group>"; };
+		836FCB861B16346A007F5CFC /* onboarding-icon-apple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-apple@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-apple@2x.png"; sourceTree = "<group>"; };
+		836FCB871B16346A007F5CFC /* onboarding-icon-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-ios.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-ios.png"; sourceTree = "<group>"; };
+		836FCB881B16346A007F5CFC /* onboarding-icon-ios@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-ios@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-ios@2x.png"; sourceTree = "<group>"; };
+		836FCB891B16346A007F5CFC /* onboarding-icon-windows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-windows.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-windows.png"; sourceTree = "<group>"; };
+		836FCB8A1B16346A007F5CFC /* onboarding-icon-windows@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-windows@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-windows@2x.png"; sourceTree = "<group>"; };
+		836FCB8B1B16346A007F5CFC /* onboarding-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-logo.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-logo.png"; sourceTree = "<group>"; };
+		836FCB8C1B16346A007F5CFC /* onboarding-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-logo@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-logo@2x.png"; sourceTree = "<group>"; };
+		836FCB8D1B16346A007F5CFC /* onboarding-icon-fast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-fast.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-fast.png"; sourceTree = "<group>"; };
+		836FCB8E1B16346A007F5CFC /* onboarding-icon-fast@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-fast@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-fast@2x.png"; sourceTree = "<group>"; };
+		836FCB8F1B16346A007F5CFC /* onboarding-icon-nolimits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-nolimits.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-nolimits.png"; sourceTree = "<group>"; };
+		836FCB901B16346A007F5CFC /* onboarding-icon-nolimits@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-nolimits@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-nolimits@2x.png"; sourceTree = "<group>"; };
+		836FCB911B16346A007F5CFC /* onboarding-icon-secure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-secure.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-secure.png"; sourceTree = "<group>"; };
+		836FCB921B16346A007F5CFC /* onboarding-icon-secure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-secure@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-secure@2x.png"; sourceTree = "<group>"; };
+		836FCB931B16346A007F5CFC /* onboarding-icon-unstoppable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-unstoppable.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-unstoppable.png"; sourceTree = "<group>"; };
+		836FCB941B16346A007F5CFC /* onboarding-icon-unstoppable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding-icon-unstoppable@2x.png"; path = "../../../../fist-resources/slices/mac/view_onboarding/onboarding-icon-unstoppable@2x.png"; sourceTree = "<group>"; };
+		836FCBAF1B1634C8007F5CFC /* IIBlackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIBlackView.h; path = ../../../installer/InfinitInstaller/IIBlackView.h; sourceTree = "<group>"; };
+		836FCBB01B1634C8007F5CFC /* IIBlackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIBlackView.m; path = ../../../installer/InfinitInstaller/IIBlackView.m; sourceTree = "<group>"; };
+		836FCBB21B1634E2007F5CFC /* IIBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIBorderView.h; path = ../../../installer/InfinitInstaller/IIBorderView.h; sourceTree = "<group>"; };
+		836FCBB31B1634E2007F5CFC /* IIBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIBorderView.m; path = ../../../installer/InfinitInstaller/IIBorderView.m; sourceTree = "<group>"; };
+		836FCBB81B163541007F5CFC /* IIHoverImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IIHoverImageButton.h; path = ../../../installer/InfinitInstaller/IIHoverImageButton.h; sourceTree = "<group>"; };
+		836FCBB91B163541007F5CFC /* IIHoverImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IIHoverImageButton.m; path = ../../../installer/InfinitInstaller/IIHoverImageButton.m; sourceTree = "<group>"; };
 		8372B3331AB3448A00F1B8B8 /* InfinitConversationRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitConversationRowView.h; sourceTree = "<group>"; };
 		8372B3341AB3448A00F1B8B8 /* InfinitConversationRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitConversationRowView.m; sourceTree = "<group>"; };
 		83732B551989418F0030B0F0 /* icon-delete-confirm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-delete-confirm.png"; path = "../../../../fist-resources/slices/mac/view_link/icon-delete-confirm.png"; sourceTree = "<group>"; };
@@ -1094,6 +1211,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				836FCB771B162EAE007F5CFC /* CoreMedia.framework in Frameworks */,
+				836FCB751B162E3A007F5CFC /* AVFoundation.framework in Frameworks */,
 				83E0F6681B01F1C90057B91E /* Carbon.framework in Frameworks */,
 				8373D9C91ABAFF8A0054B0D3 /* WebKit.framework in Frameworks */,
 				8372B1711AB32C2000F1B8B8 /* Gap.framework in Frameworks */,
@@ -1262,6 +1381,8 @@
 		8328080917A2B4A60025B6F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				836FCB761B162EAE007F5CFC /* CoreMedia.framework */,
+				836FCB741B162E39007F5CFC /* AVFoundation.framework */,
 				83E0F6671B01F1C90057B91E /* Carbon.framework */,
 				8373D9C81ABAFF8A0054B0D3 /* WebKit.framework */,
 				83E54A5719EC14C500D9DC7D /* QuickLook.framework */,
@@ -1301,6 +1422,7 @@
 				83C124B517A7CE9800BE1252 /* Managers */,
 				83CD108517D4F92D00AA0A19 /* No Connection View */,
 				832808EA17A2E5C70025B6F8 /* Not Logged In View */,
+				836FCB3B1B162980007F5CFC /* Onboarding Controller */,
 				836D648A19D41F4500D77D9B /* Proxy View */,
 				83E0F6571B01E3690057B91E /* Quota Window */,
 				837A7F5A17FC070600600ACD /* Report Problem Window */,
@@ -1648,6 +1770,93 @@
 				836EAD0C1988EE3B0053BE85 /* video@2x.png */,
 			);
 			name = "MIME types";
+			sourceTree = "<group>";
+		};
+		836FCB3B1B162980007F5CFC /* Onboarding Controller */ = {
+			isa = PBXGroup;
+			children = (
+				836FCB651B1629EC007F5CFC /* Resources */,
+				836FCB661B1629F5007F5CFC /* Helpers */,
+				836FCB441B1629B5007F5CFC /* IIOnboardingViewController1.h */,
+				836FCB451B1629B5007F5CFC /* IIOnboardingViewController1.m */,
+				836FCB461B1629B5007F5CFC /* IIOnboardingViewController1.xib */,
+				836FCB471B1629B5007F5CFC /* IIOnboardingViewController2.h */,
+				836FCB481B1629B5007F5CFC /* IIOnboardingViewController2.m */,
+				836FCB491B1629B5007F5CFC /* IIOnboardingViewController3.h */,
+				836FCB4A1B1629B5007F5CFC /* IIOnboardingViewController3.m */,
+				836FCB4B1B1629B5007F5CFC /* IIOnboardingViewController4.h */,
+				836FCB4C1B1629B5007F5CFC /* IIOnboardingViewController4.m */,
+				836FCB4D1B1629B5007F5CFC /* IIOnboardingViewController5.h */,
+				836FCB4E1B1629B5007F5CFC /* IIOnboardingViewController5.m */,
+				836FCB4F1B1629B5007F5CFC /* IIOnboardingViewController5.xib */,
+				836FCB6F1B162A2E007F5CFC /* InfinitOnboardingWindowController.h */,
+				836FCB701B162A2E007F5CFC /* InfinitOnboardingWindowController.m */,
+				836FCB711B162A2E007F5CFC /* InfinitOnboardingWindowController.xib */,
+			);
+			name = "Onboarding Controller";
+			sourceTree = "<group>";
+		};
+		836FCB651B1629EC007F5CFC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				836FCB671B162A10007F5CFC /* accept.mp4 */,
+				836FCB681B162A10007F5CFC /* send-contact.mp4 */,
+				836FCB691B162A10007F5CFC /* send-device.mp4 */,
+				836FCB6A1B162A10007F5CFC /* send-email.mp4 */,
+				836FCB7B1B16346A007F5CFC /* onboarding-icon-android-hover.png */,
+				836FCB7C1B16346A007F5CFC /* onboarding-icon-android-hover@2x.png */,
+				836FCB7D1B16346A007F5CFC /* onboarding-icon-apple-hover.png */,
+				836FCB7E1B16346A007F5CFC /* onboarding-icon-apple-hover@2x.png */,
+				836FCB7F1B16346A007F5CFC /* onboarding-icon-ios-hover.png */,
+				836FCB801B16346A007F5CFC /* onboarding-icon-ios-hover@2x.png */,
+				836FCB811B16346A007F5CFC /* onboarding-icon-windows-hover.png */,
+				836FCB821B16346A007F5CFC /* onboarding-icon-windows-hover@2x.png */,
+				836FCB831B16346A007F5CFC /* onboarding-icon-android.png */,
+				836FCB841B16346A007F5CFC /* onboarding-icon-android@2x.png */,
+				836FCB851B16346A007F5CFC /* onboarding-icon-apple.png */,
+				836FCB861B16346A007F5CFC /* onboarding-icon-apple@2x.png */,
+				836FCB871B16346A007F5CFC /* onboarding-icon-ios.png */,
+				836FCB881B16346A007F5CFC /* onboarding-icon-ios@2x.png */,
+				836FCB891B16346A007F5CFC /* onboarding-icon-windows.png */,
+				836FCB8A1B16346A007F5CFC /* onboarding-icon-windows@2x.png */,
+				836FCB8B1B16346A007F5CFC /* onboarding-logo.png */,
+				836FCB8C1B16346A007F5CFC /* onboarding-logo@2x.png */,
+				836FCB8D1B16346A007F5CFC /* onboarding-icon-fast.png */,
+				836FCB8E1B16346A007F5CFC /* onboarding-icon-fast@2x.png */,
+				836FCB8F1B16346A007F5CFC /* onboarding-icon-nolimits.png */,
+				836FCB901B16346A007F5CFC /* onboarding-icon-nolimits@2x.png */,
+				836FCB911B16346A007F5CFC /* onboarding-icon-secure.png */,
+				836FCB921B16346A007F5CFC /* onboarding-icon-secure@2x.png */,
+				836FCB931B16346A007F5CFC /* onboarding-icon-unstoppable.png */,
+				836FCB941B16346A007F5CFC /* onboarding-icon-unstoppable@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		836FCB661B1629F5007F5CFC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				836FCBAF1B1634C8007F5CFC /* IIBlackView.h */,
+				836FCBB01B1634C8007F5CFC /* IIBlackView.m */,
+				836FCBB21B1634E2007F5CFC /* IIBorderView.h */,
+				836FCBB31B1634E2007F5CFC /* IIBorderView.m */,
+				836FCBB81B163541007F5CFC /* IIHoverImageButton.h */,
+				836FCBB91B163541007F5CFC /* IIHoverImageButton.m */,
+				836FCB591B1629D1007F5CFC /* IIOnboardingAbstractViewController.h */,
+				836FCB5A1B1629D1007F5CFC /* IIOnboardingAbstractViewController.m */,
+				836FCB5B1B1629D1007F5CFC /* IIOnboardingButtonCell.h */,
+				836FCB5C1B1629D1007F5CFC /* IIOnboardingButtonCell.m */,
+				836FCB781B16341D007F5CFC /* IIOnboardingProgressView.h */,
+				836FCB791B16341D007F5CFC /* IIOnboardingProgressView.m */,
+				836FCB411B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.h */,
+				836FCB421B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.m */,
+				836FCB431B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.xib */,
+				836FCB5F1B1629DB007F5CFC /* IIVideoPlayerView.h */,
+				836FCB601B1629DB007F5CFC /* IIVideoPlayerView.m */,
+				836FCB611B1629DB007F5CFC /* IIWhiteView.h */,
+				836FCB621B1629DB007F5CFC /* IIWhiteView.m */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		8372B3321AB3447000F1B8B8 /* Cells */ = {
@@ -2065,11 +2274,11 @@
 				8304230F1B108AB10059A668 /* Account */,
 				830423101B108ABF0059A668 /* General */,
 				830423111B108AFF0059A668 /* Screenshots */,
+				83EC175719AB2DFA0063A3B3 /* InfinitSettingsViewController.h */,
+				83EC175819AB2DFA0063A3B3 /* InfinitSettingsViewController.m */,
 				83E73FA219A5DD0E00B7E8EF /* InfinitSettingsWindow.h */,
 				83E73FA319A5DD0E00B7E8EF /* InfinitSettingsWindow.m */,
 				83E73FA419A5DD0E00B7E8EF /* InfinitSettingsWindow.xib */,
-				83EC175719AB2DFA0063A3B3 /* InfinitSettingsViewController.h */,
-				83EC175819AB2DFA0063A3B3 /* InfinitSettingsViewController.m */,
 			);
 			name = "Settings Window";
 			sourceTree = "<group>";
@@ -2300,6 +2509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B8A729182246E500AD775F /* InfinitLoginViewController.xib in Resources */,
+				836FCB961B16346A007F5CFC /* onboarding-icon-android-hover@2x.png in Resources */,
 				836EADB11988EEC70053BE85 /* icon-status-online.png in Resources */,
 				8318E9D519A788E800B765A2 /* settings-icon-check@2x.png in Resources */,
 				836EAE5C1988F5630053BE85 /* icon-clipboard-hover.png in Resources */,
@@ -2310,6 +2520,7 @@
 				836EACF01988EE300053BE85 /* icon-delete@2x.png in Resources */,
 				831445761ABC23690032958B /* send-icon-email-results@2x.png in Resources */,
 				836EAD121988EE3B0053BE85 /* document@2x.png in Resources */,
+				836FCBAE1B16346A007F5CFC /* onboarding-icon-unstoppable@2x.png in Resources */,
 				836EAE271988F43E0053BE85 /* icon-menu-bar-animated-red-6.png in Resources */,
 				837B2AA719DD981F00A3CDE1 /* main-icon-expand@2x.png in Resources */,
 				83EF5C741A0A7AFA00A38D49 /* main-icon-bufferised.png in Resources */,
@@ -2331,8 +2542,10 @@
 				831445691ABC23690032958B /* send-icon-device-default-avatar.png in Resources */,
 				836D648F19D433B000D77D9B /* InfinitProxyWindow.xib in Resources */,
 				836EAE071988F42D0053BE85 /* icon-menu-bar-active@2x.png in Resources */,
+				836FCBAD1B16346A007F5CFC /* onboarding-icon-unstoppable.png in Resources */,
 				836EAD9C1988EEC70053BE85 /* conversation-icon-quote-right.png in Resources */,
 				8314456C1ABC23690032958B /* send-icon-device-mac-avatar@2x.png in Resources */,
+				836FCB9C1B16346A007F5CFC /* onboarding-icon-windows-hover@2x.png in Resources */,
 				83E0F67B1B034F3B0057B91E /* icon-quota-full@2x.png in Resources */,
 				8373D99F1ABABCAE0054B0D3 /* SourceSansPro-BlackIt.otf in Resources */,
 				836EAD9B1988EEC70053BE85 /* conversation-icon-quote-left@2x.png in Resources */,
@@ -2340,11 +2553,15 @@
 				836EAE541988F4500053BE85 /* icon-menu-bar-animated-black-15.png in Resources */,
 				837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */,
 				836EADCB1988F1F90053BE85 /* icon-transfer@2x.png in Resources */,
+				836FCB9D1B16346A007F5CFC /* onboarding-icon-android.png in Resources */,
 				83C25B7119F010EE009752F1 /* send-icon-back.png in Resources */,
 				830BB8AC1B06045F00861D5F /* conversation-icon-resume@2x.png in Resources */,
 				836EAD9F1988EEC70053BE85 /* conversation-icon-quote@2x.png in Resources */,
 				83C25B5B19EEBC8F009752F1 /* send-icon-media-ps.png in Resources */,
+				836FCBA81B16346A007F5CFC /* onboarding-icon-fast@2x.png in Resources */,
+				836FCB6E1B162A10007F5CFC /* send-email.mp4 in Resources */,
 				83C25B5D19EEBC8F009752F1 /* send-icon-media-video.png in Resources */,
+				836FCBA11B16346A007F5CFC /* onboarding-icon-ios.png in Resources */,
 				836EAE281988F43E0053BE85 /* icon-menu-bar-animated-red-7.png in Resources */,
 				836EAD901988EEC70053BE85 /* conversation-icon-error.png in Resources */,
 				836EAE231988F43E0053BE85 /* icon-menu-bar-animated-red-2.png in Resources */,
@@ -2352,6 +2569,7 @@
 				831445711ABC23690032958B /* send-icon-device-ios.png in Resources */,
 				8373D9A71ABABCAE0054B0D3 /* SourceSansPro-Regular.otf in Resources */,
 				8373D99E1ABABCAE0054B0D3 /* SourceSansPro-Black.otf in Resources */,
+				836FCB731B162A2E007F5CFC /* InfinitOnboardingWindowController.xib in Resources */,
 				836EACF21988EE300053BE85 /* icon-edit-hover@2x.png in Resources */,
 				836EACF71988EE300053BE85 /* link-icon-cancel.png in Resources */,
 				836EADCA1988F1F90053BE85 /* icon-transfer.png in Resources */,
@@ -2365,6 +2583,7 @@
 				831445751ABC23690032958B /* send-icon-email-results.png in Resources */,
 				836EAE331988F43E0053BE85 /* icon-menu-bar-animated-red-18.png in Resources */,
 				8304233C1B131DA50059A668 /* icon-activity.png in Resources */,
+				836FCBAB1B16346A007F5CFC /* onboarding-icon-secure.png in Resources */,
 				8373D9A61ABABCAE0054B0D3 /* SourceSansPro-LightIt.otf in Resources */,
 				8314456E1ABC23690032958B /* send-icon-device-android-avatar@2x.png in Resources */,
 				830423191B108BB70059A668 /* settings-icon-screenshots.png in Resources */,
@@ -2384,10 +2603,12 @@
 				830BB8AB1B06045F00861D5F /* conversation-icon-resume.png in Resources */,
 				8375C09F1B0CB94F00AE439F /* conversation-icon-resume-hover.png in Resources */,
 				836EAE5F1988F5630053BE85 /* icon-clipboard@2x.png in Resources */,
+				836FCB971B16346A007F5CFC /* onboarding-icon-apple-hover.png in Resources */,
 				8304233B1B131DA50059A668 /* arrow-onboarding-send@2x.png in Resources */,
 				836EAD951988EEC70053BE85 /* conversation-icon-hide-files@2x.png in Resources */,
 				836EADC51988F1B80053BE85 /* login-icon-close.png in Resources */,
 				837B2AAF19DD985E00A3CDE1 /* main-icon-download@2x.png in Resources */,
+				836FCBAA1B16346A007F5CFC /* onboarding-icon-nolimits@2x.png in Resources */,
 				8373D9A51ABABCAE0054B0D3 /* SourceSansPro-Light.otf in Resources */,
 				83C25B5E19EEBC8F009752F1 /* send-icon-media-video@2x.png in Resources */,
 				836EAE561988F4500053BE85 /* icon-menu-bar-animated-black-17.png in Resources */,
@@ -2398,11 +2619,15 @@
 				836EAD921988EEC70053BE85 /* conversation-icon-finished.png in Resources */,
 				837B2AAE19DD985E00A3CDE1 /* main-icon-download.png in Resources */,
 				83C25B5A19EEBC8F009752F1 /* send-icon-media-picture@2x.png in Resources */,
+				836FCB6C1B162A10007F5CFC /* send-contact.mp4 in Resources */,
 				8373D9A31ABABCAE0054B0D3 /* SourceSansPro-ExtraLightIt.otf in Resources */,
 				83C25B7519F016E3009752F1 /* send-icon-add-file.png in Resources */,
+				836FCB6B1B162A10007F5CFC /* accept.mp4 in Resources */,
 				837B2A9F19DD974B00A3CDE1 /* logo@2x.png in Resources */,
+				836FCB981B16346A007F5CFC /* onboarding-icon-apple-hover@2x.png in Resources */,
 				83C25B4D19EEBC78009752F1 /* send-illustration-no-results.png in Resources */,
 				836EAD0D1988EE3B0053BE85 /* archive.png in Resources */,
+				836FCBA91B16346A007F5CFC /* onboarding-icon-nolimits.png in Resources */,
 				836EAE0A1988F42D0053BE85 /* icon-menu-bar-fire.png in Resources */,
 				836EAD9A1988EEC70053BE85 /* conversation-icon-quote-left.png in Resources */,
 				836EADAF1988EEC70053BE85 /* conversation-icon-status-offline@2x.png in Resources */,
@@ -2410,6 +2635,8 @@
 				836EAD911988EEC70053BE85 /* conversation-icon-error@2x.png in Resources */,
 				83C25B5C19EEBC8F009752F1 /* send-icon-media-ps@2x.png in Resources */,
 				836EAD0F1988EE3B0053BE85 /* cat.png in Resources */,
+				836FCB951B16346A007F5CFC /* onboarding-icon-android-hover.png in Resources */,
+				836FCBA01B16346A007F5CFC /* onboarding-icon-apple@2x.png in Resources */,
 				83C25B4919EEBC6C009752F1 /* send-icon-link.png in Resources */,
 				83E73FB119A5E2B700B7E8EF /* InfinitSettingsAccountView.xib in Resources */,
 				8314456D1ABC23690032958B /* send-icon-device-android-avatar.png in Resources */,
@@ -2448,6 +2675,7 @@
 				831445771ABC23690032958B /* send-icon-favorite.png in Resources */,
 				836EAE261988F43E0053BE85 /* icon-menu-bar-animated-red-5.png in Resources */,
 				837B2AB319DD987500A3CDE1 /* main-icon-upload@2x.png in Resources */,
+				836FCB581B1629B5007F5CFC /* IIOnboardingViewController5.xib in Resources */,
 				836EAE241988F43E0053BE85 /* icon-menu-bar-animated-red-3.png in Resources */,
 				834F137A19224FCF00BF36A4 /* InfinitLinkViewController.xib in Resources */,
 				837B2A9A19DD96DF00A3CDE1 /* bg-triangle-top-white.png in Resources */,
@@ -2458,14 +2686,17 @@
 				836EACF41988EE300053BE85 /* icon-edit@2x.png in Resources */,
 				836EAD1A1988EE3B0053BE85 /* photoshop@2x.png in Resources */,
 				8304233A1B131DA50059A668 /* arrow-onboarding-send.png in Resources */,
+				836FCBA41B16346A007F5CFC /* onboarding-icon-windows@2x.png in Resources */,
 				836EAD0E1988EE3B0053BE85 /* archive@2x.png in Resources */,
 				836EAE651988F5970053BE85 /* icon-share-hover.png in Resources */,
 				830423401B13210C0059A668 /* icon-link.png in Resources */,
 				8314456B1ABC23690032958B /* send-icon-device-mac-avatar.png in Resources */,
 				8318E9D419A788E800B765A2 /* settings-icon-check.png in Resources */,
+				836FCBA51B16346A007F5CFC /* onboarding-logo.png in Resources */,
 				836EAD1B1988EE3B0053BE85 /* picture.png in Resources */,
 				83F1148617AE63E700DCF662 /* IAUserSearchViewController.xib in Resources */,
 				836EADD31988F2270053BE85 /* icon-upload@2x.png in Resources */,
+				836FCB9A1B16346A007F5CFC /* onboarding-icon-ios-hover@2x.png in Resources */,
 				836EAD141988EE3B0053BE85 /* folder@2x.png in Resources */,
 				836EAE061988F42D0053BE85 /* icon-menu-bar-active.png in Resources */,
 				836EAE4C1988F4500053BE85 /* icon-menu-bar-animated-black-7.png in Resources */,
@@ -2486,8 +2717,10 @@
 				83F5FCF818EC62460051F010 /* InfinitTooltipViewController.xib in Resources */,
 				836EAE251988F43E0053BE85 /* icon-menu-bar-animated-red-4.png in Resources */,
 				836EAD171988EE3B0053BE85 /* music.png in Resources */,
+				836FCBAC1B16346A007F5CFC /* onboarding-icon-secure@2x.png in Resources */,
 				836EAD851988EEC70053BE85 /* conversation-icon-accept-hover@2x.png in Resources */,
 				836EAE4B1988F4500053BE85 /* icon-menu-bar-animated-black-6.png in Resources */,
+				836FCB531B1629B5007F5CFC /* IIOnboardingViewController1.xib in Resources */,
 				836EAD1D1988EE3B0053BE85 /* powerpoint.png in Resources */,
 				83126E5517BA69A3003B2F52 /* IAFavouritesSendViewController.xib in Resources */,
 				837B2AAB19DD983A00A3CDE1 /* main-icon-unread@2x.png in Resources */,
@@ -2500,7 +2733,9 @@
 				83C25B5719EEBC8F009752F1 /* send-icon-media-folder.png in Resources */,
 				836EAD201988EE3B0053BE85 /* video@2x.png in Resources */,
 				8314458D1AC03C9A0032958B /* send-icon-device-android@2x.png in Resources */,
+				836FCB6D1B162A10007F5CFC /* send-device.mp4 in Resources */,
 				83AA9AE91A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png in Resources */,
+				836FCB9E1B16346A007F5CFC /* onboarding-icon-android@2x.png in Resources */,
 				836EAE311988F43E0053BE85 /* icon-menu-bar-animated-red-16.png in Resources */,
 				836EAE301988F43E0053BE85 /* icon-menu-bar-animated-red-15.png in Resources */,
 				83E73FA619A5DD0E00B7E8EF /* InfinitSettingsWindow.xib in Resources */,
@@ -2517,8 +2752,10 @@
 				837B2AAA19DD983A00A3CDE1 /* main-icon-unread.png in Resources */,
 				836EAE491988F4500053BE85 /* icon-menu-bar-animated-black-4.png in Resources */,
 				836EACF11988EE300053BE85 /* icon-edit-hover.png in Resources */,
+				836FCB511B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.xib in Resources */,
 				837B2A9519DD96DF00A3CDE1 /* bg-header-top-gray@2x.png in Resources */,
 				836EAD101988EE3B0053BE85 /* cat@2x.png in Resources */,
+				836FCB9F1B16346A007F5CFC /* onboarding-icon-apple.png in Resources */,
 				837B2A8219DD966E00A3CDE1 /* sound_finished.aiff in Resources */,
 				836EAE0C1988F42D0053BE85 /* icon-menu-bar-inactive.png in Resources */,
 				8375C0A01B0CB94F00AE439F /* conversation-icon-resume-hover@2x.png in Resources */,
@@ -2528,14 +2765,18 @@
 				836EAE2F1988F43E0053BE85 /* icon-menu-bar-animated-red-14.png in Resources */,
 				836EACF51988EE300053BE85 /* link-icon-cancel-hover.png in Resources */,
 				830BB8AA1B06045F00861D5F /* conversation-icon-pause@2x.png in Resources */,
+				836FCBA21B16346A007F5CFC /* onboarding-icon-ios@2x.png in Resources */,
 				83E0F67A1B034F3B0057B91E /* icon-quota-full.png in Resources */,
 				837B2AB219DD987500A3CDE1 /* main-icon-upload.png in Resources */,
 				836EAE4F1988F4500053BE85 /* icon-menu-bar-animated-black-10.png in Resources */,
+				836FCBA61B16346A007F5CFC /* onboarding-logo@2x.png in Resources */,
 				836EAE661988F5970053BE85 /* icon-share-hover@2x.png in Resources */,
 				833B238C19DA938300D3F104 /* InfinitFirstScreenshotModal.xib in Resources */,
 				836EAD111988EE3B0053BE85 /* document.png in Resources */,
 				836EAD1C1988EE3B0053BE85 /* picture@2x.png in Resources */,
 				83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */,
+				836FCB991B16346A007F5CFC /* onboarding-icon-ios-hover.png in Resources */,
+				836FCB9B1B16346A007F5CFC /* onboarding-icon-windows-hover.png in Resources */,
 				834F136A19216E2B00BF36A4 /* InfinitTransactionViewController.xib in Resources */,
 				836EAE0F1988F42D0053BE85 /* icon-menu-bar-link@2x.png in Resources */,
 				8373D9A81ABABCAE0054B0D3 /* SourceSansPro-Semibold.otf in Resources */,
@@ -2555,8 +2796,10 @@
 				833B59CE18D75D4800A43339 /* InfinitConversationViewController.xib in Resources */,
 				837B2AA619DD981F00A3CDE1 /* main-icon-expand.png in Resources */,
 				836EADA21988EEC70053BE85 /* conversation-icon-reject-hover.png in Resources */,
+				836FCBA31B16346A007F5CFC /* onboarding-icon-windows.png in Resources */,
 				836EADC61988F1B80053BE85 /* login-icon-close@2x.png in Resources */,
 				836EADD61988F2BE0053BE85 /* icon-back.png in Resources */,
+				836FCBA71B16346A007F5CFC /* onboarding-icon-fast.png in Resources */,
 				83CD108A17D4F95200AA0A19 /* IANoConnectionViewController.xib in Resources */,
 				837B2ABB19DD98DF00A3CDE1 /* main-icon-error@2x.png in Resources */,
 				836EAE291988F43E0053BE85 /* icon-menu-bar-animated-red-8.png in Resources */,
@@ -2599,10 +2842,13 @@
 			files = (
 				83E1B73A191E6F85000338A3 /* InfinitSendFilesViewController.m in Sources */,
 				834F13741921813200BF36A4 /* InfinitAvatarView.m in Sources */,
+				836FCB721B162A2E007F5CFC /* InfinitOnboardingWindowController.m in Sources */,
+				836FCB571B1629B5007F5CFC /* IIOnboardingViewController5.m in Sources */,
 				83019CA91925354300423FCA /* InfinitLinkIconManager.m in Sources */,
 				8328081717A2B4A60025B6F8 /* main.m in Sources */,
 				83C30A2A193298BF00D07D2C /* InfinitScreenshotManager.mm in Sources */,
 				83B4AE96189FF6AA0011BD43 /* InfinitMetricsManager.mm in Sources */,
+				836FCB631B1629DB007F5CFC /* IIVideoPlayerView.m in Sources */,
 				83E1E1A51861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm in Sources */,
 				8373D9B01ABAC5760054B0D3 /* InfinitLoginFooterView.m in Sources */,
 				83019CD41925629800423FCA /* InfinitMainCounterView.m in Sources */,
@@ -2614,6 +2860,7 @@
 				83C30A411933EA5100D07D2C /* InfinitLinkShortcutView.m in Sources */,
 				830423271B10921E0059A668 /* MASShortcut.m in Sources */,
 				83EC175919AB2DFA0063A3B3 /* InfinitSettingsViewController.m in Sources */,
+				836FCBBA1B163541007F5CFC /* IIHoverImageButton.m in Sources */,
 				831445871AC01BBB0032958B /* InfinitSearchEmailCell.m in Sources */,
 				83B8A728182246E500AD775F /* InfinitLoginViewController.mm in Sources */,
 				832808CF17A2C1480025B6F8 /* IAFunctions.mm in Sources */,
@@ -2623,8 +2870,10 @@
 				834F13801922522F00BF36A4 /* InfinitLinkClickCountView.m in Sources */,
 				83CC2C4C1923B97E00EBB96E /* InfinitLinkFileIconView.m in Sources */,
 				83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */,
+				836FCB541B1629B5007F5CFC /* IIOnboardingViewController2.m in Sources */,
 				832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.mm in Sources */,
 				8337673E19088E910073A621 /* InfinitTokenAttachmentCell.m in Sources */,
+				836FCB641B1629DB007F5CFC /* IIWhiteView.m in Sources */,
 				8373D9AD1ABABF060054B0D3 /* InfinitLoginButton.m in Sources */,
 				8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */,
 				8398835517A6AA9D009409B3 /* IAUserPrefs.m in Sources */,
@@ -2632,6 +2881,7 @@
 				834F137919224FCF00BF36A4 /* InfinitLinkViewController.m in Sources */,
 				8398836A17A6FDE7009409B3 /* IACentredTextFieldCell.m in Sources */,
 				83F5FCF118EC61AF0051F010 /* INPopoverWindow.m in Sources */,
+				836FCB561B1629B5007F5CFC /* IIOnboardingViewController4.m in Sources */,
 				8346315017A7042A00A7E17F /* IACentredSecureCell.m in Sources */,
 				831B024A190719EA00018B7C /* InfinitSearchTokenFieldCell.m in Sources */,
 				836A679418D790D600A15677 /* InfinitConversationElement.m in Sources */,
@@ -2652,6 +2902,7 @@
 				834F13831922532D00BF36A4 /* InfinitLinkProgressIndicator.m in Sources */,
 				83E0F67F1B0370320057B91E /* GetBSDProcessList.m in Sources */,
 				833B59CD18D75D4800A43339 /* InfinitConversationViewController.mm in Sources */,
+				836FCB5E1B1629D1007F5CFC /* IIOnboardingButtonCell.m in Sources */,
 				830423241B1092050059A668 /* MASShortcutValidator.m in Sources */,
 				83C99E0117AB8EAC00AFF091 /* IAGeneralSendController.mm in Sources */,
 				83F1148517AE63E700DCF662 /* IAUserSearchViewController.m in Sources */,
@@ -2662,24 +2913,30 @@
 				83F1A37819DEBCC70045ADD7 /* InfinitScreenshotTextView.m in Sources */,
 				8373D9B31ABACD910054B0D3 /* InfinitLoginView.m in Sources */,
 				83E54A6F19ECFDBB00D9DC7D /* InfinitSendFileView.m in Sources */,
+				836FCBB11B1634C8007F5CFC /* IIBlackView.m in Sources */,
 				8314457B1ABED4B30032958B /* InfinitSearchBoxView.m in Sources */,
 				836AAF6C17AE7B12001ECF2E /* InfinitSearchResultCell.m in Sources */,
 				834F13871922618200BF36A4 /* InfinitMainViewController.mm in Sources */,
+				836FCBB41B1634E2007F5CFC /* IIBorderView.m in Sources */,
 				83126E5417BA69A3003B2F52 /* IAFavouritesSendViewController.m in Sources */,
 				830423211B1091F80059A668 /* MASShortcutView.m in Sources */,
 				83126E5C17BAA8DA003B2F52 /* IAFavouriteView.m in Sources */,
 				83014AC717BB742700ECDE96 /* IAFavouritesView.m in Sources */,
+				836FCB521B1629B5007F5CFC /* IIOnboardingViewController1.m in Sources */,
 				83C25B6519EEBEC6009752F1 /* InfinitSearchNoResultsCellView.m in Sources */,
 				839DDCF218D8C7D50021B826 /* InfinitConversationProgressBar.mm in Sources */,
 				833C319117CCC85200941C09 /* InfinitDesktopNotifier.mm in Sources */,
 				8337673819088A820073A621 /* OEXTokenAttachmentCell.m in Sources */,
 				8373D9C61ABAFD5A0054B0D3 /* InfinitFacebookWindowController.mm in Sources */,
+				836FCB7A1B16341D007F5CFC /* IIOnboardingProgressView.m in Sources */,
 				833B238B19DA938300D3F104 /* InfinitFirstScreenshotModal.mm in Sources */,
 				831445811ABEDE3C0032958B /* InfinitSearchRowModel.m in Sources */,
 				83CD108917D4F95200AA0A19 /* IANoConnectionViewController.mm in Sources */,
 				83F5FCF218EC61AF0051F010 /* INPopoverWindowFrame.m in Sources */,
 				834F137119217FA700BF36A4 /* InfinitAvatarBadgeView.m in Sources */,
 				830836E41B0DC7110095B76B /* InfinitAddressBookManager.mm in Sources */,
+				836FCB501B1629B5007F5CFC /* IIOnboardingVideoAbstractViewController.m in Sources */,
+				836FCB551B1629B5007F5CFC /* IIOnboardingViewController3.m in Sources */,
 				83AA9B021A08C1AA00C5D4BA /* NSStatusBarButtonCell+ForciblyHighlighted.m in Sources */,
 				831E22D9183E565300F0623C /* InfinitSearchPersonResult.mm in Sources */,
 				83F5FCD318EB3E2E0051F010 /* InfinitSizedTextField.m in Sources */,
@@ -2694,6 +2951,7 @@
 				8321BE7A18E0D33600237252 /* InfinitConversationFileCellView.m in Sources */,
 				837B2A6919DD962B00A3CDE1 /* InfinitFeatureManager.m in Sources */,
 				83F77AF219E4199F00982F64 /* InfinitDownloadDestinationManager.mm in Sources */,
+				836FCB5D1B1629D1007F5CFC /* IIOnboardingAbstractViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
