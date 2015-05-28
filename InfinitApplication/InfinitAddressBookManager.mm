@@ -72,9 +72,11 @@ static dispatch_once_t _instance_token = 0;
   if (![self accessToAddressBook] ||
       [[[IAUserPrefs sharedInstance] prefsForKey:@"addressbook_uploaded"] isEqualTo:@YES])
   {
+    ELLE_DEBUG("%s: not uploading address book", self.description.UTF8String);
     return;
   }
   [[IAUserPrefs sharedInstance] setPref:@YES forKey:@"addressbook_uploaded"];
+  ELLE_LOG("%s: uploading address book", self.description.UTF8String);
   NSMutableArray* res = [NSMutableArray array];
   for (ABPerson* person in [ABAddressBook sharedAddressBook].people)
   {
