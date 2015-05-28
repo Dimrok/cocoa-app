@@ -77,15 +77,22 @@ ELLE_LOG_COMPONENT("OSX.SearchController");
 
 - (BOOL)accessToAddressBook
 {
+  static dispatch_once_t _access_addressbook_token;
   if ([ABAddressBook sharedAddressBook] == nil)
   {
-    ELLE_LOG("%s: no access to addressbook", self.description.UTF8String);
+    dispatch_once(&_access_addressbook_token, ^
+    {
+      ELLE_LOG("%s: no access to addressbook", self.description.UTF8String);
+    });
     return NO;
   }
   else
   {
-    ELLE_DEBUG("%s: addressbook accessible", self.description.UTF8String);
-    [[InfinitAddressBookManager sharedInstance] uploadContacts];
+    dispatch_once(&_access_addressbook_token, ^
+    {
+      ELLE_DEBUG("%s: addressbook accessible", self.description.UTF8String);
+      [[InfinitAddressBookManager sharedInstance] uploadContacts];
+    });
     return YES;
   }
 }
