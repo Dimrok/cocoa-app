@@ -73,22 +73,20 @@ static dispatch_once_t _instance_token = 0;
 
 - (void)showWindow:(id)sender
 {
-  [_account_view loadData];
+  self.window.alphaValue = 0.0f;
+  [super showWindow:sender];
+  [self.account_view loadData];
   self.account_button.enabled = YES;
   self.general_button.enabled = YES;
   self.screenshot_button.enabled = YES;
   self.toolbar.selectedItemIdentifier = @"general_toolbar_item";
   [self changeToViewController:self.general_view withAnimation:NO];
-  [self.window center];
-  [super showWindow:sender];
-}
-
-- (void)close
-{
-  if (self.window == nil)
-    return;
-
-  [super close];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(100 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self.window center];
+    self.window.alphaValue = 1.0f;
+  });
 }
 
 #pragma mark - Change View

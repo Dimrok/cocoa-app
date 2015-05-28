@@ -38,6 +38,9 @@
                 </customView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J5S-iN-jz2">
                     <rect key="frame" x="84" y="127" width="313" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="309" id="6si-EB-dPh"/>
+                    </constraints>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="or use Infinit shortcuts to share screenshots without saving them on your desktop." id="4jo-9k-Bh0">
                         <font key="font" size="13" name="HelveticaNeue"/>
                         <color key="textColor" red="0.53725490196078429" green="0.53725490196078429" blue="0.53725490196078429" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>

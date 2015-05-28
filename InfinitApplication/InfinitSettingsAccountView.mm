@@ -30,6 +30,8 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 @end
 
+static dispatch_once_t _awake_token;
+
 @implementation InfinitSettingsAccountView
 {
 @private
@@ -61,6 +63,7 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (void)dealloc
 {
+  _awake_token = 0;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [NSNotificationCenter.defaultCenter removeObserver:self];
 }
@@ -102,16 +105,19 @@ ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
 - (void)awakeFromNib
 {
-  NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:13.0]
-                                        paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
-                                                colour:IA_RGB_COLOUR(0, 146, 207)
-                                                shadow:nil];
-  self.manage_emails_link.normal_attrs = attrs;
-  self.manage_emails_link.hover_attrs = attrs;
-  self.manage_emails_link.hand_cursor = YES;
-  self.web_profile_link.normal_attrs = attrs;
-  self.web_profile_link.hover_attrs = attrs;
-  self.web_profile_link.hand_cursor = YES;
+  dispatch_once(&_awake_token, ^
+  {
+    NSDictionary* attrs = [IAFunctions textStyleWithFont:[NSFont systemFontOfSize:13.0]
+                                          paragraphStyle:[NSParagraphStyle defaultParagraphStyle]
+                                                  colour:IA_RGB_COLOUR(0, 146, 207)
+                                                  shadow:nil];
+    self.manage_emails_link.normal_attrs = attrs;
+    self.manage_emails_link.hover_attrs = attrs;
+    self.manage_emails_link.hand_cursor = YES;
+    self.web_profile_link.normal_attrs = attrs;
+    self.web_profile_link.hover_attrs = attrs;
+    self.web_profile_link.hand_cursor = YES;
+  });
 }
 
 - (void)controlTextDidChange:(NSNotification*)notification

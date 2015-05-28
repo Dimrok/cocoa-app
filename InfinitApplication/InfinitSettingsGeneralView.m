@@ -9,10 +9,13 @@
 #import "InfinitSettingsGeneralView.h"
 
 #import "InfinitDownloadDestinationManager.h"
+#import "InfinitOnboardingWindowController.h"
+#import "InfinitSettingsWindow.h"
 
 #import <Gap/InfinitDeviceManager.h>
 
-@interface InfinitSettingsGeneralView () <NSOpenSavePanelDelegate,
+@interface InfinitSettingsGeneralView () <InfinitOnboardingWindowProtocol,
+                                          NSOpenSavePanelDelegate,
                                           NSTextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet NSTextField* device_name_field;
@@ -24,6 +27,7 @@
 @property (nonatomic, readonly) BOOL auto_stay_awake;
 @property (nonatomic, unsafe_unretained) id<InfinitSettingsGeneralProtocol> delegate;
 @property (nonatomic, readonly) NSString* download_dir_str;
+@property (nonatomic, readonly) InfinitOnboardingWindowController* onboarding_controller;
 
 @end
 
@@ -33,7 +37,7 @@
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0, 280.0);
+  return NSMakeSize(480.0f, 310.0f);
 }
 
 #pragma mark - Init
@@ -125,6 +129,15 @@ shouldEnableURL:(NSURL*)url
   [self.delegate checkForUpdate:self];
 }
 
+- (IBAction)playTutorial:(id)sender
+{
+  NSString* name = NSStringFromClass(InfinitOnboardingWindowController.class);
+  _onboarding_controller = [[InfinitOnboardingWindowController alloc] initWithWindowNibName:name];
+  self.onboarding_controller.delegate = self;
+  [[InfinitSettingsWindow sharedInstance] close];
+  [self.onboarding_controller showWindow:self];
+}
+
 #pragma mark - NSTextFieldDelegate
 
 - (BOOL)control:(NSControl*)control
@@ -137,6 +150,13 @@ textShouldEndEditing:(NSText*)fieldEditor
     [[InfinitDeviceManager sharedInstance] setThisDeviceName:new_name];
   }
   return YES;
+}
+
+#pragma makr - Onboarding Protocol
+
+- (void)onboardingWindowDidClose:(InfinitOnboardingWindowController*)sender
+{
+  _onboarding_controller = nil;
 }
 
 @end
