@@ -175,7 +175,8 @@ ELLE_LOG_COMPONENT("OSX.ConversationViewController");
 
 - (void)loadView
 {
-  ELLE_TRACE("%s: loadview for: %s", self.description.UTF8String, _user.fullname.UTF8String);
+  NSString* name = _user.fullname.length ? _user.fullname : @"<none>";
+  ELLE_TRACE("%s: loadview for: %s", self.description.UTF8String, name.UTF8String);
   [super loadView];
   [self configurePersonView];
   [self.table_view reloadData];
