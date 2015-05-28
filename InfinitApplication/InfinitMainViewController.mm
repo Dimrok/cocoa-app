@@ -23,7 +23,8 @@
 
 ELLE_LOG_COMPONENT("OSX.MainViewController");
 
-#define IA_FEEDBACK_LINK "http://help.infinit.io?utm_source=app&utm_medium=mac"
+#define INFINIT_FEEDBACK_LINK @"http://help.infinit.io?utm_source=app&utm_medium=mac"
+#define INFINIT_HELP_LINK @"http://help.infinit.io/knowledgebase?utm_source=app&utm_medium=mac"
 
 //- Main Controller --------------------------------------------------------------------------------
 
@@ -402,8 +403,12 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (IBAction)onFeedbackClick:(NSMenuItem*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:
-                                          [NSString stringWithUTF8String:IA_FEEDBACK_LINK]]];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_FEEDBACK_LINK]];
+}
+
+- (IBAction)onHelpClick:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_HELP_LINK]];
 }
 
 - (IBAction)onReportProblemClick:(NSMenuItem*)sender
