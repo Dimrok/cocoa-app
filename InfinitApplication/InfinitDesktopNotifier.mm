@@ -12,6 +12,7 @@
 
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitThreadSafeDictionary.h>
 
 #undef check
 #import <elle/log.hh>
@@ -29,6 +30,8 @@ ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 @property (nonatomic, readonly) NSSound* transaction_finished_sound;
 @property (nonatomic, readonly) NSSound* transaction_incoming_sound;
 
+@property (nonatomic, readonly) InfinitThreadSafeDictionary* reminder_map; // {transaction_id: reminder_timer}
+
 @end
 
 static InfinitDesktopNotifier* _instance = nil;
@@ -45,6 +48,8 @@ static dispatch_once_t _instance_token = 0;
   {
     _notification_center = [NSUserNotificationCenter defaultUserNotificationCenter];
     self.notification_center.delegate = self;
+    _reminder_map =
+      [InfinitThreadSafeDictionary initWithName:@"io.infinit.DesktopNotifier.ReminderMap"];
     NSString* finished_name = @"sound_finished";
     NSString* incoming_name = @"sound_incoming";
     NSString* finished_path = [[NSBundle mainBundle] pathForSoundResource:finished_name];
@@ -87,6 +92,8 @@ static dispatch_once_t _instance_token = 0;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   for (NSUserNotification* notification in self.notification_center.scheduledNotifications)
     [self.notification_center removeScheduledNotification:notification];
+  for (NSTimer* timer in self.reminder_map.allValues)
+    [timer invalidate];
 }
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter*)center
@@ -134,6 +141,16 @@ static dispatch_once_t _instance_token = 0;
     return;
   }
 
+  if (transaction.status != gap_transaction_waiting_accept)
+  {
+    NSTimer* reminder_timer = self.reminder_map[transaction.id_];
+    if (reminder_timer)
+    {
+      [reminder_timer invalidate];
+      [self.reminder_map removeObjectForKey:transaction.id_];
+    }
+  }
+
   NSUserNotification* user_notification = [self _statusNotificationFromPeerTransaction:transaction];
 
   if (user_notification == nil)
@@ -147,8 +164,6 @@ static dispatch_once_t _instance_token = 0;
            transaction.status_text.UTF8String);
 
   [self.notification_center deliverNotification:user_notification];
-  if (transaction.status == gap_transaction_waiting_accept && transaction.receivable)
-    [self.notification_center scheduleNotification:user_notification];
 }
 
 - (void)linkTransactionUpdated:(NSNotification*)notification
@@ -344,6 +359,17 @@ static dispatch_once_t _instance_token = 0;
           res.actionButtonTitle = NSLocalizedString(@"Accept", nil);
           res.otherButtonTitle = NSLocalizedString(@"Snooze", nil);
         }
+        if (!self.reminder_map[transaction.id_])
+        {
+          NSTimeInterval repeat_interval = 24 * 60 * 60 * 60;
+          NSTimer* reminder_timer =
+            [NSTimer scheduledTimerWithTimeInterval:repeat_interval
+                                             target:self
+                                           selector:@selector(_reminderNotificationForTimer:)
+                                           userInfo:transaction.id_
+                                            repeats:YES];
+          self.reminder_map[transaction.id_] = reminder_timer;
+        }
       }
       else
       {
@@ -428,6 +454,31 @@ static dispatch_once_t _instance_token = 0;
   res.userInfo = [self _userInfoFromTransaction:transaction];
 
   return res;
+}
+
+- (void)_reminderNotificationForTimer:(NSTimer*)timer
+{
+  NSNumber* id_ = timer.userInfo;
+  InfinitPeerTransaction* transaction = [InfinitPeerTransactionManager transactionWithId:id_];
+  if (transaction.status != gap_transaction_waiting_accept)
+  {
+    NSTimer* reminder_timer = self.reminder_map[transaction.id_];
+    [reminder_timer invalidate];
+    [self.reminder_map removeObjectForKey:transaction.id_];
+    return;
+  }
+  NSUserNotification* user_notification = [self _statusNotificationFromPeerTransaction:transaction];
+  if (user_notification == nil)
+    return;
+
+  [self _removeNotificationForTransactionId:id_];
+
+  ELLE_LOG("%s: show reminder desktop notification for transaction (%s) with status: %s",
+           self.description.UTF8String,
+           transaction.meta_id.UTF8String,
+           transaction.status_text.UTF8String);
+
+  [self.notification_center deliverNotification:user_notification];
 }
 
 - (NSUserNotification*)_acceptedNotificationFromTransaction:(InfinitPeerTransaction*)transaction
