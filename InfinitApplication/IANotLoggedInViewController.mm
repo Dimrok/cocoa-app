@@ -150,8 +150,8 @@ ELLE_LOG_COMPONENT("OSX.NotLoggedInViewController");
   [self.spinner startAnimation:nil];
   self.problem_button.attributedTitle = [[NSAttributedString alloc] initWithString:problem
                                                                         attributes:_link_attrs];
-  [self.problem_button setHoverTextAttributes:_link_hover_attrs];
-  [self.problem_button setNormalTextAttributes:_link_attrs];
+  self.problem_button.hover_attrs = _link_hover_attrs;
+  self.problem_button.normal_attrs = _link_attrs;
   [self.problem_button setToolTip:NSLocalizedString(@"Click to tell us!", @"click to tell us")];
   button_text = NSLocalizedString(@"QUIT", nil);
   [self.bottom_button setEnabled:YES];
