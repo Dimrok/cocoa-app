@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "InfinitConstants.h"
 #import "InfinitMainViewController.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTooltipViewController.h"
@@ -107,8 +108,8 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [super loadView];
   [self.view_selector setDelegate:self];
   [self.view_selector setupViewForPeopleView:_for_people_view];
-  [self.view_selector setLinkCount:self.link_controller.linksRunning];
-  [self.view_selector setTransactionCount:self.transaction_controller.unreadRows];
+  [self.view_selector setLinkCount:self.link_controller.links_running];
+  [self.view_selector setTransactionCount:self.transaction_controller.unread_rows];
 
   if (_for_people_view)
   {
@@ -132,7 +133,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   if (_current_controller != _link_controller)
     return;
   [self.link_controller linkAdded:link];
-  [self.view_selector setLinkCount:self.link_controller.linksRunning];
+  [self.view_selector setLinkCount:self.link_controller.links_running];
 }
 
 - (void)linkUpdated:(NSNotification*)notification
@@ -143,7 +144,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   InfinitLinkTransaction* link =
     [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
   [_link_controller linkUpdated:link];
-  [self.view_selector setLinkCount:_link_controller.linksRunning];
+  [self.view_selector setLinkCount:_link_controller.links_running];
 }
 
 - (void)transactionAdded:(NSNotification*)notification
@@ -154,7 +155,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   [_transaction_controller transactionAdded:transaction];
-  [self.view_selector setTransactionCount:_transaction_controller.unreadRows];
+  [self.view_selector setTransactionCount:_transaction_controller.unread_rows];
 }
 
 - (void)transactionUpdated:(NSNotification*)notification
@@ -165,7 +166,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   [self.transaction_controller transactionUpdated:transaction];
-  [self.view_selector setTransactionCount:self.transaction_controller.unreadRows];
+  [self.view_selector setTransactionCount:self.transaction_controller.unread_rows];
 }
 
 #pragma mark - User Handling
@@ -177,15 +178,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   NSNumber* id_ = notification.userInfo[kInfinitUserId];
   InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
   [self.transaction_controller userUpdated:user];
-}
-
-#pragma mark - Connection Status Handling
-
-- (void)connectionStatusChanged:(NSNotification*)notification
-{
-  InfinitConnectionStatus* connection_status = notification.object;
-  if (self.current_controller == self.link_controller)
-    [self.link_controller selfStatusChanged:connection_status.status];
 }
 
 #pragma mark - Link View Protocol
@@ -260,7 +252,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   self.send_button.toolTip = NSLocalizedString(@"Send a file", nil);
 
   [_transaction_controller updateModel];
-  [_transaction_controller.table_view scrollRowToVisible:0];
+  [_transaction_controller scrollToTop];
 
   [self.view_selector setMode:INFINIT_MAIN_VIEW_TRANSACTION_MODE];
   _link_controller.changing = YES;
@@ -315,7 +307,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
 
   [self.link_controller updateModel];
-  [self.link_controller.table_view scrollRowToVisible:0];
+  [self.link_controller scrollToTop];
 
   [self.view_selector setMode:INFINIT_MAIN_VIEW_LINK_MODE];
   self.transaction_controller.changing = YES;
@@ -421,6 +413,11 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [_delegate settings:self];
 }
 
+- (IBAction)onWebProfileClick:(NSMenuItem*)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kInfinitWebProfileURL]];
+}
+
 #pragma mark - IAViewController
 
 - (BOOL)closeOnFocusLost
@@ -459,10 +456,6 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(transactionUpdated:)
                                                name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(connectionStatusChanged:)
-                                               name:INFINIT_CONNECTION_STATUS_CHANGE
                                              object:nil];
   // WORKAROUND stop flashing when changing subview by enabling layer backing. Need to do this once
   // the view has opened so that we get a shadow during opening animation.
