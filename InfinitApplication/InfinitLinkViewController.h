@@ -12,28 +12,21 @@
 
 @protocol InfinitLinkViewProtocol;
 
-@interface InfinitLinkViewController : NSViewController <NSTableViewDataSource,
-                                                         NSTableViewDelegate,
-                                                         InfinitLinkCellProtocol>
+@interface InfinitLinkViewController : NSViewController
 
-@property (nonatomic, weak) IBOutlet NSTableView* table_view;
+@property (nonatomic, readwrite) BOOL changing;
+@property (nonatomic, readonly) CGFloat height;
+@property (nonatomic, readonly) NSUInteger links_running;
 
 - (id)initWithDelegate:(id<InfinitLinkViewProtocol>)delegate;
 
-@property (nonatomic, readwrite) BOOL changing;
-
 - (void)updateModel;
+- (void)scrollToTop;
 
 - (void)linkAdded:(InfinitLinkTransaction*)link;
 - (void)linkUpdated:(InfinitLinkTransaction*)link;
 
-- (NSUInteger)linksRunning;
-
-- (CGFloat)height;
-
 - (void)resizeComplete;
-
-- (void)selfStatusChanged:(BOOL)status;
 
 @end
 
