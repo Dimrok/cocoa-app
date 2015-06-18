@@ -49,6 +49,7 @@
 {
   self.window.alphaValue = 0.0f;
   [super showWindow:sender];
+  self.window.level = NSStatusWindowLevel;
   NSColor* text_color = [NSColor whiteColor];
   NSMutableAttributedString* back_str = [self.back_button.attributedTitle mutableCopy];
   [back_str addAttribute:NSForegroundColorAttributeName
