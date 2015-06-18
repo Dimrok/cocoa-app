@@ -53,6 +53,7 @@ static dispatch_once_t _instance_token = 0;
   [[IAUserPrefs sharedInstance] setPref:download_destination forKey:@"download_directory"];
   [[InfinitStateManager sharedInstance] setDownloadDirectory:download_destination fallback:fallback];
   _download_destination = download_destination;
+  [InfinitDirectoryManager sharedInstance].download_directory = self.download_destination;
 }
 
 - (void)setDownloadDestination:(NSString*)download_destination
