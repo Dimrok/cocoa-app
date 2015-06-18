@@ -8,13 +8,17 @@
 
 #import "IAHoverButton.h"
 
-@implementation IAHoverButton
-{
-@private
-    NSTrackingArea* _tracking_area;
-}
+@interface IAHoverButton ()
 
-//- Initialisation ---------------------------------------------------------------------------------
+@property (nonatomic, readonly) NSTrackingArea* tracking_area;
+@property (nonatomic, readonly) NSAttributedString* hover_attr_str;
+@property (nonatomic, readonly) NSAttributedString* normal_attr_str;
+
+@end
+
+@implementation IAHoverButton
+
+#pragma mark - Init
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -37,22 +41,28 @@
 - (void)awakeFromNib
 {
   [self setFocusRingType:NSFocusRingTypeNone];
-  if (_normal_image == nil)
-    _normal_image = self.image;
+  if (self.normal_image == nil)
+    self.normal_image = self.image;
 }
 
 - (void)dealloc
 {
-  _tracking_area = nil;
+  if (self.tracking_area)
+  {
+    for (NSTrackingArea* tracking_area in self.trackingAreas)
+      [self removeTrackingArea:tracking_area];
+    _tracking_area = nil;
+  }
 }
+
+#pragma mark - Mouse Handling
 
 - (void)resetCursorRects
 {
   [super resetCursorRects];
-
   NSCursor* cursor;
-  if (_hand_cursor)
-   cursor = [NSCursor pointingHandCursor];
+  if (self.hand_cursor)
+    cursor = [NSCursor pointingHandCursor];
   else
     cursor = [NSCursor arrowCursor];
   [self addCursorRect:self.bounds cursor:cursor];
@@ -65,9 +75,7 @@
                                                          NSTrackingActiveAlways)
                                                   owner:self
                                                userInfo:nil];
-  
-  [self addTrackingArea:_tracking_area];
-  
+  [self addTrackingArea:self.tracking_area];
   NSPoint mouse_loc = self.window.mouseLocationOutsideOfEventStream;
   mouse_loc = [self convertPoint:mouse_loc fromView:nil];
   if (NSPointInRect(mouse_loc, self.bounds))
@@ -78,49 +86,55 @@
 
 - (void)updateTrackingAreas
 {
-  [self removeTrackingArea:_tracking_area];
+  [self removeTrackingArea:self.tracking_area];
   [self createTrackingArea];
   [super updateTrackingAreas];
 }
 
 - (void)mouseEntered:(NSEvent*)theEvent
 {
-    NSString* title = self.attributedTitle.string;
-    self.attributedTitle = [[NSAttributedString alloc] initWithString:title
-                                                           attributes:_hover_attrs];
-    self.image = _hover_image;
-    [self setNeedsDisplay:YES];
+  if (!self.hover_attr_str)
+  {
+    _hover_attr_str = [[NSAttributedString alloc] initWithString:self.attributedTitle.string
+                                                      attributes:_hover_attrs];
+  }
+  self.attributedTitle = self.hover_attr_str;
+  self.image = self.hover_image;
+  [self setNeedsDisplay:YES];
 }
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
-    NSString* title = self.attributedTitle.string;
-    self.attributedTitle = [[NSAttributedString alloc] initWithString:title
-                                                           attributes:_normal_attrs];
-    self.image = _normal_image;
-    [self setNeedsDisplay:YES];
+  if (!self.normal_attr_str)
+  {
+    _normal_attr_str = [[NSAttributedString alloc] initWithString:self.attributedTitle.string
+                                                       attributes:_normal_attrs];
+  }
+  self.attributedTitle = self.normal_attr_str;
+  self.image = self.normal_image;
+  [self setNeedsDisplay:YES];
 }
 
-//- General Functions ------------------------------------------------------------------------------
+#pragma mark - External
 
-- (void)setNormalImage:(NSImage*)normal_image
+- (void)setNormal_image:(NSImage*)normal_image
 {
   _normal_image = normal_image;
 }
 
-- (void)setHoverImage:(NSImage*)hover_image
+- (void)setHover_image:(NSImage*)hover_image
 {
   _hover_image = hover_image;
 }
 
-- (void)setNormalTextAttributes:(NSDictionary*)attrs
+- (void)setNormal_attrs:(NSDictionary*)normal_attrs
 {
-  _normal_attrs = attrs;
+  _normal_attrs = normal_attrs;
 }
 
-- (void)setHoverTextAttributes:(NSDictionary*)attrs
+- (void)setHover_attrs:(NSDictionary*)hover_attrs
 {
-  _hover_attrs = attrs;
+  _hover_attrs = hover_attrs;
 }
 
 @end
