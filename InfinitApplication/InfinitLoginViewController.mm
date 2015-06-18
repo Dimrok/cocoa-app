@@ -69,6 +69,8 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
   NSDictionary* _tab_dark_attrs;
 }
 
+@dynamic main_view;
+
 #pragma mark - Init
 
 - (id)initWithDelegate:(id<InfinitLoginViewControllerProtocol>)delegate
@@ -187,7 +189,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 {
   _running = NO;
   self.close_button.hand_cursor = NO;
-  [self.close_button setHoverImage:[IAFunctions imageNamed:@"login-icon-close-hover"]];
+  self.close_button.hover_image = [IAFunctions imageNamed:@"login-icon-close-hover"];
   [self configureForMode];
   
   self.version.attributedStringValue = _version_str;
