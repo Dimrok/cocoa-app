@@ -15,25 +15,21 @@
 
 @protocol InfinitTransactionViewProtocol;
 
-@interface InfinitTransactionViewController : NSViewController <NSTableViewDelegate,
-                                                                NSTableViewDataSource>
-
-@property (nonatomic, weak) IBOutlet NSTableView* table_view;
+@interface InfinitTransactionViewController : NSViewController
 
 @property (nonatomic, readwrite) BOOL changing;
+@property (nonatomic, readonly) CGFloat height;
+@property (nonatomic, readonly) NSUInteger unread_rows;
 
 - (id)initWithDelegate:(id<InfinitTransactionViewProtocol>)delegate;
 
 - (void)updateModel;
+- (void)scrollToTop;
 
 - (void)transactionAdded:(InfinitPeerTransaction*)transaction;
 - (void)transactionUpdated:(InfinitPeerTransaction*)transaction;
 
 - (void)userUpdated:(InfinitUser*)user;
-
-- (CGFloat)height;
-
-- (NSUInteger)unreadRows;
 
 - (void)markTransactionsRead;
 

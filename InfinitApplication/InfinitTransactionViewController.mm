@@ -8,32 +8,37 @@
 
 #import "InfinitTransactionViewController.h"
 
+#import "IAHoverButton.h"
+#import "InfinitOnboardingWindowController.h"
 #import "InfinitTooltipViewController.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitUserManager.h>
 
-@interface InfinitTransactionViewController ()
+@interface InfinitTransactionViewController () <InfinitOnboardingWindowProtocol,
+                                                NSTableViewDelegate,
+                                                NSTableViewDataSource>
+
+@property (nonatomic, weak) IBOutlet IAHoverButton* tutorial_button;
+@property (nonatomic, weak) IBOutlet NSTableView* table_view;
+
+@property (nonatomic, unsafe_unretained) id<InfinitTransactionViewProtocol> delegate;
+@property (atomic, readonly) NSMutableArray* list;
+@property (nonatomic, readonly) InfinitOnboardingWindowController* onboarding_window;
+@property (nonatomic, readonly) NSTimer* progress_timer;
+@property (atomic, readonly) NSMutableArray* rows_with_progress;
+@property (nonatomic, readonly) InfinitTooltipViewController* tooltip;
+
 @end
 
+static dispatch_once_t _awake_token = 0;
+static NSUInteger _max_rows = 4;
+static CGFloat _row_height = 72.0f;
+
 @implementation InfinitTransactionViewController
-{
-@private
-  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  __unsafe_unretained id<InfinitTransactionViewProtocol> _delegate;
-  NSMutableArray* _list;
 
-  NSUInteger _max_rows;
-  CGFloat _row_height;
-
-  // Progress handling.
-  NSTimer* _progress_timer;
-  NSMutableArray* _rows_with_progress;
-
-  InfinitTooltipViewController* _tooltip;
-}
-
-//- Init -------------------------------------------------------------------------------------------
+#pragma mark - Init
 
 - (id)initWithDelegate:(id<InfinitTransactionViewProtocol>)delegate
 {
@@ -54,32 +59,46 @@
 
 - (void)dealloc
 {
+  _awake_token = 0;
   self.table_view.delegate = nil;
   self.table_view.dataSource = nil;
   _delegate = nil;
   [NSNotificationCenter.defaultCenter removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
-  if (_progress_timer != nil)
+  if (self.progress_timer != nil)
   {
-    [_progress_timer invalidate];
+    [self.progress_timer invalidate];
     _progress_timer = nil;
   }
 }
 
 - (void)awakeFromNib
 {
-  // WORKAROUND: Stop 15" Macbook Pro always rendering scroll bars
-  // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
-  [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
-  [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
-}
+  dispatch_once(&_awake_token, ^
+  {
+    // WORKAROUND: Stop 15" Macbook Pro always rendering scroll bars
+    // http://www.cocoabuilder.com/archive/cocoa/317591-can-hide-scrollbar-on-nstableview.html
+    [self.table_view.enclosingScrollView setScrollerStyle:NSScrollerStyleOverlay];
+    [self.table_view.enclosingScrollView.verticalScroller setControlSize:NSSmallControlSize];
 
-- (void)loadView
-{
-  [super loadView];
-  [self.table_view reloadData];
-  [self resizeView];
-  [self updateListOfRowsWithProgress];
+    NSFont* link_font = [NSFont fontWithName:@"SourceSansPro-Semibold" size:13.0f];
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSCenterTextAlignment;
+    NSColor* link_color = [InfinitColor colorWithRed:0 green:208 blue:206];
+    NSDictionary* link_attrs = @{NSFontAttributeName: link_font,
+                                 NSParagraphStyleAttributeName: para,
+                                 NSForegroundColorAttributeName: link_color};
+    NSColor* hover_color = [InfinitColor colorWithRed:0 green:170 blue:162];
+    NSDictionary* link_hover_attrs = @{NSFontAttributeName: link_font,
+                                       NSParagraphStyleAttributeName: para,
+                                       NSForegroundColorAttributeName: hover_color};
+
+    self.tutorial_button.hover_attrs = link_hover_attrs;
+    self.tutorial_button.normal_attrs = link_attrs;
+    [self.table_view reloadData];
+    [self resizeView];
+    [self updateListOfRowsWithProgress];
+  });
 }
 
 - (void)updateModel
@@ -98,49 +117,54 @@
   [self updateListOfRowsWithProgress];
 }
 
-//- Progress Handling ------------------------------------------------------------------------------
+- (void)scrollToTop
+{
+  [self.table_view scrollRowToVisible:0];
+}
+
+#pragma mark - Progress Handling
 
 - (void)setUpdatorRunning:(BOOL)is_running
 {
-	if (is_running && _progress_timer == nil)
+	if (is_running && self.progress_timer == nil)
   {
-		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+		_progress_timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                        target:self
                                                      selector:@selector(updateProgress)
                                                      userInfo:nil
                                                       repeats:YES];
   }
-	else if (!is_running && _progress_timer != nil)
+	else if (!is_running && self.progress_timer != nil)
 	{
-		[_progress_timer invalidate];
+		[self.progress_timer invalidate];
 		_progress_timer = nil;
 	}
 }
 
 - (void)updateListOfRowsWithProgress
 {
-  if (_list.count == 0)
+  if (self.list.count == 0)
     return;
 
-  if (_rows_with_progress == nil)
+  if (self.rows_with_progress == nil)
     _rows_with_progress = [NSMutableArray array];
   else
-    [_rows_with_progress removeAllObjects];
+    [self.rows_with_progress removeAllObjects];
 
-  NSUInteger row = 0;
   InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
 
-  for (InfinitPeerTransaction* transaction in _list)
+  [self.list enumerateObjectsUsingBlock:^(InfinitPeerTransaction* transaction,
+                                          NSUInteger row,
+                                          BOOL* stop)
   {
     NSUInteger running = [manager transferringTransactionsWithUser:transaction.other_user];
     if (running > 0)
     {
-      [_rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
+      [self.rows_with_progress addObject:[NSNumber numberWithUnsignedInteger:row]];
     }
-    row++;
-  }
+  }];
 
-  if (_rows_with_progress.count > 0)
+  if (self.rows_with_progress.count > 0)
     [self setUpdatorRunning:YES];
   else
   {
@@ -151,28 +175,27 @@
 
 - (void)updateProgress
 {
-  for (NSNumber* num in _rows_with_progress)
+  for (NSNumber* num in self.rows_with_progress)
   {
     NSInteger row = num.unsignedIntegerValue;
-    if (row < _list.count)
+    if (row < self.list.count)
     {
-      InfinitTransactionCellView* cell = [self.table_view viewAtColumn:0
-                                                                   row:row
-                                                       makeIfNecessary:NO];
-      InfinitPeerTransaction* transaction = _list[row];
+      InfinitTransactionCellView* cell =
+        [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+      InfinitPeerTransaction* transaction = self.list[row];
       cell.progress =
         [[InfinitPeerTransactionManager sharedInstance] progressWithUser:transaction.other_user];
     }
   }
 }
 
-//- Table Handling ---------------------------------------------------------------------------------
+#pragma mark - Table Handling
 
-- (NSUInteger)unreadRows
+- (NSUInteger)unread_rows
 {
   NSUInteger res = 0;
   InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
-  for (InfinitPeerTransaction* transaction in _list)
+  for (InfinitPeerTransaction* transaction in self.list)
   {
     NSUInteger unread = [manager unreadTransactionsWithUser:transaction.other_user];
     if (unread > 0)
@@ -189,30 +212,25 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView*)tableView
 {
-  if (_list.count > 0)
-    return _list.count;
-  else
-    return 1;
+  return (self.list.count > 0 ? self.list.count : 1);
 }
 
 - (CGFloat)tableView:(NSTableView*)tableView
          heightOfRow:(NSInteger)row
 {
-  if (_list.count == 0)
-    return 278.0f;
-  return _row_height;
+  return (self.list.count == 0 ? 279.0f : _row_height);
 }
 
 - (NSView*)tableView:(NSTableView*)tableView
   viewForTableColumn:(NSTableColumn*)tableColumn
                  row:(NSInteger)row
 {
-  if (_list.count == 0)
+  if (self.list.count == 0)
     return [self.table_view makeViewWithIdentifier:@"no_transaction_cell" owner:self];
 
   InfinitTransactionCellView* cell = [self.table_view makeViewWithIdentifier:@"transaction_cell"
                                                                        owner:self];
-  InfinitPeerTransaction* transaction = _list[row];
+  InfinitPeerTransaction* transaction = self.list[row];
   InfinitUser* user = transaction.other_user;
   InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
   [cell setupCellWithTransaction:transaction
@@ -222,6 +240,7 @@
                      andProgress:[manager progressWithUser:user]];
   if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_9)
   {
+    // WORKAROUND: Progress rendering glitches on 10.7 and 10.8.
     cell.identifier = nil;
   }
   return cell;
@@ -229,60 +248,61 @@
 
 - (IBAction)tableViewAction:(NSTableView*)sender
 {
-  _changing = YES;
-  if (_list.count == 0)
+  self.changing = YES;
+  if (self.list.count == 0)
     return;
 
   [_progress_timer invalidate];
   NSInteger row = self.table_view.clickedRow;
 
-  InfinitPeerTransaction* transaction = _list[row];
+  InfinitPeerTransaction* transaction = self.list[row];
   NSMutableIndexSet* other_rows =
-    [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _list.count)];
+    [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.list.count)];
   [other_rows removeIndex:row];
 
   [self.table_view beginUpdates];
-  [_list removeObjectsAtIndexes:other_rows];
+  [self.list removeObjectsAtIndexes:other_rows];
   [self.table_view removeRowsAtIndexes:other_rows withAnimation:NSTableViewAnimationSlideRight];
   [self.table_view endUpdates];
-  [_delegate userGotClicked:transaction.other_user];
+  [self.delegate userGotClicked:transaction.other_user];
 }
 
-//- Transaction Added/Updated ----------------------------------------------------------------------
+#pragma mark - Transaction Handling
 
 - (void)transactionAdded:(InfinitPeerTransaction*)transaction
 {
-  if (_changing)
+  if (self.changing)
     return;
 
-  if ([_list containsObject:transaction])
+  if ([self.list containsObject:transaction])
     return;
 
-  BOOL found = NO;
+  __block BOOL found = NO;
 
   // Check for exisiting transaction for this user
-  for (InfinitPeerTransaction* existing_transaction in _list)
+  [self.list enumerateObjectsUsingBlock:^(InfinitPeerTransaction* existing_transaction,
+                                          NSUInteger row,
+                                          BOOL* stop)
   {
     if ([existing_transaction.other_user isEqual:transaction.other_user])
     {
       [self.table_view beginUpdates];
-      NSUInteger row = [_list indexOfObject:existing_transaction];
+      [self.list removeObject:existing_transaction];
+      [self.list insertObject:transaction atIndex:0];
       [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
                              withAnimation:NSTableViewAnimationSlideRight];
-      [_list removeObject:existing_transaction];
-      [_list insertObject:transaction atIndex:0];
       [self.table_view insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
                              withAnimation:NSTableViewAnimationSlideLeft];
       [self.table_view endUpdates];
       found = YES;
-      break;
+      *stop = YES;
     }
-  }
+  }];
   if (!found) // Got transaction with new user
   {
-    [_list insertObject:transaction atIndex:0];
     [self.table_view beginUpdates];
-    if (_list.count == 1) // First transaction.
+    [self.list insertObject:transaction atIndex:0];
+    if (self.list.count == 1) // First transaction.
     {
       [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:0]
                              withAnimation:NSTableViewAnimationSlideRight];
@@ -306,14 +326,15 @@
 
 - (void)transactionUpdated:(InfinitPeerTransaction*)transaction
 {
-  if (_changing)
+  if (self.changing)
     return;
 
-  for (InfinitPeerTransaction* existing_transaction in _list)
+  [self.list enumerateObjectsUsingBlock:^(InfinitPeerTransaction* existing_transaction,
+                                          NSUInteger row,
+                                          BOOL* stop)
   {
     if (existing_transaction.other_user == transaction.other_user)
     {
-      NSUInteger row = [_list indexOfObject:existing_transaction];
       [self.table_view beginUpdates];
       [self.table_view removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row]
                              withAnimation:NSTableViewAnimationEffectNone];
@@ -325,56 +346,63 @@
       InfinitTransactionCellView* cell = [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
       InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
       [cell setBadgeCount:[manager incompleteTransactionsWithUser:transaction.other_user]];
-      break;
+      *stop = YES;
     }
-  }
+  }];
   [self updateListOfRowsWithProgress];
 }
 
-//- User Status Changed ----------------------------------------------------------------------------
+#pragma mark - User Status Handling
 
 - (void)userUpdated:(InfinitUser*)user
 {
-  for (InfinitPeerTransaction* transaction in _list)
+  [self.list enumerateObjectsUsingBlock:^(InfinitPeerTransaction* transaction,
+                                          NSUInteger row,
+                                          BOOL* stop)
   {
     if ([transaction.other_user isEqual:user])
     {
-      NSUInteger row = [_list indexOfObject:transaction];
       [self.table_view beginUpdates];
       [self.table_view reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row]
                                  columnIndexes:[NSIndexSet indexSetWithIndex:0]];
       [self.table_view endUpdates];
+      *stop = YES;
     }
-  }
+  }];
 }
 
 //- Avatar Callback --------------------------------------------------------------------------------
 
 - (void)avatarCallback:(NSNotification*)notification
 {
-  if (_changing)
+  if (self.changing)
     return;
 
   NSNumber* id_ = notification.userInfo[kInfinitUserId];
-  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:id_];
-  for (InfinitPeerTransaction* transaction in _list)
+  InfinitUser* user = [InfinitUserManager userWithId:id_];
+  if (user.avatar == nil)
+    return;
+  [self.list enumerateObjectsUsingBlock:^(InfinitPeerTransaction* transaction,
+                                          NSUInteger row, 
+                                          BOOL* stop)
   {
     if ([transaction.other_user isEqual:user])
     {
       InfinitTransactionCellView* cell =
-        [self.table_view viewAtColumn:0 row:[_list indexOfObject:transaction] makeIfNecessary:NO];
-      if (user.avatar == nil || cell == nil)
+        [self.table_view viewAtColumn:0 row:row makeIfNecessary:NO];
+      if (cell == nil)
         return;
       [cell loadAvatarImage:user.avatar];
+      *stop = YES;
     }
-  }
+  }];
 }
 
 //- View Handling ----------------------------------------------------------------------------------
 
 - (CGFloat)height
 {
-  if (_list.count == 0)
+  if (self.list.count == 0)
     return 278.0f;
   CGFloat height = self.table_view.numberOfRows * _row_height;
 
@@ -397,13 +425,13 @@
 
 - (void)resizeView
 {
-  [_delegate transactionsViewResizeToHeight:self.height];
+  [self.delegate transactionsViewResizeToHeight:self.height];
 }
 
 - (void)markTransactionsRead
 {
   InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
-  for (InfinitPeerTransaction* transaction in _list)
+  for (InfinitPeerTransaction* transaction in self.list)
   {
     NSUInteger active = [manager transferringTransactionsWithUser:transaction.other_user];
     NSUInteger unread = [manager unreadTransactionsWithUser:transaction.other_user];;
@@ -414,7 +442,28 @@
 
 - (void)closeToolTips
 {
-  [_tooltip close];
+  [self.tooltip close];
+}
+
+#pragma mark - Button Handling
+
+- (IBAction)tutorialButtonClicked:(id)sender
+{
+  NSString* name = InfinitOnboardingWindowController.className;
+  _onboarding_window = [[InfinitOnboardingWindowController alloc] initWithWindowNibName:name];
+  self.onboarding_window.delegate = self;
+  [self.onboarding_window showWindow:self];
+}
+
+#pragma mark - Onboarding Protocol
+
+- (void)onboardingWindowDidClose:(InfinitOnboardingWindowController*)sender
+{
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(100 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    _onboarding_window = nil;
+  });
 }
 
 @end
