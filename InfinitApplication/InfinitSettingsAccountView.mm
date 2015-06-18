@@ -8,6 +8,7 @@
 
 #import "InfinitSettingsAccountView.h"
 
+#import "InfinitConstants.h"
 #import "InfinitKeychain.h"
 #import "InfinitSettingsWindow.h"
 
@@ -19,8 +20,6 @@
 
 #undef check
 #import <elle/log.hh>
-
-#define INFINIT_PROFILE_LINK @"https://infinit.io/account?utm_source=app&utm_medium=mac&utm_campaign=settings"
 
 ELLE_LOG_COMPONENT("OSX.AccountSettings")
 
@@ -345,8 +344,8 @@ static dispatch_once_t _awake_token;
 
 - (IBAction)webProfile:(NSButton*)sender
 {
-  NSMutableString* url_str = [INFINIT_PROFILE_LINK mutableCopy];
-  NSString* session_id = [InfinitStateManager sharedInstance].metaSessionId;
+  NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
+  NSString* session_id = [InfinitStateManager sharedInstance].encoded_meta_session_id;
   if (session_id.length)
     [url_str appendFormat:@"&session_id=%@", session_id];
   [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
