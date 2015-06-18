@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitTransactionViewController">
             <connections>
                 <outlet property="table_view" destination="5m5-K3-B0p" id="ZY5-zg-3Jo"/>
+                <outlet property="tutorial_button" destination="aQd-qz-8Ig" id="8vK-Vn-m8a"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="Qr1-17-iYi"/>
             </connections>
         </customObject>
@@ -114,7 +115,7 @@
                                                 </connections>
                                             </tableCellView>
                                             <tableCellView identifier="no_transaction_cell" id="AY8-uS-0iD">
-                                                <rect key="frame" x="0.0" y="72" width="317" height="287"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="317" height="287"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e4c-Is-WbE">
@@ -130,7 +131,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JQ4-uP-kCa">
-                                                        <rect key="frame" x="94" y="68" width="115" height="21"/>
+                                                        <rect key="frame" x="98" y="68" width="115" height="21"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Send your first file!" id="P6u-vM-6px">
                                                             <font key="font" size="13" name="SourceSansPro-Bold"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -138,16 +139,28 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rn9-x4-rDP">
-                                                        <rect key="frame" x="194" y="15" width="88" height="45"/>
+                                                        <rect key="frame" x="217" y="15" width="65" height="64"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow-onboarding-send" id="bnv-9O-rUr"/>
                                                     </imageView>
+                                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="aQd-qz-8Ig" customClass="IAHoverButton">
+                                                        <rect key="frame" x="73" y="45" width="165" height="17"/>
+                                                        <buttonCell key="cell" type="square" title="or watch the tutorial again" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="SUW-NF-eaL">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="tutorialButtonClicked:" target="-2" id="Sm0-yb-dK9"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="BkO-a6-lEu" firstAttribute="top" secondItem="e4c-Is-WbE" secondAttribute="bottom" constant="22" id="5eE-Qg-tpI"/>
                                                     <constraint firstItem="e4c-Is-WbE" firstAttribute="top" secondItem="AY8-uS-0iD" secondAttribute="top" constant="45" id="FEo-Nl-VF1"/>
                                                     <constraint firstAttribute="centerX" secondItem="e4c-Is-WbE" secondAttribute="centerX" id="GG0-iE-0tb"/>
-                                                    <constraint firstItem="rn9-x4-rDP" firstAttribute="top" secondItem="JQ4-uP-kCa" secondAttribute="bottom" constant="8" id="VqP-ma-RHo"/>
-                                                    <constraint firstItem="rn9-x4-rDP" firstAttribute="leading" secondItem="JQ4-uP-kCa" secondAttribute="trailing" constant="-13" id="ntq-GE-rK3"/>
+                                                    <constraint firstItem="aQd-qz-8Ig" firstAttribute="centerX" secondItem="JQ4-uP-kCa" secondAttribute="centerX" id="ZPO-0m-8SG"/>
+                                                    <constraint firstItem="aQd-qz-8Ig" firstAttribute="top" secondItem="JQ4-uP-kCa" secondAttribute="bottom" constant="6" id="bGd-kc-uQX"/>
+                                                    <constraint firstItem="rn9-x4-rDP" firstAttribute="leading" secondItem="JQ4-uP-kCa" secondAttribute="trailing" constant="6" id="eXA-Xp-rpo"/>
+                                                    <constraint firstItem="rn9-x4-rDP" firstAttribute="top" secondItem="JQ4-uP-kCa" secondAttribute="bottom" constant="-11" id="jdM-xv-NeA"/>
                                                     <constraint firstAttribute="bottom" secondItem="rn9-x4-rDP" secondAttribute="bottom" constant="15" id="pbq-yR-ALa"/>
                                                     <constraint firstAttribute="trailing" secondItem="rn9-x4-rDP" secondAttribute="trailing" constant="35" id="pgl-C5-h2n"/>
                                                     <constraint firstAttribute="centerX" secondItem="BkO-a6-lEu" secondAttribute="centerX" id="tJY-IJ-kQn"/>
@@ -185,7 +198,7 @@
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="arrow-onboarding-send" width="88" height="45"/>
+        <image name="arrow-onboarding-send" width="65" height="64"/>
         <image name="icon-activity" width="73" height="71"/>
         <image name="icon-status-online" width="9" height="10"/>
     </resources>

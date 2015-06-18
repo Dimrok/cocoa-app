@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
@@ -8,6 +8,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitLinkViewController">
             <connections>
                 <outlet property="table_view" destination="fld-6m-Snz" id="Ave-bp-R9w"/>
+                <outlet property="tutorial_button" destination="47T-uF-fVE" id="xFW-9B-rxc"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -41,25 +42,22 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="link_cell" wantsLayer="YES" id="EP9-ei-aIw" customClass="InfinitLinkCellView">
+                                            <tableCellView identifier="link_cell" id="EP9-ei-aIw" customClass="InfinitLinkCellView">
                                                 <rect key="frame" x="0.0" y="0.0" width="317" height="72"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kUD-Ub-kC5">
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kUD-Ub-kC5">
                                                         <rect key="frame" x="73" y="39" width="177" height="15"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="173" id="NZk-Ti-Qdi"/>
-                                                        </constraints>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="File name" id="fGE-f4-xIA">
                                                             <font key="font" size="12" name="Helvetica"/>
                                                             <color key="textColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="irP-E8-UXy">
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="irP-E8-UXy">
                                                         <rect key="frame" x="73" y="22" width="50" height="14"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="uu2-bs-Svk"/>
+                                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="178" id="VM4-iq-Vd5"/>
                                                         </constraints>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Time/Info" id="w2M-YE-rSC">
                                                             <font key="font" size="11" name="Helvetica"/>
@@ -67,20 +65,28 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qoQ-OX-nSm" customClass="InfinitLinkClickCountView">
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="qoQ-OX-nSm" customClass="InfinitLinkClickCountView">
                                                         <rect key="frame" x="251" y="25" width="50" height="23"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="50" id="apQ-Gu-QcC"/>
+                                                            <constraint firstAttribute="height" constant="23" id="hxc-vc-Yfh"/>
+                                                        </constraints>
                                                     </customView>
-                                                    <progressIndicator fixedFrame="YES" maxValue="1" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-qm-VRj" customClass="InfinitLinkProgressIndicator">
+                                                    <progressIndicator maxValue="1" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-qm-VRj" customClass="InfinitLinkProgressIndicator">
                                                         <rect key="frame" x="0.0" y="0.0" width="317" height="12"/>
                                                     </progressIndicator>
-                                                    <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mdo-ZL-6GS" customClass="InfinitLinkFileIconView">
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="mdo-ZL-6GS" customClass="InfinitLinkFileIconView">
                                                         <rect key="frame" x="16" y="12" width="48" height="48"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="48" id="CO6-dE-6YL"/>
+                                                            <constraint firstAttribute="height" constant="48" id="vC8-tu-Gdp"/>
+                                                        </constraints>
                                                     </customView>
-                                                    <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RcN-gk-O6f" customClass="IAHoverButton">
+                                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="RcN-gk-O6f" customClass="IAHoverButton">
                                                         <rect key="frame" x="129" y="22" width="14" height="14"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="14" id="fkf-8h-UPE"/>
-                                                            <constraint firstAttribute="height" constant="14" id="yr8-91-sWl"/>
+                                                            <constraint firstAttribute="height" constant="14" id="DYG-h0-lVE"/>
+                                                            <constraint firstAttribute="width" constant="14" id="fdM-Rx-Ouj"/>
                                                         </constraints>
                                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="link-icon-cancel" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="bEP-hv-ATm">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -90,12 +96,16 @@
                                                             <action selector="cancelClicked:" target="EP9-ei-aIw" id="wWC-Ft-m5I"/>
                                                         </connections>
                                                     </button>
-                                                    <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OGA-Kg-8Se" customClass="InfinitLinkBlurView">
-                                                        <rect key="frame" x="317" y="2" width="130" height="72"/>
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="OGA-Kg-8Se" customClass="InfinitLinkBlurView">
+                                                        <rect key="frame" x="317" y="0.0" width="130" height="72"/>
                                                         <subviews>
-                                                            <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Ji-dGD" customClass="IAHoverButton">
+                                                            <button translatesAutoresizingMaskIntoConstraints="NO" id="8Eq-Ji-dGD" customClass="IAHoverButton">
                                                                 <rect key="frame" x="90" y="25" width="22" height="22"/>
-                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-delete" imagePosition="overlaps" alignment="center" alternateImage="icon-delete-confirm" imageScaling="proportionallyDown" inset="2" id="vPX-RB-qSG">
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="22" id="31w-UP-xyN"/>
+                                                                    <constraint firstAttribute="height" constant="22" id="rBu-1Q-lHo"/>
+                                                                </constraints>
+                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-delete" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="vPX-RB-qSG">
                                                                     <behavior key="behavior" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
@@ -103,33 +113,43 @@
                                                                     <action selector="deleteLinkClicked:" target="EP9-ei-aIw" id="jjg-za-8iI"/>
                                                                 </connections>
                                                             </button>
-                                                            <button ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZG1-iK-S4L" customClass="IAHoverButton">
-                                                                <rect key="frame" x="63" y="25" width="22" height="22"/>
-                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-clipboard" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="23u-pc-Yqu">
+                                                            <button translatesAutoresizingMaskIntoConstraints="NO" id="SfX-9g-Ypy" customClass="IAHoverButton">
+                                                                <rect key="frame" x="36" y="25" width="22" height="22"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="22" id="34n-Pe-pHF"/>
+                                                                    <constraint firstAttribute="height" constant="22" id="UUB-td-7VB"/>
+                                                                </constraints>
+                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-clipboard" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pjj-s2-h3j">
                                                                     <behavior key="behavior" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="clipboardClicked:" target="EP9-ei-aIw" id="RXO-Yc-Q28"/>
+                                                                    <action selector="clipboardClicked:" target="EP9-ei-aIw" id="QsQ-sI-HPF"/>
                                                                 </connections>
                                                             </button>
-                                                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SfX-9g-Ypy" customClass="IAHoverButton">
-                                                                <rect key="frame" x="36" y="25" width="22" height="22"/>
-                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-share" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pjj-s2-h3j">
+                                                            <button translatesAutoresizingMaskIntoConstraints="NO" id="yJJ-rw-AxF" customClass="IAHoverButton">
+                                                                <rect key="frame" x="63" y="25" width="22" height="22"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="22" id="B3I-8b-yZw"/>
+                                                                    <constraint firstAttribute="width" constant="22" id="Ey7-L4-Uue"/>
+                                                                </constraints>
+                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-clipboard" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="VSW-6c-3SH">
                                                                     <behavior key="behavior" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="linkClicked:" target="EP9-ei-aIw" id="9ZU-0Z-0fI"/>
+                                                                    <action selector="clipboardClicked:" target="EP9-ei-aIw" id="Jdb-S3-RcG"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="ZG1-iK-S4L" secondAttribute="bottom" constant="25" id="0Uv-cJ-ej7"/>
-                                                            <constraint firstItem="ZG1-iK-S4L" firstAttribute="top" secondItem="OGA-Kg-8Se" secondAttribute="top" constant="25" id="EIH-Lw-h9i"/>
-                                                            <constraint firstItem="8Eq-Ji-dGD" firstAttribute="top" secondItem="OGA-Kg-8Se" secondAttribute="top" constant="25" id="Lqt-kN-pTx"/>
-                                                            <constraint firstAttribute="bottom" secondItem="8Eq-Ji-dGD" secondAttribute="bottom" constant="25" id="eFP-eP-7xP"/>
-                                                            <constraint firstAttribute="trailing" secondItem="8Eq-Ji-dGD" secondAttribute="trailing" constant="18" id="nKA-LK-BJM"/>
+                                                            <constraint firstAttribute="centerY" secondItem="SfX-9g-Ypy" secondAttribute="centerY" id="2TJ-58-Jwa"/>
+                                                            <constraint firstItem="8Eq-Ji-dGD" firstAttribute="leading" secondItem="yJJ-rw-AxF" secondAttribute="trailing" constant="5" id="Lwc-ed-GgR"/>
+                                                            <constraint firstAttribute="centerY" secondItem="yJJ-rw-AxF" secondAttribute="centerY" id="Op2-8f-ZpM"/>
+                                                            <constraint firstAttribute="centerY" secondItem="8Eq-Ji-dGD" secondAttribute="centerY" id="XI2-Bg-srW"/>
+                                                            <constraint firstItem="yJJ-rw-AxF" firstAttribute="leading" secondItem="SfX-9g-Ypy" secondAttribute="trailing" constant="5" id="pwS-va-Oiz"/>
+                                                            <constraint firstAttribute="trailing" secondItem="8Eq-Ji-dGD" secondAttribute="trailing" constant="18" id="zFR-vZ-eYR"/>
+                                                            <constraint firstAttribute="width" constant="130" id="zUC-DN-R2R"/>
                                                         </constraints>
                                                         <animations>
                                                             <caTransition key="subviews">
@@ -147,26 +167,39 @@ AAAAAAEGA
                                                     </customView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="RcN-gk-O6f" firstAttribute="leading" secondItem="irP-E8-UXy" secondAttribute="trailing" constant="8" id="QBz-28-qKh"/>
-                                                    <constraint firstItem="OGA-Kg-8Se" firstAttribute="leading" secondItem="EP9-ei-aIw" secondAttribute="leading" constant="317" id="fIC-40-6G0"/>
-                                                    <constraint firstItem="irP-E8-UXy" firstAttribute="leading" secondItem="mdo-ZL-6GS" secondAttribute="trailing" constant="11" id="lfn-bn-7Ka"/>
+                                                    <constraint firstItem="mdo-ZL-6GS" firstAttribute="leading" secondItem="EP9-ei-aIw" secondAttribute="leading" constant="16" id="2Gr-lH-ZUJ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dBZ-qm-VRj" secondAttribute="bottom" id="4z9-dQ-ekz"/>
+                                                    <constraint firstAttribute="trailing" secondItem="dBZ-qm-VRj" secondAttribute="trailing" id="8gK-h0-HPz"/>
+                                                    <constraint firstItem="qoQ-OX-nSm" firstAttribute="leading" secondItem="kUD-Ub-kC5" secondAttribute="trailing" constant="3" id="9H7-FA-472"/>
+                                                    <constraint firstItem="mdo-ZL-6GS" firstAttribute="top" secondItem="kUD-Ub-kC5" secondAttribute="bottom" constant="-21" id="JBj-7g-6Ca"/>
+                                                    <constraint firstItem="RcN-gk-O6f" firstAttribute="leading" secondItem="irP-E8-UXy" secondAttribute="trailing" constant="8" id="MuY-fG-w9h"/>
+                                                    <constraint firstItem="OGA-Kg-8Se" firstAttribute="top" secondItem="EP9-ei-aIw" secondAttribute="top" id="QSC-fJ-jTf"/>
+                                                    <constraint firstAttribute="trailing" secondItem="OGA-Kg-8Se" secondAttribute="leading" id="UJf-MJ-Pgn"/>
+                                                    <constraint firstItem="dBZ-qm-VRj" firstAttribute="leading" secondItem="EP9-ei-aIw" secondAttribute="leading" id="WZm-C9-9Be"/>
+                                                    <constraint firstItem="irP-E8-UXy" firstAttribute="centerY" secondItem="RcN-gk-O6f" secondAttribute="centerY" id="gPf-xj-Hqz"/>
+                                                    <constraint firstItem="kUD-Ub-kC5" firstAttribute="leading" secondItem="mdo-ZL-6GS" secondAttribute="trailing" constant="11" id="kff-8C-wYQ"/>
+                                                    <constraint firstItem="irP-E8-UXy" firstAttribute="top" secondItem="mdo-ZL-6GS" secondAttribute="bottom" constant="-24" id="l3F-xn-cmc"/>
+                                                    <constraint firstItem="kUD-Ub-kC5" firstAttribute="leading" secondItem="irP-E8-UXy" secondAttribute="leading" id="lrl-lg-CBj"/>
+                                                    <constraint firstAttribute="bottom" secondItem="OGA-Kg-8Se" secondAttribute="bottom" id="lvg-0W-kj4"/>
+                                                    <constraint firstAttribute="centerY" secondItem="mdo-ZL-6GS" secondAttribute="centerY" id="nYV-I1-f7R"/>
+                                                    <constraint firstAttribute="centerY" secondItem="qoQ-OX-nSm" secondAttribute="centerY" id="p3V-A4-D9W"/>
+                                                    <constraint firstAttribute="trailing" secondItem="qoQ-OX-nSm" secondAttribute="trailing" constant="16" id="y6l-jr-kgZ"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="blur_view" destination="OGA-Kg-8Se" id="joi-vE-eS2"/>
-                                                    <outlet property="buttons_constraint" destination="fIC-40-6G0" id="UrZ-rh-udx"/>
+                                                    <outlet property="buttons_constraint" destination="UJf-MJ-Pgn" id="dZE-Ik-dMf"/>
                                                     <outlet property="cancel" destination="RcN-gk-O6f" id="YMt-Va-kMN"/>
                                                     <outlet property="click_count" destination="qoQ-OX-nSm" id="qmX-G6-Zzo"/>
-                                                    <outlet property="clipboard" destination="ZG1-iK-S4L" id="XPH-xR-6Ww"/>
+                                                    <outlet property="clipboard" destination="SfX-9g-Ypy" id="EXZ-dT-sJu"/>
                                                     <outlet property="delete_link" destination="8Eq-Ji-dGD" id="kAL-0h-AG9"/>
                                                     <outlet property="icon_view" destination="mdo-ZL-6GS" id="Jgc-0F-pFV"/>
                                                     <outlet property="information" destination="irP-E8-UXy" id="L5D-XZ-hwX"/>
-                                                    <outlet property="link" destination="SfX-9g-Ypy" id="6Ug-GF-EiX"/>
                                                     <outlet property="name" destination="kUD-Ub-kC5" id="3hu-we-buJ"/>
                                                     <outlet property="progress_indicator" destination="dBZ-qm-VRj" id="3j1-4r-eKg"/>
                                                 </connections>
                                             </tableCellView>
                                             <tableCellView identifier="no_link_cell" id="tDK-HO-iOS">
-                                                <rect key="frame" x="0.0" y="72" width="317" height="287"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="317" height="287"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pdX-eF-fIJ">
@@ -182,7 +215,7 @@ AAAAAAEGA
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sPF-JS-5jl">
-                                                        <rect key="frame" x="133" y="68" width="76" height="21"/>
+                                                        <rect key="frame" x="128" y="68" width="81" height="21"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Create a link!" id="cra-Oc-zbK">
                                                             <font key="font" size="13" name="SourceSansPro-Bold"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -190,19 +223,31 @@ AAAAAAEGA
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lde-71-Z8j">
-                                                        <rect key="frame" x="194" y="15" width="88" height="45"/>
+                                                        <rect key="frame" x="217" y="15" width="65" height="64"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow-onboarding-send" id="R90-JP-2mk"/>
                                                     </imageView>
+                                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="47T-uF-fVE" customClass="IAHoverButton">
+                                                        <rect key="frame" x="86" y="46" width="165" height="17"/>
+                                                        <buttonCell key="cell" type="square" title="or watch the tutorial again" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="vPY-iy-J03">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="tutorialButtonClicked:" target="-2" id="mrJ-fV-XwD"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
+                                                    <constraint firstItem="Lde-71-Z8j" firstAttribute="top" secondItem="sPF-JS-5jl" secondAttribute="bottom" constant="-11" id="5pL-2n-31H"/>
                                                     <constraint firstAttribute="centerX" secondItem="pdX-eF-fIJ" secondAttribute="centerX" id="CqT-AV-5DM"/>
                                                     <constraint firstAttribute="trailing" secondItem="Lde-71-Z8j" secondAttribute="trailing" constant="35" id="TE8-Fh-cua"/>
                                                     <constraint firstItem="pdX-eF-fIJ" firstAttribute="top" secondItem="tDK-HO-iOS" secondAttribute="top" constant="45" id="Ylc-X3-Ahq"/>
                                                     <constraint firstAttribute="bottom" secondItem="Lde-71-Z8j" secondAttribute="bottom" constant="15" id="cSe-nY-npD"/>
                                                     <constraint firstItem="fFC-gG-Kpu" firstAttribute="top" secondItem="pdX-eF-fIJ" secondAttribute="bottom" constant="32" id="d9M-MT-yIT"/>
                                                     <constraint firstAttribute="centerX" secondItem="fFC-gG-Kpu" secondAttribute="centerX" id="dEb-OQ-wic"/>
-                                                    <constraint firstItem="Lde-71-Z8j" firstAttribute="top" secondItem="sPF-JS-5jl" secondAttribute="bottom" constant="8" id="fWB-GI-vtw"/>
-                                                    <constraint firstItem="Lde-71-Z8j" firstAttribute="leading" secondItem="sPF-JS-5jl" secondAttribute="trailing" constant="-13" id="sMK-IT-XZa"/>
+                                                    <constraint firstItem="Lde-71-Z8j" firstAttribute="leading" secondItem="sPF-JS-5jl" secondAttribute="trailing" constant="10" id="izB-rV-9Xl"/>
+                                                    <constraint firstItem="47T-uF-fVE" firstAttribute="top" secondItem="sPF-JS-5jl" secondAttribute="bottom" constant="5" id="loz-ui-JBR"/>
+                                                    <constraint firstItem="47T-uF-fVE" firstAttribute="centerX" secondItem="sPF-JS-5jl" secondAttribute="centerX" id="m2c-qS-PT4"/>
                                                 </constraints>
                                             </tableCellView>
                                         </prototypeCellViews>
@@ -226,15 +271,14 @@ AAAAAAEGA
                     </scroller>
                 </scrollView>
             </subviews>
+            <point key="canvasLocation" x="88.5" y="148"/>
         </customView>
     </objects>
     <resources>
-        <image name="arrow-onboarding-send" width="88" height="45"/>
+        <image name="arrow-onboarding-send" width="65" height="64"/>
         <image name="icon-clipboard" width="14" height="16"/>
         <image name="icon-delete" width="14" height="16"/>
-        <image name="icon-delete-confirm" width="14" height="16"/>
         <image name="icon-link" width="61" height="61"/>
-        <image name="icon-share" width="17" height="15"/>
         <image name="link-icon-cancel" width="18" height="18"/>
     </resources>
 </document>
