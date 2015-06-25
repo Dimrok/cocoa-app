@@ -53,6 +53,7 @@
 @interface InfinitSendFilesViewController : NSViewController <InfinitSendFilesSubViewProtocol>
 
 @property (nonatomic, weak) IBOutlet InfinitSendFilesCollectionView* collection_view;
+@property (nonatomic, readonly) NSUInteger file_size;
 @property (nonatomic, weak) IBOutlet NSTextField* info;
 @property (nonatomic, strong) IBOutlet InfinitSendFilesView* view;
 

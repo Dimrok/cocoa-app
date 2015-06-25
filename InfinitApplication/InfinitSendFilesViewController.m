@@ -598,6 +598,7 @@ static NSDictionary* _info_attrs = nil;
       }
       if (weak_self != nil)
       {
+        weak_self->_file_size = res;
         weak_self.info.attributedStringValue =
           [[NSAttributedString alloc] initWithString:info_str attributes:_info_attrs];
       }
