@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="InfinitGhostSendWindowController">
+            <connections>
+                <outlet property="window" destination="Xen-Xi-wuq" id="kDS-7k-lCX"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Infinit" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="Xen-Xi-wuq">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="460" height="405"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <view key="contentView" id="Gqg-8V-TUa">
+                <rect key="frame" x="0.0" y="0.0" width="460" height="405"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gja-XN-vkY">
+                        <rect key="frame" x="368" y="17" width="78" height="32"/>
+                        <buttonCell key="cell" type="push" title="Got it!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vb1-cQ-FWf">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="okClicked:" target="-2" id="7D4-kd-cMt"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1mT-6z-7Id">
+                        <rect key="frame" x="13" y="17" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WLd-1c-ymD">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelClicked:" target="-2" id="qyC-OI-0Ob"/>
+                        </connections>
+                    </button>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="WxM-JF-n9D" customClass="InfinitGhostSendWindowView">
+                        <rect key="frame" x="0.0" y="70" width="460" height="335"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lo-rW-0MC">
+                                <rect key="frame" x="124" y="215" width="304" height="60"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Files over 2 GB need to be downloaded using Infinit." id="Mu8-0P-h8e">
+                                    <font key="font" size="21" name="Helvetica-Light"/>
+                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pZ1-9e-VZp">
+                                <rect key="frame" x="42" y="29" width="386" height="57"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Questions? Tweet us @infinit or send an email to contact@infinit.io." id="ekJ-sM-oSz">
+                                    <font key="font" size="16" name="SourceSansPro-Regular"/>
+                                    <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3V-uu-vrL">
+                                <rect key="frame" x="44" y="219" width="65" height="65"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon" id="3WB-rp-yfp"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="72t-ue-axx">
+                                <rect key="frame" x="42" y="96" width="386" height="57"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You can upgrade your plan to remove this limit." id="JpB-Vj-csx">
+                                    <font key="font" size="16" name="SourceSansPro-Regular"/>
+                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </customView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="WxM-JF-n9D" firstAttribute="top" secondItem="Gqg-8V-TUa" secondAttribute="top" id="0hN-Uk-OY6"/>
+                    <constraint firstAttribute="trailing" secondItem="WxM-JF-n9D" secondAttribute="trailing" id="HyR-ZP-Vjo"/>
+                    <constraint firstAttribute="bottom" secondItem="WxM-JF-n9D" secondAttribute="bottom" constant="70" id="LFl-wh-eOO"/>
+                    <constraint firstItem="WxM-JF-n9D" firstAttribute="leading" secondItem="Gqg-8V-TUa" secondAttribute="leading" id="stj-Aq-C8P"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="sdY-7S-XLY"/>
+            </connections>
+            <point key="canvasLocation" x="603" y="322.5"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="icon" width="512" height="512"/>
+    </resources>
+</document>
