@@ -12,6 +12,7 @@
 #import "InfinitLinkIconManager.h"
 
 #import <Gap/InfinitDataSize.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTime.h>
 
 #import <QuartzCore/QuartzCore.h>
@@ -23,7 +24,7 @@ namespace
   const NSTimeInterval kMinimumTimeInterval = std::numeric_limits<NSTimeInterval>::min();
 }
 
-//- Link Blur View ---------------------------------------------------------------------------------
+#pragma mark - LinkBlurView
 
 @implementation InfinitLinkBlurView
 
@@ -50,20 +51,44 @@ namespace
 
 @end
 
-//- Link Cell View ---------------------------------------------------------------------------------
+#pragma mark - LinkCellView
+
+@interface InfinitLinkCellView ()
+
+@property (nonatomic, weak) IBOutlet InfinitLinkFileIconView* icon_view;
+@property (nonatomic, weak) IBOutlet NSTextField* name;
+@property (nonatomic, weak) IBOutlet NSTextField* information;
+@property (nonatomic, weak) IBOutlet InfinitLinkClickCountView* click_count;
+@property (nonatomic, weak) IBOutlet IAHoverButton* cancel;
+@property (nonatomic, weak) IBOutlet IAHoverButton* link;
+@property (nonatomic, weak) IBOutlet IAHoverButton* clipboard;
+
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* buttons_constraint;
+
+@property (nonatomic, weak) IBOutlet InfinitLinkBlurView* blur_view;
+@property (nonatomic, weak) IBOutlet InfinitLinkProgressIndicator* progress_indicator;
+
+@property (nonatomic, readonly) dispatch_once_t awake_token;
+@property (nonatomic, unsafe_unretained) id<InfinitLinkCellProtocol> delegate;
+@property (nonatomic, readonly) BOOL hover;
+@property (nonatomic, readonly) NSTrackingArea* tracking_area;
+@property (nonatomic, readonly) InfinitLinkTransaction* transaction;
+
+@end
+
+static NSImage* _icon_admin = nil;
+static NSImage* _icon_admin_hover = nil;
+static NSImage* _icon_cancel = nil;
+static NSImage* _icon_cancel_hover = nil;
+static NSImage* _icon_clipboard = nil;
+static NSImage* _icon_clipboard_hover = nil;
+static NSImage* _icon_delete = nil;
+static NSImage* _icon_delete_confirm = nil;
+static NSImage* _icon_delete_hover = nil;
 
 @implementation InfinitLinkCellView
-{
-@private
-  // WORKAROUND: 10.7 doesn't allow weak references to certain classes (like NSViewController)
-  __unsafe_unretained id<InfinitLinkCellProtocol> _delegate;
-  NSTrackingArea* _tracking_area;
-  BOOL _hover;
 
-  InfinitLinkTransaction* _transaction_link;
-}
-
-//- Mouse Tracking ---------------------------------------------------------------------------------
+#pragma mark - Mouse Handling
 
 - (void)createTrackingArea
 {
@@ -73,91 +98,60 @@ namespace
                                                   owner:self
                                                userInfo:nil];
 
-  [self addTrackingArea:_tracking_area];
-}
-
-- (void)prepareForReuse
-{
-  _click_count = 0;
-  self.buttons_constraint.constant = 317.0;
-  self.click_count.hidden = NO;
-  self.click_count.alphaValue = 1.0;
+  [self addTrackingArea:self.tracking_area];
 }
 
 - (void)updateTrackingAreas
 {
-  [self removeTrackingArea:_tracking_area];
+  [self removeTrackingArea:self.tracking_area];
   [self createTrackingArea];
   [super updateTrackingAreas];
 }
 
+- (void)setButtonsHidden:(BOOL)hidden
+     animateWithDuration:(CGFloat)duration
+{
+  if (self.hover == !hidden && duration != kMinimumTimeInterval)
+    return;
+  _hover = !hidden;
+  if (hidden && self.delete_clicks > 0)
+  {
+    _delete_clicks = 0;
+    self.delete_link.normal_image = _icon_delete;
+    self.delete_link.hover_image = _icon_delete_hover;
+    self.link.alphaValue= 1.0f;
+    self.clipboard.alphaValue = 1.0f;
+  }
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+  {
+    context.duration = duration;
+    self.click_count.animator.alphaValue = (hidden ? 1.0f : 0.0f);
+    self.click_count.hidden = !hidden;
+    self.buttons_constraint.animator.constant = (hidden ? 0.0f : self.blur_view.bounds.size.width);
+  } completionHandler:^
+  {
+    self.click_count.alphaValue = (hidden ? 1.0f : 0.0f);
+    self.click_count.hidden = !hidden;
+    self.buttons_constraint.constant = (hidden ? 0.0f : self.blur_view.bounds.size.width);
+  }];
+}
+
 - (void)mouseEntered:(NSEvent*)theEvent
 {
-  if (_hover || [_delegate userScrolling:self])
+  if ([self.delegate userScrolling:self])
     return;
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-   {
-     _hover = YES;
-     context.duration = 0.2;
-     [self.click_count.animator setAlphaValue:0.0];
-     [self.buttons_constraint.animator setConstant:187.0];
-   }
-                      completionHandler:^
-   {
-     self.click_count.animator.alphaValue = 0.0;
-     self.click_count.hidden = YES;
-     self.buttons_constraint.constant = 187.0;
-   }];
+  [self setButtonsHidden:NO animateWithDuration:0.2f];
 }
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
-  if (_delete_clicks > 0)
-  {
-    _delete_clicks = 0;
-    self.delete_link.normal_image = [IAFunctions imageNamed:@"icon-delete"];
-    self.delete_link.hover_image = [IAFunctions imageNamed:@"icon-delete-hover"];
-    self.link.alphaValue= 1.0;
-    self.clipboard.alphaValue = 1.0;
-  }
-  [_delegate linkCellLostMouseHover:self];
-  if (!_hover)
-    return;
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-   {
-     context.duration = 0.2;
-     [self.click_count.animator setAlphaValue:1.0];
-     [self.buttons_constraint.animator setConstant:317.0];
-   }
-                      completionHandler:^
-   {
-     _hover = NO;
-     self.click_count.alphaValue = 1.0;
-     self.click_count.hidden = NO;
-     self.buttons_constraint.constant = 317.0;
-   }];
+  [self.delegate linkCellLostMouseHover:self];
+  [self setButtonsHidden:YES animateWithDuration:0.2f];
 }
 
 - (void)hideControls
 {
-  if (!_hover)
-    return;
-  _hover = NO;
-  if (_delete_clicks > 0)
-  {
-    _delete_clicks = 0;
-    self.delete_link.normal_image = [IAFunctions imageNamed:@"icon-delete"];
-    self.delete_link.hover_image = [IAFunctions imageNamed:@"icon-delete-hover"];
-    self.link.alphaValue= 1.0;
-    self.clipboard.alphaValue = 1.0;
-  }
-  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-  {
-    context.duration = kMinimumTimeInterval;
-    [self.buttons_constraint.animator setConstant:317.0];
-    self.click_count.hidden = NO;
-    self.click_count.alphaValue = 1.0;
-  } completionHandler:nil];
+  [self setButtonsHidden:YES animateWithDuration:kMinimumTimeInterval];
 }
 
 - (void)checkMouseInside
@@ -168,7 +162,7 @@ namespace
     [self mouseEntered:nil];
 }
 
-//- Drawing ----------------------------------------------------------------------------------------
+#pragma mark - Drawing
 
 - (BOOL)isOpaque
 {
@@ -189,25 +183,58 @@ namespace
   [light_line fill];
 }
 
-//- Setup ------------------------------------------------------------------------------------------
+#pragma mark - Init
 
-- (void)setupButtons
+- (void)awakeFromNib
 {
-  self.cancel.normal_image = [IAFunctions imageNamed:@"link-icon-cancel"];
-  self.cancel.hover_image = [IAFunctions imageNamed:@"link-icon-cancel-hover"];
-  self.cancel.toolTip = NSLocalizedString(@"Cancel", nil);
+  dispatch_once(&_awake_token, ^
+  {
+    if (!_icon_admin)
+      _icon_admin = [IAFunctions imageNamed:@"icon-admin-link"];
+    if (!_icon_admin_hover)
+      _icon_admin_hover = [IAFunctions imageNamed:@"icon-admin-link-hover"];
+    if (!_icon_cancel)
+      _icon_cancel = [IAFunctions imageNamed:@"link-icon-cancel"];
+    if (!_icon_cancel_hover)
+      _icon_cancel_hover = [IAFunctions imageNamed:@"link-icon-cancel-hover"];
+    if (!_icon_clipboard)
+      _icon_clipboard = [IAFunctions imageNamed:@"icon-clipboard"];
+    if (!_icon_clipboard_hover)
+      _icon_clipboard_hover = [IAFunctions imageNamed:@"icon-clipboard-hover"];
+    if (!_icon_delete)
+      _icon_delete = [IAFunctions imageNamed:@"icon-delete"];
+    if (!_icon_delete_confirm)
+      _icon_delete_confirm = [IAFunctions imageNamed:@"icon-delete-confirm"];
+    if (!_icon_delete_hover)
+      _icon_delete_hover = [IAFunctions imageNamed:@"icon-delete-hover"];
 
-  self.link.normal_image = [IAFunctions imageNamed:@"icon-share"];
-  self.link.hover_image = [IAFunctions imageNamed:@"icon-share-hover"];
-  self.link.toolTip = NSLocalizedString(@"Open link", nil);
+    self.cancel.normal_image = _icon_cancel;
+    self.cancel.hover_image = _icon_cancel_hover;
+    self.cancel.toolTip = NSLocalizedString(@"Cancel", nil);
 
-  self.clipboard.normal_image = [IAFunctions imageNamed:@"icon-clipboard"];
-  self.clipboard.hover_image = [IAFunctions imageNamed:@"icon-clipboard-hover"];
-  self.clipboard.toolTip = NSLocalizedString(@"Copy link", nil);
+    self.link.normal_image = _icon_admin;
+    self.link.hover_image = _icon_admin_hover;
+    self.link.toolTip = NSLocalizedString(@"Administrate link", nil);
 
-  self.delete_link.normal_image = [IAFunctions imageNamed:@"icon-delete"];
-  self.delete_link.hover_image = [IAFunctions imageNamed:@"icon-delete-hover"];
-  self.delete_link.toolTip = NSLocalizedString(@"Delete link", nil);
+    self.clipboard.normal_image = _icon_clipboard;
+    self.clipboard.hover_image = _icon_clipboard_hover;
+    self.clipboard.toolTip = NSLocalizedString(@"Copy link", nil);
+
+    self.delete_link.normal_image = _icon_delete;
+    self.delete_link.hover_image = _icon_delete_hover;
+    self.delete_link.toolTip = NSLocalizedString(@"Delete link", nil);
+  });
+}
+
+- (void)prepareForReuse
+{
+  _delegate = nil;
+  _click_count = 0;
+  self.buttons_constraint.constant = 0.0f;
+  self.click_count.hidden = NO;
+  self.click_count.alphaValue = 1.0f;
+  self.delete_link.normal_image = _icon_delete;
+  self.delete_link.hover_image = _icon_delete_hover;
 }
 
 - (void)setupCellWithLink:(InfinitLinkTransaction*)link
@@ -215,34 +242,31 @@ namespace
          withOnlineStatus:(BOOL)status
 {
   _delegate = delegate;
-  _transaction_link = link;
-  [self setupButtons];
+  _transaction = link;
   self.click_count.count = link.click_count;
   self.icon_view.icon = [InfinitLinkIconManager iconForFilename:link.name];
   self.name.stringValue = link.name;
-  if (link.status == gap_transaction_transferring)
+  if (self.transaction.status == gap_transaction_transferring)
   {
     self.progress_indicator.hidden = NO;
-    [self setProgress:link.progress withAnimation:NO andOnline:status];
+    [self setProgress:self.transaction.progress withAnimation:NO andOnline:status];
   }
-  else if (link.status == gap_transaction_on_other_device)
+  else if (self.transaction.status == gap_transaction_on_other_device)
   {
     self.information.stringValue = NSLocalizedString(@"Uploading elsewhere", nil);
   }
   else
   {
     self.progress_indicator.hidden = YES;
-    NSString* time_str = [InfinitTime relativeDateOf:link.mtime longerFormat:YES];
+    NSString* time_str = [InfinitTime relativeDateOf:self.transaction.mtime longerFormat:YES];
     NSString* data_str = [InfinitDataSize fileSizeStringFrom:link.size];
     self.information.stringValue = [NSString stringWithFormat:@"%@ – %@", data_str, time_str];
   }
-  if (link.status == gap_transaction_transferring || link.status == gap_transaction_on_other_device)
-    self.cancel.hidden = NO;
-  else
-    self.cancel.hidden = YES;
+  self.cancel.hidden = !(self.transaction.status == gap_transaction_transferring ||
+                         self.transaction.status == gap_transaction_on_other_device);
 }
 
-//- Progress Handling ------------------------------------------------------------------------------
+#pragma mark - Progress Handling
 
 - (void)setProgress:(CGFloat)progress
 {
@@ -267,14 +291,13 @@ namespace
   if (animate)
   {
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-       context.duration = 1.0;
-       [self.progress_indicator.animator setDoubleValue:progress];
-     }
-                        completionHandler:^
-     {
-       self.progress_indicator.doubleValue = progress;
-     }];
+    {
+      context.duration = 1.0f;
+      [self.progress_indicator.animator setDoubleValue:progress];
+    } completionHandler:^
+    {
+      self.progress_indicator.doubleValue = progress;
+    }];
   }
   else
   {
@@ -282,16 +305,19 @@ namespace
   }
 }
 
-//- Button Handling --------------------------------------------------------------------------------
+#pragma mark - Button Handling
 
 - (IBAction)cancelClicked:(NSButton*)sender
 {
-  [_delegate linkCell:self gotCancelForLink:_transaction_link];
+  [self.delegate linkCell:self gotCancelForLink:self.transaction];
 }
 
-- (IBAction)linkClicked:(NSButton*)sender
+- (IBAction)administerLinkClicked:(NSButton*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_transaction_link.link]];
+  NSString* encoded_session_id = [InfinitStateManager sharedInstance].encoded_meta_session_id;
+  NSString* link_str =
+  [NSString stringWithFormat:@"%@?session_id=%@", self.transaction.link, encoded_session_id];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:link_str]];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_OPEN_LINK];
 }
 
@@ -299,26 +325,26 @@ namespace
 {
   NSPasteboard* paste_board = [NSPasteboard generalPasteboard];
   [paste_board declareTypes:@[NSStringPboardType] owner:nil];
-  [paste_board setString:_transaction_link.link forType:NSStringPboardType];
-  [_delegate linkCell:self gotCopyToClipboardForLink:_transaction_link];
+  [paste_board setString:self.transaction.link forType:NSStringPboardType];
+  [self.delegate linkCell:self gotCopyToClipboardForLink:self.transaction];
   [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_COPY_LINK];
 }
 
 - (IBAction)deleteLinkClicked:(NSButton*)sender
 {
   _delete_clicks++;
-  if (_delete_clicks < 2)
+  if (self.delete_clicks < 2)
   {
-    self.delete_link.normal_image = [IAFunctions imageNamed:@"icon-delete-confirm"];
-    self.delete_link.hover_image = [IAFunctions imageNamed:@"icon-delete-confirm"];
-    self.delete_link.image = [IAFunctions imageNamed:@"icon-delete-confirm"];
+    self.delete_link.normal_image = _icon_delete_confirm;
+    self.delete_link.hover_image = _icon_delete_confirm;
+    self.delete_link.image = _icon_delete_confirm;
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
     {
-      [self.link.animator setAlphaValue:0.0];
-      [self.clipboard.animator setAlphaValue:0.0];
+      [self.link.animator setAlphaValue:0.0f];
+      [self.clipboard.animator setAlphaValue:0.0f];
     } completionHandler:nil];
   }
-  [_delegate linkCell:self gotDeleteForLink:_transaction_link];
+  [self.delegate linkCell:self gotDeleteForLink:self.transaction];
 }
 
 @end

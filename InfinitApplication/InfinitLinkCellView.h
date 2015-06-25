@@ -22,20 +22,9 @@
 
 @interface InfinitLinkCellView : NSTableCellView
 
-@property (nonatomic, weak) IBOutlet InfinitLinkFileIconView* icon_view;
-@property (nonatomic, weak) IBOutlet NSTextField* name;
-@property (nonatomic, weak) IBOutlet NSTextField* information;
-@property (nonatomic, weak) IBOutlet InfinitLinkClickCountView* click_count;
-@property (nonatomic, weak) IBOutlet IAHoverButton* cancel;
-@property (nonatomic, weak) IBOutlet IAHoverButton* link;
-@property (nonatomic, weak) IBOutlet IAHoverButton* clipboard;
 @property (nonatomic, weak) IBOutlet IAHoverButton* delete_link;
 
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* buttons_constraint;
-
 @property (nonatomic) NSUInteger delete_clicks;
-@property (nonatomic, weak) IBOutlet InfinitLinkBlurView* blur_view;
-@property (nonatomic, weak) IBOutlet InfinitLinkProgressIndicator* progress_indicator;
 
 @property (nonatomic, readwrite) CGFloat progress;
 

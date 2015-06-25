@@ -133,12 +133,12 @@
                                                                     <constraint firstAttribute="height" constant="22" id="B3I-8b-yZw"/>
                                                                     <constraint firstAttribute="width" constant="22" id="Ey7-L4-Uue"/>
                                                                 </constraints>
-                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-clipboard" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="VSW-6c-3SH">
+                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-admin-link" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="VSW-6c-3SH">
                                                                     <behavior key="behavior" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <action selector="clipboardClicked:" target="EP9-ei-aIw" id="Jdb-S3-RcG"/>
+                                                                    <action selector="administerLinkClicked:" target="EP9-ei-aIw" id="eff-fO-g8X"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -194,6 +194,7 @@ AAAAAAEGA
                                                     <outlet property="delete_link" destination="8Eq-Ji-dGD" id="kAL-0h-AG9"/>
                                                     <outlet property="icon_view" destination="mdo-ZL-6GS" id="Jgc-0F-pFV"/>
                                                     <outlet property="information" destination="irP-E8-UXy" id="L5D-XZ-hwX"/>
+                                                    <outlet property="link" destination="yJJ-rw-AxF" id="jfy-eE-CtL"/>
                                                     <outlet property="name" destination="kUD-Ub-kC5" id="3hu-we-buJ"/>
                                                     <outlet property="progress_indicator" destination="dBZ-qm-VRj" id="3j1-4r-eKg"/>
                                                 </connections>
@@ -276,6 +277,7 @@ AAAAAAEGA
     </objects>
     <resources>
         <image name="arrow-onboarding-send" width="65" height="64"/>
+        <image name="icon-admin-link" width="17" height="17"/>
         <image name="icon-clipboard" width="14" height="16"/>
         <image name="icon-delete" width="14" height="16"/>
         <image name="icon-link" width="61" height="61"/>
