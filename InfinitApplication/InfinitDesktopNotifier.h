@@ -29,6 +29,8 @@
 
 - (void)desktopNotificationForContactJoined:(NSString*)name;
 
+- (void)checkPendingTransactions;
+
 @end
 
 @protocol InfinitDesktopNotifierProtocol <NSObject>

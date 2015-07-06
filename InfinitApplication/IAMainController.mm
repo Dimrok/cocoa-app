@@ -572,6 +572,8 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   {
     [self showNotifications];
   }
+  if ([IAFunctions osxVersion] > INFINIT_OS_X_VERSION_10_7)
+    [[InfinitDesktopNotifier sharedInstance] checkPendingTransactions];
 }
 
 - (void)onUnsuccessfulLogin:(InfinitStateResult*)result

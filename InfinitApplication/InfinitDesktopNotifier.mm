@@ -111,6 +111,20 @@ static dispatch_once_t _instance_token = 0;
     [self.notification_center removeScheduledNotification:notification];
 }
 
+- (void)checkPendingTransactions
+{
+  NSArray* transactions = [InfinitPeerTransactionManager sharedInstance].transactions;
+  for (InfinitPeerTransaction* transaction in transactions)
+  {
+    if (transaction.receivable)
+    {
+      NSUserNotification* notification = [self _statusNotificationFromPeerTransaction:transaction];
+      if (notification)
+        [self.notification_center deliverNotification:notification];
+    }
+  }
+}
+
 #pragma mark - Transaction Handling
 
 - (void)desktopNotificationForTransactionAccepted:(InfinitPeerTransaction*)transaction
