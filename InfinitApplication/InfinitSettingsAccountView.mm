@@ -345,6 +345,7 @@ static dispatch_once_t _awake_token;
 - (IBAction)webProfile:(NSButton*)sender
 {
   InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [[InfinitSettingsWindow sharedInstance] close];
   [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
                                               NSString* token,
                                               NSString* email)
@@ -354,7 +355,6 @@ static dispatch_once_t _awake_token;
     NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
     [url_str appendFormat:@"&login_token=%@&email=%@", token, email];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
-    [[InfinitSettingsWindow sharedInstance] close];
   }];
 }
 
