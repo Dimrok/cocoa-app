@@ -347,7 +347,7 @@ static dispatch_once_t _instance_token = 0;
       }
       else if (transaction.receivable)
       {
-        if (transaction.to_device)
+        if (transaction.to_device && transaction.sender.is_self)
           return nil;
         res.title = NSLocalizedString(@"Incoming!", @"incoming!");
         res.soundName = self.transaction_incoming_sound.name;
