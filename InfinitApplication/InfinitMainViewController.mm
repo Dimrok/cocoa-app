@@ -16,6 +16,7 @@
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitUserManager.h>
 
 #undef check
@@ -415,7 +416,17 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (IBAction)onWebProfileClick:(NSMenuItem*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kInfinitWebProfileURL]];
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+  {
+    if (!result.success || !token.length || !email.length)
+      return;
+    NSString* url_str =
+      [NSString stringWithFormat:@"%@&login_token=%@&email=%@", kInfinitWebProfileURL, token, email];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
+  }];
 }
 
 #pragma mark - IAViewController

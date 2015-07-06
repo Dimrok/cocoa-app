@@ -344,12 +344,18 @@ static dispatch_once_t _awake_token;
 
 - (IBAction)webProfile:(NSButton*)sender
 {
-  NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
-  NSString* session_id = [InfinitStateManager sharedInstance].encoded_meta_session_id;
-  if (session_id.length)
-    [url_str appendFormat:@"&session_id=%@", session_id];
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
-  [[InfinitSettingsWindow sharedInstance] close];
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+  {
+    if (!result.success || !token.length || !email.length)
+      return;
+    NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
+    [url_str appendFormat:@"&login_token=%@&email=%@", token, email];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
+    [[InfinitSettingsWindow sharedInstance] close];
+  }];
 }
 
 //- Change Password Panel --------------------------------------------------------------------------

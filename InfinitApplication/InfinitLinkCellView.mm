@@ -314,11 +314,18 @@ static NSImage* _icon_delete_hover = nil;
 
 - (IBAction)administerLinkClicked:(NSButton*)sender
 {
-  NSString* encoded_session_id = [InfinitStateManager sharedInstance].encoded_meta_session_id;
-  NSString* link_str =
-  [NSString stringWithFormat:@"%@?session_id=%@", self.transaction.link, encoded_session_id];
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:link_str]];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_OPEN_LINK];
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+  {
+    if (!result.success || !token.length || !email.length)
+      return;
+    NSString* link_str =
+      [NSString stringWithFormat:@"%@?login_token=%@&email=%@", self.transaction.link, token, email];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:link_str]];
+    [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_OPEN_LINK];
+  }];
 }
 
 - (IBAction)clipboardClicked:(NSButton*)sender
