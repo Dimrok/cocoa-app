@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
@@ -19,7 +19,7 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="Vna-RT-76n">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="517" y="410" width="740" height="630"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
             <view key="contentView" id="eYt-o8-cxm" customClass="IIWhiteView">
                 <rect key="frame" x="0.0" y="0.0" width="740" height="630"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -30,8 +30,8 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="kAy-TM-8Oz">
                         <rect key="frame" x="570" y="40" width="100" height="35"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="35" id="LZI-QS-6Ig"/>
-                            <constraint firstAttribute="width" constant="100" id="jty-dB-PVT"/>
+                            <constraint firstAttribute="width" constant="100" id="154-Uh-4qG"/>
+                            <constraint firstAttribute="height" constant="35" id="43o-7k-ROV"/>
                         </constraints>
                         <buttonCell key="cell" type="square" title="NEXT" bezelStyle="shadowlessSquare" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qf1-do-PU9" customClass="IIOnboardingButtonCell">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -45,8 +45,8 @@
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Nwk-K1-gfW">
                         <rect key="frame" x="70" y="40" width="100" height="35"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="35" id="72m-lF-0wC"/>
-                            <constraint firstAttribute="width" constant="100" id="KhO-GY-IMU"/>
+                            <constraint firstAttribute="width" constant="100" id="5lW-fC-cuq"/>
+                            <constraint firstAttribute="height" constant="35" id="HqG-P2-lHY"/>
                         </constraints>
                         <buttonCell key="cell" type="square" title="BACK" bezelStyle="shadowlessSquare" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dx8-6L-DBc" customClass="IIOnboardingButtonCell">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -60,23 +60,22 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="nkd-7o-74G" customClass="IIOnboardingProgressView">
                         <rect key="frame" x="320" y="47" width="100" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="Iqs-Sb-U6O"/>
-                            <constraint firstAttribute="width" constant="100" id="k70-V5-ue0"/>
+                            <constraint firstAttribute="height" constant="20" id="JNR-6n-sPA"/>
+                            <constraint firstAttribute="width" constant="100" id="QgS-jX-O00"/>
                         </constraints>
                     </customView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="nkd-7o-74G" firstAttribute="centerY" secondItem="Nwk-K1-gfW" secondAttribute="centerY" id="0q8-4U-Vet"/>
-                    <constraint firstAttribute="bottom" secondItem="FmJ-IM-vHv" secondAttribute="bottom" constant="80" id="1o7-Th-KTh"/>
-                    <constraint firstAttribute="centerX" secondItem="nkd-7o-74G" secondAttribute="centerX" id="8Dx-8g-fj5"/>
-                    <constraint firstAttribute="bottom" secondItem="kAy-TM-8Oz" secondAttribute="bottom" constant="40" id="AeE-EL-TSo"/>
-                    <constraint firstItem="Nwk-K1-gfW" firstAttribute="leading" secondItem="eYt-o8-cxm" secondAttribute="leading" constant="70" id="Dcm-EQ-CgC"/>
-                    <constraint firstAttribute="trailing" secondItem="FmJ-IM-vHv" secondAttribute="trailing" id="KZu-lO-Rcf"/>
-                    <constraint firstAttribute="bottom" secondItem="Nwk-K1-gfW" secondAttribute="bottom" constant="40" id="Khh-yn-y4C"/>
-                    <constraint firstItem="FmJ-IM-vHv" firstAttribute="top" secondItem="eYt-o8-cxm" secondAttribute="top" id="Ru6-cj-Sme"/>
-                    <constraint firstItem="FmJ-IM-vHv" firstAttribute="leading" secondItem="eYt-o8-cxm" secondAttribute="leading" id="VXW-LP-ZNf"/>
-                    <constraint firstAttribute="trailing" secondItem="kAy-TM-8Oz" secondAttribute="trailing" constant="70" id="e0c-Nm-7qI"/>
-                    <constraint firstItem="nkd-7o-74G" firstAttribute="centerY" secondItem="Nwk-K1-gfW" secondAttribute="centerY" id="vC5-Xa-nov"/>
+                    <constraint firstAttribute="trailing" secondItem="kAy-TM-8Oz" secondAttribute="trailing" constant="70" id="7AN-bJ-ynx"/>
+                    <constraint firstItem="FmJ-IM-vHv" firstAttribute="leading" secondItem="eYt-o8-cxm" secondAttribute="leading" id="REp-tu-hdg"/>
+                    <constraint firstAttribute="centerX" secondItem="nkd-7o-74G" secondAttribute="centerX" id="Y03-D0-8rW"/>
+                    <constraint firstAttribute="bottom" secondItem="kAy-TM-8Oz" secondAttribute="bottom" constant="40" id="ahD-pA-pT0"/>
+                    <constraint firstItem="Nwk-K1-gfW" firstAttribute="leading" secondItem="eYt-o8-cxm" secondAttribute="leading" constant="70" id="cOS-Nt-bKz"/>
+                    <constraint firstAttribute="trailing" secondItem="FmJ-IM-vHv" secondAttribute="trailing" id="dq6-ns-MNS"/>
+                    <constraint firstAttribute="bottom" secondItem="FmJ-IM-vHv" secondAttribute="bottom" constant="80" id="gSu-yL-Gmw"/>
+                    <constraint firstItem="FmJ-IM-vHv" firstAttribute="top" secondItem="eYt-o8-cxm" secondAttribute="top" id="kpO-8f-sSe"/>
+                    <constraint firstAttribute="bottom" secondItem="Nwk-K1-gfW" secondAttribute="bottom" constant="40" id="wQz-1j-Agp"/>
+                    <constraint firstAttribute="bottom" secondItem="nkd-7o-74G" secondAttribute="bottom" constant="47" id="zA2-bG-XBi"/>
                 </constraints>
             </view>
             <connections>
