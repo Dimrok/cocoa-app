@@ -424,7 +424,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
     if (!result.success || !token.length || !email.length)
       return;
     NSString* url_str =
-      [NSString stringWithFormat:@"%@&login_token=%@&email=%@", kInfinitWebProfileURL, token, email];
+      [kInfinitWebProfileURL stringByAppendingFormat:@"&login_token=%@&email=%@", token, email];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
   }];
 }

@@ -352,8 +352,8 @@ static dispatch_once_t _awake_token;
   {
     if (!result.success || !token.length || !email.length)
       return;
-    NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
-    [url_str appendFormat:@"&login_token=%@&email=%@", token, email];
+    NSString* url_str =
+      [kInfinitWebProfileURL stringByAppendingFormat:@"&login_token=%@&email=%@", token, email];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
   }];
 }

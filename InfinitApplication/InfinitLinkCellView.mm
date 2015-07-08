@@ -322,7 +322,7 @@ static NSImage* _icon_delete_hover = nil;
     if (!result.success || !token.length || !email.length)
       return;
     NSString* link_str =
-      [NSString stringWithFormat:@"%@?login_token=%@&email=%@", self.transaction.link, token, email];
+      [self.transaction.link stringByAppendingFormat:@"?login_token=%@&email=%@", token, email];
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:link_str]];
     [InfinitMetricsManager sendMetric:INFINIT_METRIC_MAIN_OPEN_LINK];
   }];
