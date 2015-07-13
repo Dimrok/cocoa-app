@@ -54,12 +54,11 @@ ELLE_LOG_COMPONENT("OSX.ScreenshotModal");
                                                             colour:IA_GREY_COLOUR(96)
                                                             shadow:nil];
   NSString* info_text =
-    NSLocalizedString(@"Whenever you take a screenshot, we'll upload it and copy a\nlink to your\
-clipboard so you can share it in a message, an\nemail or a tweet.", nil);
+    NSLocalizedString(@"Whenever you take a screenshot, we'll upload it and copy a\nlink to your clipboard so you can share it in a message, an\nemail or a tweet.", nil);
   self.information.attributedStringValue =
     [[NSAttributedString alloc] initWithString:info_text attributes:information_attrs];
 
-  self.affirmative.title = @"Help me share my screenshots!";
+  self.affirmative.title = NSLocalizedString(@"Help me share my screenshots!", nil);
   self.negative.title = NSLocalizedString(@"No, thanks", nil);
 }
 
