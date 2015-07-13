@@ -59,7 +59,7 @@ static NSString* kInfinitShortcutModifiers = @"modifiers";
 {
   NSUInteger key_code = [dict[kInfinitShortcutKey] unsignedIntegerValue];
   NSUInteger modifiers = [dict[kInfinitShortcutModifiers] unsignedIntegerValue];
-  if (key_code == 0 || modifiers == 0)
+  if (key_code == 0)
     return nil;
   return [[MASShortcut alloc] initWithKeyCode:key_code modifierFlags:modifiers];
 }
