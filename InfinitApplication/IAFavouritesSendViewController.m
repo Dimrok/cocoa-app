@@ -197,7 +197,6 @@ static NSSize favourites_size = {430.f, 170.f};
   if (temp_arr.count < 5)
   {
     NSArray* swaggers = [InfinitUserManager sharedInstance].time_ordered_swaggers;
-    
     for (InfinitUser* swagger in swaggers)
     {
       if (!swagger.deleted && !swagger.ghost && temp_arr.count < 5 && ![temp_arr containsObject:swagger])
@@ -211,7 +210,12 @@ static NSSize favourites_size = {430.f, 170.f};
     favourites = [temp_arr subarrayWithRange:NSMakeRange(0, 5)];
   else
     favourites = [NSArray arrayWithArray:temp_arr];
-  
+
+  NSSortDescriptor* sort = [[NSSortDescriptor alloc] initWithKey:@"fullname"
+                                                       ascending:YES
+                                                        selector:@selector(caseInsensitiveCompare:)];
+  favourites = [favourites sortedArrayUsingDescriptors:@[sort]];
+
   NSRect frame = NSZeroRect;
   frame.size = self.view.bounds.size;
   NSPoint midpoint = [_delegate favouritesViewWantsMidpoint:self];
