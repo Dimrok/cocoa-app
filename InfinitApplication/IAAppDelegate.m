@@ -118,7 +118,7 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 - (void)dealloc
 {
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
-  [NSNotificationCenter.defaultCenter removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification*)notification
@@ -267,9 +267,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 - (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender
 {
   NSLog(@"%@ Checking for update verbosely", self);
-#ifdef BUILD_PRODUCTION
   [[SUUpdater sharedUpdater] checkForUpdates:self];
-#endif
 }
 
 - (void)mainControllerWantsBackgroundUpdateChecks:(IAMainController*)sender
