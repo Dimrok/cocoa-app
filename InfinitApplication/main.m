@@ -8,23 +8,27 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "InfinitOSVersion.h"
+
 int main(int argc, char *argv[])
 {
 #ifndef DEBUG
-  if (!getenv("DYLD_ROOT_PATH"))
+  @autoreleasepool
   {
-    @autoreleasepool
+    // Only need to change the library path on versions older than 10.9.
+    SInt32 minor = [InfinitOSVersion osVersion].minor;
+    if (minor != 0 && minor < 9 && !getenv("DYLD_LIBRARY_PATH"))
     {
-      NSString* our_cxx_path = [NSBundle mainBundle].privateFrameworksPath;
-      // Ensure that our libc++ and libc++abi are used.
-      setenv("DYLD_ROOT_PATH", our_cxx_path.UTF8String, 1);
-      // Ensure that we null the fallback path. This is crucial because DYLD_FALLBACK_LIBRARY_PATH
-      // defaults to $(HOME)/lib:/usr/local/lib:/lib:/usr/lib.
-      // If you have Homebrew installed, its libraries are at /usr/local/lib. Loading these can
-      // cause missing symbols.
-      setenv("DYLD_FALLBACK_LIBRARY_PATH", "", 1);
+      // Setting the library path ensures that on 10.7 and 10.8, the application loads the correct
+      // libc++.
+      NSString* framework_path = [NSBundle mainBundle].privateFrameworksPath;
+      setenv("DYLD_LIBRARY_PATH", framework_path.UTF8String, 1);
+      // Moving /usr/local/lib to the end of the fallback library path ensures that we don't get
+      // polluted by Homebrew.
+      NSString* fallback_paths = @"/lib:/usr/lib:/usr/local/lib";
+      setenv("DYLD_FALLBACK_LIBRARY_PATH", fallback_paths.UTF8String, 1);
+      execvp(argv[0], argv);
     }
-    execvp(argv[0], argv);
   }
 #endif
   return NSApplicationMain(argc, (const char**)argv);
