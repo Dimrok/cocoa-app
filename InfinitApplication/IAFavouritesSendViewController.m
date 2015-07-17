@@ -335,16 +335,16 @@ static NSSize favourites_size = {430.f, 170.f};
                                sender.frame.origin.y - ((end_size - sender.frame.size.height) / 2.0),
                                end_size, end_size);
   [self hideFavouritesExcluding:sender];
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+  {
+    [_delegate favouritesView:self gotDropOnUser:user withFiles:files];
+  });
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
   {
     context.duration = 0.2;
     [sender.animator setFrame:end_rect];
     [sender.animator setAlphaValue:0.0];
-  }
-                      completionHandler:^
-  {
-    [_delegate favouritesView:self gotDropOnUser:user withFiles:files];
-  }];
+  } completionHandler:nil];
 }
 
 - (void)linkViewGotDrop:(InfinitLinkShortcutView*)sender
@@ -356,21 +356,16 @@ static NSSize favourites_size = {430.f, 170.f};
                                sender.frame.origin.y - ((end_size - sender.frame.size.height) / 2.0),
                                end_size, end_size);
   [self hideFavouritesExcluding:sender];
-  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
-    [_delegate favouritesView:self gotDropLinkWithFiles:files];
-  else
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
   {
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
-     {
-       context.duration = 0.2;
-       [sender.animator setFrame:end_rect];
-       [sender.animator setAlphaValue:0.0];
-     }
-                        completionHandler:^
-     {
-       [_delegate favouritesView:self gotDropLinkWithFiles:files];
-     }];
-  }
+    [_delegate favouritesView:self gotDropLinkWithFiles:files];
+  });
+  [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
+   {
+     context.duration = 0.2;
+     [sender.animator setFrame:end_rect];
+     [sender.animator setAlphaValue:0.0];
+   } completionHandler:nil];
 }
 
 @end
