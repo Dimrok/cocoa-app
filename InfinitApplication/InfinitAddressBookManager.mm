@@ -114,7 +114,7 @@ static dispatch_once_t _instance_token = 0;
     ELLE_WARN("%s: unable to show contact joined notification, no name", self.description.UTF8String);
     return;
   }
-  [[InfinitDesktopNotifier sharedInstance] desktopNotificationForContactJoined:name];
+  [[InfinitDesktopNotifier sharedInstance] desktopNotificationForContactJoined:name details:contact];
 }
 
 - (ABPerson*)personFromContact:(NSString*)contact
