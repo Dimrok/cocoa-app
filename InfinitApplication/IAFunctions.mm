@@ -342,26 +342,4 @@ ELLE_LOG_COMPONENT("OSX.Functions");
     return nil;
 }
 
-+ (INFINIT_OS_X_VERSION)osxVersion
-{
-  NSInteger major_version = [[IAFunctions osMajorVersion] integerValue];
-  NSInteger minor_version = [[IAFunctions osMinorVersion] integerValue];
-  if (major_version != 10)
-    return INFINIT_OS_X_VERSION_UNKNOWN;
-  switch (minor_version)
-  {
-    case 7:
-      return INFINIT_OS_X_VERSION_10_7;
-    case 8:
-      return INFINIT_OS_X_VERSION_10_8;
-    case 9:
-      return INFINIT_OS_X_VERSION_10_9;
-    case 10:
-      return INFINIT_OS_X_VERSION_10_10;
-
-    default:
-      return INFINIT_OS_X_VERSION_UNKNOWN;
-  }
-}
-
 @end
