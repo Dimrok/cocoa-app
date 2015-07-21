@@ -29,6 +29,7 @@
 		83059E09191EA2C0008DA14A /* InfinitSendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83059E07191EA2C0008DA14A /* InfinitSendViewController.xib */; };
 		83059E0D19213BD7008DA14A /* Montserrat.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83059E0A19213B42008DA14A /* Montserrat.ttf */; };
 		830836E41B0DC7110095B76B /* InfinitAddressBookManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 830836E31B0DC7110095B76B /* InfinitAddressBookManager.mm */; };
+		8309FF071B5E3F6200E2AC83 /* InfinitSoundsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8309FF061B5E3F6200E2AC83 /* InfinitSoundsManager.m */; };
 		830BB8A91B06045F00861D5F /* conversation-icon-pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 830BB8A51B06045F00861D5F /* conversation-icon-pause.png */; };
 		830BB8AA1B06045F00861D5F /* conversation-icon-pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 830BB8A61B06045F00861D5F /* conversation-icon-pause@2x.png */; };
 		830BB8AB1B06045F00861D5F /* conversation-icon-resume.png in Resources */ = {isa = PBXBuildFile; fileRef = 830BB8A71B06045F00861D5F /* conversation-icon-resume.png */; };
@@ -643,6 +644,8 @@
 		83059E0A19213B42008DA14A /* Montserrat.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Montserrat.ttf; sourceTree = "<group>"; };
 		830836E21B0DC7110095B76B /* InfinitAddressBookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitAddressBookManager.h; sourceTree = "<group>"; };
 		830836E31B0DC7110095B76B /* InfinitAddressBookManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitAddressBookManager.mm; sourceTree = "<group>"; };
+		8309FF051B5E3F6200E2AC83 /* InfinitSoundsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSoundsManager.h; sourceTree = "<group>"; };
+		8309FF061B5E3F6200E2AC83 /* InfinitSoundsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSoundsManager.m; sourceTree = "<group>"; };
 		830BB8A51B06045F00861D5F /* conversation-icon-pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-pause.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-pause.png"; sourceTree = "<group>"; };
 		830BB8A61B06045F00861D5F /* conversation-icon-pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-pause@2x.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-pause@2x.png"; sourceTree = "<group>"; };
 		830BB8A71B06045F00861D5F /* conversation-icon-resume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conversation-icon-resume.png"; path = "../../../../fist-resources/slices/mac/view_conversation/conversation-icon-resume.png"; sourceTree = "<group>"; };
@@ -2095,6 +2098,8 @@
 				836D648819D0667D00D77D9B /* InfinitNetworkManager.mm */,
 				83C30A28193298BF00D07D2C /* InfinitScreenshotManager.h */,
 				83C30A29193298BF00D07D2C /* InfinitScreenshotManager.mm */,
+				8309FF051B5E3F6200E2AC83 /* InfinitSoundsManager.h */,
+				8309FF061B5E3F6200E2AC83 /* InfinitSoundsManager.m */,
 				83E1E1A31861A2AB00F8DDF9 /* InfinitStayAwakeManager.h */,
 				83E1E1A41861A2AB00F8DDF9 /* InfinitStayAwakeManager.mm */,
 			);
@@ -2864,6 +2869,7 @@
 				834F13801922522F00BF36A4 /* InfinitLinkClickCountView.m in Sources */,
 				83CC2C4C1923B97E00EBB96E /* InfinitLinkFileIconView.m in Sources */,
 				83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */,
+				8309FF071B5E3F6200E2AC83 /* InfinitSoundsManager.m in Sources */,
 				836FCB541B1629B5007F5CFC /* IIOnboardingViewController2.m in Sources */,
 				832808E817A2E5C10025B6F8 /* IANotLoggedInViewController.mm in Sources */,
 				8337673E19088E910073A621 /* InfinitTokenAttachmentCell.m in Sources */,
