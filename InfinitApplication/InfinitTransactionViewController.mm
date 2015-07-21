@@ -10,6 +10,7 @@
 
 #import "IAHoverButton.h"
 #import "InfinitOnboardingWindowController.h"
+#import "InfinitOSVersion.h"
 #import "InfinitTooltipViewController.h"
 
 #import <Gap/InfinitColor.h>
@@ -238,7 +239,7 @@ static CGFloat _row_height = 72.0f;
           andNotDoneTransactions:[manager incompleteTransactionsWithUser:user]
            andUnreadTransactions:[manager unreadTransactionsWithUser:user]
                      andProgress:[manager progressWithUser:user]];
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_9)
+  if ([InfinitOSVersion lessThan:{10, 9, 0}])
   {
     // WORKAROUND: Progress rendering glitches on 10.7 and 10.8.
     cell.identifier = nil;

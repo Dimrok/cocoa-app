@@ -9,6 +9,7 @@
 #import "InfinitDesktopNotifier.h"
 
 #import "InfinitMetricsManager.h"
+#import "InfinitOSVersion.h"
 
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -78,7 +79,7 @@ static dispatch_once_t _instance_token = 0;
 
 + (instancetype)sharedInstance
 {
-  if ([IAFunctions osxVersion] == INFINIT_OS_X_VERSION_10_7)
+  if ([InfinitOSVersion equalToRelease:{10, 7}])
     return nil;
   dispatch_once(&_instance_token, ^
   {
@@ -368,7 +369,7 @@ static dispatch_once_t _instance_token = 0;
         res.informativeText =
           [NSString stringWithFormat:NSLocalizedString(@"%@ wants to send %@ to you", nil),
            transaction.sender.fullname, filename];
-        if ([IAFunctions osxVersion] > INFINIT_OS_X_VERSION_10_8)
+        if ([InfinitOSVersion greaterThanEqualToRelease:{10, 9}])
         {
           res.hasActionButton = YES;
           res._showsButtons = YES;

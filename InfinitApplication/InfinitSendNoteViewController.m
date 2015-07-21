@@ -8,6 +8,8 @@
 
 #import "InfinitSendNoteViewController.h"
 
+#import "InfinitOSVersion.h"
+
 //- Note Field -------------------------------------------------------------------------------------
 
 @implementation InfinitSendNoteField
@@ -81,7 +83,7 @@
 - (void)awakeFromNib
 {
   // WORKAROUND older versions of OS X don't handle setting of placeholder string well.
-  if ([IAFunctions osxVersion] >= INFINIT_OS_X_VERSION_10_9)
+  if ([InfinitOSVersion greaterThanEqualToRelease:InfinitOSReleaseMake(10, 9)])
   {
     NSFont* font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica Neue"
                                                               traits:NSUnboldFontMask

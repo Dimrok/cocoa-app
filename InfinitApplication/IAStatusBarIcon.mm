@@ -9,6 +9,7 @@
 #import "IAStatusBarIcon.h"
 #import "IAFunctions.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitOSVersion.h"
 #import "InfinitTooltipViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -222,7 +223,8 @@ static NSDictionary* _grey_style;
     NSRect rect;
     [[NSColor selectedMenuItemColor] set];
     // WORKAROUND: Highlighting of icon on non-retina screens is broken
-    if ([[NSScreen mainScreen] backingScaleFactor] == 1.0 && [IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_10)
+    if ([[NSScreen mainScreen] backingScaleFactor] == 1.0 &&
+        ![InfinitOSVersion equalToRelease:{10, 10, 0}])
     {
       rect = NSMakeRect(self.frame.origin.x,
                         self.frame.origin.y + 1.0,

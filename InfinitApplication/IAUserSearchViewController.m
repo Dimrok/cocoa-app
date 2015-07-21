@@ -8,6 +8,7 @@
 
 #import "IAUserSearchViewController.h"
 
+#import "InfinitOSVersion.h"
 #import "InfinitSearchEmailCell.h"
 #import "InfinitSearchRowModel.h"
 #import "InfinitTokenAttachmentCell.h"
@@ -117,7 +118,7 @@
     [self.search_spinner setIndeterminate:YES];
     
     // WORKAROUND: Place holder text has been fixed in 10.9
-    if ([IAFunctions osxVersion] >= INFINIT_OS_X_VERSION_10_9)
+    if ([InfinitOSVersion greaterThanEqualToRelease:InfinitOSReleaseMake(10, 9)])
     {
       NSFont* search_font = [[NSFontManager sharedFontManager] fontWithFamily:@"Helvetica"
                                                                        traits:NSUnboldFontMask

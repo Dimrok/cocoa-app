@@ -28,6 +28,7 @@
 #import "InfinitMainViewController.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitNetworkManager.h"
+#import "InfinitOSVersion.h"
 #import "InfinitQuotaWindowController.h"
 #import "InfinitScreenshotManager.h"
 #import "InfinitSettingsWindow.h"
@@ -168,7 +169,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     _stay_awake_manager = [InfinitStayAwakeManager setUpInstanceWithDelegate:self];
 
 
-    if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    if ([InfinitOSVersion lessThan:{10, 10, 0}])
     {
       _old_status_item = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
       _status_bar_icon = [[IAStatusBarIcon alloc] initWithDelegate:self statusItem:_old_status_item];
@@ -182,7 +183,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     _window_controller = [[IAWindowController alloc] initWithDelegate:self];
     _current_view_controller = nil;
     
-    if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+    if (![InfinitOSVersion equalToRelease:{10, 7, 0}])
       [InfinitDesktopNotifier sharedInstance].delegate = self;
     
     _infinit_link = nil;
@@ -360,7 +361,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   if (![_current_view_controller isKindOfClass:InfinitSendViewController.class])
   {
-    if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+    if ([InfinitOSVersion lessThan:{10, 10, 0}])
       [_status_bar_icon setHighlighted:YES];
     else
       _status_item.open = YES;
@@ -398,7 +399,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (void)openOrChangeViewController:(IAViewController*)view_controller
 {
   bool open = YES;
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  if ([InfinitOSVersion lessThan:{10, 10, 0}])
     [_status_bar_icon setHighlighted:open];
   else
     _status_item.open = open;
@@ -423,7 +424,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)showNotifications
 {
-  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  if (![InfinitOSVersion equalToRelease:{10, 7, 0}])
     [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   _main_view_controller = [[InfinitMainViewController alloc] initWithDelegate:self
                                                                 forPeopleView:YES];
@@ -432,7 +433,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)showLinks
 {
-  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  if (![InfinitOSVersion equalToRelease:{10, 7, 0}])
     [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   _main_view_controller = [[InfinitMainViewController alloc] initWithDelegate:self
                                                                 forPeopleView:NO];
@@ -510,10 +511,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)closeNotificationWindow
 {
-  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  if (![InfinitOSVersion equalToRelease:{10, 7, 0}])
     [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   [_window_controller closeWindow];
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  if ([InfinitOSVersion lessThan:{10, 10, 0}])
     [_status_bar_icon setHighlighted:NO];
   else
     _status_item.open = NO;
@@ -521,10 +522,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
 - (void)closeNotificationWindowWithoutLosingFocus
 {
-  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  if (![InfinitOSVersion equalToRelease:{10, 7, 0}])
     [[InfinitDesktopNotifier sharedInstance] clearAllNotifications];
   [_window_controller closeWindowWithoutLosingFocus];
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  if ([InfinitOSVersion lessThan:{10, 10, 0}])
     [_status_bar_icon setHighlighted:NO];
   else
     _status_item.open = NO;
@@ -572,7 +573,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
   {
     [self showNotifications];
   }
-  if ([IAFunctions osxVersion] > INFINIT_OS_X_VERSION_10_7)
+  if (![InfinitOSVersion equalToRelease:{10, 7, 0}])
     [[InfinitDesktopNotifier sharedInstance] checkPendingTransactions];
 }
 
@@ -701,7 +702,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 - (NSPoint)statusBarIconMiddle
 {
   NSRect frame;
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  if ([InfinitOSVersion lessThan:{10, 10, 0}])
   {
     frame = _old_status_item.view.window.frame;
   }
@@ -752,7 +753,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 {
   _stay_awake_manager = nil;
 
-  if ([IAFunctions osxVersion] < INFINIT_OS_X_VERSION_10_10)
+  if ([InfinitOSVersion lessThan:{10, 10, 0}])
   {
     [_status_bar_icon setHighlighted:NO];
     [_status_bar_icon setHidden:YES];
@@ -1279,7 +1280,7 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 
 - (void)peerTransactionAccepted:(NSNotification*)notification
 {
-  if ([IAFunctions osxVersion] != INFINIT_OS_X_VERSION_10_7)
+  if (![InfinitOSVersion equalToRelease:{10, 7, 0}])
   {
     NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
     InfinitPeerTransaction* transaction =
