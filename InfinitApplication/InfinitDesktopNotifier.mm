@@ -10,6 +10,7 @@
 
 #import "InfinitMetricsManager.h"
 #import "InfinitOSVersion.h"
+#import "InfinitSoundsManager.h"
 
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -470,6 +471,9 @@ static dispatch_once_t _instance_token = 0;
   res.deliveryDate = [NSDate date];
   res.userInfo = [self _userInfoFromTransaction:transaction];
 
+  if (![InfinitSoundsManager soundsEnabled])
+    res.soundName = nil;
+
   return res;
 }
 
@@ -548,7 +552,10 @@ static dispatch_once_t _instance_token = 0;
 
   res.title = title;
   res.informativeText = message;
-  res.soundName = sound;
+  if ([InfinitSoundsManager soundsEnabled])
+    res.soundName = sound;
+  else
+    res.soundName = nil;
   res.deliveryDate = [NSDate date];
   res.userInfo = [self _userInfoFromTransaction:link];
   return res;
