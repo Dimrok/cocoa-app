@@ -11,6 +11,7 @@
 #import "InfinitDownloadDestinationManager.h"
 #import "InfinitOnboardingWindowController.h"
 #import "InfinitSettingsWindow.h"
+#import "InfinitSoundsManager.h"
 
 #import <Gap/InfinitDeviceManager.h>
 
@@ -19,6 +20,7 @@
                                           NSTextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet NSTextField* device_name_field;
+@property (nonatomic, weak) IBOutlet NSButton* enable_sounds;
 @property (nonatomic, weak) IBOutlet NSButton* launch_at_startup;
 @property (nonatomic, weak) IBOutlet NSButton* stay_awake;
 @property (nonatomic, weak) IBOutlet NSTextField* download_dir;
@@ -28,6 +30,7 @@
 @property (nonatomic, unsafe_unretained) id<InfinitSettingsGeneralProtocol> delegate;
 @property (nonatomic, readonly) NSString* download_dir_str;
 @property (nonatomic, readonly) InfinitOnboardingWindowController* onboarding_controller;
+@property (nonatomic, readonly) BOOL sounds_enabled;
 
 @end
 
@@ -37,7 +40,7 @@
 
 - (NSSize)startSize
 {
-  return NSMakeSize(480.0f, 310.0f);
+  return NSMakeSize(480.0f, 330.0f);
 }
 
 #pragma mark - Init
@@ -56,6 +59,8 @@
   _auto_launch = [self.delegate infinitInLoginItems:self];
   _auto_stay_awake = [self.delegate stayAwake:self];
   _download_dir_str = [InfinitDownloadDestinationManager sharedInstance].download_destination;
+  _sounds_enabled = [InfinitSoundsManager soundsEnabled];
+
   if (self.auto_launch)
     self.launch_at_startup.state = NSOnState;
   else
@@ -65,6 +70,11 @@
     self.stay_awake.state = NSOnState;
   else
     self.stay_awake.state = NSOffState;
+
+  if (self.sounds_enabled)
+    self.enable_sounds.state = NSOnState;
+  else
+    self.enable_sounds.state = NSOffState;
 
   self.download_dir.stringValue = _download_dir_str;
   [[InfinitDeviceManager sharedInstance] updateDevices];
@@ -78,6 +88,15 @@
 }
 
 #pragma mark - Toggle Handling
+
+- (IBAction)toggleEnableSounds:(NSButton*)sender
+{
+  if (self.enable_sounds.state == NSOnState)
+    _sounds_enabled = YES;
+  else
+    _sounds_enabled = NO;
+  [InfinitSoundsManager setSoundsEnabled:self.sounds_enabled];
+}
 
 - (IBAction)toggleLaunchAtStartup:(NSButton*)sender
 {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14F6a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="device_name_field" destination="cJY-bd-c9D" id="QX3-I1-dkq"/>
                 <outlet property="download_dir" destination="LWl-UA-aMd" id="9GD-hf-iGW"/>
+                <outlet property="enable_sounds" destination="UY3-A1-zyz" id="l4r-9D-SBr"/>
                 <outlet property="launch_at_startup" destination="bWW-gG-HyP" id="h7M-1c-eQ0"/>
                 <outlet property="stay_awake" destination="Yh1-fR-oQb" id="AYw-gn-9si"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -17,11 +18,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="310"/>
+            <rect key="frame" x="0.0" y="0.0" width="480" height="330"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bWW-gG-HyP">
-                    <rect key="frame" x="95" y="257" width="290" height="18"/>
+                    <rect key="frame" x="95" y="277" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Launch Infinit at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cuD-cD-L6e">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -31,7 +32,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XRb-0U-vvc">
-                    <rect key="frame" x="110" y="62" width="166" height="32"/>
+                    <rect key="frame" x="110" y="64" width="166" height="32"/>
                     <buttonCell key="cell" type="push" title="Check for updates..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PP7-tu-kV9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -41,18 +42,18 @@
                     </connections>
                 </button>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-fR-oQb">
-                    <rect key="frame" x="95" y="233" width="290" height="18"/>
+                    <rect key="frame" x="95" y="253" width="290" height="18"/>
                     <buttonCell key="cell" type="check" title="Stay awake while transferring on AC power" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qW2-Gc-YZE">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleStayAwake:" target="-2" id="txZ-y6-l61"/>
-                        <outlet property="nextKeyView" destination="bWW-gG-HyP" id="jy3-11-5ZF"/>
+                        <outlet property="nextKeyView" destination="UY3-A1-zyz" id="pHq-jc-PQ6"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9p5-7z-URn">
-                    <rect key="frame" x="114" y="192" width="163" height="17"/>
+                    <rect key="frame" x="114" y="194" width="163" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Download files to:" id="Bdy-QN-bnS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -60,7 +61,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YVo-ha-zMh">
-                    <rect key="frame" x="114" y="134" width="194" height="17"/>
+                    <rect key="frame" x="114" y="136" width="194" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Rename this device to:" id="49g-K1-ILm">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -68,7 +69,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="goy-5a-ANT">
-                    <rect key="frame" x="326" y="160" width="98" height="32"/>
+                    <rect key="frame" x="326" y="162" width="98" height="32"/>
                     <buttonCell key="cell" type="push" title="Browse..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rgc-zt-oZK">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -78,7 +79,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LWl-UA-aMd">
-                    <rect key="frame" x="116" y="166" width="208" height="22"/>
+                    <rect key="frame" x="116" y="168" width="208" height="22"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingMiddle" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="/Users/someone/Downloads" placeholderString="" drawsBackground="YES" usesSingleLineMode="YES" id="Awy-UF-qym">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -86,7 +87,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cJY-bd-c9D">
-                    <rect key="frame" x="116" y="106" width="208" height="22"/>
+                    <rect key="frame" x="116" y="108" width="208" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="EPY-vh-f3w">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -97,13 +98,24 @@
                     </connections>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dpe-Zi-3Ck">
-                    <rect key="frame" x="110" y="29" width="166" height="32"/>
+                    <rect key="frame" x="110" y="31" width="166" height="32"/>
                     <buttonCell key="cell" type="push" title="Play Tutorial" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Z9W-UQ-qea">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="playTutorial:" target="-2" id="Nog-yy-hfT"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UY3-A1-zyz">
+                    <rect key="frame" x="95" y="229" width="290" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable sounds" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6a1-iy-RYP">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleEnableSounds:" target="-2" id="LJH-vt-Puf"/>
+                        <outlet property="nextKeyView" destination="bWW-gG-HyP" id="GQU-B2-hID"/>
                     </connections>
                 </button>
             </subviews>
