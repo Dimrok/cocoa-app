@@ -241,11 +241,12 @@ static dispatch_once_t _instance_token = 0;
 #pragma mark - Contact Joined
 
 - (void)desktopNotificationForContactJoined:(NSString*)name
+                                    details:(NSString*)details
 {
   NSUserNotification* notification = [[NSUserNotification alloc] init];
   notification.title = [NSString stringWithFormat:NSLocalizedString(@"%@ joined!", nil), name];
   notification.informativeText =
-    [NSString stringWithFormat:NSLocalizedString(@"%@ just joined Infinit!", nil), name];
+    [NSString stringWithFormat:NSLocalizedString(@"Your contact %@ (%@) just joined Infinit!", nil), name, details];
   notification.soundName = nil;
   notification.userInfo =
     @{@"pid": [NSNumber numberWithInt:[[NSProcessInfo processInfo] processIdentifier]]};

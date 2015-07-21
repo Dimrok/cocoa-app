@@ -27,7 +27,8 @@
 
 - (void)desktopNotificationForApplicationUpdated;
 
-- (void)desktopNotificationForContactJoined:(NSString*)name;
+- (void)desktopNotificationForContactJoined:(NSString*)name
+                                    details:(NSString*)details;
 
 - (void)checkPendingTransactions;
 
