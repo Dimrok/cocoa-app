@@ -32,6 +32,7 @@
 #import "InfinitQuotaWindowController.h"
 #import "InfinitScreenshotManager.h"
 #import "InfinitSettingsWindow.h"
+#import "InfinitSoundsManager.h"
 #import "InfinitStatusBarIcon.h"
 #import "InfinitStayAwakeManager.h"
 #import "InfinitTooltipViewController.h"
@@ -929,7 +930,8 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 
 - (void)linkTransactionCreated:(NSNotification*)notification
 {
-  [_sent_sound play];
+  if ([InfinitSoundsManager soundsEnabled])
+    [_sent_sound play];
 }
 
 - (void)linkTransactionUpdated:(NSNotification*)notification
@@ -1259,7 +1261,8 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 
 - (void)peerTransactionCreated:(NSNotification*)notification
 {
-  [_sent_sound play];
+  if ([InfinitSoundsManager soundsEnabled])
+    [_sent_sound play];
 }
 
 - (void)peerTransactionAdded:(NSNotification*)notification
