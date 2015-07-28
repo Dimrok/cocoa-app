@@ -138,10 +138,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                                  name:INFINIT_LINK_TRANSACTION_CREATED_NOTIFICATION
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(linkTransactionAdded:)
-                                                 name:INFINIT_NEW_LINK_TRANSACTION_NOTIFICATION
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(linkTransactionUpdated:)
                                                  name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION
                                                object:nil];
@@ -939,16 +935,7 @@ hadClickNotificationForLinkId:(NSNumber*)id_
   NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitLinkTransaction* link =
     [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
-  if (link.status == gap_transaction_transferring)
-    [self _copyLinkToClipboard:link withNotification:NO];
-}
-
-- (void)linkTransactionAdded:(NSNotification*)notification
-{
-  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
-  InfinitLinkTransaction* link =
-    [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
-  if (link.status == gap_transaction_transferring)
+  if (link.from_device && link.status == gap_transaction_transferring)
     [self _copyLinkToClipboard:link withNotification:NO];
 }
 
