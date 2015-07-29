@@ -12,6 +12,7 @@
 #import "InfinitOSVersion.h"
 #import "InfinitSoundsManager.h"
 
+#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitThreadSafeDictionary.h>
@@ -74,6 +75,10 @@ static dispatch_once_t _instance_token = 0;
                                              selector:@selector(peerTransactionUpdated:)
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(firstOnline:)
+                                                 name:INFINIT_CONNECTION_STATUS_CHANGE
+                                               object:nil];
   }
   return self;
 }
@@ -102,6 +107,32 @@ static dispatch_once_t _instance_token = 0;
      shouldPresentNotification:(NSUserNotification*)notification
 {
   return YES;
+}
+
+- (void)firstOnline:(NSNotification*)notification
+{
+  // Show notifications for pending transactions on startup.
+  @synchronized(self)
+  {
+    InfinitConnectionStatus* connection_status = notification.object;
+    if (connection_status.status)
+    {
+      [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                      name:INFINIT_CONNECTION_STATUS_CHANGE
+                                                    object:nil];
+      NSArray* transactions = [InfinitPeerTransactionManager sharedInstance].transactions;
+      for (InfinitPeerTransaction* transaction in transactions)
+      {
+        if (transaction.status == gap_transaction_waiting_accept)
+        {
+          NSUserNotification* notification =
+            [self _statusNotificationFromPeerTransaction:transaction];
+          if (notification)
+            [self.notification_center deliverNotification:notification];
+        }
+      }
+    }
+  }
 }
 
 #pragma mark - General
@@ -380,14 +411,19 @@ static dispatch_once_t _instance_token = 0;
         }
         if (!self.reminder_map[transaction.id_])
         {
-          NSTimeInterval repeat_interval = 24 * 60 * 60 * 60;
-          NSTimer* reminder_timer =
-            [NSTimer scheduledTimerWithTimeInterval:repeat_interval
+          NSTimer* day_reminder_timer =
+            [NSTimer scheduledTimerWithTimeInterval:(24 * 60 * 60 * 60)
                                              target:self
                                            selector:@selector(_reminderNotificationForTimer:)
-                                           userInfo:transaction.id_
+                                           userInfo:@{kInfinitTransactionId: transaction.id_}
                                             repeats:YES];
-          self.reminder_map[transaction.id_] = reminder_timer;
+          self.reminder_map[transaction.id_] = day_reminder_timer;
+          // Ten minute reminder.
+          [NSTimer scheduledTimerWithTimeInterval:(10 * 60)
+                                           target:self
+                                         selector:@selector(_reminderNotificationForTimer:)
+                                         userInfo:@{kInfinitTransactionId: transaction.id_}
+                                          repeats:NO];
         }
       }
       else
@@ -480,13 +516,16 @@ static dispatch_once_t _instance_token = 0;
 
 - (void)_reminderNotificationForTimer:(NSTimer*)timer
 {
-  NSNumber* id_ = timer.userInfo;
+  NSNumber* id_ = timer.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* transaction = [InfinitPeerTransactionManager transactionWithId:id_];
   if (transaction.status != gap_transaction_waiting_accept)
   {
     NSTimer* reminder_timer = self.reminder_map[transaction.id_];
-    [reminder_timer invalidate];
-    [self.reminder_map removeObjectForKey:transaction.id_];
+    if (reminder_timer)
+    {
+      [reminder_timer invalidate];
+      [self.reminder_map removeObjectForKey:transaction.id_];
+    }
     return;
   }
   NSUserNotification* user_notification = [self _statusNotificationFromPeerTransaction:transaction];
