@@ -21,7 +21,9 @@
 
 @protocol InfinitFacebookWindowProtocol <NSObject>
 
-- (void)facebookWindow:(InfinitFacebookWindowController*)sender gotError:(NSString*)error;
-- (void)facebookWindow:(InfinitFacebookWindowController*)sender gotToken:(NSString*)token;
+- (void)facebookWindow:(InfinitFacebookWindowController*)sender
+              gotError:(NSString*)error;
+- (void)facebookWindow:(InfinitFacebookWindowController*)sender
+              gotToken:(NSString*)token;
 
 @end
