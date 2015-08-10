@@ -30,7 +30,9 @@ static dispatch_once_t _instance_token = 0;
   if (self = [super init])
   {
     _download_destination = [[IAUserPrefs sharedInstance] prefsForKey:@"download_directory"];
-    if (!self.download_destination.length)
+    NSFileManager* manager = [NSFileManager defaultManager];
+    BOOL is_dir = NO;
+    if (![manager fileExistsAtPath:self.download_destination isDirectory:&is_dir] || !is_dir)
       _download_destination = [InfinitDirectoryManager sharedInstance].download_directory;
   }
   return self;
