@@ -13,9 +13,9 @@
 
 #import "InfinitDownloadDestinationManager.h"
 
-#import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitTime.h>
 #import <Gap/InfinitUserManager.h>
+#import <Gap/NSNumber+DataSize.h>
 
 #undef check
 #import <elle/log.hh>
@@ -503,8 +503,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
         self.top_button.hidden = NO;
         self.bottom_button.hidden = NO;
         self.transaction_status_button.hidden = YES;
-        self.information.stringValue =
-        [InfinitDataSize fileSizeStringFrom:_element.transaction.size];
+        self.information.stringValue = _element.transaction.size.infinit_fileSize;
       }
       else
       {
@@ -734,9 +733,10 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 
 - (NSString*)dataTransferredForTransaction:(InfinitPeerTransaction*)transaction
 {
-  NSNumber* transferred = [NSNumber numberWithDouble:(transaction.size.doubleValue * transaction.progress)];
-  return [NSString stringWithFormat:@"%@/%@", [InfinitDataSize fileSizeStringFrom:transferred],
-                                              [InfinitDataSize fileSizeStringFrom:transaction.size]];
+  NSNumber* transferred =
+    [NSNumber numberWithDouble:(transaction.size.doubleValue * transaction.progress)];
+  return [NSString stringWithFormat:@"%@/%@",
+          transferred.infinit_fileSize, transaction.size.infinit_fileSize];
 }
 
 - (void)updateProgress
