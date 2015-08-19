@@ -11,9 +11,9 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitLinkIconManager.h"
 
-#import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTime.h>
+#import <Gap/NSNumber+DataSize.h>
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -259,7 +259,7 @@ static NSImage* _icon_delete_hover = nil;
   {
     self.progress_indicator.hidden = YES;
     NSString* time_str = [InfinitTime relativeDateOf:self.transaction.mtime longerFormat:YES];
-    NSString* data_str = [InfinitDataSize fileSizeStringFrom:link.size];
+    NSString* data_str = link.size.infinit_fileSize;
     self.information.stringValue = [NSString stringWithFormat:@"%@ – %@", data_str, time_str];
   }
   self.cancel.hidden = !(self.transaction.status == gap_transaction_transferring ||
