@@ -12,7 +12,7 @@
 #import "InfinitSendFileView.h"
 
 #import <Gap/InfinitColor.h>
-#import <Gap/InfinitDataSize.h>
+#import <Gap/NSNumber+DataSize.h>
 
 #import <QuickLook/QuickLook.h>
 #import <QuartzCore/QuartzCore.h>
@@ -586,15 +586,13 @@ static NSDictionary* _info_attrs = nil;
       if (weak_file_list.count == 1)
       {
         info_str = [NSString stringWithFormat:@"1 %@ (%@)",
-                    NSLocalizedString(@"file", nil),
-                    [InfinitDataSize fileSizeStringFrom:total_size]];
+                    NSLocalizedString(@"file", nil), total_size.infinit_fileSize];
       }
       else
       {
         info_str = [NSString stringWithFormat:@"%ld %@ (%@)",
                     weak_file_list.count - 1,
-                    NSLocalizedString(@"files", nil),
-                    [InfinitDataSize fileSizeStringFrom:total_size]];
+                    NSLocalizedString(@"files", nil), total_size.infinit_fileSize];
       }
       if (weak_self != nil)
       {
