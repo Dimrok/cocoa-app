@@ -8,16 +8,19 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "InfinitConstants.h"
 #import "InfinitMainViewController.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTooltipViewController.h"
+#import "InfinitUsageBar.h"
 
+#import <Gap/InfinitAccountManager.h>
 #import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitConstants.h>
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitUserManager.h>
+#import <Gap/NSNumber+DataSize.h>
 
 #undef check
 #import <elle/log.hh>
@@ -32,23 +35,22 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 @interface InfinitMainViewController ()
 
+@property (nonatomic, strong) IBOutlet InfinitUsageBar* usage_bar;
+@property (nonatomic, strong) IBOutlet NSButton* usage_label;
+
 @property (nonatomic, unsafe_unretained) NSViewController* current_controller;
+@property (nonatomic, weak) id<InfinitMainViewProtocol> delegate;
+@property (nonatomic, readonly) BOOL for_people_view;
 @property (nonatomic, strong) InfinitLinkViewController* link_controller;
+@property (nonatomic, strong) InfinitTooltipViewController* tooltip;
 @property (nonatomic, strong) InfinitTransactionViewController* transaction_controller;
 
 @end
 
+static NSString* _version_str = nil;
+static NSDictionary* _usage_label_attrs = nil;
+
 @implementation InfinitMainViewController
-{
-@private
-  __weak id<InfinitMainViewProtocol> _delegate;
-
-  NSString* _version_str;
-
-  InfinitTooltipViewController* _tooltip;
-
-  BOOL _for_people_view;
-}
 
 #pragma mark - Init
 
@@ -64,12 +66,14 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
     _link_controller =
       [[InfinitLinkViewController alloc] initWithDelegate:self];
     if (_for_people_view)
-      _current_controller = _transaction_controller;
+      self.current_controller = _transaction_controller;
     else
-      _current_controller = _link_controller;
-
-    _version_str =
-      [NSString stringWithFormat:@"v%@", [NSString stringWithUTF8String:INFINIT_VERSION]];
+      self.current_controller = _link_controller;
+    if (!_version_str.length)
+    {
+      _version_str =
+        [NSString stringWithFormat:@"v%@", [NSString stringWithUTF8String:INFINIT_VERSION]];
+    }
   }
   return self;
 }
@@ -83,7 +87,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (void)awakeFromNib
 {
-  [self.main_view addSubview:_current_controller.view];
+  [self.main_view addSubview:self.current_controller.view];
   NSArray* contraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
                                             options:0
@@ -124,6 +128,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
     self.send_button.image = [IAFunctions imageNamed:@"icon-upload"];
     self.send_button.toolTip = NSLocalizedString(@"Get a link", nil);
   }
+  [self updateQuotaInformation];
 }
 
 - (void)linkAdded:(NSNotification*)notification
@@ -131,7 +136,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitLinkTransaction* link =
     [[InfinitLinkTransactionManager sharedInstance] transactionWithId:id_];
-  if (_current_controller != _link_controller)
+  if (self.current_controller != _link_controller)
     return;
   [self.link_controller linkAdded:link];
   [self.view_selector setLinkCount:self.link_controller.links_running];
@@ -139,7 +144,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (void)linkUpdated:(NSNotification*)notification
 {
-  if (_current_controller != self.link_controller)
+  if (self.current_controller != self.link_controller)
     return;
   NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitLinkTransaction* link =
@@ -244,7 +249,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 - (void)gotUserClick:(InfinitMainTransactionLinkView*)sender
 {
-  if (_current_controller == _transaction_controller)
+  if (self.current_controller == _transaction_controller)
     return;
 
   ELLE_LOG("%s: changing to people view", self.description.UTF8String);
@@ -261,9 +266,10 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context)
    {
      context.duration = 0.15;
-     [self.main_view.animator replaceSubview:_current_controller.view
+     [self.main_view.animator replaceSubview:self.current_controller.view
                                         with:_transaction_controller.view];
-     _current_controller = _transaction_controller;
+     self.current_controller = self.transaction_controller;
+     [self updateQuotaInformation];
    }
                       completionHandler:^
    {
@@ -271,7 +277,7 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
        [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
                                                options:0
                                                metrics:nil
-                                                 views:@{@"view": _current_controller.view}];
+                                                 views:@{@"view": self.current_controller.view}];
      [self.main_view addConstraints:constraints];
      if (self.content_height_constraint.constant != _transaction_controller.height)
      {
@@ -318,7 +324,8 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
     context.duration = 0.15;
     [self.main_view.animator replaceSubview:self.current_controller.view
                                        with:self.link_controller.view];
-    _current_controller = self.link_controller;
+    self.current_controller = self.link_controller;
+    [self updateQuotaInformation];
   }
                       completionHandler:^
   {
@@ -429,6 +436,107 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
   }];
 }
 
+- (IBAction)onGetMoreStorageClicked:(NSMenuItem*)sender
+{
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+   {
+     if (!result.success || !token.length || !email.length)
+       return;
+     NSString* url_str =
+       [kInfinitReferalMoreStorageURL stringByAppendingFormat:@"&login_token=%@&email=%@",
+        token, email];
+     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
+   }];
+}
+
+#pragma mark - Quota Handling
+
+- (void)updateQuotaInformation
+{
+  if (self.current_controller == self.transaction_controller)
+  {
+    InfinitAccountUsageQuota* self_quota =
+    [InfinitAccountManager sharedInstance].send_to_self_quota;
+    if (self_quota.quota)
+    {
+      self.usage_bar.doubleValue = self_quota.proportion_used.doubleValue;
+      NSString* label_str = nil;
+      switch (self_quota.remaining.unsignedIntegerValue)
+      {
+        case 0:
+          label_str = NSLocalizedString(@"No monthly transfers to yourself left", nil);
+          break;
+        case 1:
+          label_str = NSLocalizedString(@"1 monthly transfer to yourself left", nil);
+          break;
+        default:
+          label_str = [NSString localizedStringWithFormat:@"%@ monthly transfers to yourself left",
+                       self_quota.remaining];
+          break;
+      }
+      NSMutableDictionary* attrs =
+      [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+      attrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
+      self.usage_label.attributedTitle =
+      [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
+      self.usage_bar.hidden = NO;
+      self.usage_label.hidden = NO;
+    }
+    else
+    {
+      self.usage_bar.hidden = YES;
+      self.usage_label.hidden = YES;
+    }
+  }
+  else if (self.current_controller == self.link_controller)
+  {
+    InfinitAccountUsageQuota* link_quota = [InfinitAccountManager sharedInstance].link_quota;
+    if (link_quota.quota)
+    {
+      self.usage_bar.doubleValue = link_quota.proportion_used.doubleValue;
+      NSString* label_str = nil;
+      if (link_quota.remaining.unsignedLongLongValue <= 0)
+      {
+        label_str = NSLocalizedString(@"No storage space left", nil);
+      }
+      else
+      {
+        NSString* remaining_str = link_quota.remaining.infinit_fileSize;
+        label_str = [NSString localizedStringWithFormat:@"%@ storage left", remaining_str];
+      }
+      NSMutableDictionary* attrs =
+      [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+      attrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
+      self.usage_label.attributedTitle =
+      [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
+    }
+    else
+    {
+      self.usage_bar.hidden = YES;
+      self.usage_label.hidden = YES;
+    }
+  }
+}
+
+- (IBAction)quotaClicked:(id)sender
+{
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+   {
+     if (!result.success || !token.length || !email.length)
+       return;
+     NSString* url_str =
+       [kInfinitWebProfileQuotaURL stringByAppendingFormat:@"&login_token=%@&email=%@",
+        token, email];
+     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
+   }];
+}
+
 #pragma mark - IAViewController
 
 - (BOOL)closeOnFocusLost
@@ -478,9 +586,9 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 {
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  if (_current_controller == _transaction_controller)
+  if (self.current_controller == _transaction_controller)
     _transaction_controller.changing = YES;
-  else if (_current_controller == _link_controller)
+  else if (self.current_controller == _link_controller)
     _link_controller.changing = YES;
   [_tooltip close];
   [_transaction_controller closeToolTips];
