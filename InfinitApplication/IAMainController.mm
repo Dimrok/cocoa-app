@@ -29,7 +29,6 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitNetworkManager.h"
 #import "InfinitOSVersion.h"
-#import "InfinitQuotaWindowController.h"
 #import "InfinitScreenshotManager.h"
 #import "InfinitSettingsWindow.h"
 #import "InfinitSoundsManager.h"
@@ -67,7 +66,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
                                 InfinitStayAwakeProtocol>
 
 @property (nonatomic, readonly) InfinitConnectionManager* connection_manager;
-@property (nonatomic, readonly) InfinitQuotaWindowController* quota_window;
 
 @end
 
@@ -156,10 +154,6 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionAccepted:)
                                                  name:INFINIT_PEER_TRANSACTION_ACCEPTED_NOTIFICATION
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(quotaExceeded)
-                                                 name:INFINIT_LINK_QUOTA_EXCEEDED
                                                object:nil];
 
     _connection_manager = [InfinitConnectionManager sharedInstance];
@@ -1329,15 +1323,6 @@ hasCurrentViewController:(IAViewController*)controller
                                            emailAddress:nil
                                         performSelector:@selector(facebookConnectCallback:)
                                                onObject:self];
-}
-
-#pragma mark - Quota
-
-- (void)quotaExceeded
-{
-  NSString* class_name = NSStringFromClass(InfinitQuotaWindowController.class);
-  _quota_window = [[InfinitQuotaWindowController alloc] initWithWindowNibName:class_name];
-  [self.quota_window showWindow:self];
 }
 
 @end
