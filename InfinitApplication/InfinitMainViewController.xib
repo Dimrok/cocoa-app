@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
@@ -14,6 +14,8 @@
                 <outlet property="header_view" destination="2Lk-Xw-tFF" id="ZoV-1C-jcY"/>
                 <outlet property="main_view" destination="hEP-bi-K5F" id="gRG-m6-rm5"/>
                 <outlet property="send_button" destination="tU3-mI-zza" id="DrD-bH-Fn8"/>
+                <outlet property="usage_bar" destination="JNH-4t-7RO" id="P6m-8n-9dX"/>
+                <outlet property="usage_label" destination="Jhm-p4-rzn" id="iIR-b1-gMT"/>
                 <outlet property="version_item" destination="rgi-jQ-wyG" id="qUO-Dl-nyB"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="view_selector" destination="WKb-S2-bgh" id="ZoX-ao-Agc"/>
@@ -88,7 +90,7 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                         </caTransition>
                     </animations>
                 </customView>
-                <customView autoresizesSubviews="NO" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hwd-fU-mZe" customClass="IAFooterView">
+                <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwd-fU-mZe" customClass="IAFooterView">
                     <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
                     <subviews>
                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fLR-71-rem">
@@ -115,9 +117,29 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                                 <action selector="sendButtonClicked:" target="-2" id="GiT-em-pUl"/>
                             </connections>
                         </button>
+                        <progressIndicator maxValue="1" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="JNH-4t-7RO" customClass="InfinitUsageBar">
+                            <rect key="frame" x="108" y="17" width="100" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="CgB-hS-sPt"/>
+                            </constraints>
+                        </progressIndicator>
+                        <button horizontalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jhm-p4-rzn" customClass="InfinitHandButton">
+                            <rect key="frame" x="100" y="8" width="116" height="17"/>
+                            <buttonCell key="cell" type="roundTextured" title="Label" bezelStyle="texturedRounded" alignment="center" controlSize="mini" state="on" imageScaling="proportionallyDown" inset="2" id="qLx-bu-DLV">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" size="12" name="HelveticaNeue"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="quotaClicked:" target="-2" id="M04-8N-I9s"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="centerX" secondItem="Jhm-p4-rzn" secondAttribute="centerX" id="DqV-Qa-4Eb"/>
+                        <constraint firstItem="JNH-4t-7RO" firstAttribute="top" secondItem="hwd-fU-mZe" secondAttribute="top" constant="3" id="P7D-Jy-XQa"/>
+                        <constraint firstAttribute="bottom" secondItem="Jhm-p4-rzn" secondAttribute="bottom" constant="5" id="i4M-Wx-dLU"/>
                         <constraint firstAttribute="height" constant="39" id="jfH-bZ-Vr5"/>
+                        <constraint firstAttribute="centerX" secondItem="JNH-4t-7RO" secondAttribute="centerX" id="tgP-oZ-a0S"/>
                     </constraints>
                 </customView>
             </subviews>
@@ -125,7 +147,9 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                 <constraint firstItem="2Lk-Xw-tFF" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="4b8-8e-OQ0"/>
                 <constraint firstAttribute="bottom" secondItem="hwd-fU-mZe" secondAttribute="bottom" id="5ME-iE-JxS"/>
                 <constraint firstItem="hwd-fU-mZe" firstAttribute="top" secondItem="hEP-bi-K5F" secondAttribute="bottom" id="iS3-Uq-uux"/>
+                <constraint firstAttribute="trailing" secondItem="hwd-fU-mZe" secondAttribute="trailing" id="iSu-V9-GGn"/>
                 <constraint firstItem="hEP-bi-K5F" firstAttribute="top" secondItem="2Lk-Xw-tFF" secondAttribute="bottom" id="sp2-yh-7db"/>
+                <constraint firstItem="hwd-fU-mZe" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="yXG-vW-F7E"/>
             </constraints>
         </customView>
         <menu autoenablesItems="NO" id="TZg-Rw-nQG">
@@ -139,6 +163,12 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="onWebProfileClick:" target="-2" id="uaG-xG-aPy"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Get More Storage!" id="6lC-Ip-xon">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="onGetMoreStorageClicked:" target="-2" id="L8n-Jb-ifT"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="nSC-qx-BhU"/>
