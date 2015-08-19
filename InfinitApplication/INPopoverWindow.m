@@ -49,7 +49,6 @@
 // Allow the popover to become the key window
 - (BOOL)canBecomeKeyWindow
 {
-  // XXX
 	return NO;
 }
 
