@@ -8,11 +8,12 @@
 
 #import "InfinitSendViewController.h"
 
-#import "InfinitGhostSendWindowController.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitQuotaManager.h"
 #import "InfinitTooltipViewController.h"
 
 #import <Gap/InfinitAccountManager.h>
+#import <Gap/InfinitExternalAccountsManager.h>
 #import <Gap/NSString+email.h>
 
 #import <QuartzCore/QuartzCore.h>
@@ -359,7 +360,6 @@
 @interface InfinitSendViewController ()
 
 @property (nonatomic, readonly) dispatch_once_t init_token;
-@property (nonatomic, readonly) InfinitGhostSendWindowController* ghost_send_popup;
 
 @end
 
@@ -591,66 +591,62 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
 {
   if (self.user_link_view.mode == INFINIT_USER_MODE)
   {
+    InfinitAccountManager* manager = [InfinitAccountManager sharedInstance];
+    NSUInteger to_self_remaining = NSIntegerMax;
+    if (manager.send_to_self_quota)
+      to_self_remaining = manager.send_to_self_quota.remaining.unsignedIntegerValue;
     NSMutableArray* destinations = [NSMutableArray array];
     for (id element in _recipient_list)
     {
       if ([element isKindOfClass:InfinitSearchRowModel.class])
       {
+        InfinitSearchRowModel* model = (InfinitSearchRowModel*)element;
+        if ([model.destination isKindOfClass:InfinitDevice.class])
+        {
+          // Can only send to own devices.
+          if (!to_self_remaining)
+          {
+            [InfinitQuotaManager showWindowForSendToSelfLimit];
+            return;
+          }
+        }
+        else if ([model.destination isKindOfClass:InfinitUser.class])
+        {
+          InfinitUser* user = (InfinitUser*)model.destination;
+          if (user.is_self && !to_self_remaining)
+          {
+            [InfinitQuotaManager showWindowForSendToSelfLimit];
+            return;
+          }
+        }
         [destinations addObject:[element destination]];
       }
       else if ([element isKindOfClass:NSString.class])
       {
-        [destinations addObject:element];
+        NSString* email = (NSString*)element;
+        if ([[InfinitExternalAccountsManager sharedInstance] userEmail:email])
+        {
+          if (!to_self_remaining)
+          {
+            [InfinitQuotaManager showWindowForSendToSelfLimit];
+            return;
+          }
+        }
+        [destinations addObject:email];
       }
     }
-    uint64_t limit = (2 * 1024 * 1024 * 1024);
-    void (^send_block)() = ^()
+    if (manager.transfer_size_limit && _files_controller.file_size >= manager.transfer_size_limit)
+    {
+      [InfinitQuotaManager showWindowForTransferSizeLimit];
+    }
+    else
     {
       [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_CREATE_TRANSACTION];
       [_delegate sendView:self
            wantsSendFiles:[_delegate sendViewWantsFileList:self]
                   toUsers:destinations
               withMessage:_note];
-    };
-    if ([InfinitAccountManager sharedInstance].plan == InfinitAccountPlanTypeBasic &&
-        _files_controller.file_size >= limit)
-    {
-      __block BOOL show_popup = NO;
-      [destinations enumerateObjectsUsingBlock:^(id destination, NSUInteger idx, BOOL* stop)
-      {
-        if ([destination isKindOfClass:NSString.class])
-        {
-          show_popup = YES;
-          *stop = YES;
-        }
-        else if ([destination isKindOfClass:InfinitUser.class])
-        {
-          InfinitUser* user = (InfinitUser*)destination;
-          if (user.ghost)
-          {
-            show_popup = YES;
-            *stop = YES;
-          }
-        }
-      }];
-      if (show_popup)
-      {
-        if (!self.ghost_send_popup)
-        {
-          NSString* class_name = NSStringFromClass(InfinitGhostSendWindowController.class);
-          _ghost_send_popup =
-            [[InfinitGhostSendWindowController alloc] initWithWindowNibName:class_name];
-        }
-        self.ghost_send_popup.send_block = send_block;
-        [self.ghost_send_popup showWindow:self];
-      }
-      else
-      {
-        send_block();
-      }
-      return;
     }
-    send_block();
   }
   else
   {
