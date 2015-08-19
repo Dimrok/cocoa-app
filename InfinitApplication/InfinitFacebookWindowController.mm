@@ -21,6 +21,7 @@ ELLE_LOG_COMPONENT("OSX.FacebookWindowController");
 
 @property (nonatomic, unsafe_unretained) id<InfinitFacebookWindowProtocol> delegate;
 @property (nonatomic, weak) IBOutlet WebView* web_view;
+@property (atomic, readwrite) BOOL window_floating;
 
 @end
 
@@ -32,7 +33,7 @@ ELLE_LOG_COMPONENT("OSX.FacebookWindowController");
 {
   if (self = [super initWithWindowNibName:NSStringFromClass(self.class) owner:self])
   {
-    _delegate = delegate;
+    self.delegate = delegate;
   }
   return self;
 }
@@ -40,7 +41,7 @@ ELLE_LOG_COMPONENT("OSX.FacebookWindowController");
 - (void)dealloc
 {
   [self.web_view close];
-  _delegate = nil;
+  self.delegate = nil;
 }
 
 - (void)windowDidLoad
@@ -53,7 +54,12 @@ ELLE_LOG_COMPONENT("OSX.FacebookWindowController");
 
 - (void)showWindow:(id)sender
 {
+  self.window_floating = NO;
+  self.window.hidesOnDeactivate = YES;
+  self.window.level = NSNormalWindowLevel;
   [super showWindow:sender];
+  [self.window orderOut:self];
+  [self.window resignKeyWindow];
   [self.web_view.mainFrame loadRequest:[self _facebookRequest]];
 }
 
@@ -65,14 +71,24 @@ didReceiveResponse:(NSURLResponse*)response
  fromDataSource:(WebDataSource*)dataSource
 {
   NSDictionary* query_dict = [self _queryDictionaryFromResponse:response];
+  if (!query_dict.count && !self.window_floating)
+  {
+    self.window_floating = YES;
+    self.window.hidesOnDeactivate = NO;
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      self.window.level = NSFloatingWindowLevel;
+      [self.window makeKeyAndOrderFront:self];
+    });
+  }
   if (query_dict[kInfinitFacebookErrorKey])
   {
-    [_delegate facebookWindow:self gotError:query_dict[kInfinitFacebookErrorKey]];
+    [self.delegate facebookWindow:self gotError:query_dict[kInfinitFacebookErrorKey]];
     [self close];
   }
   else if (query_dict[kInfinitFacebookAccessKey])
   {
-    [_delegate facebookWindow:self gotToken:query_dict[kInfinitFacebookAccessKey]];
+    [self.delegate facebookWindow:self gotToken:query_dict[kInfinitFacebookAccessKey]];
     [self close];
   }
 }
