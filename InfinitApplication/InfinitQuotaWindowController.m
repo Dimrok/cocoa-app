@@ -8,19 +8,20 @@
 
 #import "InfinitQuotaWindowController.h"
 
-#import "InfinitMetricsManager.h"
-
 #import <Gap/InfinitAccountManager.h>
 #import <Gap/InfinitColor.h>
-#import <Gap/InfinitDataSize.h>
-
-#define INFINIT_UPGRADE_PLAN_URL @"https://infinit.io/account?utm_source=app&utm_medium=mac&utm_campaign=upgrade_plan"
+#import <Gap/InfinitConstants.h>
+#import <Gap/InfinitStateManager.h>
 
 @interface InfinitQuotaMainView : NSView
 @end
 
 @interface InfinitQuotaWindowController ()
-@property (nonatomic, weak) IBOutlet NSTextField* title_label;
+
+@property (nonatomic, strong) IBOutlet NSTextField* details_label;
+@property (nonatomic, strong) IBOutlet NSButton* invite_button;
+@property (nonatomic, strong) IBOutlet NSTextField* title_label;
+
 @end
 
 @implementation InfinitQuotaMainView
@@ -35,26 +36,16 @@
 
 @end
 
-static NSString* _title_str = nil;
-
 @implementation InfinitQuotaWindowController
 
-- (void)windowDidLoad
+- (void)showWithTitleText:(NSString*)title
+                  details:(NSString*)details
+      inviteButtonEnabled:(BOOL)invite_enabled
 {
-  [super windowDidLoad];
-  if (_title_str == nil)
-    _title_str = NSLocalizedString(@"You have exceeded your <size> quota for links.", nil);
-}
-
-- (void)showWindow:(id)sender
-{
-  [super showWindow:sender];
-  NSMutableString* title_str = [_title_str mutableCopy];
-  NSRange range = [title_str rangeOfString:@"<size>"];
-  uint64_t quota = [InfinitAccountManager sharedInstance].link_space_quota;
-  [title_str replaceCharactersInRange:range
-                           withString:[InfinitDataSize fileSizeStringFrom:@(quota)]];
-  self.title_label.stringValue = title_str;
+  self.title_label.stringValue = title;
+  self.details_label.stringValue = details;
+  self.invite_button.hidden = !invite_enabled;
+  [super showWindow:self];
   self.window.level = kCGFloatingWindowLevel;
   [self.window center];
 }
@@ -64,14 +55,43 @@ static NSString* _title_str = nil;
 - (IBAction)cancelClicked:(id)sender
 {
   [self.window close];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_LINK_QUOTA_CANCEL];
+  [self.delegate gotCancel];
 }
 
 - (IBAction)upgradeClicked:(id)sender
 {
   [self.window close];
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_UPGRADE_PLAN_URL]];
-  [InfinitMetricsManager sendMetric:INFINIT_METRIC_LINK_QUOTA_UPGRADE];
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+   {
+     if (!result.success || !token.length || !email.length)
+       return;
+     NSString* url_str =
+       [kInfinitUpgradePlanURL stringByAppendingFormat:@"&login_token=%@&email=%@",
+        token, email];
+     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
+   }];
+  [self.delegate gotUpgrade];
+}
+
+- (IBAction)inviteClicked:(id)sender
+{
+  [self.window close];
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+   {
+     if (!result.success || !token.length || !email.length)
+       return;
+     NSString* url_str =
+       [kInfinitReferalInviteURL stringByAppendingFormat:@"&login_token=%@&email=%@",
+        token, email];
+     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
+   }];
+  [self.delegate gotInvite];
 }
 
 @end

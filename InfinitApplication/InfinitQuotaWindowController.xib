@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitQuotaWindowController">
             <connections>
+                <outlet property="details_label" destination="sUx-a9-sOR" id="bYP-ia-WYh"/>
+                <outlet property="invite_button" destination="fqG-XJ-m0R" id="FV5-Xw-8LM"/>
                 <outlet property="title_label" destination="dRz-iJ-N6Q" id="umP-4A-f2i"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -25,35 +27,57 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="cVE-37-0nC" customClass="InfinitQuotaMainView">
                         <rect key="frame" x="0.0" y="70" width="460" height="335"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dRz-iJ-N6Q">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="1000" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dRz-iJ-N6Q">
                                 <rect key="frame" x="124" y="215" width="304" height="60"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You have exceeded your &lt;size&gt; quota for links." id="5fd-nd-m4j">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You have exceeded your &lt;size&gt; storage for links." id="5fd-nd-m4j">
                                     <font key="font" size="21" name="Helvetica-Light"/>
                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sUx-a9-sOR">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sUx-a9-sOR">
                                 <rect key="frame" x="42" y="94" width="386" height="57"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You can upgrade to a better plan on our website or remove some of your old links." id="9gs-fd-wMP">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="Hnm-PG-Y2h"/>
+                                </constraints>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You can upgrade your plan or invite friends to remove this limitation." id="9gs-fd-wMP">
                                     <font key="font" size="16" name="SourceSansPro-Regular"/>
                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Pr-LJ-m3y">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Pr-LJ-m3y">
                                 <rect key="frame" x="42" y="29" width="386" height="57"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="U4T-yO-YHM"/>
+                                </constraints>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Questions? Tweet us @infinit or send an email to contact@infinit.io." id="JgD-7z-lJH">
                                     <font key="font" size="16" name="SourceSansPro-Regular"/>
                                     <color key="textColor" red="0.70588235294117641" green="0.70588235294117641" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xMd-uQ-rr3">
-                                <rect key="frame" x="48" y="204" width="31" height="82"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon-quota-full" id="hae-ri-Jza"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xMd-uQ-rr3">
+                                <rect key="frame" x="44" y="210" width="68" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="68" id="IxH-Af-jBj"/>
+                                    <constraint firstAttribute="height" constant="71" id="Qs1-lI-Tvy"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon" id="hae-ri-Jza"/>
                             </imageView>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="sUx-a9-sOR" secondAttribute="trailing" constant="34" id="4Wl-u7-hUW"/>
+                            <constraint firstItem="dRz-iJ-N6Q" firstAttribute="leading" secondItem="xMd-uQ-rr3" secondAttribute="trailing" constant="14" id="8ui-XK-KPj"/>
+                            <constraint firstItem="dRz-iJ-N6Q" firstAttribute="centerY" secondItem="xMd-uQ-rr3" secondAttribute="centerY" id="Gih-zP-jpU"/>
+                            <constraint firstItem="6Pr-LJ-m3y" firstAttribute="leading" secondItem="cVE-37-0nC" secondAttribute="leading" constant="44" id="OQm-Zd-V96"/>
+                            <constraint firstAttribute="trailing" secondItem="6Pr-LJ-m3y" secondAttribute="trailing" constant="34" id="aTc-9X-kVb"/>
+                            <constraint firstItem="6Pr-LJ-m3y" firstAttribute="top" secondItem="sUx-a9-sOR" secondAttribute="bottom" constant="8" id="bCY-1o-Auj"/>
+                            <constraint firstAttribute="bottom" secondItem="6Pr-LJ-m3y" secondAttribute="bottom" constant="29" id="cf2-sR-fnj"/>
+                            <constraint firstItem="sUx-a9-sOR" firstAttribute="leading" secondItem="cVE-37-0nC" secondAttribute="leading" constant="44" id="cll-OU-eIG"/>
+                            <constraint firstItem="xMd-uQ-rr3" firstAttribute="leading" secondItem="cVE-37-0nC" secondAttribute="leading" constant="44" id="igh-vU-aqA"/>
+                            <constraint firstItem="xMd-uQ-rr3" firstAttribute="top" secondItem="cVE-37-0nC" secondAttribute="top" constant="54" id="vPR-JS-9hz"/>
+                        </constraints>
                     </customView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ByA-eP-0ft">
                         <rect key="frame" x="299" y="17" width="146" height="32"/>
@@ -81,6 +105,13 @@ Gw
                             <action selector="cancelClicked:" target="-2" id="KQK-vO-BaM"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqG-XJ-m0R">
+                        <rect key="frame" x="173" y="17" width="127" height="32"/>
+                        <buttonCell key="cell" type="push" title="Invite Friends!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IDl-ql-wOq">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="cVE-37-0nC" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="5I1-id-mlg"/>
@@ -92,10 +123,10 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="603" y="322.5"/>
+            <point key="canvasLocation" x="593" y="316.5"/>
         </window>
     </objects>
     <resources>
-        <image name="icon-quota-full" width="31" height="82"/>
+        <image name="icon" width="512" height="512"/>
     </resources>
 </document>

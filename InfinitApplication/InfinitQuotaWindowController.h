@@ -8,6 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol InfinitQuotaWindowProtocol;
+
 @interface InfinitQuotaWindowController : NSWindowController
+
+@property (nonatomic, weak) id<InfinitQuotaWindowProtocol> delegate;
+
+- (void)showWithTitleText:(NSString*)title
+                  details:(NSString*)details
+      inviteButtonEnabled:(BOOL)invite_enabled;
+
+@end
+
+@protocol InfinitQuotaWindowProtocol <NSObject>
+
+- (void)gotCancel;
+- (void)gotInvite;
+- (void)gotUpgrade;
 
 @end
