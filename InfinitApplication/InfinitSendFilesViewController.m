@@ -583,7 +583,7 @@ static NSDictionary* _info_attrs = nil;
       NSNumber* total_size = [NSNumber numberWithUnsignedInteger:res];
 
       NSString* info_str;
-      if (weak_file_list.count == 1)
+      if (weak_file_list.count - 1 == 1) // Exclude placeholder in count.
       {
         info_str = [NSString stringWithFormat:@"1 %@ (%@)",
                     NSLocalizedString(@"file", nil), total_size.infinit_fileSize];
