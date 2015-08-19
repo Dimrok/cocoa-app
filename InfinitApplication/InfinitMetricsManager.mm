@@ -147,12 +147,21 @@ static InfinitMetricsManager* _instance = nil;
     case INFINIT_METRIC_REGISTER_TO_LOGIN:
       return @"toggle login";
 
+    case INFINIT_METRIC_GHOST_QUOTA_CANCEL:
+    case INFINIT_METRIC_GHOST_QUOTA_UPGRADE:
+      return @"quota ghost popup";
     case INFINIT_METRIC_LINK_QUOTA_CANCEL:
+    case INFINIT_METRIC_LINK_QUOTA_INVITE:
     case INFINIT_METRIC_LINK_QUOTA_UPGRADE:
-      return @"link_quota_popup";
-    case INFINIT_METRIC_GHOST_LIMIT_CANCEL:
-    case INFINIT_METRIC_GHOST_LIMIT_CONTINUE:
-      return @"ghost_send_popup";
+      return @"quota link popup";
+    case INFINIT_METRIC_SELF_QUOTA_CANCEL:
+    case INFINIT_METRIC_SELF_QUOTA_INVITE:
+    case INFINIT_METRIC_SELF_QUOTA_UPGRADE:
+      return @"quota self popup";
+    case INFINIT_METRIC_TRANSFER_QUOTA_CANCEL:
+    case INFINIT_METRIC_TRANSFER_QUOTA_INVITE:
+    case INFINIT_METRIC_TRANSFER_QUOTA_UPGRADE:
+      return @"quota transfer popup";
 
     default:
       return @"unknown";
@@ -230,14 +239,20 @@ static InfinitMetricsManager* _instance = nil;
     case INFINIT_METRIC_REGISTER_TO_LOGIN:
       return @"login view";
 
+    case INFINIT_METRIC_GHOST_QUOTA_CANCEL:
     case INFINIT_METRIC_LINK_QUOTA_CANCEL:
+    case INFINIT_METRIC_SELF_QUOTA_CANCEL:
+    case INFINIT_METRIC_TRANSFER_QUOTA_CANCEL:
       return @"cancel";
+    case INFINIT_METRIC_GHOST_QUOTA_UPGRADE:
+    case INFINIT_METRIC_SELF_QUOTA_UPGRADE:
     case INFINIT_METRIC_LINK_QUOTA_UPGRADE:
+    case INFINIT_METRIC_TRANSFER_QUOTA_UPGRADE:
       return @"upgrade";
-    case INFINIT_METRIC_GHOST_LIMIT_CANCEL:
-      return @"cancel";
-    case INFINIT_METRIC_GHOST_LIMIT_CONTINUE:
-      return @"continue";
+    case INFINIT_METRIC_LINK_QUOTA_INVITE:
+    case INFINIT_METRIC_TRANSFER_QUOTA_INVITE:
+    case INFINIT_METRIC_SELF_QUOTA_INVITE:
+      return @"invite";
 
     default:
       return @"unknown";
