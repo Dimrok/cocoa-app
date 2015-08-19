@@ -10,6 +10,8 @@
 
 #import "NSStatusBarButtonCell.h"
 
-@interface NSStatusBarButtonCell(ForciblyHighlighted)
+@interface NSStatusBarButtonCell (ForciblyHighlighted)
+
 @property (nonatomic, assign) BOOL forciblyHighlighted;
+
 @end

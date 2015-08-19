@@ -8,32 +8,15 @@
 
 #import "NSStatusBarButtonCell+ForciblyHighlighted.h"
 
-#import <objc/runtime.h>
+#import <Gap/InfinitSwizzler.h>
 
 static char InfinitForciblyHighlightedKey;
-
-static
-void
-InfinitExchangeImplementations(Class cls, SEL srcSel, SEL dstSel)
-{
-  Method srcMethod = class_getInstanceMethod(cls, srcSel);
-  Method dstMethod = class_getInstanceMethod(cls, dstSel);
-
-  if (class_addMethod(cls, srcSel, method_getImplementation(dstMethod), method_getTypeEncoding(dstMethod)))
-  {
-    class_replaceMethod(cls, dstSel, method_getImplementation(srcMethod), method_getTypeEncoding(srcMethod));
-  }
-  else
-  {
-    method_exchangeImplementations(srcMethod, dstMethod);
-  }
-}
 
 @implementation NSStatusBarButtonCell(ForciblyHighlighted)
 
 + (void)load
 {
-  InfinitExchangeImplementations(self, @selector(isHighlighted), @selector(infinit_highlighted));
+  swizzle_class_selector(self, @selector(isHighlighted), @selector(infinit_highlighted));
 }
 
 
