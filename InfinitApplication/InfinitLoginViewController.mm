@@ -23,7 +23,7 @@
 
 #import <version.hh>
 
-#define INFINIT_HELP_URL @"https://infinit.io/faq?utm_source=app&utm_medium=mac&utm_campaign=help"
+#define INFINIT_HELP_URL @"http://help.infinit.io?utm_source=app&utm_medium=mac&utm_campaign=help"
 #define INFINIT_FORGOT_PASSWORD_URL @"https://infinit.io/forgot_password?utm_source=app&utm_medium=mac&utm_campaign=forgot_password"
 
 #undef check
