@@ -8,10 +8,10 @@
 
 #import "InfinitSettingsAccountView.h"
 
-#import "InfinitConstants.h"
 #import "InfinitKeychain.h"
 #import "InfinitSettingsWindow.h"
 
+#import <Gap/InfinitConstants.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
