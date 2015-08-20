@@ -601,7 +601,20 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
       if ([element isKindOfClass:InfinitSearchRowModel.class])
       {
         InfinitSearchRowModel* model = (InfinitSearchRowModel*)element;
-        if ([model.destination isKindOfClass:InfinitDevice.class])
+        if ([model.destination isKindOfClass:NSString.class])
+        {
+          NSString* email = (NSString*)model.destination;
+          if ([[InfinitExternalAccountsManager sharedInstance] userEmail:email])
+          {
+            if (!to_self_remaining)
+            {
+              [InfinitQuotaManager showWindowForSendToSelfLimit];
+              return;
+            }
+          }
+          [destinations addObject:email];
+        }
+        else if ([model.destination isKindOfClass:InfinitDevice.class])
         {
           // Can only send to own devices.
           if (!to_self_remaining)
