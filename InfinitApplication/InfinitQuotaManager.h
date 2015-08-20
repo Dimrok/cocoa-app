@@ -10,6 +10,8 @@
 
 @interface InfinitQuotaManager : NSObject
 
++ (void)start;
+
 + (void)showWindowForSendToSelfLimit;
 + (void)showWindowForTransferSizeLimit;
 

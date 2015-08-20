@@ -109,6 +109,11 @@ static dispatch_once_t _instance_token = 0;
 
 #pragma mark - External
 
++ (void)start
+{
+  [self sharedInstance];
+}
+
 + (void)showWindowForSendToSelfLimit
 {
   [[self sharedInstance] _showWindowForSendToSelfLimit];
