@@ -35,15 +35,15 @@
 
 - (void)setupUpdater
 {
-#ifdef BUILD_PRODUCTION
+#ifdef DEBUG
+  [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:NO];
+  [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
+  NSLog(@"Not checking for updates");
+#else
   [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
   [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
   [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
   NSLog(@"Will check for updates");
-#else
-  [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:NO];
-  [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
-  NSLog(@"Not checking for updates");
 #endif
 }
 
