@@ -29,6 +29,7 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitNetworkManager.h"
 #import "InfinitOSVersion.h"
+#import "InfinitQuotaManager.h"
 #import "InfinitScreenshotManager.h"
 #import "InfinitSettingsWindow.h"
 #import "InfinitSoundsManager.h"
@@ -158,6 +159,7 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
 
     _connection_manager = [InfinitConnectionManager sharedInstance];
     _stay_awake_manager = [InfinitStayAwakeManager setUpInstanceWithDelegate:self];
+    [InfinitQuotaManager start];
 
 
     if ([InfinitOSVersion lessThan:{10, 10, 0}])
@@ -884,9 +886,11 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 
 - (void)addToLoginItems
 {
-#ifdef BUILD_PRODUCTION
+#ifndef DEBUG
   if (![[IAAutoStartup sharedInstance] appInLoginItemList])
     [[IAAutoStartup sharedInstance] addAppAsLoginItem];
+#else
+  NSLog(@"DEBUG: addToLoginItems");
 #endif
 }
 
@@ -897,9 +901,11 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 
 - (void)removeFromLoginItems
 {
-#ifdef BUILD_PRODUCTION
+#ifndef DEBUG
   if ([[IAAutoStartup sharedInstance] appInLoginItemList])
     [[IAAutoStartup sharedInstance] removeAppFromLoginItem];
+#else
+  NSLog(@"DEBUG: removeFromLoginItems");
 #endif
 }
 
