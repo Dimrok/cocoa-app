@@ -42,10 +42,10 @@
                   details:(NSString*)details
       inviteButtonEnabled:(BOOL)invite_enabled
 {
+  [super showWindow:self];
   self.title_label.stringValue = title;
   self.details_label.stringValue = details;
   self.invite_button.hidden = !invite_enabled;
-  [super showWindow:self];
   self.window.level = kCGFloatingWindowLevel;
   [self.window center];
 }
