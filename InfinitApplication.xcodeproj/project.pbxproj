@@ -436,6 +436,8 @@
 		83CD6F8017A65FF2004F55D1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; };
 		83CD701317A6756D004F55D1 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8328084C17A2B6BE0025B6F8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83CF45F119B5ACD40074A9DA /* InfinitStatusBarIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */; };
+		83D0EC411B85F0B7002BB9C9 /* icon-quota-full.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D0EC3F1B85F0B7002BB9C9 /* icon-quota-full.png */; };
+		83D0EC421B85F0B7002BB9C9 /* icon-quota-full@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D0EC401B85F0B7002BB9C9 /* icon-quota-full@2x.png */; };
 		83E0F6651B01E3B20057B91E /* InfinitQuotaWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */; };
 		83E0F6661B01E3B20057B91E /* InfinitQuotaWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */; };
 		83E0F6681B01F1C90057B91E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E0F6671B01F1C90057B91E /* Carbon.framework */; };
@@ -1148,6 +1150,8 @@
 		83CD108817D4F95200AA0A19 /* IANoConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IANoConnectionViewController.xib; sourceTree = "<group>"; };
 		83CF45EF19B5ACD40074A9DA /* InfinitStatusBarIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStatusBarIcon.h; sourceTree = "<group>"; };
 		83CF45F019B5ACD40074A9DA /* InfinitStatusBarIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStatusBarIcon.m; sourceTree = "<group>"; };
+		83D0EC3F1B85F0B7002BB9C9 /* icon-quota-full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-quota-full.png"; path = "../../../../fist-resources/slices/mac/other/icon-quota-full.png"; sourceTree = "<group>"; };
+		83D0EC401B85F0B7002BB9C9 /* icon-quota-full@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-quota-full@2x.png"; path = "../../../../fist-resources/slices/mac/other/icon-quota-full@2x.png"; sourceTree = "<group>"; };
 		83E0F6621B01E3B20057B91E /* InfinitQuotaWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitQuotaWindowController.h; sourceTree = "<group>"; };
 		83E0F6631B01E3B20057B91E /* InfinitQuotaWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitQuotaWindowController.m; sourceTree = "<group>"; };
 		83E0F6641B01E3B20057B91E /* InfinitQuotaWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitQuotaWindowController.xib; sourceTree = "<group>"; };
@@ -2234,6 +2238,8 @@
 		83E0F6771B034F2F0057B91E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83D0EC3F1B85F0B7002BB9C9 /* icon-quota-full.png */,
+				83D0EC401B85F0B7002BB9C9 /* icon-quota-full@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2562,6 +2568,7 @@
 				837A7F7317FC072300600ACD /* IAReportProblemWindowController.xib in Resources */,
 				836EADCB1988F1F90053BE85 /* icon-transfer@2x.png in Resources */,
 				836FCB9D1B16346A007F5CFC /* onboarding-icon-android.png in Resources */,
+				83D0EC411B85F0B7002BB9C9 /* icon-quota-full.png in Resources */,
 				83C25B7119F010EE009752F1 /* send-icon-back.png in Resources */,
 				830BB8AC1B06045F00861D5F /* conversation-icon-resume@2x.png in Resources */,
 				836EAD9F1988EEC70053BE85 /* conversation-icon-quote@2x.png in Resources */,
@@ -2734,6 +2741,7 @@
 				83C25B5719EEBC8F009752F1 /* send-icon-media-folder.png in Resources */,
 				836EAD201988EE3B0053BE85 /* video@2x.png in Resources */,
 				8314458D1AC03C9A0032958B /* send-icon-device-android@2x.png in Resources */,
+				83D0EC421B85F0B7002BB9C9 /* icon-quota-full@2x.png in Resources */,
 				836FCB6D1B162A10007F5CFC /* send-device.mp4 in Resources */,
 				83AA9AE91A07E1F600C5D4BA /* icon-menu-bar-yosemite@2x.png in Resources */,
 				836FCB9E1B16346A007F5CFC /* onboarding-icon-android@2x.png in Resources */,
