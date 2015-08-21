@@ -37,6 +37,7 @@
 #import "InfinitStayAwakeManager.h"
 #import "InfinitTooltipViewController.h"
 
+#import <Gap/InfinitAccountManager.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitLinkTransactionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -155,6 +156,10 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionAccepted:)
                                                  name:INFINIT_PEER_TRANSACTION_ACCEPTED_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(accountPlanChanged:) 
+                                                 name:INFINIT_ACCOUNT_PLAN_CHANGED 
                                                object:nil];
 
     _connection_manager = [InfinitConnectionManager sharedInstance];
@@ -1317,9 +1322,7 @@ hasCurrentViewController:(IAViewController*)controller
 
 - (void)facebookWindow:(InfinitFacebookWindowController*)sender
               gotError:(NSString*)error
-{
-
-}
+{}
 
 - (void)facebookWindow:(InfinitFacebookWindowController*)sender
               gotToken:(NSString*)token
@@ -1329,6 +1332,16 @@ hasCurrentViewController:(IAViewController*)controller
                                            emailAddress:nil
                                         performSelector:@selector(facebookConnectCallback:)
                                                onObject:self];
+}
+
+#pragma mark - Account Plan Changed
+
+- (void)accountPlanChanged:(NSNotification*)notification
+{
+  if (![InfinitDesktopNotifier sharedInstance])
+    return;
+  NSString* plan_name = notification.userInfo[kInfinitAccountPlanName];
+  [[InfinitDesktopNotifier sharedInstance] accountPlanChangedTo:plan_name];
 }
 
 @end
