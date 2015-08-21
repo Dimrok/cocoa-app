@@ -158,6 +158,14 @@ static dispatch_once_t _instance_token = 0;
   }
 }
 
+- (void)accountPlanChangedTo:(NSString*)plan
+{
+  NSUserNotification* notification = [[NSUserNotification alloc] init];
+  notification.title = NSLocalizedString(@"Account plan changed!", nil);
+  notification.informativeText = [NSString localizedStringWithFormat:@"You've changed to the %@ plan", plan];
+  [self.notification_center deliverNotification:notification];
+}
+
 #pragma mark - Transaction Handling
 
 - (void)desktopNotificationForTransactionAccepted:(InfinitPeerTransaction*)transaction

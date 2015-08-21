@@ -32,6 +32,8 @@
 
 - (void)checkPendingTransactions;
 
+- (void)accountPlanChangedTo:(NSString*)plan;
+
 @end
 
 @protocol InfinitDesktopNotifierProtocol <NSObject>
