@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitQuotaWindowController">
             <connections>
+                <outlet property="cancel_button" destination="2Bk-lB-5M3" id="6ge-lo-HYs"/>
                 <outlet property="details_label" destination="sUx-a9-sOR" id="bYP-ia-WYh"/>
                 <outlet property="invite_button" destination="fqG-XJ-m0R" id="FV5-Xw-8LM"/>
                 <outlet property="title_label" destination="dRz-iJ-N6Q" id="umP-4A-f2i"/>
@@ -27,8 +28,8 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="cVE-37-0nC" customClass="InfinitQuotaMainView">
                         <rect key="frame" x="0.0" y="70" width="460" height="335"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="1000" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dRz-iJ-N6Q">
-                                <rect key="frame" x="124" y="215" width="304" height="60"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="1000" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dRz-iJ-N6Q">
+                                <rect key="frame" x="98" y="214" width="330" height="52"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="You have exceeded your &lt;size&gt; storage for links." id="5fd-nd-m4j">
                                     <font key="font" size="21" name="Helvetica-Light"/>
                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -58,28 +59,29 @@
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xMd-uQ-rr3">
-                                <rect key="frame" x="44" y="210" width="68" height="71"/>
+                                <rect key="frame" x="44" y="199" width="31" height="82"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="68" id="IxH-Af-jBj"/>
-                                    <constraint firstAttribute="height" constant="71" id="Qs1-lI-Tvy"/>
+                                    <constraint firstAttribute="width" constant="31" id="IxH-Af-jBj"/>
+                                    <constraint firstAttribute="height" constant="82" id="Qs1-lI-Tvy"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon" id="hae-ri-Jza"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon-quota-full" id="hae-ri-Jza"/>
                             </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="sUx-a9-sOR" secondAttribute="trailing" constant="34" id="4Wl-u7-hUW"/>
-                            <constraint firstItem="dRz-iJ-N6Q" firstAttribute="leading" secondItem="xMd-uQ-rr3" secondAttribute="trailing" constant="14" id="8ui-XK-KPj"/>
+                            <constraint firstItem="dRz-iJ-N6Q" firstAttribute="leading" secondItem="xMd-uQ-rr3" secondAttribute="trailing" constant="25" id="8ui-XK-KPj"/>
                             <constraint firstItem="dRz-iJ-N6Q" firstAttribute="centerY" secondItem="xMd-uQ-rr3" secondAttribute="centerY" id="Gih-zP-jpU"/>
+                            <constraint firstItem="sUx-a9-sOR" firstAttribute="leading" secondItem="xMd-uQ-rr3" secondAttribute="leading" id="Mbd-RL-bN1"/>
                             <constraint firstItem="6Pr-LJ-m3y" firstAttribute="leading" secondItem="cVE-37-0nC" secondAttribute="leading" constant="44" id="OQm-Zd-V96"/>
+                            <constraint firstItem="dRz-iJ-N6Q" firstAttribute="trailing" secondItem="sUx-a9-sOR" secondAttribute="trailing" id="aSd-QF-1xX"/>
                             <constraint firstAttribute="trailing" secondItem="6Pr-LJ-m3y" secondAttribute="trailing" constant="34" id="aTc-9X-kVb"/>
                             <constraint firstItem="6Pr-LJ-m3y" firstAttribute="top" secondItem="sUx-a9-sOR" secondAttribute="bottom" constant="8" id="bCY-1o-Auj"/>
                             <constraint firstAttribute="bottom" secondItem="6Pr-LJ-m3y" secondAttribute="bottom" constant="29" id="cf2-sR-fnj"/>
                             <constraint firstItem="sUx-a9-sOR" firstAttribute="leading" secondItem="cVE-37-0nC" secondAttribute="leading" constant="44" id="cll-OU-eIG"/>
-                            <constraint firstItem="xMd-uQ-rr3" firstAttribute="leading" secondItem="cVE-37-0nC" secondAttribute="leading" constant="44" id="igh-vU-aqA"/>
                             <constraint firstItem="xMd-uQ-rr3" firstAttribute="top" secondItem="cVE-37-0nC" secondAttribute="top" constant="54" id="vPR-JS-9hz"/>
                         </constraints>
                     </customView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ByA-eP-0ft">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ByA-eP-0ft">
                         <rect key="frame" x="299" y="17" width="146" height="32"/>
                         <buttonCell key="cell" type="push" title="Upgrade my plan" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V46-GQ-Y3y">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -92,8 +94,8 @@ DQ
                             <action selector="upgradeClicked:" target="-2" id="PG5-ex-BcE"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Bk-lB-5M3">
-                        <rect key="frame" x="13" y="17" width="82" height="32"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Bk-lB-5M3">
+                        <rect key="frame" x="13" y="17" width="83" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XEI-Ec-pf5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -105,7 +107,7 @@ Gw
                             <action selector="cancelClicked:" target="-2" id="KQK-vO-BaM"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqG-XJ-m0R">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fqG-XJ-m0R">
                         <rect key="frame" x="173" y="17" width="127" height="32"/>
                         <buttonCell key="cell" type="push" title="Invite Friends!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IDl-ql-wOq">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -114,19 +116,25 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="2Bk-lB-5M3" secondAttribute="bottom" constant="24" id="3Bg-4z-EDA"/>
                     <constraint firstItem="cVE-37-0nC" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="5I1-id-mlg"/>
+                    <constraint firstItem="ByA-eP-0ft" firstAttribute="leading" secondItem="fqG-XJ-m0R" secondAttribute="trailing" constant="11" id="8pS-qD-l4k"/>
+                    <constraint firstItem="fqG-XJ-m0R" firstAttribute="centerY" secondItem="2Bk-lB-5M3" secondAttribute="centerY" id="MwF-qh-bkq"/>
                     <constraint firstAttribute="trailing" secondItem="cVE-37-0nC" secondAttribute="trailing" id="Oue-fW-dCa"/>
                     <constraint firstAttribute="bottom" secondItem="cVE-37-0nC" secondAttribute="bottom" constant="70" id="ZKQ-Hd-yfK"/>
+                    <constraint firstAttribute="trailing" secondItem="ByA-eP-0ft" secondAttribute="trailing" constant="21" id="cPH-2V-Y1i"/>
                     <constraint firstItem="cVE-37-0nC" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="fTd-0x-i1g"/>
+                    <constraint firstItem="2Bk-lB-5M3" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="19" id="q7o-FK-zM7"/>
+                    <constraint firstItem="fqG-XJ-m0R" firstAttribute="centerY" secondItem="ByA-eP-0ft" secondAttribute="centerY" id="rBu-RU-oQS"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="593" y="316.5"/>
+            <point key="canvasLocation" x="285" y="340.5"/>
         </window>
     </objects>
     <resources>
-        <image name="icon" width="512" height="512"/>
+        <image name="icon-quota-full" width="31" height="82"/>
     </resources>
 </document>

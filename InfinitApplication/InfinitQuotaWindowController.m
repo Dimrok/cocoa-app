@@ -18,9 +18,10 @@
 
 @interface InfinitQuotaWindowController ()
 
-@property (nonatomic, strong) IBOutlet NSTextField* details_label;
-@property (nonatomic, strong) IBOutlet NSButton* invite_button;
-@property (nonatomic, strong) IBOutlet NSTextField* title_label;
+@property (nonatomic) IBOutlet NSButton* cancel_button;
+@property (nonatomic) IBOutlet NSTextField* details_label;
+@property (nonatomic) IBOutlet NSButton* invite_button;
+@property (nonatomic) IBOutlet NSTextField* title_label;
 
 @end
 
@@ -43,6 +44,8 @@
       inviteButtonEnabled:(BOOL)invite_enabled
 {
   [super showWindow:self];
+  self.cancel_button.title =
+    invite_enabled ? NSLocalizedString(@"Cancel", nil) : NSLocalizedString(@"OK", nil);
   self.title_label.stringValue = title;
   self.details_label.stringValue = details;
   self.invite_button.hidden = !invite_enabled;
