@@ -14,6 +14,7 @@
 
 #import <Gap/InfinitAccountManager.h>
 #import <Gap/InfinitExternalAccountsManager.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/NSString+email.h>
 
 #import <QuartzCore/QuartzCore.h>
@@ -595,7 +596,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     NSUInteger to_self_remaining = NSIntegerMax;
     if (manager.send_to_self_quota)
       to_self_remaining = manager.send_to_self_quota.remaining.unsignedIntegerValue;
-    NSMutableArray* destinations = [NSMutableArray array];
+    NSMutableSet* destinations = [NSMutableSet set];
     for (id element in _recipient_list)
     {
       if ([element isKindOfClass:InfinitSearchRowModel.class])
@@ -609,6 +610,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
             if (!to_self_remaining)
             {
               [InfinitQuotaManager showWindowForSendToSelfLimit];
+              [[InfinitStateManager sharedInstance] sendMetricSendToSelfLimit];
               return;
             }
           }
@@ -620,6 +622,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
           if (!to_self_remaining)
           {
             [InfinitQuotaManager showWindowForSendToSelfLimit];
+            [[InfinitStateManager sharedInstance] sendMetricSendToSelfLimit];
             return;
           }
         }
@@ -629,6 +632,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
           if (user.is_self && !to_self_remaining)
           {
             [InfinitQuotaManager showWindowForSendToSelfLimit];
+            [[InfinitStateManager sharedInstance] sendMetricSendToSelfLimit];
             return;
           }
         }
@@ -642,6 +646,7 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
           if (!to_self_remaining)
           {
             [InfinitQuotaManager showWindowForSendToSelfLimit];
+            [[InfinitStateManager sharedInstance] sendMetricSendToSelfLimit];
             return;
           }
         }
@@ -651,13 +656,14 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
     if (manager.transfer_size_limit && _files_controller.file_size >= manager.transfer_size_limit)
     {
       [InfinitQuotaManager showWindowForTransferSizeLimit];
+      [[InfinitStateManager sharedInstance] sendMetricTransferSizeLimitWithTransferSize:_files_controller.file_size];
     }
     else
     {
       [InfinitMetricsManager sendMetric:INFINIT_METRIC_SEND_CREATE_TRANSACTION];
       [_delegate sendView:self
            wantsSendFiles:[_delegate sendViewWantsFileList:self]
-                  toUsers:destinations
+                  toUsers:destinations.allObjects
               withMessage:_note];
     }
   }
