@@ -17,13 +17,13 @@
 #import "InfinitNetworkManager.h"
 
 #import <Gap/InfinitColor.h>
+#import <Gap/InfinitConstants.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 #import <Gap/NSString+email.h>
 
 #import <version.hh>
 
-#define INFINIT_HELP_URL @"http://help.infinit.io?utm_source=app&utm_medium=mac&utm_campaign=help"
 #define INFINIT_FORGOT_PASSWORD_URL @"https://infinit.io/forgot_password?utm_source=app&utm_medium=mac&utm_campaign=forgot_password"
 
 #undef check
@@ -569,7 +569,7 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
 
 - (IBAction)helpClicked:(IAHoverButton*)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:INFINIT_HELP_URL]];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kInfinitHelpURL]];
   [self closeLoginView];
 }
 
