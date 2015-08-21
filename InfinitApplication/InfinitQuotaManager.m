@@ -63,7 +63,7 @@ static dispatch_once_t _instance_token = 0;
       NSLocalizedString(@"You can upgrade your plan or invite friends to remove this limitation.",
                         nil);
     _send_to_self_title =
-      NSLocalizedString(@"You have reached your limit for sending files to your own devices.", nil);
+      NSLocalizedString(@"You have reached your monthly limit for sending files to your own devices.", nil);
     _transfer_size_details =
       NSLocalizedString(@"You can upgrade your plan or invite friends to remove this limitation.",
                         nil);
