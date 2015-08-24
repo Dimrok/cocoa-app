@@ -44,6 +44,7 @@
       inviteButtonEnabled:(BOOL)invite_enabled
 {
   [super showWindow:self];
+  self.window.alphaValue = 0.0f;
   self.cancel_button.title =
     invite_enabled ? NSLocalizedString(@"Cancel", nil) : NSLocalizedString(@"OK", nil);
   self.title_label.stringValue = title;
@@ -51,6 +52,7 @@
   self.invite_button.hidden = !invite_enabled;
   self.window.level = kCGFloatingWindowLevel;
   [self.window center];
+  self.window.alphaValue = 1.0f;
 }
 
 #pragma mark - Button Handling
