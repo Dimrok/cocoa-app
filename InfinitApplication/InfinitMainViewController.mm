@@ -74,6 +74,10 @@ static NSDictionary* _usage_label_attrs = nil;
       _version_str =
         [NSString stringWithFormat:@"v%@", [NSString stringWithUTF8String:INFINIT_VERSION]];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateQuotaInformation)
+                                                 name:INFINIT_ACCOUNT_QUOTA_UPDATED
+                                               object:nil];
   }
   return self;
 }
@@ -83,6 +87,7 @@ static NSDictionary* _usage_label_attrs = nil;
   _transaction_controller = nil;
   _link_controller = nil;
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)awakeFromNib
