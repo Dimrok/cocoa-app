@@ -12,7 +12,7 @@
 
 int main(int argc, char *argv[])
 {
-#ifndef DEBUG
+#if !DEBUG
   @autoreleasepool
   {
     // Only need to change the library path on versions older than 10.9.

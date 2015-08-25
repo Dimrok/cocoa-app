@@ -891,7 +891,7 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 
 - (void)addToLoginItems
 {
-#ifdef DEBUG
+#if DEBUG
   NSLog(@"DEBUG: addToLoginItems");
 #else
   if (![[IAAutoStartup sharedInstance] appInLoginItemList])
@@ -906,7 +906,7 @@ hadClickNotificationForLinkId:(NSNumber*)id_
 
 - (void)removeFromLoginItems
 {
-#ifdef DEBUG
+#if DEBUG
   NSLog(@"DEBUG: removeFromLoginItems");
 #else
   if ([[IAAutoStartup sharedInstance] appInLoginItemList])

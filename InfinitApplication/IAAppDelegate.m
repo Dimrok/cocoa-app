@@ -35,7 +35,7 @@
 
 - (void)setupUpdater
 {
-#ifdef DEBUG
+#if DEBUG
   [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:NO];
   [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
   NSLog(@"Not checking for updates");
@@ -272,7 +272,7 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 
 - (void)mainControllerWantsBackgroundUpdateChecks:(IAMainController*)sender
 {
-#ifdef BUILD_PRODUCTION
+#if !DEBUG
   [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 #endif
 }
