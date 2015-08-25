@@ -464,7 +464,7 @@ static NSDictionary* _usage_label_attrs = nil;
   if (self.current_controller == self.transaction_controller)
   {
     InfinitAccountUsageQuota* self_quota =
-    [InfinitAccountManager sharedInstance].send_to_self_quota;
+      [InfinitAccountManager sharedInstance].send_to_self_quota;
     if (self_quota.quota)
     {
       self.usage_bar.doubleValue = self_quota.proportion_used.doubleValue;
@@ -483,10 +483,10 @@ static NSDictionary* _usage_label_attrs = nil;
           break;
       }
       NSMutableDictionary* attrs =
-      [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+        [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
       attrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
       self.usage_label.attributedTitle =
-      [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
+        [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
       self.usage_bar.hidden = NO;
       self.usage_label.hidden = NO;
     }
@@ -513,10 +513,12 @@ static NSDictionary* _usage_label_attrs = nil;
         label_str = [NSString localizedStringWithFormat:@"%@ storage left", remaining_str];
       }
       NSMutableDictionary* attrs =
-      [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+        [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
       attrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
       self.usage_label.attributedTitle =
-      [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
+        [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
+      self.usage_bar.hidden = NO;
+      self.usage_label.hidden = NO;
     }
     else
     {
