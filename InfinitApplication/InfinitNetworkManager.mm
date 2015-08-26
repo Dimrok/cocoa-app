@@ -206,7 +206,7 @@ static InfinitNetworkManager* _instance = nil;
           }
         }
       }
-      gap_ProxyType gap_proxy_type;
+      gap_ProxyType gap_proxy_type = gap_proxy_http;
       if ([proxy_type isEqualToString:@"HTTP"])
       {
         gap_proxy_type = gap_proxy_http;
