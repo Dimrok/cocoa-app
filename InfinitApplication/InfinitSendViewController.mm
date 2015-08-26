@@ -593,8 +593,8 @@ static NSDictionary* _send_btn_disabled_attrs = nil;
   if (self.user_link_view.mode == INFINIT_USER_MODE)
   {
     InfinitAccountManager* manager = [InfinitAccountManager sharedInstance];
-    NSUInteger to_self_remaining = NSIntegerMax;
-    if (manager.send_to_self_quota)
+    NSUInteger to_self_remaining = NSUIntegerMax;
+    if (manager.send_to_self_quota.quota)
       to_self_remaining = manager.send_to_self_quota.remaining.unsignedIntegerValue;
     NSMutableSet* destinations = [NSMutableSet set];
     for (id element in _recipient_list)
