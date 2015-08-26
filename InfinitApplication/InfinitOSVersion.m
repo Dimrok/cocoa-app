@@ -75,9 +75,9 @@ static dispatch_once_t _version_token = 0;
 + (BOOL)greaterThanRelease:(InfinitOSVersionStruct)version
 {
   InfinitOSVersionStruct this_version = [self osVersion];
-  if (version.major > this_version.major)
+  if (this_version.major > version.major)
     return YES;
-  if (version.major == this_version.major && version.minor > this_version.minor)
+  if (this_version.major == version.major && this_version.minor > version.minor)
     return YES;
   return NO;
 }
@@ -113,13 +113,12 @@ static dispatch_once_t _version_token = 0;
 + (BOOL)greaterThan:(InfinitOSVersionStruct)version
 {
   InfinitOSVersionStruct this_version = [self osVersion];
-  if (version.major > this_version.major)
+  if (this_version.major > version.major)
     return YES;
-  if (version.major == this_version.major && version.minor > this_version.minor)
+  if (this_version.major == version.major && this_version.minor > version.minor)
     return YES;
-  if (version.major == this_version.major &&
-      version.minor == this_version.minor &&
-      version.subminor > this_version.subminor)
+  if (this_version.major == version.major && this_version.minor == version.minor &&
+      this_version.subminor > version.subminor)
   {
     return YES;
   }
