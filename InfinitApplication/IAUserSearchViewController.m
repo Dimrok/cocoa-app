@@ -843,13 +843,6 @@ writeRepresentedObjects:(NSArray*)objects
 
 - (void)searchControllerGotResults:(InfinitSearchController*)sender
 {
-  NSString* search_string;
-  NSArray* tokens = self.search_field.objectValue;
-  if ([tokens.lastObject isKindOfClass:NSString.class])
-    search_string = [self trimLeadingWhitespace:tokens.lastObject];
-  else
-    search_string = @"";
-  
   [self searchLoading:NO];
 
   if (self.search_results == nil)
