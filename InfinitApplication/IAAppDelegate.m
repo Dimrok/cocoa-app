@@ -86,7 +86,7 @@ static NSTimeInterval _update_install_retry_cooldown = 2 * 60.0f; // Install ret
 #else
   if (self.fingerprint.length || self.readonly_volume)
   {
-    NSLog(@"Skip startup update check because of fingerprint");
+    NSLog(@"Skip startup update check because of fingerprint or read only volume");
     [self startMainController];
   }
   else
