@@ -83,10 +83,6 @@ static NSTimeInterval _update_install_retry_cooldown = 2 * 60.0f; // Install ret
   //If there are no updates then continue, otherwise do nothing as the update will be performed.
 #if DEBUG
   [self startMainController];
-  if (self.readonly_volume)
-  {
-    
-  }
 #else
   if (self.fingerprint.length || self.readonly_volume)
   {
