@@ -13,13 +13,6 @@
 
 #import "IAMainController.h"
 
-@interface IAAppDelegate : NSObject <NSApplicationDelegate,
-                                     IAMainControllerProtocol>
-{
-@private
-    IAMainController* _controller;
-}
-
-@property (assign) IBOutlet NSWindow* window;
+@interface IAAppDelegate : NSObject
 
 @end

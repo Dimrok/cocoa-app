@@ -8,6 +8,8 @@
 
 #import "IAAppDelegate.h"
 
+#include <sys/mount.h>
+
 #import <Sparkle/Sparkle.h>
 
 #import "IAUserPrefs.h"
@@ -18,102 +20,30 @@
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitURLParser.h>
 
-//- Automatic Relaunching --------------------------------------------------------------------------
+@interface IAAppDelegate () <NSApplicationDelegate,
+                             IAMainControllerProtocol>
+
+@property (assign) IBOutlet NSWindow* window;
+
+@property NSArray* contextual_link_files;
+@property NSArray* contextual_send_files;
+@property (nonatomic) IAMainController* controller;
+@property NSString* fingerprint;
+@property NSURL* infinit_url;
+@property (nonatomic, readonly) BOOL readonly_volume;
+@property NSInvocation* update_invocation;
+@property BOOL updating;
+
+@end
+
+static NSTimeInterval _auto_update_check_interval = 24 * 60 * 60.0f; // Automatic update check period.
+static NSTimeInterval _startup_install_timeout = 20 * 60.0f; // Timeout for startup download and install.
+static NSTimeInterval _startup_update_check_timeout = 45.0f; // Timeout for startup check for update.
+static NSTimeInterval _update_install_retry_cooldown = 2 * 60.0f; // Install retry period.
 
 @implementation IAAppDelegate
-{
-@private
-  BOOL _updating;
-  NSInvocation* _update_invocation;
-  
-  NSURL* _infinit_url;
-  NSArray* _contextual_send_files;
-  NSArray* _contextual_link_files;
-}
 
-//- Sparkle Updater --------------------------------------------------------------------------------
-
-- (void)setupUpdater
-{
-#if DEBUG
-  [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:NO];
-  [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
-  NSLog(@"Not checking for updates");
-#else
-  [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
-  [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
-  [[SUUpdater sharedUpdater] setUpdateCheckInterval:3600]; // check every 1 hours
-  NSLog(@"Will check for updates");
-#endif
-}
-
-// Overloaded so that we check for updates on the first launch
-// https://github.com/andymatuschak/Sparkle/wiki/customization
-- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater*)bundle
-{
-  return NO;
-}
-
-- (BOOL)updater:(SUUpdater*)updater
-shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
-  untilInvoking:(NSInvocation*)invocation
-{
-  _updating = YES;
-  _update_invocation = invocation;
-  if (_controller != nil)
-    [_controller handleQuit];
-  else
-    [self terminateApplication:nil];
-  return YES;
-}
-
-- (void)updaterWillRelaunchApplication:(SUUpdater*)updater
-{
-  NSLog(@"%@ Will relaunch", self);
-  [[IAUserPrefs sharedInstance] setPrefNow:@"1" forKey:@"updated"];
-}
-
-- (void)delayedTryUpdate:(NSInvocation*)invocation
-{
-  if (_controller == nil || [_controller canUpdate])
-  {
-    _updating = YES;
-    [invocation invoke];
-  }
-  else
-  {
-    [self performSelector:@selector(delayedTryUpdate:) withObject:invocation afterDelay:(60 * 5)];
-  }
-}
-
-- (void)updater:(SUUpdater*)updater
-willInstallUpdateOnQuit:(SUAppcastItem*)update
-immediateInstallationInvocation:(NSInvocation*)invocation
-{
-  if (_controller == nil || [_controller canUpdate])
-  {
-    _updating = YES;
-    [invocation invoke];
-  }
-  else
-  {
-    [self performSelector:@selector(delayedTryUpdate:) withObject:invocation afterDelay:(60 * 5)];
-  }
-}
-
-//- Initialisation ---------------------------------------------------------------------------------
-
-- (id)init
-{
-  if (self = [super init])
-  {
-    _updating = NO;
-    _infinit_url = nil;
-    _contextual_send_files = nil;
-    _contextual_link_files = nil;
-  }
-  return self;
-}
+#pragma mark - Init
 
 - (void)dealloc
 {
@@ -138,31 +68,73 @@ immediateInstallationInvocation:(NSInvocation*)invocation
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
-  [NSApp setServicesProvider:self];
-  NSString* download_dir =
-    [InfinitDownloadDestinationManager sharedInstance].download_destination;
-  [InfinitStateManager startStateWithDownloadDir:download_dir];
-  [InfinitFeatureManager sharedInstance];
-
-  _controller = [[IAMainController alloc] initWithDelegate:self];
-  if (_infinit_url != nil) // Infinit was launched with a link
-    [_controller handleInfinitLink:_infinit_url];
-  else if (_contextual_send_files != nil) // Infinit was launched to send files
-    [_controller handleContextualSendFiles:_contextual_send_files];
-
-  NSString* code = nil;
   NSArray* arguments = [NSProcessInfo processInfo].arguments;
   for (int i = 0; i < arguments.count; i++)
   {
     NSString* arg = arguments[i];
-    if ([arg isEqualToString:@"code"])
-      code = arguments[i + 1];
+    if ([arg isEqualToString:@"code"] && (i < arguments.count))
+    {
+      NSString* code = arguments[i + 1];
+      if (code.length)
+        self.fingerprint = code;
+    }
   }
-  if (code.length)
-    [[InfinitStateManager sharedInstance] addFingerprint:code];
+  // Check for updates before anything else unless we were launched with a fingerpirnt.
+  //If there are no updates then continue, otherwise do nothing as the update will be performed.
+#if DEBUG
+  [self startMainController];
+  if (self.readonly_volume)
+  {
+    
+  }
+#else
+  if (self.fingerprint.length || self.readonly_volume)
+  {
+    NSLog(@"Skip startup update check because of fingerprint");
+    [self startMainController];
+  }
+  else
+  {
+    NSLog(@"Startup update check");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(noUpdateAvailableOnStartup) 
+                                                 name:SUUpdaterDidNotFindUpdateNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateAvailableOnStartup) 
+                                                 name:SUUpdaterDidFindValidUpdateNotification 
+                                               object:nil];
+    [self performSelector:@selector(startupUpdateCheckTimedOut)
+               withObject:nil 
+               afterDelay:_startup_update_check_timeout];
+    [[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+  }
+#endif
 }
 
-//- Infinit URL Handling ---------------------------------------------------------------------------
+- (void)startMainController
+{
+  static dispatch_once_t _controller_token = 0;
+  dispatch_once(&_controller_token, ^
+  {
+    [NSApp setServicesProvider:self];
+    NSString* download_dir =
+      [InfinitDownloadDestinationManager sharedInstance].download_destination;
+    [InfinitStateManager startStateWithDownloadDir:download_dir];
+    [InfinitFeatureManager sharedInstance];
+
+    self.controller = [[IAMainController alloc] initWithDelegate:self];
+    if (self.infinit_url != nil) // Infinit was launched with a link
+      [self.controller handleInfinitLink:self.infinit_url];
+    else if (self.contextual_send_files != nil) // Infinit was launched to send files
+      [self.controller handleContextualSendFiles:self.contextual_send_files];
+
+    if (self.fingerprint.length)
+      [[InfinitStateManager sharedInstance] addFingerprint:self.fingerprint];
+  });
+}
+
+#pragma mark - URL Handling
 
 - (void)getURL:(NSAppleEventDescriptor*)event
 withReplyEvent:(NSAppleEventDescriptor*)reply_event
@@ -181,13 +153,13 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
     });
     return;
   }
-  if (_controller == nil) // We haven't created a controller yet as we're being launched by a link
-    _infinit_url = infinit_url;
+  if (self.controller == nil) // We haven't created a controller yet as we're being launched by a link
+    self.infinit_url = infinit_url;
   else
-    [_controller handleInfinitLink:infinit_url];
+    [self.controller handleInfinitLink:infinit_url];
 }
 
-//- Infinit Context Menu Handling ------------------------------------------------------------------
+#pragma mark - Contextual Menu Handling
 
 - (void)contextMenuSendFile:(NSPasteboard*)paste_board
                    userData:(NSString*)user_data
@@ -196,10 +168,10 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
   NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
   if (files.count == 0)
     return;
-  if (_controller == nil)
-    _contextual_send_files = files;
+  if (self.controller == nil)
+    self.contextual_send_files = files;
   else
-    [_controller handleContextualSendFiles:files];
+    [self.controller handleContextualSendFiles:files];
 }
 
 - (void)contextMenuCreateLink:(NSPasteboard*)paste_board
@@ -209,64 +181,64 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
   NSArray* files = [paste_board propertyListForType:NSFilenamesPboardType];
   if (files.count == 0)
     return;
-  if (_controller == nil)
-    _contextual_link_files = files;
+  if (self.controller == nil)
+    self.contextual_link_files = files;
   else
-    [_controller handleContextualCreateLink:files];
+    [self.controller handleContextualCreateLink:files];
 }
 
-//- Quit Handling ----------------------------------------------------------------------------------
+#pragma mark - Quit Handling
 
 - (void)handleQuitEvent:(NSAppleEventDescriptor*)event
          withReplyEvent:(NSAppleEventDescriptor*)reply_event
 {
-  NSLog(@"%@ Handle quit event", self);
-  [_controller handleQuit];
+  NSLog(@"Handle quit event");
+  [self.controller handleQuit];
 }
 
 - (IBAction)cleanQuit:(id)sender
 {
-  [_controller handleQuit];
+  [self.controller handleQuit];
   // If there's a problem quiting after 15 sec, terminate
   [self performSelector:@selector(delayedTerminate)
              withObject:nil
-             afterDelay:15.0];
+             afterDelay:15.0f];
 }
 
 - (void)delayedTerminate
 {
-  NSLog(@"%@ Cleaning up took to long, killing application", self);
-  [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
+  NSLog(@"Cleaning up took to long, killing application");
+  [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0f];
 }
 
-//- Settings Handling ------------------------------------------------------------------------------
+#pragma mark - Settings
 
 - (IBAction)openPreferences:(id)sender
 {
-  [_controller openPreferences];
+  [self.controller openPreferences];
 }
 
-//- Main Controller Protocol -----------------------------------------------------------------------
+#pragma mark - IAMainControllerProtocol
 
 - (void)terminateApplication:(IAMainController*)sender
 {
-  if (_updating)
+  if (self.updating)
   {
-    NSLog(@"%@ Invoking update: %@", self, _update_invocation);
+    NSLog(@"Invoking update: %@", self.update_invocation);
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [_update_invocation invoke];
-    NSLog(@"%@ Update invoked", self);
+    [self.update_invocation invoke];
+    NSLog(@"Update invoked");
   }
   else
   {
-    NSLog(@"%@ Terminating application", self);
-    [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0];
+    NSLog(@"Terminating application");
+    [NSApp performSelector:@selector(terminate:) withObject:nil afterDelay:0.0f];
   }
 }
 
 - (void)mainControllerWantsCheckForUpdate:(IAMainController*)sender
 {
-  NSLog(@"%@ Checking for update verbosely", self);
+  NSLog(@"Checking for update verbosely");
   [[SUUpdater sharedUpdater] checkForUpdates:self];
 }
 
@@ -279,7 +251,144 @@ withReplyEvent:(NSAppleEventDescriptor*)reply_event
 
 - (BOOL)applicationUpdating
 {
-  return _updating;
+  return self.updating;
+}
+
+#pragma mark - Sparkle Updater
+
+- (void)setupUpdater
+{
+#if DEBUG
+  [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:NO];
+  [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:NO];
+  NSLog(@"Not checking for updates");
+#else
+  [[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:YES];
+  [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:YES];
+  [[SUUpdater sharedUpdater] setUpdateCheckInterval:_auto_update_check_interval];
+  NSLog(@"Will check for updates");
+#endif
+}
+
+// Overloaded so that we check for updates on the first launch
+// https://github.com/andymatuschak/Sparkle/wiki/customization
+- (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater*)bundle
+{
+  return NO;
+}
+
+- (BOOL)updater:(SUUpdater*)updater
+shouldPostponeRelaunchForUpdate:(SUAppcastItem*)update
+  untilInvoking:(NSInvocation*)invocation
+{
+  self.updating = YES;
+  self.update_invocation = invocation;
+  if (self.controller != nil)
+    [self.controller handleQuit];
+  else
+    [self terminateApplication:nil];
+  return YES;
+}
+
+- (void)updaterWillRelaunchApplication:(SUUpdater*)updater
+{
+  NSLog(@"Will relaunch");
+  [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                           selector:@selector(startupUpdateInstallTimedOut)
+                                             object:nil];
+  [[IAUserPrefs sharedInstance] setPrefNow:@"1" forKey:@"updated"];
+}
+
+- (void)delayedTryUpdate:(NSInvocation*)invocation
+{
+  if (!self.controller || [self.controller canUpdate])
+  {
+    self.updating = YES;
+    [invocation invoke];
+  }
+  else
+  {
+    [self performSelector:@selector(delayedTryUpdate:)
+               withObject:invocation 
+               afterDelay:_update_install_retry_cooldown];
+  }
+}
+
+- (void)updater:(SUUpdater*)updater
+willInstallUpdateOnQuit:(SUAppcastItem*)update
+immediateInstallationInvocation:(NSInvocation*)invocation
+{
+  if (!self.controller || [self.controller canUpdate])
+  {
+    self.updating = YES;
+    [invocation invoke];
+  }
+  else
+  {
+    [self performSelector:@selector(delayedTryUpdate:)
+               withObject:invocation
+               afterDelay:_update_install_retry_cooldown];
+  }
+}
+
+- (void)gotStartupUpdateReply
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self 
+                                           selector:@selector(startupUpdateCheckTimedOut)
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:SUUpdaterDidFindValidUpdateNotification
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:SUUpdaterDidNotFindUpdateNotification
+                                                object:nil];
+}
+
+- (void)startupUpdateInstallTimedOut
+{
+  NSLog(@"Startup update install timedout");
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    [self startMainController];
+  });
+}
+
+- (void)updateAvailableOnStartup
+{
+  [self gotStartupUpdateReply];
+  NSLog(@"Update available on startup");
+  [self performSelector:@selector(startupUpdateInstallTimedOut)
+             withObject:nil
+             afterDelay:_startup_install_timeout];
+}
+
+- (void)noUpdateAvailableOnStartup
+{
+  [self gotStartupUpdateReply];
+  NSLog(@"No update available on startup");
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    [self startMainController];
+  });
+}
+
+- (void)startupUpdateCheckTimedOut
+{
+  [self gotStartupUpdateReply];
+  NSLog(@"Startup check for updates timed out");
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    [self startMainController];
+  });
+}
+
+#pragma mark - Helpers
+
+- (BOOL)readonly_volume
+{
+  struct statfs statfs_info;
+  statfs([NSBundle mainBundle].bundlePath.fileSystemRepresentation, &statfs_info);
+  return (statfs_info.f_flags & MNT_RDONLY);
 }
 
 @end
