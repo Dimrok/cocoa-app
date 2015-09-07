@@ -162,7 +162,7 @@ static dispatch_once_t _instance_token = 0;
 {
   NSUserNotification* notification = [[NSUserNotification alloc] init];
   notification.title = NSLocalizedString(@"Account plan changed!", nil);
-  notification.informativeText = [NSString localizedStringWithFormat:@"You've changed to the %@ plan", plan];
+  notification.informativeText = [NSString localizedStringWithFormat:@"You've changed to the %@", plan];
   [self.notification_center deliverNotification:notification];
 }
 
