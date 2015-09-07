@@ -465,7 +465,7 @@ static NSDictionary* _usage_label_attrs = nil;
   {
     InfinitAccountUsageQuota* self_quota =
       [InfinitAccountManager sharedInstance].send_to_self_quota;
-    if (self_quota.quota)
+    if (self_quota.quota && [InfinitPeerTransactionManager sharedInstance].transactions.count)
     {
       self.usage_bar.doubleValue = self_quota.proportion_used.doubleValue;
       NSString* label_str = nil;
@@ -499,7 +499,7 @@ static NSDictionary* _usage_label_attrs = nil;
   else if (self.current_controller == self.link_controller)
   {
     InfinitAccountUsageQuota* link_quota = [InfinitAccountManager sharedInstance].link_quota;
-    if (link_quota.quota)
+    if (link_quota.quota && [InfinitLinkTransactionManager sharedInstance].transactions.count)
     {
       self.usage_bar.doubleValue = link_quota.proportion_used.doubleValue;
       NSString* label_str = nil;
