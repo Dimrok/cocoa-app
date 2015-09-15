@@ -68,6 +68,10 @@ static dispatch_once_t _instance_token = 0;
                                                  name:INFINIT_LINK_TRANSACTION_STATUS_NOTIFICATION
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(linkTransactionFailed:) 
+                                                 name:INFINIT_LINK_TRANSACTION_FAILED_NOTIFICATION 
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionUpdated:)
                                                  name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
                                                object:nil];
@@ -237,6 +241,15 @@ static dispatch_once_t _instance_token = 0;
   ELLE_LOG("%s: show desktop notification for link (%s) with status: %s",
            self.description.UTF8String, link.meta_id.UTF8String, link.status_text.UTF8String);
   [self.notification_center deliverNotification:user_notification];
+}
+
+- (void)linkTransactionFailed:(NSNotification*)notification
+{
+  NSUserNotification* res = [[NSUserNotification alloc] init];
+  res.title = NSLocalizedString(@"Link Failed!", nil);
+  res.informativeText = NSLocalizedString(@"Oh no! Contact support if this persists", nil);
+  res.soundName = nil;
+  [self.notification_center deliverNotification:res];
 }
 
 - (void)desktopNotificationForLinkCopied:(InfinitLinkTransaction*)link
@@ -482,6 +495,16 @@ static dispatch_once_t _instance_token = 0;
       {
         res.informativeText =
           NSLocalizedString(@"Something went wrong. Keep calm and try again.", nil);
+      }
+      break;
+
+    case gap_transaction_ghost_uploaded:
+      if (transaction.sender.is_self && transaction.from_device)
+      {
+        res.title = NSLocalizedString(@"Ready!", nil);
+        res.informativeText =
+          [NSString localizedStringWithFormat:@"Voilà, your file is ready for %@ to download",
+           transaction.recipient.fullname];
       }
       break;
 
