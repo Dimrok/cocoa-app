@@ -247,6 +247,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
     case gap_transaction_transferring:
     case gap_transaction_paused:
     case gap_transaction_on_other_device:
+    case gap_transaction_ghost_uploaded:
     case gap_transaction_finished:
       if (element.transaction.from_device || element.transaction.to_device)
         return NO;
@@ -412,7 +413,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
 {
   // If progress hasn't run until the end.
   if ((_element.transaction.status == gap_transaction_finished ||
-      _element.transaction.status == gap_transaction_cloud_buffered) &&
+      _element.transaction.buffered) &&
       is_new && _progress.doubleValue < 1.0)
   {
     [self updateProgress];
@@ -439,6 +440,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
       self.information.hidden = YES;
       break;
     case gap_transaction_cloud_buffered:
+    case gap_transaction_ghost_uploaded:
       if (_element.transaction.sender.is_self)
       {
         [self setTransactionStatusButtonToCancel];
