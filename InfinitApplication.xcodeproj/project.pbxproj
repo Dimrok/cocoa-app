@@ -83,10 +83,6 @@
 		8328081B17A2B4A60025B6F8 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 8328081917A2B4A60025B6F8 /* Credits.rtf */; };
 		8328081E17A2B4A60025B6F8 /* IAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8328081D17A2B4A60025B6F8 /* IAAppDelegate.m */; };
 		8328082117A2B4A60025B6F8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8328081F17A2B4A60025B6F8 /* MainMenu.xib */; };
-		8328082917A2B4A60025B6F8 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328082817A2B4A60025B6F8 /* SenTestingKit.framework */; };
-		8328082A17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8328080A17A2B4A60025B6F8 /* Cocoa.framework */; };
-		8328083217A2B4A60025B6F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8328083017A2B4A60025B6F8 /* InfoPlist.strings */; };
-		8328083517A2B4A60025B6F8 /* InfinitApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8328083417A2B4A60025B6F8 /* InfinitApplicationTests.m */; };
 		832808C717A2BBD70025B6F8 /* IAStatusBarIcon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808C617A2BBD70025B6F8 /* IAStatusBarIcon.mm */; };
 		832808CF17A2C1480025B6F8 /* IAFunctions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808CE17A2C1480025B6F8 /* IAFunctions.mm */; };
 		832808D217A2C9E40025B6F8 /* IAMainController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832808D117A2C9E40025B6F8 /* IAMainController.mm */; };
@@ -471,13 +467,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8328082B17A2B4A60025B6F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 832807FF17A2B4A60025B6F8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8328080617A2B4A60025B6F8;
-			remoteInfo = InfinitApplication;
-		};
 		8328084B17A2B6BE0025B6F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8328084317A2B6BE0025B6F8 /* Sparkle.xcodeproj */;
@@ -717,7 +706,6 @@
 		8328081C17A2B4A60025B6F8 /* IAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAAppDelegate.h; sourceTree = "<group>"; };
 		8328081D17A2B4A60025B6F8 /* IAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IAAppDelegate.m; sourceTree = "<group>"; };
 		8328082017A2B4A60025B6F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		8328082717A2B4A60025B6F8 /* InfinitApplicationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InfinitApplicationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8328082817A2B4A60025B6F8 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		8328082F17A2B4A60025B6F8 /* InfinitApplicationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InfinitApplicationTests-Info.plist"; sourceTree = "<group>"; };
 		8328083117A2B4A60025B6F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1229,15 +1217,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8328082317A2B4A60025B6F8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8328082917A2B4A60025B6F8 /* SenTestingKit.framework in Frameworks */,
-				8328082A17A2B4A60025B6F8 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1384,7 +1363,6 @@
 			isa = PBXGroup;
 			children = (
 				8328080717A2B4A60025B6F8 /* InfinitApplication.app */,
-				8328082717A2B4A60025B6F8 /* InfinitApplicationTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2404,25 +2382,6 @@
 			productReference = 8328080717A2B4A60025B6F8 /* InfinitApplication.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8328082617A2B4A60025B6F8 /* InfinitApplicationTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8328083B17A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplicationTests" */;
-			buildPhases = (
-				8328082217A2B4A60025B6F8 /* Sources */,
-				8328082317A2B4A60025B6F8 /* Frameworks */,
-				8328082417A2B4A60025B6F8 /* Resources */,
-				8328082517A2B4A60025B6F8 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8328082C17A2B4A60025B6F8 /* PBXTargetDependency */,
-			);
-			name = InfinitApplicationTests;
-			productName = InfinitApplicationTests;
-			productReference = 8328082717A2B4A60025B6F8 /* InfinitApplicationTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2430,7 +2389,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Infinit;
-				LastTestingUpgradeCheck = 0510;
+				LastTestingUpgradeCheck = 0700;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Infinit;
 				TargetAttributes = {
@@ -2462,7 +2421,6 @@
 			projectRoot = "";
 			targets = (
 				8328080617A2B4A60025B6F8 /* InfinitApplication */,
-				8328082617A2B4A60025B6F8 /* InfinitApplicationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2814,31 +2772,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8328082417A2B4A60025B6F8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8328083217A2B4A60025B6F8 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8328082517A2B4A60025B6F8 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8328080317A2B4A60025B6F8 /* Sources */ = {
@@ -2965,22 +2899,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8328082217A2B4A60025B6F8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8328083517A2B4A60025B6F8 /* InfinitApplicationTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8328082C17A2B4A60025B6F8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8328080617A2B4A60025B6F8 /* InfinitApplication */;
-			targetProxy = 8328082B17A2B4A60025B6F8 /* PBXContainerItemProxy */;
-		};
 		8372B16A1AB32C1100F1B8B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Gap-OSX";
@@ -3068,7 +2989,7 @@
 					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -3109,7 +3030,7 @@
 					"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path @loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../Externals/lib\"";
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
@@ -3122,7 +3043,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Christopher Crone (9E27AS8W64)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
@@ -3139,7 +3060,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../Externals/lib",
 					"$(SRCROOT)/../../../../_build/macosx64/lib",
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
@@ -3158,7 +3078,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
-				CODE_SIGN_IDENTITY = "Mac Developer: Christopher Crone (9E27AS8W64)";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer: Christopher Crone (9E27AS8W64)";
 				CODE_SIGN_RESOURCE_RULES_PATH = "";
 				COMBINE_HIDPI_IMAGES = NO;
@@ -3174,7 +3094,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../Externals/lib",
 					"$(SRCROOT)/../../../../_build/macosx64/lib",
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
@@ -3185,36 +3104,6 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../../../fist/src $(SRCROOT)/../../../../elle/elle/src $(SRCROOT)/../../../../_build/macosx64 $(SRCROOT)/../../../../_build/macosx64/elle/boost/include $(SRCROOT)/../../../../_build/macosx64/fist/src";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		8328083C17A2B4A60025B6F8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/InfinitApplication.app/Contents/MacOS/InfinitApplication";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
-				INFOPLIST_FILE = "InfinitApplicationTests/InfinitApplicationTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		8328083D17A2B4A60025B6F8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/InfinitApplication.app/Contents/MacOS/InfinitApplication";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InfinitApplication/InfinitApplication-Prefix.pch";
-				INFOPLIST_FILE = "InfinitApplicationTests/InfinitApplicationTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -3235,15 +3124,6 @@
 			buildConfigurations = (
 				8328083917A2B4A60025B6F8 /* Debug */,
 				8328083A17A2B4A60025B6F8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8328083B17A2B4A60025B6F8 /* Build configuration list for PBXNativeTarget "InfinitApplicationTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8328083C17A2B4A60025B6F8 /* Debug */,
-				8328083D17A2B4A60025B6F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
