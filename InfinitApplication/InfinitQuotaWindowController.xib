@@ -82,8 +82,8 @@
                         </constraints>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ByA-eP-0ft">
-                        <rect key="frame" x="299" y="17" width="146" height="32"/>
-                        <buttonCell key="cell" type="push" title="Upgrade my plan" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V46-GQ-Y3y">
+                        <rect key="frame" x="357" y="17" width="88" height="32"/>
+                        <buttonCell key="cell" type="push" title="Get Pro" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V46-GQ-Y3y">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -107,9 +107,9 @@ Gw
                             <action selector="cancelClicked:" target="-2" id="KQK-vO-BaM"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fqG-XJ-m0R">
-                        <rect key="frame" x="173" y="17" width="127" height="32"/>
-                        <buttonCell key="cell" type="push" title="Invite Friends!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IDl-ql-wOq">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqG-XJ-m0R">
+                        <rect key="frame" x="231" y="17" width="127" height="32"/>
+                        <buttonCell key="cell" type="push" title="Free Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IDl-ql-wOq">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
