@@ -191,8 +191,9 @@
   else if ([paste_board availableTypeFromArray:@[NSTIFFPboardType]])
   {
     NSImage* image = [paste_board readObjectsForClasses:@[NSImage.class] options:@{}][0];
-    NSData* image_data = [[image representations][0] representationUsingType:NSPNGFileType
-                                                                  properties:nil];
+    NSBitmapImageRep* image_rep =
+      [[NSBitmapImageRep alloc] initWithCGImage:[image CGImageForProposedRect:NULL context:nil hints:nil]];
+    NSData* image_data = [image_rep representationUsingType:NSPNGFileType properties:@{}];
     image = [[NSImage alloc] initWithData:image_data];
     if (image != nil)
     {
