@@ -33,22 +33,21 @@ ELLE_LOG_COMPONENT("OSX.MainViewController");
 
 //- Main Controller --------------------------------------------------------------------------------
 
-@interface InfinitMainViewController ()
+@interface InfinitMainViewController () <InfinitUsageBarProtocol>
 
 @property (nonatomic, strong) IBOutlet InfinitUsageBar* usage_bar;
-@property (nonatomic, strong) IBOutlet NSButton* usage_label;
+@property (nonatomic, strong) NSString* usage_label;
 
 @property (nonatomic, unsafe_unretained) NSViewController* current_controller;
 @property (nonatomic, weak) id<InfinitMainViewProtocol> delegate;
 @property (nonatomic, readonly) BOOL for_people_view;
 @property (nonatomic, strong) InfinitLinkViewController* link_controller;
-@property (nonatomic, strong) InfinitTooltipViewController* tooltip;
+@property (nonatomic, strong) InfinitTooltipViewController* usage_tooltip;
 @property (nonatomic, strong) InfinitTransactionViewController* transaction_controller;
 
 @end
 
 static NSString* _version_str = nil;
-static NSDictionary* _usage_label_attrs = nil;
 
 @implementation InfinitMainViewController
 
@@ -78,6 +77,7 @@ static NSDictionary* _usage_label_attrs = nil;
                                              selector:@selector(updateQuotaInformation)
                                                  name:INFINIT_ACCOUNT_QUOTA_UPDATED
                                                object:nil];
+    self.usage_tooltip = [[InfinitTooltipViewController alloc] init];
   }
   return self;
 }
@@ -311,7 +311,7 @@ static NSDictionary* _usage_label_attrs = nil;
 
   ELLE_LOG("%s: changing to link view", self.description.UTF8String);
 
-  [_tooltip close];
+  [self.usage_tooltip close];
   [self.transaction_controller closeToolTips];
   [self.transaction_controller markTransactionsRead];
 
@@ -461,6 +461,7 @@ static NSDictionary* _usage_label_attrs = nil;
 
 - (void)updateQuotaInformation
 {
+  self.usage_bar.delegate = self;
   if (self.current_controller == self.transaction_controller)
   {
     InfinitAccountUsageQuota* self_quota =
@@ -468,32 +469,25 @@ static NSDictionary* _usage_label_attrs = nil;
     if (self_quota.quota && [InfinitPeerTransactionManager sharedInstance].transactions.count)
     {
       self.usage_bar.doubleValue = self_quota.proportion_used.doubleValue;
-      NSString* label_str = nil;
       switch (self_quota.remaining.unsignedIntegerValue)
       {
         case 0:
-          label_str = NSLocalizedString(@"No monthly transfers to yourself left", nil);
+          self.usage_label = NSLocalizedString(@"No monthly transfers to yourself left", nil);
           break;
         case 1:
-          label_str = NSLocalizedString(@"1 monthly transfer to yourself left", nil);
+          self.usage_label = NSLocalizedString(@"1 monthly transfer to yourself left", nil);
           break;
         default:
-          label_str = [NSString localizedStringWithFormat:@"%@ monthly transfers to yourself left",
-                       self_quota.remaining];
+          self.usage_label =
+            [NSString localizedStringWithFormat:@"%@ monthly transfers to yourself left",
+             self_quota.remaining];
           break;
       }
-      NSMutableDictionary* attrs =
-        [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
-      attrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
-      self.usage_label.attributedTitle =
-        [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
       self.usage_bar.hidden = NO;
-      self.usage_label.hidden = NO;
     }
     else
     {
       self.usage_bar.hidden = YES;
-      self.usage_label.hidden = YES;
     }
   }
   else if (self.current_controller == self.link_controller)
@@ -502,33 +496,41 @@ static NSDictionary* _usage_label_attrs = nil;
     if (link_quota.quota && [InfinitLinkTransactionManager sharedInstance].transactions.count)
     {
       self.usage_bar.doubleValue = link_quota.proportion_used.doubleValue;
-      NSString* label_str = nil;
       if (link_quota.remaining.unsignedLongLongValue <= 0)
       {
-        label_str = NSLocalizedString(@"No storage space left", nil);
+        self.usage_label = NSLocalizedString(@"No storage space left", nil);
       }
       else
       {
         NSString* remaining_str = link_quota.remaining.infinit_fileSize;
-        label_str = [NSString localizedStringWithFormat:@"%@ storage left", remaining_str];
+        self.usage_label = [NSString localizedStringWithFormat:@"%@ storage left", remaining_str];
       }
-      NSMutableDictionary* attrs =
-        [[self.usage_label.attributedTitle attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
-      attrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
-      self.usage_label.attributedTitle =
-        [[NSAttributedString alloc] initWithString:label_str attributes:attrs];
       self.usage_bar.hidden = NO;
-      self.usage_label.hidden = NO;
     }
     else
     {
       self.usage_bar.hidden = YES;
-      self.usage_label.hidden = YES;
     }
   }
 }
 
-- (IBAction)quotaClicked:(id)sender
+#pragma mark - InfinitUsageBarProtocol
+
+- (void)mouseEnteredUsageBar:(InfinitUsageBar*)sender
+{
+  [self.usage_tooltip showPopoverForView:self.usage_bar
+                      withArrowDirection:INPopoverArrowDirectionUp
+                             withMessage:self.usage_label
+                        withPopAnimation:NO
+                                 forTime:0.0f];
+}
+
+- (void)mouseExitedUsageBar:(InfinitUsageBar*)sender
+{
+  [self.usage_tooltip close];
+}
+
+- (void)clickedUsageBar:(InfinitUsageBar*)sender
 {
   InfinitStateManager* manager = [InfinitStateManager sharedInstance];
   [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
@@ -538,8 +540,8 @@ static NSDictionary* _usage_label_attrs = nil;
      if (!result.success || !token.length || !email.length)
        return;
      NSString* url_str =
-       [kInfinitWebProfileQuotaURL stringByAppendingFormat:@"&login_token=%@&email=%@",
-        token, email];
+     [kInfinitWebProfileQuotaURL stringByAppendingFormat:@"&login_token=%@&email=%@",
+      token, email];
      [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:url_str]];
    }];
 }
@@ -597,7 +599,7 @@ static NSDictionary* _usage_label_attrs = nil;
     _transaction_controller.changing = YES;
   else if (self.current_controller == _link_controller)
     _link_controller.changing = YES;
-  [_tooltip close];
+  [self.usage_tooltip close];
   [_transaction_controller closeToolTips];
   [_transaction_controller markTransactionsRead];
 }

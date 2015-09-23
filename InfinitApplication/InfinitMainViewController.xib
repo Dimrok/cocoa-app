@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9046" systemVersion="15B17c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9046"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitMainViewController">
@@ -15,7 +15,6 @@
                 <outlet property="main_view" destination="hEP-bi-K5F" id="gRG-m6-rm5"/>
                 <outlet property="send_button" destination="tU3-mI-zza" id="DrD-bH-Fn8"/>
                 <outlet property="usage_bar" destination="JNH-4t-7RO" id="P6m-8n-9dX"/>
-                <outlet property="usage_label" destination="Jhm-p4-rzn" id="iIR-b1-gMT"/>
                 <outlet property="version_item" destination="rgi-jQ-wyG" id="qUO-Dl-nyB"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="view_selector" destination="WKb-S2-bgh" id="ZoX-ao-Agc"/>
@@ -31,6 +30,7 @@
                     <subviews>
                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqD-Yl-7nC">
                             <rect key="frame" x="0.0" y="42" width="317" height="8"/>
+                            <animations/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="bg-triangle-top-white" id="lK7-VY-bBu"/>
                         </imageView>
                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WKb-S2-bgh" customClass="InfinitMainTransactionLinkView">
@@ -38,6 +38,7 @@
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HMZ-IT-48i">
                                     <rect key="frame" x="52" y="16" width="53" height="16"/>
+                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="PEOPLE" id="mfZ-Ne-OcR">
                                         <font key="font" size="12" name="Helvetica"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -46,6 +47,7 @@
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilo-sL-unO">
                                     <rect key="frame" x="216" y="16" width="40" height="16"/>
+                                    <animations/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="LINKS" id="zM1-7y-zE4">
                                         <font key="font" size="12" name="Helvetica"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -54,11 +56,14 @@
                                 </textField>
                                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nvG-SI-aAY" customClass="InfinitMainCounterView">
                                     <rect key="frame" x="107" y="19" width="13" height="13"/>
+                                    <animations/>
                                 </customView>
                                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6R-8M-I4K" customClass="InfinitMainCounterView">
                                     <rect key="frame" x="257" y="19" width="13" height="13"/>
+                                    <animations/>
                                 </customView>
                             </subviews>
+                            <animations/>
                             <connections>
                                 <outlet property="link_counter" destination="A6R-8M-I4K" id="yew-Gd-dUX"/>
                                 <outlet property="link_text" destination="ilo-sL-unO" id="m5S-g2-0j1"/>
@@ -70,6 +75,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="6hC-Cs-WCC"/>
                     </constraints>
+                    <animations/>
                 </customView>
                 <customView verticalHuggingPriority="1000" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hEP-bi-K5F" customClass="IAMainView">
                     <rect key="frame" x="0.0" y="39" width="317" height="72"/>
@@ -95,10 +101,12 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                     <subviews>
                         <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fLR-71-rem">
                             <rect key="frame" x="0.0" y="0.0" width="317" height="39"/>
+                            <animations/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="bg-main-button" id="dFa-F3-jwp"/>
                         </imageView>
                         <button toolTip="Settings" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eY6-mc-4s8">
                             <rect key="frame" x="11" y="7" width="25" height="25"/>
+                            <animations/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-gear" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="tTx-df-wS6">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -109,6 +117,7 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                         </button>
                         <button toolTip="Send a file" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tU3-mI-zza">
                             <rect key="frame" x="273" y="7" width="35" height="25"/>
+                            <animations/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon-transfer" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Q8q-BS-2Ph">
                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -117,30 +126,20 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                                 <action selector="sendButtonClicked:" target="-2" id="GiT-em-pUl"/>
                             </connections>
                         </button>
-                        <progressIndicator maxValue="1" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="JNH-4t-7RO" customClass="InfinitUsageBar">
-                            <rect key="frame" x="108" y="17" width="100" height="20"/>
+                        <progressIndicator wantsLayer="YES" maxValue="1" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="JNH-4t-7RO" customClass="InfinitUsageBar">
+                            <rect key="frame" x="108" y="9" width="100" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="100" id="CgB-hS-sPt"/>
                             </constraints>
+                            <animations/>
                         </progressIndicator>
-                        <button horizontalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jhm-p4-rzn" customClass="InfinitHandButton">
-                            <rect key="frame" x="100" y="8" width="116" height="17"/>
-                            <buttonCell key="cell" type="roundTextured" title="Label" bezelStyle="texturedRounded" alignment="center" controlSize="mini" state="on" imageScaling="proportionallyDown" inset="2" id="qLx-bu-DLV">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" size="11" name="HelveticaNeue"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="quotaClicked:" target="-2" id="M04-8N-I9s"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="centerX" secondItem="Jhm-p4-rzn" secondAttribute="centerX" id="DqV-Qa-4Eb"/>
-                        <constraint firstItem="JNH-4t-7RO" firstAttribute="top" secondItem="hwd-fU-mZe" secondAttribute="top" constant="3" id="P7D-Jy-XQa"/>
-                        <constraint firstAttribute="bottom" secondItem="Jhm-p4-rzn" secondAttribute="bottom" constant="5" id="i4M-Wx-dLU"/>
                         <constraint firstAttribute="height" constant="39" id="jfH-bZ-Vr5"/>
                         <constraint firstAttribute="centerX" secondItem="JNH-4t-7RO" secondAttribute="centerX" id="tgP-oZ-a0S"/>
+                        <constraint firstItem="JNH-4t-7RO" firstAttribute="top" secondItem="hwd-fU-mZe" secondAttribute="top" constant="11" id="vfF-Ps-UA0"/>
                     </constraints>
+                    <animations/>
                 </customView>
             </subviews>
             <constraints>
@@ -151,6 +150,7 @@ AQQBFgEZAR4AAAAAAAACAQAAAAAAAAAoAAAAAAAAAAAAAAAAAAABIA
                 <constraint firstItem="hEP-bi-K5F" firstAttribute="top" secondItem="2Lk-Xw-tFF" secondAttribute="bottom" id="sp2-yh-7db"/>
                 <constraint firstItem="hwd-fU-mZe" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="yXG-vW-F7E"/>
             </constraints>
+            <animations/>
         </customView>
         <menu autoenablesItems="NO" id="TZg-Rw-nQG">
             <items>
