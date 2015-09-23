@@ -604,9 +604,18 @@ ELLE_LOG_COMPONENT("OSX.ApplicationController");
       break;
 
     case gap_email_not_confirmed:
+    {
       error = [NSString stringWithFormat:@"%@",
                NSLocalizedString(@"You need to confirm your email, check your inbox.", nil)];
+      NSString* message = NSLocalizedString(@"Please check your email inbox for an email from us asking to confirm your email address. This email may be in your spam folder.", nil);
+      NSAlert* alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Email not confirmed", nil)
+                                       defaultButton:NSLocalizedString(@"OK", nil)
+                                     alternateButton:nil
+                                         otherButton:nil
+                           informativeTextWithFormat:@"%@", message];
+      [alert runModal];
       break;
+    }
 
     case gap_meta_down_with_message:
       error = [NSString stringWithFormat:@"%@",

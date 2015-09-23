@@ -459,6 +459,16 @@ ELLE_LOG_COMPONENT("OSX.LoginViewController");
       return;
     }
     [self showError:error];
+    if (result.status == gap_email_not_confirmed)
+    {
+      NSString* message = NSLocalizedString(@"Please check your email inbox for an email from us asking to confirm your email address. This email may be in your spam folder.", nil);
+      NSAlert* alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Email not confirmed", nil)
+                                       defaultButton:NSLocalizedString(@"OK", nil)
+                                     alternateButton:nil
+                                         otherButton:nil 
+                           informativeTextWithFormat:@"%@", message];
+      [alert runModal];
+    }
   }
   self.action_button.enabled = YES;
   self.fullname.enabled = YES;
