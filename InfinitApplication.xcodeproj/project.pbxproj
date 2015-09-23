@@ -351,7 +351,6 @@
 		837B2ABA19DD98DF00A3CDE1 /* main-icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2AB819DD98DF00A3CDE1 /* main-icon-error.png */; };
 		837B2ABB19DD98DF00A3CDE1 /* main-icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 837B2AB919DD98DF00A3CDE1 /* main-icon-error@2x.png */; };
 		837DE2C718E10DBB003A63A8 /* InfinitFileListScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */; };
-		838F4A901B8460C90036E62A /* InfinitHandButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838F4A8F1B8460C90036E62A /* InfinitHandButton.m */; };
 		838FE0B817DA097C004160DB /* IAHoverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 838FE0B717DA097C004160DB /* IAHoverButton.m */; };
 		8392497418D7B70100EE72C7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F867517ECA30300D7202C /* QuartzCore.framework */; };
 		8398834F17A6A5AE009409B3 /* IAAutoStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8398834E17A6A5AE009409B3 /* IAAutoStartup.m */; };
@@ -1042,8 +1041,6 @@
 		837B2AB919DD98DF00A3CDE1 /* main-icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "main-icon-error@2x.png"; path = "../../../../fist-resources/slices/mac/view_main/main-icon-error@2x.png"; sourceTree = "<group>"; };
 		837DE2C518E10DBB003A63A8 /* InfinitFileListScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileListScrollView.h; sourceTree = "<group>"; };
 		837DE2C618E10DBB003A63A8 /* InfinitFileListScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileListScrollView.m; sourceTree = "<group>"; };
-		838F4A8E1B8460C90036E62A /* InfinitHandButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHandButton.h; sourceTree = "<group>"; };
-		838F4A8F1B8460C90036E62A /* InfinitHandButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHandButton.m; sourceTree = "<group>"; };
 		838FE0B617DA097C004160DB /* IAHoverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAHoverButton.h; sourceTree = "<group>"; };
 		838FE0B717DA097C004160DB /* IAHoverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAHoverButton.m; sourceTree = "<group>"; };
 		8398834D17A6A5AE009409B3 /* IAAutoStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAAutoStartup.h; sourceTree = "<group>"; };
@@ -1284,8 +1281,6 @@
 			children = (
 				830B57791B83239C009DF3BA /* InfinitUsageBar.h */,
 				830B577A1B83239C009DF3BA /* InfinitUsageBar.m */,
-				838F4A8E1B8460C90036E62A /* InfinitHandButton.h */,
-				838F4A8F1B8460C90036E62A /* InfinitHandButton.m */,
 			);
 			name = "Usage View";
 			sourceTree = "<group>";
@@ -2886,7 +2881,6 @@
 				83A67AB419AB19C900A69E35 /* InfinitSettingsGeneralView.m in Sources */,
 				830423151B108B3A0059A668 /* InfinitSettingsScreenshotView.m in Sources */,
 				8372B3351AB3448A00F1B8B8 /* InfinitConversationRowView.m in Sources */,
-				838F4A901B8460C90036E62A /* InfinitHandButton.m in Sources */,
 				830B577B1B83239C009DF3BA /* InfinitUsageBar.m in Sources */,
 				834F136319214B9F00BF36A4 /* InfinitSendNoteViewController.m in Sources */,
 				83F5FCEF18EC61AF0051F010 /* INPopoverController.m in Sources */,
