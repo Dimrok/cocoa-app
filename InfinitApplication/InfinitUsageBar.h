@@ -8,6 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol InfinitUsageBarProtocol;
+
 @interface InfinitUsageBar : NSProgressIndicator
+
+@property (nonatomic, readwrite, unsafe_unretained) id<InfinitUsageBarProtocol> delegate;
+
+@end
+
+@protocol InfinitUsageBarProtocol <NSObject>
+
+- (void)mouseEnteredUsageBar:(InfinitUsageBar*)sender;
+- (void)mouseExitedUsageBar:(InfinitUsageBar*)sender;
+- (void)clickedUsageBar:(InfinitUsageBar*)sender;
 
 @end
