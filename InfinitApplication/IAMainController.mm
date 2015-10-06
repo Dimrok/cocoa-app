@@ -1331,7 +1331,15 @@ hasCurrentViewController:(IAViewController*)controller
 
 - (void)facebookWindow:(InfinitFacebookWindowController*)sender
               gotError:(NSString*)error
-{}
+{
+  NSAlert* alert =
+    [NSAlert alertWithMessageText:NSLocalizedString(@"Unable to login with Facebook.", nil)
+                    defaultButton:NSLocalizedString(@"OK", nil)
+                  alternateButton:nil
+                      otherButton:nil
+        informativeTextWithFormat:NSLocalizedString(@"Ensure that you give Infinit permission to use your Facebook account.", nil)];
+  [alert runModal];
+}
 
 - (void)facebookWindow:(InfinitFacebookWindowController*)sender
               gotToken:(NSString*)token
