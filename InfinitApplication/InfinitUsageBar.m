@@ -23,6 +23,8 @@ static NSColor* _shadow_color = nil;
 
 @implementation InfinitUsageBar
 
+@synthesize doubleValue = _doubleValue;
+
 - (BOOL)isFlipped
 {
   return NO;
@@ -46,13 +48,14 @@ static NSColor* _shadow_color = nil;
     if (!_shadow_color)
       _shadow_color = [InfinitColor colorWithGray:0 alpha:0.3f];
     self.delegate = nil;
+    self.displayedWhenStopped = YES;
   }
   return self;
 }
 
 - (void)dealloc
 {
-  _delegate = nil;
+  self.delegate = nil;
 }
 
 #pragma mark - Drawing
@@ -81,6 +84,14 @@ static NSColor* _shadow_color = nil;
                                                         yRadius:radius];
   [_bar_color set];
   [usage fill];
+}
+
+#pragma mark - Set
+
+- (void)setDoubleValue:(double)doubleValue
+{
+  _doubleValue = doubleValue;
+  [self setNeedsDisplay:YES];
 }
 
 #pragma mark - Mouse Handling
@@ -116,17 +127,21 @@ static NSColor* _shadow_color = nil;
 
 - (void)mouseEntered:(NSEvent*)theEvent
 {
+  if (self.hidden)
+    return;
   [self.delegate mouseEnteredUsageBar:self];
 }
 
 - (void)mouseExited:(NSEvent*)theEvent
 {
+  if (self.hidden)
+    return;
   [self.delegate mouseExitedUsageBar:self];
 }
 
 - (void)mouseDown:(NSEvent*)theEvent
 {
-  if (theEvent.clickCount != 1)
+  if (theEvent.clickCount != 1 || self.hidden)
     return;
   [self.delegate clickedUsageBar:self];
 }
