@@ -144,6 +144,7 @@
     [[NSAttributedString alloc] initWithString:name attributes:_attrs_normal];
   _file_icon.image =
     [[NSWorkspace sharedWorkspace] iconForFileType:[_file_name.stringValue pathExtension]];
+  self.toolTip = name;
   [self setNeedsDisplay:YES];
 }
 

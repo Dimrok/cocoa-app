@@ -592,6 +592,7 @@ ELLE_LOG_COMPONENT("OSX.ConversationCellView");
   self.table_height.constant = 0.0;
   if (transaction.files.count == 1)
   {
+    self.file_name.toolTip = transaction.files[0];
     self.file_name.stringValue = transaction.files[0];
     if (transaction.directory)
     {
