@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9052" systemVersion="15B22c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9052"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InfinitFirstScreenshotModal">
@@ -19,7 +19,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="651" height="567"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="651" height="567"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -29,6 +29,7 @@
                         <subviews>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZW9-jg-Url">
                                 <rect key="frame" x="105" y="23" width="441" height="80"/>
+                                <animations/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="HyD-Dm-NxF">
                                     <font key="font" metaFont="system"/>
                                     <string key="title">Whenever you take a screenshot, we'll upload it and copy a link to your
@@ -37,13 +38,16 @@ clipboard so you can share it in a message, an email or a tweet.</string>
                                 </textFieldCell>
                             </textField>
                         </subviews>
+                        <animations/>
                     </customView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ha4-cq-9f3">
                         <rect key="frame" x="0.0" y="187" width="651" height="380"/>
+                        <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="illustration_screenshots" id="mQZ-Ry-lvz"/>
                     </imageView>
                     <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rde-5I-gpe">
                         <rect key="frame" x="14" y="17" width="110" height="32"/>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="No, Thanks" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G3I-sg-frX">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -57,6 +61,7 @@ Gw
                     </button>
                     <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ViY-Rl-ufb">
                         <rect key="frame" x="414" y="17" width="223" height="32"/>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Sure, upload my screenshots!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6P6-np-uB4">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -73,6 +78,7 @@ DQ
                     <constraint firstItem="rde-5I-gpe" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="08v-gx-hkF"/>
                     <constraint firstAttribute="trailing" secondItem="ViY-Rl-ufb" secondAttribute="trailing" constant="20" id="a4W-jm-wIZ"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
