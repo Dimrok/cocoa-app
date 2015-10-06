@@ -518,6 +518,11 @@ static NSString* kInfinitFullscreenShortcutKey = @"fullscreen_screenshot_shortcu
     {
       if (attrs[@"NSFileExtendedAttributes"][@"com.apple.metadata:kMDItemIsScreenCapture"])
       {
+        NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:filename];
+        ELLE_TRACE("%s: copy screenshot at path: %s -> %s",
+                   self.description.UTF8String, path.UTF8String, output_path.UTF8String);
+        NSError* error = nil;
+        [[NSFileManager defaultManager] copyItemAtPath:path toPath:output_path error:&error];
         NSDate* c_date = attrs[NSFileCreationDate];
         if ([c_date compare:self.last_capture_time] == NSOrderedAscending ||
             [c_date compare:self.last_capture_time] == NSOrderedSame)
@@ -528,7 +533,8 @@ static NSString* kInfinitFullscreenShortcutKey = @"fullscreen_screenshot_shortcu
         if (_first_screenshot)
         {
           _first_screenshot = NO;
-          InfinitFirstScreenshotModal* screenshot_modal = [[InfinitFirstScreenshotModal alloc] init];
+          InfinitFirstScreenshotModal* screenshot_modal =
+            [[InfinitFirstScreenshotModal alloc] init];
           NSInteger res = [NSApp runModalForWindow:screenshot_modal.window];
           if (res == INFINIT_UPLOAD_SCREENSHOTS)
           {
@@ -539,17 +545,27 @@ static NSString* kInfinitFullscreenShortcutKey = @"fullscreen_screenshot_shortcu
           {
             [InfinitMetricsManager sendMetric:INFINIT_METRIC_SCREENSHOT_MODAL_NO];
             [self setWatch:NO];
+            [[NSFileManager defaultManager] removeItemAtPath:output_path error:nil];
             return;
           }
           else
           {
+            [[NSFileManager defaultManager] removeItemAtPath:output_path error:nil];
             return;
           }
         }
         [InfinitMetricsManager sendMetric:INFINIT_METRIC_UPLOAD_SCREENSHOT];
-        ELLE_LOG("%s: got screenshot with path: %s",
-                 self.description.UTF8String, path.UTF8String);
-        [[InfinitLinkTransactionManager sharedInstance] createScreenshotLink:path];
+        if (!error)
+        {
+          NSNumber* id_ =
+            [[InfinitLinkTransactionManager sharedInstance] createScreenshotLink:output_path];
+          [self.link_map setObject:output_path forKey:id_];
+        }
+        else
+        {
+          ELLE_ERR("%s: unable to copy screenshot: %s",
+                   self.description.UTF8String, error.description);
+        }
       }
     }
   }
