@@ -518,11 +518,6 @@ static NSString* kInfinitFullscreenShortcutKey = @"fullscreen_screenshot_shortcu
     {
       if (attrs[@"NSFileExtendedAttributes"][@"com.apple.metadata:kMDItemIsScreenCapture"])
       {
-        NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:filename];
-        ELLE_TRACE("%s: copy screenshot at path: %s -> %s",
-                   self.description.UTF8String, path.UTF8String, output_path.UTF8String);
-        NSError* error = nil;
-        [[NSFileManager defaultManager] copyItemAtPath:path toPath:output_path error:&error];
         NSDate* c_date = attrs[NSFileCreationDate];
         if ([c_date compare:self.last_capture_time] == NSOrderedAscending ||
             [c_date compare:self.last_capture_time] == NSOrderedSame)
@@ -530,6 +525,11 @@ static NSString* kInfinitFullscreenShortcutKey = @"fullscreen_screenshot_shortcu
           continue;
         }
         _last_capture_time = c_date;
+        NSString* output_path = [self.temporary_dir stringByAppendingPathComponent:filename];
+        ELLE_TRACE("%s: copy screenshot at path: %s -> %s",
+                   self.description.UTF8String, path.UTF8String, output_path.UTF8String);
+        NSError* error = nil;
+        [[NSFileManager defaultManager] copyItemAtPath:path toPath:output_path error:&error];
         if (_first_screenshot)
         {
           _first_screenshot = NO;
