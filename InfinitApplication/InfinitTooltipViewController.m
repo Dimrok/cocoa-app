@@ -52,11 +52,13 @@
           withPopAnimation:(BOOL)pop
                    forTime:(NSTimeInterval)time
 {
+  if (!view || !message.length)
+    return;
   if (pop)
     _popover_controller.animationType = INPopoverAnimationTypePop;
   else
     _popover_controller.animationType = INPopoverAnimationTypeFadeInOut;
-  _message.stringValue = message;
+  self.message.stringValue = message;
   [self.view layoutSubtreeIfNeeded];
   _popover_controller.contentSize = NSMakeSize(_message.intrinsicContentSize.width + _arrow_size.width + 2.0,
                                                _message.intrinsicContentSize.height + 8.0);
