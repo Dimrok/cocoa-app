@@ -10,9 +10,8 @@
 
 #import "InfinitOSVersion.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-#if !DEBUG
   @autoreleasepool
   {
     // Only need to change the library path on versions older than 10.9.
@@ -30,6 +29,5 @@ int main(int argc, char *argv[])
       execvp(argv[0], argv);
     }
   }
-#endif
   return NSApplicationMain(argc, (const char**)argv);
 }
