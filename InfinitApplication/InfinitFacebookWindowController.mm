@@ -54,6 +54,7 @@ ELLE_LOG_COMPONENT("OSX.FacebookWindowController");
 
 - (void)showWindow:(id)sender
 {
+  ELLE_TRACE("%s: open window", self.description.UTF8String);
   self.window_floating = NO;
   self.window.hidesOnDeactivate = YES;
   self.window.level = NSNormalWindowLevel;
@@ -73,6 +74,7 @@ didReceiveResponse:(NSURLResponse*)response
   NSDictionary* query_dict = [self _queryDictionaryFromResponse:response];
   if (!query_dict.count && !self.window_floating)
   {
+    ELLE_TRACE("%s: empty reply, show window", self.description.UTF8String);
     self.window_floating = YES;
     self.window.hidesOnDeactivate = NO;
     dispatch_async(dispatch_get_main_queue(), ^
@@ -83,13 +85,21 @@ didReceiveResponse:(NSURLResponse*)response
   }
   if (query_dict[kInfinitFacebookErrorKey])
   {
+    ELLE_WARN("%s: got Facebook error: %s",
+              self.description.UTF8String, query_dict.description.UTF8String);
     [self.delegate facebookWindow:self gotError:query_dict[kInfinitFacebookErrorKey]];
     [self close];
   }
   else if (query_dict[kInfinitFacebookAccessKey])
   {
+    ELLE_TRACE("%s: got Facebook token", self.description.UTF8String);
     [self.delegate facebookWindow:self gotToken:query_dict[kInfinitFacebookAccessKey]];
     [self close];
+  }
+  else
+  {
+    ELLE_WARN("%s: unknown reply: %s",
+              self.description.UTF8String, query_dict.description.UTF8String);
   }
 }
 
