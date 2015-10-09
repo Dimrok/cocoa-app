@@ -98,8 +98,11 @@ didReceiveResponse:(NSURLResponse*)response
   }
   else
   {
-    ELLE_WARN("%s: unknown reply: %s",
-              self.description.UTF8String, query_dict.description.UTF8String);
+    if (query_dict.count)
+    {
+      ELLE_WARN("%s: unknown reply: %s",
+                self.description.UTF8String, query_dict.description.UTF8String);
+    }
   }
 }
 
@@ -110,19 +113,22 @@ didReceiveResponse:(NSURLResponse*)response
   return @"https://www.facebook.com/connect/login_success.html";
 }
 
+- (NSURL*)_facebookRequestURL
+{
+  return [NSURL URLWithString:[NSString stringWithFormat:
+                               @"https://www.facebook.com/dialog/oauth?"
+                               "client_id=%@"
+                               "&redirect_uri=%@"
+                               "&response_type=token"
+                               "&scope=email,public_profile,user_friends"
+                               "&display=popup",
+                               [InfinitStateManager sharedInstance].facebookApplicationId,
+                               [InfinitFacebookWindowController _redirectURI]]];
+}
+
 - (NSURLRequest*)_facebookRequest
 {
-  NSURL* url =
-    [NSURL URLWithString:[NSString stringWithFormat:
-     @"https://www.facebook.com/dialog/oauth?"
-     "client_id=%@"
-     "&redirect_uri=%@"
-     "&response_type=token"
-     "&scope=email,public_profile,user_friends"
-     "&display=popup",
-     [InfinitStateManager sharedInstance].facebookApplicationId,
-     [InfinitFacebookWindowController _redirectURI]]];
-  NSURLRequest* res = [NSURLRequest requestWithURL:url
+  NSURLRequest* res = [NSURLRequest requestWithURL:[self _facebookRequestURL]
                                        cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                    timeoutInterval:0.0f];
   return res;
