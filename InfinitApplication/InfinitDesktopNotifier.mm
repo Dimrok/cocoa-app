@@ -23,8 +23,10 @@
 
 ELLE_LOG_COMPONENT("OSX.DesktopNotifier");
 
-@interface NSUserNotification(Private)
+@interface NSUserNotification (Private)
+
 @property BOOL _showsButtons;
+
 @end
 
 @interface InfinitDesktopNotifier ()
